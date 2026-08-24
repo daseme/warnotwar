@@ -28,37 +28,15 @@
     font-size: 14px;
     color: rgba(255,255,255,0.5);
   }
-  #setup {
-    position: fixed; inset: 0;
-    background: #111; color: #eee;
-    display: flex; flex-direction: column; gap: 12px;
-    align-items: center; justify-content: center;
-    font-family: sans-serif; padding: 20px; text-align: center;
-  }
-  #setup input {
-    padding: 10px; width: 320px; max-width: 80vw;
-    font-size: 14px;
-  }
-  #setup button {
-    padding: 10px 20px; font-size: 14px; cursor: pointer;
-  }
-  #setup a { color: #7fd1ff; }
 </style>
 </head>
 <body>
 
-<div id="setup" style="display:none;">
-  <h2>One-time setup</h2>
-  <p>Get a free API key at <a href="https://finnhub.io/register" target="_blank">finnhub.io/register</a>,<br>then paste it below.</p>
-  <input id="keyInput" placeholder="Finnhub API key" />
-  <button onclick="saveKey()">Save & Start</button>
-</div>
-
-<div id="message" style="display:none;"></div>
+<div id="message"></div>
 <div id="price"></div>
 
 <script>
-  // ---- CONFIG: edit these thresholds/messages anytime ----
+  // ---- CONFIG: edit these thresholds/messages/key anytime ----
   const TICKER = "BNO";
   const LOW_MAX = 49;      // below this = peace
   const HIGH_MIN = 55;     // above this = war
@@ -66,19 +44,8 @@
   const MSG_MID  = "Perpetual war sweet spot";
   const MSG_HIGH = "War";
   const REFRESH_MS = 60000; // 60 seconds
-  // ----------------------------------------------------------
-
-  const KEY_STORAGE = "finnhub_api_key";
-
-  function saveKey() {
-    const k = document.getElementById("keyInput").value.trim();
-    if (!k) return;
-    localStorage.setItem(KEY_STORAGE, k);
-    document.getElementById("setup").style.display = "none";
-    document.getElementById("message").style.display = "block";
-    fetchPrice();
-    setInterval(fetchPrice, REFRESH_MS);
-  }
+  const API_KEY = "da68rdhr01qtngrev8kgda68rdhr01qtngrev8l0";
+  // --------------------------------------------------------------
 
   function setMessage(text, color) {
     const el = document.getElementById("message");
@@ -91,9 +58,8 @@
   }
 
   async function fetchPrice() {
-    const key = localStorage.getItem(KEY_STORAGE);
     try {
-      const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${TICKER}&token=${key}`);
+      const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${TICKER}&token=${API_KEY}`);
       const data = await res.json();
       const price = data.c; // current price
       if (!price) throw new Error("no price");
@@ -105,20 +71,12 @@
       else if (price > HIGH_MIN) setMessage(MSG_HIGH, "#3a1717");
       else setMessage(MSG_MID, "#3a2f17");
     } catch (e) {
-      document.getElementById("price").textContent = "Error fetching price — check API key.";
+      document.getElementById("price").textContent = "Error fetching price.";
     }
   }
 
-  window.onload = () => {
-    const saved = localStorage.getItem(KEY_STORAGE);
-    if (saved) {
-      document.getElementById("message").style.display = "block";
-      fetchPrice();
-      setInterval(fetchPrice, REFRESH_MS);
-    } else {
-      document.getElementById("setup").style.display = "flex";
-    }
-  };
+  fetchPrice();
+  setInterval(fetchPrice, REFRESH_MS);
 </script>
 
 </body>
