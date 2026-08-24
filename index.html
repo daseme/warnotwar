@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>warnotwar.com</title>
+<style>
+  html, body {
+    margin: 0; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: Georgia, 'Times New Roman', serif;
+    transition: background-color 1.2s ease;
+    background: #1a1a1a;
+  }
+  #message {
+    font-size: 12vw;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: center;
+    transition: opacity 0.8s ease;
+  }
+  #price {
+    position: fixed;
+    bottom: 24px; left: 0; right: 0;
+    text-align: center;
+    font-family: monospace;
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+  }
+  #setup {
+    position: fixed; inset: 0;
+    background: #111; color: #eee;
+    display: flex; flex-direction: column; gap: 12px;
+    align-items: center; justify-content: center;
+    font-family: sans-serif; padding: 20px; text-align: center;
+  }
+  #setup input {
+    padding: 10px; width: 320px; max-width: 80vw;
+    font-size: 14px;
+  }
+  #setup button {
+    padding: 10px 20px; font-size: 14px; cursor: pointer;
+  }
+  #setup a { color: #7fd1ff; }
+</style>
+</head>
+<body>
+
+<div id="setup" style="display:none;">
+  <h2>One-time setup</h2>
+  <p>Get a free API key at <a href="https://finnhub.io/register" target="_blank">finnhub.io/register</a>,<br>then paste it below.</p>
+  <input id="keyInput" placeholder="Finnhub API key" />
+  <button onclick="saveKey()">Save & Start</button>
+</div>
+
+<div id="message" style="display:none;"></div>
+<div id="price"></div>
+
+<script>
+  // ---- CONFIG: edit these thresholds/messages anytime ----
+  const TICKER = "BNO";
+  const LOW_MAX = 49;      // below this = peace
+  const HIGH_MIN = 55;     // above this = war
+  const MSG_LOW  = "Peace";
+  const MSG_MID  = "Perpetual war sweet spot";
+  const MSG_HIGH = "War";
+  const REFRESH_MS = 60000; // 60 seconds
+  // ----------------------------------------------------------
+
+  const KEY_STORAGE = "finnhub_api_key";
+
+  function saveKey() {
+    const k = document.getElementById("keyInput").value.trim();
+    if (!k) return;
+    localStorage.setItem(KEY_STORAGE, k);
+    document.getElementById("setup").style.display = "none";
+    document.getElementById("message").style.display = "block";
+    fetchPrice();
+    setInterval(fetchPrice, REFRESH_MS);
+  }
+
+  function setMessage(text, color) {
+    const el = document.getElementById("message");
+    el.style.opacity = 0;
+    setTimeout(() => {
+      el.textContent = text;
+      document.body.style.backgroundColor = color;
+      el.style.opacity = 1;
+    }, 400);
+  }
+
+  async function fetchPrice() {
+    const key = localStorage.getItem(KEY_STORAGE);
+    try {
+      const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${TICKER}&token=${key}`);
+      const data = await res.json();
+      const price = data.c; // current price
+      if (!price) throw new Error("no price");
+
+      document.getElementById("price").textContent =
+        `${TICKER} $${price.toFixed(2)} — updated ${new Date().toLocaleTimeString()}`;
+
+      if (price < LOW_MAX) setMessage(MSG_LOW, "#173a1e");
+      else if (price > HIGH_MIN) setMessage(MSG_HIGH, "#3a1717");
+      else setMessage(MSG_MID, "#3a2f17");
+    } catch (e) {
+      document.getElementById("price").textContent = "Error fetching price — check API key.";
+    }
+  }
+
+  window.onload = () => {
+    const saved = localStorage.getItem(KEY_STORAGE);
+    if (saved) {
+      document.getElementById("message").style.display = "block";
+      fetchPrice();
+      setInterval(fetchPrice, REFRESH_MS);
+    } else {
+      document.getElementById("setup").style.display = "flex";
+    }
+  };
+</script>
+
+</body>
+</html>
