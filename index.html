@@ -22,11 +22,32 @@
   }
   #price {
     position: fixed;
-    bottom: 24px; left: 0; right: 0;
+    bottom: 46px; left: 0; right: 0;
     text-align: center;
     font-family: monospace;
     font-size: 14px;
     color: rgba(255,255,255,0.5);
+  }
+  #info-link {
+    position: fixed;
+    bottom: 14px; left: 0; right: 0;
+    text-align: center;
+  }
+  #info-link a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px; height: 20px;
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 50%;
+    color: rgba(255,255,255,0.5);
+    font-family: monospace;
+    font-size: 12px;
+    text-decoration: none;
+  }
+  #info-link a:hover {
+    color: rgba(255,255,255,0.9);
+    border-color: rgba(255,255,255,0.9);
   }
 </style>
 </head>
@@ -34,9 +55,10 @@
 
 <div id="message"></div>
 <div id="price"></div>
+<div id="info-link"><a href="/info.html" aria-label="About this site">?</a></div>
 
 <script>
-  // ---- CONFIG: edit these thresholds/messages/key anytime ----
+  // ---- CONFIG: edit these thresholds/messages anytime ----
   const TICKER = "BNO";
   const LOW_MAX = 49;      // below this = peace
   const HIGH_MIN = 55;     // above this = war
@@ -44,8 +66,7 @@
   const MSG_MID  = "Perpetual war sweet spot";
   const MSG_HIGH = "War";
   const REFRESH_MS = 60000; // 60 seconds
-  const API_KEY = "da68rdhr01qtngrev8kgda68rdhr01qtngrev8l0";
-  // --------------------------------------------------------------
+  // ----------------------------------------------------------
 
   function setMessage(text, color) {
     const el = document.getElementById("message");
@@ -59,7 +80,7 @@
 
   async function fetchPrice() {
     try {
-      const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${TICKER}&token=${API_KEY}`);
+      const res = await fetch("/api/price");
       const data = await res.json();
       const price = data.c; // current price
       if (!price) throw new Error("no price");
