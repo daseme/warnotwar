@@ -58,7 +58,7 @@
 <div id="info-link"><a href="/info.html" aria-label="About this site">?</a></div>
 
 <script>
-  // ---- CONFIG: edit these thresholds/messages anytime ----
+  // ---- CONFIG: edit these thresholds/messages/key anytime ----
   const TICKER = "BNO";
   const LOW_MAX = 49;      // below this = peace
   const HIGH_MIN = 55;     // above this = war
@@ -66,7 +66,8 @@
   const MSG_MID  = "Perpetual war sweet spot";
   const MSG_HIGH = "War";
   const REFRESH_MS = 60000; // 60 seconds
-  // ----------------------------------------------------------
+  const API_KEY = "da68rdhr01qtngrev8kgda68rdhr01qtngrev8l0";
+  // --------------------------------------------------------------
 
   function setMessage(text, color) {
     const el = document.getElementById("message");
@@ -80,7 +81,7 @@
 
   async function fetchPrice() {
     try {
-      const res = await fetch("/api/price");
+      const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${TICKER}&token=${API_KEY}`);
       const data = await res.json();
       const price = data.c; // current price
       if (!price) throw new Error("no price");
