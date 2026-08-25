@@ -7,36 +7,62 @@
 <style>
   html, body {
     margin: 0; min-height: 100%;
-    display: flex; align-items: center; justify-content: center;
     font-family: Georgia, 'Times New Roman', serif;
     background: #1a1a1a;
     color: #fff;
   }
-  .wrap {
-    text-align: center;
-    padding: 40px 20px;
-    max-width: 500px;
+  body {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 40px 20px 50px;
+    box-sizing: border-box;
   }
   h1 {
     font-size: 1.6em;
     font-weight: normal;
     letter-spacing: 0.03em;
-    margin-bottom: 1.2em;
+    margin: 0 0 1.2em;
+    text-align: center;
   }
-  p {
+  p.rules {
     font-size: 1.2em;
     line-height: 2em;
     margin: 0;
+    text-align: center;
   }
   #price {
-    margin-top: 2em;
+    margin-top: 1.6em;
     font-family: monospace;
     font-size: 14px;
     color: rgba(255,255,255,0.5);
+    text-align: center;
+  }
+  #chart-wrap {
+    width: 100%;
+    max-width: 800px;
+    margin-top: 2.5em;
+  }
+  svg { width: 100%; height: auto; display: block; }
+  .legend {
+    display: flex; gap: 18px; justify-content: center;
+    font-family: monospace; font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .note {
+    max-width: 600px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    text-align: center;
+    margin-top: 14px;
+    line-height: 1.6;
+    font-family: monospace;
   }
   a.back {
     display: inline-block;
-    margin-top: 2em;
+    margin-top: 2.5em;
     color: rgba(255,255,255,0.5);
     font-family: monospace;
     font-size: 13px;
@@ -46,35 +72,125 @@
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>The Dean Street Heuristic</h1>
-  <p>
-    &lt; 49 = peace<br>
-    &gt; 55 = war<br>
-    50 = perpetual war sweet spot
-  </p>
-  <div id="price"></div>
-  <a class="back" href="/">&larr; back</a>
+
+<h1>The Dean Street Heuristic</h1>
+<p class="rules">
+  &lt; 49 = peace<br>
+  &gt; 55 = war<br>
+  50 = perpetual war sweet spot
+</p>
+<div id="price"></div>
+
+<div id="chart-wrap"></div>
+<div class="legend">
+  <span><span class="dot" style="background:#2e7d4f"></span>peace (&lt; 49)</span>
+  <span><span class="dot" style="background:#c9962c"></span>sweet spot (49–55)</span>
+  <span><span class="dot" style="background:#b3413d"></span>war (&gt; 55)</span>
 </div>
+<div class="note" id="note">Loading price history…</div>
+
+<a class="back" href="/">&larr; back</a>
 
 <script>
   const TICKER = "BNO";
+  const LOW_MAX = 49;
+  const HIGH_MIN = 55;
   const API_KEY = "da68rdhr01qtngrev8kgda68rdhr01qtngrev8l0";
 
-  async function fetchPrice() {
+  function zoneColor(p) {
+    if (p < LOW_MAX) return "#2e7d4f";
+    if (p > HIGH_MIN) return "#b3413d";
+    return "#c9962c";
+  }
+
+  async function fetchLive() {
     try {
       const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${TICKER}&token=${API_KEY}`);
       const data = await res.json();
-      const price = data.c;
-      if (!price) throw new Error("no price");
-      document.getElementById("price").textContent =
-        `${TICKER} $${price.toFixed(2)} — updated ${new Date().toLocaleTimeString()}`;
-    } catch (e) {
-      document.getElementById("price").textContent = "Error fetching price.";
-    }
+      if (data && data.c) return data.c;
+    } catch (e) {}
+    return null;
   }
 
-  fetchPrice();
+  async function buildChart(history, livePrice) {
+    let points = history.map(pt => ({ t: new Date(pt.d + "T00:00:00Z").getTime(), p: pt.p }));
+    if (livePrice) points.push({ t: Date.now(), p: livePrice });
+
+    const W = 900, H = 380, PAD_L = 46, PAD_R = 16, PAD_T = 16, PAD_B = 30;
+    const t0 = points[0].t, t1 = points[points.length - 1].t;
+    const prices = points.map(pt => pt.p);
+    const yMin = Math.floor(Math.min(...prices, LOW_MAX) / 5) * 5 - 5;
+    const yMax = Math.ceil(Math.max(...prices, HIGH_MIN) / 5) * 5 + 5;
+
+    function x(t) { return PAD_L + ((t - t0) / (t1 - t0)) * (W - PAD_L - PAD_R); }
+    function y(p) { return H - PAD_B - ((p - yMin) / (yMax - yMin)) * (H - PAD_T - PAD_B); }
+
+    const yLow = y(LOW_MAX), yHigh = y(HIGH_MIN);
+
+    let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+    svg += `<rect x="${PAD_L}" y="${PAD_T}" width="${W-PAD_L-PAD_R}" height="${yHigh-PAD_T}" fill="#b3413d" opacity="0.12"/>`;
+    svg += `<rect x="${PAD_L}" y="${yHigh}" width="${W-PAD_L-PAD_R}" height="${yLow-yHigh}" fill="#c9962c" opacity="0.12"/>`;
+    svg += `<rect x="${PAD_L}" y="${yLow}" width="${W-PAD_L-PAD_R}" height="${H-PAD_B-yLow}" fill="#2e7d4f" opacity="0.12"/>`;
+    svg += `<line x1="${PAD_L}" y1="${yLow}" x2="${W-PAD_R}" y2="${yLow}" stroke="rgba(255,255,255,0.25)" stroke-dasharray="4 4"/>`;
+    svg += `<line x1="${PAD_L}" y1="${yHigh}" x2="${W-PAD_R}" y2="${yHigh}" stroke="rgba(255,255,255,0.25)" stroke-dasharray="4 4"/>`;
+    svg += `<text x="${PAD_L+4}" y="${yLow-4}" fill="rgba(255,255,255,0.4)" font-size="10" font-family="monospace">$49</text>`;
+    svg += `<text x="${PAD_L+4}" y="${yHigh-4}" fill="rgba(255,255,255,0.4)" font-size="10" font-family="monospace">$55</text>`;
+
+    let path = "";
+    points.forEach((pt, i) => {
+      const cmd = i === 0 ? "M" : "L";
+      path += `${cmd}${x(pt.t).toFixed(1)},${y(pt.p).toFixed(1)} `;
+    });
+    svg += `<path d="${path}" fill="none" stroke="#fff" stroke-width="1.5"/>`;
+
+    points.forEach((pt, i) => {
+      if (i % 3 !== 0 && i !== points.length - 1) return;
+      svg += `<circle cx="${x(pt.t).toFixed(1)}" cy="${y(pt.p).toFixed(1)}" r="1.8" fill="${zoneColor(pt.p)}"/>`;
+    });
+
+    const last = points[points.length - 1];
+    svg += `<circle cx="${x(last.t).toFixed(1)}" cy="${y(last.p).toFixed(1)}" r="5" fill="${zoneColor(last.p)}" stroke="#1a1a1a" stroke-width="1.5"/>`;
+
+    const months = [];
+    let cursor = new Date(Date.UTC(new Date(t0).getUTCFullYear(), new Date(t0).getUTCMonth(), 1));
+    const end = new Date(t1);
+    while (cursor <= end) {
+      months.push(new Date(cursor));
+      cursor = new Date(Date.UTC(cursor.getUTCFullYear(), cursor.getUTCMonth() + 1, 1));
+    }
+    months.forEach(m => {
+      const mx = x(m.getTime());
+      if (mx >= PAD_L && mx <= W - PAD_R) {
+        const label = m.toLocaleDateString(undefined, { month: "short", year: "2-digit" });
+        svg += `<text x="${mx.toFixed(1)}" y="${H-10}" fill="rgba(255,255,255,0.4)" font-size="9" font-family="monospace" text-anchor="middle">${label}</text>`;
+      }
+    });
+
+    svg += `</svg>`;
+    document.getElementById("chart-wrap").innerHTML = svg;
+    document.getElementById("note").textContent =
+      "Daily close data, Jun 23 2025 \u2013 present; the final point updates live.";
+  }
+
+  async function init() {
+    const [historyRes, livePrice] = await Promise.all([
+      fetch("/history.json"),
+      fetchLive()
+    ]);
+    const history = await historyRes.json();
+
+    if (livePrice) {
+      document.getElementById("price").textContent =
+        `${TICKER} $${livePrice.toFixed(2)} \u2014 updated ${new Date().toLocaleTimeString()}`;
+    } else {
+      document.getElementById("price").textContent = "Error fetching live price.";
+    }
+
+    buildChart(history, livePrice);
+  }
+
+  init();
 </script>
+
 </body>
 </html>
