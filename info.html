@@ -28,9 +28,15 @@
     line-height: 2em;
     margin: 0;
   }
+  #price {
+    margin-top: 2em;
+    font-family: monospace;
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+  }
   a.back {
     display: inline-block;
-    margin-top: 2.5em;
+    margin-top: 2em;
     color: rgba(255,255,255,0.5);
     font-family: monospace;
     font-size: 13px;
@@ -47,7 +53,28 @@
     &gt; 55 = war<br>
     50 = perpetual war sweet spot
   </p>
+  <div id="price"></div>
   <a class="back" href="/">&larr; back</a>
 </div>
+
+<script>
+  const TICKER = "BNO";
+  const API_KEY = "da68rdhr01qtngrev8kgda68rdhr01qtngrev8l0";
+
+  async function fetchPrice() {
+    try {
+      const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${TICKER}&token=${API_KEY}`);
+      const data = await res.json();
+      const price = data.c;
+      if (!price) throw new Error("no price");
+      document.getElementById("price").textContent =
+        `${TICKER} $${price.toFixed(2)} — updated ${new Date().toLocaleTimeString()}`;
+    } catch (e) {
+      document.getElementById("price").textContent = "Error fetching price.";
+    }
+  }
+
+  fetchPrice();
+</script>
 </body>
 </html>

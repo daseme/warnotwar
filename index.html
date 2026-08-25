@@ -20,17 +20,9 @@
     text-align: center;
     transition: opacity 0.8s ease;
   }
-  #price {
-    position: fixed;
-    bottom: 46px; left: 0; right: 0;
-    text-align: center;
-    font-family: monospace;
-    font-size: 14px;
-    color: rgba(255,255,255,0.5);
-  }
   #info-link {
     position: fixed;
-    bottom: 14px; left: 0; right: 0;
+    bottom: 24px; left: 0; right: 0;
     text-align: center;
   }
   #info-link a {
@@ -54,7 +46,6 @@
 <body>
 
 <div id="message"></div>
-<div id="price"></div>
 <div id="info-link"><a href="/info.html" aria-label="About this site">?</a></div>
 
 <script>
@@ -86,14 +77,11 @@
       const price = data.c; // current price
       if (!price) throw new Error("no price");
 
-      document.getElementById("price").textContent =
-        `${TICKER} $${price.toFixed(2)} — updated ${new Date().toLocaleTimeString()}`;
-
       if (price < LOW_MAX) setMessage(MSG_LOW, "#173a1e");
       else if (price > HIGH_MIN) setMessage(MSG_HIGH, "#3a1717");
       else setMessage(MSG_MID, "#3a2f17");
     } catch (e) {
-      document.getElementById("price").textContent = "Error fetching price.";
+      setMessage("Error", "#1a1a1a");
     }
   }
 
