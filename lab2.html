@@ -368,7 +368,7 @@
       const col = st.lit.includes(id) ? '#fff' : st.counted.includes(id) ? '#c9b06a' : 'rgba(255,255,255,0.45)';
       s += `<text x="138" y="${y + 4}" fill="${col}" font-size="11" font-family="monospace" text-anchor="end">${n}</text>`;
       if (st.counted.includes(id) && (id === 'iran' || id === 'qatar')) {
-        s += `<text x="335" y="${y - 8}" fill="#c9b06a" font-size="9" font-family="monospace" text-anchor="middle">counted in the total — not broken out in our data</text>`;
+        s += `<text x="335" y="${y - 8}" fill="#c9b06a" font-size="9" font-family="monospace" text-anchor="middle">fully counted in this total — public data can’t split their share out</text>`;
       }
     });
     if (st.track) {
