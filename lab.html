@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Hands-on exhibits behind the Hormuz oil-flow coverage: what each claimed number counts, and what the verification gap would require.">
+<title>The Lab</title>
+<style>
+  html, body {
+    margin: 0; min-height: 100%;
+    font-family: Georgia, 'Times New Roman', serif;
+    background: #1a1a1a;
+    color: #fff;
+    overflow-x: clip;
+  }
+  body {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 40px 20px 60px;
+    box-sizing: border-box;
+  }
+  h1 {
+    font-size: 1.6em; font-weight: normal;
+    letter-spacing: 0.03em; margin: 0 0 0.4em; text-align: center;
+  }
+  .subtitle {
+    max-width: 640px; text-align: center;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.95em; line-height: 1.7; margin: 0 0 0.6em;
+  }
+  .housenote {
+    font-family: monospace; font-size: 11px;
+    color: rgba(255,255,255,0.45); text-align: center;
+    max-width: 640px; line-height: 1.6;
+  }
+  section.exhibit {
+    width: 100%; max-width: 880px; margin-top: 3.5em;
+    border: 1px solid rgba(255,255,255,0.13);
+    padding: 22px 24px 20px;
+    box-sizing: border-box;
+  }
+  h2 { font-size: 1.2em; font-weight: normal; letter-spacing: 0.03em; margin: 0 0 0.2em; }
+  .learn {
+    font-family: monospace; font-size: 11px;
+    color: rgba(255,255,255,0.5); margin: 0 0 14px; line-height: 1.6;
+  }
+  .btnrow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 6px 0; }
+  .btnrow .grp {
+    font-family: monospace; font-size: 9px; letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.4); text-transform: uppercase;
+    flex-basis: 100%; margin-top: 8px;
+  }
+  button.claim {
+    font-family: monospace; font-size: 11px;
+    background: none; color: rgba(255,255,255,0.8);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 7px 10px; cursor: pointer; text-align: left;
+    min-height: 34px;
+  }
+  button.claim .badge {
+    display: block; font-size: 9px; color: rgba(255,255,255,0.45); margin-top: 2px;
+  }
+  button.claim:hover { border-color: rgba(255,255,255,0.6); }
+  button.claim.on { border-color: #4a8fd4; color: #fff; background: rgba(74,143,212,0.12); }
+  button.claim:disabled { opacity: 0.4; cursor: default; }
+  .modeline {
+    font-family: monospace; font-size: 10px;
+    color: rgba(255,255,255,0.5); margin: 8px 0 4px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  #schematic svg { width: 100%; height: auto; display: block; }
+  .caption {
+    font-family: monospace; font-size: 12px;
+    color: rgba(255,255,255,0.75); line-height: 1.8;
+    border-left: 2px solid rgba(74,143,212,0.6);
+    padding: 6px 0 6px 14px; margin-top: 12px;
+    min-height: 3em;
+  }
+  .caption a { color: rgba(255,255,255,0.6); }
+  .legend {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    font-family: monospace; font-size: 10px;
+    color: rgba(255,255,255,0.55); margin-top: 8px;
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .sw { width: 18px; height: 3px; display: inline-block; }
+  .note {
+    font-size: 11.5px; color: rgba(255,255,255,0.4);
+    margin-top: 14px; line-height: 1.7; font-family: monospace;
+  }
+  /* exhibit 2 */
+  .sliders { display: flex; flex-direction: column; gap: 10px; margin: 12px 0; font-family: monospace; font-size: 12px; color: rgba(255,255,255,0.7); }
+  .sliders .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .sliders label { min-width: 200px; }
+  .sliders input[type=range] { flex: 1 1 200px; accent-color: #4a8fd4; }
+  .sliders .val { color: #fff; min-width: 90px; }
+  button.preset {
+    font-family: monospace; font-size: 11px;
+    background: none; color: rgba(255,255,255,0.8);
+    border: 1px solid rgba(255,255,255,0.3); padding: 6px 10px; cursor: pointer;
+  }
+  button.preset:hover { border-color: rgba(255,255,255,0.6); }
+  #lanes svg { width: 100%; height: auto; display: block; margin-top: 8px; }
+  .arms {
+    font-family: monospace; font-size: 12px;
+    color: rgba(255,255,255,0.75); line-height: 1.9; margin-top: 12px;
+  }
+  .arms .arm { border-left: 2px solid rgba(255,255,255,0.25); padding-left: 12px; margin-bottom: 8px; }
+  .arms .num { color: #fff; }
+  .hypo {
+    display: none;
+    font-family: monospace; font-size: 10px; letter-spacing: 0.06em;
+    color: #b8862a; border: 1px dashed rgba(184,134,42,0.6);
+    padding: 3px 8px; margin: 10px 0 0; width: fit-content;
+    text-transform: uppercase;
+  }
+  a.back {
+    display: inline-block; margin-top: 3em;
+    color: rgba(255,255,255,0.5);
+    font-family: monospace; font-size: 13px; text-decoration: none;
+  }
+  a.back:hover { color: rgba(255,255,255,0.8); }
+  #load-error { display: none; font-family: monospace; font-size: 13px; color: #b3413d; margin-top: 2em; }
+</style>
+</head>
+<body>
+
+<h1>The Lab</h1>
+<p class="subtitle">
+  Hands-on arithmetic behind the <a style="color:rgba(255,255,255,0.6)" href="/oilflows.html">Hormuz oil-flow coverage</a>.
+  Each exhibit teaches one idea you can hold in your hands.
+</p>
+<p class="housenote">
+  Exhibits start from the live, sourced claims ledger. Anything you change
+  yourself is labeled hypothetical. Nothing here adjudicates who is right.
+</p>
+
+<div id="load-error">Could not load the claims ledger.</div>
+
+<section class="exhibit" id="ex1">
+  <h2>1 &middot; What each number counts</h2>
+  <p class="learn">Several official numbers are circulating &mdash; and they answer different questions. Tap a number to light up exactly which routes it counts. Tap an instrument to see what it can measure.</p>
+  <div class="btnrow" id="claim-btns"></div>
+  <div class="btnrow" id="inst-btns"></div>
+  <div class="modeline" id="mode-line">select a number or an instrument</div>
+  <div id="schematic"></div>
+  <div class="legend">
+    <span><span class="sw" style="background:#4a8fd4"></span>counted by this selection</span>
+    <span><span class="sw" style="background:#8a7444"></span>inside the total, not broken out in our data</span>
+    <span><span class="sw" style="background:rgba(255,255,255,0.22)"></span>not counted</span>
+    <span><span class="sw" style="background:repeating-linear-gradient(90deg,#777 0 4px,transparent 4px 8px)"></span>not visible to that instrument</span>
+  </div>
+  <div class="caption" id="ex1-caption">Tap a number above to begin.</div>
+  <div class="note">
+    Schematic, not a map: connections only &mdash; line width and length mean
+    nothing about volume. Oil moves one way; tankers return empty. Iran and
+    Qatar export through the same strait; their barrels are inside any
+    Hormuz-wide total, but public data are too sparse for this site to track
+    them country-by-country &mdash; which is not a claim that they are zero.
+  </div>
+</section>
+
+<section class="exhibit" id="ex2">
+  <h2>2 &middot; Pricing the unseen barrels</h2>
+  <p class="learn">U.S. officials and independent trackers report different Hormuz flows. This exhibit prices what it would take for the numbers to be reconciled &mdash; it does not decide between them.</p>
+  <div class="sliders">
+    <div class="row">
+      <label for="s-claim">claimed flow</label>
+      <input type="range" id="s-claim" min="2" max="12" step="0.5">
+      <span class="val" id="v-claim"></span>
+    </div>
+    <div class="row">
+      <label for="s-track">independently tracked flow</label>
+      <input type="range" id="s-track" min="2" max="8" step="0.5">
+      <span class="val" id="v-track"></span>
+    </div>
+    <div class="row"><button class="preset" id="btn-preset">show today's ledger numbers</button></div>
+  </div>
+  <div class="hypo" id="hypo-stamp">hypothetical &mdash; reader-set values, not ledger data</div>
+  <div id="lanes"></div>
+  <div class="arms" id="arms"></div>
+  <div class="note" id="ex2-note"></div>
+</section>
+
+<a class="back" href="/oilflows.html">&larr; back to the data</a>
+
+<script>
+(async function () {
+  let verify;
+  try {
+    verify = await fetch('/data/hormuz_verification.json').then(r => r.json());
+  } catch (e) {
+    document.getElementById('load-error').style.display = 'block';
+    return;
+  }
+  const ep = verify.current_episode;
+
+  function fmtDate(d) {
+    const [y, m, day] = d.split('-').map(Number);
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `${months[m - 1]} ${day} ${y}`;
+  }
+  const fmtLedgerDate = r => r.date_precision === 'month'
+    ? fmtDate(r.claim_date || r.estimate_date).replace(/^(\w+) \d+ /, '$1 ')
+    : fmtDate(r.claim_date || r.estimate_date);
+
+  /* ================= Exhibit 1: the schematic ================= */
+
+  // Pipes: id, path, label, label position. Equal widths, one-way.
+  const PIPES = [
+    { id: 'iraq',   d: 'M150,70 H520',  lab: 'Basrah',            lx: 300, ly: 62 },
+    { id: 'kuwait', d: 'M150,130 H520', lab: 'Mina al-Ahmadi',    lx: 300, ly: 122 },
+    { id: 'saudi',  d: 'M150,210 H520', lab: 'Ras Tanura · Juaymah', lx: 300, ly: 202 },
+    { id: 'uae',    d: 'M150,300 H520', lab: 'Ruways · Das Is.',  lx: 300, ly: 292 },
+    { id: 'iran',   d: 'M150,370 H520', lab: '',                  lx: 0,   ly: 0 },
+    { id: 'qatar',  d: 'M150,425 H520', lab: '',                  lx: 0,   ly: 0 },
+    { id: 'out',    d: 'M546,248 H784', lab: 'outbound crude',    lx: 660, ly: 240 },
+    { id: 'yanbu',  d: 'M250,210 V520 H784', lab: 'East–West pipeline → Yanbu (Red Sea) — bypasses the strait', lx: 470, ly: 512 },
+    { id: 'fuj',    d: 'M330,300 V478 H784', lab: '→ Fujairah — bypasses the strait', lx: 500, ly: 470 },
+  ];
+  const SOURCES = [
+    { id: 'iraq', name: 'IRAQ', y: 70 }, { id: 'kuwait', name: 'KUWAIT', y: 130 },
+    { id: 'saudi', name: 'SAUDI ARABIA', y: 210 }, { id: 'uae', name: 'UAE', y: 300 },
+    { id: 'iran', name: 'IRAN', y: 370 }, { id: 'qatar', name: 'QATAR', y: 425 },
+  ];
+  const HORMUZ_IN = ['iraq', 'kuwait', 'saudi', 'uae'];
+
+  const C_LIT = '#4a8fd4', C_CTD = '#8a7444', C_DIM = 'rgba(255,255,255,0.22)';
+
+  // state: {lit:[], counted:[], dashed:[], gate:'lit'|'dim', track:bool, srcLit:[]}
+  function drawSchematic(st) {
+    const arrow = (x, y, c) => `<path d="M${x},${y-5} L${x+9},${y} L${x},${y+5} Z" fill="${c}"/>`;
+    let s = `<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schematic of Gulf oil routes">`;
+    s += `<defs><pattern id="dash" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="4" height="8" fill="#777"/></pattern></defs>`;
+
+    PIPES.forEach(p => {
+      let color = C_DIM, w = 2.5, extra = '';
+      if (st.lit.includes(p.id)) { color = C_LIT; w = 3.5; }
+      else if (st.counted.includes(p.id)) { color = C_CTD; w = 3; }
+      if (st.dashed.includes(p.id)) extra = ' stroke-dasharray="5 5"';
+      s += `<path d="${p.d}" fill="none" stroke="${color}" stroke-width="${w}"${extra}/>`;
+      const m = p.d.match(/H(\d+)$|H(\d+)\s*$/);
+      // arrowheads at pipe ends
+      if (p.id === 'out') s += arrow(784, 248, color);
+      if (p.id === 'yanbu') s += arrow(784, 520, color);
+      if (p.id === 'fuj') s += arrow(784, 478, color);
+      if (p.lab && (st.lit.includes(p.id) || st.counted.includes(p.id) || st.showAllLabels)) {
+        s += `<text x="${p.lx}" y="${p.ly}" fill="rgba(255,255,255,0.55)" font-size="9.5" font-family="monospace" text-anchor="middle">${p.lab}</text>`;
+      }
+    });
+
+    // gate
+    const gateFill = st.gate === 'lit' ? 'rgba(74,143,212,0.55)' : 'rgba(255,255,255,0.16)';
+    s += `<rect x="520" y="40" width="26" height="420" fill="${gateFill}"/>`;
+    s += `<text x="533" y="30" fill="rgba(255,255,255,0.7)" font-size="10" font-family="monospace" text-anchor="middle">STRAIT OF HORMUZ</text>`;
+
+    // sources
+    SOURCES.forEach(n => {
+      const on = st.srcLit && st.srcLit.includes(n.id);
+      const litPipe = st.lit.includes(n.id), ctdPipe = st.counted.includes(n.id);
+      const col = on ? C_LIT : litPipe ? '#fff' : ctdPipe ? '#c9b06a' : 'rgba(255,255,255,0.5)';
+      s += `<circle cx="150" cy="${n.y}" r="4.5" fill="${col}"/>`;
+      s += `<text x="138" y="${n.y + 4}" fill="${col}" font-size="11" font-family="monospace" text-anchor="end">${n.name}</text>`;
+      if ((n.id === 'iran' || n.id === 'qatar') && st.counted.includes(n.id)) {
+        s += `<text x="330" y="${n.y - 8}" fill="#c9b06a" font-size="9" font-family="monospace" text-anchor="middle">counted in the total — not broken out in our data</text>`;
+      }
+    });
+
+    // world
+    s += `<text x="822" y="280" fill="rgba(255,255,255,0.7)" font-size="11" font-family="monospace" transform="rotate(90 822 280)" text-anchor="middle" letter-spacing="3">WORLD MARKETS</text>`;
+
+    // ship track for the transit-count claim
+    if (st.track) {
+      s += `<line x1="420" y1="140" x2="646" y2="140" stroke="#b8862a" stroke-width="2" stroke-dasharray="2 6"/>` + arrow(646, 140, '#b8862a');
+      s += `<line x1="646" y1="180" x2="430" y2="180" stroke="#b8862a" stroke-width="2" stroke-dasharray="2 6"/>` + `<path d="M430,175 L421,180 L430,185 Z" fill="#b8862a"/>`;
+      s += `<text x="533" y="128" fill="#c9b06a" font-size="9" font-family="monospace" text-anchor="middle">outbound ships</text>`;
+      s += `<text x="533" y="196" fill="#c9b06a" font-size="9" font-family="monospace" text-anchor="middle">inbound ships — travelling empty</text>`;
+    }
+
+    s += `<text x="30" y="550" fill="rgba(255,255,255,0.35)" font-size="9.5" font-family="monospace">connections only — line width and length mean nothing</text>`;
+    s += `</svg>`;
+    document.getElementById('schematic').innerHTML = s;
+  }
+
+  // Selection configs, keyed by scope+unit. Unmapped -> disabled button.
+  const hormuzState = {
+    lit: HORMUZ_IN.concat(['out']), counted: ['iran', 'qatar'],
+    dashed: [], gate: 'lit', track: false,
+  };
+  const CLAIM_CONFIGS = {
+    'hormuz_outbound|mbd': {
+      state: hormuzState,
+      covers: 'crude leaving through the strait itself, from every exporter that uses it — including Iranian and Qatari barrels this site cannot break out.',
+      excludes: 'the Saudi Red Sea and UAE Fujairah bypass routes.',
+    },
+    'hormuz_outbound|mbbl_single_day': {
+      state: hormuzState,
+      covers: 'barrels through the strait on one exceptional day — a volume, not an average rate.',
+      excludes: 'the bypass routes; and it is not comparable to any of the per-day rates.',
+    },
+    'regional_total_including_bypass|mbd': {
+      state: { lit: HORMUZ_IN.concat(['out', 'yanbu', 'fuj']), counted: ['iran', 'qatar'], dashed: [], gate: 'lit', track: false },
+      covers: 'everything: the strait AND the bypass pipelines to the Red Sea and Fujairah.',
+      excludes: 'nothing regional — which is why it is the biggest number, and not comparable to Hormuz-only figures.',
+    },
+    'ship_transits_in_and_out|tankers_per_night': {
+      state: { lit: [], counted: [], dashed: [], gate: 'lit', track: true },
+      covers: 'ship movements in BOTH directions — inbound tankers travel empty, so this is not a count of loaded outbound ships.',
+      excludes: 'any statement of barrels: ship counts cannot be converted to volume without knowing sizes and loads.',
+    },
+  };
+
+  const INSTRUMENTS = [
+    {
+      id: 'trackers', grp: 'instruments in the dispute', label: 'commercial trackers',
+      sub: (ep ? '~' + ep.independent_consensus_mbd.toFixed(0) + ' mb/d · as reported' : 'as reported'),
+      state: { lit: HORMUZ_IN.concat(['out']), counted: ['iran', 'qatar'], dashed: [], gate: 'lit', track: false },
+      caption: 'Commercial vessel-monitoring services (as reported by Reuters and the WSJ). They watch the strait itself, see Ras Tanura, and state that their estimate already attempts to include dark ships and ship-to-ship transfers. Their figure answers the same question as the Hormuz-only claims.',
+    },
+    {
+      id: 'portwatch', grp: 'this site’s instruments', label: 'PortWatch activity index',
+      sub: 'ship signals · never barrels',
+      state: { lit: ['iraq', 'kuwait', 'uae', 'yanbu', 'fuj', 'out'], counted: [], dashed: ['saudi'], gate: 'lit', track: false, showAllLabels: true },
+      caption: 'This site’s fast layer: AIS activity at the strait and at the terminals it can see. Saudi Arabia’s main Gulf terminal Ras Tanura is NOT visible to this source (dashed line) — but that is a limit of our activity index, not of the commercial trackers’ volume estimate. PortWatch numbers are activity signals and are never converted into barrels.',
+    },
+    {
+      id: 'official', grp: 'this site’s instruments', label: 'official ledgers (SOMO / JODI)',
+      sub: 'monthly · months behind',
+      state: { lit: [], counted: [], dashed: [], gate: 'dim', track: false, srcLit: ['iraq', 'kuwait', 'saudi'] },
+      caption: 'The slow referee: official monthly export figures for Iraq, Kuwait and Saudi Arabia (Saudi’s is national and includes bypass routes). They lag by roughly two months — the August numbers that bear on the current dispute arrive around October–November.',
+    },
+  ];
+
+  const unitBadge = { mbd: 'mb/d', tankers_per_night: 'ships/night · both directions', mbbl_single_day: 'million barrels · one day' };
+  const scopeGroup = {
+    hormuz_outbound: 'through Hormuz only',
+    regional_total_including_bypass: 'region incl. bypass',
+    ship_transits_in_and_out: 'ship counts',
+  };
+  const figShort = c => (c.value_low === c.value_high
+    ? (c.value_low % 1 ? c.value_low : c.value_low.toFixed(0))
+    : c.value_low.toFixed(0) + '–' + c.value_high.toFixed(0));
+
+  // build claim buttons grouped by scope
+  const claimBtns = document.getElementById('claim-btns');
+  let bhtml = '';
+  Object.keys(scopeGroup).forEach(scope => {
+    const group = verify.claims.filter(c => c.scope === scope);
+    if (!group.length) return;
+    bhtml += `<span class="grp">${scopeGroup[scope]}</span>`;
+    group.forEach(c => {
+      const key = c.scope + '|' + c.unit;
+      const ok = key in CLAIM_CONFIGS;
+      bhtml += `<button class="claim" data-claim="${c.claim_id}" ${ok ? '' : 'disabled title="cannot be drawn on this schematic"'}>` +
+        `${figShort(c)} <span style="opacity:0.6">${unitBadge[c.unit] || c.unit}</span>` +
+        `<span class="badge">${c.speaker}${c.attribution === 'anonymous' ? ' · anonymous' : ''}</span></button>`;
+    });
+  });
+  claimBtns.innerHTML = bhtml;
+
+  const instBtns = document.getElementById('inst-btns');
+  let ihtml = '', lastGrp = '';
+  INSTRUMENTS.forEach(inst => {
+    if (inst.grp !== lastGrp) { ihtml += `<span class="grp">${inst.grp}</span>`; lastGrp = inst.grp; }
+    ihtml += `<button class="claim" data-inst="${inst.id}">${inst.label}<span class="badge">${inst.sub}</span></button>`;
+  });
+  instBtns.innerHTML = ihtml;
+
+  const modeLine = document.getElementById('mode-line');
+  const cap = document.getElementById('ex1-caption');
+  function clearActive() {
+    document.querySelectorAll('#ex1 button.claim').forEach(b => b.classList.remove('on'));
+  }
+  function selectClaim(id) {
+    clearActive();
+    const btn = document.querySelector(`[data-claim="${id}"]`);
+    btn.classList.add('on');
+    const c = verify.claims.find(x => x.claim_id === id);
+    const cfg = CLAIM_CONFIGS[c.scope + '|' + c.unit];
+    drawSchematic(cfg.state);
+    modeLine.textContent = 'showing: one claimed number';
+    const status = c.status === 'unverified' ? 'unverified'
+      : c.status.replace(/_/g, ' ');
+    cap.innerHTML =
+      `<b>${figShort(c)} ${unitBadge[c.unit]}</b> — ${c.speaker}` +
+      `${c.attribution === 'anonymous' ? ' (anonymous)' : ''}, ${fmtLedgerDate(c)} · status: ${status}<br>` +
+      `counts: ${cfg.covers}<br>does not count: ${cfg.excludes}<br>` +
+      `<a href="${c.source_url}">${c.source_name}</a>`;
+  }
+  function selectInst(id) {
+    clearActive();
+    document.querySelector(`[data-inst="${id}"]`).classList.add('on');
+    const inst = INSTRUMENTS.find(i => i.id === id);
+    drawSchematic(inst.state);
+    modeLine.textContent = 'showing: one instrument’s view';
+    cap.innerHTML = inst.caption;
+  }
+  claimBtns.addEventListener('click', e => {
+    const b = e.target.closest('button[data-claim]');
+    if (b && !b.disabled) selectClaim(b.dataset.claim);
+  });
+  instBtns.addEventListener('click', e => {
+    const b = e.target.closest('button[data-inst]');
+    if (b) selectInst(b.dataset.inst);
+  });
+
+  // initial view: neutral, all labels
+  drawSchematic({ lit: [], counted: [], dashed: [], gate: 'dim', track: false, showAllLabels: true });
+
+  // ?sel=c2 / ?sel=portwatch preselects a state (testing aid)
+  const sel = new URLSearchParams(location.search).get('sel');
+  if (sel) {
+    if (verify.claims.some(c => c.claim_id === sel)) selectClaim(sel);
+    else if (INSTRUMENTS.some(i => i.id === sel)) selectInst(sel);
+  }
+
+  /* ================= Exhibit 2: pricing the unseen barrels ================= */
+
+  if (!ep) { document.getElementById('ex2').style.display = 'none'; return; }
+
+  const sClaim = document.getElementById('s-claim');
+  const sTrack = document.getElementById('s-track');
+  let mode = 'preset'; // 'preset' | 'custom'
+
+  function shipLane(y, count, color, hatchFrom) {
+    // one glyph = 2M bbl (a VLCC-equivalent volume); fractional glyph clipped
+    let s = '';
+    const gw = 60, gh = 22, gap = 14, x0 = 150;
+    const whole = Math.floor(count), frac = count - whole;
+    for (let i = 0; i < whole; i++) {
+      s += shipGlyph(x0 + i * (gw + gap), y, color, 1);
+    }
+    if (frac > 0.02) s += shipGlyph(x0 + whole * (gw + gap), y, color, frac);
+    if (hatchFrom != null) {
+      const hx = x0 + hatchFrom * (gw + gap) - 4;
+      const hw = Math.max(0, x0 + count * (gw + gap) - gap + 8 - hx);
+      if (hw > 0) {
+        s += `<rect x="${hx}" y="${y - 6}" width="${hw}" height="${gh + 12}" fill="url(#hatch2)" stroke="rgba(184,134,42,0.7)" stroke-dasharray="3 3"/>`;
+      }
+    }
+    return s;
+  }
+  function shipGlyph(x, y, color, frac) {
+    const id = 'clip' + Math.round(x * 7 + y);
+    let s = '';
+    if (frac < 1) {
+      s += `<clipPath id="${id}"><rect x="${x}" y="${y - 10}" width="${60 * frac}" height="44"/></clipPath>`;
+    }
+    const g = `<g ${frac < 1 ? `clip-path="url(#${id})"` : ''}>` +
+      `<path d="M${x},${y} h52 l8,8 -12,14 h-42 l-6,-14 z" fill="${color}"/>` +
+      `<rect x="${x + 38}" y="${y - 8}" width="10" height="8" fill="${color}"/></g>`;
+    if (frac < 1) {
+      s += g + `<path d="M${x},${y} h52 l8,8 -12,14 h-42 l-6,-14 z" fill="none" stroke="${color}" stroke-width="1" stroke-dasharray="3 3" opacity="0.6"/>`;
+    } else s += g;
+    return s;
+  }
+
+  function render() {
+    const preset = mode === 'preset';
+    const cLo = preset ? ep.claim_low_mbd : parseFloat(sClaim.value);
+    const cHi = preset ? ep.claim_high_mbd : parseFloat(sClaim.value);
+    const t = preset ? ep.independent_consensus_mbd : parseFloat(sTrack.value);
+
+    document.getElementById('v-claim').textContent =
+      (cLo === cHi ? cHi.toFixed(1) : cLo.toFixed(0) + '–' + cHi.toFixed(0)) + ' mb/d';
+    document.getElementById('v-track').textContent = t.toFixed(1) + ' mb/d';
+    document.getElementById('hypo-stamp').style.display = preset ? 'none' : 'block';
+
+    // lanes
+    let s = `<svg viewBox="0 0 900 190" xmlns="http://www.w3.org/2000/svg">`;
+    s += `<defs><pattern id="hatch2" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><rect width="3" height="8" fill="rgba(184,134,42,0.35)"/></pattern></defs>`;
+    s += `<text x="20" y="45" fill="rgba(255,255,255,0.6)" font-size="10" font-family="monospace">CLAIMED</text>`;
+    s += `<text x="20" y="125" fill="rgba(255,255,255,0.6)" font-size="10" font-family="monospace">INDEPENDENTLY</text>`;
+    s += `<text x="20" y="138" fill="rgba(255,255,255,0.6)" font-size="10" font-family="monospace">TRACKED</text>`;
+    s += shipLane(35, cHi / 2, '#4a8fd4', t < cHi ? t / 2 : null);
+    s += shipLane(118, t / 2, 'rgba(255,255,255,0.75)', null);
+    if (t < cHi) {
+      s += `<text x="150" y="82" fill="#c9b06a" font-size="10" font-family="monospace">hatched: unaccounted-for share — volume in the claim that trackers cannot find</text>`;
+    }
+    if (!preset) {
+      s += `<text x="878" y="182" fill="rgba(184,134,42,0.8)" font-size="9" font-family="monospace" text-anchor="end">HYPOTHETICAL — READER-SET VALUES</text>`;
+    } else {
+      s += `<text x="878" y="182" fill="rgba(255,255,255,0.35)" font-size="9" font-family="monospace" text-anchor="end">ledger data as of ${fmtDate(ep.as_of)} · one glyph = 2M bbl of volume</text>`;
+    }
+    s += `</svg>`;
+    document.getElementById('lanes').innerHTML = s;
+
+    // three symmetric arms
+    const arms = document.getElementById('arms');
+    if (t >= cLo && t >= cHi) {
+      arms.innerHTML = `<div class="arm">Trackers see as much or more than is claimed — no unseen flow is required to reconcile these numbers.</div>`;
+    } else {
+      const gLo = Math.max(0, cLo - t), gHi = Math.max(0, cHi - t);
+      const shLo = Math.max(0, Math.min(99, 100 * (1 - t / cLo)));
+      const shHi = Math.max(0, Math.min(99, 100 * (1 - t / cHi)));
+      const g = gLo === gHi ? gHi.toFixed(1) : gLo.toFixed(0) + '–' + gHi.toFixed(0);
+      const sh = Math.round(shLo) === Math.round(shHi) ? Math.round(shHi) : Math.round(shLo) + '–' + Math.round(shHi);
+      arms.innerHTML =
+        `<div class="arm">If both numbers are right: <span class="num">${g} mb/d (${sh}% of the claim)</span> is moving uncounted — beyond what trackers already try to include.</div>` +
+        `<div class="arm">If the trackers are right: the claim overstates the flow by <span class="num">${g} mb/d</span>.</div>` +
+        `<div class="arm">If they count different things: the gap is definitional, not physical — see <a style="color:rgba(255,255,255,0.6)" href="#ex1">what each number counts</a>.</div>` +
+        `<div class="arm" style="border-color:rgba(255,255,255,0.12);color:rgba(255,255,255,0.55)">Either way, ${g} mb/d is ${(gLo/2).toFixed(1)}${gLo===gHi?'':'–'+(gHi/2).toFixed(1)} VLCC-equivalent volumes per day, ${(gLo*7).toFixed(0)}${gLo===gHi?'':'–'+(gHi*7).toFixed(0)}M barrels a week — volume that would eventually surface in loadings, arrivals and import statistics if it exists, and stay absent from them if it does not.</div>`;
+    }
+
+    document.getElementById('ex2-note').innerHTML =
+      'VLCC-equivalents are an illustrative unit of volume, not a prediction of ship counts — most tankers are smaller, and the separate "15–20 tankers a night" claim counts empty inbound ships too, so it cannot be converted to barrels. ' +
+      'Trackers state their estimate already attempts to include dark (AIS-off) transits and ship-to-ship transfers. ' +
+      'Resolution is slow and partial: barrels can sit in floating or bonded storage for months, and destination customs data lag — but official export and import figures can be checked against counterparties, which a podium statement cannot. ' +
+      'This exhibit prices the reconciliation; it does not adjudicate it.' +
+      (preset ? '' : ' The values shown were set by you, not by the ledger.');
+  }
+
+  document.getElementById('btn-preset').addEventListener('click', () => {
+    mode = 'preset';
+    sClaim.value = ep.claim_high_mbd;
+    sTrack.value = ep.independent_consensus_mbd;
+    render();
+  });
+  [sClaim, sTrack].forEach(el => el.addEventListener('input', () => {
+    mode = 'custom';
+    render();
+  }));
+
+  sClaim.value = ep.claim_high_mbd;
+  sTrack.value = ep.independent_consensus_mbd;
+  render();
+})();
+</script>
+
+</body>
+</html>
