@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Is the oil moving? How thick is the U.S. crude cushion? What is the market charging? Three instruments on the 2026 Hormuz disruption.">
 <title>Hormuz Oil Flows</title>
 <style>
   html, body {
@@ -10,6 +11,7 @@
     font-family: Georgia, 'Times New Roman', serif;
     background: #1a1a1a;
     color: #fff;
+    overflow-x: hidden;
   }
   body {
     display: flex; flex-direction: column; align-items: center;
@@ -87,6 +89,9 @@
     border-collapse: collapse;
     color: rgba(255,255,255,0.7);
     margin-top: 10px;
+    display: block;
+    overflow-x: auto;
+    max-width: 100%;
   }
   table.mono td, table.mono th {
     padding: 3px 14px 3px 0;
@@ -152,6 +157,103 @@
     color: rgba(255,255,255,0.35);
     margin-top: 2px;
   }
+  /* opening question tiles */
+  #top-tiles { width: 100%; max-width: 860px; margin-top: 1.6em; }
+  #top-tiles .tile .q {
+    font-size: 1.02em;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 6px;
+  }
+  #top-tiles .tile .v { font-size: 1.45em; }
+  #top-tiles .tile .u { color: rgba(255,255,255,0.55); line-height: 1.5; }
+  #top-tiles .tile svg.spark { width: 100%; height: 26px; margin-top: 6px; }
+  @media (max-width: 640px) {
+    #top-tiles { flex-direction: column; }
+  }
+  .kicker {
+    width: 100%; max-width: 860px;
+    font-family: monospace; font-size: 11px;
+    color: rgba(255,255,255,0.55);
+    margin-top: 10px;
+    line-height: 1.6;
+  }
+  /* scrollytelling */
+  #scrolly {
+    width: 100%; max-width: 860px;
+    margin-top: 3.5em;
+    display: none; /* shown once data + engine are ready */
+  }
+  #scrolly-graphic {
+    position: sticky;
+    top: 0;
+    background: #1a1a1a;
+    z-index: 2;
+    padding: 10px 0 6px;
+    height: min(52dvh, 470px);
+    box-sizing: border-box;
+    display: flex; flex-direction: column;
+  }
+  @supports not (height: 1dvh) {
+    #scrolly-graphic { height: min(52vh, 470px); }
+  }
+  #act-title {
+    font-family: monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.75);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  #scrolly-chart { position: relative; flex: 1; min-height: 0; opacity: 1; transition: opacity 0.3s ease; }
+  #scrolly-chart svg { height: 100%; }
+  #scrolly-guard {
+    font-family: monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 6px;
+    min-height: 1.4em;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #scrolly-chart { transition: none; }
+  }
+  #scrolly-steps { position: relative; z-index: 1; padding-bottom: 20vh; padding-bottom: 20dvh; }
+  .step {
+    max-width: 33em;
+    margin: 0 auto 55vh;
+    margin-bottom: 55dvh;
+    font-size: 1.08em;
+    line-height: 1.9;
+    color: rgba(255,255,255,0.55);
+    transition: color 0.3s ease;
+  }
+  .step:first-child { margin-top: 6vh; margin-top: 6dvh; }
+  .step.active { color: rgba(255,255,255,0.92); }
+  .instruments-heading {
+    width: 100%; max-width: 860px;
+    margin-top: 4em;
+    padding-top: 2em;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+  .instruments-heading h2 { margin: 0; }
+  .instruments-heading p {
+    font-family: monospace; font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    margin: 6px 0 0;
+  }
+  /* ratio widget */
+  #ratio-widget {
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 14px 16px;
+    margin-top: 16px;
+    font-family: monospace;
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.8;
+  }
+  #ratio-widget .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  #ratio-widget input[type=range] { flex: 1 1 180px; accent-color: #4a8fd4; }
+  #ratio-widget .out { color: #fff; font-size: 1.25em; }
+  #ratio-widget .fine { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 8px; }
 </style>
 </head>
 <body>
@@ -166,6 +268,23 @@
 </p>
 
 <div id="load-error">Could not load oil-flow data.</div>
+
+<div class="tiles" id="top-tiles"></div>
+<div class="kicker" id="top-kicker"></div>
+
+<section id="scrolly">
+  <div id="scrolly-graphic">
+    <div id="act-title"></div>
+    <div class="chart-wrap" id="scrolly-chart"></div>
+    <div id="scrolly-guard"></div>
+  </div>
+  <div id="scrolly-steps"></div>
+</section>
+
+<div class="instruments-heading" id="instruments-heading" style="display:none">
+  <h2>The instruments in detail</h2>
+  <p>every chart below, with definitions, caveats, freshness dates and the raw data</p>
+</div>
 
 <section class="panel" id="panel-hormuz">
   <h2>1 &middot; The physical break</h2>
@@ -232,9 +351,12 @@
     Stored U.S. crude, including the Strategic Petroleum Reserve, divided by
     that week's refinery crude inputs. This is a cushion ratio, not a
     countdown &mdash; domestic production and imports continue, refinery runs
-    change, and SPR releases are policy decisions. The denominator is
-    seasonal: days of supply can fall simply because refineries run harder.
+    change, and SPR releases are policy decisions. The SPR share is also
+    rate-limited: it can only be drawn down so fast, so the cushion is not
+    one uniform pool. The denominator is seasonal: days of supply can fall
+    simply because refineries run harder.
   </div>
+  <div id="ratio-widget"></div>
 </section>
 
 <section class="panel" id="panel-market">
@@ -328,6 +450,20 @@
     ]);
     buffer.forEach(r => { r.date = r.week_end; r.t = dayMs(r.week_end); });
   } catch (e) { buffer = null; bufferMeta = null; }
+
+  // Buffer stats shared by the tiles, panel, scrolly and widget.
+  // Rank, not percentile: "2nd-lowest of N weeks" is checkable; a
+  // percentile at the extreme tail depends on method choices.
+  let bDays = [], bLatest = null, bMinRow = null, bRank = 0, rankLabel = '';
+  if (buffer) {
+    bDays = buffer.filter(r => r.days_supply_incl_spr != null);
+    bLatest = bDays[bDays.length - 1];
+    bMinRow = bDays.reduce((a, b) =>
+      b.days_supply_incl_spr < a.days_supply_incl_spr ? b : a);
+    bRank = 1 + bDays.filter(
+      r => r.days_supply_incl_spr < bLatest.days_supply_incl_spr).length;
+    rankLabel = bRank === 1 ? 'lowest' : ordinal(bRank) + '-lowest';
+  }
 
   const GRID = 'rgba(255,255,255,0.12)';
   const TICK = 'rgba(255,255,255,0.4)';
@@ -597,7 +733,13 @@
       ['total crude cushion', bm.latest_days_supply_incl_spr, 'days of refinery use, incl. SPR'],
       ['commercial only', bm.latest_commercial_days_supply, 'days, excl. SPR'],
       ['SPR equivalent', bm.latest_spr_days_equivalent, 'days at current refinery inputs'],
-      ['historical rank', ordinal(bm.current_percentile), 'percentile of weeks since ' + bm.first_week.slice(0, 4)],
+      ['historical rank', rankLabel,
+       'of ' + bDays.length.toLocaleString() + ' weekly readings since '
+       + bm.first_week.slice(0, 4)
+       + (bRank > 1
+          ? ' (lowest: ' + bMinRow.days_supply_incl_spr.toFixed(1)
+            + ', ' + fmtDate(bMinRow.date) + ')'
+          : '')],
     ];
     document.getElementById('buffer-tiles').innerHTML = tiles.map(t =>
       `<div class="tile"><div class="k">${t[0]}</div><div class="v">${t[1]}</div><div class="u">${t[2]}</div></div>`
@@ -640,6 +782,220 @@
         bnoPeak && { date: bnoPeak.date, label: 'peak ' + usd(bnoPeak.bno_last_close_usd), side: 'right' },
       ].filter(Boolean),
     });
+
+  // ---- Opening question tiles (all values from loaded data) ----
+  const flowRow = [...rows].reverse().find(r => r.hormuz_tanker_count_index_7d != null);
+  const brentRow = [...rows].reverse().find(r => r.brent_observed);
+  const topTiles = [];
+  if (flowRow) {
+    topTiles.push(
+      `<div class="tile"><div class="q">Is the oil moving?</div>` +
+      `<div class="v">${flowRow.hormuz_tanker_count_index_7d.toFixed(1)} / 100</div>` +
+      `<div class="u">Hormuz tanker-traffic index vs a normal 2025 week &mdash; ship signals, not barrels &middot; as of ${fmtDate(flowRow.date)}</div></div>`);
+  }
+  if (bLatest) {
+    const spark = (() => {
+      const vs = bDays.filter((r, i) => i % 8 === 0 || i === bDays.length - 1);
+      const lo = Math.min(...vs.map(r => r.days_supply_incl_spr));
+      const hi = Math.max(...vs.map(r => r.days_supply_incl_spr));
+      const pts = vs.map((r, i) =>
+        `${(i / (vs.length - 1) * 200).toFixed(1)},${(24 - (r.days_supply_incl_spr - lo) / (hi - lo) * 22).toFixed(1)}`
+      ).join(' ');
+      return `<svg class="spark" viewBox="0 0 200 26" preserveAspectRatio="none">` +
+        `<polyline points="${pts}" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1"/>` +
+        `<circle cx="200" cy="${(24 - (bLatest.days_supply_incl_spr - lo) / (hi - lo) * 22).toFixed(1)}" r="2.5" fill="#fff"/></svg>`;
+    })();
+    topTiles.push(
+      `<div class="tile"><div class="q">How thick is the cushion?</div>` +
+      `<div class="v">${bLatest.days_supply_incl_spr.toFixed(1)} <span style="font-size:0.55em;color:rgba(255,255,255,0.55)">vs ${bufferMeta.historical_mean_days_supply_incl_spr} avg</span></div>` +
+      `<div class="u">stored U.S. crude per day of refinery use, incl. SPR (${bLatest.commercial_days_supply.toFixed(1)} commercial only) &mdash; a cushion ratio, not a countdown &middot; week ending ${fmtDate(bLatest.date)}</div>${spark}</div>`);
+  }
+  if (brentRow) {
+    topTiles.push(
+      `<div class="tile"><div class="q">What is the market charging?</div>` +
+      `<div class="v">$${brentRow.brent_spot_last_usd.toFixed(2)}</div>` +
+      `<div class="u">Brent, the world benchmark crude price, per barrel &middot; last close ${fmtDate(brentRow.date)}</div></div>`);
+  }
+  document.getElementById('top-tiles').innerHTML = topTiles.join('');
+  document.getElementById('top-kicker').textContent =
+    'Three separate measurements answering three separate questions. Their alignment on this page is not a claim that one causes another.';
+
+  // ---- Scrollytelling: the March 2026 event, told over the live data ----
+  if (buffer && bLatest && firstThresh && lastThresh && brentPeak
+      && 'IntersectionObserver' in window) {
+    const chartEl = document.getElementById('scrolly-chart');
+    const titleEl = document.getElementById('act-title');
+    const guardEl = document.getElementById('scrolly-guard');
+    const stepsEl = document.getElementById('scrolly-steps');
+
+    const isoFromT = t => new Date(t).toISOString().slice(0, 10);
+    const zoomLo = isoFromT(dayMs(firstThresh.date) - 40 * 86400000);
+    const zoomHi = isoFromT(dayMs(firstThresh.date) + 80 * 86400000);
+    const zoomRows = rows.filter(r => r.date >= zoomLo && r.date <= zoomHi);
+
+    const bufferAtShock = [...bDays].reverse().find(
+      r => r.t <= dayMs(lastThresh.date));
+    const officialFeb = [...rows].reverse().find(
+      r => r.date < firstThresh.date
+        && r.known_gulf_official_7d_mbd != null);
+
+    const ACTS = {
+      flow: {
+        title: 'Tanker traffic at the strait · index, 100 = normal 2025',
+        guard: 'measures ship activity, not barrels of oil',
+      },
+      official: {
+        title: 'Official crude exports, Iraq + Kuwait · million barrels/day',
+        guard: 'official monthly totals, spread across days by loading activity',
+      },
+      reroute: {
+        title: 'Saudi terminal activity · Gulf route vs Red Sea bypass · index',
+        guard: 'terminal-activity signals, not barrels rerouted',
+      },
+      buffer: {
+        title: 'U.S. stored crude · days of refinery use · weekly since 1982',
+        guard: 'a cushion ratio — not a countdown',
+      },
+      price: {
+        title: 'Brent crude · dollars per barrel',
+        guard: 'non-trading days carry the last market close',
+      },
+    };
+
+    const hormuzSeries = [{ field: 'hormuz_tanker_count_index_7d', name: 'activity index', color: '#ffffff' }];
+    const usd = v => '$' + v.toFixed(2);
+    // narrower viewBox on small screens so axis text stays legible
+    const SW = matchMedia('(max-width: 640px)').matches ? 560 : 900;
+    const base = linePanel;
+    const linePanelS = (el, series, opts) =>
+      base(el, series, Object.assign({ width: SW, height: 300 }, opts));
+    const states = [
+      { act: 'flow', render: () => linePanelS(chartEl, hormuzSeries,
+          { refLine: 100, refLabel: 'baseline = 100' }) },
+      { act: 'flow', render: () => linePanelS(chartEl, hormuzSeries,
+          { data: zoomRows, refLine: 100, refLabel: '100', monthEvery: 1,
+            events: [{ date: firstThresh.date, label: thresholdLabel(firstThresh.shock_marker) + ' of baseline', side: 'left' }] }) },
+      { act: 'flow', render: () => linePanelS(chartEl, hormuzSeries,
+          { data: zoomRows, refLine: 100, refLabel: '100', monthEvery: 1,
+            events: thresholdRows.map((r, i) => ({
+              date: r.date,
+              label: (r === firstThresh || r === lastThresh) ? thresholdLabel(r.shock_marker) : '',
+              side: r === firstThresh ? 'left' : 'right',
+              dy: i * 11,
+            })) }) },
+      { act: 'official', render: () => linePanelS(chartEl,
+          [{ field: 'known_gulf_official_7d_mbd', name: 'mb/d', color: '#ffffff', fmt: v => v.toFixed(2) + ' mb/d' }], {}) },
+      { act: 'reroute', render: () => linePanelS(chartEl,
+          [
+            { field: 'saudi_gulf_proxy_index_7d', name: 'Juaymah (Gulf)', color: '#4a8fd4' },
+            { field: 'saudi_bypass_proxy_index_7d', name: 'Yanbu (bypass)', color: '#b8862a' },
+          ], { refLine: 100, refLabel: '100' }) },
+      { act: 'buffer', render: () => linePanelS(chartEl,
+          [
+            { field: 'days_supply_incl_spr', name: 'incl. SPR', color: '#ffffff', fmt: v => v.toFixed(1) + ' days' },
+            { field: 'commercial_days_supply', name: 'commercial', color: '#4a8fd4', fmt: v => v.toFixed(1) + ' days' },
+          ],
+          { data: buffer, includeZero: false, dateLabel: 'week ending ',
+            refLine: bufferMeta.historical_mean_days_supply_incl_spr,
+            refLabel: 'mean ' + bufferMeta.historical_mean_days_supply_incl_spr }) },
+      { act: 'buffer', render: () => linePanelS(chartEl,
+          [
+            { field: 'days_supply_incl_spr', name: 'incl. SPR', color: '#ffffff', fmt: v => v.toFixed(1) + ' days' },
+            { field: 'commercial_days_supply', name: 'commercial', color: '#4a8fd4', fmt: v => v.toFixed(1) + ' days' },
+          ],
+          { data: buffer, includeZero: false, markLast: true, dateLabel: 'week ending ',
+            refLine: bufferMeta.historical_mean_days_supply_incl_spr,
+            refLabel: 'mean ' + bufferMeta.historical_mean_days_supply_incl_spr,
+            events: [{ date: lastThresh.date, label: 'Hormuz shock', side: 'left' }] }) },
+      { act: 'price', render: () => linePanelS(chartEl,
+          [{ field: 'brent_spot_last_usd', name: 'Brent', color: '#ffffff', fmt: usd, observedField: 'brent_observed' }],
+          { includeZero: false,
+            events: [
+              { date: lastThresh.date, label: 'traffic index under 1', side: 'left' },
+              { date: brentPeak.date, label: 'peak ' + usd(brentPeak.brent_spot_last_usd), side: 'right' },
+            ] }) },
+    ];
+
+    const steps = [
+      { s: 0, t: `The Strait of Hormuz is the narrow exit from the Persian Gulf and one of the world's most important oil corridors. A traffic counter &mdash; satellite ship signals, averaged over seven days &mdash; watches tanker activity there. Through late 2025 it held around its normal level: 100 on this index.` },
+      { s: 1, t: `In early March 2026 the traffic broke. On ${fmtDate(firstThresh.date)} the index fell below three-quarters of its 2025 baseline.` },
+      { s: 2, t: `Ten days later it was under 1. Tanker activity near the strait had not drifted lower &mdash; it had effectively stopped registering.` },
+      { s: 2, t: `One caution before going on: this instrument counts ship signals, not barrels. Tankers going quiet is strong evidence that crude stopped moving &mdash; but it is not itself a count of oil.` },
+      { s: 3, t: `The official books, which arrive months later, confirmed it. Iraqi and Kuwaiti crude exports &mdash; about ${officialFeb ? officialFeb.known_gulf_official_7d_mbd.toFixed(1) : 'five'} million barrels a day before the shock &mdash; fell close to zero by late March.` },
+      { s: 4, t: `Some activity found a way around. Terminal signals at Saudi Arabia's Red Sea port of Yanbu rose to multiples of their 2025 norm while its Gulf-side terminal went quiet &mdash; signals of a detour, not a count of barrels rerouted.` },
+      { s: 5, t: `Now pull the camera back: the axis below spans 1982 to today. The United States stores crude commercially and in its Strategic Petroleum Reserve. Measured in days of current refinery use, that cushion has been thinning for a decade.` },
+      { s: 6, t: `In the week of the shock the cushion stood near ${bufferAtShock ? bufferAtShock.days_supply_incl_spr.toFixed(0) : ''} days of refinery use. By the week ending ${fmtDate(bLatest.date)} it was ${bLatest.days_supply_incl_spr.toFixed(1)} &mdash; the ${rankLabel} weekly reading since 1982${bRank > 1 ? ` (the lowest, ${bMinRow.days_supply_incl_spr.toFixed(1)}, came ${fmtDate(bMinRow.date)})` : ''}.` },
+      { s: 6, t: `That number is a ratio, not a countdown. Wells keep pumping, imports keep arriving, and refinery runs change &mdash; which moves the number by itself. It says the shock absorber is thin, not that the tank runs dry.` },
+      { s: 7, t: `Markets did not wait for the bottom. Brent went from about $${firstThresh.brent_spot_last_usd.toFixed(0)} on ${fmtDate(firstThresh.date)} to $${lastThresh.brent_spot_last_usd.toFixed(0)} by ${fmtDate(lastThresh.date)}, while the collapse was still developing &mdash; and kept climbing to $${brentPeak.brent_spot_last_usd.toFixed(0)} on ${fmtDate(brentPeak.date)}, after tanker traffic had already stopped registering.` },
+      { s: 7, t: `Three instruments, three questions: is the oil moving, how thick is the cushion, and what is the market charging. Each is a separate measurement &mdash; why prices moved the way they did is a question none of them can answer alone. The full instruments, with their caveats and raw data, are below.` },
+    ];
+
+    stepsEl.innerHTML = steps.map((st, i) =>
+      `<div class="step" data-i="${i}">${st.t}</div>`).join('');
+
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let currentState = -1;
+    function applyState(i) {
+      if (i === currentState) return;
+      const sameAct = currentState >= 0
+        && states[i].act === states[currentState].act;
+      currentState = i;
+      const paint = () => {
+        titleEl.textContent = ACTS[states[i].act].title;
+        guardEl.textContent = ACTS[states[i].act].guard;
+        states[i].render();
+      };
+      if (reduced || sameAct) { paint(); return; }
+      chartEl.style.opacity = 0;
+      setTimeout(() => { paint(); chartEl.style.opacity = 1; }, 300);
+    }
+
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const i = +e.target.dataset.i;
+        stepsEl.querySelectorAll('.step').forEach(el =>
+          el.classList.toggle('active', +el.dataset.i === i));
+        applyState(steps[i].s);
+      });
+    }, { rootMargin: '-40% 0px -45% 0px', threshold: 0 });
+    stepsEl.querySelectorAll('.step').forEach(el => io.observe(el));
+
+    applyState(0);
+    stepsEl.querySelector('.step').classList.add('active');
+    document.getElementById('scrolly').style.display = 'block';
+    document.getElementById('instruments-heading').style.display = '';
+
+    // ?step=N jumps the graphic to a step's chart state (testing aid)
+    const dbg = new URLSearchParams(location.search).get('step');
+    if (dbg != null && steps[+dbg]) applyState(steps[+dbg].s);
+  }
+
+  // ---- Ratio widget: the denominator moves the number ----
+  if (bLatest) {
+    const stocksM = bLatest.crude_stocks_incl_spr_mbbl / 1000;
+    const curIn = bLatest.refinery_crude_inputs_mbd / 1000;
+    const inputsHist = bDays.map(r => r.refinery_crude_inputs_mbd / 1000);
+    const inMin = (Math.floor(Math.min(...inputsHist) * 10) / 10).toFixed(1);
+    const inMax = (Math.ceil(Math.max(...inputsHist) * 10) / 10).toFixed(1);
+    const w = document.getElementById('ratio-widget');
+    w.innerHTML =
+      `<div>Try the arithmetic &mdash; same stored crude, different refinery pace:</div>` +
+      `<div class="row">${stocksM.toFixed(0)} million barrels stored &divide; ` +
+      `<input type="range" id="rw-slider" min="${inMin}" max="${inMax}" step="0.1" value="${curIn.toFixed(1)}">` +
+      `<span id="rw-in"></span> = <span class="out" id="rw-out"></span></div>` +
+      `<div class="fine">Stocks are frozen at the latest week; only the denominator moves, and the slider spans only paces U.S. refineries have actually run since 1982 (${inMin}&ndash;${inMax}). This is arithmetic, not a forecast. And note the trap: in real disruptions refinery runs often <em>fall</em>, which makes this number rise even as conditions worsen. Actual current pace: ${curIn.toFixed(1)} million barrels/day.</div>`;
+    const slider = document.getElementById('rw-slider');
+    const update = () => {
+      const v = parseFloat(slider.value);
+      document.getElementById('rw-in').textContent =
+        v.toFixed(1) + ' million b/d processed';
+      document.getElementById('rw-out').textContent =
+        (stocksM / v).toFixed(1) + ' days of cover';
+    };
+    slider.addEventListener('input', update);
+    update();
+  }
 
   // ---- Freshness, from metadata (never hard-coded) ----
   const freshLabels = {
