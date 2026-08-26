@@ -29,14 +29,25 @@ EVIDENCE_TYPES = {
     "official_ledger",
 }
 
-ATTRIBUTIONS = {"named", "anonymous"}
+ATTRIBUTIONS = {"named", "anonymous", "institutional"}
 
 DATE_PRECISIONS = {"day", "month"}
 
 # unverified: no independent corroboration yet (the default).
 # consistent_with_independent: later data matched the claim.
 # not_corroborated: later data failed to support the claim.
-CLAIM_STATUSES = {"unverified", "consistent_with_independent", "not_corroborated"}
+# superseded: the speaker (or their institution) issued a newer figure.
+CLAIM_STATUSES = {
+    "unverified", "consistent_with_independent", "not_corroborated",
+    "superseded",
+}
+
+# The archive ledger (us_oil_flow_claims.csv) is the full historical record
+# of U.S. statements, deliberately looser than the site ledger: it preserves
+# nuance (free-text channels, rich time bases) and never overwrites history.
+# Strictness lives in the comparable view derived from it.
+ARCHIVE_ATTRIBUTIONS = {"named", "anonymous", "institutional"}
+ARCHIVE_STATUSES = {"active", "corrected", "retracted_and_denied", "superseded"}
 
 # Claims within this window of the anchor date count as "current".
 EPISODE_WINDOW_DAYS = 45
@@ -109,6 +120,66 @@ def load_estimates(path) -> pd.DataFrame:
         raise RuntimeError("Duplicate estimate_id in estimates ledger.")
 
     return frame.sort_values("estimate_date").reset_index(drop=True)
+
+
+def load_archive_claims(path) -> pd.DataFrame:
+    """Load the full historical U.S.-statements ledger.
+
+    Validation is pragmatic: identity, dates, sources and the small enums
+    are enforced; descriptive fields (channel, commodity, metric,
+    time_basis) stay free-form to preserve nuance. History is never
+    rewritten — corrections and supersessions are links, not edits.
+    """
+    frame = pd.read_csv(path, dtype=str)
+    required = {
+        "claim_id", "statement_date", "speaker", "attribution", "scope",
+        "direction", "unit", "time_basis", "claim_text", "status",
+        "supersedes_claim_id", "source_publisher", "source_url",
+        "value_min", "value_max",
+    }
+    _require_columns(frame, required, "archive")
+
+    _validate_enum(frame, "attribution", ARCHIVE_ATTRIBUTIONS, "archive")
+    _validate_enum(frame, "status", ARCHIVE_STATUSES, "archive")
+    _validate_sources(frame, "archive")
+
+    if frame["claim_id"].duplicated().any():
+        raise RuntimeError("Duplicate claim_id in archive ledger.")
+    frame["statement_date"] = pd.to_datetime(
+        frame["statement_date"], errors="raise"
+    )
+    for column in ("value_min", "value_max"):
+        # empty means unstated / open-ended (e.g. "more than 100 million")
+        frame[column] = pd.to_numeric(frame[column], errors="raise")
+
+    known = set(frame["claim_id"])
+    dangling = frame.loc[
+        frame["supersedes_claim_id"].notna()
+        & ~frame["supersedes_claim_id"].isin(known),
+        "supersedes_claim_id",
+    ]
+    if not dangling.empty:
+        raise RuntimeError(
+            f"Archive supersedes links point at unknown claims: "
+            f"{sorted(dangling)}"
+        )
+
+    superseded_by = frame.dropna(subset=["supersedes_claim_id"]).set_index(
+        "supersedes_claim_id"
+    )["claim_id"]
+    frame["superseded_by"] = frame["claim_id"].map(superseded_by)
+
+    return frame.sort_values("statement_date").reset_index(drop=True)
+
+
+def comparable_hormuz_flow_claims(archive: pd.DataFrame) -> pd.DataFrame:
+    """Only directly comparable outbound Hormuz oil-flow-rate claims in
+    million barrels/day — the apples-to-apples series."""
+    return archive.loc[
+        (archive["scope"] == "hormuz_only")
+        & (archive["direction"] == "outbound")
+        & (archive["unit"] == "million_barrels_per_day")
+    ].reset_index(drop=True)
 
 
 def build_current_episode(

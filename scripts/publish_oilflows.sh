@@ -36,6 +36,7 @@ cp data/published/oilflows_meta.json "$ROOT/data/"
 cp data/published/us_crude_buffer_weekly.json "$ROOT/data/"
 cp data/published/us_crude_buffer_meta.json "$ROOT/data/"
 cp data/published/hormuz_verification.json "$ROOT/data/"
+cp data/published/us_oil_flow_claims.json "$ROOT/data/"
 # Optional download/debug artifacts for the "view the data" links.
 cp data/published/oilflows_daily.csv "$ROOT/data/"
 cp data/published/us_crude_buffer_weekly.csv "$ROOT/data/"

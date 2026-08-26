@@ -174,6 +174,78 @@ def test_publish_payload_is_strict_json():
     assert len(round_trip["claims"]) == len(claims)
     # unverified, never adjudicated language
     assert "unverified" in round_trip["method"]["gap"]
-    assert all(
-        c["status"] == "unverified" for c in round_trip["claims"]
+    # statuses are lifecycle states, never adjudication verdicts
+    allowed = {
+        "unverified", "superseded",
+        "consistent_with_independent", "not_corroborated",
+    }
+    assert all(c["status"] in allowed for c in round_trip["claims"])
+
+
+def test_archive_ledger_loads_and_links():
+    from oilflows.verification import (
+        comparable_hormuz_flow_claims,
+        load_archive_claims,
     )
+
+    archive = load_archive_claims(CURATED / "us_oil_flow_claims.csv")
+
+    assert len(archive) >= 31
+    assert (archive["source_url"].str.startswith("http")).all()
+
+    # history preserved: the deleted escort claim and its same-day denial
+    escort = archive.loc[archive["claim_id"] == "USOF-20260310-01"].iloc[0]
+    assert escort["status"] == "retracted_and_denied"
+    assert escort["superseded_by"] == "USOF-20260310-02"
+
+    comparable = comparable_hormuz_flow_claims(archive)
+    assert set(comparable["value_min"]) == {8.0, 9.0, 10.0}
+    # Wright's Aug 21 figure supersedes his Aug 11 figure
+    aug11 = archive.loc[archive["claim_id"] == "USOF-20260811-01"].iloc[0]
+    assert aug11["superseded_by"] == "USOF-20260821-02"
+
+
+def test_archive_rejects_dangling_supersedes(tmp_path):
+    from oilflows.verification import load_archive_claims
+
+    frame = pd.read_csv(CURATED / "us_oil_flow_claims.csv", dtype=str)
+    frame.loc[0, "supersedes_claim_id"] = "USOF-DOES-NOT-EXIST"
+    path = tmp_path / "bad.csv"
+    frame.to_csv(path, index=False)
+
+    with pytest.raises(RuntimeError, match="unknown claims"):
+        load_archive_claims(path)
+
+
+def test_site_ledger_covers_archive_comparable_claims():
+    # Every directly comparable archive claim must appear in the site
+    # ledger with the same value, so the episode math never lags the
+    # historical record.
+    from oilflows.verification import (
+        comparable_hormuz_flow_claims,
+        load_archive_claims,
+    )
+
+    archive = load_archive_claims(CURATED / "us_oil_flow_claims.csv")
+    site = load_claims(CURATED / "hormuz_flow_claims.csv")
+
+    comparable = comparable_hormuz_flow_claims(archive)
+    site_vals = set(
+        site.loc[
+            (site["scope"] == "hormuz_outbound") & (site["unit"] == "mbd"),
+            "value_high",
+        ]
+    )
+    missing = set(comparable["value_max"]) - site_vals
+    assert not missing, f"archive claims absent from site ledger: {missing}"
+
+
+def test_episode_reflects_wright_revision():
+    claims = load_claims(CURATED / "hormuz_flow_claims.csv")
+    estimates = load_estimates(CURATED / "hormuz_flow_estimates.csv")
+
+    ep = build_current_episode(claims, estimates)
+    assert ep["claim_low_mbd"] == 8.0
+    assert ep["claim_high_mbd"] == 10.0
+    assert ep["gap_low_mbd"] == 3.0
+    assert ep["gap_high_mbd"] == 5.0

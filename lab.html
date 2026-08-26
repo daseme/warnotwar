@@ -576,11 +576,10 @@
     let s = `<svg viewBox="0 0 900 170" xmlns="http://www.w3.org/2000/svg">`;
     s += `<text x="20" y="38" fill="rgba(255,255,255,0.6)" font-size="10" font-family="monospace">STATED</text>`;
     s += `<rect x="${x(ep.claim_low_mbd)}" y="24" width="${x(ep.claim_high_mbd) - x(ep.claim_low_mbd)}" height="18" fill="rgba(74,143,212,0.4)" stroke="#4a8fd4"/>`;
-    mbdClaims.forEach((c, i) => {
-      const anchor = i % 2 ? 'start' : 'end';
-      const dx = i % 2 ? 4 : -4;
+    [...mbdClaims].sort((a, b) => a.hi - b.hi).forEach((c, i) => {
+      const ty = i % 2 ? 6 : 15;   // alternate label rows so close ticks stay legible
       s += `<line x1="${x(c.hi)}" y1="20" x2="${x(c.hi)}" y2="46" stroke="#fff" stroke-width="1.5"/>`;
-      s += `<text x="${x(c.hi) + dx}" y="14" fill="rgba(255,255,255,0.6)" font-size="8.5" font-family="monospace" text-anchor="${anchor}">${c.hi} — ${c.attribution === 'anonymous' ? 'anonymous officials' : c.speaker.split(',')[0]}</text>`;
+      s += `<text x="${x(c.hi)}" y="${ty}" fill="rgba(255,255,255,0.6)" font-size="8.5" font-family="monospace" text-anchor="middle">${c.hi} — ${c.attribution === 'anonymous' ? 'anonymous officials' : c.speaker.split(',')[0]}${c.status === 'superseded' ? ' (superseded)' : ''}</text>`;
     });
     s += `<text x="20" y="95" fill="rgba(255,255,255,0.6)" font-size="10" font-family="monospace">INDEPENDENTLY</text>`;
     s += `<text x="20" y="107" fill="rgba(255,255,255,0.6)" font-size="10" font-family="monospace">ESTIMATED</text>`;
@@ -596,7 +595,7 @@
     /* requirement-test sandbox */
     const presetRow = document.getElementById('preset-row');
     presetRow.innerHTML = mbdClaims.map(c =>
-      `<button class="chip" data-test="${c.id}">test the ${c.hi} (${c.attribution === 'anonymous' ? 'anonymous officials' : c.speaker.split(',')[0]})</button>`
+      `<button class="chip" data-test="${c.id}">test the ${c.hi} (${c.attribution === 'anonymous' ? 'anonymous officials' : c.speaker.split(',')[0]}${c.status === 'superseded' ? ' · superseded' : ''})</button>`
     ).join('');
     const sDark = document.getElementById('s-dark');
     let sandboxMode = null; // claim id or 'custom'
