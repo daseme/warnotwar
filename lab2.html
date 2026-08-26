@@ -45,8 +45,9 @@
   .card:hover { border-color: rgba(255,255,255,0.55); }
   .card.on { border-color: #4a8fd4; background: rgba(74,143,212,0.10); }
   .card.dimmed { opacity: 0.35; }
-  .card .fig { font-family: Georgia, serif; font-size: 1.5em; color: #fff; }
-  .card .who { color: rgba(255,255,255,0.55); margin-top: 2px; }
+  .card .fig { font-family: Georgia, serif; font-size: 1.6em; color: #fff; }
+  .card .unit { color: rgba(255,255,255,0.7); font-size: 10.5px; margin-top: 1px; }
+  .card .who { color: rgba(255,255,255,0.55); margin-top: 4px; }
   .card .ann { color: #c9b06a; margin-top: 5px; line-height: 1.5; }
   .chipnote { font-family: monospace; font-size: 10px; color: rgba(255,255,255,0.45); }
 
@@ -154,7 +155,7 @@
 
 <section class="exhibit" id="ex3">
   <h2>3 &middot; What can actually be verified</h2>
-  <p class="learn">Where the stated figures and the independent estimates stand, why a gap could exist, and which evidence will eventually discriminate.</p>
+  <p class="learn">Where the stated figures and the independent estimates stand, why a gap could exist, and which evidence will eventually discriminate. All figures are in million barrels per day &mdash; written "mb/d" for short.</p>
 
   <div id="bars"></div>
 
@@ -219,6 +220,7 @@
   <h2>Glossary</h2>
   <dl class="gloss">
     <dt>mb/d</dt><dd>million barrels per day &mdash; a rate of flow.</dd>
+    <dt>consensus</dt><dd>the figure the tracking firms roughly agree on, sitting inside their wider range of individual answers.</dd>
     <dt>AIS</dt><dd>the radio transponder system ships use to broadcast their position; "dark" ships have switched it off.</dd>
     <dt>VLCC</dt><dd>the largest common class of tanker, carrying about 2 million barrels.</dd>
     <dt>condensate</dt><dd>ultra-light oil produced with natural gas; counted in some totals and not others.</dd>
@@ -276,7 +278,15 @@
     official_ledger: 'official export ledger — self-reported, delayed',
   };
   const UNIT_PLAIN = {
-    mbd: 'mb/d', tankers_per_night: 'ships/night', mbbl_single_day: 'million barrels · one day',
+    mbd: 'million barrels per day',
+    tankers_per_night: 'tankers per night',
+    mbbl_single_day: 'million barrels in one day',
+  };
+  // compact unit line for cards/chips, always spelled out for learners
+  const UNIT_CARD = {
+    mbd: 'million barrels per day',
+    tankers_per_night: 'tankers per night · both directions',
+    mbbl_single_day: 'million barrels · one single day',
   };
 
   /* ---------- normalize claims + estimates into items ---------- */
@@ -302,9 +312,15 @@
   }));
   items.sort((a, b) => a.date < b.date ? -1 : 1);
 
-  const figText = it => (it.lo === it.hi
+  const figNum = it => it.lo === it.hi
     ? (it.lo % 1 ? it.lo : it.lo.toFixed(0))
-    : it.lo.toFixed(0) + '–' + it.hi.toFixed(0)) + ' ' + UNIT_PLAIN[it.unit];
+    : it.lo.toFixed(0) + '–' + it.hi.toFixed(0);
+  const figText = it => figNum(it) + ' ' + UNIT_PLAIN[it.unit];
+  // ranges must explain themselves: a spread is disagreement, not precision
+  const rangeNote = it => it.lo === it.hi ? null
+    : it.kind === 'estimate'
+      ? `a range, not one number — the tracking firms disagree: the lowest finds ~${it.lo.toFixed(0)}, the highest ~${it.hi.toFixed(0)}`
+      : `a range as stated by the speaker: ${it.lo.toFixed(0)} to ${it.hi.toFixed(0)}`;
 
   /* one attribution verb for every party (finding: no distancing verbs) */
   function sentence(it) {
@@ -408,9 +424,12 @@
       const rel = q ? q.relevant(it) : true;
       const ann = q && !rel ? q.annotate(it) : (q && rel && q.annotate(it)) || null;
       const dim = q && !rel && !ann;
+      const rn = rangeNote(it);
       h += `<button class="card${dim ? ' dimmed' : ''}" data-item="${it.id}">` +
-        `<div class="fig">${figText(it)}</div>` +
+        `<div class="fig">${figNum(it)}</div>` +
+        `<div class="unit">${UNIT_CARD[it.unit]}</div>` +
         `<div class="who">${it.speaker}${it.attribution === 'anonymous' ? ' · anonymous' : ''} · ${itemDate(it)}</div>` +
+        (rn ? `<div class="ann">${rn}</div>` : '') +
         (ann ? `<div class="ann">${ann}</div>` : '') +
         `</button>`;
     });
