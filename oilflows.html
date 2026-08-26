@@ -242,8 +242,34 @@
     color: rgba(255,255,255,0.45);
     margin: 6px 0 0;
   }
+  /* verification layers + chips */
+  .vlayer {
+    border-left: 2px solid rgba(255,255,255,0.25);
+    padding: 6px 0 6px 16px;
+    margin-left: 6px;
+  }
+  .vlayer .k {
+    font-family: monospace; font-size: 10px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+  }
+  .vlayer .v { font-size: 1.25em; color: #fff; margin-top: 2px; }
+  .vlayer .u { font-family: monospace; font-size: 11px; color: rgba(255,255,255,0.5); }
+  .vconn {
+    font-family: monospace; font-size: 11px;
+    color: #b8862a;
+    padding: 4px 0 4px 22px; margin-left: 6px;
+    border-left: 2px dashed rgba(184,134,42,0.55);
+  }
+  .chip {
+    font-family: monospace; font-size: 10px;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 1px 6px; border-radius: 8px;
+    color: rgba(255,255,255,0.65);
+    white-space: nowrap;
+  }
   /* ratio widget */
-  #ratio-widget {
+  #ratio-widget, #barrels-widget {
     border: 1px solid rgba(255,255,255,0.15);
     padding: 14px 16px;
     margin-top: 16px;
@@ -252,10 +278,10 @@
     color: rgba(255,255,255,0.7);
     line-height: 1.8;
   }
-  #ratio-widget .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-  #ratio-widget input[type=range] { flex: 1 1 180px; accent-color: #4a8fd4; }
-  #ratio-widget .out { color: #fff; font-size: 1.25em; }
-  #ratio-widget .fine { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 8px; }
+  #ratio-widget .row, #barrels-widget .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  #ratio-widget input[type=range], #barrels-widget input[type=range] { flex: 1 1 180px; accent-color: #4a8fd4; }
+  #ratio-widget .out, #barrels-widget .out { color: #fff; font-size: 1.25em; }
+  #ratio-widget .fine, #barrels-widget .fine { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 8px; }
 </style>
 </head>
 <body>
@@ -299,8 +325,39 @@
   </div>
 </section>
 
+<section class="panel" id="panel-verify" style="display:none">
+  <h2>2 &middot; Claimed vs. observed flow</h2>
+  <p class="panel-sub" id="sub-verify">U.S. government statements vs independent tracker estimates &middot; an event ledger, not a continuous series</p>
+  <div class="tiles" id="verify-tiles"></div>
+  <div id="verify-layers"></div>
+  <div class="prose" style="font-size:0.92em" id="verify-explainer">
+    <p>Wartime tanker tracking is unusually uncertain because vessels may
+    switch off their transponders. U.S. military surveillance can therefore
+    see ships that commercial tracking misses. We show both the U.S.
+    government's stated oil flow and the volume independently estimated by
+    commercial trackers. The difference is labeled <em>unverified</em> until
+    subsequent loading, arrival and official trade data can resolve it.</p>
+    <p>Part of the confusion is that several different official numbers are
+    circulating, and they answer different questions:</p>
+  </div>
+  <div id="verify-scopes"></div>
+  <div id="verify-ledger"></div>
+  <div id="barrels-widget"></div>
+  <div class="note">
+    Ships operating without AIS may explain part of the gap &mdash; a missed
+    supertanker is roughly 2 million barrels. But oil does not disappear
+    with a transponder signal: an extra 4&ndash;5 million barrels a day is
+    28&ndash;35 million barrels a week that must load, sail, unload, and
+    eventually appear in import and trade statistics. This page labels the
+    difference unverified; it does not adjudicate it. Comparisons never mix
+    scopes or units, and the PortWatch index above is a third, different
+    measure &mdash; publicly visible AIS activity &mdash; never converted
+    into barrels.
+  </div>
+</section>
+
 <section class="panel" id="panel-official">
-  <h2>2 &middot; Official confirmation</h2>
+  <h2>3 &middot; Official confirmation</h2>
   <p class="panel-sub" id="sub-official">Iraq Basrah + Kuwait official/calibrated crude exports &middot; 7-day average, million barrels/day</p>
   <div class="chart-wrap" id="chart-official"></div>
   <div class="note">
@@ -314,7 +371,7 @@
 </section>
 
 <section class="panel" id="panel-reroute">
-  <h2>3 &middot; Rerouting</h2>
+  <h2>4 &middot; Rerouting</h2>
   <p class="panel-sub" id="sub-reroute">PortWatch terminal-activity proxies &middot; index, Jul&ndash;Dec 2025 = 100 &middot; each chart has its own scale</p>
   <div class="duo">
     <div>
@@ -341,7 +398,7 @@
 </section>
 
 <section class="panel" id="panel-buffer" style="display:none">
-  <h2>4 &middot; The buffer</h2>
+  <h2>5 &middot; The buffer</h2>
   <p class="panel-sub" id="sub-buffer">U.S. crude stocks &divide; refinery crude inputs, in days of refinery use &middot; weekly, 1982&ndash;present &middot; EIA</p>
   <div class="tiles" id="buffer-tiles"></div>
   <div class="chart-wrap" id="chart-buffer"></div>
@@ -362,7 +419,7 @@
 </section>
 
 <section class="panel" id="panel-market">
-  <h2>5 &middot; The market response</h2>
+  <h2>6 &middot; The market response</h2>
   <p class="panel-sub" id="sub-market">Brent spot (EIA via FRED), USD/barrel &middot; weekend/holiday values carry the last close</p>
   <div class="chart-wrap" id="chart-brent"></div>
   <p class="panel-sub" style="margin-top:26px" id="sub-bno">BNO (Brent oil ETF), unadjusted close, USD &middot; a futures-holding fund, not spot Brent</p>
@@ -376,7 +433,7 @@
 </section>
 
 <section class="panel" id="panel-method">
-  <h2>6 &middot; How we know</h2>
+  <h2>7 &middot; How we know</h2>
   <div class="prose">
     <p><strong>The traffic sensor.</strong> IMF PortWatch derives daily
     tanker-activity signals from AIS ship-tracking data at the Strait of Hormuz
@@ -410,7 +467,8 @@
     <a href="/data/oilflows_meta.json">metadata</a> &middot;
     <a href="/data/us_crude_buffer_weekly.csv">buffer weekly (CSV)</a> &middot;
     <a href="/data/us_crude_buffer_weekly.json">JSON</a> &middot;
-    <a href="/data/us_crude_buffer_meta.json">metadata</a>
+    <a href="/data/us_crude_buffer_meta.json">metadata</a> &middot;
+    <a href="/data/hormuz_verification.json">claims ledger (JSON)</a>
   </div>
 </section>
 
@@ -452,6 +510,12 @@
     ]);
     buffer.forEach(r => { r.date = r.week_end; r.t = dayMs(r.week_end); });
   } catch (e) { buffer = null; bufferMeta = null; }
+
+  // Verification layer (claims/estimates ledger) is optional too.
+  let verify = null;
+  try {
+    verify = await fetch('/data/hormuz_verification.json').then(r => r.json());
+  } catch (e) { verify = null; }
 
   // Buffer stats shared by the tiles, panel, scrolly and widget.
   // Rank, not percentile: "2nd-lowest of N weeks" is checkable; a
@@ -824,7 +888,8 @@
 
   // ---- Scrollytelling: the March 2026 event, told over the live data ----
   if (buffer && bLatest && firstThresh && lastThresh && brentPeak
-      && 'IntersectionObserver' in window) {
+      && 'IntersectionObserver' in window
+      && !new URLSearchParams(location.search).has('noscrolly')) {
     const chartEl = document.getElementById('scrolly-chart');
     const titleEl = document.getElementById('act-title');
     const guardEl = document.getElementById('scrolly-guard');
@@ -932,6 +997,12 @@
       { s: 7, t: `Three instruments, three questions: is the oil moving, how thick is the cushion, and what is the market charging. Each is a separate measurement &mdash; why prices moved the way they did is a question none of them can answer alone. The full instruments, with their caveats and raw data, are below.` },
     ];
 
+    if (verify && verify.current_episode) {
+      const ve = verify.current_episode;
+      const r2 = (lo, hi) => lo === hi ? lo.toFixed(0) : lo.toFixed(0) + '–' + hi.toFixed(0);
+      steps.push({ s: 0, t: `That was March. Five months on, the new dispute is about what is moving <em>now</em>: U.S. officials say ${r2(ve.claim_low_mbd, ve.claim_high_mbd)} million barrels a day are flowing; independent trackers can find about ${ve.independent_consensus_mbd.toFixed(0)}. The difference &mdash; measured, sourced, and labeled unverified &mdash; is tracked below.` });
+    }
+
     stepsEl.innerHTML = steps.map((st, i) =>
       `<div class="step" data-i="${i}">${st.t}</div>`).join('');
 
@@ -971,6 +1042,94 @@
     // ?step=N jumps the graphic to a step's chart state (testing aid)
     const dbg = new URLSearchParams(location.search).get('step');
     if (dbg != null && steps[+dbg]) applyState(steps[+dbg].s);
+  }
+
+  // ---- Panel 2: claimed vs observed flow (verification ledger) ----
+  if (verify && verify.current_episode) {
+    const ep = verify.current_episode;
+    document.getElementById('panel-verify').style.display = '';
+
+    const range = (lo, hi, dp) =>
+      lo === hi ? lo.toFixed(dp) : lo.toFixed(dp) + '–' + hi.toFixed(dp);
+    const claimTxt = range(ep.claim_low_mbd, ep.claim_high_mbd, 0);
+    const gapTxt = range(ep.gap_low_mbd, ep.gap_high_mbd, 0);
+    const covTxt = range(ep.coverage_low_pct, ep.coverage_high_pct, 0);
+    const consTxt = '~' + ep.independent_consensus_mbd.toFixed(0);
+
+    document.getElementById('verify-tiles').innerHTML = [
+      ['claimed', claimTxt + ' mb/d', 'latest U.S. statements, Hormuz outbound'],
+      ['independently tracked', consTxt + ' mb/d',
+       'commercial trackers, range ' + range(ep.independent_low_mbd, ep.independent_high_mbd, 0) + ', as reported'],
+      ['currently unverified', '~' + gapTxt + ' mb/d', 'claim minus tracker consensus — unverified, not adjudicated'],
+      ['tracking coverage', covTxt + '%', 'share of the claim that trackers can find'],
+    ].map(t =>
+      `<div class="tile"><div class="k">${t[0]}</div><div class="v">${t[1]}</div><div class="u">${t[2]}</div></div>`
+    ).join('');
+
+    document.getElementById('verify-layers').innerHTML =
+      `<div class="vlayer"><div class="k">u.s. claim</div><div class="v">${claimTxt} mb/d</div><div class="u">as of ${fmtDate(ep.as_of)} · Hormuz outbound only</div></div>` +
+      `<div class="vconn">verification gap ~${gapTxt} mb/d — currently unverified</div>` +
+      `<div class="vlayer"><div class="k">independent estimate</div><div class="v">${consTxt} mb/d</div><div class="u">commercial trackers (range ${range(ep.independent_low_mbd, ep.independent_high_mbd, 0)}), reported secondhand; attempts to include dark transits</div></div>` +
+      `<div class="vconn">later reconciliation — loadings, arrivals, official trade data</div>` +
+      `<div class="vlayer"><div class="k">destination confirmation</div><div class="v">pending</div><div class="u">first referee: official Iraq/Kuwait/Saudi export data for Aug 2026, expected ~Oct–Nov — already tracked in panel 3</div></div>`;
+
+    const fmtLedgerDate = r => r.date_precision === 'month'
+      ? fmtDate(r.claim_date || r.estimate_date).replace(/^(\w+) \d+ /, '$1 ')
+      : fmtDate(r.claim_date || r.estimate_date);
+    const unitTxt = {
+      mbd: ' mb/d',
+      tankers_per_night: ' tankers/night',
+      mbbl_single_day: ' M bbl in a single day',
+    };
+    const figTxt = r =>
+      (r.value_low === r.value_high
+        ? (r.value_low % 1 ? r.value_low : r.value_low.toFixed(0))
+        : r.value_low.toFixed(0) + '–' + r.value_high.toFixed(0))
+      + unitTxt[r.unit];
+    const scopeShort = {
+      hormuz_outbound: 'through Hormuz itself',
+      regional_total_including_bypass: 'region incl. bypass routes — not Hormuz-only',
+      ship_transits_in_and_out: 'transits both directions, incl. empty inbound',
+    };
+
+    let lt = '<table class="mono"><tr><th>when</th><th>figure</th><th>who</th><th>refers to</th><th>status</th><th>source</th></tr>';
+    verify.claims.forEach(c => {
+      const who = c.speaker + (c.attribution === 'anonymous' ? ' <span class="chip">anonymous</span>' : '');
+      lt += `<tr><td>${fmtLedgerDate(c)}</td><td>${figTxt(c)}</td><td>${who}</td>` +
+        `<td>${scopeShort[c.scope]}</td><td><span class="chip">${c.status.replace(/_/g, ' ')}</span></td>` +
+        `<td><a href="${c.source_url}">${c.source_name}</a></td></tr>`;
+    });
+    lt += '</table>';
+    lt += '<table class="mono"><tr><th>when</th><th>independent estimate</th><th>tracker</th><th>reported by</th></tr>';
+    verify.estimates.forEach(e => {
+      lt += `<tr><td>${fmtLedgerDate(e)}</td><td>${figTxt(e)}</td><td>${e.tracker}</td>` +
+        `<td><a href="${e.source_url}">${e.as_reported_by}</a></td></tr>`;
+    });
+    lt += '</table>';
+    document.getElementById('verify-scopes').innerHTML = lt;
+
+    // Conservation-of-barrels exhibit: ships can leave AIS, oil cannot.
+    const bw = document.getElementById('barrels-widget');
+    const flowCount = [...rows].reverse().find(r => r.hormuz_tanker_count_7d != null);
+    bw.innerHTML =
+      `<div>If a claim is right, what must be true?</div>` +
+      `<div class="row"><input type="range" id="bw-slider" min="2" max="12" step="0.5" value="${ep.claim_high_mbd}">` +
+      `<span id="bw-in"></span></div>` +
+      `<div id="bw-out" style="margin-top:4px"></div>` +
+      `<div class="fine">A VLCC supertanker carries about 2 million barrels; real traffic mixes smaller vessels, so ship counts would run higher. Ships can switch off AIS — barrels cannot disappear: every one must load, sail, unload, and eventually surface in import and trade statistics.` +
+      (flowCount ? ` For scale, PortWatch currently sees about ${flowCount.hormuz_tanker_count_7d.toFixed(1)} tanker calls/day at the strait (7-day average, AIS-visible only).` : '') +
+      `</div>`;
+    const bwSlider = document.getElementById('bw-slider');
+    const bwUpdate = () => {
+      const v = parseFloat(bwSlider.value);
+      document.getElementById('bw-in').textContent =
+        v.toFixed(1) + ' mb/d claimed';
+      document.getElementById('bw-out').innerHTML =
+        `= <span class="out">${(v / 2).toFixed(1)}</span> loaded VLCC-equivalents leaving every day ` +
+        `= <span class="out">${(v * 7).toFixed(0)}M</span> barrels a week that must land somewhere`;
+    };
+    bwSlider.addEventListener('input', bwUpdate);
+    bwUpdate();
   }
 
   // ---- Ratio widget: the denominator moves the number ----
@@ -1018,6 +1177,9 @@
   });
   if (bufferMeta) {
     f += `<tr><td>U.S. crude buffer (EIA, weekly)</td><td>week ending ${fmtDate(bufferMeta.last_week)}</td></tr>`;
+  }
+  if (verify && verify.current_episode) {
+    f += `<tr><td>Claims/estimates ledger (curated)</td><td>${fmtDate(verify.current_episode.as_of)}</td></tr>`;
   }
   f += '</table>';
   document.getElementById('freshness').innerHTML = f;
