@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "generated_at_utc": "2026-08-26T18:54:50Z",
+  "generated_from": "oilflows_daily_master.csv",
+  "first_date": "2025-06-22",
+  "last_date": "2026-08-26",
+  "baseline": {
+    "start": "2025-07-01",
+    "end": "2025-12-31",
+    "index_value": 100
+  },
+  "latest_observation_dates": {
+    "hormuz": "2026-08-23",
+    "known_gulf_official": "2026-06-30",
+    "core_official_exports": "2026-06-30",
+    "saudi_gulf_proxy": "2026-08-21",
+    "saudi_bypass_proxy": "2026-08-21",
+    "uae_gulf_proxy": "2026-08-21",
+    "uae_bypass_proxy": "2026-08-21",
+    "brent": "2026-08-25",
+    "bno": "2026-08-26"
+  },
+  "definitions": {
+    "hormuz_tanker_count_index_7d": "7-day Hormuz tanker-count activity; 100 = Jul-Dec 2025 baseline.",
+    "known_gulf_official_7d_mbd": "Official/calibrated Iraq Basrah + Kuwait crude exports, 7-day average mb/d.",
+    "core_official_exports_7d_mbd": "Iraq Basrah + Kuwait + Saudi national crude exports, 7-day average mb/d; not Hormuz-only.",
+    "saudi_gulf_proxy_index_7d": "Juaymah PortWatch Gulf-route activity proxy; 100 = Jul-Dec 2025 baseline.",
+    "saudi_bypass_proxy_index_7d": "Yanbu PortWatch Red Sea bypass activity proxy; 100 = Jul-Dec 2025 baseline.",
+    "uae_gulf_proxy_index_7d": "Ruways + Das Island PortWatch Gulf activity proxy; 100 = Jul-Dec 2025 baseline.",
+    "uae_bypass_proxy_index_7d": "Fujairah PortWatch bypass/mixed activity proxy; 100 = Jul-Dec 2025 baseline.",
+    "brent_spot_last_usd": "Most recently observed Brent spot price on or before the calendar date.",
+    "bno_last_close_usd": "Most recently observed BNO unadjusted close on or before the calendar date.",
+    "brent_observed": "True when the calendar date carries an actual Brent spot observation; false when brent_spot_last_usd is carried forward.",
+    "bno_observed": "True when the calendar date carries an actual BNO trading close; false when bno_last_close_usd is carried forward.",
+    "shock_marker": "Pipe-delimited event marker for threshold crossings or market peaks."
+  },
+  "intentional_exclusions": [
+    "Iran daily export estimate: public PortWatch coverage too sparse.",
+    "Qatar daily export estimate: key terminal coverage incomplete.",
+    "Saudi national Gulf-vs-bypass allocation: Ras Tanura absent from PortWatch."
+  ]
+}

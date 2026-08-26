@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hormuz Oil Flows</title>
+<style>
+  html, body {
+    margin: 0; min-height: 100%;
+    font-family: Georgia, 'Times New Roman', serif;
+    background: #1a1a1a;
+    color: #fff;
+  }
+  body {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 40px 20px 60px;
+    box-sizing: border-box;
+  }
+  h1 {
+    font-size: 1.6em;
+    font-weight: normal;
+    letter-spacing: 0.03em;
+    margin: 0 0 0.4em;
+    text-align: center;
+  }
+  .subtitle {
+    max-width: 640px;
+    text-align: center;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.95em;
+    line-height: 1.7;
+    margin: 0 0 1em;
+  }
+  section.panel {
+    width: 100%;
+    max-width: 860px;
+    margin-top: 3em;
+  }
+  h2 {
+    font-size: 1.15em;
+    font-weight: normal;
+    letter-spacing: 0.03em;
+    margin: 0 0 0.3em;
+  }
+  .panel-sub {
+    font-family: monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    margin: 0 0 12px;
+    line-height: 1.6;
+  }
+  .chart-wrap { position: relative; width: 100%; }
+  svg { width: 100%; height: auto; display: block; }
+  .duo {
+    display: flex; gap: 24px; flex-wrap: wrap;
+  }
+  .duo > div { flex: 1 1 340px; min-width: 0; }
+  .duo h3 {
+    font-family: monospace; font-weight: normal;
+    font-size: 11px; color: rgba(255,255,255,0.6);
+    margin: 0 0 6px;
+  }
+  .legend {
+    display: flex; gap: 18px; justify-content: flex-start;
+    font-family: monospace; font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .note {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    margin-top: 12px;
+    line-height: 1.7;
+    font-family: monospace;
+  }
+  .prose {
+    font-size: 0.95em;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.78);
+  }
+  .prose strong { color: #fff; font-weight: normal; border-bottom: 1px solid rgba(255,255,255,0.3); }
+  table.mono {
+    font-family: monospace; font-size: 12px;
+    border-collapse: collapse;
+    color: rgba(255,255,255,0.7);
+    margin-top: 10px;
+  }
+  table.mono td, table.mono th {
+    padding: 3px 14px 3px 0;
+    text-align: left;
+    font-weight: normal;
+  }
+  table.mono th { color: rgba(255,255,255,0.4); }
+  .tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: #262626;
+    border: 1px solid rgba(255,255,255,0.25);
+    font-family: monospace;
+    font-size: 11px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.85);
+    padding: 6px 9px;
+    white-space: nowrap;
+    display: none;
+    z-index: 5;
+  }
+  a { color: rgba(255,255,255,0.6); }
+  a.back {
+    display: inline-block;
+    margin-top: 3em;
+    color: rgba(255,255,255,0.5);
+    font-family: monospace;
+    font-size: 13px;
+    text-decoration: none;
+  }
+  a.back:hover { color: rgba(255,255,255,0.8); }
+  #load-error {
+    display: none;
+    font-family: monospace;
+    font-size: 13px;
+    color: #b3413d;
+    margin-top: 2em;
+  }
+</style>
+</head>
+<body>
+
+<h1>Hormuz Oil Flows</h1>
+<p class="subtitle">
+  Four measuring instruments on the Persian Gulf oil disruption of 2026:
+  a traffic sensor, the official tally, the detour counters, and the market price.
+  All activity indices use the July&ndash;December 2025 average = 100.
+</p>
+
+<div id="load-error">Could not load oil-flow data.</div>
+
+<section class="panel" id="panel-hormuz">
+  <h2>1 &middot; The physical break</h2>
+  <p class="panel-sub" id="sub-hormuz">Hormuz tanker activity, 7-day average of PortWatch tanker counts &middot; index, Jul&ndash;Dec 2025 = 100</p>
+  <div class="chart-wrap" id="chart-hormuz"></div>
+  <div id="threshold-table"></div>
+  <div class="note">
+    This is a tanker-activity index, not barrels of crude. It answers
+    <em>when</em> shipping activity broke, day by day.
+  </div>
+</section>
+
+<section class="panel" id="panel-official">
+  <h2>2 &middot; Official confirmation</h2>
+  <p class="panel-sub" id="sub-official">Iraq Basrah + Kuwait official/calibrated crude exports &middot; 7-day average, million barrels/day</p>
+  <div class="chart-wrap" id="chart-official"></div>
+  <div class="note">
+    The "real barrels" companion: official monthly totals from SOMO (Iraq) and
+    JODI (Kuwait), allocated to days using PortWatch loading activity where
+    available. Monthly books are slower and smoother than the traffic sensor
+    &mdash; that is why both layers exist. Saudi national exports are kept
+    separate because they include Red Sea bypass routes and are not a
+    Hormuz-only measure.
+  </div>
+</section>
+
+<section class="panel" id="panel-reroute">
+  <h2>3 &middot; Rerouting</h2>
+  <p class="panel-sub" id="sub-reroute">PortWatch terminal-activity proxies &middot; index, Jul&ndash;Dec 2025 = 100 &middot; each chart has its own scale</p>
+  <div class="duo">
+    <div>
+      <h3>Saudi Arabia</h3>
+      <div class="chart-wrap" id="chart-saudi"></div>
+    </div>
+    <div>
+      <h3>United Arab Emirates</h3>
+      <div class="chart-wrap" id="chart-uae"></div>
+    </div>
+  </div>
+  <div class="legend">
+    <span><span class="dot" style="background:#4a8fd4"></span>Gulf-side terminals</span>
+    <span><span class="dot" style="background:#b8862a"></span>bypass terminals</span>
+  </div>
+  <div class="note">
+    Saudi: Juaymah (Gulf) vs Yanbu (Red Sea bypass). UAE: Ruways + Das Island
+    (Gulf) vs Fujairah (bypass/mixed port). These are activity proxies for the
+    terminals PortWatch can see &mdash; not national export volumes or national
+    route shares. Ras Tanura is absent from PortWatch, so no Saudi national
+    Gulf-vs-bypass split is estimated. A bypass index far above 100 means that
+    terminal ran at a multiple of its own 2025 baseline.
+  </div>
+</section>
+
+<section class="panel" id="panel-market">
+  <h2>4 &middot; The market response</h2>
+  <p class="panel-sub" id="sub-market">Brent spot (EIA via FRED), USD/barrel &middot; weekend/holiday values carry the last close</p>
+  <div class="chart-wrap" id="chart-brent"></div>
+  <p class="panel-sub" style="margin-top:26px" id="sub-bno">BNO (Brent oil ETF), unadjusted close, USD &middot; a futures-holding fund, not spot Brent</p>
+  <div class="chart-wrap" id="chart-bno"></div>
+  <div class="note" id="market-note">
+    Prices repriced sharply while the physical shutdown was developing and
+    peaked only after tanker activity had already collapsed. Hover a chart:
+    values are marked as an actual market observation or a carried-forward
+    last close.
+  </div>
+</section>
+
+<section class="panel" id="panel-method">
+  <h2>5 &middot; How we know</h2>
+  <div class="prose">
+    <p><strong>The traffic sensor.</strong> IMF PortWatch derives daily
+    tanker-activity signals from AIS ship-tracking data at the Strait of Hormuz
+    and at export terminals. It is fast and shows when activity disappears,
+    but it does not count barrels of crude on each ship.</p>
+    <p><strong>The official tally.</strong> SOMO (Iraq) and JODI (Kuwait,
+    Saudi Arabia) publish official monthly export figures. They arrive with a
+    lag and cannot pinpoint the day a flow stopped, but they anchor the story
+    in real reported volumes. Where the within-month timing is unknown, the
+    daily line is deliberately flat at the official monthly level.</p>
+    <p><strong>The detour counters.</strong> Saudi Arabia can ship west from
+    Yanbu on the Red Sea; UAE flows can move toward Fujairah outside the
+    Strait. Watching Gulf-side and bypass terminals separately shows whether
+    activity is rerouted rather than simply gone.</p>
+    <p><strong>The market price.</strong> Brent spot and the BNO ETF show how
+    traders priced the disruption as it developed.</p>
+    <p>Iran and Qatar are intentionally excluded: public terminal coverage is
+    too sparse or incomplete for a defensible daily series. Their absence
+    means "not measurable here," not zero exports.</p>
+  </div>
+  <div id="freshness"></div>
+  <div class="note" id="vintage"></div>
+  <div class="note">
+    Data: <a href="/data/oilflows_daily.csv">daily series (CSV)</a> &middot;
+    <a href="/data/oilflows_daily.json">JSON</a> &middot;
+    <a href="/data/oilflows_meta.json">metadata</a>
+  </div>
+</section>
+
+<a class="back" href="/info.html">&larr; back</a>
+
+<script>
+(async function () {
+  let rows, meta;
+  try {
+    [rows, meta] = await Promise.all([
+      fetch('/data/oilflows_daily.json').then(r => r.json()),
+      fetch('/data/oilflows_meta.json').then(r => r.json()),
+    ]);
+  } catch (e) {
+    document.getElementById('load-error').style.display = 'block';
+    return;
+  }
+
+  // Date-only handling: "YYYY-MM-DD" -> UTC ms, never through local-tz parsing.
+  function dayMs(d) {
+    const [y, m, day] = d.split('-').map(Number);
+    return Date.UTC(y, m - 1, day);
+  }
+  function fmtDate(d) {
+    const [y, m, day] = d.split('-').map(Number);
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `${months[m - 1]} ${day} ${y}`;
+  }
+  rows.forEach(r => { r.t = dayMs(r.date); });
+  const t0 = rows[0].t, t1 = rows[rows.length - 1].t;
+
+  const GRID = 'rgba(255,255,255,0.12)';
+  const TICK = 'rgba(255,255,255,0.4)';
+
+  // Shared line-panel renderer. Series values may be null; the line breaks
+  // across gaps and never connects or forward-fills missing physical data.
+  function linePanel(el, series, opts) {
+    opts = opts || {};
+    const W = opts.width || 900, H = opts.height || 300,
+          PAD_L = 52, PAD_R = 14, PAD_T = 14, PAD_B = 28;
+
+    let vMax = -Infinity, vMin = Infinity;
+    series.forEach(s => rows.forEach(r => {
+      const v = r[s.field];
+      if (v != null) { if (v > vMax) vMax = v; if (v < vMin) vMin = v; }
+    }));
+    if (opts.includeZero !== false) vMin = Math.min(vMin, 0);
+    if (opts.yFloor != null) vMin = Math.min(vMin, opts.yFloor);
+    if (opts.yCeil != null) vMax = Math.max(vMax, opts.yCeil);
+    const span = vMax - vMin || 1;
+    vMax += span * 0.06;
+
+    const x = t => PAD_L + ((t - t0) / (t1 - t0)) * (W - PAD_L - PAD_R);
+    const y = v => H - PAD_B - ((v - vMin) / (vMax - vMin)) * (H - PAD_T - PAD_B);
+
+    let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+
+    // y gridlines: ~4 recessive lines at rounded values
+    const step = niceStep((vMax - vMin) / 4);
+    for (let v = Math.ceil(vMin / step) * step; v <= vMax; v += step) {
+      const yy = y(v);
+      svg += `<line x1="${PAD_L}" y1="${yy.toFixed(1)}" x2="${W - PAD_R}" y2="${yy.toFixed(1)}" stroke="${GRID}"/>`;
+      svg += `<text x="${PAD_L - 6}" y="${(yy + 3).toFixed(1)}" fill="${TICK}" font-size="10" font-family="monospace" text-anchor="end">${fmtTick(v)}</text>`;
+    }
+
+    // baseline reference (e.g. index = 100)
+    if (opts.refLine != null && opts.refLine > vMin && opts.refLine < vMax) {
+      const yy = y(opts.refLine);
+      svg += `<line x1="${PAD_L}" y1="${yy.toFixed(1)}" x2="${W - PAD_R}" y2="${yy.toFixed(1)}" stroke="rgba(255,255,255,0.3)" stroke-dasharray="4 4"/>`;
+      svg += `<text x="${W - PAD_R - 2}" y="${(yy - 4).toFixed(1)}" fill="${TICK}" font-size="9" font-family="monospace" text-anchor="end">${opts.refLabel || opts.refLine}</text>`;
+    }
+
+    // month ticks, thinned to fit
+    const monthEvery = opts.monthEvery || 2;
+    let cursor = new Date(t0);
+    cursor = new Date(Date.UTC(cursor.getUTCFullYear(), cursor.getUTCMonth(), 1));
+    let mi = 0;
+    while (cursor.getTime() <= t1) {
+      const mx = x(cursor.getTime());
+      if (mx >= PAD_L && mx <= W - PAD_R && mi % monthEvery === 0) {
+        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        const label = months[cursor.getUTCMonth()] + ' ' + String(cursor.getUTCFullYear()).slice(2);
+        svg += `<text x="${mx.toFixed(1)}" y="${H - 9}" fill="${TICK}" font-size="9" font-family="monospace" text-anchor="middle">${label}</text>`;
+      }
+      cursor = new Date(Date.UTC(cursor.getUTCFullYear(), cursor.getUTCMonth() + 1, 1));
+      mi++;
+    }
+
+    // event annotations (vertical lines)
+    (opts.events || []).forEach(ev => {
+      const ex = x(dayMs(ev.date));
+      svg += `<line x1="${ex.toFixed(1)}" y1="${PAD_T}" x2="${ex.toFixed(1)}" y2="${H - PAD_B}" stroke="rgba(179,65,61,0.55)" stroke-dasharray="3 3"/>`;
+      if (ev.label) {
+        const anchor = ev.side === 'left' ? 'end' : 'start';
+        const dx = ev.side === 'left' ? -5 : 5;
+        svg += `<text x="${(ex + dx).toFixed(1)}" y="${PAD_T + 10 + (ev.dy || 0)}" fill="rgba(255,255,255,0.55)" font-size="9" font-family="monospace" text-anchor="${anchor}">${ev.label}</text>`;
+      }
+    });
+
+    // series lines with gap-breaking
+    series.forEach(s => {
+      let path = '', pen = false;
+      rows.forEach(r => {
+        const v = r[s.field];
+        if (v == null) { pen = false; return; }
+        path += `${pen ? 'L' : 'M'}${x(r.t).toFixed(1)},${y(v).toFixed(1)} `;
+        pen = true;
+      });
+      svg += `<path d="${path}" fill="none" stroke="${s.color}" stroke-width="1.8" stroke-linejoin="round"/>`;
+    });
+
+    svg += `</svg>`;
+    el.innerHTML = svg;
+
+    attachHover(el, series, opts, { W, H, PAD_L, PAD_R, PAD_T, PAD_B, x, y });
+  }
+
+  function niceStep(raw) {
+    const mag = Math.pow(10, Math.floor(Math.log10(raw)));
+    const n = raw / mag;
+    return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10) * mag;
+  }
+  function fmtTick(v) {
+    return Math.abs(v) >= 100 || v === Math.round(v)
+      ? String(Math.round(v))
+      : v.toFixed(1);
+  }
+
+  function attachHover(el, series, opts, g) {
+    const svg = el.querySelector('svg');
+    const tip = document.createElement('div');
+    tip.className = 'tooltip';
+    el.appendChild(tip);
+
+    const cross = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    cross.setAttribute('stroke', 'rgba(255,255,255,0.35)');
+    cross.setAttribute('y1', g.PAD_T);
+    cross.setAttribute('y2', g.H - g.PAD_B);
+    cross.style.display = 'none';
+    svg.appendChild(cross);
+
+    function onMove(evt) {
+      const rect = svg.getBoundingClientRect();
+      const px = (evt.clientX - rect.left) / rect.width * g.W;
+      if (px < g.PAD_L || px > g.W - g.PAD_R) { onLeave(); return; }
+      const t = t0 + (px - g.PAD_L) / (g.W - g.PAD_L - g.PAD_R) * (t1 - t0);
+      const i = Math.min(rows.length - 1,
+        Math.max(0, Math.round((t - t0) / 86400000)));
+      const r = rows[i];
+
+      let html = `<b>${fmtDate(r.date)}</b>`;
+      let any = false;
+      series.forEach(s => {
+        const v = r[s.field];
+        if (v == null) return;
+        any = true;
+        let val = s.fmt ? s.fmt(v) : (Math.round(v * 10) / 10);
+        let suffix = '';
+        if (s.observedField) {
+          suffix = r[s.observedField] ? ' observed' : ' last close';
+        }
+        html += `<br><span style="color:${s.color}">&#9632;</span> ${s.name}: ${val}${suffix}`;
+      });
+      if (opts.markerText && r.shock_marker) {
+        html += `<br><span style="color:#b3413d">${opts.markerText(r.shock_marker)}</span>`;
+      }
+      if (!any) { onLeave(); return; }
+
+      cross.setAttribute('x1', g.x(r.t));
+      cross.setAttribute('x2', g.x(r.t));
+      cross.style.display = '';
+
+      tip.innerHTML = html;
+      tip.style.display = 'block';
+      const wrapRect = el.getBoundingClientRect();
+      const cx = (g.x(r.t) / g.W) * rect.width + (rect.left - wrapRect.left);
+      const flip = cx > wrapRect.width * 0.62;
+      tip.style.left = flip ? '' : (cx + 12) + 'px';
+      tip.style.right = flip ? (wrapRect.width - cx + 12) + 'px' : '';
+      tip.style.top = '8px';
+    }
+    function onLeave() {
+      tip.style.display = 'none';
+      cross.style.display = 'none';
+    }
+    svg.addEventListener('pointermove', onMove);
+    svg.addEventListener('pointerleave', onLeave);
+  }
+
+  // ---- shock events pulled from the data, not hard-coded ----
+  const thresholdRows = rows.filter(r => r.shock_marker && r.shock_marker.includes('hormuz_below'));
+  function thresholdLabel(marker) {
+    return marker.split('|')
+      .filter(m => m.startsWith('hormuz_below'))
+      .map(m => '≤' + m.replace('hormuz_below_', '').replace('pct', '%'))
+      .join(' & ');
+  }
+  const firstThresh = thresholdRows[0];
+  const lastThresh = thresholdRows[thresholdRows.length - 1];
+  const peakRow = m => rows.find(r => r.shock_marker && r.shock_marker.includes(m));
+  const brentPeak = peakRow('brent_peak');
+  const bnoPeak = peakRow('bno_peak');
+
+  // ---- Panel 1: Hormuz ----
+  linePanel(document.getElementById('chart-hormuz'),
+    [{ field: 'hormuz_tanker_count_index_7d', name: 'Hormuz activity index', color: '#ffffff' }],
+    {
+      height: 320,
+      refLine: 100, refLabel: 'baseline = 100',
+      events: [
+        firstThresh && { date: firstThresh.date, label: thresholdLabel(firstThresh.shock_marker) + ' of baseline', side: 'left' },
+        lastThresh && { date: lastThresh.date, label: thresholdLabel(lastThresh.shock_marker), side: 'right', dy: 12 },
+      ].filter(Boolean),
+      markerText: m => m.includes('hormuz_below') ? 'crossed ' + thresholdLabel(m) : null,
+    });
+
+  // threshold table under panel 1
+  if (thresholdRows.length) {
+    let t = '<table class="mono"><tr><th>date</th><th>threshold</th><th>index</th></tr>';
+    thresholdRows.forEach(r => {
+      const idx = r.hormuz_tanker_count_index_7d;
+      t += `<tr><td>${fmtDate(r.date)}</td><td>${thresholdLabel(r.shock_marker)}</td><td>${idx != null ? idx.toFixed(1) : '&ndash;'}</td></tr>`;
+    });
+    t += '</table>';
+    document.getElementById('threshold-table').innerHTML = t;
+  }
+
+  // ---- Panel 2: official Iraq+Kuwait ----
+  linePanel(document.getElementById('chart-official'),
+    [{ field: 'known_gulf_official_7d_mbd', name: 'Iraq Basrah + Kuwait, mb/d', color: '#ffffff', fmt: v => v.toFixed(2) + ' mb/d' }],
+    { height: 260 });
+
+  // ---- Panel 3: rerouting small multiples ----
+  linePanel(document.getElementById('chart-saudi'),
+    [
+      { field: 'saudi_gulf_proxy_index_7d', name: 'Juaymah (Gulf)', color: '#4a8fd4' },
+      { field: 'saudi_bypass_proxy_index_7d', name: 'Yanbu (bypass)', color: '#b8862a' },
+    ],
+    { width: 440, height: 300, refLine: 100, refLabel: '100', monthEvery: 3 });
+
+  linePanel(document.getElementById('chart-uae'),
+    [
+      { field: 'uae_gulf_proxy_index_7d', name: 'Ruways + Das Is. (Gulf)', color: '#4a8fd4' },
+      { field: 'uae_bypass_proxy_index_7d', name: 'Fujairah (bypass/mixed)', color: '#b8862a' },
+    ],
+    { width: 440, height: 300, refLine: 100, refLabel: '100', monthEvery: 3 });
+
+  // ---- Panel 4: market, two aligned single-axis panels ----
+  const usd = v => '$' + v.toFixed(2);
+  linePanel(document.getElementById('chart-brent'),
+    [{ field: 'brent_spot_last_usd', name: 'Brent spot', color: '#ffffff', fmt: usd, observedField: 'brent_observed' }],
+    {
+      height: 260, includeZero: false,
+      events: [
+        lastThresh && { date: lastThresh.date, label: 'Hormuz ' + thresholdLabel(lastThresh.shock_marker), side: 'left' },
+        brentPeak && { date: brentPeak.date, label: 'peak ' + usd(brentPeak.brent_spot_last_usd), side: 'right' },
+      ].filter(Boolean),
+    });
+
+  linePanel(document.getElementById('chart-bno'),
+    [{ field: 'bno_last_close_usd', name: 'BNO close', color: '#b8862a', fmt: usd, observedField: 'bno_observed' }],
+    {
+      height: 200, includeZero: false,
+      events: [
+        bnoPeak && { date: bnoPeak.date, label: 'peak ' + usd(bnoPeak.bno_last_close_usd), side: 'right' },
+      ].filter(Boolean),
+    });
+
+  // ---- Freshness, from metadata (never hard-coded) ----
+  const freshLabels = {
+    hormuz: 'Hormuz tanker activity (PortWatch)',
+    known_gulf_official: 'Iraq Basrah + Kuwait official exports',
+    core_official_exports: 'Core producer official exports',
+    saudi_gulf_proxy: 'Saudi Gulf proxy (Juaymah)',
+    saudi_bypass_proxy: 'Saudi bypass proxy (Yanbu)',
+    uae_gulf_proxy: 'UAE Gulf proxy',
+    uae_bypass_proxy: 'UAE bypass proxy (Fujairah)',
+    brent: 'Brent spot, last observation',
+    bno: 'BNO close, last observation',
+  };
+  const lod = meta.latest_observation_dates || {};
+  let f = '<table class="mono"><tr><th>series</th><th>data through</th></tr>';
+  Object.keys(freshLabels).forEach(k => {
+    if (lod[k]) f += `<tr><td>${freshLabels[k]}</td><td>${fmtDate(lod[k])}</td></tr>`;
+  });
+  f += '</table>';
+  document.getElementById('freshness').innerHTML = f;
+
+  if (meta.generated_at_utc) {
+    document.getElementById('vintage').textContent =
+      'Sources publish on different schedules, so series end on different dates. ' +
+      'Dataset generated ' + meta.generated_at_utc + '. Official sources can revise history.';
+  }
+
+  // per-panel freshness notes
+  function through(id, key) {
+    if (!lod[key]) return;
+    const el = document.getElementById(id);
+    el.innerHTML += ' &middot; through ' + fmtDate(lod[key]);
+  }
+  through('sub-hormuz', 'hormuz');
+  through('sub-official', 'known_gulf_official');
+  through('sub-reroute', 'saudi_gulf_proxy');
+  through('sub-market', 'brent');
+  through('sub-bno', 'bno');
+})();
+</script>
+
+</body>
+</html>

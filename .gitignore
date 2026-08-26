@@ -1,0 +1,7 @@
+# oilflows pipeline internals: reproducible, not committed (brief §14)
+oilflows/.venv/
+oilflows/.pytest_cache/
+oilflows/data/raw/
+oilflows/data/processed/
+__pycache__/
+*.pyc
