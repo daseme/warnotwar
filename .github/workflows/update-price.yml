@@ -1,0 +1,25 @@
+name: Update BNO price
+
+on:
+  schedule:
+    - cron: '30 21 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch and update price
+        env:
+          FINNHUB_KEY: ${{ secrets.FINNHUB_KEY }}
+        run: python3 scripts/update_price.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "price-bot"
+          git config user.email "actions@github.com"
+          git add history.json
+          git diff --cached --quiet || git commit -m "update BNO close price"
+          git push
