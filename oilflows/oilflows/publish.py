@@ -211,9 +211,15 @@ def build_publish_metadata(
     }
 
 
-def dataframe_to_json_records(frame: pd.DataFrame) -> str:
+def dataframe_to_json_records(
+    frame: pd.DataFrame,
+    *,
+    date_column: str = "date",
+) -> str:
     out = frame.copy()
-    out["date"] = pd.to_datetime(out["date"]).dt.strftime("%Y-%m-%d")
+    out[date_column] = (
+        pd.to_datetime(out[date_column]).dt.strftime("%Y-%m-%d")
+    )
     # Float columns silently coerce None back to NaN, and json.dumps would
     # then emit a literal NaN token that browsers reject; go through object
     # dtype so missing values become real JSON nulls.

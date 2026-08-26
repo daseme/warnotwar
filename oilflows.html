@@ -125,15 +125,44 @@
     color: #b3413d;
     margin-top: 2em;
   }
+  .tiles {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    margin: 0 0 18px;
+  }
+  .tile {
+    flex: 1 1 150px;
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 12px 14px 10px;
+  }
+  .tile .k {
+    font-family: monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+  }
+  .tile .v {
+    font-size: 1.7em;
+    margin-top: 4px;
+    color: #fff;
+  }
+  .tile .u {
+    font-family: monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.35);
+    margin-top: 2px;
+  }
 </style>
 </head>
 <body>
 
 <h1>Hormuz Oil Flows</h1>
 <p class="subtitle">
-  Four measuring instruments on the Persian Gulf oil disruption of 2026:
-  a traffic sensor, the official tally, the detour counters, and the market price.
-  All activity indices use the July&ndash;December 2025 average = 100.
+  Oil shocks have three parts: <em>flow</em>, <em>buffer</em>, <em>price</em>.
+  Is the oil moving? How much stored crude cushions the loss? What is the
+  market charging for the risk? Five measuring instruments on the Persian
+  Gulf disruption of 2026. Activity indices use the July&ndash;December 2025
+  average = 100.
 </p>
 
 <div id="load-error">Could not load oil-flow data.</div>
@@ -190,8 +219,26 @@
   </div>
 </section>
 
+<section class="panel" id="panel-buffer" style="display:none">
+  <h2>4 &middot; The buffer</h2>
+  <p class="panel-sub" id="sub-buffer">U.S. crude stocks &divide; refinery crude inputs, in days of refinery use &middot; weekly, 1982&ndash;present &middot; EIA</p>
+  <div class="tiles" id="buffer-tiles"></div>
+  <div class="chart-wrap" id="chart-buffer"></div>
+  <div class="legend">
+    <span><span class="dot" style="background:#ffffff"></span>total incl. Strategic Petroleum Reserve</span>
+    <span><span class="dot" style="background:#4a8fd4"></span>commercial only</span>
+  </div>
+  <div class="note">
+    Stored U.S. crude, including the Strategic Petroleum Reserve, divided by
+    that week's refinery crude inputs. This is a cushion ratio, not a
+    countdown &mdash; domestic production and imports continue, refinery runs
+    change, and SPR releases are policy decisions. The denominator is
+    seasonal: days of supply can fall simply because refineries run harder.
+  </div>
+</section>
+
 <section class="panel" id="panel-market">
-  <h2>4 &middot; The market response</h2>
+  <h2>5 &middot; The market response</h2>
   <p class="panel-sub" id="sub-market">Brent spot (EIA via FRED), USD/barrel &middot; weekend/holiday values carry the last close</p>
   <div class="chart-wrap" id="chart-brent"></div>
   <p class="panel-sub" style="margin-top:26px" id="sub-bno">BNO (Brent oil ETF), unadjusted close, USD &middot; a futures-holding fund, not spot Brent</p>
@@ -205,7 +252,7 @@
 </section>
 
 <section class="panel" id="panel-method">
-  <h2>5 &middot; How we know</h2>
+  <h2>6 &middot; How we know</h2>
   <div class="prose">
     <p><strong>The traffic sensor.</strong> IMF PortWatch derives daily
     tanker-activity signals from AIS ship-tracking data at the Strait of Hormuz
@@ -220,6 +267,11 @@
     Yanbu on the Red Sea; UAE flows can move toward Fujairah outside the
     Strait. Watching Gulf-side and bypass terminals separately shows whether
     activity is rerouted rather than simply gone.</p>
+    <p><strong>The buffer gauge.</strong> The U.S. holds crude in commercial
+    inventories and in the Strategic Petroleum Reserve. Dividing those stocks
+    (EIA, weekly) by what U.S. refineries are currently processing gives the
+    size of the cushion in "days of refinery use." It is a ratio, not a
+    countdown &mdash; production, imports, and policy all keep moving.</p>
     <p><strong>The market price.</strong> Brent spot and the BNO ETF show how
     traders priced the disruption as it developed.</p>
     <p>Iran and Qatar are intentionally excluded: public terminal coverage is
@@ -231,7 +283,10 @@
   <div class="note">
     Data: <a href="/data/oilflows_daily.csv">daily series (CSV)</a> &middot;
     <a href="/data/oilflows_daily.json">JSON</a> &middot;
-    <a href="/data/oilflows_meta.json">metadata</a>
+    <a href="/data/oilflows_meta.json">metadata</a> &middot;
+    <a href="/data/us_crude_buffer_weekly.csv">buffer weekly (CSV)</a> &middot;
+    <a href="/data/us_crude_buffer_weekly.json">JSON</a> &middot;
+    <a href="/data/us_crude_buffer_meta.json">metadata</a>
   </div>
 </section>
 
@@ -263,6 +318,17 @@
   rows.forEach(r => { r.t = dayMs(r.date); });
   const t0 = rows[0].t, t1 = rows[rows.length - 1].t;
 
+  // Buffer layer (weekly EIA data) is optional: the page degrades to
+  // flow + price if it is absent.
+  let buffer = null, bufferMeta = null;
+  try {
+    [buffer, bufferMeta] = await Promise.all([
+      fetch('/data/us_crude_buffer_weekly.json').then(r => r.json()),
+      fetch('/data/us_crude_buffer_meta.json').then(r => r.json()),
+    ]);
+    buffer.forEach(r => { r.date = r.week_end; r.t = dayMs(r.week_end); });
+  } catch (e) { buffer = null; bufferMeta = null; }
+
   const GRID = 'rgba(255,255,255,0.12)';
   const TICK = 'rgba(255,255,255,0.4)';
 
@@ -270,11 +336,13 @@
   // across gaps and never connects or forward-fills missing physical data.
   function linePanel(el, series, opts) {
     opts = opts || {};
+    const data = opts.data || rows;
+    const d0 = data[0].t, d1 = data[data.length - 1].t;
     const W = opts.width || 900, H = opts.height || 300,
           PAD_L = 52, PAD_R = 14, PAD_T = 14, PAD_B = 28;
 
     let vMax = -Infinity, vMin = Infinity;
-    series.forEach(s => rows.forEach(r => {
+    series.forEach(s => data.forEach(r => {
       const v = r[s.field];
       if (v != null) { if (v > vMax) vMax = v; if (v < vMin) vMin = v; }
     }));
@@ -284,7 +352,7 @@
     const span = vMax - vMin || 1;
     vMax += span * 0.06;
 
-    const x = t => PAD_L + ((t - t0) / (t1 - t0)) * (W - PAD_L - PAD_R);
+    const x = t => PAD_L + ((t - d0) / (d1 - d0)) * (W - PAD_L - PAD_R);
     const y = v => H - PAD_B - ((v - vMin) / (vMax - vMin)) * (H - PAD_T - PAD_B);
 
     let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
@@ -304,20 +372,31 @@
       svg += `<text x="${W - PAD_R - 2}" y="${(yy - 4).toFixed(1)}" fill="${TICK}" font-size="9" font-family="monospace" text-anchor="end">${opts.refLabel || opts.refLine}</text>`;
     }
 
-    // month ticks, thinned to fit
-    const monthEvery = opts.monthEvery || 2;
-    let cursor = new Date(t0);
-    cursor = new Date(Date.UTC(cursor.getUTCFullYear(), cursor.getUTCMonth(), 1));
-    let mi = 0;
-    while (cursor.getTime() <= t1) {
-      const mx = x(cursor.getTime());
-      if (mx >= PAD_L && mx <= W - PAD_R && mi % monthEvery === 0) {
-        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-        const label = months[cursor.getUTCMonth()] + ' ' + String(cursor.getUTCFullYear()).slice(2);
-        svg += `<text x="${mx.toFixed(1)}" y="${H - 9}" fill="${TICK}" font-size="9" font-family="monospace" text-anchor="middle">${label}</text>`;
+    // time ticks: months for the recent daily window, years for long spans
+    if ((d1 - d0) / 86400000 > 1200) {
+      const y0 = new Date(d0).getUTCFullYear(), y1y = new Date(d1).getUTCFullYear();
+      const yStep = Math.max(1, Math.ceil((y1y - y0) / 9 / 5) * 5);
+      for (let yr = Math.ceil(y0 / yStep) * yStep; yr <= y1y; yr += yStep) {
+        const mx = x(Date.UTC(yr, 0, 1));
+        if (mx >= PAD_L && mx <= W - PAD_R) {
+          svg += `<text x="${mx.toFixed(1)}" y="${H - 9}" fill="${TICK}" font-size="9" font-family="monospace" text-anchor="middle">${yr}</text>`;
+        }
       }
-      cursor = new Date(Date.UTC(cursor.getUTCFullYear(), cursor.getUTCMonth() + 1, 1));
-      mi++;
+    } else {
+      const monthEvery = opts.monthEvery || 2;
+      let cursor = new Date(d0);
+      cursor = new Date(Date.UTC(cursor.getUTCFullYear(), cursor.getUTCMonth(), 1));
+      let mi = 0;
+      while (cursor.getTime() <= d1) {
+        const mx = x(cursor.getTime());
+        if (mx >= PAD_L && mx <= W - PAD_R && mi % monthEvery === 0) {
+          const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+          const label = months[cursor.getUTCMonth()] + ' ' + String(cursor.getUTCFullYear()).slice(2);
+          svg += `<text x="${mx.toFixed(1)}" y="${H - 9}" fill="${TICK}" font-size="9" font-family="monospace" text-anchor="middle">${label}</text>`;
+        }
+        cursor = new Date(Date.UTC(cursor.getUTCFullYear(), cursor.getUTCMonth() + 1, 1));
+        mi++;
+      }
     }
 
     // event annotations (vertical lines)
@@ -334,7 +413,7 @@
     // series lines with gap-breaking
     series.forEach(s => {
       let path = '', pen = false;
-      rows.forEach(r => {
+      data.forEach(r => {
         const v = r[s.field];
         if (v == null) { pen = false; return; }
         path += `${pen ? 'L' : 'M'}${x(r.t).toFixed(1)},${y(v).toFixed(1)} `;
@@ -343,10 +422,23 @@
       svg += `<path d="${path}" fill="none" stroke="${s.color}" stroke-width="1.8" stroke-linejoin="round"/>`;
     });
 
+    // mark the most recent observation of the first series
+    if (opts.markLast) {
+      const s = series[0];
+      for (let i = data.length - 1; i >= 0; i--) {
+        const v = data[i][s.field];
+        if (v != null) {
+          svg += `<circle cx="${x(data[i].t).toFixed(1)}" cy="${y(v).toFixed(1)}" r="4" fill="${s.color}" stroke="#1a1a1a" stroke-width="1.5"/>`;
+          break;
+        }
+      }
+    }
+
     svg += `</svg>`;
     el.innerHTML = svg;
 
-    attachHover(el, series, opts, { W, H, PAD_L, PAD_R, PAD_T, PAD_B, x, y });
+    attachHover(el, series, opts,
+      { W, H, PAD_L, PAD_R, PAD_T, PAD_B, x, y, data, d0, d1 });
   }
 
   function niceStep(raw) {
@@ -377,12 +469,16 @@
       const rect = svg.getBoundingClientRect();
       const px = (evt.clientX - rect.left) / rect.width * g.W;
       if (px < g.PAD_L || px > g.W - g.PAD_R) { onLeave(); return; }
-      const t = t0 + (px - g.PAD_L) / (g.W - g.PAD_L - g.PAD_R) * (t1 - t0);
-      const i = Math.min(rows.length - 1,
-        Math.max(0, Math.round((t - t0) / 86400000)));
-      const r = rows[i];
+      const t = g.d0 + (px - g.PAD_L) / (g.W - g.PAD_L - g.PAD_R) * (g.d1 - g.d0);
+      // nearest observation by time (data may be daily or weekly)
+      let i = 0, best = Infinity;
+      for (let j = 0; j < g.data.length; j++) {
+        const d = Math.abs(g.data[j].t - t);
+        if (d < best) { best = d; i = j; } else if (g.data[j].t > t) break;
+      }
+      const r = g.data[i];
 
-      let html = `<b>${fmtDate(r.date)}</b>`;
+      let html = `<b>${(opts.dateLabel || '') + fmtDate(r.date)}</b>`;
       let any = false;
       series.forEach(s => {
         const v = r[s.field];
@@ -491,6 +587,51 @@
       ].filter(Boolean),
     });
 
+  // ---- Panel 4: buffer (weekly EIA, own 1982-present time domain) ----
+  if (buffer && bufferMeta) {
+    document.getElementById('panel-buffer').style.display = '';
+
+    const days = v => v.toFixed(1) + ' days';
+    const bm = bufferMeta;
+    const tiles = [
+      ['total crude cushion', bm.latest_days_supply_incl_spr, 'days of refinery use, incl. SPR'],
+      ['commercial only', bm.latest_commercial_days_supply, 'days, excl. SPR'],
+      ['SPR equivalent', bm.latest_spr_days_equivalent, 'days at current refinery inputs'],
+      ['historical rank', ordinal(bm.current_percentile), 'percentile of weeks since ' + bm.first_week.slice(0, 4)],
+    ];
+    document.getElementById('buffer-tiles').innerHTML = tiles.map(t =>
+      `<div class="tile"><div class="k">${t[0]}</div><div class="v">${t[1]}</div><div class="u">${t[2]}</div></div>`
+    ).join('');
+
+    linePanel(document.getElementById('chart-buffer'),
+      [
+        { field: 'days_supply_incl_spr', name: 'incl. SPR', color: '#ffffff', fmt: days },
+        { field: 'commercial_days_supply', name: 'commercial', color: '#4a8fd4', fmt: days },
+      ],
+      {
+        data: buffer,
+        height: 300, includeZero: false,
+        refLine: bm.historical_mean_days_supply_incl_spr,
+        refLabel: 'mean ' + bm.historical_mean_days_supply_incl_spr,
+        markLast: true,
+        dateLabel: 'week ending ',
+        events: [
+          lastThresh && { date: lastThresh.date, label: 'Hormuz shock', side: 'left' },
+        ].filter(Boolean),
+      });
+
+    const sub = document.getElementById('sub-buffer');
+    sub.innerHTML += ' &middot; week ending ' + fmtDate(bm.last_week);
+  }
+
+  function ordinal(n) {
+    if (n == null) return '&ndash;';
+    const v = Math.round(n * 10) / 10;
+    if (v !== Math.floor(v)) return v + 'th';
+    const s = ['th', 'st', 'nd', 'rd'], m = v % 100;
+    return v + (s[(m - 20) % 10] || s[m] || s[0]);
+  }
+
   linePanel(document.getElementById('chart-bno'),
     [{ field: 'bno_last_close_usd', name: 'BNO close', color: '#b8862a', fmt: usd, observedField: 'bno_observed' }],
     {
@@ -517,6 +658,9 @@
   Object.keys(freshLabels).forEach(k => {
     if (lod[k]) f += `<tr><td>${freshLabels[k]}</td><td>${fmtDate(lod[k])}</td></tr>`;
   });
+  if (bufferMeta) {
+    f += `<tr><td>U.S. crude buffer (EIA, weekly)</td><td>week ending ${fmtDate(bufferMeta.last_week)}</td></tr>`;
+  }
   f += '</table>';
   document.getElementById('freshness').innerHTML = f;
 

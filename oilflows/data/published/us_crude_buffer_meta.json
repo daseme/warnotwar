@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "frequency": "weekly",
+  "source": "U.S. Energy Information Administration",
+  "generated_at_utc": "2026-08-26T19:42:12Z",
+  "first_week": "1982-08-20",
+  "last_week": "2026-08-21",
+  "latest_release_date": null,
+  "latest_days_supply_incl_spr": 41.3,
+  "latest_commercial_days_supply": 24.7,
+  "latest_spr_days_equivalent": 16.7,
+  "historical_mean_days_supply_incl_spr": 63.8,
+  "historical_median_days_supply_incl_spr": 64.5,
+  "historical_min_days_supply_incl_spr": 41.1,
+  "historical_min_date": "2026-07-24",
+  "current_percentile": 0.1,
+  "prior_lower_date": "2026-07-24",
+  "years_since_prior_lower": 0.1,
+  "definitions": {
+    "days_supply_incl_spr": "Total U.S. crude stocks, including the Strategic Petroleum Reserve, divided by that week's U.S. refinery crude inputs. A measure of the inventory cushion, not a countdown until the country runs out of oil.",
+    "commercial_days_supply": "Commercial U.S. crude stocks divided by refinery crude inputs. Excludes the Strategic Petroleum Reserve.",
+    "spr_days_equivalent": "SPR crude volume divided by that week's refinery crude inputs. Not the number of days until the SPR runs out; releases depend on policy decisions and physical distribution capacity.",
+    "days_supply_incl_spr_percentile": "Share of all weekly observations since 1982 at or below this week's value. A low percentile means inventories are unusually thin relative to refinery use."
+  },
+  "caveats": [
+    "Refinery inputs are seasonal: days of supply can move because the denominator moves, not only because stocks change.",
+    "Long-run EIA stock definitions have changed over time; treat multi-decade rankings as approximate context.",
+    "Weekly values represent the week ending on week_end and are released later; no daily inventory observations exist."
+  ]
+}

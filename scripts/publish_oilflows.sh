@@ -21,11 +21,20 @@ fi
 "$PY" -m oilflows.build_shock_timeline >/dev/null
 "$PY" -m oilflows.build_publish
 
+# Buffer layer: EIA raw files are gitignored, so fetch them when absent.
+if [ ! -f data/raw/eia/WCRSTUS1w.xls ]; then
+  "$PY" -m oilflows.pull_eia_inventory
+fi
+"$PY" -m oilflows.build_buffer
+
 mkdir -p "$ROOT/data"
 cp data/published/oilflows_daily.json "$ROOT/data/"
 cp data/published/oilflows_meta.json "$ROOT/data/"
-# Optional download/debug artifact for the "view the data" link.
+cp data/published/us_crude_buffer_weekly.json "$ROOT/data/"
+cp data/published/us_crude_buffer_meta.json "$ROOT/data/"
+# Optional download/debug artifacts for the "view the data" links.
 cp data/published/oilflows_daily.csv "$ROOT/data/"
+cp data/published/us_crude_buffer_weekly.csv "$ROOT/data/"
 
 echo
-echo "Copied oilflows_daily.{json,csv} + oilflows_meta.json -> $ROOT/data/"
+echo "Copied oilflows + buffer JSON/CSV/meta -> $ROOT/data/"
