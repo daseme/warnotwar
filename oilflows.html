@@ -316,7 +316,7 @@
 
 <section class="panel" id="panel-hormuz">
   <h2>1 &middot; The physical break</h2>
-  <p class="panel-sub" id="sub-hormuz">Hormuz tanker activity, 7-day average of PortWatch tanker counts &middot; index, Jul&ndash;Dec 2025 = 100</p>
+  <p class="panel-sub" id="sub-hormuz">Hormuz tanker activity, 7-day average of PortWatch tanker counts &middot; index: 100 = its normal late-2025 level, 5 = 5% of that</p>
   <div class="chart-wrap" id="chart-hormuz"></div>
   <div id="threshold-table"></div>
   <div class="note">
@@ -344,7 +344,7 @@
   <div id="verify-ledger"></div>
   <div id="barrels-widget"></div>
   <div class="note">
-    Ships operating without AIS may explain part of the gap &mdash; a missed
+    Ships operating without AIS (the position beacon ships broadcast) may explain part of the gap &mdash; a missed
     supertanker is roughly 2 million barrels. But oil does not disappear
     with a transponder signal: an extra 4&ndash;5 million barrels a day is
     28&ndash;35 million barrels a week that must load, sail, unload, and
@@ -374,7 +374,7 @@
 
 <section class="panel" id="panel-reroute">
   <h2>4 &middot; Rerouting</h2>
-  <p class="panel-sub" id="sub-reroute">PortWatch terminal-activity proxies &middot; index, Jul&ndash;Dec 2025 = 100 &middot; each chart has its own scale</p>
+  <p class="panel-sub" id="sub-reroute">PortWatch terminal-activity proxies (stand-in signals, not direct measurements) &middot; 100 = that terminal’s own normal late-2025 level &middot; each chart has its own scale</p>
   <div class="duo">
     <div>
       <h3>Saudi Arabia</h3>
@@ -422,9 +422,9 @@
 
 <section class="panel" id="panel-market">
   <h2>6 &middot; The market response</h2>
-  <p class="panel-sub" id="sub-market">Brent spot (EIA via FRED), USD/barrel &middot; weekend/holiday values carry the last close</p>
+  <p class="panel-sub" id="sub-market">Brent, the world benchmark oil price &middot; dollars per barrel of actual crude &middot; source: U.S. EIA &middot; weekend/holiday values carry the last close</p>
   <div class="chart-wrap" id="chart-brent"></div>
-  <p class="panel-sub" style="margin-top:26px" id="sub-bno">BNO (Brent oil ETF), unadjusted close, USD &middot; a futures-holding fund, not spot Brent</p>
+  <p class="panel-sub" style="margin-top:26px" id="sub-bno">BNO, an oil fund ordinary investors can buy, in dollars &middot; tracks Brent imperfectly &mdash; not the actual barrel price</p>
   <div class="chart-wrap" id="chart-bno"></div>
   <div class="note" id="market-note">
     Prices repriced sharply while the physical shutdown was developing and
@@ -438,7 +438,7 @@
   <h2>7 &middot; How we know</h2>
   <div class="prose">
     <p><strong>The traffic sensor.</strong> IMF PortWatch derives daily
-    tanker-activity signals from AIS ship-tracking data at the Strait of Hormuz
+    tanker-activity signals from AIS data &mdash; the position beacons ships broadcast &mdash; at the Strait of Hormuz
     and at export terminals. It is fast and shows when activity disappears,
     but it does not count barrels of crude on each ship.</p>
     <p><strong>The official tally.</strong> SOMO (Iraq) and JODI (Kuwait,
@@ -798,7 +798,7 @@
     const days = v => v.toFixed(1) + ' days';
     const bm = bufferMeta;
     const tiles = [
-      ['total crude cushion', bm.latest_days_supply_incl_spr, 'days of refinery use, incl. SPR'],
+      ['total crude cushion', bm.latest_days_supply_incl_spr, 'days of refinery use, incl. the Strategic Petroleum Reserve (SPR)'],
       ['commercial only', bm.latest_commercial_days_supply, 'days, excl. SPR'],
       ['SPR equivalent', bm.latest_spr_days_equivalent, 'days at current refinery inputs'],
       ['historical rank', rankLabel,
@@ -859,7 +859,7 @@
     topTiles.push(
       `<div class="tile"><div class="q">Is the oil moving?</div>` +
       `<div class="v">${flowRow.hormuz_tanker_count_index_7d.toFixed(1)} / 100</div>` +
-      `<div class="u">Hormuz tanker-traffic index vs a normal 2025 week &mdash; ship signals, not barrels &middot; as of ${fmtDate(flowRow.date)}</div></div>`);
+      `<div class="u">Hormuz tanker traffic at about ${Math.round(flowRow.hormuz_tanker_count_index_7d)}% of a normal 2025 week &mdash; ship signals, not barrels &middot; as of ${fmtDate(flowRow.date)}</div></div>`);
   }
   if (bLatest) {
     const spark = (() => {
@@ -876,13 +876,13 @@
     topTiles.push(
       `<div class="tile"><div class="q">How thick is the cushion?</div>` +
       `<div class="v">${bLatest.days_supply_incl_spr.toFixed(1)} <span style="font-size:0.55em;color:rgba(255,255,255,0.55)">vs ${bufferMeta.historical_mean_days_supply_incl_spr} avg</span></div>` +
-      `<div class="u">stored U.S. crude per day of refinery use, incl. SPR (${bLatest.commercial_days_supply.toFixed(1)} commercial only) &mdash; a cushion ratio, not a countdown &middot; week ending ${fmtDate(bLatest.date)}</div>${spark}</div>`);
+      `<div class="u">stored U.S. crude per day of refinery use, incl. the Strategic Petroleum Reserve (${bLatest.commercial_days_supply.toFixed(1)} commercial only) &mdash; a cushion ratio, not a countdown &middot; week ending ${fmtDate(bLatest.date)}</div>${spark}</div>`);
   }
   if (brentRow) {
     topTiles.push(
       `<div class="tile"><div class="q">What is the market charging?</div>` +
       `<div class="v">$${brentRow.brent_spot_last_usd.toFixed(2)}</div>` +
-      `<div class="u">Brent, the world benchmark crude price, per barrel &middot; last close ${fmtDate(brentRow.date)}</div></div>`);
+      `<div class="u">Brent, the world benchmark oil price, per barrel &middot; was $${firstThresh ? firstThresh.brent_spot_last_usd.toFixed(0) : ''} as the March collapse began &middot; last close ${fmtDate(brentRow.date)}</div></div>`);
   }
   document.getElementById('top-tiles').innerHTML = topTiles.join('');
   document.getElementById('top-kicker').textContent =
