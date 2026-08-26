@@ -18,6 +18,17 @@ UNITS = {"mbd", "tankers_per_night", "mbbl_single_day"}
 
 PERIODS = {"seven_day_average", "single_day", "nightly", "unspecified"}
 
+# What is being counted. Sources rarely say; "unspecified" is itself a
+# finding — most circulating numbers never state their commodity scope.
+COMMODITIES = {"crude", "crude_condensate", "all_liquids", "unspecified"}
+
+EVIDENCE_TYPES = {
+    "government_estimate",
+    "commercial_tracker_model",
+    "activity_index",
+    "official_ledger",
+}
+
 ATTRIBUTIONS = {"named", "anonymous"}
 
 DATE_PRECISIONS = {"day", "month"}
@@ -36,13 +47,16 @@ def load_claims(path) -> pd.DataFrame:
     required = {
         "claim_id", "claim_date", "date_precision", "speaker",
         "attribution", "value_low", "value_high", "unit", "scope",
-        "period", "quote", "source_name", "source_url", "status",
+        "period", "commodity", "evidence_type", "quote",
+        "source_name", "source_url", "status",
     }
     _require_columns(frame, required, "claims")
 
     _validate_enum(frame, "scope", SCOPES, "claims")
     _validate_enum(frame, "unit", UNITS, "claims")
     _validate_enum(frame, "period", PERIODS, "claims")
+    _validate_enum(frame, "commodity", COMMODITIES, "claims")
+    _validate_enum(frame, "evidence_type", EVIDENCE_TYPES, "claims")
     _validate_enum(frame, "attribution", ATTRIBUTIONS, "claims")
     _validate_enum(frame, "date_precision", DATE_PRECISIONS, "claims")
     _validate_enum(frame, "status", CLAIM_STATUSES, "claims")
@@ -65,12 +79,16 @@ def load_estimates(path) -> pd.DataFrame:
     required = {
         "estimate_id", "estimate_date", "date_precision", "tracker",
         "value_low", "value_high", "value_central", "unit", "scope",
+        "period", "commodity", "evidence_type",
         "as_reported_by", "source_url",
     }
     _require_columns(frame, required, "estimates")
 
     _validate_enum(frame, "scope", SCOPES, "estimates")
     _validate_enum(frame, "unit", UNITS, "estimates")
+    _validate_enum(frame, "period", PERIODS, "estimates")
+    _validate_enum(frame, "commodity", COMMODITIES, "estimates")
+    _validate_enum(frame, "evidence_type", EVIDENCE_TYPES, "estimates")
     _validate_enum(frame, "date_precision", DATE_PRECISIONS, "estimates")
     _validate_sources(frame, "estimates", url_column="source_url")
 
