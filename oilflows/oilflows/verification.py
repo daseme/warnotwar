@@ -49,6 +49,36 @@ CLAIM_STATUSES = {
 ARCHIVE_ATTRIBUTIONS = {"named", "anonymous", "institutional"}
 ARCHIVE_STATUSES = {"active", "corrected", "retracted_and_denied", "superseded"}
 
+# Display strings ship with the published archive so the page never leaks
+# machine vocabulary; an unmapped value fails the build, not the reader.
+TIME_BASIS_PLAIN = {
+    "event": "a specific event",
+    "as_of_statement": "as of the statement",
+    "forecast": "a forecast — not completed movement",
+    "recent": "recent, window unstated",
+    "single_night": "one night",
+    "cumulative_since_prior_month": "running total since the prior month",
+    "current_approximate": "current, approximate",
+    "last_24_hours": "the previous 24 hours",
+    "seven_day_average": "7-day average",
+    "current_average": "current average, window unstated",
+    "single_day": "one day",
+    "recent_two_weeks": "the previous two weeks",
+    "some_single_nights": "some individual nights",
+    "single_night_planned": "one planned night — not completed movement",
+    "current": "current",
+}
+
+ARCHIVE_STATUS_PLAIN = {
+    "active": "on the record",
+    "retracted_and_denied": "deleted by the speaker; disputed the same day",
+    "corrected": "corrected by the speaker",
+    "superseded": "revised by the speaker",
+}
+
+# Statements about intentions, not completed movement.
+PROSPECTIVE_TIME_BASES = {"forecast", "single_night_planned"}
+
 # Claims within this window of the anchor date count as "current".
 EPISODE_WINDOW_DAYS = 45
 
@@ -134,7 +164,8 @@ def load_archive_claims(path) -> pd.DataFrame:
     required = {
         "claim_id", "statement_date", "speaker", "attribution", "scope",
         "direction", "unit", "time_basis", "claim_text", "status",
-        "supersedes_claim_id", "source_publisher", "source_url",
+        "supersedes_claim_id", "disputes_claim_id",
+        "source_publisher", "source_url",
         "value_min", "value_max",
     }
     _require_columns(frame, required, "archive")
@@ -142,6 +173,21 @@ def load_archive_claims(path) -> pd.DataFrame:
     _validate_enum(frame, "attribution", ARCHIVE_ATTRIBUTIONS, "archive")
     _validate_enum(frame, "status", ARCHIVE_STATUSES, "archive")
     _validate_sources(frame, "archive")
+
+    # Reporting verbs are never verdicts: one neutral verb for every
+    # speaker. "Claimed"/"Confirmed" grade credibility and are rejected.
+    verdict_verbs = (
+        "Claimed", "Confirmed", "Admitted", "Insisted", "Boasted",
+        "Conceded", "Acknowledged", "Alleged",
+    )
+    bad_verbs = frame.loc[
+        frame["claim_text"].str.startswith(verdict_verbs), "claim_id"
+    ]
+    if not bad_verbs.empty:
+        raise RuntimeError(
+            "Archive claim_text uses a credibility-grading verb "
+            f"(use 'Said'): {sorted(bad_verbs)}"
+        )
 
     if frame["claim_id"].duplicated().any():
         raise RuntimeError("Duplicate claim_id in archive ledger.")
@@ -152,22 +198,31 @@ def load_archive_claims(path) -> pd.DataFrame:
         # empty means unstated / open-ended (e.g. "more than 100 million")
         frame[column] = pd.to_numeric(frame[column], errors="raise")
 
+    # Two link kinds with different meanings, never mixed:
+    #   supersedes = the SAME speaker/institution restating the same
+    #                quantity (a revision). Successive readings of a
+    #                moving series are series members, not supersessions.
+    #   disputes   = a DIFFERENT speaker contradicting a statement;
+    #                rendered symmetrically — neither side "wins".
     known = set(frame["claim_id"])
-    dangling = frame.loc[
-        frame["supersedes_claim_id"].notna()
-        & ~frame["supersedes_claim_id"].isin(known),
-        "supersedes_claim_id",
-    ]
-    if not dangling.empty:
-        raise RuntimeError(
-            f"Archive supersedes links point at unknown claims: "
-            f"{sorted(dangling)}"
-        )
+    for link in ("supersedes_claim_id", "disputes_claim_id"):
+        dangling = frame.loc[
+            frame[link].notna() & ~frame[link].isin(known), link
+        ]
+        if not dangling.empty:
+            raise RuntimeError(
+                f"Archive {link} links point at unknown claims: "
+                f"{sorted(dangling)}"
+            )
 
     superseded_by = frame.dropna(subset=["supersedes_claim_id"]).set_index(
         "supersedes_claim_id"
     )["claim_id"]
     frame["superseded_by"] = frame["claim_id"].map(superseded_by)
+    disputed_by = frame.dropna(subset=["disputes_claim_id"]).set_index(
+        "disputes_claim_id"
+    )["claim_id"]
+    frame["disputed_by"] = frame["claim_id"].map(disputed_by)
 
     return frame.sort_values("statement_date").reset_index(drop=True)
 

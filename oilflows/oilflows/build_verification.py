@@ -4,6 +4,9 @@ import json
 import pandas as pd
 
 from .verification import (
+    ARCHIVE_STATUS_PLAIN,
+    PROSPECTIVE_TIME_BASES,
+    TIME_BASIS_PLAIN,
     build_verification_publish,
     comparable_hormuz_flow_claims,
     load_archive_claims,
@@ -15,6 +18,17 @@ from .verification import (
 def archive_records(frame: pd.DataFrame) -> list[dict]:
     out = frame.copy()
     out["statement_date"] = out["statement_date"].dt.strftime("%Y-%m-%d")
+
+    unmapped = set(out["time_basis"]) - set(TIME_BASIS_PLAIN)
+    if unmapped:
+        raise RuntimeError(
+            f"Archive time_basis values without display strings: "
+            f"{sorted(unmapped)} — add them to TIME_BASIS_PLAIN."
+        )
+    out["time_basis_plain"] = out["time_basis"].map(TIME_BASIS_PLAIN)
+    out["status_plain"] = out["status"].map(ARCHIVE_STATUS_PLAIN)
+    out["prospective"] = out["time_basis"].isin(PROSPECTIVE_TIME_BASES)
+
     out = out.astype(object).where(pd.notna(out), None)
     return out.to_dict(orient="records")
 

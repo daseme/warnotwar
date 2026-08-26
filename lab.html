@@ -97,6 +97,47 @@
   .sandbox-box .big { color: #fff; font-size: 1.15em; }
   .sandbox-box .hypo { color: #b8862a; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; border: 1px dashed rgba(184,134,42,0.6); padding: 2px 7px; display: inline-block; margin-bottom: 6px; }
   .chain { color: rgba(255,255,255,0.55); }
+  /* timeline */
+  .orient {
+    font-family: monospace; font-size: 11.5px;
+    color: rgba(255,255,255,0.6); line-height: 1.8;
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 12px 14px; margin-bottom: 14px; max-width: 52em;
+  }
+  .orient b { color: #fff; font-weight: normal; }
+  .monthhead {
+    font-family: monospace; font-size: 11px; letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.55); text-transform: uppercase;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    padding-bottom: 4px; margin: 26px 0 4px;
+  }
+  .monthhead .cav { text-transform: none; letter-spacing: 0; color: rgba(255,255,255,0.4); }
+  .tl-entry {
+    border-left: 2px solid rgba(255,255,255,0.18);
+    padding: 8px 0 8px 14px; margin: 10px 0;
+    font-family: monospace; font-size: 11.5px;
+    color: rgba(255,255,255,0.7); line-height: 1.7;
+  }
+  .tl-frame { color: rgba(255,255,255,0.5); font-size: 10.5px; letter-spacing: 0.04em; }
+  .tl-fig { font-size: 13px; margin: 2px 0; }
+  .tl-fig .fam {
+    font-size: 9px; letter-spacing: 0.08em; border: 1px solid rgba(255,255,255,0.25);
+    padding: 0 5px; border-radius: 7px; margin-right: 6px; vertical-align: 1px;
+  }
+  .tl-fig.rate { color: #fff; }
+  .tl-fig.volume { color: #d9c391; }
+  .tl-fig.ships { color: #9fb8d1; }
+  .tl-fig.prospective { color: rgba(255,255,255,0.65); font-style: italic; }
+  .tl-desc { color: rgba(255,255,255,0.75); max-width: 46em; }
+  .tl-meta { color: rgba(255,255,255,0.45); font-size: 10.5px; margin-top: 3px; }
+  .tl-meta a { color: rgba(255,255,255,0.55); }
+  .tl-link { color: #c9b06a; font-size: 10.5px; margin-top: 3px; }
+  .tl-ann { color: rgba(255,255,255,0.4); font-size: 10px; margin-top: 3px; }
+  .tl-ghost {
+    color: rgba(255,255,255,0.35); font-family: monospace; font-size: 10.5px;
+    padding: 2px 0 2px 14px; border-left: 2px solid rgba(255,255,255,0.08);
+    margin: 4px 0;
+  }
   .note { font-size: 11.5px; color: rgba(255,255,255,0.4); margin-top: 14px; line-height: 1.7; font-family: monospace; }
   dl.gloss { font-family: monospace; font-size: 11.5px; color: rgba(255,255,255,0.6); line-height: 1.7; }
   dl.gloss dt { color: #fff; margin-top: 8px; }
@@ -213,6 +254,29 @@
     (10) and the lowest tracker estimate (2). VLCC-equivalents are an
     illustrative unit of volume (~2 million barrels), not a prediction of
     ship counts; most tankers are smaller.
+  </div>
+</section>
+
+<section class="exhibit" id="ex4" style="display:none">
+  <h2>4 &middot; What Washington said, statement by statement</h2>
+  <p class="learn">Every recorded U.S. statement about oil and ship movement, in order &mdash; each measuring something different: different waterways, different units, different time windows. The list shows what each one measured.</p>
+  <div class="orient">
+    <b>How to read this ledger.</b> These are reported statements, normalized
+    by this project's curator &mdash; the descriptions are records, not
+    verbatim quotes; each links to its source. Status tags are lifecycle
+    states (on the record, deleted, disputed), never verdicts about truth.
+    &ldquo;Anonymous&rdquo; means the reporter knows who spoke; the public
+    does not. Nothing is ever overwritten: corrections and disputes are
+    added as linked entries. Completeness is bounded: this is every
+    statement <em>located</em> through Aug 26 across the swept source sets
+    (official channels, wire services, specialist press) &mdash; statements
+    can occur in gaggles, deleted posts and unindexed remarks.
+  </div>
+  <div class="btnrow" id="tl-filters"></div>
+  <div id="timeline"></div>
+  <div class="note">
+    Full archive: <a href="/data/us_oil_flow_claims.json">us_oil_flow_claims.json</a>
+    &middot; collection protocol in the repository's claims-database brief.
   </div>
 </section>
 
@@ -579,8 +643,9 @@
     [...mbdClaims].sort((a, b) => a.hi - b.hi).forEach((c, i) => {
       const ty = i % 2 ? 6 : 15;   // alternate label rows so close ticks stay legible
       s += `<line x1="${x(c.hi)}" y1="20" x2="${x(c.hi)}" y2="46" stroke="#fff" stroke-width="1.5"/>`;
-      s += `<text x="${x(c.hi)}" y="${ty}" fill="rgba(255,255,255,0.6)" font-size="8.5" font-family="monospace" text-anchor="middle">${c.hi} — ${c.attribution === 'anonymous' ? 'anonymous officials' : c.speaker.split(',')[0]}${c.status === 'superseded' ? ' (superseded)' : ''}</text>`;
+      s += `<text x="${x(c.hi)}" y="${ty}" fill="rgba(255,255,255,0.6)" font-size="8.5" font-family="monospace" text-anchor="middle">${c.hi} — ${c.attribution === 'anonymous' ? 'anonymous officials' : c.speaker.split(',')[0]}, ${itemDate(c).replace(' 2026', '')}</text>`;
     });
+    s += `<text x="20" y="166" fill="rgba(255,255,255,0.35)" font-size="8.5" font-family="monospace">seven-day averages stated on different dates describe different weeks — a lower later reading is not a correction</text>`;
     s += `<text x="20" y="95" fill="rgba(255,255,255,0.6)" font-size="10" font-family="monospace">INDEPENDENTLY</text>`;
     s += `<text x="20" y="107" fill="rgba(255,255,255,0.6)" font-size="10" font-family="monospace">ESTIMATED</text>`;
     s += `<rect x="${x(ep.independent_low_mbd)}" y="84" width="${x(ep.independent_high_mbd) - x(ep.independent_low_mbd)}" height="18" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.6)"/>`;
@@ -595,7 +660,7 @@
     /* requirement-test sandbox */
     const presetRow = document.getElementById('preset-row');
     presetRow.innerHTML = mbdClaims.map(c =>
-      `<button class="chip" data-test="${c.id}">test the ${c.hi} (${c.attribution === 'anonymous' ? 'anonymous officials' : c.speaker.split(',')[0]}${c.status === 'superseded' ? ' · superseded' : ''})</button>`
+      `<button class="chip" data-test="${c.id}">test the ${c.hi} (${c.attribution === 'anonymous' ? 'anonymous officials' : c.speaker.split(',')[0]})</button>`
     ).join('');
     const sDark = document.getElementById('s-dark');
     let sandboxMode = null; // claim id or 'custom'
@@ -646,6 +711,158 @@
     renderSandbox();
   } else {
     document.getElementById('ex3').style.display = 'none';
+  }
+
+  /* ---------- section 4: the statements timeline ---------- */
+  let arch = null;
+  try {
+    arch = await fetch('/data/us_oil_flow_claims.json').then(r => r.json());
+  } catch (e) { arch = null; }
+
+  if (arch && arch.claims && arch.claims.length) {
+    document.getElementById('ex4').style.display = '';
+    const A = arch.claims;
+    const seriesIds = new Set(arch.comparable_hormuz_flow_claim_ids || []);
+
+    const AS_PLAIN = {
+      hormuz_only: 'the Strait of Hormuz',
+      persian_gulf_outbound: 'the Persian Gulf (wider than Hormuz alone)',
+      region_including_bypass: 'the region incl. bypass routes',
+      bypass_routes: 'bypass routes only',
+      iran_exports_via_hormuz: 'Iranian exports via Hormuz',
+    };
+    const SHIP_UNITS = { ships: 'ships', tanker: 'tanker', tankers: 'tankers', vessels: 'vessels', tankers_per_night: 'tankers per night' };
+
+    const figOf = c => {
+      if (c.value_min == null && c.value_max == null) return null;
+      const open = c.value_max == null;
+      const n = v => v % 1 ? v : v.toFixed(0);
+      const range = open ? 'more than ' + n(c.value_min)
+        : c.value_min === c.value_max ? n(c.value_min)
+        : n(c.value_min) + '–' + n(c.value_max);
+      if (c.unit === 'million_barrels_per_day')
+        return { fam: 'RATE', cls: 'rate', txt: `${range} million barrels per day` };
+      if (c.unit === 'million_barrels')
+        return { fam: c.time_basis.startsWith('cumulative') ? 'RUNNING TOTAL' : 'VOLUME',
+                 cls: 'volume', txt: `${range} million barrels` };
+      if (c.unit in SHIP_UNITS)
+        return { fam: 'SHIPS', cls: 'ships', txt: `${range} ${SHIP_UNITS[c.unit]}` };
+      return { fam: 'FIGURE', cls: 'volume', txt: `${range} ${c.unit}` };
+    };
+
+    // why an entry sits outside the same-measure series — rule, not judgment
+    const seriesReason = c => {
+      if (seriesIds.has(c.claim_id)) return null;
+      if (c.prospective) return 'planned or forecast — not completed movement';
+      if (figOf(c) == null) return 'no figure — a qualitative statement';
+      if (c.scope !== 'hormuz_only') return 'different waterway: ' + (AS_PLAIN[c.scope] || c.scope);
+      if (c.unit === 'million_barrels')
+        return c.time_basis.startsWith('cumulative') ? 'running total, not a rate' : 'one-day volume, not a rate';
+      if (c.unit in SHIP_UNITS) return 'counts ships, not oil';
+      return 'different measure per ledger';
+    };
+    const trackerNote = c => {
+      const f = figOf(c);
+      if (!f || c.prospective) return null;
+      if (c.unit === 'million_barrels_per_day') {
+        return c.statement_date >= '2026-08'
+          ? (seriesIds.has(c.claim_id) ? 'compared with independent estimates in section 3 above' : null)
+          : 'no contemporaneous independent estimate recorded — the trackers in this dataset begin Aug 2026';
+      }
+      return 'no independent series measures this quantity';
+    };
+
+    const byId = {};
+    A.forEach(c => { byId[c.claim_id] = c; });
+    const refTxt = id => {
+      const o = byId[id];
+      return o ? `${o.speaker}, ${fmtDate(o.statement_date)}` : id;
+    };
+
+    let order = 'newest', filter = 'all';
+    const FILTERS = [
+      ['all', 'all statements'],
+      ['figures', 'completed figures only'],
+      ['series', 'same-measure series: Hormuz outbound · million barrels per day · current rate'],
+    ];
+    const tlFilters = document.getElementById('tl-filters');
+    tlFilters.innerHTML = FILTERS.map(f =>
+      `<button class="chip" data-f="${f[0]}">${f[1]}</button>`).join('') +
+      `<button class="chip" data-o="1">order: newest first</button>`;
+
+    function entryHtml(c) {
+      const f = figOf(c);
+      const frame = `${AS_PLAIN[c.scope] || c.scope} · ${c.direction === 'outbound' ? 'outbound' : c.direction === 'transit' ? 'transit' : 'both directions'} · ${c.time_basis_plain}`;
+      let h = `<div class="tl-entry">`;
+      h += `<div class="tl-frame">${frame}</div>`;
+      if (f) {
+        const pro = c.prospective;
+        h += `<div class="tl-fig ${pro ? 'prospective' : f.cls}"><span class="fam">${pro ? (c.time_basis === 'forecast' ? 'FORECAST' : 'PLANNED') : f.fam}</span>${pro ? (c.time_basis === 'forecast' ? 'forecast: ' : 'planned: ') : ''}${f.txt}</div>`;
+      }
+      h += `<div class="tl-desc">description on record: ${c.claim_text}</div>`;
+      h += `<div class="tl-meta">${fmtDate(c.statement_date)} · ${c.speaker}` +
+        (c.attribution === 'anonymous' ? ` <span class="chip2" title="the reporter knows who spoke; the public does not">anonymous</span>` : '') +
+        (c.attribution === 'institutional' ? ` <span class="chip2">institutional</span>` : '') +
+        ` · ${c.channel}` +
+        (c.status !== 'active' ? ` · <span class="chip2">${c.status_plain}</span>` : '') +
+        ` · <a href="${c.source_url}">${c.source_publisher}</a></div>`;
+      if (c.disputes_claim_id) h += `<div class="tl-link">&harr; disputes, same day: ${refTxt(c.disputes_claim_id)} — neither statement independently verified</div>`;
+      if (c.disputed_by) h += `<div class="tl-link">&harr; disputed, same day, by: ${refTxt(c.disputed_by)} — neither statement independently verified</div>`;
+      const ann = trackerNote(c);
+      if (ann) h += `<div class="tl-ann">${ann}</div>`;
+      h += `</div>`;
+      return h;
+    }
+
+    function renderTimeline() {
+      tlFilters.querySelectorAll('[data-f]').forEach(b =>
+        b.classList.toggle('on', b.dataset.f === filter));
+      tlFilters.querySelector('[data-o]').textContent =
+        'order: ' + (order === 'newest' ? 'newest first' : 'oldest first');
+
+      // every month in range renders, including months with nothing located
+      const months = [];
+      const first = A[0].statement_date.slice(0, 7), last = A[A.length - 1].statement_date.slice(0, 7);
+      let [y, m] = first.split('-').map(Number);
+      while (`${y}-${String(m).padStart(2, '0')}` <= last) {
+        months.push(`${y}-${String(m).padStart(2, '0')}`);
+        m++; if (m > 12) { m = 1; y++; }
+      }
+      if (order === 'newest') months.reverse();
+
+      const MN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      let h = '';
+      months.forEach(mo => {
+        let group = A.filter(c => c.statement_date.startsWith(mo));
+        if (order === 'newest') group = [...group].reverse();
+        const label = MN[+mo.slice(5) - 1] + ' ' + mo.slice(0, 4);
+        if (!group.length) {
+          h += `<div class="monthhead">${label} — <span class="cav">no statements located in the swept sources · coverage varies by month; absence of located statements is not evidence of silence</span></div>`;
+          return;
+        }
+        h += `<div class="monthhead">${label} — ${group.length} statement${group.length > 1 ? 's' : ''} located</div>`;
+        group.forEach(c => {
+          const inSeries = seriesIds.has(c.claim_id);
+          if (filter === 'series' && !inSeries) {
+            h += `<div class="tl-ghost">${fmtDate(c.statement_date)} · ${c.speaker} — ${seriesReason(c)}</div>`;
+            return;
+          }
+          if (filter === 'figures' && (figOf(c) == null || c.prospective)) {
+            return;
+          }
+          h += entryHtml(c);
+        });
+      });
+      document.getElementById('timeline').innerHTML = h;
+    }
+
+    tlFilters.addEventListener('click', e => {
+      const f = e.target.closest('[data-f]');
+      const o = e.target.closest('[data-o]');
+      if (f) { filter = f.dataset.f; renderTimeline(); }
+      if (o) { order = order === 'newest' ? 'oldest' : 'newest'; renderTimeline(); }
+    });
+    renderTimeline();
   }
 
   /* testing aids: ?item=c1 ?pair=c1,e1 ?q=q1 */

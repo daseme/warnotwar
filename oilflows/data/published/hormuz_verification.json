@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at_utc": "2026-08-26T23:43:01Z",
+  "generated_at_utc": "2026-08-26T23:51:58Z",
   "current_episode": {
     "scope": "hormuz_outbound",
     "as_of": "2026-08-24",
@@ -38,9 +38,9 @@
       "source_name": "Anadolu Agency",
       "source_url": "https://www.aa.com.tr/en/economy/us-energy-chief-says-oil-flows-from-gulf-at-15m-barrels-per-day/4024603",
       "entered_date": "2026-08-26",
-      "status": "superseded",
-      "resolution_note": "Superseded by Wright's 2026-08-21 seven-day figure of about 8 mb/d (c6; archive USOF-20260821-02).",
-      "resolution_date": "2026-08-21"
+      "status": "unverified",
+      "resolution_note": null,
+      "resolution_date": null
     },
     {
       "claim_id": "c2",
@@ -144,7 +144,7 @@
       "commodity": "unspecified",
       "evidence_type": "government_estimate",
       "quote": "An average of about 8 million barrels of oil per day had left Hormuz over the prior seven days.",
-      "note": "Supersedes the Aug 11 seven-day figure of ~9 (c1).",
+      "note": "Later reading of the same seven-day series as c1; different windows, not a correction.",
       "source_name": "CBS News live updates",
       "source_url": "https://www.cbsnews.com/live-updates/iran-war-trump-economic-crackdown/",
       "entered_date": "2026-08-26",

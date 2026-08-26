@@ -193,16 +193,25 @@ def test_archive_ledger_loads_and_links():
     assert len(archive) >= 31
     assert (archive["source_url"].str.startswith("http")).all()
 
-    # history preserved: the deleted escort claim and its same-day denial
+    # history preserved: the deleted escort claim and its same-day dispute.
+    # A dispute is a symmetric cross-speaker link, never a supersession —
+    # neither side "wins" in the data model.
     escort = archive.loc[archive["claim_id"] == "USOF-20260310-01"].iloc[0]
     assert escort["status"] == "retracted_and_denied"
-    assert escort["superseded_by"] == "USOF-20260310-02"
+    assert pd.isna(escort["superseded_by"])
+    assert escort["disputed_by"] == "USOF-20260310-02"
 
     comparable = comparable_hormuz_flow_claims(archive)
     assert set(comparable["value_min"]) == {8.0, 9.0, 10.0}
-    # Wright's Aug 21 figure supersedes his Aug 11 figure
+    # successive 7-day readings are series members, not corrections
     aug11 = archive.loc[archive["claim_id"] == "USOF-20260811-01"].iloc[0]
-    assert aug11["superseded_by"] == "USOF-20260821-02"
+    assert pd.isna(aug11["superseded_by"])
+    # no credibility-grading verbs anywhere in the descriptions
+    assert not archive["claim_text"].str.startswith(
+        ("Claimed", "Confirmed")
+    ).any()
+    # the two-figure planned night is split into one row per figure
+    assert "USOF-20260819-04B" in set(archive["claim_id"])
 
 
 def test_archive_rejects_dangling_supersedes(tmp_path):
