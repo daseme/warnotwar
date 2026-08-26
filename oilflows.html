@@ -11,7 +11,9 @@
     font-family: Georgia, 'Times New Roman', serif;
     background: #1a1a1a;
     color: #fff;
-    overflow-x: hidden;
+    /* clip, not hidden: overflow-x:hidden makes body a scroll container
+       and silently disables position:sticky for the scrolly graphic */
+    overflow-x: clip;
   }
   body {
     display: flex; flex-direction: column; align-items: center;
