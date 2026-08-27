@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab 8: Challenge — Hormuz Lab</title>
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <div class="site-title">Hormuz Lab <span>·</span> How a Strait Becomes a Price</div>
+    <div class="grade-switch" id="grade-switch">
+      <button data-g="5" class="on">5th grade</button>
+      <button data-g="8">8th grade</button>
+      <button data-g="12">12th grade</button>
+    </div>
+  </div>
+</header>
+
+<div class="date-strip" id="date-strip"></div>
+
+<nav class="lab-nav" id="lab-nav"></nav>
+
+<main class="lab-content">
+  <section class="lab-section active" id="lab-8">
+    <h2>Challenge Lab: You Decide</h2>
+    <p class="subtitle">Click any point on the chart. Study what the market knew. Predict what happened next.</p>
+    <div class="card-grid" id="chal-chart-wrap" style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
+      <div style="width:100%;">
+        <div style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">BNO share price · Click a point to select a date</div>
+        <svg id="chal-svg" viewBox="0 0 640 120" style="width:100%;height:120px;display:block;"></svg>
+      </div>
+    </div>
+    <div id="chal-freeze" style="margin-top:16px;"></div>
+    <div id="chal-predict" style="margin-top:16px;"></div>
+    <div id="chal-reveal" style="margin-top:16px;display:none;"></div>
+  </section>
+</main>
+
+<script src="shared.js"></script>
+<script>
+let chalIdx=2, chalReasons=new Set(), chalDir=null, chalRevealed=false;
+
+function renderChallenge(){
+  // Chart
+  const svg=$('chal-svg');
+  const W=640, H=120, pad={top:10,bottom:20,left:10,right:10};
+  const minBNO=Math.min(...dates.map(d=>d.bno))*0.95;
+  const maxBNO=Math.max(...dates.map(d=>d.bno))*1.05;
+  const x=i=>pad.left+(i/(dates.length-1))*(W-pad.left-pad.right);
+  const y=v=>pad.top+(1-(v-minBNO)/(maxBNO-minBNO))*(H-pad.top-pad.bottom);
+  let s='';
+  for(let i=0;i<3;i++){ const gy=pad.top+(i/2)*(H-pad.top-pad.bottom); s+=`<line x1="${pad.left}" y1="${gy}" x2="${W-pad.right}" y2="${gy}" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>`; }
+  let areaPath=`M${x(0)},${y(dates[0].bno)}`;
+  dates.forEach((d,i)=>areaPath+=` L${x(i)},${y(d.bno)}`);
+  areaPath+=` L${x(dates.length-1)},${H-pad.bottom} L${x(0)},${H-pad.bottom} Z`;
+  s+=`<path d="${areaPath}" fill="rgba(88,166,255,0.08)"/>`;
+  let linePath=`M${x(0)},${y(dates[0].bno)}`;
+  dates.forEach((d,i)=>{ if(i>0) linePath+=` L${x(i)},${y(d.bno)}`; });
+  s+=`<path d="${linePath}" fill="none" stroke="var(--text-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`;
+  dates.forEach((d,i)=>{
+    const on=i===chalIdx;
+    s+=`<circle cx="${x(i)}" cy="${y(d.bno)}" r="${on?6:4}" fill="${on?'var(--text-primary)':'var(--bg)'}" stroke="${on?'var(--bg)':'var(--text-primary)'}" stroke-width="${on?2:1.5}" class="chart-point${on?' on':''}" data-idx="${i}" style="cursor:pointer;transition:r 0.2s;"/>`;
+    s+=`<text x="${x(i)}" y="${H-4}" fill="${on?'var(--text-primary)':'rgba(255,255,255,0.3)'}" font-size="10" text-anchor="middle">${d.label}</text>`;
+    s+=`<text x="${x(i)}" y="${y(d.bno)-10}" fill="${on?'var(--text-primary)':'rgba(255,255,255,0.3)'}" font-size="10" text-anchor="middle" font-family="var(--font-mono)" font-variant-numeric="tabular-nums">$${d.bno.toFixed(2)}</text>`;
+  });
+  svg.innerHTML=s;
+  svg.querySelectorAll('.chart-point').forEach(p=>{ p.onclick=()=>{ chalIdx=+p.dataset.idx; chalRevealed=false; chalReasons.clear(); chalDir=null; renderChallenge(); }; });
+
+  // Freeze frame
+  const d=dates[chalIdx];
+  const next=dates[chalIdx+1];
+  $('chal-freeze').innerHTML=`<div class="detail-panel"><h4><span style="display:inline-block;padding:2px 8px;border-radius:10px;background:var(--text-primary);color:var(--bg);font-size:10px;text-transform:uppercase;letter-spacing:0.05em;margin-right:8px;">Freeze Frame</span>${d.label}, 2026 — What the market knew</h4><div class="card-grid" style="grid-template-columns:repeat(2,1fr);margin-top:12px;"><div class="card" style="cursor:default;padding:10px 12px;"><div class="c-label">Flow</div><div class="c-value" style="color:${d.hormuz<10?'var(--c4)':(d.hormuz<50?'var(--c3)':'var(--c2)')};font-size:18px;">${d.hormuz}%</div><div style="font-size:11px;color:var(--text-tertiary)">Hormuz traffic vs baseline</div></div><div class="card" style="cursor:default;padding:10px 12px;"><div class="c-label">Buffer</div><div class="c-value" style="color:${d.buffer<45?'var(--c3)':'var(--c2)'};font-size:18px;">${d.buffer} days</div><div style="font-size:11px;color:var(--text-tertiary)">U.S. crude cushion</div></div><div class="card" style="cursor:default;padding:10px 12px;"><div class="c-label">Brent</div><div class="c-value" style="font-size:18px;">${fmt$(d.brent)}</div><div style="font-size:11px;color:var(--text-tertiary)">Near-month futures</div></div><div class="card" style="cursor:default;padding:10px 12px;"><div class="c-label">BNO</div><div class="c-value" style="font-size:18px;">${fmt$(d.bno)}</div><div style="font-size:11px;color:var(--text-tertiary)">Share price</div></div></div><div style="margin-top:10px;font-size:12px;color:var(--text-tertiary);line-height:1.5;"><strong>News:</strong> ${d.news}. Saudi Yanbu bypass at ${d.yanbu}% of baseline. UAE Fujairah at ${d.fujairah}%.${next?` Next data point: <strong>${next.label}</strong>.`:' This is the last date in our dataset.'}</div></div>`;
+
+  // Predict
+  const pel=$('chal-predict');
+  if(!next){ pel.innerHTML=`<div class="predict-box"><h4>What happens next?</h4><p class="pq">This is the last date in our dataset. Try selecting an earlier date to play the prediction game.</p></div>`; $('chal-reveal').style.display='none'; return; }
+
+  let ph=`<div class="predict-box"><h4>What happens next?</h4><p class="pq">On <strong>${d.label}</strong>, the market knew all of the above. Over the next 5 trading days (to <strong>${next.label}</strong>), which signals do you think matter most? Select all that apply, then choose a direction.</p>`;
+  ph+=`<div class="card-grid" style="grid-template-columns:1fr 1fr;margin-bottom:12px;">`;
+  chalReasonsList.forEach(opt=>{ const on=chalReasons.has(opt.key); ph+=`<div class="card${on?' on':''}" data-key="${opt.key}" style="padding:10px 12px;display:flex;align-items:center;gap:8px;"><div style="width:16px;height:16px;border-radius:4px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;${on?'background:var(--text-primary);border-color:var(--text-primary);color:var(--bg);':''}">${on?'✓':''}</div><div style="font-size:13px;color:${on?'var(--text-primary)':'var(--text-secondary)'}">${opt.label}</div></div>`; });
+  ph+=`</div>`;
+  ph+=`<p class="pq" style="margin-bottom:10px;">What do you think BNO did over the next 5 trading days?</p>`;
+  const dirs=[{key:'down10',label:'↓ > 10%'},{key:'down5',label:'↓ 0–10%'},{key:'flat',label:'~ flat'},{key:'up5',label:'↑ 0–10%'},{key:'up10',label:'↑ > 10%'}];
+  ph+=`<div class="card-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:12px;">`;
+  dirs.forEach(dir=>{ ph+=`<button class="guess-btn${chalDir===dir.key?' picked':''}" data-dir="${dir.key}" style="padding:10px 12px;font-size:13px;text-align:center;border:1px solid var(--border);background:transparent;color:var(--text-secondary);border-radius:8px;cursor:pointer;transition:all 0.15s;font-family:inherit;">${dir.label}</button>`; });
+  ph+=`</div>`;
+  const canSubmit=chalReasons.size>0&&chalDir!==null;
+  ph+=`<button class="submit-btn" id="chal-submit" ${canSubmit?'':'disabled'}>Reveal what happened</button></div>`;
+  pel.innerHTML=ph;
+
+  pel.querySelectorAll('.card[data-key]').forEach(c=>{
+    c.onclick=()=>{ const key=c.dataset.key; if(chalReasons.has(key)) chalReasons.delete(key); else chalReasons.add(key); chalRevealed=false; renderChallenge(); };
+  });
+  pel.querySelectorAll('.guess-btn').forEach(b=>{
+    b.onclick=()=>{ chalDir=b.dataset.dir; chalRevealed=false; renderChallenge(); };
+  });
+  const submit=document.getElementById('chal-submit');
+  if(submit) submit.onclick=()=>{ if(canSubmit){ chalRevealed=true; renderChallengeReveal(); } };
+}
+
+function renderChallengeReveal(){
+  const d=dates[chalIdx], next=dates[chalIdx+1];
+  const el=$('chal-reveal');
+  if(!next||!chalRevealed){ el.style.display='none'; return; }
+  el.style.display='block';
+
+  const actualChg=((next.bno-d.bno)/d.bno*100);
+  const actualLabel=actualChg>10?'up10':actualChg>2?'up5':actualChg>=-2?'flat':actualChg>-10?'down5':'down10';
+  const dirCorrect=chalDir===actualLabel;
+
+  let reasoningScore=0, maxReasoning=0;
+  chalReasonsList.forEach(opt=>{ const isCorrect=opt.correct(d); if(isCorrect) maxReasoning++; if(chalReasons.has(opt.key)&&isCorrect) reasoningScore++; if(chalReasons.has(opt.key)&&!isCorrect) reasoningScore--; });
+  const totalScore=Math.max(0,reasoningScore);
+  const scorePct=maxReasoning>0?Math.round((totalScore/maxReasoning)*100):0;
+  const scoreColor=scorePct>=70?'var(--c2)':(scorePct>=40?'var(--c3)':'var(--c4)');
+  const scoreBg=scorePct>=70?'rgba(63,185,80,0.15)':(scorePct>=40?'rgba(210,153,34,0.15)':'rgba(248,81,73,0.15)');
+
+  let h=`<div class="detail-panel">`;
+  h+=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><div style="width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;background:${scoreBg};color:${scoreColor};flex-shrink:0;">${scorePct}</div><div><div style="font-size:16px;font-weight:600;">${dirCorrect?'Direction correct!':'Direction missed'}</div><div style="font-size:13px;color:var(--text-secondary);">BNO moved from ${fmt$(d.bno)} to ${fmt$(next.bno)} — <strong>${actualChg>0?'+':''}${actualChg.toFixed(1)}%</strong></div></div></div>`;
+  h+=`<div style="font-size:13px;line-height:1.7;color:var(--text-secondary);">${dirCorrect?'You correctly predicted the direction. ':'The market moved '+ (actualChg>0?'up':'down') +' more than you expected. '}Your reasoning score: <strong>${totalScore}/${maxReasoning}</strong> relevant signals identified.</div>`;
+
+  h+=`<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);"><div style="font-size:12px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;font-weight:500;">Signal check</div>`;
+  chalReasonsList.forEach(opt=>{
+    const isCorrect=opt.correct(d), wasSelected=chalReasons.has(opt.key);
+    const dotColor=wasSelected&&isCorrect?'var(--c2)':(wasSelected&&!isCorrect?'var(--c4)':(isCorrect?'var(--c3)':'rgba(255,255,255,0.1)'));
+    const label=wasSelected&&isCorrect?'✓ You caught this':(wasSelected&&!isCorrect?'✗ You overcalled this':(isCorrect?'○ You missed this':''));
+    h+=`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:13px;color:var(--text-secondary);"><div style="width:6px;height:6px;border-radius:50%;background:${dotColor};flex-shrink:0;"></div>${opt.label} <span style="color:var(--text-tertiary);margin-left:auto;font-size:11px;">${label}</span></div>`;
+  });
+  h+=`</div>`;
+
+  h+=`<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);"><div style="font-size:12px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;font-weight:500;">Why the market moved</div>`;
+  h+=`<div style="font-size:13px;line-height:1.7;color:var(--text-secondary);">`;
+  if(d.hormuz<10) h+=`On ${d.label}, Hormuz was nearly shut (${d.hormuz}% of baseline). Even with Yanbu bypass at ${d.yanbu}%, the physical loss was massive. The buffer was thin (${d.buffer} days). Markets priced in sustained scarcity, pushing Brent to ${fmt$(d.brent)} and BNO to ${fmt$(d.bno)}. By ${next.label}, the move continued as the reality of partial closure sank in.`;
+  else if(d.hormuz<50) h+=`Traffic was deteriorating (${d.hormuz}% of baseline) but the full extent wasn't yet clear. Markets update beliefs as new signals arrive. The uncertainty itself is what drives volatility — prices often move most sharply during the "fog of war" phase before final data confirms the magnitude.`;
+  else h+=`Conditions were relatively normal. The market had no major supply scare to price in. BNO remained stable around ${fmt$(d.bno)}.`;
+  h+=`</div></div>`;
+
+  h+=`</div>`;
+  el.innerHTML=h;
+  el.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function onDateChange() {
+  renderHeader();
+}
+
+function onGradeChange() {
+  renderChallenge();
+}
+
+const _origInit = initShared;
+initShared = function() {
+  _origInit();
+  renderChallenge();
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initShared);
+} else {
+  initShared();
+}
+</script>
+
+</body>
+</html>

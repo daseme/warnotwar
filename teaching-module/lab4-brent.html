@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab 4: Meet Brent — Hormuz Lab</title>
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <div class="site-title">Hormuz Lab <span>·</span> How a Strait Becomes a Price</div>
+    <div class="grade-switch" id="grade-switch">
+      <button data-g="5" class="on">5th grade</button>
+      <button data-g="8">8th grade</button>
+      <button data-g="12">12th grade</button>
+    </div>
+  </div>
+</header>
+
+<div class="date-strip" id="date-strip"></div>
+
+<nav class="lab-nav" id="lab-nav"></nav>
+
+<main class="lab-content">
+  <section class="lab-section active" id="lab-4">
+    <h2>Lab 4: Meet Brent</h2>
+    <p class="subtitle">Four prices. Four different things. Which one are we actually talking about?</p>
+    <div id="l4-content"></div>
+  </section>
+</main>
+
+<script src="shared.js"></script>
+<script>
+let l4Open='spot';
+
+function renderL4(){
+  const d=dates[dateIdx], prev=dateIdx>0?dates[dateIdx-1]:null;
+  const cards=[
+    {key:'spot',label:'Brent Spot',value:fmt$(d.brent),tag:'Physical oil',tagClass:'tag-neutral',desc:grade===5?'The actual price of a barrel of oil right now, if you wanted to buy it for delivery today.':(grade===8?'Physical Brent crude for immediate delivery. Different from futures, which are contracts for later delivery.':'Physical Brent crude for immediate (spot) delivery. The spot market is thin and often inferred from futures prices minus cost of carry.')},
+    {key:'near',label:'Near-month Future',value:fmt$(d.brent),tag:'Short-term contract',tagClass:'tag-info',desc:grade===5?'A promise to buy oil in about one month. This is what most people mean when they say "the oil price."':(grade===8?'An agreement today for oil delivery in ~1 month. The "headline" oil price is usually this futures contract.':'ICE Brent Crude Futures, nearest contract. The benchmark for most oil price references. Expires monthly; BNO rolls before expiration.')},
+    {key:'next',label:'Next-month Future',value:fmt$(d.brent*1.03),tag:'Farther out',tagClass:'tag-warn',desc:grade===5?'A promise to buy oil a little further in the future. Sometimes costs more, sometimes less.':(grade===8?'The contract after the near-month. The gap between near and next is the roll yield. If next > near, that\'s contango.':'ICE Brent Crude Futures, second-nearest contract. The spread vs near-month determines roll yield and curve structure.')},
+    {key:'bno',label:'BNO',value:fmt$(d.bno),tag:'ETF share',tagClass:'tag-up',desc:grade===5?'A fund people can buy. It is designed to move with short-term Brent oil contracts. One share is NOT one barrel.':(grade===8?'An exchange-traded fund holding Brent futures. Its NAV tracks daily % changes in near-month Brent, plus collateral minus expenses.':'United States Brent Oil Fund (BNO). NAV seeks to reflect daily % changes in ICE Brent Benchmark Futures Contract, plus collateral income and minus expenses (~0.45% annually).')}
+  ];
+  let h='<div class="card-grid">';
+  cards.forEach(c=>{ const on=c.key===l4Open; h+=`<div class="card${on?' on':''}" data-key="${c.key}"><div class="c-label">${c.label}</div><div class="c-value">${c.value}</div><span class="c-tag ${c.tagClass}">${c.tag}</span></div>`; });
+  h+='</div>';
+  const c=cards.find(x=>x.key===l4Open);
+  h+=`<div class="detail-panel"><h4>${c.label}</h4><p>${c.desc}</p></div>`;
+  if(grade>=8){
+    h+=`<div class="detail-panel" style="border-left:3px solid var(--c3);"><h4>Why isn't BNO $${d.brent.toFixed(2)}?</h4><p>A share of BNO is <strong>not one barrel of oil</strong>. BNO holds many futures contracts divided across many shares. Its price reflects:</p><ul><li>The <em>percentage change</em> in Brent futures (not the dollar price of a barrel)</li><li>How many shares exist (share count affects price per share)</li><li>Expenses deducted daily</li><li>Roll yield from contract transitions</li></ul><div class="note">This is one of the most common misconceptions about commodity ETFs. BNO tracks <em>returns</em>, not prices.</div></div>`;
+  }
+  if(grade===12){
+    h+=`<div class="detail-panel"><h4>The futures curve on ${d.label}</h4><div class="roll-vis"><div class="roll-barrel"><div class="rl">Spot (inferred)</div><div class="rp" style="color:var(--accent)">${fmt$(d.brent)}</div></div><div class="roll-arrow">→</div><div class="roll-barrel"><div class="rl">Near-month</div><div class="rp" style="color:var(--accent)">${fmt$(d.brent)}</div></div><div class="roll-arrow">→</div><div class="roll-barrel"><div class="rl">Next-month</div><div class="rp" style="color:var(--c3)">${fmt$(d.brent*1.03)}</div><span class="roll-tag" style="background:rgba(210,153,34,0.12);color:var(--c3)">Contango</span></div></div><p>During the Hormuz crisis, the curve may shift into <strong>backwardation</strong> (near-month > next-month) as immediate scarcity is priced higher than future availability. This creates a <em>positive</em> roll yield for BNO.</p></div>`;
+  }
+  $('l4-content').innerHTML=h;
+  $('l4-content').querySelectorAll('.card').forEach(c=>{ c.onclick=()=>{ l4Open=c.dataset.key; renderL4(); }; });
+}
+
+function onDateChange() {
+  renderHeader();
+  renderL4();
+}
+
+function onGradeChange() {
+  renderL4();
+}
+
+const _origInit = initShared;
+initShared = function() {
+  _origInit();
+  renderL4();
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initShared);
+} else {
+  initShared();
+}
+</script>
+
+</body>
+</html>

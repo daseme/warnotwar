@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab 5: Inside BNO — Hormuz Lab</title>
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <div class="site-title">Hormuz Lab <span>·</span> How a Strait Becomes a Price</div>
+    <div class="grade-switch" id="grade-switch">
+      <button data-g="5" class="on">5th grade</button>
+      <button data-g="8">8th grade</button>
+      <button data-g="12">12th grade</button>
+    </div>
+  </div>
+</header>
+
+<div class="date-strip" id="date-strip"></div>
+
+<nav class="lab-nav" id="lab-nav"></nav>
+
+<main class="lab-content">
+  <section class="lab-section active" id="lab-5">
+    <h2>Lab 5: Inside the BNO Machine</h2>
+    <p class="subtitle">Five gears turn. Click one to learn what it does and adjust its settings.</p>
+    <div class="machine-wrap" id="l5-machine"></div>
+    <div class="result-card" id="l5-output"></div>
+    <div id="l5-detail"></div>
+
+    <h2 style="margin-top:40px;">Who Holds BNO?</h2>
+    <p class="subtitle">BNO is an ETF, but who actually owns the shares? The holder base matters for liquidity, volatility, and how the product behaves in a crisis.</p>
+    <div class="holder-grid" id="l5-holders"></div>
+    <div id="l5-holder-detail"></div>
+  </section>
+</main>
+
+<script src="shared.js"></script>
+<script>
+let l5Gear='futures', l5Brent=95.74, l5Next=98.20, l5Coll=4.5, l5Exp=0.45, l5Prem=0;
+let l5HolderOpen='retail';
+
+const l5Gears=[
+  {key:'futures',label:'Brent futures',sub:'biggest driver',color:'var(--accent)',x:90,y:70},
+  {key:'roll',label:'The roll',sub:'contango/backward',color:'var(--c3)',x:230,y:70},
+  {key:'collateral',label:'Collateral',sub:'interest income',color:'var(--c2)',x:370,y:70},
+  {key:'expenses',label:'Expenses',sub:'annual fee drag',color:'var(--c4)',x:160,y:170},
+  {key:'premium',label:'Premium/discount',sub:'market vs NAV',color:'var(--c5)',x:300,y:170}
+];
+const l5Conns=[{from:'futures',to:'roll'},{from:'roll',to:'collateral'},{from:'collateral',to:'premium'},{from:'expenses',to:'premium'}];
+
+const l5Holders=[
+  {
+    key:'retail', label:'Retail investors',
+    desc5:'Regular people buy BNO through apps like Robinhood or Fidelity. They want oil exposure without opening a futures account.',
+    desc8:'Direct retail purchase via brokerage accounts. BNO offers commodity exposure without margin requirements or futures knowledge. Retail flow can be sentiment-driven and procyclical.',
+    desc12:'Direct retail ownership through self-directed brokerage accounts. Retail flows into BNO are often sentiment-driven and procyclical — inflows spike when oil makes headlines. This creates a "dumb money" overlay on top of the underlying futures price. Retail holders do not create/redeem directly; they trade on secondary markets.',
+    color:'var(--c1)'
+  },
+  {
+    key:'ria', label:'RIAs / Advisors',
+    desc5:'Financial advisors put BNO in client portfolios. It gives clients oil exposure as part of a bigger plan.',
+    desc8:'Registered Investment Advisors use BNO in client portfolios as a commodity allocation. Rebalancing flows can create predictable buying/selling pressure.',
+    desc12:'RIAs and wirehouse advisors use BNO as a satellite commodity allocation within diversified portfolios. Rebalancing mechanics (e.g., quarterly target-weight adjustments) create predictable flows independent of oil fundamentals. Advisor-sold assets tend to be stickier than pure retail but less sticky than institutional mandates.',
+    color:'var(--c2)'
+  },
+  {
+    key:'institutional', label:'Institutional mandates',
+    desc5:'Big organizations like pension funds sometimes buy BNO as part of their commodity investments.',
+    desc8:'Pensions, endowments, and family offices with commodity mandates. These are slow-moving, strategic allocations.',
+    desc12:'Pension funds, endowments, and sovereign wealth funds with explicit commodity beta targets. These allocations are strategic, slow-moving, and governed by investment policy statements. A university endowment might hold 3-5% in "real assets" including BNO as a Brent proxy. Outflows here are regime-dependent, not headline-dependent.',
+    color:'var(--c3)'
+  },
+  {
+    key:'aps', label:'Authorized Participants',
+    desc5:'Special traders who can create or destroy BNO shares to keep the price fair. They don\'t hold BNO for long.',
+    desc8:'APs (usually market makers) create/redeem shares at NAV to arbitrage premium/discounts. Their holdings are temporary and mechanical.',
+    desc12:'Authorized Participants (typically large market makers like Jane Street, Citadel Securities) create and redeem Creation Units (25,000 shares) at NAV. AP holdings are transient — they exist only during the arbitrage window. AP activity is the mechanism that keeps BNO\'s market price tethered to NAV. In stressed markets, AP capacity constraints can cause premium/discount persistence.',
+    color:'var(--c5)'
+  },
+  {
+    key:'notindex', label:'NOT: Index funds',
+    desc5:'BNO is not in the S&P 500, so big index funds like VOO or SPY do not own it.',
+    desc8:'BNO is not a component of major equity indices (S&P 500, Russell 2000, etc.). Passive equity index funds do not hold it.',
+    desc12:'BNO is excluded from broad equity indices (S&P 500, Russell 2000, MSCI ACWI). Therefore, passive equity index funds and their ETF wrappers (SPY, VTI, VXUS) hold zero BNO. This is structurally important: BNO does not benefit from the secular inflows into passive equity. Its demand is entirely active, tactical, or strategic-commodity driven.',
+    color:'var(--c4)', notIncluded:true
+  }
+];
+
+function l5Calc(){
+  const rollYield=((l5Next-l5Brent)/l5Brent)*100;
+  const base=43.95;
+  const adj=(rollYield/252+l5Coll/100/252-l5Exp/100/252+l5Prem/100/252)*100;
+  return {price:base+adj,rollYield};
+}
+
+function renderL5(){
+  const W=520,H=240;
+  let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+  l5Conns.forEach(c=>{
+    const g1=l5Gears.find(g=>g.key===c.from), g2=l5Gears.find(g=>g.key===c.to);
+    const on=l5Gear===c.from||l5Gear===c.to;
+    s+=`<line x1="${g1.x}" y1="${g1.y}" x2="${g2.x}" y2="${g2.y}" class="pipe${on?' on':''}"/>`;
+  });
+  l5Gears.forEach(g=>{
+    const on=g.key===l5Gear, r=28;
+    s+=`<g class="gear${on?' on':''}" data-key="${g.key}" transform="translate(${g.x},${g.y})"><circle cx="0" cy="0" r="${r}" fill="none" stroke="${on?'var(--accent)':'var(--border)'}" stroke-width="${on?2.5:1.5}" class="gear-ring"/><circle cx="0" cy="0" r="${on?9:7}" fill="${on?'var(--accent)':'var(--bg)'}" stroke="${g.color}" stroke-width="2" class="gear-hub"/><text x="0" y="4" text-anchor="middle" fill="${on?'var(--bg)':g.color}" font-size="11" font-weight="600">${l5Gears.indexOf(g)+1}</text></g>`;
+    s+=`<text x="${g.x}" y="${g.y+r+13}" fill="var(--text-primary)" font-size="10" font-weight="500" text-anchor="middle">${g.label}</text>`;
+    s+=`<text x="${g.x}" y="${g.y+r+24}" fill="var(--text-tertiary)" font-size="9" text-anchor="middle">${g.sub}</text>`;
+  });
+  const c=l5Calc();
+  s+=`<g transform="translate(${W-55},${H/2})"><rect x="-42" y="-22" width="84" height="44" rx="8" fill="var(--bg-elevated)" stroke="var(--border)" stroke-width="1.5"/><text x="0" y="-6" text-anchor="middle" fill="var(--text-tertiary)" font-size="9">BNO</text><text x="0" y="12" text-anchor="middle" fill="var(--text-primary)" font-size="15" font-weight="600" font-variant-numeric="tabular-nums">$${c.price.toFixed(2)}</text></g>`;
+  const last=l5Gears.find(g=>g.key==='premium');
+  s+=`<line x1="${last.x+28}" y1="${last.y}" x2="${W-97}" y2="${H/2}" class="pipe on"/><polygon points="${W-97},${H/2} ${W-105},${H/2-4} ${W-105},${H/2+4}" fill="var(--accent)"/>`;
+  s+=`</svg>`;
+  $('l5-machine').innerHTML=s;
+  $('l5-machine').querySelectorAll('.gear').forEach(g=>{ g.onclick=()=>{ l5Gear=g.dataset.key; renderL5(); }; });
+
+  const calc=l5Calc();
+  $('l5-output').innerHTML=`<div class="r-eq">BNO estimated NAV per share</div><div class="r-num">$${calc.price.toFixed(2)}</div><div class="r-label">Roll yield: ${calc.rollYield>0?'+':''}${calc.rollYield.toFixed(2)}% · Expenses: ${l5Exp}%/yr</div>`;
+
+  const g=l5Gears.find(x=>x.key===l5Gear);
+  let h=`<div class="detail-panel"><h4>Gear ${l5Gears.indexOf(g)+1}: ${g.label}</h4>`;
+  if(l5Gear==='futures'){
+    h+=`<p>${grade===5?'This is the biggest gear. When Brent oil futures go up, BNO generally goes up too.':'BNO\'s benchmark is the ICE Brent near-month futures contract. If that contract rises 5%, BNO\'s NAV generally seeks to rise by approximately 5%.'}</p>`;
+    h+=`<div class="slider-row"><label>Brent futures</label><input type="range" id="l5-brent" min="70" max="140" step="0.5" value="${l5Brent}"><span class="slider-val" id="l5v-brent">$${l5Brent.toFixed(2)}</span></div>`;
+  } else if(l5Gear==='roll'){
+    const isContango=l5Next>l5Brent;
+    h+=`<p>${grade===5?'Every so often, BNO swaps an old oil promise for a new one. Sometimes the new one costs more (contango = loss). Sometimes less (backwardation = gain).':'USCF rolls the benchmark into the next month as expiration approaches. The price difference is the roll yield.'}</p>`;
+    h+=`<div class="roll-vis"><div class="roll-barrel"><div class="rl">Near-month</div><div class="rp" style="color:var(--accent)">$${l5Brent.toFixed(2)}</div></div><div class="roll-arrow">→</div><div class="roll-barrel"><div class="rl">Next-month</div><div class="rp" style="color:var(--c3)">$${l5Next.toFixed(2)}</div><span class="roll-tag" style="background:${isContango?'rgba(210,153,34,0.12)':'rgba(63,185,80,0.12)'};color:${isContango?'var(--c3)':'var(--c2)'}">${isContango?'Contango':'Backwardation'}</span></div></div>`;
+    h+=`<div class="slider-row"><label>Next-month price</label><input type="range" id="l5-next" min="70" max="150" step="0.5" value="${l5Next}"><span class="slider-val" id="l5v-next">$${l5Next.toFixed(2)}</span></div>`;
+  } else if(l5Gear==='collateral'){
+    h+=`<p>${grade===5?'BNO keeps some money in safe investments like government bonds. They earn a little interest.':'BNO collateralizes futures with cash and Treasuries. In a high-rate environment, this income is meaningful.'}</p>`;
+    h+=`<div class="slider-row"><label>Collateral rate</label><input type="range" id="l5-coll" min="0" max="8" step="0.1" value="${l5Coll}"><span class="slider-val" id="l5v-coll">${l5Coll.toFixed(1)}%</span></div>`;
+  } else if(l5Gear==='expenses'){
+    h+=`<p>${grade===5?'Running a fund costs money. BNO charges a small annual fee — like a tiny leak in a bucket.':'BNO\'s expense ratio is ~'+l5Exp+'% annually, deducted daily. Over 10 years, this drag compounds.'}</p>`;
+    h+=`<div class="slider-row"><label>Expense ratio</label><input type="range" id="l5-exp" min="0" max="2" step="0.05" value="${l5Exp}"><span class="slider-val" id="l5v-exp">${l5Exp.toFixed(2)}%</span></div>`;
+  } else if(l5Gear==='premium'){
+    h+=`<p>${grade===5?'BNO has two prices: what the fund says it\'s worth (NAV), and what people pay on the stock market. Usually almost the same.':'BNO trades on NYSE. APs create/redeem shares at NAV, which normally keeps market price close to NAV. In stress, premiums/discounts can widen.'}</p>`;
+    h+=`<div class="slider-row"><label>Market premium</label><input type="range" id="l5-prem" min="-2" max="2" step="0.1" value="${l5Prem}"><span class="slider-val" id="l5v-prem">${l5Prem>0?'+':''}${l5Prem.toFixed(1)}%</span></div>`;
+  }
+  h+=`</div>`;
+  $('l5-detail').innerHTML=h;
+  const sb=$('l5-brent'), sn=$('l5-next'), sc=$('l5-coll'), se=$('l5-exp'), sp=$('l5-prem');
+  if(sb) sb.oninput=()=>{l5Brent=+sb.value; refreshL5();};
+  if(sn) sn.oninput=()=>{l5Next=+sn.value; refreshL5();};
+  if(sc) sc.oninput=()=>{l5Coll=+sc.value; refreshL5();};
+  if(se) se.oninput=()=>{l5Exp=+se.value; refreshL5();};
+  if(sp) sp.oninput=()=>{l5Prem=+sp.value; refreshL5();};
+}
+
+function refreshL5(){
+  const sb=$('l5-brent'), sn=$('l5-next'), sc=$('l5-coll'), se=$('l5-exp'), sp=$('l5-prem');
+  if(sb) $('l5v-brent').textContent='$'+l5Brent.toFixed(2);
+  if(sn) $('l5v-next').textContent='$'+l5Next.toFixed(2);
+  if(sc) $('l5v-coll').textContent=l5Coll.toFixed(1)+'%';
+  if(se) $('l5v-exp').textContent=l5Exp.toFixed(2)+'%';
+  if(sp) $('l5v-prem').textContent=(l5Prem>0?'+':'')+l5Prem.toFixed(1)+'%';
+  renderL5();
+}
+
+function renderHolders(){
+  const grid=$('l5-holders');
+  grid.innerHTML=l5Holders.map(h=>{
+    const on=h.key===l5HolderOpen;
+    const desc=grade===5?h.desc5:(grade===8?h.desc8:h.desc12);
+    return `<div class="card${on?' on':''}${h.notIncluded?' not-included':''}" data-key="${h.key}" style="padding:14px 16px;"><div class="hh-label" style="color:${h.color}">${h.notIncluded?'EXCLUDED':'HOLDER TYPE'}</div><div class="hh-title">${h.label}</div></div>`;
+  }).join('');
+  grid.querySelectorAll('.card').forEach(c=>{
+    c.onclick=()=>{ l5HolderOpen=c.dataset.key; renderHolders(); };
+  });
+
+  const h=l5Holders.find(x=>x.key===l5HolderOpen);
+  const desc=grade===5?h.desc5:(grade===8?h.desc8:h.desc12);
+  $('l5-holder-detail').innerHTML=`<div class="detail-panel" style="border-left:3px solid ${h.color};"><h4>${h.label}</h4><p>${desc}</p>${h.notIncluded?'<div class="note">This is structurally important. BNO demand is driven by active allocation decisions, not passive equity inflows.</div>':''}</div>`;
+}
+
+function onDateChange() {
+  renderHeader();
+}
+
+function onGradeChange() {
+  renderL5();
+  renderHolders();
+}
+
+const _origInit = initShared;
+initShared = function() {
+  _origInit();
+  renderL5();
+  renderHolders();
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initShared);
+} else {
+  initShared();
+}
+</script>
+
+</body>
+</html>

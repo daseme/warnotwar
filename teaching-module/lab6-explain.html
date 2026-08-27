@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab 6: Explain This Day — Hormuz Lab</title>
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <div class="site-title">Hormuz Lab <span>·</span> How a Strait Becomes a Price</div>
+    <div class="grade-switch" id="grade-switch">
+      <button data-g="5" class="on">5th grade</button>
+      <button data-g="8">8th grade</button>
+      <button data-g="12">12th grade</button>
+    </div>
+  </div>
+</header>
+
+<div class="date-strip" id="date-strip"></div>
+
+<nav class="lab-nav" id="lab-nav"></nav>
+
+<main class="lab-content">
+  <section class="lab-section active" id="lab-6">
+    <h2>Lab 6: Explain This Day</h2>
+    <p class="subtitle">Everything the market knew. What do you think happened next?</p>
+    <div class="card-grid" id="l6-dash"></div>
+    <div id="l6-detail"></div>
+    <div class="predict-box" id="l6-predict"></div>
+  </section>
+</main>
+
+<script src="shared.js"></script>
+<script>
+let l6Open='flow', l6Guess=null;
+
+function renderL6(){
+  const d=dates[dateIdx], prev=dateIdx>0?dates[dateIdx-1]:null;
+  const cards=[
+    {key:'flow',label:'Flow',value:d.hormuz+'%',tag:d.hormuz<10?'Crisis':(d.hormuz<50?'Disrupted':'Normal'),tagClass:d.hormuz<10?'tag-down':(d.hormuz<50?'tag-warn':'tag-info')},
+    {key:'buffer',label:'Buffer',value:d.buffer+' days',tag:d.buffer<45?'Tight':'Adequate',tagClass:d.buffer<45?'tag-warn':'tag-info'},
+    {key:'brent',label:'Brent',value:fmt$(d.brent),tag:prev?((d.brent>prev.brent?'+':'')+(((d.brent-prev.brent)/prev.brent*100).toFixed(1))+'%'):'—',tagClass:prev?(d.brent>prev.brent?'tag-down':'tag-up'):'tag-neutral'},
+    {key:'bno',label:'BNO',value:fmt$(d.bno),tag:prev?((d.bno>prev.bno?'+':'')+(((d.bno-prev.bno)/prev.bno*100).toFixed(1))+'%'):'—',tagClass:prev?(d.bno>prev.bno?'tag-down':'tag-up'):'tag-neutral'}
+  ];
+  $('l6-dash').innerHTML=cards.map(c=>{ const on=c.key===l6Open; return `<div class="card${on?' on':''}" data-key="${c.key}"><div class="c-label">${c.label}</div><div class="c-value">${c.value}</div><span class="c-tag ${c.tagClass}">${c.tag}</span></div>`; }).join('');
+  $('l6-dash').querySelectorAll('.card').forEach(c=>{ c.onclick=()=>{ l6Open=c.dataset.key; renderL6(); }; });
+
+  let h='<div class="detail-panel">';
+  if(l6Open==='flow'){ h+=`<h4>Flow layer — ${d.label}</h4><p>Hormuz visible transit: <strong>${d.hormuz}%</strong> of baseline.</p>${d.hormuz<10?'<p>Near-total collapse. Bypass routes (Yanbu at '+d.yanbu+'%, Fujairah at '+d.fujairah+'%) are active but cannot compensate for Hormuz volumes.</p>':(d.hormuz<50?'<p>Significant disruption. Some oil likely moves through dark vessels or ship-to-ship transfers, but these are not independently verifiable.</p>':'<p>Traffic within normal range. No immediate supply concern from the strait.</p>')}`; }
+  else if(l6Open==='buffer'){ h+=`<h4>Buffer layer — ${d.label}</h4><p>U.S. combined crude cushion: <strong>${d.buffer} days</strong> of supply.</p><p>${d.buffer<45?'Below the 5-year average. Low buffer means reduced shock absorption.':'Within normal range. Adequate cushion for short-term disruptions.'}</p>`; }
+  else if(l6Open==='brent'){ h+=`<h4>Brent futures layer — ${d.label}</h4><p>ICE Brent near-month futures: <strong>${fmt$(d.brent)}</strong></p>${prev?'<p>Change from '+prev.label+': <strong>'+((d.brent>prev.brent?'+':'')+(((d.brent-prev.brent)/prev.brent*100).toFixed(1)))+'%</strong></p>':''}<p>The futures price moved <em>before</em> official export data confirmed anything. Rational price discovery under information asymmetry.</p>`; }
+  else { h+=`<h4>BNO layer — ${d.label}</h4><p>BNO share price: <strong>${fmt$(d.bno)}</strong></p>${prev?'<p>Change from '+prev.label+': <strong>'+((d.bno>prev.bno?'+':'')+(((d.bno-prev.bno)/prev.bno*100).toFixed(1)))+'%</strong></p>':''}<p>BNO tracks daily % changes in short-term Brent futures, plus collateral, minus expenses. It does not hold physical oil.</p>`; }
+  h+=`<div class="note">These are the conditions that existed. They do not constitute proof that any one item caused any specific price move.</div></div>`;
+  $('l6-detail').innerHTML=h;
+
+  const next=dates[dateIdx+1];
+  const pel=$('l6-predict');
+  if(!next){ pel.innerHTML=`<h4>What happens next?</h4><p class="pq">This is the last date in our dataset (${d.label}). In the full lab, you would see what happened over the following weeks and months.</p><p class="pq" style="margin-top:8px;color:var(--text-tertiary);">Try selecting an earlier date to play the prediction game.</p>`; return; }
+
+  const guesses=[{label:'↓ more than 10%',val:'down10'},{label:'↓ 0–10%',val:'down5'},{label:'roughly flat',val:'flat'},{label:'↑ 0–10%',val:'up5'},{label:'↑ more than 10%',val:'up10'}];
+  let ph=`<h4>What happens next?</h4><p class="pq">On <strong>${d.label}</strong>, the market knew all of the above. Over the next 5 trading days (to <strong>${next.label}</strong>), what do you think BNO did?</p>`;
+  ph+=`<div class="timeline-mini">${dates.map((dt,i)=>`<span class="tl-date${i===dateIdx?' on':''}">${dt.label}</span>${i<dates.length-1?'<span class="tl-arrow">→</span>':''}`).join('')}</div>`;
+  ph+=`<div class="guess-grid">${guesses.map(g=>`<button class="guess-btn${l6Guess===g.val?' picked':''}" data-val="${g.val}">${g.label}</button>`).join('')}</div>`;
+  ph+=`<div class="reveal-box${l6Guess?' show':''}" id="l6-reveal"><div class="rl" id="l6-rl"></div><div class="rn" id="l6-rn"></div></div>`;
+  pel.innerHTML=ph;
+  pel.querySelectorAll('.guess-btn').forEach(b=>{
+    b.onclick=()=>{
+      l6Guess=b.dataset.val;
+      const actualChg=((next.bno-d.bno)/d.bno*100);
+      const actualLabel=actualChg>10?'up10':actualChg>2?'up5':actualChg>=-2?'flat':actualChg>-10?'down5':'down10';
+      const correct=l6Guess===actualLabel;
+      renderL6();
+      $('l6-rl').innerHTML=correct?`<span style="color:var(--c2)">Well reasoned!</span> BNO moved from ${fmt$(d.bno)} to ${fmt$(next.bno)} — <strong>${actualChg>0?'+':''}${actualChg.toFixed(1)}%</strong>.`:`BNO moved from ${fmt$(d.bno)} to ${fmt$(next.bno)} — <strong>${actualChg>0?'+':''}${actualChg.toFixed(1)}%</strong>.`;
+      let note='';
+      if(d.hormuz<10&&actualChg>0) note='The market priced in sustained scarcity. Even with bypass routes active, the near-total Hormuz halt overwhelmed the buffer.';
+      else if(d.hormuz<50&&actualChg>0) note='Traffic was falling but not yet collapsed. Markets often move most sharply during the uncertainty phase.';
+      else note='Markets aggregate many signals simultaneously. Reasoning through the chain (flow → buffer → expectations → price) is what matters.';
+      $('l6-rn').textContent=note;
+    };
+  });
+}
+
+function onDateChange() {
+  renderHeader();
+  renderL6();
+}
+
+function onGradeChange() {
+  renderL6();
+}
+
+const _origInit = initShared;
+initShared = function() {
+  _origInit();
+  renderL6();
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initShared);
+} else {
+  initShared();
+}
+</script>
+
+</body>
+</html>

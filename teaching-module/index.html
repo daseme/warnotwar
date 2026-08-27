@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hormuz Lab — How a Strait Becomes a Price</title>
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <div class="site-title">Hormuz Lab <span>·</span> How a Strait Becomes a Price</div>
+    <div class="grade-switch" id="grade-switch">
+      <button data-g="5" class="on">5th grade</button>
+      <button data-g="8">8th grade</button>
+      <button data-g="12">12th grade</button>
+    </div>
+  </div>
+</header>
+
+<div class="date-strip" id="date-strip"></div>
+
+<nav class="lab-nav" id="lab-nav"></nav>
+
+<main class="lab-content">
+
+  <div class="landing-hero">
+    <h1>How a Strait Becomes a Price</h1>
+    <p>Eight interactive labs that trace the chain from a geopolitical event in the Persian Gulf to the number on your screen. Follow the oil, measure the cushion, guess the market, meet Brent, and see what BNO actually is.</p>
+  </div>
+
+  <!-- Chain Diagram -->
+  <div class="chain-diagram">
+    <svg viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="cglow"><feGaussianBlur stdDeviation="3"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <!-- Connection lines -->
+      <line x1="112" y1="80" x2="212" y2="80" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+      <line x1="288" y1="80" x2="388" y2="80" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+      <line x1="462" y1="80" x2="562" y2="80" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+      <line x1="638" y1="80" x2="738" y2="80" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+      <line x1="112" y1="200" x2="212" y2="200" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+      <line x1="288" y1="200" x2="388" y2="200" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+      <line x1="462" y1="200" x2="562" y2="200" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+      <line x1="638" y1="200" x2="738" y2="200" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+      <!-- Vertical bridge -->
+      <line x1="788" y1="100" x2="788" y2="180" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+      <polygon points="788,180 784,172 792,172" fill="rgba(255,255,255,0.08)"/>
+
+      <!-- Nodes Row 1 -->
+      <a href="lab1-flow.html" class="chain-node">
+        <rect x="12" y="48" width="100" height="64" rx="10" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1.5"/>
+        <text x="62" y="72" text-anchor="middle" fill="var(--accent)" font-size="11" font-weight="600">LAB 1</text>
+        <text x="62" y="92" text-anchor="middle" fill="var(--text-secondary)" font-size="10">Follow the Oil</text>
+      </a>
+      <a href="lab2-buffer.html" class="chain-node">
+        <rect x="188" y="48" width="100" height="64" rx="10" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1.5"/>
+        <text x="238" y="72" text-anchor="middle" fill="var(--accent)" font-size="11" font-weight="600">LAB 2</text>
+        <text x="238" y="92" text-anchor="middle" fill="var(--text-secondary)" font-size="10">The Cushion</text>
+      </a>
+      <a href="lab3-expectations.html" class="chain-node">
+        <rect x="362" y="48" width="100" height="64" rx="10" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1.5"/>
+        <text x="412" y="72" text-anchor="middle" fill="var(--accent)" font-size="11" font-weight="600">LAB 3</text>
+        <text x="412" y="92" text-anchor="middle" fill="var(--text-secondary)" font-size="10">Market Guesses</text>
+      </a>
+      <a href="lab4-brent.html" class="chain-node">
+        <rect x="538" y="48" width="100" height="64" rx="10" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1.5"/>
+        <text x="588" y="72" text-anchor="middle" fill="var(--accent)" font-size="11" font-weight="600">LAB 4</text>
+        <text x="588" y="92" text-anchor="middle" fill="var(--text-secondary)" font-size="10">Meet Brent</text>
+      </a>
+      <a href="lab5-bno.html" class="chain-node">
+        <rect x="712" y="48" width="100" height="64" rx="10" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="1.5" filter="url(#cglow)"/>
+        <text x="762" y="72" text-anchor="middle" fill="var(--accent)" font-size="11" font-weight="600">LAB 5</text>
+        <text x="762" y="92" text-anchor="middle" fill="var(--text-secondary)" font-size="10">Inside BNO</text>
+      </a>
+
+      <!-- Nodes Row 2 -->
+      <a href="lab6-explain.html" class="chain-node">
+        <rect x="12" y="168" width="100" height="64" rx="10" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1.5"/>
+        <text x="62" y="192" text-anchor="middle" fill="var(--accent)" font-size="11" font-weight="600">LAB 6</text>
+        <text x="62" y="212" text-anchor="middle" fill="var(--text-secondary)" font-size="10">Explain This Day</text>
+      </a>
+      <a href="lab7-story.html" class="chain-node">
+        <rect x="188" y="168" width="100" height="64" rx="10" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1.5"/>
+        <text x="238" y="192" text-anchor="middle" fill="var(--accent)" font-size="11" font-weight="600">LAB 7</text>
+        <text x="238" y="212" text-anchor="middle" fill="var(--text-secondary)" font-size="10">Story Mode</text>
+      </a>
+      <a href="lab8-challenge.html" class="chain-node">
+        <rect x="362" y="168" width="100" height="64" rx="10" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1.5"/>
+        <text x="412" y="192" text-anchor="middle" fill="var(--accent)" font-size="11" font-weight="600">LAB 8</text>
+        <text x="412" y="212" text-anchor="middle" fill="var(--text-secondary)" font-size="10">Challenge</text>
+      </a>
+
+      <!-- Labels -->
+      <text x="62" y="34" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-size="9" font-family="var(--font-mono)" letter-spacing="1">DATA</text>
+      <text x="238" y="34" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-size="9" font-family="var(--font-mono)" letter-spacing="1">BUFFER</text>
+      <text x="412" y="34" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-size="9" font-family="var(--font-mono)" letter-spacing="1">EXPECTATIONS</text>
+      <text x="588" y="34" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-size="9" font-family="var(--font-mono)" letter-spacing="1">PRICE</text>
+      <text x="762" y="34" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-size="9" font-family="var(--font-mono)" letter-spacing="1">PRODUCT</text>
+      <text x="62" y="254" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-size="9" font-family="var(--font-mono)" letter-spacing="1">SYNTHESIS</text>
+      <text x="238" y="254" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-size="9" font-family="var(--font-mono)" letter-spacing="1">NARRATIVE</text>
+      <text x="412" y="254" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-size="9" font-family="var(--font-mono)" letter-spacing="1">TEST</text>
+    </svg>
+  </div>
+
+  <!-- Scenario Summary -->
+  <div class="scenario-summary" id="scenario-summary"></div>
+
+  <!-- Lab Grid -->
+  <div class="lab-grid">
+    <a href="lab1-flow.html" class="lab-card">
+      <div class="lc-num">1</div>
+      <div class="lc-title">Follow the Oil</div>
+      <div class="lc-desc">Compare four different claims about Hormuz flow. Same strait, wildly different numbers. Learn why.</div>
+    </a>
+    <a href="lab2-buffer.html" class="lab-card">
+      <div class="lc-num">2</div>
+      <div class="lc-title">The Cushion</div>
+      <div class="lc-desc">Interactive tank simulator. Change storage, refinery use, and SPR. Watch days-of-supply recalculate in real time.</div>
+    </a>
+    <a href="lab3-expectations.html" class="lab-card">
+      <div class="lc-num">3</div>
+      <div class="lc-title">The Market Guesses</div>
+      <div class="lc-desc">Markets trade expectations, not yesterday's data. Assign probabilities and see what sentiment emerges.</div>
+    </a>
+    <a href="lab4-brent.html" class="lab-card">
+      <div class="lc-num">4</div>
+      <div class="lc-title">Meet Brent</div>
+      <div class="lc-desc">Four prices. Four different things. Spot, near-month, next-month, and BNO. Which one are we actually talking about?</div>
+    </a>
+    <a href="lab5-bno.html" class="lab-card">
+      <div class="lc-num">5</div>
+      <div class="lc-title">Inside BNO</div>
+      <div class="lc-desc">Five gears turn. Click one to learn what it does. Plus: who actually holds BNO shares?</div>
+    </a>
+    <a href="lab6-explain.html" class="lab-card">
+      <div class="lc-num">6</div>
+      <div class="lc-title">Explain This Day</div>
+      <div class="lc-desc">Everything the market knew on a single day. What do you think happened next?</div>
+    </a>
+    <a href="lab7-story.html" class="lab-card">
+      <div class="lc-num">7</div>
+      <div class="lc-title">Story Mode</div>
+      <div class="lc-desc">Watch the crisis unfold, chapter by chapter. Press play or use arrow keys to navigate the timeline.</div>
+    </a>
+    <a href="lab8-challenge.html" class="lab-card">
+      <div class="lc-num">8</div>
+      <div class="lc-title">Challenge Lab</div>
+      <div class="lc-desc">Click any point on the chart. Study what the market knew. Predict what happened next. Get scored on your reasoning.</div>
+    </a>
+  </div>
+
+</main>
+
+<script src="shared.js"></script>
+<script>
+function renderScenario() {
+  const el = $('scenario-summary');
+  if (!el) return;
+  const d = dates[dateIdx];
+  const prev = dateIdx > 0 ? dates[dateIdx-1] : null;
+  const brentChg = prev ? ((d.brent - prev.brent) / prev.brent * 100).toFixed(1) : '0.0';
+  const bnoChg = prev ? ((d.bno - prev.bno) / prev.bno * 100).toFixed(1) : '0.0';
+
+  let h = '<div class="detail-panel">';
+  h += '<h4><span style="display:inline-block;padding:2px 8px;border-radius:10px;background:var(--text-primary);color:var(--bg);font-size:10px;text-transform:uppercase;letter-spacing:0.05em;margin-right:8px;">Current Scenario</span>' + d.label + ', 2026</h4>';
+  h += '<div class="card-grid" style="grid-template-columns:repeat(4,1fr);margin-top:12px;">';
+  h += '<div class="card" style="cursor:default;padding:10px 12px;"><div class="c-label">Hormuz Flow</div><div class="c-value" style="font-size:18px;color:' + (d.hormuz<10?'var(--c4)':(d.hormuz<50?'var(--c3)':'var(--c2)')) + ';">' + d.hormuz + '%</div></div>';
+  h += '<div class="card" style="cursor:default;padding:10px 12px;"><div class="c-label">Buffer</div><div class="c-value" style="font-size:18px;color:' + (d.buffer<45?'var(--c3)':'var(--c2)') + ';">' + d.buffer + ' days</div></div>';
+  h += '<div class="card" style="cursor:default;padding:10px 12px;"><div class="c-label">Brent</div><div class="c-value" style="font-size:18px;">' + fmt$(d.brent) + '</div><div style="font-size:11px;color:' + (brentChg>0?'var(--c4)':'var(--c2)') + ';">' + (brentChg>0?'▲':'▼') + ' ' + Math.abs(brentChg) + '%</div></div>';
+  h += '<div class="card" style="cursor:default;padding:10px 12px;"><div class="c-label">BNO</div><div class="c-value" style="font-size:18px;">' + fmt$(d.bno) + '</div><div style="font-size:11px;color:' + (bnoChg>0?'var(--c4)':'var(--c2)') + ';">' + (bnoChg>0?'▲':'▼') + ' ' + Math.abs(bnoChg) + '%</div></div>';
+  h += '</div>';
+  h += '<div style="margin-top:10px;font-size:12px;color:var(--text-tertiary);line-height:1.5;"><strong>News:</strong> ' + d.news + '. Saudi Yanbu bypass at ' + d.yanbu + '% of baseline. UAE Fujairah at ' + d.fujairah + '%.</div>';
+  h += '</div>';
+  el.innerHTML = h;
+}
+
+function onDateChange() {
+  renderHeader();
+  renderScenario();
+}
+
+function onGradeChange() {
+  renderScenario();
+}
+
+// Override shared init to also render scenario
+const _origInit = initShared;
+initShared = function() {
+  _origInit();
+  renderScenario();
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initShared);
+} else {
+  initShared();
+}
+</script>
+
+</body>
+</html>

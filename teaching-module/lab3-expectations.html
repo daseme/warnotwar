@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab 3: The Market Guesses — Hormuz Lab</title>
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <div class="site-title">Hormuz Lab <span>·</span> How a Strait Becomes a Price</div>
+    <div class="grade-switch" id="grade-switch">
+      <button data-g="5" class="on">5th grade</button>
+      <button data-g="8">8th grade</button>
+      <button data-g="12">12th grade</button>
+    </div>
+  </div>
+</header>
+
+<div class="date-strip" id="date-strip"></div>
+<nav class="lab-nav" id="lab-nav"></nav>
+
+<main class="lab-content">
+  <section class="lab-section active" id="lab-3">
+    <h2>Lab 3: The Market Guesses</h2>
+    <p class="subtitle">Markets trade expectations, not yesterday's data. Assign probabilities and see what sentiment emerges.</p>
+    <div id="l3-content">
+      <noscript>
+        <div class="detail-panel">
+          <p style="color:var(--text-secondary);">Please enable JavaScript to interact with this lab.</p>
+        </div>
+      </noscript>
+    </div>
+  </section>
+</main>
+
+<script src="shared.js"></script>
+<script>
+let l3pQuick = 25, l3pPartial = 50, l3pFull = 25, l3Guess = null;
+
+function renderL3() {
+  const el = $('l3-content');
+  if (!el) return;
+  const d = dates[dateIdx];
+  if (!d) return;
+
+  if (grade === 5) {
+    el.innerHTML = `
+      <div class="news-card">
+        <div class="nl">What the market knew on ${d.label}</div>
+        <div class="news-item"><div class="news-dot" style="background:var(--c4)"></div>Hormuz traffic: ${d.hormuz}% of normal</div>
+        <div class="news-item"><div class="news-dot" style="background:var(--c2)"></div>Saudi Yanbu bypass: increasing</div>
+        <div class="news-item"><div class="news-dot" style="background:var(--c3)"></div>U.S. oil storage: ${d.buffer} days</div>
+        <div class="news-item"><div class="news-dot" style="background:var(--text-tertiary)"></div>Military operations announced</div>
+      </div>
+      <div class="detail-panel">
+        <h4>You are the market</h4>
+        <p>Buyers and sellers don't wait until the oil is gone. They try to guess what will happen next.</p>
+        <p>Based on the news above, what do you think happens to oil prices?</p>
+        <div class="card-grid" style="grid-template-columns:1fr;margin-top:12px;" id="l3-simple">
+          <div class="card ${l3Guess === 'down' ? 'on' : ''}" data-v="down">
+            <div class="c-label">Guess</div>
+            <div class="c-value" style="font-size:18px;font-weight:600;">Oil probably easier to get</div>
+          </div>
+          <div class="card ${l3Guess === 'flat' ? 'on' : ''}" data-v="flat">
+            <div class="c-label">Guess</div>
+            <div class="c-value" style="font-size:18px;font-weight:600;">About the same</div>
+          </div>
+          <div class="card ${l3Guess === 'up' ? 'on' : ''}" data-v="up">
+            <div class="c-label">Guess</div>
+            <div class="c-value" style="font-size:18px;font-weight:600;">Oil probably harder to get</div>
+          </div>
+        </div>
+        <div id="l3-reveal" style="margin-top:12px;"></div>
+      </div>`;
+
+    el.querySelectorAll('#l3-simple .card').forEach(c => {
+      c.onclick = () => {
+        l3Guess = c.dataset.v;
+        renderL3();
+        const rev = $('l3-reveal');
+        if (!rev) return;
+        const prev = dateIdx > 0 ? dates[dateIdx - 1] : null;
+        const chg = prev ? ((d.brent - prev.brent) / prev.brent * 100).toFixed(1) : '0.0';
+        const chgNum = parseFloat(chg);
+        const wasRight = l3Guess === 'up' && chgNum > 0;
+        rev.innerHTML = `
+          <div class="detail-panel" style="border-left:3px solid var(--c2);">
+            <p><strong>What actually happened:</strong> Brent went from ${prev ? '$' + prev.brent.toFixed(2) : '—'} to <strong>$${d.brent.toFixed(2)}</strong> — ${chgNum > 0 ? 'up' : 'down'} ${Math.abs(chgNum)}%.</p>
+            <p>${wasRight ? 'You were right! ' : ''}The market moves <em>before</em> the final numbers are known. It guesses the future.</p>
+          </div>`;
+      };
+    });
+    return;
+  }
+
+  // Grade 8 / 12 — build once, update in-place afterwards
+  const total = l3pQuick + l3pPartial + l3pFull;
+  const valid = total === 100;
+  const sent = total === 0 ? 0 : (l3pQuick * -1 + l3pPartial * 0 + l3pFull * 1) / total;
+
+  el.innerHTML = `
+    <div class="news-card">
+      <div class="nl">What the market knew on ${d.label}</div>
+      <div class="news-item"><div class="news-dot" style="background:var(--c4)"></div>Hormuz traffic collapsed to ${d.hormuz}% of baseline</div>
+      <div class="news-item"><div class="news-dot" style="background:var(--c2)"></div>Saudi Arabia increasing Yanbu bypass exports (${d.yanbu}% of baseline)</div>
+      <div class="news-item"><div class="news-dot" style="background:var(--c3)"></div>U.S. crude inventories: ${d.buffer} days (below 5-year avg)</div>
+      <div class="news-item"><div class="news-dot" style="background:var(--text-tertiary)"></div>Military escort operations announced in Gulf</div>
+    </div>
+
+    <div class="detail-panel" id="l3-prob-panel">
+      <h4>${grade === 8 ? 'Assign probabilities' : 'Bayesian scenario weights'}</h4>
+      <p style="color:var(--text-secondary);font-size:13px;line-height:1.6;margin-bottom:12px;">
+        ${grade === 8 ? "The market doesn't know what will happen. It weighs possibilities." : "The futures price is a sufficient statistic for the market's collective belief. Reverse-engineer the distribution."}
+      </p>
+      <div class="slider-row">
+        <label>${grade === 8 ? 'Hormuz reopens quickly' : 'P(reopens quickly | data)'}</label>
+        <input type="range" id="p-quick" min="0" max="100" value="${l3pQuick}">
+        <span class="slider-val" id="v-quick">${l3pQuick}%</span>
+      </div>
+      <div class="slider-row">
+        <label>${grade === 8 ? 'Partial disruption persists' : 'P(partial persists | data)'}</label>
+        <input type="range" id="p-partial" min="0" max="100" value="${l3pPartial}">
+        <span class="slider-val" id="v-partial">${l3pPartial}%</span>
+      </div>
+      <div class="slider-row">
+        <label>${grade === 8 ? 'Full closure persists' : 'P(full closure | data)'}</label>
+        <input type="range" id="p-full" min="0" max="100" value="${l3pFull}">
+        <span class="slider-val" id="v-full">${l3pFull}%</span>
+      </div>
+      <div id="l3-total" style="font-size:12px;color:${valid ? 'var(--text-tertiary)' : 'var(--c4)'};text-align:right;margin-top:4px;">
+        ${grade === 8 ? 'Total: ' + total + '% ' + (valid ? '' : '(must equal 100%)') : 'ΣP = ' + total + '% ' + (valid ? '✓' : '(must sum to 100%)')}
+      </div>
+    </div>
+
+    <div class="gauge-wrap">
+      <h4>${grade === 8 ? 'Your market sentiment' : 'Implied sentiment'}</h4>
+      <div class="gauge-track">
+        <div id="l3-gauge" class="gauge-fill${sent < 0 ? ' negative' : ''}" style="width:${Math.abs(sent) * 50}%;background:${sent > 0 ? 'var(--c4)' : (sent < 0 ? 'var(--c2)' : 'transparent')}"></div>
+      </div>
+      <div class="gauge-labels">
+        <span>${grade === 8 ? 'Bearish' : 'Bearish (normalizes)'}</span>
+        <span>Neutral</span>
+        <span>${grade === 8 ? 'Bullish' : 'Bullish (scarcity)'}</span>
+      </div>
+      <div class="gauge-center" id="l3-gauge-text">
+        <strong>${sent < -0.3 ? 'Expects supply to normalize' : (sent > 0.3 ? 'Expects sustained scarcity' : 'Sees mixed signals')}</strong>
+      </div>
+    </div>
+
+    <div class="detail-panel">
+      <h4>What Brent actually did</h4>
+      <p>On ${d.label}, Brent futures were at <strong>$${d.brent.toFixed(2)}</strong>${dateIdx > 0 ? ', up from $' + dates[dateIdx - 1].brent.toFixed(2) + ' a week earlier' : ''}.</p>
+      <p>${grade === 8 ? 'The market had already moved before official export data confirmed anything. It was trading the probability of sustained disruption, not the confirmed fact.' : 'The market moved under information asymmetry. The futures price aggregates heterogeneous, incomplete beliefs into a single sufficient statistic. Official export ledgers (SOMO, JODI) lag by weeks to months.'}</p>
+      <div class="note">${grade === 8 ? 'Even if your probabilities differ from the market\'s, the key insight is: prices reflect weighted guesses about the future.' : 'The exercise is not to "beat" the market but to understand what information set the market was processing.'}</div>
+    </div>`;
+
+  const pq = $('p-quick'), pp = $('p-partial'), pf = $('p-full');
+  if (!pq || !pp || !pf) return;
+
+  const update = () => {
+    l3pQuick = +pq.value;
+    l3pPartial = +pp.value;
+    l3pFull = +pf.value;
+
+    const newTotal = l3pQuick + l3pPartial + l3pFull;
+    const newValid = newTotal === 100;
+    const newSent = newTotal === 0 ? 0 : (l3pQuick * -1 + l3pPartial * 0 + l3pFull * 1) / newTotal;
+
+    // Update text values
+    const vq = $('v-quick'), vp = $('v-partial'), vf = $('v-full');
+    if (vq) vq.textContent = l3pQuick + '%';
+    if (vp) vp.textContent = l3pPartial + '%';
+    if (vf) vf.textContent = l3pFull + '%';
+
+    // Update total warning
+    const totalEl = $('l3-total');
+    if (totalEl) {
+      totalEl.style.color = newValid ? 'var(--text-tertiary)' : 'var(--c4)';
+      totalEl.textContent = (grade === 8 ? 'Total: ' : 'ΣP = ') + newTotal + '% ' + (newValid ? (grade === 8 ? '' : '✓') : '(must equal 100%)');
+    }
+
+    // Update gauge
+    const gauge = $('l3-gauge');
+    if (gauge) {
+      gauge.style.width = Math.abs(newSent) * 50 + '%';
+      gauge.style.background = newSent > 0 ? 'var(--c4)' : (newSent < 0 ? 'var(--c2)' : 'transparent');
+      gauge.classList.toggle('negative', newSent < 0);
+    }
+
+    const gaugeText = $('l3-gauge-text');
+    if (gaugeText) {
+      gaugeText.innerHTML = '<strong>' + (newSent < -0.3 ? 'Expects supply to normalize' : (newSent > 0.3 ? 'Expects sustained scarcity' : 'Sees mixed signals')) + '</strong>';
+    }
+  };
+
+  pq.oninput = update;
+  pp.oninput = update;
+  pf.oninput = update;
+}
+
+function onDateChange() {
+  renderHeader();
+  renderL3();
+}
+
+function onGradeChange() {
+  renderL3();
+}
+
+const _origInit = initShared;
+initShared = function() {
+  _origInit();
+  renderL3();
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initShared);
+} else {
+  initShared();
+}
+</script>
+
+</body>
+</html>

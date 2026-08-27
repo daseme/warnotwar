@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab 7: Story Mode — Hormuz Lab</title>
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <div class="site-title">Hormuz Lab <span>·</span> How a Strait Becomes a Price</div>
+    <div class="grade-switch" id="grade-switch">
+      <button data-g="5" class="on">5th grade</button>
+      <button data-g="8">8th grade</button>
+      <button data-g="12">12th grade</button>
+    </div>
+  </div>
+</header>
+
+<div class="date-strip" id="date-strip"></div>
+
+<nav class="lab-nav" id="lab-nav"></nav>
+
+<main class="lab-content">
+  <section class="lab-section active" id="lab-7">
+    <h2>Lab 7: Story Mode</h2>
+    <p class="subtitle">Watch the crisis unfold, chapter by chapter. Press play or use arrow keys.</p>
+    <div class="cinema" id="cinema">
+      <div class="date-badge" id="story-date">February 23, 2026</div>
+      <h3 class="scene-title" id="story-title">The Calm Before</h3>
+      <p class="scene-subtitle" id="story-subtitle">Tanker traffic through Hormuz is normal. The market is relaxed.</p>
+      <div class="map-wrap" id="story-map"></div>
+      <div class="signal-deck" id="story-deck"></div>
+      <div class="price-reveal" id="story-prices"></div>
+    </div>
+    <div class="story-controls">
+      <button class="ctrl-btn" id="story-prev">◀</button>
+      <button class="ctrl-btn primary" id="story-play">▶</button>
+      <button class="ctrl-btn" id="story-next">▶</button>
+      <div class="timeline-track" id="story-track"></div>
+      <div class="ctrl-label" id="story-label">1 / 5</div>
+    </div>
+  </section>
+</main>
+
+<script src="shared.js"></script>
+<script>
+let storyIdx=0, playing=false, playTimer=null;
+
+function renderStory(){
+  const c=storyChapters[storyIdx], prev=storyIdx>0?storyChapters[storyIdx-1]:null;
+  $('story-date').textContent=c.label+', 2026';
+  $('story-title').textContent=c.title;
+  $('story-subtitle').textContent=c.subtitle;
+
+  // Map
+  const W=680, H=200;
+  const hormuzPct=c.hormuz;
+  const straitColor=hormuzPct<10?'#f85149':(hormuzPct<50?'#d29922':'#3fb950');
+  let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+  s+=`<rect x="0" y="0" width="${W/2}" height="${H}" fill="rgba(88,166,255,0.03)"/>`;
+  s+=`<rect x="${W/2}" y="0" width="${W/2}" height="${H}" fill="rgba(63,185,80,0.03)"/>`;
+  s+=`<text x="${W/4}" y="${H-10}" fill="rgba(255,255,255,0.08)" font-size="14" text-anchor="middle" letter-spacing="3">PERSIAN GULF</text>`;
+  s+=`<text x="${W*0.75}" y="${H-10}" fill="rgba(255,255,255,0.08)" font-size="14" text-anchor="middle" letter-spacing="3">WORLD</text>`;
+  const countries=[{name:'IRAQ',x:60,y:50},{name:'KUWAIT',x:60,y:85},{name:'SAUDI',x:60,y:120},{name:'UAE',x:60,y:155},{name:'IRAN',x:60,y:190},{name:'QATAR',x:60,y:225}];
+  countries.forEach(ct=>{ const cy=ct.y*H/260; s+=`<circle cx="${ct.x}" cy="${cy}" r="4" fill="rgba(255,255,255,0.2)"/><text x="${ct.x-10}" y="${cy+4}" fill="rgba(255,255,255,0.4)" font-size="9" text-anchor="end">${ct.name}</text>`; });
+  const sx=W/2;
+  s+=`<rect x="${sx-12}" y="20" width="24" height="${H-40}" rx="4" fill="${straitColor}" opacity="0.15" stroke="${straitColor}" stroke-width="2"/>`;
+  s+=`<text x="${sx}" y="14" fill="${straitColor}" font-size="10" text-anchor="middle" font-weight="600">HORMUZ</text>`;
+  s+=`<text x="${sx}" y="${H-6}" fill="${straitColor}" font-size="9" text-anchor="middle" opacity="0.7">${hormuzPct}% of baseline</text>`;
+  if(hormuzPct>5){
+    countries.forEach(ct=>{ if(ct.name==='IRAN'||ct.name==='QATAR')return; const cy=ct.y*H/260; s+=`<path d="M65,${cy} Q${(65+sx-12)/2},${cy} ${sx-12},${cy<H/2?H/2-20:H/2+20}" fill="none" stroke="${straitColor}" stroke-width="1.5" opacity="0.5" stroke-linecap="round"/>`; if(hormuzPct>20) s+=`<circle r="2" fill="${straitColor}"><animateMotion dur="${3-hormuzPct/50}s" repeatCount="indefinite" path="M65,${cy} Q${(65+sx-12)/2},${cy} ${sx-12},${cy<H/2?H/2-20:H/2+20}"/></circle>`; });
+  }
+  if(hormuzPct>5){
+    s+=`<path d="M${sx+12},${H/2} Q${(sx+12+W-40)/2},${H/2} ${W-40},${H/2}" fill="none" stroke="${straitColor}" stroke-width="2" stroke-linecap="round"/>`;
+    if(hormuzPct>20) s+=`<circle r="2.5" fill="${straitColor}"><animateMotion dur="2s" repeatCount="indefinite" path="M${sx+12},${H/2} Q${(sx+12+W-40)/2},${H/2} ${W-40},${H/2}"/></circle>`;
+  }
+  s+=`<circle cx="${W-30}" cy="${H/2}" r="6" fill="rgba(63,185,80,0.2)" stroke="#3fb950" stroke-width="1.5"/>`;
+  s+=`<text x="${W-30}" y="${H/2+20}" fill="rgba(63,185,80,0.5)" font-size="9" text-anchor="middle">WORLD</text>`;
+  if(c.yanbu>110){ s+=`<path d="M65,${120*H/260} Q180,${120*H/260} 180,${H-30} Q180,${H-15} ${W-40},${H-15}" fill="none" stroke="#3fb950" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.6" stroke-linecap="round"/><text x="180" y="${H-22}" fill="#3fb950" font-size="8" text-anchor="middle">Yanbu ${c.yanbu}%</text>`; }
+  if(c.fujairah>70){ s+=`<path d="M65,${155*H/260} Q240,${155*H/260} 240,${H-45} Q240,${H-30} ${W-40},${H-30}" fill="none" stroke="#58a6ff" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.6" stroke-linecap="round"/><text x="240" y="${H-37}" fill="#58a6ff" font-size="8" text-anchor="middle">Fujairah ${c.fujairah}%</text>`; }
+  s+=`</svg>`;
+  $('story-map').innerHTML=s;
+
+  // Signals
+  const deck=$('story-deck');
+  deck.innerHTML='';
+  c.signals.forEach((sig,i)=>{
+    const div=document.createElement('div');
+    div.className='signal-card';
+    div.style.animationDelay=(0.1+i*0.15)+'s';
+    div.innerHTML=`<div class="sc-icon" style="background:${sig.color};color:${sig.textColor}">${sig.icon}</div><div class="sc-body"><div class="sc-title">${sig.title}</div><div class="sc-desc">${sig.desc}</div></div><div class="sc-value" style="color:${sig.textColor}">${sig.value}</div>`;
+    deck.appendChild(div);
+  });
+
+  // Prices
+  const brentChg=prev?((c.brent-prev.brent)/prev.brent*100).toFixed(1):'0.0';
+  const bnoChg=prev?((c.bno-prev.bno)/prev.bno*100).toFixed(1):'0.0';
+  const brentColor=+brentChg>0?'#f85149':'#3fb950';
+  const bnoColor=+bnoChg>0?'#f85149':'#3fb950';
+  $('story-prices').innerHTML=`<div class="price-pill"><div class="pp-label">Brent Crude</div><div class="pp-value">${fmt$(c.brent)}</div><div class="pp-change" style="color:${brentColor}">${prev?(brentChg>0?'▲ +':'▼ ')+Math.abs(brentChg)+'% from '+prev.label:'—'}</div></div><div class="price-pill"><div class="pp-label">BNO</div><div class="pp-value">${fmt$(c.bno)}</div><div class="pp-change" style="color:${bnoColor}">${prev?(bnoChg>0?'▲ +':'▼ ')+Math.abs(bnoChg)+'% from '+prev.label:'—'}</div></div>`;
+
+  // Controls
+  $('story-play').textContent=playing?'⏸':'▶';
+  $('story-label').textContent=`${storyIdx+1} / ${storyChapters.length}`;
+  renderStoryTimeline();
+}
+
+function renderStoryTimeline(){
+  const track=$('story-track');
+  const pct=(storyIdx/(storyChapters.length-1))*100;
+  let s=`<div class="timeline-fill" style="width:${pct}%"></div>`;
+  storyChapters.forEach((c,i)=>{ const dp=(i/(storyChapters.length-1))*100; s+=`<div class="timeline-dot${i===storyIdx?' on':''}" style="left:${dp}%" data-idx="${i}"></div>`; });
+  track.innerHTML=s;
+  track.querySelectorAll('.timeline-dot').forEach(d=>{ d.onclick=(e)=>{ e.stopPropagation(); storyIdx=+d.dataset.idx; stopPlay(); renderStory(); }; });
+  track.onclick=(e)=>{ const rect=track.getBoundingClientRect(); const x=(e.clientX-rect.left)/rect.width; storyIdx=Math.round(x*(storyChapters.length-1)); stopPlay(); renderStory(); };
+}
+
+function playStory(){ if(playing){ stopPlay(); return; } playing=true; renderStory(); playTimer=setInterval(()=>{ storyIdx++; if(storyIdx>=storyChapters.length){ storyIdx=0; } renderStory(); }, 3500); }
+function stopPlay(){ playing=false; if(playTimer){ clearInterval(playTimer); playTimer=null; } renderStory(); }
+
+// Global functions for keyboard nav
+function storyPrev(){ if(storyIdx>0){ storyIdx--; stopPlay(); renderStory(); } }
+function storyNext(){ if(storyIdx<storyChapters.length-1){ storyIdx++; stopPlay(); renderStory(); } }
+function storyPlay(){ playStory(); }
+
+$('story-prev').onclick=storyPrev;
+$('story-next').onclick=storyNext;
+$('story-play').onclick=storyPlay;
+
+function onDateChange() {
+  renderHeader();
+}
+
+function onGradeChange() {
+  renderStory();
+}
+
+const _origInit = initShared;
+initShared = function() {
+  _origInit();
+  renderStory();
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initShared);
+} else {
+  initShared();
+}
+</script>
+
+</body>
+</html>

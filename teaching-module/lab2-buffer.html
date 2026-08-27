@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab 2: The Cushion — Hormuz Lab</title>
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <div class="site-title">Hormuz Lab <span>·</span> How a Strait Becomes a Price</div>
+    <div class="grade-switch" id="grade-switch">
+      <button data-g="5" class="on">5th grade</button>
+      <button data-g="8">8th grade</button>
+      <button data-g="12">12th grade</button>
+    </div>
+  </div>
+</header>
+
+<div class="date-strip" id="date-strip"></div>
+
+<nav class="lab-nav" id="lab-nav"></nav>
+
+<main class="lab-content">
+  <section class="lab-section active" id="lab-2">
+    <h2>Lab 2: The Cushion</h2>
+    <p class="subtitle">How much breathing room does the market have? Change the numbers and watch days-of-supply recalculate.</p>
+    <div class="tank-wrap">
+      <div class="tank-visual"><div id="l2-tank-svg"></div><div class="tank-label">U.S. crude storage</div></div>
+      <div class="tank-controls" id="l2-controls"></div>
+    </div>
+    <div class="result-card" id="l2-result"></div>
+    <div id="l2-scenarios"></div>
+    <div id="l2-insight"></div>
+  </section>
+</main>
+
+<script src="shared.js"></script>
+<script>
+let l2Stored=850, l2Use=16.5, l2Spr=350, l2Scenario='normal';
+const l2Scenarios = {
+  normal:{stored:850,use:16.5,spr:350},
+  low:{stored:720,use:17.0,spr:280},
+  crisis:{stored:680,use:15.0,spr:350},
+  shock:{stored:600,use:18.0,spr:200}
+};
+
+function days(stored,use){ return (stored/use).toFixed(1); }
+
+function drawTank(){
+  const total=1200, commPct=(l2Stored/total)*100, sprPct=(l2Spr/total)*100, emptyPct=100-commPct-sprPct;
+  const el = $('l2-tank-svg');
+  if(!el) return;
+  el.innerHTML = '<svg viewBox="0 0 100 160" xmlns="http://www.w3.org/2000/svg">' +
+    '<defs><clipPath id="tc"><rect x="10" y="10" width="80" height="140" rx="6"/></clipPath></defs>' +
+    '<rect x="10" y="10" width="80" height="140" rx="6" fill="none" stroke="var(--border)" stroke-width="2"/>' +
+    '<rect x="10" y="' + (10+(140*(emptyPct+sprPct)/100)) + '" width="80" height="' + (140*commPct/100) + '" fill="var(--accent)" opacity="0.5" clip-path="url(#tc)"/>' +
+    '<rect x="10" y="' + (10+(140*emptyPct/100)) + '" width="80" height="' + (140*sprPct/100) + '" fill="var(--c2)" opacity="0.4" clip-path="url(#tc)"/>' +
+    '<line x1="10" y1="' + (10+(140*emptyPct/100)) + '" x2="90" y2="' + (10+(140*emptyPct/100)) + '" stroke="var(--border)" stroke-width="1" stroke-dasharray="3 2"/>' +
+    '<text x="50" y="' + (10+(140*(emptyPct+sprPct/2)/100)+4) + '" text-anchor="middle" fill="var(--text-primary)" font-size="8" font-weight="500">SPR</text>' +
+    '<text x="50" y="' + (10+(140*(emptyPct+sprPct+commPct/2)/100)+4) + '" text-anchor="middle" fill="var(--text-primary)" font-size="8" font-weight="500">Commercial</text>' +
+    '</svg>';
+}
+
+function renderL2(){
+  drawTank();
+  const ctrl = $('l2-controls');
+  if(!ctrl) return;
+
+  if (grade===5) {
+    ctrl.innerHTML = '<div class="slider-row"><label>Oil in storage</label><input type="range" id="s2-stored" min="400" max="1000" step="10" value="'+l2Stored+'"><span class="slider-val" id="v2-stored">'+l2Stored+'M</span></div>' +
+      '<div class="slider-row"><label>Daily refinery use</label><input type="range" id="s2-use" min="12" max="20" step="0.1" value="'+l2Use+'"><span class="slider-val" id="v2-use">'+l2Use+' mb/d</span></div>';
+  } else {
+    ctrl.innerHTML = '<div class="slider-row"><label>Commercial stocks</label><input type="range" id="s2-stored" min="400" max="1000" step="10" value="'+l2Stored+'"><span class="slider-val" id="v2-stored">'+l2Stored+'M</span></div>' +
+      '<div class="slider-row"><label>SPR (govt reserve)</label><input type="range" id="s2-spr" min="0" max="700" step="10" value="'+l2Spr+'"><span class="slider-val" id="v2-spr">'+l2Spr+'M</span></div>' +
+      '<div class="slider-row"><label>Refinery runs</label><input type="range" id="s2-use" min="12" max="20" step="0.1" value="'+l2Use+'"><span class="slider-val" id="v2-use">'+l2Use+' mb/d</span></div>';
+  }
+
+  const ss=$('s2-stored'), su=$('s2-use'), sp=$('s2-spr');
+  if(ss) ss.oninput=function(){l2Stored=+ss.value; refreshL2();};
+  if(su) su.oninput=function(){l2Use=+su.value; refreshL2();};
+  if(sp) sp.oninput=function(){l2Spr=+sp.value; refreshL2();};
+
+  const d=days(l2Stored+l2Spr,l2Use);
+  const col=d<30?'var(--c4)':(d<45?'var(--c3)':'var(--c2)');
+  const result=$('l2-result');
+  if(result) result.innerHTML = '<div class="r-eq">days of supply = stored oil ÷ daily use</div><div class="r-num" style="color:'+col+'">'+d+'</div><div class="r-label">days of oil supply</div><div class="r-note">'+
+    (grade===5?'Think of it like a pantry. If deliveries slow down, stored oil becomes important.':
+     (grade===8?'If refinery use rises, "days" falls even though barrels haven\'t changed.':'Seasonal maintenance reduces runs, mechanically raising days without any inventory build. SPR releases are political decisions.'))+
+    '</div>';
+
+  const scenarios=$('l2-scenarios');
+  if(grade>5 && scenarios){
+    let h='<div style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">Quick scenarios</div>';
+    h += '<div class="card-grid" style="grid-template-columns:repeat(2,1fr);">';
+    Object.entries(l2Scenarios).forEach(([key,sc])=>{
+      h+='<div class="card'+(l2Scenario===key?' on':'')+'" data-sc="'+key+'" style="padding:10px 12px;"><div class="c-label" style="font-size:11px;margin-bottom:2px;">'+key.charAt(0).toUpperCase()+key.slice(1)+'</div><div style="font-size:12px;color:var(--text-secondary)">'+sc.stored+'M + SPR '+sc.spr+'M @ '+sc.use+' mb/d</div></div>';
+    });
+    h += '</div>';
+    scenarios.innerHTML = h;
+    scenarios.querySelectorAll('.card').forEach(c=>{
+      c.onclick=function(){ l2Scenario=c.dataset.sc; const sc=l2Scenarios[l2Scenario]; l2Stored=sc.stored; l2Use=sc.use; l2Spr=sc.spr; renderL2(); };
+    });
+  } else if(scenarios) { scenarios.innerHTML=''; }
+
+  const insight=$('l2-insight');
+  if(!insight) return;
+  if(grade===5) insight.innerHTML='<div class="detail-panel"><h4>Why this matters for Hormuz</h4><p>If the Strait of Hormuz is blocked and the U.S. only has <strong>'+d+' days</strong> of oil stored, traders get nervous. The less oil in storage, the bigger the price jump when supply is threatened.</p></div>';
+  else if(grade===8) insight.innerHTML='<div class="detail-panel"><h4>Why two identical shocks can feel different</h4><p>In 1990, the U.S. had ~65 days of supply. Today we have ~'+d+' days. The same Hormuz disruption would hit a much tighter system — less cushion means sharper price reactions.</p><p>Also: SPR is government-controlled. A president can release it politically, changing the "days" number without changing commercial reality.</p></div>';
+  else insight.innerHTML='<div class="detail-panel"><h4>System state, not just shock magnitude</h4><p>The price response depends on the <em>state</em> of the system. Current buffer: <strong>'+d+' days</strong> total.</p><p>Key nuance: "Days of supply" is a ratio. If refineries throttle (denominator falls), days rise mechanically. If they ramp (denominator rises), days fall. The number can move without any inventory change.</p><p>SPR releases are political decisions. They can temporarily inflate days-of-supply while commercial stocks remain tight.</p></div>';
+}
+
+function refreshL2(){
+  const ss=$('s2-stored'), su=$('s2-use'), sp=$('s2-spr');
+  const vs=$('v2-stored'), vu=$('v2-use'), vp=$('v2-spr');
+  if(ss && vs) vs.textContent=l2Stored+'M';
+  if(su && vu) vu.textContent=l2Use+' mb/d';
+  if(sp && vp) vp.textContent=l2Spr+'M';
+  drawTank();
+  const d=days(l2Stored+l2Spr,l2Use);
+  const col=d<30?'var(--c4)':(d<45?'var(--c3)':'var(--c2)');
+  const rn=$('l2-result');
+  if(rn){ const num=rn.querySelector('.r-num'); if(num){ num.textContent=d; num.style.color=col; } }
+}
+
+function onDateChange() {
+  renderHeader();
+}
+
+function onGradeChange() {
+  renderL2();
+}
+
+function initPage() {
+  initShared();
+  renderL2();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initPage);
+} else {
+  initPage();
+}
+</script>
+
+</body>
+</html>
