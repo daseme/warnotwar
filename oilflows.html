@@ -310,11 +310,12 @@
 
 <h1>Hormuz: The Structural Dynamics of Flow</h1>
 <p class="subtitle">
-  Oil shocks have three parts: <em>flow</em>, <em>buffer</em>, <em>price</em>.
-  Is the oil moving? How much stored crude cushions the loss? What is the
-  market charging for the risk? Five measuring instruments on the Persian
-  Gulf disruption of 2026. Activity indices use the July&ndash;December 2025
-  average = 100.
+  Oil shocks have three measurable parts &mdash; <em>flow</em>,
+  <em>buffer</em>, <em>price</em> &mdash; and this one taught us to track a
+  fourth: <em>the record</em>. Is the oil moving? How much stored crude
+  cushions the loss? What is the market charging? And what is claimed that
+  cannot yet be verified? Six instruments on the Persian Gulf disruption
+  of 2026. Activity indices use the July&ndash;December 2025 average = 100.
 </p>
 
 <div id="load-error">Could not load oil-flow data.</div>
@@ -500,6 +501,11 @@
     countdown &mdash; production, imports, and policy all keep moving.</p>
     <p><strong>The market price.</strong> Brent spot and the BNO ETF show how
     traders priced the disruption as it developed.</p>
+    <p><strong>The claims ledger.</strong> Officials describe the flow;
+    independent trackers estimate it; the two disagree. Every recorded
+    statement is normalized and sourced, compared only like-with-like, and
+    the difference is labeled unverified &mdash; never adjudicated &mdash;
+    until loading, arrival and official trade data can resolve it.</p>
     <p>Iran and Qatar are intentionally excluded: public terminal coverage is
     too sparse or incomplete for a defensible daily series. Their absence
     means "not measurable here," not zero exports.</p>
@@ -1022,9 +1028,17 @@
       `<div class="v">$${brentRow.brent_spot_last_usd.toFixed(2)}</div>` +
       `<div class="u">Brent, the world benchmark oil price, per barrel &middot; was $${firstThresh ? firstThresh.brent_spot_last_usd.toFixed(0) : ''} as the March collapse began &middot; last close ${fmtDate(brentRow.date)}</div></div>`);
   }
+  if (verify && verify.current_episode) {
+    const ve = verify.current_episode;
+    const r4 = (lo, hi) => lo === hi ? lo.toFixed(0) : lo.toFixed(0) + '–' + hi.toFixed(0);
+    topTiles.push(
+      `<div class="tile"><div class="q">What is being claimed?</div>` +
+      `<div class="v">${r4(ve.claim_low_mbd, ve.claim_high_mbd)} <span style="font-size:0.55em;color:rgba(255,255,255,0.55)">vs ~${ve.independent_consensus_mbd.toFixed(0)} tracked</span></div>` +
+      `<div class="u">stated Hormuz flow vs independent estimate, million barrels per day &mdash; the difference is unverified &middot; as of ${fmtDate(ve.as_of)}</div></div>`);
+  }
   document.getElementById('top-tiles').innerHTML = topTiles.join('');
   document.getElementById('top-kicker').textContent =
-    'Three separate measurements answering three separate questions. Their alignment on this page is not a claim that one causes another.';
+    'Four separate measurements answering four separate questions. Their alignment on this page is not a claim that one causes another.';
 
   // ---- Scrollytelling: the March 2026 event, told over the live data ----
   if (buffer && bLatest && firstThresh && lastThresh && brentPeak
