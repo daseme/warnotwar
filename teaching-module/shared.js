@@ -83,10 +83,21 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+function renderSeriesBanner() {
+  const header = document.querySelector('.site-header-inner');
+  if (!header || typeof SERIES === 'undefined' || document.querySelector('.series-banner')) return;
+  const b = document.createElement('div');
+  b.className = 'series-banner' + (SERIES.kind === 'simulation' ? ' sim' : '');
+  b.textContent = SERIES.label;
+  b.title = SERIES.note;
+  header.appendChild(b);
+}
+
 function initShared() {
   renderGradeSwitch();
   renderLabNav();
   renderHeader();
+  renderSeriesBanner();
 }
 
 function onDateChange() { renderHeader(); }

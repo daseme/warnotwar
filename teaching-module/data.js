@@ -1,5 +1,16 @@
 // Teaching-module dataset. Loaded before shared.js; shared.js keeps
-// only rendering and state. See Phase 2: this is the SIMULATED series.
+// only rendering and state.
+//
+// THIS IS A SIMULATION. The five dates, prices and readings are a
+// constructed teaching scenario shaped like the real 2026 episode but
+// not the live record. Sources on ledger items are marked illustrative.
+// A live series can replace this file when the pipeline lands (Phase 3).
+const SERIES = {
+  id: 'sim-spring-2026',
+  kind: 'simulation',
+  label: 'Simulation — illustrative figures',
+  note: 'A constructed teaching scenario, not the live record. The real, sourced data lives at warnotwar.com/oilflows.html.',
+};
 
 const dates = [
   { id:'feb23', label:'Feb 23', brent:71.90, bno:32.15, hormuz:123, buffer:58, news:'Normal traffic', yanbu:105, fujairah:98 },
@@ -10,10 +21,10 @@ const dates = [
 ];
 
 const items = [
-  { id:'c1', speaker:'U.S. officials', date:'2026-03-07', lo:9, hi:10, unit:'mbd', scope:'hormuz_outbound', period:'unspecified', commodity:'unspecified', evidence:'government_estimate', quote:'Approximately 9 to 10 million barrels per day of oil flow through the Strait of Hormuz', source:'Reuters', url:'#', kind:'claim', attribution:'anonymous' },
-  { id:'c2', speaker:'Commercial trackers', date:'2026-03-07', lo:4.5, hi:5.5, unit:'mbd', scope:'hormuz_outbound', period:'seven_day_average', commodity:'crude_condensate', evidence:'commercial_tracker_model', quote:'Model-based estimate of Hormuz outbound crude plus condensate', source:'Kpler/Vortexa', url:'#', kind:'estimate', attribution:'named' },
-  { id:'c3', speaker:'PortWatch', date:'2026-03-07', lo:2.8, hi:2.8, unit:'tankers_per_night', scope:'ship_transits_in_and_out', period:'nightly', commodity:'unspecified', evidence:'activity_index', quote:'AIS-visible tanker transits through Hormuz corridor', source:'World Bank', url:'#', kind:'claim', attribution:'named' },
-  { id:'c4', speaker:'Analyst, Axios', date:'2026-03-07', lo:15, hi:15, unit:'mbbl_single_day', scope:'hormuz_outbound', period:'single_day', commodity:'all_liquids', evidence:'government_estimate', quote:'15 million barrels moved on March 6', source:'Axios', url:'#', kind:'claim', attribution:'named' },
+  { id:'c1', speaker:'U.S. officials', date:'2026-03-07', lo:9, hi:10, unit:'mbd', scope:'hormuz_outbound', period:'unspecified', commodity:'unspecified', evidence:'government_estimate', quote:'Approximately 9 to 10 million barrels per day of oil flow through the Strait of Hormuz', source:'illustrative', url:'#', kind:'claim', attribution:'anonymous' },
+  { id:'c2', speaker:'Commercial trackers', date:'2026-03-07', lo:4.5, hi:5.5, unit:'mbd', scope:'hormuz_outbound', period:'seven_day_average', commodity:'crude_condensate', evidence:'commercial_tracker_model', quote:'Model-based estimate of Hormuz outbound crude plus condensate', source:'illustrative', url:'#', kind:'estimate', attribution:'named' },
+  { id:'c3', speaker:'A ship-tracking index', date:'2026-03-07', lo:2.8, hi:2.8, unit:'tankers_per_night', scope:'ship_transits_in_and_out', period:'nightly', commodity:'unspecified', evidence:'activity_index', quote:'AIS-visible tanker transits through Hormuz corridor', source:'illustrative', url:'#', kind:'claim', attribution:'named' },
+  { id:'c4', speaker:'An analyst', date:'2026-03-07', lo:15, hi:15, unit:'mbbl_single_day', scope:'hormuz_outbound', period:'single_day', commodity:'all_liquids', evidence:'government_estimate', quote:'15 million barrels moved on March 6', source:'illustrative', url:'#', kind:'claim', attribution:'named' },
 ];
 
 const SCOPE = { hormuz_outbound:'through the Strait of Hormuz only', regional_total_including_bypass:'the whole region, including bypass pipelines', ship_transits_in_and_out:'ship movements at the strait, in both directions' };
