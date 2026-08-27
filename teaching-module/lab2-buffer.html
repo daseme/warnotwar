@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lab 2: The Cushion — Hormuz Lab</title>
+<title>Lab 2: The Cushion — Hormuz Lab (simulated scenario)</title>
 <link rel="stylesheet" href="shared.css">
 </head>
 <body>
@@ -88,8 +88,8 @@ function renderL2(){
   const col=d<30?'var(--c4)':(d<45?'var(--c3)':'var(--c2)');
   const result=$('l2-result');
   if(result) result.innerHTML = '<div class="r-eq">days of supply = stored oil ÷ daily use</div><div class="r-num" style="color:'+col+'">'+d+'</div><div class="r-label">days of oil supply</div><div class="r-note">'+
-    (grade===5?'Think of it like a pantry. If deliveries slow down, stored oil becomes important.':
-     (grade===8?'If refinery use rises, "days" falls even though barrels haven\'t changed.':'Seasonal maintenance reduces runs, mechanically raising days without any inventory build. SPR releases are political decisions.'))+
+    (grade===5?'Think of it like padding, not a pantry: oil keeps getting pumped and delivered every day — this is the extra cushion on top of that flow.':
+     (grade===8?'If refinery use rises, "days" falls even though barrels haven\'t changed.':'Seasonal maintenance reduces runs, mechanically raising days without any inventory build. SPR releases are policy decisions.'))+
     '</div>';
 
   const scenarios=$('l2-scenarios');
@@ -108,9 +108,9 @@ function renderL2(){
 
   const insight=$('l2-insight');
   if(!insight) return;
-  if(grade===5) insight.innerHTML='<div class="detail-panel"><h4>Why this matters for Hormuz</h4><p>If the Strait of Hormuz is blocked and the U.S. only has <strong>'+d+' days</strong> of oil stored, traders get nervous. The less oil in storage, the bigger the price jump when supply is threatened.</p></div>';
-  else if(grade===8) insight.innerHTML='<div class="detail-panel"><h4>Why two identical shocks can feel different</h4><p>In 1990, the U.S. had ~65 days of supply. Today we have ~'+d+' days. The same Hormuz disruption would hit a much tighter system — less cushion means sharper price reactions.</p><p>Also: SPR is government-controlled. A president can release it politically, changing the "days" number without changing commercial reality.</p></div>';
-  else insight.innerHTML='<div class="detail-panel"><h4>System state, not just shock magnitude</h4><p>The price response depends on the <em>state</em> of the system. Current buffer: <strong>'+d+' days</strong> total.</p><p>Key nuance: "Days of supply" is a ratio. If refineries throttle (denominator falls), days rise mechanically. If they ramp (denominator rises), days fall. The number can move without any inventory change.</p><p>SPR releases are political decisions. They can temporarily inflate days-of-supply while commercial stocks remain tight.</p></div>';
+  if(grade===5) insight.innerHTML='<div class="detail-panel"><h4>Why this matters for Hormuz</h4><p>The U.S. has a <strong>'+d+'-day cushion</strong> — stored oil compared with one day\'s use. Oil keeps getting pumped and delivered every day, so this is padding, not a countdown. A thinner cushion can make traders more nervous when supply is threatened.</p></div>';
+  else if(grade===8) insight.innerHTML='<div class="detail-panel"><h4>Why two identical shocks can feel different</h4><p>In 1990, the U.S. had ~65 days of supply. Today we have ~'+d+' days. The same Hormuz disruption would hit a much tighter system — less cushion means sharper price reactions.</p><p>Also: SPR is government-controlled. A president can order releases, changing the "days" number without changing commercial reality.</p></div>';
+  else insight.innerHTML='<div class="detail-panel"><h4>System state, not just shock magnitude</h4><p>The price response depends on the <em>state</em> of the system. Current buffer: <strong>'+d+' days</strong> total.</p><p>Key nuance: "Days of supply" is a ratio. If refineries throttle (denominator falls), days rise mechanically. If they ramp (denominator rises), days fall. The number can move without any inventory change.</p><p>SPR releases are policy decisions. They can temporarily inflate days-of-supply while commercial stocks remain tight.</p></div>';
 }
 
 function refreshL2(){

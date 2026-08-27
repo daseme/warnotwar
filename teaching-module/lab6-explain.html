@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lab 6: Explain This Day — Hormuz Lab</title>
+<title>Lab 6: Explain This Day — Hormuz Lab (simulated scenario)</title>
 <link rel="stylesheet" href="shared.css">
 </head>
 <body>
@@ -50,9 +50,9 @@ function renderL6(){
   $('l6-dash').querySelectorAll('.card').forEach(c=>{ c.onclick=()=>{ l6Open=c.dataset.key; renderL6(); }; });
 
   let h='<div class="detail-panel">';
-  if(l6Open==='flow'){ h+=`<h4>Flow layer — ${d.label}</h4><p>Hormuz visible transit: <strong>${d.hormuz}%</strong> of baseline.</p>${d.hormuz<10?'<p>Near-total collapse. Bypass routes (Yanbu at '+d.yanbu+'%, Fujairah at '+d.fujairah+'%) are active but cannot compensate for Hormuz volumes.</p>':(d.hormuz<50?'<p>Significant disruption. Some oil likely moves through dark vessels or ship-to-ship transfers, but these are not independently verifiable.</p>':'<p>Traffic within normal range. No immediate supply concern from the strait.</p>')}`; }
+  if(l6Open==='flow'){ h+=`<h4>Flow layer — ${d.label}</h4><p>Hormuz visible transit: <strong>${d.hormuz}%</strong> of baseline.</p>${d.hormuz<10?'<p>Near-total collapse. Bypass routes (Yanbu at '+d.yanbu+'%, Fujairah at '+d.fujairah+'%) are active; in this scenario they run below Hormuz volumes.</p>':(d.hormuz<50?'<p>Significant disruption. Some oil likely moves through dark vessels or ship-to-ship transfers, but these are not independently verifiable.</p>':'<p>Traffic within normal range. No immediate supply concern from the strait.</p>')}`; }
   else if(l6Open==='buffer'){ h+=`<h4>Buffer layer — ${d.label}</h4><p>U.S. combined crude cushion: <strong>${d.buffer} days</strong> of supply.</p><p>${d.buffer<45?'Below the 5-year average. Low buffer means reduced shock absorption.':'Within normal range. Adequate cushion for short-term disruptions.'}</p>`; }
-  else if(l6Open==='brent'){ h+=`<h4>Brent futures layer — ${d.label}</h4><p>ICE Brent near-month futures: <strong>${fmt$(d.brent)}</strong></p>${prev?'<p>Change from '+prev.label+': <strong>'+((d.brent>prev.brent?'+':'')+(((d.brent-prev.brent)/prev.brent*100).toFixed(1)))+'%</strong></p>':''}<p>The futures price moved <em>before</em> official export data confirmed anything. Rational price discovery under information asymmetry.</p>`; }
+  else if(l6Open==='brent'){ h+=`<h4>Brent futures layer — ${d.label}</h4><p>ICE Brent near-month futures: <strong>${fmt$(d.brent)}</strong></p>${prev?'<p>Change from '+prev.label+': <strong>'+((d.brent>prev.brent?'+':'')+(((d.brent-prev.brent)/prev.brent*100).toFixed(1)))+'%</strong></p>':''}<p>Prices moved before official export data was published. Whether that reflected good information or fear is a question this lab can\'t settle.</p>`; }
   else { h+=`<h4>BNO layer — ${d.label}</h4><p>BNO share price: <strong>${fmt$(d.bno)}</strong></p>${prev?'<p>Change from '+prev.label+': <strong>'+((d.bno>prev.bno?'+':'')+(((d.bno-prev.bno)/prev.bno*100).toFixed(1)))+'%</strong></p>':''}<p>BNO tracks daily % changes in short-term Brent futures, plus collateral, minus expenses. It does not hold physical oil.</p>`; }
   h+=`<div class="note">These are the conditions that existed. They do not constitute proof that any one item caused any specific price move.</div></div>`;
   $('l6-detail').innerHTML=h;
@@ -74,10 +74,10 @@ function renderL6(){
       const actualLabel=actualChg>10?'up10':actualChg>2?'up5':actualChg>=-2?'flat':actualChg>-10?'down5':'down10';
       const correct=l6Guess===actualLabel;
       renderL6();
-      $('l6-rl').innerHTML=correct?`<span style="color:var(--c2)">Well reasoned!</span> BNO moved from ${fmt$(d.bno)} to ${fmt$(next.bno)} — <strong>${actualChg>0?'+':''}${actualChg.toFixed(1)}%</strong>.`:`BNO moved from ${fmt$(d.bno)} to ${fmt$(next.bno)} — <strong>${actualChg>0?'+':''}${actualChg.toFixed(1)}%</strong>.`;
+      $('l6-rl').innerHTML=correct?`<span style="color:var(--c2)">Correct direction.</span> One outcome can\'t validate or refute a line of reasoning. BNO moved from ${fmt$(d.bno)} to ${fmt$(next.bno)} — <strong>${actualChg>0?'+':''}${actualChg.toFixed(1)}%</strong>.`:`BNO moved from ${fmt$(d.bno)} to ${fmt$(next.bno)} — <strong>${actualChg>0?'+':''}${actualChg.toFixed(1)}%</strong>.`;
       let note='';
-      if(d.hormuz<10&&actualChg>0) note='The market priced in sustained scarcity. Even with bypass routes active, the near-total Hormuz halt overwhelmed the buffer.';
-      else if(d.hormuz<50&&actualChg>0) note='Traffic was falling but not yet collapsed. Markets often move most sharply during the uncertainty phase.';
+      if(d.hormuz<10&&actualChg>0) note='Prices rose while Hormuz traffic was near zero and the cushion was thin. One consistent story is scarcity expectations — but prices aggregate many signals, and no single cause is observable.';
+      else if(d.hormuz<50&&actualChg>0) note='Traffic was falling but not yet collapsed. Prices often move sharply amid uncertainty — one pattern among several, not a law.';
       else note='Markets aggregate many signals simultaneously. Reasoning through the chain (flow → buffer → expectations → price) is what matters.';
       $('l6-rn').textContent=note;
     };

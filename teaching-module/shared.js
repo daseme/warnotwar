@@ -93,11 +93,26 @@ function renderSeriesBanner() {
   header.appendChild(b);
 }
 
+function renderEpilogue() {
+  const page = (location.pathname.split('/').pop() || '');
+  if (!['lab6-explain.html', 'lab7-story.html', 'lab8-challenge.html'].includes(page)) return;
+  if (document.querySelector('.sim-epilogue')) return;
+  const host = document.querySelector('main') || document.body;
+  const div = document.createElement('div');
+  div.className = 'detail-panel sim-epilogue';
+  div.innerHTML = '<h4>This scenario is one path — the real 2026 took another</h4>' +
+    '<p>In this simulation, a collapsed flow and a thin cushion send the price steadily higher. ' +
+    'The live record did not follow that script. Compare it against the sourced, current data at ' +
+    '<a href="/oilflows.html">warnotwar.com/oilflows</a> — explaining prices is hard, and that is the lesson.</p>';
+  host.appendChild(div);
+}
+
 function initShared() {
   renderGradeSwitch();
   renderLabNav();
   renderHeader();
   renderSeriesBanner();
+  renderEpilogue();
 }
 
 function onDateChange() { renderHeader(); }

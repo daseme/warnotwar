@@ -21,10 +21,10 @@ const dates = [
 ];
 
 const items = [
-  { id:'c1', speaker:'U.S. officials', date:'2026-03-07', lo:9, hi:10, unit:'mbd', scope:'hormuz_outbound', period:'unspecified', commodity:'unspecified', evidence:'government_estimate', quote:'Approximately 9 to 10 million barrels per day of oil flow through the Strait of Hormuz', source:'illustrative', url:'#', kind:'claim', attribution:'anonymous' },
-  { id:'c2', speaker:'Commercial trackers', date:'2026-03-07', lo:4.5, hi:5.5, unit:'mbd', scope:'hormuz_outbound', period:'seven_day_average', commodity:'crude_condensate', evidence:'commercial_tracker_model', quote:'Model-based estimate of Hormuz outbound crude plus condensate', source:'illustrative', url:'#', kind:'estimate', attribution:'named' },
+  { id:'c1', speaker:'U.S. officials', date:'2026-03-07', lo:10, hi:12, unit:'mbd', scope:'hormuz_outbound', period:'unspecified', commodity:'unspecified', evidence:'government_estimate', quote:'Approximately 10 to 12 million barrels per day of oil flow through the Strait of Hormuz', source:'illustrative', url:'#', kind:'claim', attribution:'anonymous' },
+  { id:'c2', speaker:'Commercial trackers', date:'2026-03-07', lo:5, hi:6, unit:'mbd', scope:'hormuz_outbound', period:'seven_day_average', commodity:'crude_condensate', evidence:'commercial_tracker_model', quote:'Model-based estimate of Hormuz outbound crude plus condensate', source:'illustrative', url:'#', kind:'estimate', attribution:'named' },
   { id:'c3', speaker:'A ship-tracking index', date:'2026-03-07', lo:2.8, hi:2.8, unit:'tankers_per_night', scope:'ship_transits_in_and_out', period:'nightly', commodity:'unspecified', evidence:'activity_index', quote:'AIS-visible tanker transits through Hormuz corridor', source:'illustrative', url:'#', kind:'claim', attribution:'named' },
-  { id:'c4', speaker:'An analyst', date:'2026-03-07', lo:15, hi:15, unit:'mbbl_single_day', scope:'hormuz_outbound', period:'single_day', commodity:'all_liquids', evidence:'government_estimate', quote:'15 million barrels moved on March 6', source:'illustrative', url:'#', kind:'claim', attribution:'named' },
+  { id:'c4', speaker:'An analyst', date:'2026-03-07', lo:18, hi:18, unit:'mbbl_single_day', scope:'hormuz_outbound', period:'single_day', commodity:'all_liquids', evidence:'government_estimate', quote:'18 million barrels moved on March 6', source:'illustrative', url:'#', kind:'claim', attribution:'named' },
 ];
 
 const SCOPE = { hormuz_outbound:'through the Strait of Hormuz only', regional_total_including_bypass:'the whole region, including bypass pipelines', ship_transits_in_and_out:'ship movements at the strait, in both directions' };
@@ -33,13 +33,14 @@ const COMM = { crude:'crude oil', crude_condensate:'crude oil plus condensate', 
 const EVIDENCE = { government_estimate:'U.S. government estimate — underlying observations not public', commercial_tracker_model:'commercial tracker model — reaches us secondhand via press', activity_index:'ship-signal activity index — never barrels' };
 
 
+// Only factual reads of the freeze frame are ever scored; causal
+// attribution has no answer key and is shown unscored after the reveal.
 const chalReasonsList = [
-  {key:'flow',label:'Hormuz disruption is severe',correct:d=>d.hormuz<15},
-  {key:'bypass',label:'Bypass routes are compensating',correct:d=>d.yanbu>120},
-  {key:'buffer',label:'Inventories are dangerously low',correct:d=>d.buffer<45},
-  {key:'expect',label:'Market is pricing in sustained scarcity',correct:d=>d.hormuz<20&&d.buffer<50},
-  {key:'brent',label:'Brent has already moved sharply',correct:d=>d.brent>90},
-  {key:'calm',label:'The situation is stabilizing',correct:d=>d.hormuz>50}
+  {key:'flow',label:'Hormuz activity is below 15% of baseline',correct:d=>d.hormuz<15},
+  {key:'bypass',label:'Yanbu activity is above its baseline',correct:d=>d.yanbu>110},
+  {key:'buffer',label:'The cushion is below 45 days',correct:d=>d.buffer<45},
+  {key:'brent',label:'Brent is up more than 25% from Feb 23',correct:d=>d.brent>89.9},
+  {key:'calm',label:'Hormuz activity is above half of baseline',correct:d=>d.hormuz>50}
 ];
 
 
@@ -54,17 +55,17 @@ const storyMeta = {
     {icon:'\u{1F6A2}',title:'Hormuz traffic',desc:'Visible transits down sharply from baseline',valueFrom:'hormuz',color:'rgba(210,153,34,0.15)',textColor:'#d29922'},
     {icon:'\u{1F6E2}\uFE0F',title:'Oil cushion',desc:'Still adequate but starting to thin',valueFrom:'buffer',color:'rgba(210,153,34,0.15)',textColor:'#d29922'},
     {icon:'\u{1F4F0}',title:'News',desc:'Reports of escalating tensions in the Gulf',value:'Concern',color:'rgba(210,153,34,0.15)',textColor:'#d29922'}]},
-  mar07: { title:'The Halt', subtitle:'Hormuz traffic collapses. The market prices in catastrophe.', signals:[
+  mar07: { title:'The Halt', subtitle:'Hormuz traffic collapses. In this scenario, prices jump sharply.', signals:[
     {icon:'\u{1F6A2}',title:'Hormuz traffic',desc:'Near-total collapse of visible transits',valueFrom:'hormuz',color:'rgba(248,81,73,0.15)',textColor:'#f85149'},
     {icon:'\u{1F6E2}\uFE0F',title:'Oil cushion',desc:'Below 5-year average. System is tight.',valueFrom:'buffer',color:'rgba(248,81,73,0.15)',textColor:'#f85149'},
-    {icon:'\u{1F4F0}',title:'News',desc:'U.S. claims 9-10 mb/d still flowing. Trackers see ~5.',value:'Crisis',color:'rgba(248,81,73,0.15)',textColor:'#f85149'},
+    {icon:'\u{1F4F0}',title:'News',desc:'Officials say most oil still flows; independent trackers see far less.',value:'Crisis',color:'rgba(248,81,73,0.15)',textColor:'#f85149'},
     {icon:'\u{1F504}',title:'Bypass routes',desc:'Yanbu and Fujairah increasing but insufficient',valueFrom:'yanbuDelta',color:'rgba(88,166,255,0.15)',textColor:'#58a6ff'}]},
   mar12: { title:'The Standstill', subtitle:'The strait is effectively closed. Prices keep climbing.', signals:[
     {icon:'\u{1F6A2}',title:'Hormuz traffic',desc:'Effectively zero visible transits',valueFrom:'hormuz',color:'rgba(248,81,73,0.15)',textColor:'#f85149'},
-    {icon:'\u{1F6E2}\uFE0F',title:'Oil cushion',desc:'Critically low. Markets pricing sustained scarcity.',valueFrom:'buffer',color:'rgba(248,81,73,0.15)',textColor:'#f85149'},
-    {icon:'\u{1F4F0}',title:'News',desc:'Military escort operations announced. No reopening in sight.',value:'Severe',color:'rgba(248,81,73,0.15)',textColor:'#f85149'},
-    {icon:'\u{1F504}',title:'Bypass routes',desc:'Maxed out. Cannot replace Hormuz volumes.',value:'Max',color:'rgba(88,166,255,0.15)',textColor:'#58a6ff'}]},
-  apr07: { title:'The Peak', subtitle:'Partial reopening begins, but the damage to price is done.', signals:[
+    {icon:'\u{1F6E2}\uFE0F',title:'Oil cushion',desc:'Critically low in this scenario.',valueFrom:'buffer',color:'rgba(248,81,73,0.15)',textColor:'#f85149'},
+    {icon:'\u{1F4F0}',title:'News',desc:'Escort operations announced; no reopening announced.',value:'Severe',color:'rgba(248,81,73,0.15)',textColor:'#f85149'},
+    {icon:'\u{1F504}',title:'Bypass routes',desc:'In this scenario, bypass runs at its assumed ceiling — below Hormuz volumes.',value:'Max',color:'rgba(88,166,255,0.15)',textColor:'#58a6ff'}]},
+  apr07: { title:'The Peak', subtitle:'Partial reopening begins; prices peak in this scenario.', signals:[
     {icon:'\u{1F6A2}',title:'Hormuz traffic',desc:'Minimal traffic resuming. Very slow recovery.',valueFrom:'hormuz',color:'rgba(210,153,34,0.15)',textColor:'#d29922'},
     {icon:'\u{1F6E2}\uFE0F',title:'Oil cushion',desc:'Depleted. Takes months to rebuild.',valueFrom:'buffer',color:'rgba(248,81,73,0.15)',textColor:'#f85149'},
     {icon:'\u{1F4F0}',title:'News',desc:'Diplomatic talks underway. Market remains skeptical.',value:'Tense',color:'rgba(210,153,34,0.15)',textColor:'#d29922'},
