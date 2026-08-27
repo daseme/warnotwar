@@ -37,6 +37,7 @@
   </section>
 </main>
 
+<script src="data.js"></script>
 <script src="shared.js"></script>
 <script>
 let l2Stored=850, l2Use=16.5, l2Spr=350, l2Scenario='normal';
@@ -133,15 +134,9 @@ function onGradeChange() {
   renderL2();
 }
 
-function initPage() {
-  initShared();
-  renderL2();
-}
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initPage);
-} else {
-  initPage();
+function onPageInit() {
+  renderL2();
 }
 </script>
 

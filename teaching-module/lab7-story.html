@@ -45,6 +45,7 @@
   </section>
 </main>
 
+<script src="data.js"></script>
 <script src="shared.js"></script>
 <script>
 let storyIdx=0, playing=false, playTimer=null;
@@ -138,16 +139,8 @@ function onGradeChange() {
   renderStory();
 }
 
-const _origInit = initShared;
-initShared = function() {
-  _origInit();
+function onPageInit() {
   renderStory();
-};
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initShared);
-} else {
-  initShared();
 }
 </script>
 

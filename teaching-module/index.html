@@ -154,6 +154,7 @@
 
 </main>
 
+<script src="data.js"></script>
 <script src="shared.js"></script>
 <script>
 function renderScenario() {
@@ -186,17 +187,8 @@ function onGradeChange() {
   renderScenario();
 }
 
-// Override shared init to also render scenario
-const _origInit = initShared;
-initShared = function() {
-  _origInit();
+function onPageInit() {
   renderScenario();
-};
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initShared);
-} else {
-  initShared();
 }
 </script>
 

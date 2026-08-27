@@ -33,6 +33,7 @@
   </section>
 </main>
 
+<script src="data.js"></script>
 <script src="shared.js"></script>
 <script>
 let l1Open = 'c1';
@@ -123,16 +124,8 @@ function onGradeChange() {
   renderL1();
 }
 
-const _origInit = initShared;
-initShared = function() {
-  _origInit();
+function onPageInit() {
   renderL1();
-};
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initShared);
-} else {
-  initShared();
 }
 </script>
 

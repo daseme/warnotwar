@@ -31,6 +31,7 @@
   </section>
 </main>
 
+<script src="data.js"></script>
 <script src="shared.js"></script>
 <script>
 let l4Open='spot';
@@ -67,16 +68,8 @@ function onGradeChange() {
   renderL4();
 }
 
-const _origInit = initShared;
-initShared = function() {
-  _origInit();
+function onPageInit() {
   renderL4();
-};
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initShared);
-} else {
-  initShared();
 }
 </script>
 

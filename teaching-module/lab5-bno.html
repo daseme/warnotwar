@@ -38,6 +38,7 @@
   </section>
 </main>
 
+<script src="data.js"></script>
 <script src="shared.js"></script>
 <script>
 let l5Gear='futures', l5Brent=95.74, l5Next=98.20, l5Coll=4.5, l5Exp=0.45, l5Prem=0;
@@ -187,17 +188,9 @@ function onGradeChange() {
   renderHolders();
 }
 
-const _origInit = initShared;
-initShared = function() {
-  _origInit();
+function onPageInit() {
   renderL5();
   renderHolders();
-};
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initShared);
-} else {
-  initShared();
 }
 </script>
 

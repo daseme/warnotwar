@@ -39,6 +39,7 @@
   </section>
 </main>
 
+<script src="data.js"></script>
 <script src="shared.js"></script>
 <script>
 let chalIdx=2, chalReasons=new Set(), chalDir=null, chalRevealed=false;
@@ -151,16 +152,8 @@ function onGradeChange() {
   renderChallenge();
 }
 
-const _origInit = initShared;
-initShared = function() {
-  _origInit();
+function onPageInit() {
   renderChallenge();
-};
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initShared);
-} else {
-  initShared();
 }
 </script>
 

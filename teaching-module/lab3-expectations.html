@@ -36,6 +36,7 @@
   </section>
 </main>
 
+<script src="data.js"></script>
 <script src="shared.js"></script>
 <script>
 let l3pQuick = 25, l3pPartial = 50, l3pFull = 25, l3Guess = null;
@@ -210,16 +211,8 @@ function onGradeChange() {
   renderL3();
 }
 
-const _origInit = initShared;
-initShared = function() {
-  _origInit();
+function onPageInit() {
   renderL3();
-};
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initShared);
-} else {
-  initShared();
 }
 </script>
 
