@@ -62,11 +62,12 @@ function renderLabNav() {
     {file:'lab7-story.html', label:'Story Mode', num:'7'},
     {file:'lab8-challenge.html', label:'Challenge', num:'8'},
   ];
+  const siteLink = '<a href="/oilflows.html" class="lab-tab" style="margin-left:auto;opacity:0.7">live data →</a>';
   nav.innerHTML = labs.map(l => {
     const isActive = l.file === current;
     const label = l.num ? `${l.num}. ${l.label}` : l.label;
     return `<a href="${l.file}" class="lab-tab${isActive?' on':''}">${label}</a>`;
-  }).join('');
+  }).join('') + siteLink;
 }
 
 document.addEventListener('keydown', (e) => {

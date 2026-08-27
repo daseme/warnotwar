@@ -391,6 +391,9 @@ def build_buffer_metadata(
         "latest_release_date": latest_release_date,
         "latest_days_supply_incl_spr":
             round(float(latest["days_supply_incl_spr"]), 1),
+        "days_rank_from_low": 1 + int(
+            (days < float(latest["days_supply_incl_spr"])).sum()),
+        "weeks_observed": int(len(days)),
         "latest_commercial_days_supply":
             round(float(latest["commercial_days_supply"]), 1)
             if pd.notna(latest["commercial_days_supply"]) else None,
@@ -408,6 +411,15 @@ def build_buffer_metadata(
         "prior_lower_date": lower_date,
         "years_since_prior_lower": lower_years,
         "spr": spr_decomposition(frame),
+        "latest_stocks": {
+            "crude_incl_spr_mbbl": round(
+                float(latest["crude_stocks_incl_spr_mbbl"]) / 1000, 1),
+            "commercial_mbbl": round(
+                float(latest["commercial_crude_mbbl"]) / 1000, 1),
+            "spr_mbbl": round(float(latest["spr_crude_mbbl"]) / 1000, 1),
+            "refinery_inputs_mbd": round(
+                float(latest["refinery_crude_inputs_mbd"]) / 1000, 2),
+        },
         "definitions": {
             "days_supply_incl_spr": (
                 "Total U.S. crude stocks, including the Strategic Petroleum "

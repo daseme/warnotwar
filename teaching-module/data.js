@@ -21,10 +21,11 @@ const dates = [
 ];
 
 const items = [
-  { id:'c1', speaker:'U.S. officials', date:'2026-03-07', lo:10, hi:12, unit:'mbd', scope:'hormuz_outbound', period:'unspecified', commodity:'unspecified', evidence:'government_estimate', quote:'Approximately 10 to 12 million barrels per day of oil flow through the Strait of Hormuz', source:'illustrative', url:'#', kind:'claim', attribution:'anonymous' },
-  { id:'c2', speaker:'Commercial trackers', date:'2026-03-07', lo:5, hi:6, unit:'mbd', scope:'hormuz_outbound', period:'seven_day_average', commodity:'crude_condensate', evidence:'commercial_tracker_model', quote:'Model-based estimate of Hormuz outbound crude plus condensate', source:'illustrative', url:'#', kind:'estimate', attribution:'named' },
-  { id:'c3', speaker:'A ship-tracking index', date:'2026-03-07', lo:2.8, hi:2.8, unit:'tankers_per_night', scope:'ship_transits_in_and_out', period:'nightly', commodity:'unspecified', evidence:'activity_index', quote:'AIS-visible tanker transits through Hormuz corridor', source:'illustrative', url:'#', kind:'claim', attribution:'named' },
-  { id:'c4', speaker:'An analyst', date:'2026-03-07', lo:18, hi:18, unit:'mbbl_single_day', scope:'hormuz_outbound', period:'single_day', commodity:'all_liquids', evidence:'government_estimate', quote:'18 million barrels moved on March 6', source:'illustrative', url:'#', kind:'claim', attribution:'named' },
+  { id:'c1', check:'not checkable against public data — underlying observations not public', differs:'c2', speaker:'U.S. officials', date:'2026-03-07', lo:10, hi:12, unit:'mbd', scope:'hormuz_outbound', period:'unspecified', commodity:'unspecified', evidence:'government_estimate', quote:'Approximately 10 to 12 million barrels per day of oil flow through the Strait of Hormuz', source:'illustrative', url:'#', kind:'claim', attribution:'anonymous' },
+  { id:'c2', check:'model estimate — checkable against later official export data', differs:'c1', speaker:'Commercial trackers', date:'2026-03-07', lo:5, hi:6, unit:'mbd', scope:'hormuz_outbound', period:'seven_day_average', commodity:'crude_condensate', evidence:'commercial_tracker_model', quote:'Model-based estimate of Hormuz outbound crude plus condensate', source:'illustrative', url:'#', kind:'estimate', attribution:'named' },
+  { id:'c3', check:'matches physical ship tracking — activity only, never barrels', speaker:'A ship-tracking index', date:'2026-03-07', lo:2.8, hi:2.8, unit:'tankers_per_night', scope:'ship_transits_in_and_out', period:'nightly', commodity:'unspecified', evidence:'activity_index', quote:'AIS-visible tanker transits through Hormuz corridor', source:'illustrative', url:'#', kind:'claim', attribution:'named' },
+  { id:'c4', check:'single-day figure — checkable against loadings data when published', speaker:'An analyst', date:'2026-03-07', lo:18, hi:18, unit:'mbbl_single_day', scope:'hormuz_outbound', period:'single_day', commodity:'all_liquids', evidence:'government_estimate', quote:'18 million barrels moved on March 6', source:'illustrative', url:'#', kind:'claim', attribution:'named' },
+  { id:'c5', check:'not checkable against public data — no independent regional series exists', speaker:'U.S. officials', date:'2026-03-07', lo:14, hi:16, unit:'mbd', scope:'regional_total_including_bypass', period:'unspecified', commodity:'unspecified', evidence:'government_estimate', quote:'About 14 to 16 million barrels per day leave the region when bypass pipelines are counted', source:'illustrative', url:'#', kind:'claim', attribution:'anonymous' },
 ];
 
 const SCOPE = { hormuz_outbound:'through the Strait of Hormuz only', regional_total_including_bypass:'the whole region, including bypass pipelines', ship_transits_in_and_out:'ship movements at the strait, in both directions' };
@@ -85,3 +86,15 @@ const storyChapters = dates.map(d => {
   return { ...d, title: m.title, subtitle: m.subtitle,
     signals: m.signals.map(s => ({ ...s, value: _sigVal(d, s) })) };
 });
+
+// FROM THE LIVE INVESTIGATION (not the simulation): the parent site's
+// candidate explanations for the real 2026 tension. Rendered only inside
+// live-record styled components. Independent plausibilities — these are
+// not exclusive outcomes and must never be forced to sum to anything.
+const liveCandidates = [
+  { key:'demand',   label:'Demand destruction',                            explains:'the price',                 disc:'EIA products-supplied data — published weekly' },
+  { key:'bypass',   label:'Bypass routes carrying more than modeled',      explains:'the flow reading',          disc:'Yanbu terminal-activity index — an activity signal, not barrels' },
+  { key:'spr',      label:'Strategic releases bridging supply',            explains:'the cushion and the price', disc:'EIA weekly SPR data — observable now' },
+  { key:'official', label:'The official flow figures being accurate',      explains:'the flow reading',          disc:'official export data, ~Oct–Nov 2026 — the referee' },
+  { key:'deesc',    label:'Expectations of de-escalation priced in',       explains:'the price',                 disc:'not directly measurable; resolves only in hindsight' },
+];

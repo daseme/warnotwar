@@ -27,6 +27,7 @@
   <section class="lab-section active" id="lab-2">
     <h2>Lab 2: The Cushion</h2>
     <p class="subtitle">How much breathing room does the market have? Change the numbers and watch days-of-supply recalculate.</p>
+    <div id="l2-mode"></div>
     <div class="tank-wrap">
       <div class="tank-visual"><div id="l2-tank-svg"></div><div class="tank-label">U.S. crude storage</div></div>
       <div class="tank-controls" id="l2-controls"></div>
@@ -41,6 +42,16 @@
 <script src="shared.js"></script>
 <script>
 let l2Stored=850, l2Use=16.5, l2Spr=350, l2Scenario='normal';
+let l2Mode='sim', l2Denom='runs', l2ShowPreshock=false;
+let liveBuf=null, liveProd=null, liveErr=false;
+function fetchLive(cb){
+  if(liveBuf||liveErr){ cb(); return; }
+  Promise.all([
+    fetch('/data/us_crude_buffer_meta.json').then(r=>r.json()),
+    fetch('/data/us_products_meta.json').then(r=>r.json()).catch(()=>null),
+  ]).then(([b,p])=>{ liveBuf=b; liveProd=p; cb(); })
+   .catch(()=>{ liveErr=true; cb(); });
+}
 const l2Scenarios = {
   normal:{stored:850,use:16.5,spr:350},
   low:{stored:720,use:17.0,spr:280},
@@ -50,8 +61,9 @@ const l2Scenarios = {
 
 function days(stored,use){ return (stored/use).toFixed(1); }
 
-function drawTank(){
-  const total=1200, commPct=(l2Stored/total)*100, sprPct=(l2Spr/total)*100, emptyPct=100-commPct-sprPct;
+function drawTank(comm, spr){
+  comm = comm==null ? l2Stored : comm; spr = spr==null ? l2Spr : spr;
+  const total=1200, commPct=(comm/total)*100, sprPct=(spr/total)*100, emptyPct=100-commPct-sprPct;
   const el = $('l2-tank-svg');
   if(!el) return;
   el.innerHTML = '<svg viewBox="0 0 100 160" xmlns="http://www.w3.org/2000/svg">' +
@@ -65,7 +77,18 @@ function drawTank(){
     '</svg>';
 }
 
+function renderMode(){
+  const el=$('l2-mode');
+  if(!el) return;
+  el.innerHTML='<div class="mode-toggle">'+
+    '<button data-m="sim" class="'+(l2Mode==='sim'?'on':'')+'">Sandbox — simulated</button>'+
+    '<button data-m="live" class="'+(l2Mode==='live'?'on':'')+'">Live record — EIA</button></div>';
+  el.querySelectorAll('button').forEach(b=>{ b.onclick=()=>{ l2Mode=b.dataset.m; renderL2(); }; });
+}
+
 function renderL2(){
+  renderMode();
+  if(l2Mode==='live'){ fetchLive(renderLive); return; }
   drawTank();
   const ctrl = $('l2-controls');
   if(!ctrl) return;
@@ -76,10 +99,14 @@ function renderL2(){
   } else {
     ctrl.innerHTML = '<div class="slider-row"><label>Commercial stocks</label><input type="range" id="s2-stored" min="400" max="1000" step="10" value="'+l2Stored+'"><span class="slider-val" id="v2-stored">'+l2Stored+'M</span></div>' +
       '<div class="slider-row"><label>SPR (govt reserve)</label><input type="range" id="s2-spr" min="0" max="700" step="10" value="'+l2Spr+'"><span class="slider-val" id="v2-spr">'+l2Spr+'M</span></div>' +
-      '<div class="slider-row"><label>Refinery runs</label><input type="range" id="s2-use" min="12" max="20" step="0.1" value="'+l2Use+'"><span class="slider-val" id="v2-use">'+l2Use+' mb/d</span></div>';
+      '<div class="slider-row"><label id="l2-den-label">'+(l2Denom==='runs'?'Refinery runs':'Products supplied (consumption)')+'</label><input type="range" id="s2-use" min="12" max="24" step="0.1" value="'+l2Use+'"><span class="slider-val" id="v2-use">'+l2Use+' mb/d</span></div>'+
+      '<div class="slider-row"><label>Denominator</label><div class="denom-switch"><button data-den="runs" class="'+(l2Denom==='runs'?'on':'')+'">refinery runs</button><button data-den="supplied" class="'+(l2Denom==='supplied'?'on':'')+'">products supplied</button></div></div>';
   }
 
   const ss=$('s2-stored'), su=$('s2-use'), sp=$('s2-spr');
+  ctrl.querySelectorAll('.denom-switch button').forEach(b=>{
+    b.onclick=()=>{ l2Denom=b.dataset.den; l2Use=(l2Denom==='runs'?16.5:20.3); renderL2(); };
+  });
   if(ss) ss.oninput=function(){l2Stored=+ss.value; refreshL2();};
   if(su) su.oninput=function(){l2Use=+su.value; refreshL2();};
   if(sp) sp.oninput=function(){l2Spr=+sp.value; refreshL2();};
@@ -87,7 +114,7 @@ function renderL2(){
   const d=days(l2Stored+l2Spr,l2Use);
   const col=d<30?'var(--c4)':(d<45?'var(--c3)':'var(--c2)');
   const result=$('l2-result');
-  if(result) result.innerHTML = '<div class="r-eq">days of supply = stored oil ÷ daily use</div><div class="r-num" style="color:'+col+'">'+d+'</div><div class="r-label">days of oil supply</div><div class="r-note">'+
+  if(result) result.innerHTML = '<div class="r-eq">days of supply = stored oil ÷ '+(l2Denom==='runs'?'daily refinery use':'daily consumption')+'</div><div class="r-num" style="color:'+col+'">'+d+'</div><div class="r-label">days of oil supply</div><div class="r-note">'+
     (grade===5?'Think of it like padding, not a pantry: oil keeps getting pumped and delivered every day — this is the extra cushion on top of that flow.':
      (grade===8?'If refinery use rises, "days" falls even though barrels haven\'t changed.':'Seasonal maintenance reduces runs, mechanically raising days without any inventory build. SPR releases are policy decisions.'))+
     '</div>';
@@ -126,6 +153,40 @@ function refreshL2(){
   if(rn){ const num=rn.querySelector('.r-num'); if(num){ num.textContent=d; num.style.color=col; } }
 }
 
+function renderLive(){
+  const ctrl=$('l2-controls'), result=$('l2-result'), scen=$('l2-scenarios'), ins=$('l2-insight');
+  if(scen) scen.innerHTML='';
+  if(liveErr||!liveBuf){
+    if(ctrl) ctrl.innerHTML='';
+    if(result) result.innerHTML='<div class="detail-panel">Live data is unavailable here — see the full instrument at <a href="/oilflows.html">warnotwar.com/oilflows</a>.</div>';
+    if(ins) ins.innerHTML='';
+    drawTank();
+    return;
+  }
+  const m=liveBuf, ls=m.latest_stocks, sp=m.spr;
+  const preComm=ls.commercial_mbbl - sp.commercial_delta_since_preshock_mbbl;
+  const preSpr=ls.spr_mbbl - sp.spr_delta_since_preshock_mbbl;
+  drawTank(l2ShowPreshock?preComm:ls.commercial_mbbl, l2ShowPreshock?preSpr:ls.spr_mbbl);
+  if(ctrl) ctrl.innerHTML='<div class="live-record"><div class="lr-head">LIVE RECORD · EIA · week ending '+m.last_week+' · <a href="/oilflows.html">full instrument</a></div>'+
+    '<p>Commercial stocks <strong>'+ls.commercial_mbbl+'M bbl</strong> · Strategic Petroleum Reserve <strong>'+ls.spr_mbbl+'M bbl</strong> · refinery inputs <strong>'+ls.refinery_inputs_mbd+' mb/d</strong></p>'+
+    '<p>Since the pre-shock week ('+sp.preshock_anchor_week+'): SPR <strong>'+sp.spr_delta_since_preshock_mbbl+'M</strong> · commercial <strong>'+sp.commercial_delta_since_preshock_mbbl+'M</strong> — the cushion is being drawn from the strategic side. SPR barrels are sold into the commercial system, so steady commercial stocks during releases is the expected mechanical signature.</p>'+
+    '<button class="lr-toggle" id="l2-pre">'+(l2ShowPreshock?'Show today':'Show the pre-shock tank')+'</button>'+
+    (l2ShowPreshock?'<span style="font-size:11px;color:var(--text-tertiary);margin-left:8px;">tank shows '+sp.preshock_anchor_week+'</span>':'')+
+    '</div>';
+  const pre=$('l2-pre'); if(pre) pre.onclick=()=>{ l2ShowPreshock=!l2ShowPreshock; renderL2(); };
+  if(result) result.innerHTML='<div class="r-eq">days of supply = stored oil ÷ refinery inputs</div><div class="r-num" style="color:var(--c3)">'+m.latest_days_supply_incl_spr+'</div><div class="r-label">days — the '+(m.days_rank_from_low===1?'lowest':m.days_rank_from_low+'nd-lowest')+' of '+m.weeks_observed.toLocaleString()+' weekly readings since 1982</div><div class="r-note">A cushion ratio, not a countdown — production and imports continue, and release rates are policy decisions.</div>';
+  if(ins){
+    let h='';
+    if(liveProd){
+      const g=liveProd.gasoline_days_cover, dz=liveProd.distillate_days_cover, lt=liveProd.latest;
+      h='<div class="live-record"><div class="lr-head">SAME EQUATION, OTHER TANKS · EIA · week ending '+liveProd.last_week+'</div>'+
+        '<p>Gasoline: <strong>'+g.latest+' days of cover</strong> · Distillate (diesel): <strong>'+dz.latest+' days</strong> ('+dz.rank_from_low+'-lowest of '+dz.weeks_observed.toLocaleString()+' weeks since 1991) · products supplied '+lt.products_supplied_mbd+' mb/d</p>'+
+        '<p style="color:var(--text-secondary)">diesel days = distillate stocks ÷ distillate supplied — the crude equation generalizes to every fuel.</p></div>';
+    }
+    ins.innerHTML=h;
+  }
+}
+
 function onDateChange() {
   renderHeader();
 }
@@ -136,6 +197,7 @@ function onGradeChange() {
 
 
 function onPageInit() {
+  if (/[#&]mode=live/.test(location.hash)) l2Mode = 'live';
   renderL2();
 }
 </script>

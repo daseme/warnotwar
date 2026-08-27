@@ -43,7 +43,7 @@ function renderL1() {
   el.innerHTML = items.map(it => {
     const on = it.id === l1Open;
     const uCard = {mbd:'million barrels per day', tankers_per_night:'tankers per night · both directions', mbbl_single_day:'million barrels · one single day'};
-    return `<div class="card${on?' on':''}" data-id="${it.id}"><div class="c-label">${it.speaker}</div><div class="c-value">${figNum(it)}</div><span class="c-tag tag-info">${uCard[it.unit]}</span></div>`;
+    return `<div class="card${on?' on':''}" data-id="${it.id}"><div class="c-label">${it.speaker}</div><div class="c-value">${figNum(it)}</div><span class="c-tag tag-info">${uCard[it.unit]}</span>${it.differs?'<span class="c-tag tag-warn">figures differ</span>':''}</div>`;
   }).join('');
   el.querySelectorAll('.card').forEach(c => {
     c.onclick = () => { l1Open = c.dataset.id; renderL1(); };
@@ -52,7 +52,8 @@ function renderL1() {
   const it = items.find(x => x.id === l1Open);
   const what = it.unit==='tankers_per_night' ? 'ship movements — not oil volume' : COMM[it.commodity];
   const dir = it.scope==='ship_transits_in_and_out' ? 'both directions — inbound tankers travel empty' : 'outbound';
-  $('l1-detail').innerHTML = `<div class="detail-panel"><h4>${it.speaker} — ${figText(it)}</h4><p><strong>What:</strong> ${what}</p><p><strong>Where:</strong> ${SCOPE[it.scope]}</p><p><strong>Direction:</strong> ${dir}</p><p><strong>Window:</strong> ${WINDOW[it.period]}</p><p><strong>Source:</strong> ${EVIDENCE[it.evidence]}</p><div class="note">"${it.quote}" — ${it.source}</div></div>`;
+  $('l1-detail').innerHTML = `<div class="detail-panel"><h4>${it.speaker} — ${figText(it)}</h4><p><strong>What:</strong> ${what}</p><p><strong>Where:</strong> ${SCOPE[it.scope]}</p><p><strong>Direction:</strong> ${dir}</p><p><strong>Window:</strong> ${WINDOW[it.period]}</p><p><strong>Source:</strong> ${EVIDENCE[it.evidence]}</p><p><strong>Checkability:</strong> ${it.check}</p>${it.differs?(()=>{const o=items.find(x=>x.id===it.differs);return '<p><strong>Figures differ:</strong> compare with '+o.speaker+' — '+figText(o)+'. Both readings are shown equal-weight; the difference is unverified, and neither card wins. <a href="#" id="l1-goto" data-goto="'+o.id+'">View the other card →</a></p>';})():''}<div class="note">"${it.quote}" — ${it.source}</div></div>`;
+  const goto=$('l1-goto'); if(goto) goto.onclick=(e)=>{e.preventDefault(); l1Open=goto.dataset.goto; renderL1();};
 
   // Schematic
   const d = dates[dateIdx];

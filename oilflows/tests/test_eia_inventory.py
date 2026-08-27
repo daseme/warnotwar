@@ -134,6 +134,8 @@ def test_metadata_reports_latest_week_and_context():
     # stocks fall monotonically, so the latest week is the all-time low
     assert meta["prior_lower_date"] is None
     assert meta["current_percentile"] == pytest.approx(20.0)
+    assert meta["latest_stocks"]["commercial_mbbl"] == 388.0
+    assert meta["latest_stocks"]["spr_mbbl"] == 372.0
     assert meta["generated_at_utc"] == "2026-08-26T00:00:00Z"
     # the countdown guardrail lives in the published definitions
     assert "not a countdown" in meta["definitions"]["days_supply_incl_spr"]
