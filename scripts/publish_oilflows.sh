@@ -26,6 +26,7 @@ if [ ! -f data/raw/eia/WCRSTUS1w.xls ]; then
   "$PY" -m oilflows.pull_eia_inventory
 fi
 "$PY" -m oilflows.build_buffer
+"$PY" -m oilflows.build_products
 
 # Verification layer: hand-curated claims/estimates ledgers -> published JSON.
 "$PY" -m oilflows.build_verification
@@ -35,6 +36,8 @@ cp data/published/oilflows_daily.json "$ROOT/data/"
 cp data/published/oilflows_meta.json "$ROOT/data/"
 cp data/published/us_crude_buffer_weekly.json "$ROOT/data/"
 cp data/published/us_crude_buffer_meta.json "$ROOT/data/"
+cp data/published/us_products_weekly.json "$ROOT/data/"
+cp data/published/us_products_meta.json "$ROOT/data/"
 cp data/published/hormuz_verification.json "$ROOT/data/"
 cp data/published/us_oil_flow_claims.json "$ROOT/data/"
 # Optional download/debug artifacts for the "view the data" links.

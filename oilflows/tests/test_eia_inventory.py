@@ -246,3 +246,56 @@ def test_spr_lowest_since_uses_preshock_history_only():
         frame, preshock_date=dates[4].date().isoformat()
     )
     assert d["spr_last_at_or_below_date"] == dates[0].date().isoformat()
+
+
+def test_products_days_cover_math_and_guards():
+    from oilflows.eia_inventory import (
+        PRODUCT_SERIES, build_products_weekly,
+    )
+
+    dates = pd.date_range("2026-01-02", periods=4, freq="7D")
+    vals = {
+        "gasoline_stocks_mbbl": [230_000] * 4,
+        "distillate_stocks_mbbl": [110_000] * 4,
+        "products_supplied_mbd": [20_000] * 4,
+        "gasoline_supplied_mbd": [9_200, 9_200, 0.0, float("nan")],
+        "distillate_supplied_mbd": [4_000] * 4,
+    }
+    parsed = {
+        c: pd.DataFrame({"week_end": dates, c: vals[c]})
+        for c in PRODUCT_SERIES
+    }
+
+    frame = build_products_weekly(parsed)
+
+    assert frame.loc[0, "gasoline_days_cover"] == pytest.approx(25.0)
+    assert frame.loc[0, "distillate_days_cover"] == pytest.approx(27.5)
+    # zero and missing denominators never divide
+    assert pd.isna(frame.loc[2, "gasoline_days_cover"])
+    assert pd.isna(frame.loc[3, "gasoline_days_cover"])
+
+
+def test_products_metadata_ranks_and_units():
+    from oilflows.eia_inventory import (
+        PRODUCT_SERIES, build_products_metadata, build_products_weekly,
+    )
+
+    dates = pd.date_range("2026-01-02", periods=5, freq="7D")
+    vals = {
+        "gasoline_stocks_mbbl": [250_000, 240_000, 230_000, 220_000, 210_000],
+        "distillate_stocks_mbbl": [110_000] * 5,
+        "products_supplied_mbd": [20_000] * 5,
+        "gasoline_supplied_mbd": [10_000] * 5,
+        "distillate_supplied_mbd": [4_000] * 5,
+    }
+    parsed = {
+        c: pd.DataFrame({"week_end": dates, c: vals[c]})
+        for c in PRODUCT_SERIES
+    }
+    meta = build_products_metadata(build_products_weekly(parsed))
+
+    assert meta["latest"]["gasoline_stocks_mbbl"] == 210.0
+    assert meta["latest"]["products_supplied_mbd"] == 20.0
+    assert meta["gasoline_days_cover"]["latest"] == 21.0
+    assert meta["gasoline_days_cover"]["rank_from_low"] == 1
+    assert "not a countdown" in meta["definitions"]["days_cover"]

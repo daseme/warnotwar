@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "frequency": "weekly",
+  "source": "U.S. Energy Information Administration",
+  "generated_at_utc": "2026-08-27T17:34:19Z",
+  "first_week": "1991-02-08",
+  "last_week": "2026-08-21",
+  "latest": {
+    "gasoline_stocks_mbbl": 206.8,
+    "distillate_stocks_mbbl": 103.4,
+    "products_supplied_mbd": 20.95,
+    "gasoline_supplied_mbd": 9.04,
+    "distillate_supplied_mbd": 3.84
+  },
+  "gasoline_days_cover": {
+    "latest": 22.9,
+    "rank_from_low": 331,
+    "weeks_observed": 1854
+  },
+  "distillate_days_cover": {
+    "latest": 26.9,
+    "rank_from_low": 156,
+    "weeks_observed": 1854
+  },
+  "definitions": {
+    "days_cover": "Product stocks divided by that week's product supplied (EIA's consumption proxy). A cushion ratio, not a countdown — refineries keep producing.",
+    "products_supplied_mbd": "EIA's weekly proxy for U.S. consumption of petroleum products, million barrels per day."
+  }
+}

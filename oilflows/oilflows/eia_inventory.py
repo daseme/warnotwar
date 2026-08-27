@@ -20,6 +20,16 @@ BUFFER_SERIES = {
     "refinery_crude_inputs_mbd": "WCRRIUS2",
 }
 
+# Refined products: stocks and demand ("product supplied" is EIA's proxy
+# for consumption). Sourcekeys verified against the live dnav endpoints.
+PRODUCT_SERIES = {
+    "gasoline_stocks_mbbl": "WGTSTUS1",
+    "distillate_stocks_mbbl": "WDISTUS1",
+    "products_supplied_mbd": "WRPUPUS2",
+    "gasoline_supplied_mbd": "WGFUPUS2",
+    "distillate_supplied_mbd": "WDIUPUS2",
+}
+
 # Tolerated relative gap in the incl_spr ≈ commercial + spr identity;
 # EIA series are independently rounded.
 IDENTITY_TOLERANCE = 0.01
@@ -145,6 +155,85 @@ def build_buffer_weekly(
     )
 
     return frame
+
+
+def build_products_weekly(parsed: dict[str, pd.DataFrame]) -> pd.DataFrame:
+    """Join the refined-product series and compute days-of-cover ratios.
+
+    Same discipline as the crude buffer: matching weeks only, no
+    interpolation, undefined ratios stay null, and days-of-cover is a
+    cushion ratio, never a countdown — refineries keep producing.
+    """
+    frame = None
+    for column in PRODUCT_SERIES:
+        part = parsed[column]
+        frame = part if frame is None else frame.merge(
+            part, on="week_end", how="inner", validate="one_to_one"
+        )
+    frame = frame.sort_values("week_end").reset_index(drop=True)
+    if frame.empty:
+        raise RuntimeError("No overlapping EIA weeks across product inputs.")
+
+    for stocks, supplied, out in [
+        ("gasoline_stocks_mbbl", "gasoline_supplied_mbd", "gasoline_days_cover"),
+        ("distillate_stocks_mbbl", "distillate_supplied_mbd", "distillate_days_cover"),
+    ]:
+        denom = frame[supplied].where(frame[supplied] > 0)
+        frame[out] = frame[stocks] / denom
+
+    return frame
+
+
+def build_products_metadata(
+    frame: pd.DataFrame,
+    *,
+    generated_at_utc: str | None = None,
+) -> dict:
+    if generated_at_utc is None:
+        generated_at_utc = (
+            pd.Timestamp.now(tz="UTC").strftime("%Y-%m-%dT%H:%M:%SZ")
+        )
+
+    latest = frame.iloc[-1]
+
+    def rank_low(column: str) -> dict:
+        observed = frame.dropna(subset=[column])
+        current = observed.iloc[-1][column]
+        rank = 1 + int((observed[column] < current).sum())
+        return {
+            "latest": round(float(current), 1),
+            "rank_from_low": rank,
+            "weeks_observed": int(len(observed)),
+        }
+
+    return {
+        "schema_version": 1,
+        "frequency": "weekly",
+        "source": "U.S. Energy Information Administration",
+        "generated_at_utc": generated_at_utc,
+        "first_week": frame["week_end"].min().date().isoformat(),
+        "last_week": frame["week_end"].max().date().isoformat(),
+        "latest": {
+            "gasoline_stocks_mbbl": round(float(latest["gasoline_stocks_mbbl"]) / 1000, 1),
+            "distillate_stocks_mbbl": round(float(latest["distillate_stocks_mbbl"]) / 1000, 1),
+            "products_supplied_mbd": round(float(latest["products_supplied_mbd"]) / 1000, 2),
+            "gasoline_supplied_mbd": round(float(latest["gasoline_supplied_mbd"]) / 1000, 2),
+            "distillate_supplied_mbd": round(float(latest["distillate_supplied_mbd"]) / 1000, 2),
+        },
+        "gasoline_days_cover": rank_low("gasoline_days_cover"),
+        "distillate_days_cover": rank_low("distillate_days_cover"),
+        "definitions": {
+            "days_cover": (
+                "Product stocks divided by that week's product supplied "
+                "(EIA's consumption proxy). A cushion ratio, not a "
+                "countdown — refineries keep producing."
+            ),
+            "products_supplied_mbd": (
+                "EIA's weekly proxy for U.S. consumption of petroleum "
+                "products, million barrels per day."
+            ),
+        },
+    }
 
 
 def validate_stock_identity(frame: pd.DataFrame) -> float:

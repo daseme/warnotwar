@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from .eia_inventory import BUFFER_SERIES, fetch_eia_weekly_xls
+from .eia_inventory import BUFFER_SERIES, PRODUCT_SERIES, fetch_eia_weekly_xls
 from .settings import Settings
 
 
@@ -11,7 +11,7 @@ def main() -> None:
     eia_dir = settings.raw_dir / "eia"
     eia_dir.mkdir(parents=True, exist_ok=True)
 
-    for column, sourcekey in BUFFER_SERIES.items():
+    for column, sourcekey in {**BUFFER_SERIES, **PRODUCT_SERIES}.items():
         content = fetch_eia_weekly_xls(
             sourcekey,
             timeout_seconds=settings.request_timeout_seconds,
