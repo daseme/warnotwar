@@ -434,8 +434,27 @@
   </div>
 </section>
 
+<section class="panel" id="panel-onetl" style="display:none">
+  <h2>7 &middot; One timeline &mdash; flow, buffer, price</h2>
+  <p class="panel-sub" id="sub-onetl">all three instruments on one clock &middot; each rebased so 100 = its own level on Feb 23 2026, before the shock &middot; three separate measurements, not one blended number</p>
+  <div class="chart-wrap" id="chart-onetl"></div>
+  <div class="legend">
+    <span><span class="dot" style="background:#ffffff"></span>flow &mdash; Hormuz tanker activity</span>
+    <span><span class="dot" style="background:#4a8fd4"></span>price &mdash; Brent</span>
+    <span><span class="dot" style="background:#b8862a"></span>buffer &mdash; U.S. days of supply (weekly; dots = actual readings)</span>
+  </div>
+  <div class="note">
+    Reading it: 25 on the flow line means Hormuz activity at 25% of
+    <em>its own</em> pre-shock level &mdash; not 25% of the other lines.
+    The buffer line holds its latest weekly reading between dots; only the
+    dots are observations. Putting the three on one clock shows timing, not
+    mechanism &mdash; their alignment is not a claim that one causes
+    another. Full detail for each instrument is in the panels above.
+  </div>
+</section>
+
 <section class="panel" id="panel-method">
-  <h2>7 &middot; How we know</h2>
+  <h2>8 &middot; How we know</h2>
   <div class="prose">
     <p><strong>The traffic sensor.</strong> IMF PortWatch derives daily
     tanker-activity signals from AIS data &mdash; the position beacons ships broadcast &mdash; at the Strait of Hormuz
@@ -625,6 +644,13 @@
         pen = true;
       });
       svg += `<path d="${path}" fill="none" stroke="${s.color}" stroke-width="1.8" stroke-linejoin="round"/>`;
+      // dots at true observations (e.g. weekly readings under a step line)
+      if (s.markers) {
+        data.forEach(r => {
+          const v = r[s.markers];
+          if (v != null) svg += `<circle cx="${x(r.t).toFixed(1)}" cy="${y(v).toFixed(1)}" r="2.4" fill="${s.color}"/>`;
+        });
+      }
     });
 
     // mark the most recent observation of the first series
@@ -851,6 +877,56 @@
         bnoPeak && { date: bnoPeak.date, label: 'peak ' + usd(bnoPeak.bno_last_close_usd), side: 'right' },
       ].filter(Boolean),
     });
+
+  // ---- Panel 7: one timeline — flow, buffer, price rebased to Feb 23 ----
+  // The brief bans dual axes and blended numbers; a shared clock is legal
+  // only with every series rebased to its own pre-shock level.
+  if (buffer && bLatest) {
+    const REBASE = '2026-02-23'; // pre-shock reference date of the shock analysis
+    const fA = rows.find(r => r.date === REBASE);
+    const bA = [...bDays].reverse().find(r => r.date <= REBASE);
+    if (fA && bA && fA.hormuz_tanker_count_index_7d != null
+        && fA.brent_spot_last_usd != null) {
+      const chartRows = [];
+      let lastB = null, bi = 0;
+      rows.filter(r => r.date >= '2026-02-01').forEach(r => {
+        while (bi < bDays.length && bDays[bi].date <= r.date) {
+          lastB = bDays[bi]; bi++;
+        }
+        chartRows.push({
+          date: r.date, t: r.t,
+          flow_r: r.hormuz_tanker_count_index_7d != null
+            ? r.hormuz_tanker_count_index_7d / fA.hormuz_tanker_count_index_7d * 100 : null,
+          price_r: r.brent_spot_last_usd != null
+            ? r.brent_spot_last_usd / fA.brent_spot_last_usd * 100 : null,
+          // display-only step carrying the latest weekly reading; dots mark
+          // the actual observations, and the tooltip names the week
+          buffer_r: lastB
+            ? lastB.days_supply_incl_spr / bA.days_supply_incl_spr * 100 : null,
+          buffer_obs: (lastB && lastB.date === r.date)
+            ? lastB.days_supply_incl_spr / bA.days_supply_incl_spr * 100 : null,
+          buffer_week: lastB ? lastB.date : null,
+        });
+      });
+
+      document.getElementById('panel-onetl').style.display = '';
+      const pct = v => Math.round(v) + '% of its own Feb 23 level';
+      linePanel(document.getElementById('chart-onetl'),
+        [
+          { field: 'flow_r', name: 'flow — Hormuz activity', color: '#ffffff', fmt: pct },
+          { field: 'price_r', name: 'price — Brent', color: '#4a8fd4', fmt: pct },
+          { field: 'buffer_r', name: 'buffer — days of supply', color: '#b8862a', fmt: pct, markers: 'buffer_obs' },
+        ],
+        {
+          data: chartRows, height: 330, monthEvery: 1,
+          refLine: 100, refLabel: 'Feb 23 2026 = 100',
+          events: [
+            lastThresh && { date: lastThresh.date, label: 'Hormuz activity ' + thresholdLabel(lastThresh.shock_marker), side: 'left' },
+            brentPeak && { date: brentPeak.date, label: 'Brent peak', side: 'right' },
+          ].filter(Boolean),
+        });
+    }
+  }
 
   // ---- Opening question tiles (all values from loaded data) ----
   const flowRow = [...rows].reverse().find(r => r.hormuz_tanker_count_index_7d != null);
