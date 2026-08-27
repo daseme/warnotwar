@@ -84,6 +84,17 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+function renderBackLink() {
+  const header = document.querySelector('.site-header-inner');
+  if (!header || document.querySelector('.site-back')) return;
+  const a = document.createElement('a');
+  a.className = 'site-back';
+  a.href = '/oilflows.html';
+  a.textContent = '\u2190 oilflows';
+  a.title = 'Back to the live data at warnotwar.com';
+  header.insertBefore(a, header.firstChild);
+}
+
 function renderSeriesBanner() {
   const header = document.querySelector('.site-header-inner');
   if (!header || typeof SERIES === 'undefined' || document.querySelector('.series-banner')) return;
@@ -112,6 +123,7 @@ function initShared() {
   renderGradeSwitch();
   renderLabNav();
   renderHeader();
+  renderBackLink();
   renderSeriesBanner();
   renderEpilogue();
 }

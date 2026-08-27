@@ -605,3 +605,14 @@ button, a.lab-tab { font:inherit; cursor:pointer; text-decoration:none; }
 .cand-row { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border, rgba(255,255,255,0.08)); }
 .cand-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 13px; }
 .cand-disc { font-family: var(--font-mono, monospace); font-size: 10.5px; color: var(--text-tertiary, rgba(255,255,255,0.4)); margin-top: 2px; }
+
+/* always-visible way back to the parent site */
+.site-back {
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  color: var(--text-secondary, rgba(255,255,255,0.55));
+  text-decoration: none;
+  white-space: nowrap;
+  margin-right: 14px;
+}
+.site-back:hover { color: var(--accent, #58a6ff); }
