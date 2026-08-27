@@ -2,7 +2,7 @@
   "schema_version": 1,
   "frequency": "weekly",
   "source": "U.S. Energy Information Administration",
-  "generated_at_utc": "2026-08-26T20:24:59Z",
+  "generated_at_utc": "2026-08-27T16:59:56Z",
   "first_week": "1982-08-20",
   "last_week": "2026-08-21",
   "latest_release_date": null,
@@ -16,6 +16,19 @@
   "current_percentile": 0.1,
   "prior_lower_date": "2026-07-24",
   "years_since_prior_lower": 0.1,
+  "spr": {
+    "spr_latest_mbbl": 289.7,
+    "spr_last_at_or_below_date": "1982-11-26",
+    "spr_weekly_change_avg_mbbl": -4.5,
+    "spr_weekly_change_min_mbbl": -6.2,
+    "spr_weekly_change_max_mbbl": -2.8,
+    "spr_change_window_weeks": 8,
+    "preshock_anchor_week": "2026-02-20",
+    "spr_delta_since_preshock_mbbl": -125.7,
+    "commercial_delta_since_preshock_mbbl": -6.9,
+    "spr_2022_peak_mbbl": 638.1,
+    "spr_prewar_decline_mbbl": 222.6
+  },
   "definitions": {
     "days_supply_incl_spr": "Total U.S. crude stocks, including the Strategic Petroleum Reserve, divided by that week's U.S. refinery crude inputs. A measure of the inventory cushion, not a countdown until the country runs out of oil.",
     "commercial_days_supply": "Commercial U.S. crude stocks divided by refinery crude inputs. Excludes the Strategic Petroleum Reserve.",

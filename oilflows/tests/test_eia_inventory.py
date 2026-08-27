@@ -200,3 +200,49 @@ def test_parse_reads_valid_sheet(tmp_path):
 
     assert len(parsed) == 2
     assert parsed.loc[1, "crude_stocks_incl_spr_mbbl"] == 1100
+
+
+def test_spr_decomposition_facts():
+    from oilflows.eia_inventory import spr_decomposition
+
+    # 60 pre-shock weeks flat, then 26 weeks of SPR draw with commercial flat
+    n_pre, n_post = 60, 26
+    dates = pd.date_range("2025-01-03", periods=n_pre + n_post, freq="7D")
+    spr = [415_000] * n_pre + [415_000 - 5_000 * (i + 1) for i in range(n_post)]
+    com = [436_000] * n_pre + [436_000 - 300 * (i + 1) for i in range(n_post)]
+    frame = pd.DataFrame({
+        "week_end": dates,
+        "spr_crude_mbbl": spr,
+        "commercial_crude_mbbl": com,
+    })
+    preshock = dates[n_pre - 1].date().isoformat()
+
+    d = spr_decomposition(frame, preshock_date=preshock)
+
+    assert d["spr_latest_mbbl"] == 285.0
+    assert d["spr_weekly_change_avg_mbbl"] == -5.0
+    assert d["spr_delta_since_preshock_mbbl"] == -130.0
+    assert d["commercial_delta_since_preshock_mbbl"] == pytest.approx(-7.8)
+    # never at-or-below before the shock in this synthetic history
+    assert d["spr_last_at_or_below_date"] is None
+    # and no countdown fields exist, by design
+    assert not any("remaining" in k or "until" in k for k in d)
+
+
+def test_spr_lowest_since_uses_preshock_history_only():
+    from oilflows.eia_inventory import spr_decomposition
+
+    dates = pd.date_range("2025-01-03", periods=10, freq="7D")
+    # dipped to 280 early (pre-shock), later drawn to 290
+    spr = [280_000, 400_000, 410_000, 415_000, 415_000,
+           380_000, 350_000, 320_000, 300_000, 290_000]
+    frame = pd.DataFrame({
+        "week_end": dates,
+        "spr_crude_mbbl": spr,
+        "commercial_crude_mbbl": [430_000] * 10,
+    })
+
+    d = spr_decomposition(
+        frame, preshock_date=dates[4].date().isoformat()
+    )
+    assert d["spr_last_at_or_below_date"] == dates[0].date().isoformat()

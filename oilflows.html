@@ -242,6 +242,11 @@
     color: rgba(255,255,255,0.45);
     margin: 6px 0 0;
   }
+  .blockhead {
+    font-family: monospace; font-size: 10px; letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.5); text-transform: uppercase;
+    margin: 26px 0 8px;
+  }
   /* verification layers + chips */
   .vlayer {
     border-left: 2px solid rgba(255,255,255,0.25);
@@ -434,6 +439,7 @@
     simply because refineries run harder.
   </div>
   <div id="ratio-widget"></div>
+  <div id="spr-block"></div>
 </section>
 
 <section class="panel" id="panel-market">
@@ -467,6 +473,7 @@
     mechanism &mdash; their alignment is not a claim that one causes
     another. Full detail for each instrument is in the panels above.
   </div>
+  <div id="open-question"></div>
 </section>
 
 <section class="panel" id="panel-method">
@@ -927,6 +934,42 @@
       });
 
       document.getElementById('panel-onetl').style.display = '';
+
+      // ---- the open question: every numeral computed, every branch written ----
+      (function () {
+        const oq = document.getElementById('open-question');
+        const fRow = [...rows].reverse().find(r => r.hormuz_tanker_count_index_7d != null);
+        const bRow = [...rows].reverse().find(r => r.brent_observed);
+        const sp = bufferMeta && bufferMeta.spr;
+        if (!fRow || !bRow || !lastThresh || !sp) return;
+
+        const b = bRow.brent_spot_last_usd;
+        const b12 = lastThresh.brent_spot_last_usd;
+        const cmp = b < b12 - 0.5 ? 'below' : b > b12 + 0.5 ? 'above' : 'near';
+        const drawing = sp.spr_weekly_change_avg_mbbl < 0;
+        const mbdEq = (Math.abs(sp.spr_weekly_change_avg_mbbl) / 7).toFixed(1);
+
+        let h = `<div class="blockhead">the open question</div>`;
+        h += `<div class="prose" style="font-size:0.92em"><p>` +
+          `<strong>If</strong> flows are as low as the tracker index reads, these measurements sit in tension: ` +
+          `Hormuz activity at about ${Math.round(fRow.hormuz_tanker_count_index_7d)}% of its 2025 baseline, ` +
+          `the crude cushion at its ${rankLabel} level since 1982${drawing ? ' and being drawn from the strategic side' : ''}, ` +
+          `and Brent at $${b.toFixed(2)} — ${cmp} its March 12 level of $${b12.toFixed(2)}. ` +
+          `The flow reading is itself one of the unverified quantities (referee: official export data, ~Oct–Nov 2026) — and if the official flow figures are right, the tension dissolves. ` +
+          `None of our instruments resolves this alone. Candidate explanations, in no order:</p></div>`;
+
+        h += `<table class="mono"><tr><th>candidate explanation</th><th>explains which observation</th><th>what would discriminate, and when</th></tr>`;
+        h += `<tr><td>Demand destruction</td><td>the price</td><td>consumption ("products supplied") data — published weekly by EIA; not yet integrated here</td></tr>`;
+        h += `<tr><td>Bypass routes carrying more than modeled</td><td>the flow reading</td><td>partially observable now: the Yanbu terminal-activity index runs at multiples of its baseline — an activity signal; index multiples cannot be converted to barrels</td></tr>`;
+        h += `<tr><td>Strategic releases bridging supply</td><td>the cushion and the price</td><td>observable now: the U.S. SPR is ${drawing ? 'drawing' : 'moving'} at a rate equivalent to ~${mbdEq} million barrels/day (${Math.abs(sp.spr_weekly_change_avg_mbbl).toFixed(1)}M bbl/week ÷ 7 — EIA); <em>if</em> those barrels reach the market, that is added supply. Allied releases are not tracked here</td></tr>`;
+        h += `<tr><td>The official 8–10 mb/d flow figures being accurate</td><td>the flow reading</td><td>the referee: official export data, ~Oct–Nov 2026 — if right, the tension dissolves</td></tr>`;
+        h += `<tr><td>Expectations of de-escalation priced in</td><td>the price</td><td>not directly measurable; resolves only in hindsight</td></tr>`;
+        h += `</table>`;
+
+        h += `<div class="note">A circulating claim that prices are being suppressed names no mechanism our instruments could test, and no evidence for it appears in our sources. If a specific, testable version emerges, it would join the table with a discriminator like the others.</div>`;
+        oq.innerHTML = h;
+      })();
+
       const pct = v => Math.round(v) + '% of its own Feb 23 level';
       linePanel(document.getElementById('chart-onetl'),
         [
@@ -1226,6 +1269,67 @@
     };
     bwSlider.addEventListener('input', bwUpdate);
     bwUpdate();
+  }
+
+  // ---- Where the cushion is going: SPR vs commercial (all computed) ----
+  if (buffer && bufferMeta && bufferMeta.spr) {
+    const sp = bufferMeta.spr;
+    const asOf = 'EIA · week ending ' + fmtDate(bufferMeta.last_week);
+    const drawing = sp.spr_weekly_change_avg_mbbl < 0;
+    const rate = Math.abs(sp.spr_weekly_change_avg_mbbl);
+    const rlo = Math.min(Math.abs(sp.spr_weekly_change_min_mbbl), Math.abs(sp.spr_weekly_change_max_mbbl));
+    const rhi = Math.max(Math.abs(sp.spr_weekly_change_min_mbbl), Math.abs(sp.spr_weekly_change_max_mbbl));
+
+    const lowLine = sp.spr_last_at_or_below_date
+      ? `lowest since ${fmtDate(sp.spr_last_at_or_below_date)} — then filling, now ${drawing ? 'drawing' : 'building'}`
+      : `the lowest on record (weekly series begins ${bufferMeta.first_week.slice(0, 4)})`;
+    const prewarLine = sp.spr_2022_peak_mbbl != null
+      ? ` · down from ${sp.spr_2022_peak_mbbl.toFixed(0)}M in 2021–22; ${Math.abs(sp.spr_prewar_decline_mbbl) > Math.abs(sp.spr_delta_since_preshock_mbbl) ? 'most' : 'much'} of that decline predates this war`
+      : '';
+
+    const sprTiles = [
+      ['strategic petroleum reserve', sp.spr_latest_mbbl.toFixed(1) + 'M bbl',
+       lowLine + prewarLine + ' · ' + asOf],
+      [drawing ? 'being drawn at' : 'being refilled at',
+       (drawing ? '−' : '+') + rate.toFixed(1) + 'M bbl/week',
+       `${sp.spr_change_window_weeks}-week average; weekly moves ranged ${rlo.toFixed(1)}–${rhi.toFixed(1)}M · the rate is set week to week and can slow, stop or reverse — the current rate implies nothing about duration · ` + asOf],
+      ['change since the pre-shock week',
+       `${sp.spr_delta_since_preshock_mbbl.toFixed(0)}M vs ${sp.commercial_delta_since_preshock_mbbl.toFixed(0)}M`,
+       `SPR vs commercial stocks since ${fmtDate(sp.preshock_anchor_week)} · SPR barrels are sold into the commercial system, so steady commercial stocks during releases is the expected mechanical signature of releases reaching the market · ` + asOf],
+    ];
+
+    const blk = document.getElementById('spr-block');
+    blk.innerHTML =
+      `<div class="blockhead">where the cushion is going — strategic vs commercial stocks</div>` +
+      `<div class="tiles">` + sprTiles.map(t2 =>
+        `<div class="tile"><div class="k">${t2[0]}</div><div class="v">${t2[1]}</div><div class="u">${t2[2]}</div></div>`).join('') + `</div>` +
+      `<div class="chart-wrap" id="spr-strip"></div>` +
+      `<div class="chart-wrap" id="spr-focus" style="margin-top:14px"></div>` +
+      `<div class="legend">` +
+      `<span><span class="dot" style="background:#b8862a"></span>Strategic Petroleum Reserve</span>` +
+      `<span><span class="dot" style="background:#4a8fd4"></span>commercial stocks</span></div>` +
+      `<div class="note">The Strategic Petroleum Reserve is the government-owned emergency stockpile, stored separately from the commercial inventories refiners hold. Both lines are in million barrels. The top strip shows the whole weekly record since 1982 — the dashed line marks today's SPR level, so the last time the reserve sat this low is visible directly; the lower chart focuses on 2021 onward, where the 2021–22 drawdowns and the post-shock draws can be told apart.</div>`;
+
+    const sprRows = buffer.map(r => ({
+      date: r.date, t: r.t,
+      spr_m: r.spr_crude_mbbl != null ? r.spr_crude_mbbl / 1000 : null,
+      com_m: r.commercial_crude_mbbl != null ? r.commercial_crude_mbbl / 1000 : null,
+    }));
+    const mb = v => v.toFixed(0) + 'M bbl';
+    const sprSeries = [
+      { field: 'spr_m', name: 'SPR', color: '#b8862a', fmt: mb },
+      { field: 'com_m', name: 'commercial', color: '#4a8fd4', fmt: mb },
+    ];
+    linePanel(document.getElementById('spr-strip'), sprSeries, {
+      data: sprRows, height: 150, dateLabel: 'week ending ',
+      refLine: sp.spr_latest_mbbl, refLabel: 'today’s SPR level',
+      events: [{ date: sp.preshock_anchor_week, label: 'pre-shock', side: 'left' }],
+    });
+    linePanel(document.getElementById('spr-focus'), sprSeries, {
+      data: sprRows.filter(r => r.date >= '2021-01-01'),
+      height: 240, includeZero: false, dateLabel: 'week ending ',
+      events: [{ date: sp.preshock_anchor_week, label: 'pre-shock, Feb 2026', side: 'left' }],
+    });
   }
 
   // ---- Ratio widget: the denominator moves the number ----

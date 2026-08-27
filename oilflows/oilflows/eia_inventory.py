@@ -207,6 +207,72 @@ def prior_lower_date(
     return when.date().isoformat(), round(float(years), 1)
 
 
+def spr_decomposition(
+    frame: pd.DataFrame,
+    *,
+    preshock_date: str = "2026-02-23",
+    draw_window_weeks: int = 8,
+) -> dict:
+    """Neutral facts about where the crude cushion's change is coming from.
+
+    No countdown arithmetic is computed here by design: a drawdown rate is
+    a policy choice, and 'weeks remaining' framing is banned house-wide.
+    """
+    observed = frame.dropna(subset=["spr_crude_mbbl"]).reset_index(drop=True)
+    latest = observed.iloc[-1]
+
+    prior = observed.iloc[:-1]
+    at_or_below = prior.loc[
+        (prior["spr_crude_mbbl"] <= latest["spr_crude_mbbl"])
+        & (prior["week_end"] < pd.Timestamp(preshock_date))
+    ]
+    lowest_since = (
+        at_or_below["week_end"].max().date().isoformat()
+        if not at_or_below.empty else None
+    )
+
+    recent = observed.tail(draw_window_weeks + 1)["spr_crude_mbbl"].diff()
+    deltas = recent.dropna()
+    draw_avg = deltas.mean()
+
+    anchor = observed.loc[
+        observed["week_end"] <= pd.Timestamp(preshock_date)
+    ].iloc[-1]
+
+    # 2022 reference peak: the multi-decade low is NOT solely a war effect;
+    # the page must be able to say how much decline predates the shock.
+    y2022 = observed.loc[
+        observed["week_end"].dt.year.isin([2021, 2022])
+    ]
+    peak_2022 = (
+        y2022.loc[y2022["spr_crude_mbbl"].idxmax()]
+        if not y2022.empty else None
+    )
+
+    return {
+        "spr_latest_mbbl": round(float(latest["spr_crude_mbbl"]) / 1000, 1),
+        "spr_last_at_or_below_date": lowest_since,
+        "spr_weekly_change_avg_mbbl": round(float(draw_avg) / 1000, 1),
+        "spr_weekly_change_min_mbbl": round(float(deltas.min()) / 1000, 1),
+        "spr_weekly_change_max_mbbl": round(float(deltas.max()) / 1000, 1),
+        "spr_change_window_weeks": draw_window_weeks,
+        "preshock_anchor_week": anchor["week_end"].date().isoformat(),
+        "spr_delta_since_preshock_mbbl": round(
+            (float(latest["spr_crude_mbbl"])
+             - float(anchor["spr_crude_mbbl"])) / 1000, 1),
+        "commercial_delta_since_preshock_mbbl": round(
+            (float(latest["commercial_crude_mbbl"])
+             - float(anchor["commercial_crude_mbbl"])) / 1000, 1),
+        "spr_2022_peak_mbbl": (
+            round(float(peak_2022["spr_crude_mbbl"]) / 1000, 1)
+            if peak_2022 is not None else None),
+        "spr_prewar_decline_mbbl": (
+            round((float(peak_2022["spr_crude_mbbl"])
+                   - float(anchor["spr_crude_mbbl"])) / 1000, 1)
+            if peak_2022 is not None else None),
+    }
+
+
 def build_buffer_metadata(
     frame: pd.DataFrame,
     *,
@@ -252,6 +318,7 @@ def build_buffer_metadata(
             round(float(latest["days_supply_incl_spr_percentile"]), 1),
         "prior_lower_date": lower_date,
         "years_since_prior_lower": lower_years,
+        "spr": spr_decomposition(frame),
         "definitions": {
             "days_supply_incl_spr": (
                 "Total U.S. crude stocks, including the Strategic Petroleum "
