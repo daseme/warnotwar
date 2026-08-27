@@ -120,9 +120,25 @@
   }
   a.back:hover { color: rgba(255,255,255,0.8); }
   #load-error { display: none; font-family: monospace; font-size: 13px; color: #b3413d; margin-top: 2em; }
+  .topnav {
+    font-family: monospace; font-size: 11px;
+    display: flex; gap: 18px; flex-wrap: wrap; justify-content: center;
+    margin: 0 0 2.4em; letter-spacing: 0.04em;
+  }
+  .topnav a { color: rgba(255,255,255,0.45); text-decoration: none; }
+  .topnav a:hover { color: rgba(255,255,255,0.85); }
+  .topnav a.here { color: rgba(255,255,255,0.9); border-bottom: 1px solid rgba(255,255,255,0.4); }
 </style>
 </head>
 <body>
+
+<nav class="topnav">
+  <a href="/">warnotwar</a>
+  <a href="/info.html">the heuristic</a>
+  <a href="/oilflows.html">the data</a>
+  <a href="/lab.html">the lab</a>
+  <a href="/methodology.html">methodology</a>
+</nav>
 
 <h1>The Lab</h1>
 <p class="subtitle">
