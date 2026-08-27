@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="How the U.S. oil-flow claims ledger is built: normalization, the never-overwrite rule, collection tiers, and the completeness bounds.">
+<title>Claims Ledger Methodology</title>
+<style>
+  html, body {
+    margin: 0; min-height: 100%;
+    font-family: Georgia, 'Times New Roman', serif;
+    background: #1a1a1a; color: #fff;
+    overflow-x: clip;
+  }
+  body { display: flex; flex-direction: column; align-items: center; padding: 40px 20px 60px; box-sizing: border-box; }
+  main { width: 100%; max-width: 720px; }
+  h1 { font-size: 1.6em; font-weight: normal; letter-spacing: 0.03em; margin: 0 0 0.4em; text-align: center; }
+  .subtitle { text-align: center; color: rgba(255,255,255,0.6); font-size: 0.95em; line-height: 1.7; margin: 0 0 2.2em; }
+  h2 {
+    font-size: 1.15em; font-weight: normal; letter-spacing: 0.03em;
+    margin: 2.2em 0 0.4em;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    padding-bottom: 4px;
+  }
+  p, li { font-size: 0.97em; line-height: 1.8; color: rgba(255,255,255,0.78); }
+  li { margin-bottom: 4px; }
+  strong { color: #fff; font-weight: normal; border-bottom: 1px solid rgba(255,255,255,0.3); }
+  .mono, code {
+    font-family: monospace; font-size: 0.88em;
+    color: rgba(255,255,255,0.7);
+  }
+  code { background: rgba(255,255,255,0.07); padding: 1px 5px; border-radius: 3px; }
+  .rulebox {
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 12px 16px; margin: 14px 0;
+    font-family: monospace; font-size: 12px;
+    color: rgba(255,255,255,0.7); line-height: 1.8;
+  }
+  table {
+    font-family: monospace; font-size: 12px;
+    border-collapse: collapse; color: rgba(255,255,255,0.75);
+    margin: 10px 0; display: block; overflow-x: auto; max-width: 100%;
+  }
+  td, th { padding: 4px 16px 4px 0; text-align: left; font-weight: normal; vertical-align: top; line-height: 1.6; }
+  th { color: rgba(255,255,255,0.4); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; }
+  a { color: rgba(255,255,255,0.65); }
+  .note { font-family: monospace; font-size: 11.5px; color: rgba(255,255,255,0.4); line-height: 1.7; margin-top: 2.5em; }
+  a.back { display: inline-block; margin-top: 3em; color: rgba(255,255,255,0.5); font-family: monospace; font-size: 13px; text-decoration: none; }
+  a.back:hover { color: rgba(255,255,255,0.8); }
+</style>
+</head>
+<body>
+<main>
+
+<h1>How the Claims Ledger Is Built</h1>
+<p class="subtitle">
+  A durable, auditable record of reported U.S. government statements about
+  oil and vessel movement through the Strait of Hormuz and the Gulf bypass
+  routes &mdash; what was said, what each number measures, and what we can
+  and cannot promise about completeness.
+</p>
+
+<h2>Purpose</h2>
+<p>
+  The ledger does <strong>not</strong> decide which claims are correct. It
+  records exactly what was claimed, normalizes what each number measures,
+  and preserves corrections, disputes and revisions. It currently holds
+  32 normalized statements from March 10 through August 21, 2026, and
+  feeds the <a href="/lab.html">Reading the Hormuz Numbers</a> tools and
+  the <a href="/oilflows.html">verification panel</a>.
+</p>
+
+<h2>Core normalization</h2>
+<p>Every recorded statement answers seven questions:</p>
+<ul>
+  <li><strong>What?</strong> oil, oil and products, tankers, all ships</li>
+  <li><strong>Where?</strong> Hormuz only, the Persian Gulf, the region including bypass routes, bypass routes only</li>
+  <li><strong>Direction?</strong> outbound, inbound and outbound, unspecified</li>
+  <li><strong>When?</strong> one night, one day, a 7-day average, a running total, current</li>
+  <li><strong>Who?</strong> a named official, an anonymous official, an institutional statement</li>
+  <li><strong>Status?</strong> on the record, revised, deleted, disputed</li>
+  <li><strong>Source?</strong> exact provenance, with a dated link on every row</li>
+</ul>
+<p>
+  One public statement can produce several rows: a single post that gives
+  a Hormuz rate, a bypass rate, a regional total and a one-day volume is
+  recorded as four claims, one figure per row, each with its own scope
+  and time basis. This is what prevents the apples-and-oranges confusion
+  the numbers otherwise invite.
+</p>
+
+<h2>The rules the pipeline enforces</h2>
+<p>
+  These constraints are checked mechanically every time the ledger is
+  loaded; a row that violates them fails the build rather than reaching
+  the page.
+</p>
+<div class="rulebox">
+  <b>Never overwrite history.</b> A deleted post, a same-day denial, a
+  revised figure &mdash; all remain as separate rows, joined by links.
+  Nothing is edited away.<br><br>
+  <b>Reporting verbs are never verdicts.</b> Every description uses the
+  same neutral verb ("Said"). Verbs that grade credibility &mdash;
+  claimed, confirmed, admitted, insisted &mdash; are rejected by the
+  loader, for every speaker equally.<br><br>
+  <b>Disputes are not supersessions.</b> When a different speaker
+  contradicts a statement, the two rows are linked symmetrically and
+  neither is marked the successor &mdash; a denial does not "win" in the
+  data model. Supersession is reserved for the same speaker restating the
+  same quantity.<br><br>
+  <b>Successive readings are not corrections.</b> Two seven-day averages
+  stated ten days apart describe different weeks; a lower later reading
+  is recorded as a series member, never as a walk-back.<br><br>
+  <b>One figure per row; no figure for qualitative statements.</b> A
+  denial is not "0 vessels"; a statement with two numbers becomes two
+  rows.<br><br>
+  <b>Every machine value has a plain-English display string</b>, and a
+  value without one fails the build instead of leaking jargon to readers.
+</div>
+
+<h2>The comparable series</h2>
+<p>
+  Most recorded numbers cannot be directly compared with each other or
+  with independent tracker estimates &mdash; they measure different
+  waterways, different units, or different time windows. The pipeline
+  derives a strict <span class="mono">comparable_hormuz_flow_claims</span>
+  view: outbound, Hormuz-only, oil flow-rate claims in million barrels
+  per day. That series (currently three claims) is what the
+  <a href="/oilflows.html#panel-verify">verification gap</a> is computed
+  from. Exclusions are visible and rule-based, never editorial.
+</p>
+
+<h2>Collection protocol</h2>
+<p>
+  Absolute completeness cannot be guaranteed: statements occur in press
+  gaggles, television interviews, deleted social posts, anonymous
+  briefings and unindexed remarks. The approach is to make coverage
+  systematic and auditable instead.
+</p>
+<table>
+  <tr><th>tier</th><th>sources</th><th>what it catches</th></tr>
+  <tr><td>1 &middot; direct</td>
+      <td>White House briefings and transcripts; Department of Energy /
+      Secretary Wright; CENTCOM and Department of Defense releases;
+      presidential Truth Social; official X accounts</td>
+      <td>the statements themselves, verbatim context</td></tr>
+  <tr><td>2 &middot; wires</td>
+      <td>Reuters, AP</td>
+      <td>gaggles, TV remarks, deleted posts, anonymous officials,
+      corrections</td></tr>
+  <tr><td>3 &middot; specialist</td>
+      <td>Axios, WSJ, Bloomberg, S&amp;P Global, USNI, E&amp;E/Politico,
+      Lloyd's List and similar</td>
+      <td>operational claims and anonymous briefings</td></tr>
+</table>
+<p class="mono">
+  sweep keywords: Hormuz &middot; Persian Gulf &middot; oil &middot;
+  tanker &middot; barrels &middot; ships &middot; Project Freedom &middot;
+  escort &middot; flow &middot; transit
+</p>
+<p>
+  The strongest completeness statement this project makes is:
+  <strong>"all located U.S. oil-flow statements through the stated date,
+  across these source sets."</strong> Where a month shows no entries, the
+  timeline says "no statements located," never "no statements" &mdash;
+  absence of located statements is not evidence of silence, and coverage
+  varies by month.
+</p>
+
+<h2>What comes next</h2>
+<ul>
+  <li><span class="mono">collection_runs</span> &mdash; recording which
+  source families were swept and through what date, so "complete through
+  a date" has an auditable meaning;</li>
+  <li><span class="mono">verification_snapshots</span> &mdash; attaching
+  the independent evidence that existed <em>at the time</em> of each
+  claim (tracker estimates, activity indices), without ever altering the
+  historical claim itself;</li>
+  <li>retrospective resolution &mdash; official export data and
+  destination import statistics arriving months later are the referee
+  that can move a claim's status from unverified to consistent or not
+  corroborated, always with a citation.</li>
+</ul>
+
+<div class="note">
+  Data: <a href="/data/us_oil_flow_claims.json">the full archive (JSON)</a>
+  &middot; <a href="/US_OIL_FLOW_CLAIMS_DATABASE_BRIEF.md">original brief (raw markdown)</a>
+  &middot; source CSV and validation code in the site repository.
+  Ledger seeded Aug 26 2026; statements Mar 10 &ndash; Aug 21 2026.
+</div>
+
+<a class="back" href="/lab.html">&larr; back to Reading the Hormuz Numbers</a>
+
+</main>
+</body>
+</html>
