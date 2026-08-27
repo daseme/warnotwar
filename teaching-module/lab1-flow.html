@@ -71,16 +71,25 @@ function renderL1() {
   s += `<text x="${SX/2}" y="${H-10}" fill="rgba(255,255,255,0.1)" font-size="14" font-family="var(--font-mono)" text-anchor="middle" letter-spacing="3">PERSIAN GULF</text>`;
   s += `<text x="${(SX+40+800)/2}" y="${H-10}" fill="rgba(255,255,255,0.1)" font-size="14" font-family="var(--font-mono)" text-anchor="middle" letter-spacing="3">WORLD</text>`;
   COUNTRIES.forEach(c => {
-    const lit = isHormuz || isRegional || isShips;
+    // color by STATE, never by country identity:
+    //   blue = counted by this figure; gold = in the total but not
+    //   separable in public data (Iran/Qatar); dim = not counted.
+    //   Ship counts light the gate, not the oil routes.
+    const isVolume = isHormuz || isRegional;
     const counted = c.id==='iran' || c.id==='qatar';
-    const nc = lit ? c.color : (counted?'#d29922':'rgba(255,255,255,0.2)');
-    const lc = lit ? '#fff' : (counted?'#d29922':'rgba(255,255,255,0.35)');
+    const lit = isVolume && !counted;
+    const gold = isVolume && counted;
+    const nc = lit ? 'var(--accent)' : (gold ? '#d29922' : 'rgba(255,255,255,0.2)');
+    const lc = lit ? '#fff' : (gold ? '#d29922' : 'rgba(255,255,255,0.35)');
     s += `<circle cx="60" cy="${c.y}" r="5" fill="${nc}"${lit?' filter="url(#glow)"':''}/>`;
     s += `<text x="48" y="${c.y+4}" fill="${lc}" font-size="10" font-family="var(--font-mono)" text-anchor="end">${c.name}</text>`;
     const cp = (60 + SX) / 2;
-    s += `<path d="M65,${c.y} Q${cp},${c.y} ${SX},${c.y < 170 ? 155 : (c.y > 230 ? 215 : 185)}" fill="none" stroke="${lit?nc:'rgba(255,255,255,0.08)'}" stroke-width="${lit?2:1}" stroke-linecap="round"/>`;
-    if (lit && !isShips) s += `<circle r="2" fill="${nc}"><animateMotion dur="2s" repeatCount="indefinite" path="M65,${c.y} Q${cp},${c.y} ${SX},${c.y < 170 ? 155 : (c.y > 230 ? 215 : 185)}"/></circle>`;
+    s += `<path d="M65,${c.y} Q${cp},${c.y} ${SX},${c.y < 170 ? 155 : (c.y > 230 ? 215 : 185)}" fill="none" stroke="${lit ? 'var(--accent)' : (gold ? '#d29922' : 'rgba(255,255,255,0.08)')}" stroke-width="${(lit||gold)?2:1}" stroke-linecap="round"/>`;
+    if (lit) s += `<circle r="2" fill="var(--accent)"><animateMotion dur="2s" repeatCount="indefinite" path="M65,${c.y} Q${cp},${c.y} ${SX},${c.y < 170 ? 155 : (c.y > 230 ? 215 : 185)}"/></circle>`;
   });
+  if (isHormuz || isRegional) {
+    s += `<text x="${(60+SX)/2}" y="${245-9}" fill="#d29922" font-size="8.5" font-family="var(--font-mono)" text-anchor="middle">fully counted — share not separable in public data</text>`;
+  }
   s += `<rect x="${SX}" y="70" width="24" height="200" rx="4" fill="${isShips?'rgba(88,166,255,0.3)':'rgba(255,255,255,0.06)'}" stroke="${isShips?'var(--accent)':'rgba(255,255,255,0.15)'}" stroke-width="1.5"/>`;
   s += `<text x="${SX+12}" y="62" fill="${isShips?'var(--accent)':'rgba(255,255,255,0.3)'}" font-size="10" font-family="var(--font-mono)" text-anchor="middle">HORMUZ</text>`;
   if (!isShips) {
@@ -107,9 +116,9 @@ function renderL1() {
   s += `<text x="${800-160}" y="24" fill="rgba(255,255,255,0.4)" font-size="9" font-family="var(--font-mono)">LEGEND</text>`;
   s += `<line x1="${800-160}" y1="28" x2="${800-18}" y2="28" stroke="rgba(255,255,255,0.08)"/>`;
   s += `<circle cx="${800-150}" cy="40" r="3" fill="var(--accent)"/>`;
-  s += `<text x="${800-142}" y="43" fill="rgba(255,255,255,0.4)" font-size="9" font-family="var(--font-mono)">counted</text>`;
+  s += `<text x="${800-142}" y="43" fill="rgba(255,255,255,0.4)" font-size="9" font-family="var(--font-mono)">counted by this figure</text>`;
   s += `<circle cx="${800-150}" cy="56" r="3" fill="#d29922"/>`;
-  s += `<text x="${800-142}" y="59" fill="rgba(255,255,255,0.4)" font-size="9" font-family="var(--font-mono)">not separable</text>`;
+  s += `<text x="${800-142}" y="59" fill="rgba(255,255,255,0.4)" font-size="9" font-family="var(--font-mono)">in total — not separable</text>`;
   if (isShips) { s += `<text x="${800-150}" y="76" font-size="12" fill="#d29922">🚢</text>`; s += `<text x="${800-135}" y="78" fill="rgba(255,255,255,0.4)" font-size="9" font-family="var(--font-mono)">ship count</text>`; }
   s += `<text x="400" y="${H-4}" fill="rgba(255,255,255,0.2)" font-size="9" font-family="var(--font-mono)" text-anchor="middle">connections only — geometry never encodes quantity</text>`;
   s += `</svg>`;
