@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Different numbers describe different things. What each Hormuz claim measures, which claims can fairly be compared, and what evidence can verify them.">
+<title>Reading the Hormuz Numbers</title>
+<style>
+  /* ─── Design Tokens ─── */
+  :root {
+    --bg: #12151a;
+    --bg-elevated: #1a1e24;
+    --bg-card: #1f242c;
+    --border: rgba(255,255,255,0.10);
+    --border-hover: rgba(255,255,255,0.25);
+    --border-active: #4a8fd4;
+    --text-primary: #e8ecf1;
+    --text-secondary: rgba(255,255,255,0.55);
+    --text-muted: rgba(255,255,255,0.35);
+    --accent-blue: #4a8fd4;
+    --accent-blue-glow: rgba(74,143,212,0.15);
+    --accent-gold: #c9a84c;
+    --accent-gold-glow: rgba(201,168,76,0.12);
+    --accent-teal: #4ec9b0;
+    --accent-coral: #e06c75;
+    --accent-green: #98c379;
+    --font-serif: Georgia, 'Times New Roman', serif;
+    --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+    --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  html, body {
+    margin: 0; min-height: 100%;
+    font-family: var(--font-serif);
+    background: var(--bg); color: var(--text-primary);
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+  body {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 0; box-sizing: border-box;
+  }
+
+  /* ─── Hero / Header ─── */
+  .hero {
+    width: 100%;
+    background: linear-gradient(180deg, rgba(74,143,212,0.06) 0%, transparent 100%);
+    padding: 48px 20px 32px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  h1 {
+    font-size: clamp(1.6em, 4vw, 2.2em);
+    font-weight: normal;
+    letter-spacing: 0.02em;
+    margin: 0 0 0.3em;
+    background: linear-gradient(135deg, #fff 0%, var(--accent-blue) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .subtitle {
+    max-width: 640px;
+    margin: 0 auto 0.6em;
+    color: var(--text-secondary);
+    font-size: 1.05em;
+    line-height: 1.7;
+  }
+  .housenote {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    max-width: 640px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  .housenote a { color: var(--text-secondary); }
+  .housenote a:hover { color: var(--accent-blue); }
+
+  /* ─── Context Banner (new, for non-oil people) ─── */
+  .context-banner {
+    width: 100%; max-width: 880px;
+    margin: 24px auto 0;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+  .context-box {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 18px 22px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    position: relative;
+    overflow: hidden;
+  }
+  .context-box::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: var(--accent-blue);
+  }
+  .context-box strong {
+    color: var(--text-primary);
+    font-weight: normal;
+    font-family: var(--font-serif);
+    font-size: 1.15em;
+  }
+  .context-box .context-icon {
+    display: inline-block;
+    width: 18px; height: 18px;
+    background: var(--accent-blue-glow);
+    border-radius: 50%;
+    text-align: center;
+    line-height: 18px;
+    font-size: 10px;
+    color: var(--accent-blue);
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  /* ─── Sections ─── */
+  section.exhibit {
+    width: 100%; max-width: 880px;
+    margin-top: 2.5em;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px 28px 26px;
+    box-sizing: border-box;
+    box-shadow: var(--shadow-sm);
+    transition: border-color var(--transition);
+  }
+  section.exhibit:hover { border-color: rgba(255,255,255,0.15); }
+  h2 {
+    font-size: 1.25em;
+    font-weight: normal;
+    letter-spacing: 0.02em;
+    margin: 0 0 0.15em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  h2 .section-num {
+    display: inline-flex;
+    align-items: center; justify-content: center;
+    width: 28px; height: 28px;
+    background: var(--accent-blue-glow);
+    color: var(--accent-blue);
+    border-radius: 50%;
+    font-family: var(--font-mono);
+    font-size: 0.65em;
+    font-weight: bold;
+  }
+  .learn {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--text-muted);
+    margin: 6px 0 18px;
+    line-height: 1.6;
+    padding-left: 38px;
+  }
+
+  /* ─── Router ─── */
+  #router {
+    width: 100%; max-width: 880px;
+    margin-top: 1.5em;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+  #router .q {
+    font-size: 1.1em;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+    font-weight: normal;
+  }
+  .btnrow {
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch;
+  }
+  button.chip {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    cursor: pointer;
+    text-align: left;
+    min-height: 40px;
+    transition: all var(--transition);
+    box-shadow: var(--shadow-sm);
+  }
+  button.chip .sub {
+    display: block;
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 3px;
+  }
+  button.chip:hover {
+    border-color: var(--border-hover);
+    background: rgba(255,255,255,0.04);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+  button.chip.on {
+    border-color: var(--accent-blue);
+    color: var(--text-primary);
+    background: var(--accent-blue-glow);
+    box-shadow: 0 0 0 3px rgba(74,143,212,0.08);
+  }
+
+  /* ─── Cards ─── */
+  .cards {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    margin: 14px 0;
+  }
+  .card {
+    flex: 1 1 260px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    cursor: pointer;
+    box-sizing: border-box;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-align: left;
+    transition: all var(--transition);
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: transparent;
+    transition: background var(--transition);
+  }
+  .card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  .card:hover::before { background: var(--accent-blue); }
+  .card.on {
+    border-color: var(--accent-blue);
+    background: var(--accent-blue-glow);
+    box-shadow: 0 0 0 3px rgba(74,143,212,0.06);
+  }
+  .card.on::before { background: var(--accent-blue); }
+  .card.dimmed {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  .card .fig {
+    font-family: var(--font-serif);
+    font-size: 1.8em;
+    color: var(--text-primary);
+    font-weight: normal;
+    line-height: 1.2;
+  }
+  .card .unit {
+    color: var(--text-secondary);
+    font-size: 11px;
+    margin-top: 2px;
+    letter-spacing: 0.02em;
+  }
+  .card .who {
+    color: var(--text-muted);
+    margin-top: 6px;
+    font-size: 11px;
+  }
+  .card .ann {
+    color: var(--accent-gold);
+    margin-top: 8px;
+    line-height: 1.5;
+    font-size: 11px;
+    padding: 6px 8px;
+    background: var(--accent-gold-glow);
+    border-radius: var(--radius-sm);
+    border-left: 2px solid var(--accent-gold);
+  }
+  .chipnote {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    align-self: center;
+    padding-left: 8px;
+  }
+
+  /* ─── Anatomy Panel ─── */
+  #anatomy {
+    display: none;
+    margin-top: 20px;
+    animation: fadeIn 0.3s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .sentence {
+    font-size: 1.15em;
+    line-height: 1.8;
+    color: var(--text-primary);
+    max-width: 44em;
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.03);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--accent-blue);
+  }
+  .verbatim {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 12px;
+    line-height: 1.7;
+    border-left: 2px solid rgba(255,255,255,0.12);
+    padding-left: 14px;
+  }
+  .verbatim a { color: var(--accent-blue); text-decoration: none; }
+  .verbatim a:hover { text-decoration: underline; }
+  table.fields {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    border-collapse: collapse;
+    margin-top: 18px;
+    color: var(--text-secondary);
+    width: 100%;
+    max-width: 600px;
+  }
+  table.fields td {
+    padding: 8px 16px 8px 0;
+    vertical-align: top;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  table.fields tr:last-child td { border-bottom: none; }
+  table.fields td:first-child {
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    font-size: 10px;
+    padding-top: 10px;
+    text-transform: uppercase;
+    width: 100px;
+    white-space: nowrap;
+  }
+
+  /* ─── Schematic (THE BIG IMPROVEMENT) ─── */
+  .schemhead {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-top: 24px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .schemhead::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+  #schematic {
+    margin-top: 8px;
+    background: rgba(0,0,0,0.2);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    position: relative;
+  }
+  #schematic svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Animated flow dots on SVG paths */
+  .flow-dot {
+    fill: var(--accent-blue);
+    opacity: 0.7;
+  }
+  .flow-dot-gold {
+    fill: var(--accent-gold);
+    opacity: 0.7;
+  }
+
+  /* ─── Comparability ─── */
+  .verdict {
+    margin-top: 18px;
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  .vhead {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--text-primary);
+    border: 1px solid var(--border-hover);
+    display: inline-block;
+    padding: 5px 12px;
+    text-transform: uppercase;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.03);
+  }
+  .vpair {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  .vitem {
+    flex: 1 1 280px;
+    background: var(--bg-card);
+    border-left: 3px solid var(--accent-blue);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 14px 16px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    box-shadow: var(--shadow-sm);
+  }
+  .vitem:nth-child(2) { border-left-color: var(--accent-gold); }
+  .vitem b {
+    color: var(--text-primary);
+    font-size: 1.3em;
+    font-family: var(--font-serif);
+    font-weight: normal;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .vexpl {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    line-height: 1.9;
+    margin-top: 16px;
+    max-width: 50em;
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.03);
+    border-radius: var(--radius-md);
+  }
+  .vexpl .arm {
+    border-left: 2px solid rgba(255,255,255,0.15);
+    padding-left: 14px;
+    margin: 8px 0;
+    color: var(--text-muted);
+  }
+
+  /* ─── Verification / Bars ─── */
+  #bars {
+    margin-top: 8px;
+    background: rgba(0,0,0,0.15);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    padding: 8px;
+  }
+  #bars svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  table.tbl {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    border-collapse: collapse;
+    margin-top: 12px;
+    color: var(--text-secondary);
+    display: block;
+    overflow-x: auto;
+    max-width: 100%;
+  }
+  table.tbl td, table.tbl th {
+    padding: 8px 18px 8px 0;
+    text-align: left;
+    font-weight: normal;
+    vertical-align: top;
+    line-height: 1.6;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  table.tbl tr:last-child td { border-bottom: none; }
+  table.tbl th {
+    color: var(--text-muted);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+  }
+  .chip2 {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 2px 8px;
+    border-radius: 10px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    background: rgba(255,255,255,0.03);
+  }
+  .subhead {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin: 28px 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .subhead::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  /* ─── Ladder ─── */
+  .ladder {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: stretch;
+    margin-top: 12px;
+  }
+  .rung {
+    flex: 1 1 180px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    box-sizing: border-box;
+    transition: all var(--transition);
+    position: relative;
+  }
+  .rung:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  .rung .t {
+    color: var(--text-primary);
+    font-size: 12.5px;
+    font-weight: normal;
+    margin-bottom: 4px;
+    font-family: var(--font-serif);
+  }
+  .rung .lag {
+    color: var(--accent-blue);
+    font-weight: bold;
+    display: inline-block;
+    margin: 4px 0;
+    padding: 1px 6px;
+    background: var(--accent-blue-glow);
+    border-radius: 4px;
+    font-size: 10px;
+  }
+  .offladder {
+    background: var(--accent-gold-glow);
+    border: 1px dashed rgba(201,168,76,0.4);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-top: 12px;
+  }
+  .offladder .t {
+    color: var(--accent-gold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 10px;
+    margin-bottom: 4px;
+  }
+
+  /* ─── Sandbox ─── */
+  .sliders {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 14px 0;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .sliders .row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .sliders label {
+    min-width: 260px;
+    color: var(--text-secondary);
+  }
+  .sliders input[type=range] {
+    flex: 1 1 200px;
+    accent-color: var(--accent-blue);
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.1);
+    outline: none;
+    -webkit-appearance: none;
+  }
+  .sliders input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--accent-blue);
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(74,143,212,0.4);
+    border: 2px solid var(--bg);
+  }
+  .sliders .val {
+    color: var(--text-primary);
+    min-width: 90px;
+    font-weight: bold;
+    text-align: right;
+  }
+  .sandbox-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 18px 22px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 2;
+    color: var(--text-secondary);
+    margin-top: 10px;
+    box-shadow: var(--shadow-sm);
+  }
+  .sandbox-box .big {
+    color: var(--text-primary);
+    font-size: 1.2em;
+    font-family: var(--font-serif);
+  }
+  .sandbox-box .hypo {
+    color: var(--accent-gold);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px dashed rgba(201,168,76,0.5);
+    padding: 3px 9px;
+    display: inline-block;
+    margin-bottom: 8px;
+    border-radius: var(--radius-sm);
+    background: var(--accent-gold-glow);
+  }
+  .chain {
+    color: var(--text-muted);
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: rgba(0,0,0,0.2);
+    border-radius: var(--radius-sm);
+    border-left: 2px solid var(--accent-teal);
+  }
+  .note {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    margin-top: 16px;
+    line-height: 1.7;
+    font-family: var(--font-mono);
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.02);
+    border-radius: var(--radius-sm);
+    border: 1px dashed var(--border);
+  }
+
+  /* ─── Glossary ─── */
+  dl.gloss {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px 24px;
+  }
+  dl.gloss dt {
+    color: var(--text-primary);
+    font-weight: normal;
+    font-family: var(--font-serif);
+    font-size: 1.1em;
+  }
+  dl.gloss dd { margin: 0; }
+  a {
+    color: var(--accent-blue);
+    text-decoration: none;
+    transition: opacity var(--transition);
+  }
+  a:hover { opacity: 0.8; text-decoration: underline; }
+  a.back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 3em;
+    margin-bottom: 2em;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    text-decoration: none;
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition);
+  }
+  a.back:hover {
+    color: var(--text-primary);
+    border-color: var(--border-hover);
+    background: rgba(255,255,255,0.03);
+  }
+  #load-error {
+    display: none;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--accent-coral);
+    margin-top: 2em;
+    padding: 12px 16px;
+    background: rgba(224,108,117,0.08);
+    border: 1px solid rgba(224,108,117,0.2);
+    border-radius: var(--radius-sm);
+  }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 640px) {
+    .hero { padding: 32px 16px 24px; }
+    section.exhibit { padding: 20px 16px 18px; margin-top: 1.8em; }
+    .card { flex: 1 1 100%; }
+    .vitem { flex: 1 1 100%; }
+    .rung { flex: 1 1 100%; }
+    dl.gloss { grid-template-columns: 1fr; }
+    .sliders label { min-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── Hero ─── -->
+<div class="hero">
+  <h1>Reading the Hormuz Numbers</h1>
+  <p class="subtitle">
+    Different numbers describe different things. This tool shows what each
+    claim measures, which other claims it can fairly be compared with, and
+    what independent evidence can verify it.
+  </p>
+  <p class="housenote" style="border:1px dashed rgba(201,168,76,0.5);padding:8px 12px;margin-bottom:10px">
+    Design test &mdash; an alternative look for <a href="/lab.html">Reading the Hormuz Numbers</a>, same live data. Compare and pick.
+  </p>
+  <p class="housenote">
+    Built from the live, sourced claims ledger. Nothing here adjudicates who
+    is right; anything you set yourself is labeled hypothetical.
+    The earlier prototype is preserved at <a href="/lab1.html">lab1</a> &middot; part of
+    <a href="/oilflows.html">the Hormuz oil-flow coverage</a>.
+  </p>
+</div>
+
+<!-- ─── Context Banner (for non-oil people) ─── -->
+<div class="context-banner">
+  <div class="context-box">
+    <strong><span class="context-icon">?</span>What is this about?</strong><br>
+    The Strait of Hormuz is a narrow waterway between Iran and Oman. It is one of the world's most important oil corridors. When officials, journalists, and analysts talk about "oil flows through Hormuz," they often use different numbers that <em>sound</em> comparable but actually measure different things. This tool helps you read those numbers critically.
+  </div>
+</div>
+
+<div id="load-error">Could not load the claims ledger.</div>
+
+<!-- ─── Router ─── -->
+<div id="router">
+  <div class="q">What are you trying to understand?</div>
+  <div class="btnrow" id="router-btns"></div>
+</div>
+
+<!-- ─── Section 1: What each number counts ─── -->
+<section class="exhibit" id="ex1">
+  <h2><span class="section-num">1</span> What each number counts</h2>
+  <p class="learn">Select any figure. It translates itself into plain English first; the route map is the second layer.</p>
+  <div class="cards" id="item-cards"></div>
+  <div id="anatomy">
+    <div class="sentence" id="an-sentence"></div>
+    <div class="verbatim" id="an-verbatim"></div>
+    <table class="fields" id="an-fields"></table>
+    <div class="schemhead">the routes this number covers</div>
+    <div id="schematic"></div>
+  </div>
+</section>
+
+<!-- ─── Section 2: Comparability ─── -->
+<section class="exhibit" id="ex2">
+  <h2><span class="section-num">2</span> Which numbers can be compared</h2>
+  <p class="learn">Pick any two figures. The verdict is derived from what each one measures &mdash; comparability of the question, never of credibility.</p>
+  <div class="btnrow" id="cmp-chips"></div>
+  <div class="verdict" id="verdict">
+    <span class="vhead" id="v-head"></span>
+    <div class="vpair" id="v-pair"></div>
+    <div class="vexpl" id="v-expl"></div>
+  </div>
+</section>
+
+<!-- ─── Section 3: Verification ─── -->
+<section class="exhibit" id="ex3">
+  <h2><span class="section-num">3</span> What can actually be verified</h2>
+  <p class="learn">Where the stated figures and the independent estimates stand, why a gap could exist, and which evidence will eventually discriminate. All figures are in million barrels per day &mdash; written "mb/d" for short.</p>
+
+  <div id="bars"></div>
+
+  <div class="subhead">candidate explanations for the gap</div>
+  <table class="tbl">
+    <tr><th>explanation</th><th>standing</th></tr>
+    <tr><td>The stated figures overstate the actual flow</td>
+        <td><span class="chip2">cannot be ruled out</span> underlying observations are not public</td></tr>
+    <tr><td>Dark (AIS-off) vessels beyond what trackers model</td>
+        <td><span class="chip2">cannot be ruled out</span> trackers state they already attempt to count dark transits</td></tr>
+    <tr><td>Ship-to-ship transfers hiding cargo movements</td>
+        <td><span class="chip2">cannot be ruled out</span> trackers state they attempt to include these too</td></tr>
+    <tr><td>Different time windows</td>
+        <td><span class="chip2">partially checkable</span> some speakers state a window, some do not &mdash; see the anatomy of each claim</td></tr>
+    <tr><td>Different commodity or route definitions</td>
+        <td><span class="chip2">partially checkable</span> commodity scope (crude vs. condensate vs. products) is usually not stated by anyone</td></tr>
+  </table>
+
+  <div class="subhead">what will discriminate between them, and when</div>
+  <table class="tbl">
+    <tr><td>Destination arrivals &mdash; cargoes appearing at ports</td>
+        <td><span class="chip2">resolvable later</span> lags weeks; floating storage can delay it further</td></tr>
+    <tr><td>Official export and trade data</td>
+        <td><span class="chip2">resolvable later</span> August figures expected ~Oct&ndash;Nov 2026 &mdash; the referee this site already tracks</td></tr>
+  </table>
+
+  <div class="subhead">the measurement ladder &mdash; fast to slow</div>
+  <div class="ladder">
+    <div class="rung"><div class="t">ship signals</div>PortWatch / AIS<br><span class="lag">hours&ndash;days</span><br>fastest, but incomplete &mdash; activity only, never barrels</div>
+    <div class="rung"><div class="t">tracker models</div>Kpler / Vortexa class<br><span class="lag">days</span><br>volume estimate, but model-dependent</div>
+    <div class="rung"><div class="t">destination arrivals</div>ports, discharge data<br><span class="lag">weeks</span><br>confirms individual cargo</div>
+    <div class="rung"><div class="t">official ledgers</div>SOMO / JODI / customs<br><span class="lag">weeks&ndash;months</span><br>most complete accounting when published &mdash; but self-reported; reliability varies by country</div>
+  </div>
+  <div class="offladder">
+    <div class="t">not on the ladder</div>
+    U.S. military surveillance &mdash; officials describe corridor escort
+    operations (<a href="https://www.axios.com/2026/08/19/hormuz-iran-oil-gulf-trump">Axios, Aug 19</a>)
+    that could observe what civilian AIS cannot. The underlying observations
+    are not public, so this claimed capability cannot be independently
+    checked and does not occupy a rung.
+  </div>
+
+  <div class="subhead">the requirement test &mdash; what would the gap need?</div>
+  <div class="sliders">
+    <div class="row" id="preset-row"></div>
+    <div class="row">
+      <label for="s-dark">or assume unmodeled movement yourself</label>
+      <input type="range" id="s-dark" min="0" max="8" step="0.5" value="0">
+      <span class="val" id="v-dark"></span>
+    </div>
+  </div>
+  <div class="sandbox-box" id="sandbox"></div>
+  <div class="note">
+    Slider capped at 8 mb/d &mdash; the widest gap between any stated figure
+    (10) and the lowest tracker estimate (2). VLCC-equivalents are an
+    illustrative unit of volume (~2 million barrels), not a prediction of
+    ship counts; most tankers are smaller.
+  </div>
+</section>
+
+<!-- ─── Glossary ─── -->
+<section class="exhibit">
+  <h2><span class="section-num">G</span>lossary</h2>
+  <dl class="gloss">
+    <dt>mb/d</dt><dd>million barrels per day &mdash; a rate of flow.</dd>
+    <dt>consensus</dt><dd>the figure the tracking firms roughly agree on, sitting inside their wider range of individual answers.</dd>
+    <dt>AIS</dt><dd>the radio transponder system ships use to broadcast their position; "dark" ships have switched it off.</dd>
+    <dt>VLCC</dt><dd>the largest common class of tanker, carrying about 2 million barrels.</dd>
+    <dt>condensate</dt><dd>ultra-light oil produced with natural gas; counted in some totals and not others.</dd>
+    <dt>ship-to-ship transfer</dt><dd>moving cargo between tankers at sea, which can hide where oil came from.</dd>
+    <dt>bypass routes</dt><dd>pipelines that let Saudi (to Yanbu, Red Sea) and UAE (to Fujairah) oil leave without crossing the strait.</dd>
+  </dl>
+</section>
+
+<a class="back" href="/oilflows.html">&larr; back to the data</a>
+
+<script>
+(async function () {
+  let verify = null, rows = null;
+  try {
+    verify = await fetch('/data/hormuz_verification.json').then(r => r.json());
+  } catch (e) {
+    document.getElementById('load-error').style.display = 'block';
+    return;
+  }
+  try {
+    rows = await fetch('/data/oilflows_daily.json').then(r => r.json());
+  } catch (e) { rows = null; }
+  const ep = verify.current_episode;
+
+  function fmtDate(d) {
+    const [y, m, day] = d.split('-').map(Number);
+    const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `${M[m - 1]} ${day} ${y}`;
+  }
+  const itemDate = it => it.date_precision === 'month'
+    ? fmtDate(it.date).replace(/^([\w]+) \d+ /, '$1 ') : fmtDate(it.date);
+
+  /* ---------- enum -> plain-English maps (every enum covered) ---------- */
+  const SCOPE_PLAIN = {
+    hormuz_outbound: 'through the Strait of Hormuz only',
+    regional_total_including_bypass: 'the whole region, including the bypass pipelines',
+    ship_transits_in_and_out: 'ship movements at the strait, in both directions',
+  };
+  const WINDOW_PLAIN = {
+    seven_day_average: 'a 7-day average',
+    single_day: 'one single day',
+    nightly: 'per night',
+    unspecified: 'the speaker did not state a time window',
+  };
+  const COMMODITY_PLAIN = {
+    crude: 'crude oil',
+    crude_condensate: 'crude oil plus condensate',
+    all_liquids: 'all petroleum liquids',
+    unspecified: 'oil flow — commodity (crude vs. condensate vs. products) not stated',
+  };
+  const EVIDENCE_PLAIN = {
+    government_estimate: 'U.S. government estimate — underlying observations not public',
+    commercial_tracker_model: 'commercial tracker model — reaches us secondhand via press',
+    activity_index: 'ship-signal activity index — never barrels',
+    official_ledger: 'official export ledger — self-reported, delayed',
+  };
+  const UNIT_PLAIN = {
+    mbd: 'million barrels per day',
+    tankers_per_night: 'tankers per night',
+    mbbl_single_day: 'million barrels in one day',
+  };
+  const UNIT_CARD = {
+    mbd: 'million barrels per day',
+    tankers_per_night: 'tankers per night · both directions',
+    mbbl_single_day: 'million barrels · one single day',
+  };
+
+  /* ---------- normalize claims + estimates into items ---------- */
+  const items = [];
+  verify.claims.forEach(c => items.push({
+    id: c.claim_id, kind: 'claim', date: c.claim_date,
+    date_precision: c.date_precision,
+    speaker: c.speaker, attribution: c.attribution,
+    lo: c.value_low, hi: c.value_high, unit: c.unit, scope: c.scope,
+    period: c.period, commodity: c.commodity, evidence: c.evidence_type,
+    quote: c.quote, source: c.source_name, url: c.source_url,
+    status: c.status,
+  }));
+  verify.estimates.forEach(e => items.push({
+    id: e.estimate_id, kind: 'estimate', date: e.estimate_date,
+    date_precision: e.date_precision,
+    speaker: e.tracker, attribution: 'named',
+    lo: e.value_low, hi: e.value_high, central: e.value_central,
+    unit: e.unit, scope: e.scope, period: e.period,
+    commodity: e.commodity, evidence: e.evidence_type,
+    quote: e.note, source: e.as_reported_by, url: e.source_url,
+    status: null,
+  }));
+  items.sort((a, b) => a.date < b.date ? -1 : 1);
+
+  const figNum = it => it.lo === it.hi
+    ? (it.lo % 1 ? it.lo : it.lo.toFixed(0))
+    : it.lo.toFixed(0) + '–' + it.hi.toFixed(0);
+  const figText = it => figNum(it) + ' ' + UNIT_PLAIN[it.unit];
+  const rangeNote = it => it.lo === it.hi ? null
+    : it.kind === 'estimate'
+      ? `a range, not one number — the tracking firms disagree: the lowest finds ~${it.lo.toFixed(0)}, the highest ~${it.hi.toFixed(0)}`
+      : `a range as stated by the speaker: ${it.lo.toFixed(0)} to ${it.hi.toFixed(0)}`;
+
+  function sentence(it) {
+    const who = it.kind === 'estimate'
+      ? `${it.speaker}, as reported by ${it.source},`
+      : it.speaker;
+    const val = figText(it);
+    if (it.unit === 'tankers_per_night') {
+      return `${who} put the figure at ${val} — a count of ships moving in both directions, not of oil.`;
+    }
+    if (it.unit === 'mbbl_single_day') {
+      return `${who} put the figure at ${it.lo.toFixed(0)} million barrels moved on one particular day — a single-day volume, not an average rate.`;
+    }
+    const w = it.period === 'unspecified'
+      ? ' No averaging window was stated.'
+      : `, as ${WINDOW_PLAIN[it.period]}.`;
+    return `${who} put the figure at ${val} of oil moving ${SCOPE_PLAIN[it.scope]}${w}`;
+  }
+
+  /* ---------- IMPROVED SCHEMATIC ---------- */
+  // Better geometry: Gulf on left, strait in center, world on right
+  // Animated dots, clearer labels, better visual hierarchy
+
+  const COUNTRIES = [
+    { id: 'iraq',   name: 'IRAQ',   y: 65,  color: '#e06c75' },
+    { id: 'kuwait', name: 'KUWAIT', y: 115, color: '#c9a84c' },
+    { id: 'saudi',  name: 'SAUDI ARABIA', y: 180, color: '#98c379' },
+    { id: 'uae',    name: 'UAE',    y: 245, color: '#4ec9b0' },
+    { id: 'iran',   name: 'IRAN',   y: 310, color: '#c586c0' },
+    { id: 'qatar',  name: 'QATAR',  y: 360, color: '#61afef' },
+  ];
+
+  const STRAIT_X = 420;
+  const WORLD_X = 780;
+  const BYPASS_YANBU_X = 260;
+  const BYPASS_FUJAIRAH_X = 340;
+
+  function drawSchematic(st) {
+    const vbW = 900, vbH = 420;
+    let s = `<svg viewBox="0 0 ${vbW} ${vbH}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gulf oil routes diagram">`;
+
+    // Background regions
+    s += `<defs>`;
+    s += `<linearGradient id="gulfGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="rgba(74,143,212,0.06)"/><stop offset="100%" stop-color="transparent"/></linearGradient>`;
+    s += `<linearGradient id="worldGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="transparent"/><stop offset="100%" stop-color="rgba(152,195,121,0.06)"/></linearGradient>`;
+    s += `<filter id="glow"><feGaussianBlur stdDeviation="2" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>`;
+    s += `</defs>`;
+
+    // Region backgrounds
+    s += `<rect x="0" y="0" width="${STRAIT_X}" height="${vbH}" fill="url(#gulfGrad)"/>`;
+    s += `<rect x="${STRAIT_X + 40}" y="0" width="${vbW - STRAIT_X - 40}" height="${vbH}" fill="url(#worldGrad)"/>`;
+
+    // Region labels
+    s += `<text x="${STRAIT_X / 2}" y="${vbH - 15}" fill="rgba(255,255,255,0.15)" font-size="14" font-family="monospace" text-anchor="middle" letter-spacing="4">PERSIAN GULF</text>`;
+    s += `<text x="${(STRAIT_X + 40 + vbW) / 2}" y="${vbH - 15}" fill="rgba(255,255,255,0.15)" font-size="14" font-family="monospace" text-anchor="middle" letter-spacing="4">WORLD MARKETS</text>`;
+
+    // Country nodes (circles with labels)
+    COUNTRIES.forEach(c => {
+      const isLit = st.lit.includes(c.id);
+      const isCounted = st.counted.includes(c.id);
+      const nodeColor = isLit ? c.color : (isCounted ? '#c9a84c' : 'rgba(255,255,255,0.25)');
+      const labelColor = isLit ? '#fff' : (isCounted ? '#c9b06a' : 'rgba(255,255,255,0.4)');
+      const glow = isLit ? ` filter="url(#glow)"` : '';
+
+      // Node circle
+      s += `<circle cx="80" cy="${c.y}" r="6" fill="${nodeColor}"${glow} stroke="${nodeColor}" stroke-width="1.5"/>`;
+      // Label
+      s += `<text x="60" y="${c.y + 4}" fill="${labelColor}" font-size="11" font-family="monospace" text-anchor="end" font-weight="${isLit ? 'bold' : 'normal'}">${c.name}</text>`;
+    });
+
+    // Routes from countries to strait
+    COUNTRIES.forEach(c => {
+      const isLit = st.lit.includes(c.id);
+      const isCounted = st.counted.includes(c.id);
+      const pathColor = isLit ? c.color : (isCounted ? '#c9a84c' : 'rgba(255,255,255,0.12)');
+      const pathWidth = isLit ? 2.5 : 1.5;
+      const dash = (st.dashed || []).includes(c.id) ? ' stroke-dasharray="4 6"' : '';
+
+      // Curved path to strait
+      const cpX = (80 + STRAIT_X) / 2;
+      s += `<path d="M86,${c.y} Q${cpX},${c.y} ${STRAIT_X},${c.y < 200 ? 170 : (c.y > 280 ? 250 : 210)}" fill="none" stroke="${pathColor}" stroke-width="${pathWidth}"${dash} stroke-linecap="round"/>`;
+
+      // Animated flow dots for lit routes
+      if (isLit) {
+        s += `<circle r="2.5" fill="${c.color}" opacity="0.8">`;
+        s += `<animateMotion dur="2s" repeatCount="indefinite" path="M86,${c.y} Q${cpX},${c.y} ${STRAIT_X},${c.y < 200 ? 170 : (c.y > 280 ? 250 : 210)}"/>`;
+        s += `</circle>`;
+      }
+    });
+
+    // Strait of Hormuz (vertical barrier)
+    const gateColor = st.gate ? 'rgba(74,143,212,0.6)' : 'rgba(255,255,255,0.12)';
+    s += `<rect x="${STRAIT_X}" y="80" width="28" height="260" rx="4" fill="${gateColor}" stroke="${st.gate ? '#4a8fd4' : 'rgba(255,255,255,0.2)'}" stroke-width="1.5"/>`;
+    s += `<text x="${STRAIT_X + 14}" y="70" fill="${st.gate ? '#4a8fd4' : 'rgba(255,255,255,0.4)'}" font-size="9" font-family="monospace" text-anchor="middle" letter-spacing="1">STRAIT</text>`;
+    s += `<text x="${STRAIT_X + 14}" y="355" fill="${st.gate ? '#4a8fd4' : 'rgba(255,255,255,0.4)'}" font-size="9" font-family="monospace" text-anchor="middle" letter-spacing="1">HORMUZ</text>`;
+
+    // Outbound route from strait to world
+    const outLit = st.lit.includes('out');
+    const outColor = outLit ? '#4a8fd4' : 'rgba(255,255,255,0.12)';
+    s += `<path d="M${STRAIT_X + 28},210 Q${(STRAIT_X + 28 + WORLD_X) / 2},210 ${WORLD_X - 20},210" fill="none" stroke="${outColor}" stroke-width="${outLit ? 3 : 1.5}" stroke-linecap="round"/>`;
+    if (outLit) {
+      s += `<circle r="3" fill="#4a8fd4" opacity="0.9">`;
+      s += `<animateMotion dur="2.5s" repeatCount="indefinite" path="M${STRAIT_X + 28},210 Q${(STRAIT_X + 28 + WORLD_X) / 2},210 ${WORLD_X - 20},210"/>`;
+      s += `</circle>`;
+    }
+
+    // World markets node
+    s += `<circle cx="${WORLD_X - 10}" cy="210" r="8" fill="rgba(152,195,121,0.3)" stroke="#98c379" stroke-width="1.5"/>`;
+    s += `<text x="${WORLD_X - 10}" y="235" fill="rgba(152,195,121,0.7)" font-size="10" font-family="monospace" text-anchor="middle">WORLD</text>`;
+
+    // Bypass pipelines
+    const yanbuLit = st.lit.includes('yanbu');
+    const fujLit = st.lit.includes('fuj');
+
+    if (yanbuLit || fujLit) {
+      // Yanbu bypass (from Saudi)
+      if (yanbuLit) {
+        s += `<path d="M86,180 Q${BYPASS_YANBU_X},180 ${BYPASS_YANBU_X},380 Q${BYPASS_YANBU_X},400 ${WORLD_X - 20},400" fill="none" stroke="#98c379" stroke-width="2.5" stroke-dasharray="6 4" stroke-linecap="round"/>`;
+        s += `<circle r="2.5" fill="#98c379" opacity="0.8">`;
+        s += `<animateMotion dur="3s" repeatCount="indefinite" path="M86,180 Q${BYPASS_YANBU_X},180 ${BYPASS_YANBU_X},380 Q${BYPASS_YANBU_X},400 ${WORLD_X - 20},400"/>`;
+        s += `</circle>`;
+        s += `<text x="${BYPASS_YANBU_X}" y="${vbH - 25}" fill="#98c379" font-size="9" font-family="monospace" text-anchor="middle">→ Yanbu (Red Sea)</text>`;
+        s += `<text x="${BYPASS_YANBU_X}" y="${vbH - 14}" fill="rgba(152,195,121,0.5)" font-size="8" font-family="monospace" text-anchor="middle">bypasses Hormuz</text>`;
+      }
+      // Fujairah bypass (from UAE)
+      if (fujLit) {
+        s += `<path d="M86,245 Q${BYPASS_FUJAIRAH_X},245 ${BYPASS_FUJAIRAH_X},360 Q${BYPASS_FUJAIRAH_X},370 ${WORLD_X - 20},370" fill="none" stroke="#4ec9b0" stroke-width="2.5" stroke-dasharray="6 4" stroke-linecap="round"/>`;
+        s += `<circle r="2.5" fill="#4ec9b0" opacity="0.8">`;
+        s += `<animateMotion dur="3s" repeatCount="indefinite" path="M86,245 Q${BYPASS_FUJAIRAH_X},245 ${BYPASS_FUJAIRAH_X},360 Q${BYPASS_FUJAIRAH_X},370 ${WORLD_X - 20},370"/>`;
+        s += `</circle>`;
+        s += `<text x="${BYPASS_FUJAIRAH_X}" y="${vbH - 25}" fill="#4ec9b0" font-size="9" font-family="monospace" text-anchor="middle">→ Fujairah</text>`;
+        s += `<text x="${BYPASS_FUJAIRAH_X}" y="${vbH - 14}" fill="rgba(78,201,176,0.5)" font-size="8" font-family="monospace" text-anchor="middle">bypasses Hormuz</text>`;
+      }
+    }
+
+    // Ship transit indicators (for tanker counts)
+    if (st.track) {
+      s += `<line x1="${STRAIT_X + 35}" y1="140" x2="${WORLD_X - 30}" y2="140" stroke="#c9a84c" stroke-width="1.5" stroke-dasharray="3 5" opacity="0.6"/>`;
+      s += `<line x1="${WORLD_X - 30}" y1="180" x2="${STRAIT_X + 35}" y2="180" stroke="#c9a84c" stroke-width="1.5" stroke-dasharray="3 5" opacity="0.6"/>`;
+      s += `<text x="${(STRAIT_X + WORLD_X) / 2}" y="132" fill="#c9a84c" font-size="9" font-family="monospace" text-anchor="middle" opacity="0.8">outbound ships →</text>`;
+      s += `<text x="${(STRAIT_X + WORLD_X) / 2}" y="196" fill="#c9a84c" font-size="9" font-family="monospace" text-anchor="middle" opacity="0.8">← inbound ships (empty)</text>`;
+
+      // Little tanker icons
+      s += `<text x="${STRAIT_X + 50}" y="138" font-size="10" fill="#c9a84c" opacity="0.7">🚢</text>`;
+      s += `<text x="${WORLD_X - 50}" y="178" font-size="10" fill="#c9a84c" opacity="0.7">🚢</text>`;
+    }
+
+    // Legend
+    s += `<rect x="${vbW - 180}" y="8" width="170" height="${st.track ? 90 : 65}" rx="6" fill="rgba(0,0,0,0.4)" stroke="rgba(255,255,255,0.08)"/>`;
+    s += `<text x="${vbW - 170}" y="24" fill="rgba(255,255,255,0.5)" font-size="9" font-family="monospace">LEGEND</text>`;
+    s += `<line x1="${vbW - 170}" y1="30" x2="${vbW - 20}" y2="30" stroke="rgba(255,255,255,0.1)"/>`;
+    s += `<circle cx="${vbW - 160}" cy="42" r="3" fill="#4a8fd4"/>`;
+    s += `<text x="${vbW - 152}" y="45" fill="rgba(255,255,255,0.5)" font-size="9" font-family="monospace">counted in this figure</text>`;
+    s += `<circle cx="${vbW - 160}" cy="58" r="3" fill="#c9a84c"/>`;
+    s += `<text x="${vbW - 152}" y="61" fill="rgba(255,255,255,0.5)" font-size="9" font-family="monospace">included but not separable</text>`;
+    if (st.track) {
+      s += `<text x="${vbW - 160}" y="78" font-size="10" fill="#c9a84c" opacity="0.7">🚢</text>`;
+      s += `<text x="${vbW - 145}" y="80" fill="rgba(255,255,255,0.5)" font-size="9" font-family="monospace">ship count (not oil volume)</text>`;
+    }
+
+    // Footer note
+    s += `<text x="${vbW / 2}" y="${vbH - 4}" fill="rgba(255,255,255,0.25)" font-size="9" font-family="monospace" text-anchor="middle">connections only — line geometry never encodes quantity</text>`;
+
+    s += `</svg>`;
+    document.getElementById('schematic').innerHTML = s;
+  }
+
+  function stateFor(it) {
+    if (it.unit === 'tankers_per_night') return { lit: [], counted: [], gate: true, track: true };
+    if (it.scope === 'regional_total_including_bypass')
+      return { lit: ['iraq','kuwait','saudi','uae','out','yanbu','fuj'], counted: ['iran','qatar'], gate: true };
+    return { lit: ['iraq','kuwait','saudi','uae','out'], counted: ['iran','qatar'], gate: true };
+  }
+
+  /* ---------- section 1: cards + anatomy ---------- */
+  const portwatchCount = rows
+    ? [...rows].reverse().find(r => r.hormuz_tanker_count_7d != null)
+    : null;
+
+  const cardsEl = document.getElementById('item-cards');
+  let routerQ = null;
+
+  const ROUTER = [
+    { id: 'q1', label: 'How much oil is crossing Hormuz?',
+      relevant: it => it.scope === 'hormuz_outbound' && (it.unit === 'mbd' || it.unit === 'mbbl_single_day'),
+      annotate: it => it.period === 'single_day' ? 'one-day volume — its window differs from the multi-day rates' : null,
+      extra: 'PortWatch: activity index only — cannot answer barrels/day' },
+    { id: 'q2', label: 'How much oil is leaving the Gulf altogether?',
+      relevant: it => it.scope === 'regional_total_including_bypass',
+      annotate: it => it.scope === 'hormuz_outbound' ? 'Hormuz-only — incomplete for this question' : null,
+      extra: null },
+    { id: 'q3', label: 'How many ships are moving?',
+      relevant: it => it.unit === 'tankers_per_night',
+      annotate: () => null,
+      extra: portwatchCount
+        ? `PortWatch also counts strait transits — currently ~${portwatchCount.hormuz_tanker_count_7d.toFixed(1)}/day visible on AIS (7-day avg)`
+        : 'PortWatch also counts strait transits (AIS-visible only)' },
+  ];
+
+  function renderCards() {
+    const q = ROUTER.find(r => r.id === routerQ);
+    let h = '';
+    items.forEach(it => {
+      const rel = q ? q.relevant(it) : true;
+      const ann = q && !rel ? q.annotate(it) : (q && rel && q.annotate(it)) || null;
+      const dim = q && !rel && !ann;
+      const rn = rangeNote(it);
+      h += `<button class="card${dim ? ' dimmed' : ''}" data-item="${it.id}">` +
+        `<div class="fig">${figNum(it)}</div>` +
+        `<div class="unit">${UNIT_CARD[it.unit]}</div>` +
+        `<div class="who">${it.speaker}${it.attribution === 'anonymous' ? ' · anonymous' : ''} · ${itemDate(it)}</div>` +
+        (rn ? `<div class="ann">${rn}</div>` : '') +
+        (ann ? `<div class="ann">${ann}</div>` : '') +
+        `</button>`;
+    });
+    if (q && q.extra) h += `<div class="card" style="cursor:default;border-style:dashed;opacity:0.7"><div class="ann" style="border:none;background:none;padding:0">${q.extra}</div></div>`;
+    cardsEl.innerHTML = h;
+  }
+  renderCards();
+
+  const routerBtns = document.getElementById('router-btns');
+  routerBtns.innerHTML = ROUTER.map(r =>
+    `<button class="chip" data-q="${r.id}">${r.label}</button>`).join('');
+  routerBtns.addEventListener('click', e => {
+    const b = e.target.closest('button[data-q]');
+    if (!b) return;
+    routerQ = routerQ === b.dataset.q ? null : b.dataset.q;
+    routerBtns.querySelectorAll('.chip').forEach(x =>
+      x.classList.toggle('on', x.dataset.q === routerQ));
+    renderCards();
+  });
+
+  function showAnatomy(id) {
+    const it = items.find(x => x.id === id);
+    cardsEl.querySelectorAll('.card').forEach(c =>
+      c.classList.toggle('on', c.dataset.item === id));
+    document.getElementById('anatomy').style.display = 'block';
+    document.getElementById('an-sentence').textContent = sentence(it);
+    document.getElementById('an-verbatim').innerHTML =
+      `their words: &ldquo;${it.quote}&rdquo; — <a href="${it.url}">${it.source}</a>, ${itemDate(it)}` +
+      (it.status ? ` · status: ${it.status.replace(/_/g, ' ')}` : '');
+    const what = it.unit === 'tankers_per_night'
+      ? 'ship movements — not oil volume' : COMMODITY_PLAIN[it.commodity];
+    const dir = it.scope === 'ship_transits_in_and_out'
+      ? 'both directions — inbound tankers travel empty' : 'outbound';
+    document.getElementById('an-fields').innerHTML = [
+      ['what', what],
+      ['where', SCOPE_PLAIN[it.scope]],
+      ['direction', dir],
+      ['window', WINDOW_PLAIN[it.period]],
+      ['source', `${it.speaker} · ${it.attribution === 'anonymous' ? 'anonymous · ' : ''}${EVIDENCE_PLAIN[it.evidence]}`],
+    ].map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+    drawSchematic(stateFor(it));
+  }
+  cardsEl.addEventListener('click', e => {
+    const b = e.target.closest('button[data-item]');
+    if (b) showAnatomy(b.dataset.item);
+  });
+
+  /* ---------- section 2: comparability ---------- */
+  const cmpEl = document.getElementById('cmp-chips');
+  cmpEl.innerHTML = items.map(it =>
+    `<button class="chip" data-cmp="${it.id}">${figText(it)}<span class="sub">${it.speaker}</span></button>`
+  ).join('') + `<span class="chipnote">pick two</span>`;
+  let picked = [];
+  cmpEl.addEventListener('click', e => {
+    const b = e.target.closest('button[data-cmp]');
+    if (!b) return;
+    const id = b.dataset.cmp;
+    if (picked.includes(id)) picked = picked.filter(x => x !== id);
+    else { picked.push(id); if (picked.length > 2) picked.shift(); }
+    cmpEl.querySelectorAll('.chip').forEach(x =>
+      x.classList.toggle('on', picked.includes(x.dataset.cmp)));
+    if (picked.length === 2) renderVerdict(picked[0], picked[1]);
+    else document.getElementById('verdict').style.display = 'none';
+  });
+
+  const UNIT_PAIR = {
+    'mbbl_single_day|mbd': {
+      head: 'same quantity, different window',
+      text: 'Both measure oil volume — 15 million barrels in one day IS a one-day rate of 15 mb/d. But a single exceptional day can neither confirm nor refute a multi-day average, and vice versa.',
+    },
+    'mbd|tankers_per_night': {
+      head: 'not directly comparable',
+      text: 'One measures oil volume; the other counts ship transits in both directions, including empty inbound tankers. Converting ships to barrels needs vessel sizes and cargo states that neither figure provides.',
+    },
+    'mbbl_single_day|tankers_per_night': {
+      head: 'not directly comparable',
+      text: 'One is a one-day oil volume; the other counts ship transits in both directions, including empty inbound tankers. No conversion is possible without sizes and cargo states.',
+    },
+  };
+
+  function miniAnatomy(it) {
+    return `<div class="vitem"><b>${figText(it)}</b>` +
+      `${it.speaker}${it.attribution === 'anonymous' ? ' · anonymous' : ''}<br>` +
+      `${SCOPE_PLAIN[it.scope]}<br>window: ${WINDOW_PLAIN[it.period]}<br>` +
+      `${EVIDENCE_PLAIN[it.evidence]}` +
+      (it.status ? `<br>status: ${it.status.replace(/_/g, ' ')}` : '') + `</div>`;
+  }
+
+  function renderVerdict(idA, idB) {
+    const a = items.find(x => x.id === idA), b = items.find(x => x.id === idB);
+    const V = document.getElementById('verdict');
+    V.style.display = 'block';
+    document.getElementById('v-pair').innerHTML = miniAnatomy(a) + miniAnatomy(b);
+    const head = document.getElementById('v-head');
+    const expl = document.getElementById('v-expl');
+
+    if (a.scope === b.scope && a.unit === b.unit) {
+      head.textContent = 'asking the same question';
+      let periods;
+      if (a.period === 'unspecified' || b.period === 'unspecified') {
+        const who = a.period === 'unspecified' ? a.speaker : b.speaker;
+        periods = `Whether their time windows match cannot be determined — ${who} did not state one.`;
+      } else if (a.period === b.period) {
+        periods = `Both use the same time window (${WINDOW_PLAIN[a.period]}).`;
+      } else {
+        periods = `Different windows: ${WINDOW_PLAIN[a.period]} vs ${WINDOW_PLAIN[b.period]} — short windows cannot confirm or refute averages.`;
+      }
+      const differ = Math.max(a.lo, b.lo) > Math.min(a.hi, b.hi);
+      let arms = '';
+      if (differ) {
+        arms =
+          `<div class="arm">movement neither instrument counted — beyond what trackers already model</div>` +
+          `<div class="arm">one figure overstates, or the other understates, the actual flow</div>` +
+          `<div class="arm">remaining definitional differences — commodity scope is unstated on both sides</div>`;
+      }
+      expl.innerHTML =
+        `Both put a number on oil moving ${SCOPE_PLAIN[a.scope]}. ${periods} ` +
+        `They rest on different kinds of evidence — comparable question, not equal verifiability.` +
+        (differ ? `<br>The figures differ. Candidate explanations, in no order:${arms}` : '');
+    } else if (a.unit === b.unit) {
+      head.textContent = 'different questions — not contradictory';
+      const reg = a.scope === 'regional_total_including_bypass' ? a : b;
+      const hor = reg === a ? b : a;
+      expl.innerHTML =
+        `${figText(reg)} covers the whole region including the bypass pipelines; ` +
+        `${figText(hor)} covers the strait only. The larger number contains the smaller one's territory — both can be true at once.`;
+    } else {
+      const key = [a.unit, b.unit].sort().join('|');
+      const cfg = UNIT_PAIR[key];
+      head.textContent = cfg ? cfg.head : 'not directly comparable';
+      expl.innerHTML = cfg ? cfg.text
+        : 'These figures use units this tool has no rule for comparing.';
+    }
+  }
+
+  /* ---------- section 3: bars + sandbox ---------- */
+  if (ep) {
+    const mbdClaims = items.filter(it =>
+      it.kind === 'claim' && it.scope === 'hormuz_outbound' && it.unit === 'mbd');
+    const X0 = 170, X1 = 850, MAX = 12;
+    const x = v => X0 + (v / MAX) * (X1 - X0);
+    let s = `<svg viewBox="0 0 900 170" xmlns="http://www.w3.org/2000/svg">`;
+    s += `<text x="20" y="38" fill="rgba(255,255,255,0.6)" font-size="10" font-family="monospace">STATED</text>`;
+    s += `<rect x="${x(ep.claim_low_mbd)}" y="24" width="${x(ep.claim_high_mbd) - x(ep.claim_low_mbd)}" height="18" fill="rgba(74,143,212,0.4)" stroke="#4a8fd4" rx="2"/>`;
+    mbdClaims.forEach((c, i) => {
+      const anchor = i % 2 ? 'start' : 'end';
+      const dx = i % 2 ? 4 : -4;
+      s += `<line x1="${x(c.hi)}" y1="20" x2="${x(c.hi)}" y2="46" stroke="#fff" stroke-width="1.5"/>`;
+      s += `<text x="${x(c.hi) + dx}" y="14" fill="rgba(255,255,255,0.6)" font-size="8.5" font-family="monospace" text-anchor="${anchor}">${c.hi} — ${c.attribution === 'anonymous' ? 'anonymous officials' : c.speaker.split(',')[0]}</text>`;
+    });
+    s += `<text x="20" y="95" fill="rgba(255,255,255,0.6)" font-size="10" font-family="monospace">INDEPENDENTLY</text>`;
+    s += `<text x="20" y="107" fill="rgba(255,255,255,0.6)" font-size="10" font-family="monospace">ESTIMATED</text>`;
+    s += `<rect x="${x(ep.independent_low_mbd)}" y="84" width="${x(ep.independent_high_mbd) - x(ep.independent_low_mbd)}" height="18" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.6)" rx="2"/>`;
+    s += `<line x1="${x(ep.independent_consensus_mbd)}" y1="80" x2="${x(ep.independent_consensus_mbd)}" y2="106" stroke="#fff" stroke-width="1.5"/>`;
+    s += `<text x="${x(ep.independent_consensus_mbd)}" y="120" fill="rgba(255,255,255,0.6)" font-size="8.5" font-family="monospace" text-anchor="middle">consensus ~${ep.independent_consensus_mbd}</text>`;
+    s += `<text x="${x(ep.independent_high_mbd) + 12}" y="98" fill="rgba(255,255,255,0.45)" font-size="9" font-family="monospace">range ${ep.independent_low_mbd}–${ep.independent_high_mbd} — a model estimate, not an observation</text>`;
+    s += `<text x="${X0}" y="152" fill="#c9a84c" font-size="10" font-family="monospace">difference vs consensus: ~${ep.gap_low_mbd.toFixed(0)}–${ep.gap_high_mbd.toFixed(0)} mb/d — unverified · vs the full tracker range: ${(ep.claim_low_mbd - ep.independent_high_mbd).toFixed(0)}–${(ep.claim_high_mbd - ep.independent_low_mbd).toFixed(0)} mb/d</text>`;
+    s += `<text x="848" y="166" fill="rgba(255,255,255,0.3)" font-size="8.5" font-family="monospace" text-anchor="end">ledger data as of ${fmtDate(ep.as_of)}</text>`;
+    s += `</svg>`;
+    document.getElementById('bars').innerHTML = s;
+
+    /* requirement-test sandbox */
+    const presetRow = document.getElementById('preset-row');
+    presetRow.innerHTML = mbdClaims.map(c =>
+      `<button class="chip" data-test="${c.id}">test the ${c.hi} (${c.attribution === 'anonymous' ? 'anonymous officials' : c.speaker.split(',')[0]})</button>`
+    ).join('');
+    const sDark = document.getElementById('s-dark');
+    let sandboxMode = null;
+
+    function renderSandbox() {
+      const box = document.getElementById('sandbox');
+      const cons = ep.independent_consensus_mbd;
+      let X, headline, hypo;
+      if (sandboxMode && sandboxMode !== 'custom') {
+        const c = items.find(i => i.id === sandboxMode);
+        X = c.hi - cons;
+        hypo = false;
+        headline = `For the stated <span class="big">${c.hi} mb/d</span> to be right, an additional <span class="big">${X.toFixed(1)} mb/d</span> of movement beyond what trackers already model would have to exist — about ${(X / 2).toFixed(1)} VLCC-equivalent volumes of unmodeled flow per day.`;
+      } else if (sandboxMode === 'custom') {
+        X = parseFloat(sDark.value);
+        hypo = true;
+        headline = `Tracker consensus ${cons} + <span class="big">${X.toFixed(1)} mb/d</span> assumed unmodeled movement = <span class="big">${(cons + X).toFixed(1)} mb/d</span> possible total.`;
+      } else {
+        box.innerHTML = 'Pick a stated figure to test, or set an assumption yourself.';
+        return;
+      }
+      const arms =
+        `<div style="margin-top:8px;color:rgba(255,255,255,0.55)">The same gap has other candidate explanations, in no order: ` +
+        `unmodeled movement · the stated figure overstates the flow · definitional differences (commodity and windows are largely unstated). This box prices only the first; it does not rank them.</div>`;
+      const chain =
+        `<div class="chain">If ${X.toFixed(1)} mb/d really moves uncounted, it is ${(X * 7).toFixed(0)}M barrels a week that must appear downstream: Gulf loadings &rarr; destination arrivals &rarr; customs/import data &rarr; inventories. If it does not exist, it stays absent from all four.</div>`;
+      box.innerHTML =
+        (hypo ? `<div class="hypo">hypothetical — reader-set assumption, not evidence</div><br>` : '') +
+        headline +
+        `<div style="margin-top:6px;color:rgba(255,255,255,0.5)">assumes the movement is invisible to trackers even though they state they already model dark transits and ship-to-ship transfers · ledger as of ${fmtDate(ep.as_of)}</div>` +
+        arms + chain;
+    }
+    presetRow.addEventListener('click', e => {
+      const b = e.target.closest('button[data-test]');
+      if (!b) return;
+      sandboxMode = b.dataset.test;
+      presetRow.querySelectorAll('.chip').forEach(x =>
+        x.classList.toggle('on', x.dataset.test === sandboxMode));
+      renderSandbox();
+    });
+    sDark.addEventListener('input', () => {
+      sandboxMode = 'custom';
+      presetRow.querySelectorAll('.chip').forEach(x => x.classList.remove('on'));
+      document.getElementById('v-dark').textContent = parseFloat(sDark.value).toFixed(1) + ' mb/d';
+      renderSandbox();
+    });
+    document.getElementById('v-dark').textContent = '0.0 mb/d';
+    renderSandbox();
+  } else {
+    document.getElementById('ex3').style.display = 'none';
+  }
+
+  /* testing aids */
+  const P = new URLSearchParams(location.search);
+  if (P.get('q')) { routerQ = P.get('q'); renderCards();
+    routerBtns.querySelectorAll('.chip').forEach(x => x.classList.toggle('on', x.dataset.q === routerQ)); }
+  if (P.get('item')) showAnatomy(P.get('item'));
+  if (P.get('pair')) { picked = P.get('pair').split(','); renderVerdict(picked[0], picked[1]);
+    cmpEl.querySelectorAll('.chip').forEach(x => x.classList.toggle('on', picked.includes(x.dataset.cmp))); }
+  if (P.get('test')) {
+    const b = document.querySelector(`[data-test="${P.get('test')}"]`);
+    if (b) b.click();
+  }
+})();
+</script>
+</body>
+</html>
