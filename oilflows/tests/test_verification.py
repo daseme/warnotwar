@@ -197,7 +197,7 @@ def test_archive_ledger_loads_and_links():
     # A dispute is a symmetric cross-speaker link, never a supersession —
     # neither side "wins" in the data model.
     escort = archive.loc[archive["claim_id"] == "USOF-20260310-01"].iloc[0]
-    assert escort["status"] == "retracted_and_denied"
+    assert escort["status"] == "deleted_by_speaker"
     assert pd.isna(escort["superseded_by"])
     assert escort["disputed_by"] == "USOF-20260310-02"
 
@@ -212,6 +212,12 @@ def test_archive_ledger_loads_and_links():
     ).any()
     # the two-figure planned night is split into one row per figure
     assert "USOF-20260819-04B" in set(archive["claim_id"])
+    # rows from one public statement share a rule-derived event id
+    ev = archive.set_index("claim_id")["statement_event_id"]
+    aug11 = [c for c in archive["claim_id"] if c.startswith("USOF-20260811")]
+    assert len(aug11) >= 2
+    assert len({ev[c] for c in aug11}) == 1
+    assert archive["statement_event_id"].nunique() < len(archive)
 
 
 def test_archive_rejects_dangling_supersedes(tmp_path):

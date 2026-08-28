@@ -47,7 +47,9 @@ CLAIM_STATUSES = {
 # nuance (free-text channels, rich time bases) and never overwrites history.
 # Strictness lives in the comparable view derived from it.
 ARCHIVE_ATTRIBUTIONS = {"named", "anonymous", "institutional"}
-ARCHIVE_STATUSES = {"active", "corrected", "retracted_and_denied", "superseded"}
+# deleted_by_speaker: the speaker withdrew it (e.g. deleted the post).
+# A denial by someone ELSE is never a status — it is a disputes link.
+ARCHIVE_STATUSES = {"active", "corrected", "deleted_by_speaker", "superseded"}
 
 # Display strings ship with the published archive so the page never leaks
 # machine vocabulary; an unmapped value fails the build, not the reader.
@@ -71,7 +73,7 @@ TIME_BASIS_PLAIN = {
 
 ARCHIVE_STATUS_PLAIN = {
     "active": "on the record",
-    "retracted_and_denied": "deleted by the speaker; disputed the same day",
+    "deleted_by_speaker": "deleted by the speaker",
     "corrected": "corrected by the speaker",
     "superseded": "revised by the speaker",
 }
@@ -214,6 +216,16 @@ def load_archive_claims(path) -> pd.DataFrame:
                 f"Archive {link} links point at unknown claims: "
                 f"{sorted(dangling)}"
             )
+
+    # One public statement can decompose into several rows (one figure per
+    # row). Rule-derived event id — same date, speaker, channel and source —
+    # lets displays count distinct STATEMENTS, not schema rows.
+    frame["statement_event_id"] = (
+        frame.groupby(
+            ["statement_date", "speaker", "channel", "source_url"],
+            sort=False,
+        ).ngroup().map(lambda g: f"EV-{g + 1:03d}")
+    )
 
     superseded_by = frame.dropna(subset=["supersedes_claim_id"]).set_index(
         "supersedes_claim_id"

@@ -67,6 +67,22 @@ def main() -> None:
             "interviews, deleted posts and anonymous briefings. See the "
             "collection protocol in US_OIL_FLOW_CLAIMS_DATABASE_BRIEF.md.",
         ],
+        "statement_event_count": int(archive["statement_event_id"].nunique()),
+        "_coverage": {
+            "located_through": archive["statement_date"].max().date().isoformat(),
+            "sources_swept": [
+                "official channels (White House, DOE, CENTCOM/DoD, presidential social accounts)",
+                "wire services (Reuters, AP)",
+                "specialist press (Axios, WSJ, Bloomberg, S&P, USNI, Lloyd's List and similar)",
+            ],
+            "note": (
+                "Rows are normalized figures, not statements: one public "
+                "statement can produce several rows (statement_event_id "
+                "groups them). Completeness is bounded to located "
+                "statements; collection effort varies by month and channel."
+            ),
+            "methodology_url": "https://warnotwar.com/methodology.html",
+        },
         "comparable_hormuz_flow_claim_ids":
             comparable["claim_id"].tolist(),
         "claims": archive_records(archive),

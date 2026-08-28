@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="The rhetoric feed, measured: every located U.S. statement about oil and ship movement through Hormuz — normalized, sourced, compared only like-with-like.">
-<title>The Record</title>
+<meta name="description" content="Every located U.S. statement about oil and ship movement through Hormuz — normalized, sourced, compared only like-with-like.">
+<title>The Statement Ledger</title>
 <style>
   html, body {
     margin: 0; min-height: 100%;
@@ -88,17 +88,17 @@
   <a href="/">warnotwar</a>
   <a href="/info.html">the heuristic</a>
   <a href="/oilflows.html">oilflows</a>
-  <a href="/record.html" class="here">the record</a>
+  <a href="/record.html" class="here">the ledger</a>
   <a href="/lab.html">the lab</a>
   <a href="/teaching-module/index.html">hormuz lab (sim)</a>
   <a href="/methodology.html">methodology</a>
 </nav>
 
-<h1>The Record</h1>
+<h1>The Statement Ledger</h1>
 <p class="subtitle">
-  The rhetoric feed, measured: every located statement about oil and ship
-  movement through Hormuz &mdash; normalized, sourced, and compared only
-  like-with-like.
+  Every located U.S. statement about oil and ship movement through Hormuz
+  &mdash; normalized, sourced, and compared only like-with-like.
+  <span id="located-through" style="display:block;font-family:monospace;font-size:11px;color:rgba(255,255,255,0.45);margin-top:6px;"></span>
 </p>
 
 <main>
@@ -114,7 +114,7 @@
   added as linked entries. Completeness is bounded: this is every
   statement <em>located</em> across the swept source sets &mdash;
   statements can occur in gaggles, deleted posts and unindexed remarks,
-  and coverage varies by month. Independent tracker estimates appear on
+  and coverage varies by month. This ledger collects one channel of the site's rhetoric feed &mdash; U.S. official statements; other parties' statements are not yet collected. Independent tracker estimates appear on
   the <a href="/oilflows.html" style="color:rgba(255,255,255,0.7)">verification panel</a>,
   where they are compared with the directly comparable claims.
 </div>
@@ -145,6 +145,13 @@
     return;
   }
   const A = arch.claims;
+  let verify = null;
+  try { verify = await fetch('/data/hormuz_verification.json').then(r => r.json()); } catch (e) {}
+  if (arch._coverage) {
+    document.getElementById('located-through').textContent =
+      'located through ' + arch._coverage.located_through + ' · ' +
+      arch.statement_event_count + ' statements, ' + arch.claim_count + ' normalized rows';
+  }
 
   const MN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   function fmtDate(d) {
@@ -243,12 +250,13 @@
         h += `<div class="monthhead">${label} — <span class="cav">no statements located in the swept sources · coverage varies by month; absence of located statements is not evidence of silence</span></div>`;
         return;
       }
-      h += `<div class="monthhead">${label} — ${group.length} statement${group.length > 1 ? 's' : ''} located` +
-        (filtered ? ` <span class="cav">· ${shown.length} matching the filter</span>` : '') + `</div>`;
+      h += `<div class="monthhead">${label} — ${group.length} row${group.length > 1 ? 's' : ''} located` +
+        (filtered ? ` <span class="cav">· ${shown.length ? shown.length + ' matching the filter' : 'none matching current filters'}</span>` : '') + `</div>`;
       shown.forEach(c => { h += entryHtml(c); });
     });
     if (filtered) {
-      h = `<div class="note" style="margin:4px 0 0">Filtered view — a selection, not the record. Counts per month always show the full ledger.</div>` + h;
+      const nShown = A.filter(passes).length;
+      h = `<div class="note" style="margin:4px 0 0">Showing ${nShown} of ${A.length} located rows — a filtered selection, not the ledger. Month counts always show the full ledger; status tags remain lifecycle states, never verdicts.</div>` + h;
     }
     el.innerHTML = h;
   }
@@ -258,7 +266,7 @@
     const v = document.getElementById('views');
     v.innerHTML =
       `<span class="grp">view</span>` +
-      ['ledger', 'numbers', 'voices'].map(x =>
+      ['ledger', 'numbers', 'attribution'].map(x =>
         `<button class="chip${view === x ? ' on' : ''}" data-v="${x}">${x}</button>`).join('') +
       `<button class="chip" data-o="1">order: ${order} first</button>`;
     v.querySelectorAll('[data-v]').forEach(b => b.onclick = () => { view = b.dataset.v; syncView(); });
@@ -282,17 +290,196 @@
 
   function syncView() {
     renderControls();
-    document.getElementById('view-ledger').style.display = view === 'ledger' ? '' : 'none';
-    document.getElementById('view-numbers').style.display = view === 'numbers' ? '' : 'none';
-    document.getElementById('view-voices').style.display = view === 'voices' ? '' : 'none';
-    if (view === 'numbers' && typeof renderNumbers === 'function') renderNumbers();
-    if (view === 'voices' && typeof renderVoices === 'function') renderVoices();
+    document.getElementById('view-ledger').style.display = view === 'ledger' ? 'block' : 'none';
+    document.getElementById('view-numbers').style.display = view === 'numbers' ? 'block' : 'none';
+    document.getElementById('view-voices').style.display = view === 'attribution' ? 'block' : 'none';
+    if (view === 'numbers') renderNumbers();
+    if (view === 'attribution') renderAttribution();
+    document.getElementById('genre-strip').style.display = view === 'ledger' ? 'block' : 'none';
   }
 
-  window._rec = { A, figOf, fmtDate, AS_PLAIN };  // for the other views
+  /* ---------- genre strip: kinds of located statements per month ---------- */
+  const GROUPS = [
+    ['forecasts', k => k === 'forecast'],
+    ['status claims', k => ['operational_status','escort_status','control_status','qualitative_flow','trend'].includes(k) || k.includes('status')],
+    ['ship counts', k => k.includes('ship_count')],
+    ['quantity claims', k => k.includes('flow_') || k.includes('volume')],
+  ];
+  const groupOf = k => (GROUPS.find(g => g[1](k)) || GROUPS[1])[0];
+
+  function renderGenreStrip() {
+    const el = document.getElementById('genre-strip');
+    const months = [...new Set(A.map(c => c.statement_date.slice(0, 7)))].sort();
+    const first = months[0], last = months[months.length - 1];
+    const all = [];
+    let [y, m] = first.split('-').map(Number);
+    while (`${y}-${String(m).padStart(2, '0')}` <= last) {
+      all.push(`${y}-${String(m).padStart(2, '0')}`);
+      m++; if (m > 12) { m = 1; y++; }
+    }
+    // distinct statement events per (month, group)
+    const cell = {};
+    A.forEach(c => {
+      const key = c.statement_date.slice(0, 7) + '|' + groupOf(c.claim_kind);
+      (cell[key] = cell[key] || new Set()).add(c.statement_event_id);
+    });
+    let h = '<table class="mono" style="font-family:monospace;font-size:11px;color:rgba(255,255,255,0.65);border-collapse:collapse;margin-bottom:4px;display:block;overflow-x:auto;">';
+    h += '<tr><th style="text-align:left;padding:2px 12px 2px 0;color:rgba(255,255,255,0.4);font-weight:normal;font-size:9px;letter-spacing:0.06em;">KINDS OF LOCATED STATEMENTS</th>' +
+      all.map(mo => `<th style="padding:2px 10px;color:rgba(255,255,255,0.4);font-weight:normal;">${MN[+mo.slice(5)-1].slice(0,3)}</th>`).join('') + '</tr>';
+    GROUPS.forEach(([g]) => {
+      h += `<tr><td style="padding:2px 12px 2px 0;">${g}</td>` + all.map(mo => {
+        const n = (cell[mo + '|' + g] || new Set()).size;
+        return `<td style="text-align:center;padding:2px 10px;color:${n ? '#fff' : 'rgba(255,255,255,0.2)'};">${n || '·'}</td>`;
+      }).join('') + '</tr>';
+    });
+    h += '</table>';
+    h += '<div class="note" style="margin:0 0 14px;">Counts are distinct located statements (one public statement can mention several kinds and counts in each it touched). Collection effort varies by month and channel — a sparse month is not evidence of silence.</div>';
+    el.innerHTML = h;
+  }
+
+  /* ---------- numbers view: one panel per question ---------- */
+  const BASIS_SHAPE = c => {
+    if (c.prospective) return 'hollow';
+    const tb = c.time_basis;
+    if (tb.startsWith('cumulative')) return 'tri';
+    if (['single_day','single_night','last_24_hours','some_single_nights','event'].includes(tb)) return 'sq';
+    if (['seven_day_average','current_average','recent_two_weeks'].includes(tb)) return 'circ';
+    return 'ring';
+  };
+  const shortWho = s => s.split(',')[0].replace('U.S. ', '');
+
+  function laneSvg(rows, opts) {
+    const W = 900, H = opts.tall ? 190 : 118, L = 10, R = 10;
+    const t0 = Date.UTC(2026, 2, 1), t1 = Date.UTC(2026, 8, 15);
+    const x = d => L + ((Date.UTC(+d.slice(0,4), +d.slice(5,7)-1, +d.slice(8,10)) - t0) / (t1 - t0)) * (W - L - R);
+    const base = H - 26;
+    const yv = opts.tall ? (v => base - (v / 12) * (H - 105)) : (() => base);
+    let s = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;background:rgba(255,255,255,0.025);border-radius:6px;">`;
+    s += `<text x="12" y="16" fill="rgba(255,255,255,0.6)" font-size="10.5" font-family="monospace">${opts.title}</text>`;
+    s += `<line x1="${L}" y1="${base}" x2="${W-R}" y2="${base}" stroke="rgba(255,255,255,0.15)"/>`;
+    ['2026-03-01','2026-05-01','2026-07-01','2026-09-01'].forEach(d => {
+      s += `<text x="${x(d)}" y="${H-6}" fill="rgba(255,255,255,0.3)" font-size="9" font-family="monospace" text-anchor="middle">${MN[+d.slice(5,7)-1].slice(0,3)}</text>`;
+    });
+    if (opts.tall) {
+      [0, 5, 10].forEach(v => {
+        s += `<text x="${W-4}" y="${yv(v)+3}" fill="rgba(255,255,255,0.3)" font-size="9" font-family="monospace" text-anchor="end">${v}</text>`;
+      });
+    }
+    // tracker marks: first-class, dated, attributed — never a background field
+    (opts.trackers || []).forEach(tr => {
+      const tx = x(tr.date);
+      if (tr.lo !== tr.hi) {
+        s += `<line x1="${tx}" y1="${yv(tr.lo)}" x2="${tx}" y2="${yv(tr.hi)}" stroke="#4ec9b0" stroke-width="2"/>`;
+        s += `<line x1="${tx-4}" y1="${yv(tr.lo)}" x2="${tx+4}" y2="${yv(tr.lo)}" stroke="#4ec9b0" stroke-width="2"/>`;
+        s += `<line x1="${tx-4}" y1="${yv(tr.hi)}" x2="${tx+4}" y2="${yv(tr.hi)}" stroke="#4ec9b0" stroke-width="2"/>`;
+      } else {
+        s += `<path d="M${tx},${yv(tr.lo)-5} l5,5 -5,5 -5,-5 z" fill="#4ec9b0"/>`;
+      }
+      const ta = tx > W - 320 ? 'end' : 'start';
+      s += `<text x="${tx + (ta === 'end' ? -8 : 8)}" y="${yv(tr.lo)+12}" fill="#4ec9b0" font-size="8.5" font-family="monospace" text-anchor="${ta}">${tr.label}</text>`;
+    });
+    // cluster-aware label rows: points landing near each other in x get
+    // successive label levels so dense weeks stay legible
+    const sorted = [...rows].sort((a, b) => a.statement_date < b.statement_date ? -1 : 1);
+    let prevX = -1e9, level = 0;
+    sorted.forEach(c => {
+      const f = figOf(c);
+      const v = c.value_max != null ? (c.value_min + c.value_max) / 2 : c.value_min;
+      const cx = x(c.statement_date), cy = opts.tall ? yv(Math.min(v, 12)) : base;
+      const col = '#4a8fd4';
+      const shape = BASIS_SHAPE(c);
+      if (shape === 'sq') s += `<rect x="${cx-4}" y="${cy-4}" width="8" height="8" fill="${col}"/>`;
+      else if (shape === 'tri') s += `<path d="M${cx},${cy-5} l5,9 -10,0 z" fill="${col}"/>`;
+      else if (shape === 'ring') s += `<circle cx="${cx}" cy="${cy}" r="4.5" fill="none" stroke="${col}" stroke-width="2"/>`;
+      else if (shape === 'hollow') s += `<circle cx="${cx}" cy="${cy}" r="4.5" fill="none" stroke="${col}" stroke-width="1.5" stroke-dasharray="2 2"/>`;
+      else s += `<circle cx="${cx}" cy="${cy}" r="4.5" fill="${col}"/>`;
+      if (c.value_max == null) s += `<path d="M${cx},${cy-13} l3,5 -6,0 z" fill="${col}"/>`;
+      level = (cx - prevX < 190) ? (level + 1) % 4 : 0;
+      prevX = cx;
+      const ly = 30 + level * 11;
+      const anchor = cx > W - 180 ? 'end' : (cx < 180 ? 'start' : 'middle');
+      const fig = f.txt.replace(' million barrels per day', '').replace(' million barrels', 'M').replace('more than ', '>');
+      s += `<line x1="${cx}" y1="${ly + 2}" x2="${cx}" y2="${cy - 7}" stroke="rgba(255,255,255,0.12)"/>`;
+      s += `<text x="${cx}" y="${ly}" fill="rgba(255,255,255,0.75)" font-size="9" font-family="monospace" text-anchor="${anchor}">${fig} · ${shortWho(c.speaker)} · ${fmtDate(c.statement_date).replace(' 2026','')}` +
+        (c.status !== 'active' ? ` · <tspan fill="#c9b06a">${c.status_plain}</tspan>` : '') + `</text>`;
+    });
+    s += `</svg>`;
+    return s;
+  }
+
+  function renderNumbers() {
+    const el = document.getElementById('view-numbers');
+    const figs = A.filter(c => figOf(c) != null);
+    const UNIT_TITLE = {
+      million_barrels_per_day: 'rate, million barrels per day',
+      million_barrels: 'volume, million barrels',
+      ships: 'ship count', tankers_per_night: 'tankers per night', vessels: 'vessel count', tanker: 'tanker count',
+    };
+    const lanes = {};
+    figs.forEach(c => {
+      const key = c.unit + '|' + c.scope;
+      (lanes[key] = lanes[key] || []).push(c);
+    });
+    const keys = Object.keys(lanes).sort();
+    const multi = keys.filter(k => lanes[k].length >= 2);
+    const single = keys.filter(k => lanes[k].length === 1);
+
+    let h = `<div class="note" style="margin:0 0 10px;">${figs.length} of ${A.length} located rows carry figures; the rest appear in the Ledger. Each panel below answers a different question — <b style="color:rgba(255,255,255,0.7)">vertical position is never comparable across panels</b>, and points within a panel can still differ by time window (shapes: ● multi-day average, ■ single day/night, ▲ running total, ○ window unstated, dashed = planned/forecast; ▲ above a point = "more than").</div>`;
+    multi.forEach(k => {
+      const [unit, scope] = k.split('|');
+      const tall = k === 'million_barrels_per_day|hormuz_only';
+      const trackers = [];
+      if (tall && verify) {
+        verify.estimates.forEach(e => {
+          if (e.unit === 'mbd' && e.scope === 'hormuz_outbound') {
+            trackers.push({ date: e.estimate_date, lo: e.value_low, hi: e.value_high,
+              label: `tanker trackers, as reported by ${e.as_reported_by}, ${fmtDate(e.estimate_date).replace(' 2026','')} — period estimate` });
+          }
+        });
+      }
+      h += `<div style="margin:14px 0;">` + laneSvg(lanes[k], {
+        title: `${UNIT_TITLE[unit] || unit} · ${AS_PLAIN[scope] || scope}`,
+        tall, trackers,
+      }) + `</div>`;
+      if (tall) h += `<div class="note" style="margin:2px 0 12px;">Trackers estimate; a claim outside their range is unverified against them — differences can reflect scope, timing, or method. Tracker figures exist for August only.</div>`;
+    });
+    if (single.length) {
+      const rows = single.map(k => lanes[k][0]);
+      h += `<div style="margin:14px 0;">` + laneSvg(rows, { title: 'single located figures — one point per question; not comparable with each other' }) + `</div>`;
+    }
+    el.innerHTML = h;
+  }
+
+  /* ---------- attribution index ---------- */
+  function renderAttribution() {
+    const el = document.getElementById('view-voices');
+    const named = {}, anon = { rows: 0, events: new Set() };
+    A.forEach(c => {
+      if (c.attribution === 'anonymous') { anon.rows++; anon.events.add(c.statement_event_id); return; }
+      const k = c.speaker;
+      named[k] = named[k] || { rows: 0, events: new Set(), role: c.role || '', attribution: c.attribution };
+      named[k].rows++; named[k].events.add(c.statement_event_id);
+    });
+    let h = `<div class="note" style="margin:0 0 10px;">An index of who is on the record — alphabetical, never ranked. Counts are of located statements (rows in parentheses); collection effort varies by channel, so counts describe the ledger, not any speaker's talkativeness or reliability.</div>`;
+    Object.keys(named).sort().forEach(k => {
+      const s = named[k];
+      h += `<div class="tl-entry"><div class="tl-fig rate">${k}</div>` +
+        `<div class="tl-meta">${s.role}${s.attribution === 'institutional' ? ' · institutional statement' : ''} · ${s.events.size} statement${s.events.size > 1 ? 's' : ''} located (${s.rows} row${s.rows > 1 ? 's' : ''}) · <a href="#" data-sp="${k}">view in ledger →</a></div></div>`;
+    });
+    h += `<div class="tl-entry"><div class="tl-fig volume">anonymous officials</div>` +
+      `<div class="tl-meta">not one person — ${anon.events.size} statements (${anon.rows} rows) whose speakers are known to reporters, not the public · <a href="#" data-anon="1">view in ledger →</a></div></div>`;
+    el.innerHTML = h;
+    el.querySelectorAll('a[data-sp]').forEach(a => a.onclick = e => {
+      e.preventDefault(); F.speaker = a.dataset.sp; F.kind = F.scope = F.figure = ''; view = 'ledger'; syncView(); renderLedger();
+    });
+    const an = el.querySelector('a[data-anon]');
+    if (an) an.onclick = e => { e.preventDefault(); F.speaker = ''; view = 'ledger'; syncView(); renderLedger(); };
+  }
+
+  window._rec = { A, figOf, fmtDate, AS_PLAIN };
   renderControls();
   renderLedger();
-  if (typeof renderGenreStrip === 'function') renderGenreStrip();
+  renderGenreStrip();
 
   const P = new URLSearchParams(location.search);
   if (P.get('view')) { view = P.get('view'); syncView(); }
