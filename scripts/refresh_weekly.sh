@@ -10,7 +10,9 @@ PY="${PYTHON:-python3}"
 "$PY" -m oilflows.build_buffer
 "$PY" -m oilflows.build_products
 "$PY" -m oilflows.build_verification
-"$PY" -m pytest tests/test_eia_inventory.py tests/test_verification.py -q
+"$PY" -m oilflows.build_teaching
+"$PY" -m pytest tests/test_eia_inventory.py tests/test_verification.py \
+  tests/test_build_teaching.py -q
 
 mkdir -p "$ROOT/data"
 cp data/published/us_crude_buffer_weekly.json "$ROOT/data/"
@@ -20,4 +22,5 @@ cp data/published/us_products_weekly.json "$ROOT/data/"
 cp data/published/us_products_meta.json "$ROOT/data/"
 cp data/published/hormuz_verification.json "$ROOT/data/"
 cp data/published/us_oil_flow_claims.json "$ROOT/data/"
+cp data/published/hormuz_checkpoints.json "$ROOT/data/"
 echo "weekly refresh complete"

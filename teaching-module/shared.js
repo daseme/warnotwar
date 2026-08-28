@@ -71,6 +71,8 @@ function renderLabNav() {
 }
 
 document.addEventListener('keydown', (e) => {
+  // real-tape mode (labs 6/8) navigates checkpoints in the page script
+  if (window._tape === 'real') return;
   const path = window.location.pathname;
   const current = path.split('/').pop() || 'index.html';
   const isStory = current === 'lab7-story.html';

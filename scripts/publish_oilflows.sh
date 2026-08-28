@@ -31,6 +31,9 @@ fi
 # Verification layer: hand-curated claims/estimates ledgers -> published JSON.
 "$PY" -m oilflows.build_verification
 
+# Teaching layer: real-tape checkpoints for the module's labs 6 and 8.
+"$PY" -m oilflows.build_teaching
+
 mkdir -p "$ROOT/data"
 cp data/published/oilflows_daily.json "$ROOT/data/"
 cp data/published/oilflows_meta.json "$ROOT/data/"
@@ -40,6 +43,7 @@ cp data/published/us_products_weekly.json "$ROOT/data/"
 cp data/published/us_products_meta.json "$ROOT/data/"
 cp data/published/hormuz_verification.json "$ROOT/data/"
 cp data/published/us_oil_flow_claims.json "$ROOT/data/"
+cp data/published/hormuz_checkpoints.json "$ROOT/data/"
 # Optional download/debug artifacts for the "view the data" links.
 cp data/published/oilflows_daily.csv "$ROOT/data/"
 cp data/published/us_crude_buffer_weekly.csv "$ROOT/data/"

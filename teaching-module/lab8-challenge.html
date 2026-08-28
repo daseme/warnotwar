@@ -26,10 +26,11 @@
 <main class="lab-content">
   <section class="lab-section active" id="lab-8">
     <h2>Challenge Lab: You Decide</h2>
-    <p class="subtitle">Click any point on the chart. Study what the market knew. Predict what happened next.</p>
+    <p class="subtitle">Click any point on the chart. Study what was publicly available. Predict what happened next.</p>
+    <div id="tape-toggle"></div>
     <div class="card-grid" id="chal-chart-wrap" style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
       <div style="width:100%;">
-        <div style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">BNO (sim) share price · Click a point to select a date</div>
+        <div style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;" id="chal-chart-label">BNO (sim) share price · Click a point to select a date</div>
         <svg id="chal-svg" viewBox="0 0 640 120" style="width:100%;height:120px;display:block;"></svg>
       </div>
     </div>
@@ -41,8 +42,10 @@
 
 <script src="data.js"></script>
 <script src="shared.js"></script>
+<script src="tape.js"></script>
 <script>
 let chalIdx=2, chalReasons=new Set(), chalDir=null, chalRevealed=false;
+let chalRReasons=new Set(), chalRDir=null, chalRRevealed=false;
 
 function renderChallenge(){
   // Chart
@@ -146,16 +149,138 @@ function renderChallengeReveal(){
   el.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
+// Real-tape mode. The chart draws (and scales to) revealed checkpoints
+// only, so neither the path ahead nor the y-axis leaks where the tape
+// goes; peak markers are hindsight and appear only at reveal.
+function renderChallengeReal(){
+  const cps=TAPE.checkpoints, vi=tapeVantageIdx(), d=cps[vi], next=cps[vi+1];
+  tapeChrome();
+  renderTapeStrip(vi, i=>{ tapeSetVantage(i); chalRReasons.clear(); chalRDir=null; chalRRevealed=false; renderChallengeReal(); });
+  $('chal-chart-label').textContent='BNO share price · dated record · Click a point to stand on that checkpoint';
+
+  const svg=$('chal-svg');
+  // top band reserved for the provenance tag so annotation and value
+  // labels never collide with it
+  const W=640, H=130, pad={top:30,bottom:20,left:10,right:10};
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`); svg.style.height=H+'px';
+  const visible=cps.slice(0,vi+1+(chalRRevealed&&next?1:0));
+  const anns=chalRRevealed&&next?tapeAnnotationsBetween(d,next).filter(a=>a.label==='BNO peak'):[];
+  const yVals=visible.map(c=>c.bno).concat(anns.map(a=>a.value));
+  const minBNO=Math.min(...yVals)*0.95, maxBNO=Math.max(...yVals)*1.05;
+  const n=Math.max(visible.length,2);
+  const x=i=>pad.left+(i/(n-1))*(W-pad.left-pad.right);
+  const y=v=>pad.top+(1-(v-minBNO)/(maxBNO-minBNO))*(H-pad.top-pad.bottom);
+  let s='';
+  for(let i=0;i<3;i++){ const gy=pad.top+(i/2)*(H-pad.top-pad.bottom); s+=`<line x1="${pad.left}" y1="${gy}" x2="${W-pad.right}" y2="${gy}" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>`; }
+  let linePath=`M${x(0)},${y(visible[0].bno)}`;
+  visible.forEach((c,i)=>{ if(i>0) linePath+=` L${x(i)},${y(c.bno)}`; });
+  s+=`<path d="${linePath}" fill="none" stroke="var(--text-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`;
+  visible.forEach((c,i)=>{
+    const on=i===vi, isReveal=i>vi;
+    s+=`<circle cx="${x(i)}" cy="${y(c.bno)}" r="${on?6:4}" fill="${on?'var(--text-primary)':(isReveal?'#58a6ff':'var(--bg)')}" stroke="${on?'var(--bg)':(isReveal?'#58a6ff':'var(--text-primary)')}" stroke-width="${on?2:1.5}" class="chart-point${on?' on':''}" data-idx="${i}" style="cursor:pointer;"/>`;
+    s+=`<text x="${x(i)}" y="${H-4}" fill="${on?'var(--text-primary)':'rgba(255,255,255,0.3)'}" font-size="10" text-anchor="middle">${tapeDay(c.date)}</text>`;
+    s+=`<text x="${x(i)}" y="${Math.max(y(c.bno)-10,pad.top+8)}" fill="${on?'var(--text-primary)':'rgba(255,255,255,0.3)'}" font-size="10" text-anchor="middle" font-family="var(--font-mono)" font-variant-numeric="tabular-nums">$${c.bno.toFixed(2)}</text>`;
+  });
+  anns.forEach((a,ai)=>{
+    const span=d.days_to_next||1;
+    const frac=Math.min(1,Math.max(0,(new Date(a.date)-new Date(d.date))/86400000/span));
+    const ax=x(vi)+(x(vi+1)-x(vi))*frac;
+    s+=`<path d="M${ax},${y(a.value)-4} l4,7 h-8 z" fill="#d29922"/>`;
+    s+=`<text x="${pad.left}" y="${12+ai*11}" fill="#d29922" font-size="9" text-anchor="start" font-family="var(--font-mono)">▼ ${a.label} $${a.value.toFixed(2)} · ${tapeDay(a.date)} (hindsight)</text>`;
+  });
+  s+=`<text x="${W-pad.right}" y="12" fill="rgba(88,166,255,0.55)" font-size="9" letter-spacing="1.5" text-anchor="end" font-family="var(--font-mono)">REAL RECORD · AS OF ${tapeDay(cps[cps.length-1].date).toUpperCase()} · WARNOTWAR.COM</text>`;
+  svg.innerHTML=s;
+  svg.querySelectorAll('.chart-point').forEach(p=>{ p.onclick=()=>{ tapeSetVantage(+p.dataset.idx); chalRReasons.clear(); chalRDir=null; chalRRevealed=false; renderChallengeReal(); }; });
+
+  const cards=tapeFieldCards(d);
+  $('chal-freeze').innerHTML=`<div class="detail-panel"><h4><span style="display:inline-block;padding:2px 8px;border-radius:10px;background:var(--text-primary);color:var(--bg);font-size:10px;text-transform:uppercase;letter-spacing:0.05em;margin-right:8px;">Freeze Frame</span>${tapeDayFull(d.date)} — publicly available by this date</h4><div class="card-grid" style="grid-template-columns:repeat(2,1fr);margin-top:12px;">${cards.map(c=>`<div class="card" style="cursor:default;padding:10px 12px;"><div class="c-label">${c.label}</div><div class="c-value" style="font-size:18px;">${c.value}</div><div style="font-size:11px;color:var(--text-tertiary)">${c.sub}${c.asof?' · '+(c.key==='buffer'?c.asof:'as of '+tapeDay(c.asof)):''}</div></div>`).join('')}</div><div style="margin-top:10px;font-size:12px;color:var(--text-tertiary);line-height:1.5;">Why this date is on the tape: ${d.why}. Bypass activity — Yanbu ${d.yanbu===null?'no reading':d.yanbu}, Fujairah ${d.fujairah===null?'no reading':d.fujairah} (activity signals, not barrels).${next?` Next checkpoint: <strong>${tapeDayFull(next.date)}</strong> (${d.days_to_next} days later).`:' The tape ends here.'}</div>${tapeSourcesLine(d)}</div>`;
+
+  const pel=$('chal-predict');
+  if(!next){ pel.innerHTML=`<div class="predict-box"><h4>What happens next?</h4><p class="pq">The tape ends here — come back after the next weekly data update, or step back to an earlier checkpoint.</p></div>`; $('chal-reveal').style.display='none'; return; }
+
+  let ph=`<div class="predict-box"><h4>What happens next?</h4><p class="pq">Everything above was publicly available by <strong>${tapeDayFull(d.date)}</strong>. Which of these factual reads of the freeze frame are accurate? Select all that apply, then record a direction call.</p>`;
+  ph+=`<div class="card-grid" style="grid-template-columns:1fr 1fr;margin-bottom:12px;">`;
+  TAPE.reads.forEach(opt=>{ const res=tapeReadEval(opt,d); const dead=res===null; const on=chalRReasons.has(opt.key); ph+=`<div class="card${on?' on':''}" data-key="${dead?'':opt.key}" style="padding:10px 12px;display:flex;align-items:center;gap:8px;${dead?'opacity:0.4;cursor:default;':''}"><div style="width:16px;height:16px;border-radius:4px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;${on?'background:var(--text-primary);border-color:var(--text-primary);color:var(--bg);':''}">${on?'✓':''}</div><div style="font-size:13px;color:${on?'var(--text-primary)':'var(--text-secondary)'}">${opt.label}${dead?' — no reading published by this date; not scored':''}</div></div>`; });
+  ph+=`</div>`;
+  ph+=`<p class="pq" style="margin-bottom:10px;">By ${tapeDayFull(next.date)} (${d.days_to_next} days later), what did BNO do? Your call is recorded, never graded — one interval cannot validate a line of reasoning.</p>`;
+  ph+=`<div class="card-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:12px;">`;
+  TAPE_DIRS.forEach(dir=>{ ph+=`<button class="guess-btn${chalRDir===dir.key?' picked':''}" data-dir="${dir.key}" style="padding:10px 12px;font-size:13px;text-align:center;border:1px solid var(--border);background:transparent;color:var(--text-secondary);border-radius:8px;cursor:pointer;transition:all 0.15s;font-family:inherit;">${dir.label}</button>`; });
+  ph+=`</div>`;
+  const canSubmit=chalRReasons.size>0&&chalRDir!==null;
+  ph+=`<button class="submit-btn" id="chal-submit" ${canSubmit?'':'disabled'}>Reveal the next checkpoint</button></div>`;
+  pel.innerHTML=ph;
+
+  pel.querySelectorAll('.card[data-key]').forEach(c=>{
+    c.onclick=()=>{ const key=c.dataset.key; if(!key) return; if(chalRReasons.has(key)) chalRReasons.delete(key); else chalRReasons.add(key); chalRRevealed=false; renderChallengeReal(); };
+  });
+  pel.querySelectorAll('.guess-btn').forEach(b=>{
+    b.onclick=()=>{ chalRDir=b.dataset.dir; chalRRevealed=false; renderChallengeReal(); };
+  });
+  const submit=document.getElementById('chal-submit');
+  if(submit) submit.onclick=()=>{ if(canSubmit){ chalRRevealed=true; renderChallengeReal(); renderChallengeRealReveal(); } };
+  if(!chalRRevealed) $('chal-reveal').style.display='none'; else renderChallengeRealReveal();
+}
+
+function renderChallengeRealReveal(){
+  const cps=TAPE.checkpoints, vi=tapeVantageIdx(), d=cps[vi], next=cps[vi+1];
+  const el=$('chal-reveal');
+  if(!next||!chalRRevealed){ el.style.display='none'; return; }
+  el.style.display='block';
+
+  const evaluable=TAPE.reads.filter(r=>tapeReadEval(r,d)!==null);
+  let reasoningScore=0, maxReasoning=0;
+  evaluable.forEach(opt=>{ const isCorrect=tapeReadEval(opt,d); if(isCorrect) maxReasoning++; if(chalRReasons.has(opt.key)&&isCorrect) reasoningScore++; if(chalRReasons.has(opt.key)&&!isCorrect) reasoningScore--; });
+  const totalScore=Math.max(0,reasoningScore);
+  const scorePct=maxReasoning>0?Math.round((totalScore/maxReasoning)*100):0;
+  const scoreColor=scorePct>=70?'var(--c2)':(scorePct>=40?'var(--c3)':'var(--c4)');
+  const scoreBg=scorePct>=70?'rgba(63,185,80,0.15)':(scorePct>=40?'rgba(210,153,34,0.15)':'rgba(248,81,73,0.15)');
+
+  let h=`<div class="detail-panel">`;
+  h+=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><div style="width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;background:${scoreBg};color:${scoreColor};flex-shrink:0;">${scorePct}</div><div><div style="font-size:16px;font-weight:600;">The tape, ${tapeDay(d.date)} → ${tapeDay(next.date)}</div><div style="font-size:13px;color:var(--text-secondary);">${tapeOutcomeLine(d,next)}</div></div></div>`;
+  h+=`<div style="font-size:13px;line-height:1.7;color:var(--text-secondary);">Your call: <strong>${tapeDirLabel(chalRDir)}</strong> — recorded, not graded. The score above covers only the factual reads of the freeze frame, which were verifiable when you made them: <strong>${totalScore}/${maxReasoning}</strong>.</div>`;
+
+  h+=`<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);"><div style="font-size:12px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;font-weight:500;">Signal check</div>`;
+  evaluable.forEach(opt=>{
+    const isCorrect=tapeReadEval(opt,d), wasSelected=chalRReasons.has(opt.key);
+    const dotColor=wasSelected&&isCorrect?'var(--c2)':(wasSelected&&!isCorrect?'var(--c4)':(isCorrect?'var(--c3)':'rgba(255,255,255,0.1)'));
+    const label=wasSelected&&isCorrect?'✓ You caught this':(wasSelected&&!isCorrect?'✗ You overcalled this':(isCorrect?'○ You missed this':''));
+    h+=`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:13px;color:var(--text-secondary);"><div style="width:6px;height:6px;border-radius:50%;background:${dotColor};flex-shrink:0;"></div>${opt.label} <span style="color:var(--text-tertiary);margin-left:auto;font-size:11px;">${label}</span></div>`;
+  });
+  h+=`</div>`;
+
+  const ann=tapeAnnotationsBetween(d,next);
+  if(ann.length) h+=`<div style="margin-top:10px;font-size:12px;color:var(--text-tertiary);line-height:1.6;">${ann.map(a=>`Between these checkpoints the record contains the ${a.label}: ${fmt$(a.value)} on ${tapeDayFull(a.date)} — ${a.note}.`).join(' ')}</div>`;
+  h+=`<div style="margin-top:10px;font-size:12px;color:var(--text-tertiary);line-height:1.6;">Attribution is never scored: explanations such as scarcity expectations, bypass compensation, or expectations of quick resolution have no answer key. Candidate explanations for the real record are laid out at <a href="/oilflows.html">oilflows</a>.</div>`;
+  h+=`</div>`;
+  el.innerHTML=h;
+  el.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function renderChallengeAny(){
+  if(window._tape==='real'&&TAPE){ renderChallengeReal(); }
+  else {
+    const svg=$('chal-svg'); svg.setAttribute('viewBox','0 0 640 120'); svg.style.height='120px';
+    $('chal-chart-label').textContent='BNO (sim) share price · Click a point to select a date';
+    renderHeader(); renderChallenge();
+  }
+}
+
 function onDateChange() {
-  renderHeader();
+  if(window._tape!=='real') renderHeader();
 }
 
 function onGradeChange() {
-  renderChallenge();
+  renderChallengeAny();
 }
 
 function onPageInit() {
-  renderChallenge();
+  const boot=()=>{
+    renderTapeToggle(()=>{ chalReasons.clear(); chalDir=null; chalRevealed=false; chalRReasons.clear(); chalRDir=null; chalRRevealed=false; renderChallengeAny(); });
+    renderChallengeAny();
+    // render-test hook: #t=real&test8=1 exercises the reveal path
+    if(window._tape==='real'&&location.hash.includes('test8=1')){ chalRReasons.add('flow'); chalRDir='down5'; renderChallengeReal(); const s=document.getElementById('chal-submit'); if(s) s.click(); }
+  };
+  if(window._tape==='real'){ tapeLoad().then(()=>{ tapeChrome(); boot(); }); } else { boot(); }
 }
 </script>
 

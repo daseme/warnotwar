@@ -26,7 +26,8 @@
 <main class="lab-content">
   <section class="lab-section active" id="lab-6">
     <h2>Lab 6: Explain This Day</h2>
-    <p class="subtitle">Everything the market knew. What do you think happened next?</p>
+    <p class="subtitle">What was publicly available on a given day. What do you think happened next?</p>
+    <div id="tape-toggle"></div>
     <div class="card-grid" id="l6-dash"></div>
     <div id="l6-detail"></div>
     <div class="predict-box" id="l6-predict"></div>
@@ -35,8 +36,9 @@
 
 <script src="data.js"></script>
 <script src="shared.js"></script>
+<script src="tape.js"></script>
 <script>
-let l6Open='flow', l6Guess=null;
+let l6Open='flow', l6Guess=null, l6rGuess=null;
 
 function renderL6(){
   const d=dates[dateIdx], prev=dateIdx>0?dates[dateIdx-1]:null;
@@ -84,17 +86,69 @@ function renderL6(){
   });
 }
 
+// Real-tape mode: rule-derived dated checkpoints from the record.
+// Direction outcomes are reported, never graded; later checkpoints
+// stay masked until the reader stands on them.
+function renderL6Real(){
+  const cps=TAPE.checkpoints, vi=tapeVantageIdx(), d=cps[vi], next=cps[vi+1];
+  tapeChrome();
+  renderTapeStrip(vi, i=>{ tapeSetVantage(i); l6rGuess=null; renderL6Real(); });
+
+  const cards=tapeFieldCards(d);
+  $('l6-dash').innerHTML=cards.map(c=>{ const on=c.key===l6Open; return `<div class="card${on?' on':''}" data-key="${c.key}"><div class="c-label">${c.label}</div><div class="c-value">${c.value}</div><span class="c-tag tag-neutral">${c.asof?('as of '+(c.key==='buffer'?c.asof:tapeDay(c.asof))):'no reading'}</span></div>`; }).join('');
+  $('l6-dash').querySelectorAll('.card').forEach(c=>{ c.onclick=()=>{ l6Open=c.dataset.key; renderL6Real(); }; });
+
+  let h='<div class="detail-panel">';
+  if(l6Open==='flow'){
+    h+=`<h4>Flow layer — checkpoint ${tapeDayFull(d.date)} (${d.why})</h4>`;
+    h+=d.hormuz===null?`<p>No Hormuz activity reading had been published by this date.</p>`:`<p>Hormuz activity index: <strong>${d.hormuz}</strong> as of ${tapeDayFull(d.hormuz_asof)} — a 7-day average where the July–December 2025 average equals 100. Readings trail the calendar by a few days and are revised after first publication.</p>`;
+    if(d.yanbu!==null||d.fujairah!==null){ h+=`<p>Bypass terminals: Yanbu ${d.yanbu===null?'no reading':d.yanbu}${d.yanbu_asof?' (as of '+tapeDay(d.yanbu_asof)+')':''}, Fujairah ${d.fujairah===null?'no reading':d.fujairah}${d.fujairah_asof?' (as of '+tapeDay(d.fujairah_asof)+')':''}. These are ship-activity signals, not barrels.</p>`; }
+  }
+  else if(l6Open==='buffer'){ h+=`<h4>Buffer layer — checkpoint ${tapeDayFull(d.date)}</h4><p>Latest published EIA week: ${d.buffer_week_end?'week ending '+tapeDayFull(d.buffer_week_end):'none yet'} — <strong>${d.buffer===null?'no reading':d.buffer+' days'}</strong> of supply (U.S. crude stocks including the Strategic Petroleum Reserve, divided by refinery inputs). Each week is released about five to six days after it ends; this is the latest week that had been released by ${tapeDay(d.date)}.</p>`; }
+  else if(l6Open==='brent'){ h+=`<h4>Brent layer — checkpoint ${tapeDayFull(d.date)}</h4><p>Brent spot: <strong>${fmt$(d.brent)}</strong>, last close observed ${tapeDayFull(d.brent_asof)}.</p><p>Prices move on many signals at once; no single cause is observable in a price.</p>`; }
+  else { h+=`<h4>BNO layer — checkpoint ${tapeDayFull(d.date)}</h4><p>BNO share price: <strong>${fmt$(d.bno)}</strong>, last close observed ${tapeDayFull(d.bno_asof)}.</p><p>BNO tracks daily % changes in short-term Brent futures, plus collateral, minus expenses. It does not hold physical oil.</p>`; }
+  h+=tapeSourcesLine(d);
+  h+=`<div class="note">Conditions on the record by this date. They do not establish what caused any price move.</div></div>`;
+  $('l6-detail').innerHTML=h;
+
+  const pel=$('l6-predict');
+  if(!next){ pel.innerHTML=`<h4>What happens next?</h4><p class="pq">The tape ends here — ${tapeDayFull(d.date)} is the latest checkpoint. Come back after the next weekly data update, or step back to an earlier checkpoint.</p>`; return; }
+
+  let ph=`<h4>What happens next?</h4><p class="pq">Everything above was publicly available by <strong>${tapeDayFull(d.date)}</strong>. By the next checkpoint, <strong>${tapeDayFull(next.date)}</strong> (${d.days_to_next} days later), what did BNO do?</p>`;
+  const shown=cps.slice(0,vi+2);
+  ph+=`<div class="timeline-mini">${shown.map((c,i)=>`<span class="tl-date${i===vi?' on':''}">${tapeDay(c.date)}</span>${i<shown.length-1?'<span class="tl-arrow">→</span>':''}`).join('')}${vi+2<cps.length?'<span class="tl-arrow">→</span><span class="tl-date" style="opacity:0.45">later checkpoints hidden</span>':''}</div>`;
+  ph+=`<div class="guess-grid">${TAPE_DIRS.map(g=>`<button class="guess-btn${l6rGuess===g.key?' picked':''}" data-val="${g.key}">${g.label}</button>`).join('')}</div>`;
+  ph+=`<div class="reveal-box${l6rGuess?' show':''}" id="l6-reveal"><div class="rl" id="l6-rl"></div><div class="rn" id="l6-rn"></div></div>`;
+  pel.innerHTML=ph;
+  pel.querySelectorAll('.guess-btn').forEach(b=>{
+    b.onclick=()=>{
+      l6rGuess=b.dataset.val;
+      renderL6Real();
+      $('l6-rl').innerHTML=`Your call: ${tapeDirLabel(l6rGuess)}. The tape: ${tapeOutcomeLine(d,next)}`;
+      const ann=tapeAnnotationsBetween(d,next).map(a=>`Between these checkpoints the record contains the ${a.label}: ${fmt$(a.value)} on ${tapeDayFull(a.date)} — ${a.note}.`).join(' ');
+      $('l6-rn').textContent=(ann?ann+' ':'')+'One interval cannot validate or refute a line of reasoning, so direction calls are recorded, never graded.';
+    };
+  });
+}
+
+function renderL6Any(){ if(window._tape==='real'&&TAPE){ renderL6Real(); } else { renderHeader(); renderL6(); } }
+
 function onDateChange() {
-  renderHeader();
-  renderL6();
+  renderL6Any();
 }
 
 function onGradeChange() {
-  renderL6();
+  renderL6Any();
 }
 
 function onPageInit() {
-  renderL6();
+  const boot=()=>{
+    renderTapeToggle(()=>{ l6Guess=null; l6rGuess=null; renderL6Any(); });
+    renderL6Any();
+    // render-test hook: #t=real&test6=1 exercises the reveal path
+    if(window._tape==='real'&&location.hash.includes('test6=1')){ const b=document.querySelector('#l6-predict .guess-btn[data-val="down5"]'); if(b) b.click(); }
+  };
+  if(window._tape==='real'){ tapeLoad().then(()=>{ tapeChrome(); boot(); }); } else { boot(); }
 }
 </script>
 
