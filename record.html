@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="The rhetoric feed, measured: every located U.S. statement about oil and ship movement through Hormuz — normalized, sourced, compared only like-with-like.">
+<title>The Record</title>
+<style>
+  html, body {
+    margin: 0; min-height: 100%;
+    font-family: Georgia, 'Times New Roman', serif;
+    background: #1a1a1a; color: #fff;
+    overflow-x: clip;
+  }
+  body { display: flex; flex-direction: column; align-items: center; padding: 40px 20px 60px; box-sizing: border-box; }
+  h1 { font-size: 1.6em; font-weight: normal; letter-spacing: 0.03em; margin: 0 0 0.4em; text-align: center; }
+  .subtitle { max-width: 640px; text-align: center; color: rgba(255,255,255,0.6); font-size: 0.95em; line-height: 1.7; margin: 0 0 1.2em; }
+  main { width: 100%; max-width: 860px; }
+  .topnav {
+    font-family: monospace; font-size: 11px;
+    display: flex; gap: 18px; flex-wrap: wrap; justify-content: center;
+    margin: 0 0 2.4em; letter-spacing: 0.04em;
+  }
+  .topnav a { color: rgba(255,255,255,0.45); text-decoration: none; }
+  .topnav a:hover { color: rgba(255,255,255,0.85); }
+  .topnav a.here { color: rgba(255,255,255,0.9); border-bottom: 1px solid rgba(255,255,255,0.4); }
+  .orient {
+    font-family: monospace; font-size: 11.5px;
+    color: rgba(255,255,255,0.6); line-height: 1.8;
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 12px 14px; margin-bottom: 18px;
+  }
+  .orient b { color: #fff; font-weight: normal; }
+  .btnrow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 6px 0 14px; }
+  .btnrow .grp { font-family: monospace; font-size: 9px; letter-spacing: 0.08em; color: rgba(255,255,255,0.4); text-transform: uppercase; }
+  button.chip {
+    font-family: monospace; font-size: 11px; background: none;
+    color: rgba(255,255,255,0.75); border: 1px solid rgba(255,255,255,0.3);
+    padding: 6px 10px; cursor: pointer;
+  }
+  button.chip:hover { border-color: rgba(255,255,255,0.6); }
+  button.chip.on { border-color: #4a8fd4; color: #fff; background: rgba(74,143,212,0.12); }
+  select.filter {
+    font-family: monospace; font-size: 11px;
+    background: #1a1a1a; color: rgba(255,255,255,0.75);
+    border: 1px solid rgba(255,255,255,0.3); padding: 5px 6px;
+  }
+  .monthhead {
+    font-family: monospace; font-size: 11px; letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.55); text-transform: uppercase;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    padding-bottom: 4px; margin: 26px 0 4px;
+  }
+  .monthhead .cav { text-transform: none; letter-spacing: 0; color: rgba(255,255,255,0.4); }
+  .tl-entry {
+    border-left: 2px solid rgba(255,255,255,0.18);
+    padding: 8px 0 8px 14px; margin: 10px 0;
+    font-family: monospace; font-size: 11.5px;
+    color: rgba(255,255,255,0.7); line-height: 1.7;
+  }
+  .tl-frame { color: rgba(255,255,255,0.5); font-size: 10.5px; letter-spacing: 0.04em; }
+  .tl-fig { font-size: 13px; margin: 2px 0; }
+  .tl-fig .fam {
+    font-size: 9px; letter-spacing: 0.08em; border: 1px solid rgba(255,255,255,0.25);
+    padding: 0 5px; border-radius: 7px; margin-right: 6px; vertical-align: 1px;
+  }
+  .tl-fig.rate { color: #fff; }
+  .tl-fig.volume { color: #d9c391; }
+  .tl-fig.ships { color: #9fb8d1; }
+  .tl-fig.prospective { color: rgba(255,255,255,0.65); font-style: italic; }
+  .tl-desc { color: rgba(255,255,255,0.78); max-width: 46em; }
+  .tl-meta { color: rgba(255,255,255,0.45); font-size: 10.5px; margin-top: 3px; }
+  .tl-meta a { color: rgba(255,255,255,0.55); }
+  .tl-link { color: #c9b06a; font-size: 10.5px; margin-top: 3px; }
+  .chip2 {
+    font-family: monospace; font-size: 10px; border: 1px solid rgba(255,255,255,0.3);
+    padding: 1px 7px; border-radius: 8px; color: rgba(255,255,255,0.65); white-space: nowrap;
+  }
+  .note { font-size: 11.5px; color: rgba(255,255,255,0.4); margin-top: 20px; line-height: 1.7; font-family: monospace; }
+  .note a { color: rgba(255,255,255,0.55); }
+  #view-numbers, #view-voices { display: none; }
+  #load-error { display: none; font-family: monospace; font-size: 13px; color: #b3413d; margin-top: 2em; }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="/">warnotwar</a>
+  <a href="/info.html">the heuristic</a>
+  <a href="/oilflows.html">oilflows</a>
+  <a href="/record.html" class="here">the record</a>
+  <a href="/lab.html">the lab</a>
+  <a href="/teaching-module/index.html">hormuz lab (sim)</a>
+  <a href="/methodology.html">methodology</a>
+</nav>
+
+<h1>The Record</h1>
+<p class="subtitle">
+  The rhetoric feed, measured: every located statement about oil and ship
+  movement through Hormuz &mdash; normalized, sourced, and compared only
+  like-with-like.
+</p>
+
+<main>
+<div id="load-error">Could not load the statements archive.</div>
+
+<div class="orient">
+  <b>How to read this ledger.</b> These are reported statements, normalized
+  by this project &mdash; descriptions are records, not verbatim quotes;
+  each links to its source. Status tags are lifecycle states (on the
+  record, deleted, disputed), never verdicts about truth.
+  &ldquo;Anonymous&rdquo; means the reporter knows who spoke; the public
+  does not. Nothing is ever overwritten: corrections and disputes are
+  added as linked entries. Completeness is bounded: this is every
+  statement <em>located</em> across the swept source sets &mdash;
+  statements can occur in gaggles, deleted posts and unindexed remarks,
+  and coverage varies by month. Independent tracker estimates appear on
+  the <a href="/oilflows.html" style="color:rgba(255,255,255,0.7)">verification panel</a>,
+  where they are compared with the directly comparable claims.
+</div>
+
+<div id="genre-strip"></div>
+
+<div class="btnrow" id="views"></div>
+<div class="btnrow" id="filters"></div>
+
+<div id="view-ledger"></div>
+<div id="view-numbers"></div>
+<div id="view-voices"></div>
+
+<div class="note">
+  Data: <a href="/data/us_oil_flow_claims.json">full archive (JSON)</a> &middot;
+  <a href="/methodology.html">how the ledger is built</a> &middot;
+  teaching version in <a href="/lab.html">the lab</a>.
+</div>
+</main>
+
+<script>
+(async function () {
+  let arch;
+  try {
+    arch = await fetch('/data/us_oil_flow_claims.json').then(r => r.json());
+  } catch (e) {
+    document.getElementById('load-error').style.display = 'block';
+    return;
+  }
+  const A = arch.claims;
+
+  const MN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  function fmtDate(d) {
+    const [y, m, day] = d.split('-').map(Number);
+    return `${MN[m - 1].slice(0,3)} ${day} ${y}`;
+  }
+
+  const AS_PLAIN = {
+    hormuz_only: 'the Strait of Hormuz',
+    persian_gulf_outbound: 'the Persian Gulf (wider than Hormuz alone)',
+    region_including_bypass: 'the region incl. bypass routes',
+    bypass_routes: 'bypass routes only',
+    iran_exports_via_hormuz: 'Iranian exports via Hormuz',
+  };
+  const SHIP_UNITS = { ships: 'ships', tanker: 'tanker', tankers: 'tankers', vessels: 'vessels', tankers_per_night: 'tankers per night' };
+
+  const figOf = c => {
+    if (c.value_min == null && c.value_max == null) return null;
+    const open = c.value_max == null;
+    const n = v => v % 1 ? v : v.toFixed(0);
+    const range = open ? 'more than ' + n(c.value_min)
+      : c.value_min === c.value_max ? n(c.value_min)
+      : n(c.value_min) + '–' + n(c.value_max);
+    if (c.unit === 'million_barrels_per_day')
+      return { fam: 'RATE', cls: 'rate', txt: `${range} million barrels per day` };
+    if (c.unit === 'million_barrels')
+      return { fam: c.time_basis.startsWith('cumulative') ? 'RUNNING TOTAL' : 'VOLUME',
+               cls: 'volume', txt: `${range} million barrels` };
+    if (c.unit in SHIP_UNITS)
+      return { fam: 'SHIPS', cls: 'ships', txt: `${range} ${SHIP_UNITS[c.unit]}` };
+    return { fam: 'FIGURE', cls: 'volume', txt: `${range} ${c.unit}` };
+  };
+
+  const byId = {};
+  A.forEach(c => { byId[c.claim_id] = c; });
+  const refTxt = id => {
+    const o = byId[id];
+    return o ? `${o.speaker}, ${fmtDate(o.statement_date)}` : id;
+  };
+
+  function entryHtml(c) {
+    const f = figOf(c);
+    const frame = `${AS_PLAIN[c.scope] || c.scope} · ${c.direction === 'outbound' ? 'outbound' : c.direction === 'transit' ? 'transit' : 'both directions'} · ${c.time_basis_plain}`;
+    let h = `<div class="tl-entry">`;
+    h += `<div class="tl-frame">${frame}</div>`;
+    if (f) {
+      const pro = c.prospective;
+      h += `<div class="tl-fig ${pro ? 'prospective' : f.cls}"><span class="fam">${pro ? (c.time_basis === 'forecast' ? 'FORECAST' : 'PLANNED') : f.fam}</span>${pro ? (c.time_basis === 'forecast' ? 'forecast: ' : 'planned: ') : ''}${f.txt}</div>`;
+    }
+    h += `<div class="tl-desc">description on record: ${c.claim_text}</div>`;
+    h += `<div class="tl-meta">${fmtDate(c.statement_date)} · ${c.speaker}` +
+      (c.attribution === 'anonymous' ? ` <span class="chip2" title="the reporter knows who spoke; the public does not">anonymous</span>` : '') +
+      (c.attribution === 'institutional' ? ` <span class="chip2">institutional</span>` : '') +
+      ` · ${c.channel}` +
+      (c.status !== 'active' ? ` · <span class="chip2">${c.status_plain}</span>` : '') +
+      ` · <a href="${c.source_url}">${c.source_publisher}</a></div>`;
+    if (c.disputes_claim_id) h += `<div class="tl-link">&harr; disputes, same day: ${refTxt(c.disputes_claim_id)} — neither statement independently verified</div>`;
+    if (c.disputed_by) h += `<div class="tl-link">&harr; disputed, same day, by: ${refTxt(c.disputed_by)} — neither statement independently verified</div>`;
+    h += `</div>`;
+    return h;
+  }
+
+  /* ---------- state ---------- */
+  let view = 'ledger', order = 'newest';
+  const F = { speaker: '', kind: '', scope: '', figure: '' };
+
+  /* ---------- ledger view ---------- */
+  function passes(c) {
+    if (F.speaker && c.speaker !== F.speaker) return false;
+    if (F.kind && c.claim_kind !== F.kind) return false;
+    if (F.scope && c.scope !== F.scope) return false;
+    if (F.figure === 'yes' && figOf(c) == null) return false;
+    if (F.figure === 'no' && figOf(c) != null) return false;
+    return true;
+  }
+
+  function renderLedger() {
+    const el = document.getElementById('view-ledger');
+    const months = [];
+    const first = A[0].statement_date.slice(0, 7), last = A[A.length - 1].statement_date.slice(0, 7);
+    let [y, m] = first.split('-').map(Number);
+    while (`${y}-${String(m).padStart(2, '0')}` <= last) {
+      months.push(`${y}-${String(m).padStart(2, '0')}`);
+      m++; if (m > 12) { m = 1; y++; }
+    }
+    if (order === 'newest') months.reverse();
+
+    const filtered = F.speaker || F.kind || F.scope || F.figure;
+    let h = '';
+    months.forEach(mo => {
+      let group = A.filter(c => c.statement_date.startsWith(mo));
+      const shown = group.filter(passes);
+      if (order === 'newest') shown.reverse();
+      const label = MN[+mo.slice(5) - 1] + ' ' + mo.slice(0, 4);
+      if (!group.length) {
+        h += `<div class="monthhead">${label} — <span class="cav">no statements located in the swept sources · coverage varies by month; absence of located statements is not evidence of silence</span></div>`;
+        return;
+      }
+      h += `<div class="monthhead">${label} — ${group.length} statement${group.length > 1 ? 's' : ''} located` +
+        (filtered ? ` <span class="cav">· ${shown.length} matching the filter</span>` : '') + `</div>`;
+      shown.forEach(c => { h += entryHtml(c); });
+    });
+    if (filtered) {
+      h = `<div class="note" style="margin:4px 0 0">Filtered view — a selection, not the record. Counts per month always show the full ledger.</div>` + h;
+    }
+    el.innerHTML = h;
+  }
+
+  /* ---------- view toggle + filters ---------- */
+  function renderControls() {
+    const v = document.getElementById('views');
+    v.innerHTML =
+      `<span class="grp">view</span>` +
+      ['ledger', 'numbers', 'voices'].map(x =>
+        `<button class="chip${view === x ? ' on' : ''}" data-v="${x}">${x}</button>`).join('') +
+      `<button class="chip" data-o="1">order: ${order} first</button>`;
+    v.querySelectorAll('[data-v]').forEach(b => b.onclick = () => { view = b.dataset.v; syncView(); });
+    v.querySelector('[data-o]').onclick = () => { order = order === 'newest' ? 'oldest' : 'newest'; renderControls(); renderLedger(); };
+
+    const f = document.getElementById('filters');
+    const opts = (vals, label) =>
+      `<option value="">${label}: all</option>` + [...new Set(vals)].sort().map(x => `<option>${x}</option>`).join('');
+    f.innerHTML =
+      `<span class="grp">filter</span>` +
+      `<select class="filter" data-f="speaker">${opts(A.map(c => c.speaker), 'speaker')}</select>` +
+      `<select class="filter" data-f="kind">${opts(A.map(c => c.claim_kind), 'kind')}</select>` +
+      `<select class="filter" data-f="scope">${opts(A.map(c => c.scope), 'scope')}</select>` +
+      `<select class="filter" data-f="figure"><option value="">figure: all</option><option value="yes">has figure</option><option value="no">qualitative</option></select>`;
+    f.querySelectorAll('select').forEach(s => {
+      s.value = F[s.dataset.f];
+      s.onchange = () => { F[s.dataset.f] = s.value; renderLedger(); };
+    });
+    f.style.display = view === 'ledger' ? '' : 'none';
+  }
+
+  function syncView() {
+    renderControls();
+    document.getElementById('view-ledger').style.display = view === 'ledger' ? '' : 'none';
+    document.getElementById('view-numbers').style.display = view === 'numbers' ? '' : 'none';
+    document.getElementById('view-voices').style.display = view === 'voices' ? '' : 'none';
+    if (view === 'numbers' && typeof renderNumbers === 'function') renderNumbers();
+    if (view === 'voices' && typeof renderVoices === 'function') renderVoices();
+  }
+
+  window._rec = { A, figOf, fmtDate, AS_PLAIN };  // for the other views
+  renderControls();
+  renderLedger();
+  if (typeof renderGenreStrip === 'function') renderGenreStrip();
+
+  const P = new URLSearchParams(location.search);
+  if (P.get('view')) { view = P.get('view'); syncView(); }
+})();
+</script>
+
+</body>
+</html>
