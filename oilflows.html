@@ -1212,7 +1212,7 @@
     document.getElementById('verify-tiles').innerHTML = [
       ['claimed', claimTxt + ' mb/d', 'latest U.S. statements, Hormuz outbound'],
       ['independently tracked', consTxt + ' mb/d',
-       'commercial trackers, range ' + range(ep.independent_low_mbd, ep.independent_high_mbd, 0) + ', as reported'],
+       'tracker consensus; independent estimates (trackers and market participants) span ' + range(ep.independent_low_mbd, ep.independent_high_mbd, 0) + ', as reported'],
       ['currently unverified', '~' + gapTxt + ' mb/d', 'claim minus tracker consensus — unverified, not adjudicated'],
       ['tracking coverage', covTxt + '%', 'share of the claim that trackers can find'],
     ].map(t =>

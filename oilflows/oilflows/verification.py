@@ -22,11 +22,19 @@ PERIODS = {"seven_day_average", "single_day", "nightly", "unspecified"}
 # finding — most circulating numbers never state their commodity scope.
 COMMODITIES = {"crude", "crude_condensate", "all_liquids", "unspecified"}
 
+# The crude-family episode: unspecified rides with crude because every
+# figure in the dispute is spoken of as crude unless the source says
+# otherwise; all_liquids is a different quantity and never mixes in.
+EPISODE_COMMODITY_FAMILY = {"crude", "crude_condensate", "unspecified"}
+
 EVIDENCE_TYPES = {
     "government_estimate",
     "commercial_tracker_model",
     "activity_index",
     "official_ledger",
+    # physical-market participants quoted by press; neither a model nor
+    # an official figure, and usually anonymous
+    "market_participant_estimate",
 }
 
 ATTRIBUTIONS = {"named", "anonymous", "institutional"}
@@ -257,20 +265,27 @@ def build_current_episode(
     window_days: int = EPISODE_WINDOW_DAYS,
 ) -> dict | None:
     """Compare like with like: latest rate claims vs rate estimates,
-    one scope, one unit, one time window.
+    one scope, one unit, one commodity family, one time window.
 
     Anchored to the newest ledger date rather than the wall clock so a
     rebuild months later reports the same episode, not a shifted window.
     Returns None when either side of the comparison is missing.
+
+    Commodity family: an all-liquids figure (crude plus refined
+    products) answers a different question than a crude figure, so it
+    never enters the crude-family episode even when scope and unit
+    match. It stays in the ledger as its own row.
     """
     if scope not in SCOPES:
         raise RuntimeError(f"Unknown scope {scope!r}.")
 
     rate_claims = claims.loc[
         (claims["scope"] == scope) & (claims["unit"] == "mbd")
+        & claims["commodity"].isin(EPISODE_COMMODITY_FAMILY)
     ]
     rate_estimates = estimates.loc[
         (estimates["scope"] == scope) & (estimates["unit"] == "mbd")
+        & estimates["commodity"].isin(EPISODE_COMMODITY_FAMILY)
     ]
     if rate_claims.empty or rate_estimates.empty:
         return None

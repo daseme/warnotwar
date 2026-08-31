@@ -146,6 +146,24 @@ def test_cross_scope_and_unit_never_pair():
     assert ep is None  # no regional-scope estimate exists to compare
 
 
+def test_all_liquids_never_enters_the_crude_episode():
+    # An all-liquids figure (crude + refined products) answers a
+    # different question; matching scope and unit is not enough.
+    claims = claims_frame([
+        {"claim_id": "c1", "value_low": 9.0, "value_high": 9.0},
+    ])
+    estimates = estimates_frame([
+        {"estimate_id": "e1"},
+        {"estimate_id": "e2", "estimate_date": "2026-08-28",
+         "value_low": 15.0, "value_high": 16.0, "value_central": None,
+         "commodity": "all_liquids"},
+    ])
+
+    ep = build_current_episode(claims, estimates)
+    assert ep["independent_high_mbd"] == 5.0
+    assert ep["estimate_count"] == 1
+
+
 def test_stale_claims_fall_out_of_window():
     claims = claims_frame([
         {"claim_id": "c1", "claim_date": "2026-05-01",
