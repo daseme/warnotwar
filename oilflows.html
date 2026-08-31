@@ -521,7 +521,7 @@
 </nav>
 
 <header class="hero">
-  <div class="hero-kicker">flow &middot; buffer &middot; rhetoric &mdash; a running dossier</div>
+  <div class="hero-kicker">flow &middot; buffer &middot; rhetoric</div>
   <h1>Hormuz: The Structural Dynamics of Flow</h1>
   <p class="subtitle">
     We are of the flow, buffer and rhetoric school.
@@ -575,7 +575,7 @@
 
 <section class="panel" id="panel-verify" style="display:none">
   <h2>2 &middot; Claimed vs. observed flow</h2>
-  <p class="panel-sub" id="sub-verify">U.S. government statements vs independent estimates (trackers, banks, market participants) &middot; figures in mb/d = million barrels per day &middot; an event ledger, not a continuous series</p>
+  <p class="panel-sub" id="sub-verify">U.S. statements vs independent estimates (trackers, banks, market participants) &middot; mb/d = million barrels per day &middot; dated events, not a daily line</p>
   <div class="tiles" id="verify-tiles"></div>
   <div id="verify-layers"></div>
   <div class="prose" style="font-size:0.95rem" id="verify-explainer">
@@ -597,7 +597,7 @@
     with a transponder signal: every unverified million barrels a day is
     seven million barrels a week that must load, sail, unload, and
     eventually appear in import and trade statistics. This page labels the
-    difference unverified; it does not adjudicate it. Comparisons never mix
+    difference unverified; it does not decide who is right. Comparisons never mix
     scopes or units, and the PortWatch index above is a third, different
     measure &mdash; publicly visible AIS activity &mdash; never converted
     into barrels.
@@ -622,7 +622,7 @@
 
 <section class="panel" id="panel-reroute">
   <h2>4 &middot; Rerouting</h2>
-  <p class="panel-sub" id="sub-reroute">PortWatch terminal-activity proxies (stand-in signals, not direct measurements) &middot; 100 = that terminal’s own normal late-2025 level &middot; each chart has its own scale</p>
+  <p class="panel-sub" id="sub-reroute">Activity at specific export terminals (PortWatch) &mdash; stand-in signals, not direct measurements &middot; 100 = that terminal&rsquo;s own normal late-2025 level &middot; each chart has its own scale</p>
   <div class="duo">
     <div>
       <h3>Saudi Arabia</h3>
@@ -639,7 +639,7 @@
   </div>
   <div class="note">
     Saudi: Juaymah (Gulf) vs Yanbu (Red Sea bypass). UAE: Ruways + Das Island
-    (Gulf) vs Fujairah (bypass/mixed port). These are activity proxies for the
+    (Gulf) vs Fujairah (bypass/mixed port). These are activity signals for the
     terminals PortWatch can see &mdash; not national export volumes or national
     route shares. Ras Tanura is absent from PortWatch, so no Saudi national
     Gulf-vs-bypass split is estimated. A bypass index far above 100 means that
@@ -728,8 +728,9 @@
     traders priced the disruption as it developed.</p>
     <p><strong>The claims ledger.</strong> Officials describe the flow;
     independent trackers estimate it; the two disagree. Every recorded
-    statement is normalized and sourced, compared only like-with-like, and
-    the difference is labeled unverified &mdash; never adjudicated &mdash;
+    statement is written down in a standard form with its source, compared
+    only with figures that count the same thing, and the difference is
+    labeled unverified &mdash; no one is declared right &mdash;
     until loading, arrival and official trade data can resolve it.</p>
     <p>Iran and Qatar are intentionally excluded: public terminal coverage is
     too sparse or incomplete for a defensible daily series. Their absence
@@ -1463,7 +1464,7 @@ themeBtn.onclick = () => {
       ['claimed', claimTxt + ' mb/d', 'latest U.S. statements, Hormuz outbound'],
       ['independently tracked', consTxt + ' mb/d',
        'tracker consensus; independent estimates (trackers and market participants) span ' + range(ep.independent_low_mbd, ep.independent_high_mbd, 0) + ', as reported'],
-      ['currently unverified', '~' + gapTxt + ' mb/d', 'claim minus tracker consensus — unverified, not adjudicated'],
+      ['currently unverified', '~' + gapTxt + ' mb/d', 'claim minus tracker consensus — unverified; no verdict either way'],
       ['tracking coverage', covTxt + '%', 'share of the claim that trackers can find'],
     ].map(t =>
       `<div class="tile"><div class="k">${t[0]}</div><div class="v">${t[1]}</div><div class="u">${t[2]}</div></div>`
@@ -1472,7 +1473,7 @@ themeBtn.onclick = () => {
     document.getElementById('verify-layers').innerHTML =
       `<div class="vlayer"><div class="k">u.s. claim</div><div class="v">${claimTxt} mb/d</div><div class="u">as of ${fmtDate(ep.as_of)} · Hormuz outbound only</div></div>` +
       `<div class="vconn">verification gap ~${gapTxt} mb/d — currently unverified</div>` +
-      `<div class="vlayer"><div class="k">independent estimate</div><div class="v">${consTxt} mb/d</div><div class="u">commercial trackers (range ${range(ep.independent_low_mbd, ep.independent_high_mbd, 0)}), reported secondhand; attempts to include dark transits</div></div>` +
+      `<div class="vlayer"><div class="k">independent estimate</div><div class="v">${consTxt} mb/d</div><div class="u">commercial trackers (range ${range(ep.independent_low_mbd, ep.independent_high_mbd, 0)}), as reported in the press; tries to count ships that hide their signals</div></div>` +
       `<div class="vconn">later reconciliation — loadings, arrivals, official trade data</div>` +
       `<div class="vlayer"><div class="k">destination confirmation</div><div class="v">pending</div><div class="u">first referee: official Iraq/Kuwait/Saudi export data for Aug 2026, expected ~Oct–Nov — already tracked in panel 3</div></div>`;
 
@@ -1651,7 +1652,7 @@ themeBtn.onclick = () => {
     f += `<tr><td>U.S. crude buffer (EIA, weekly)</td><td>week ending ${fmtDate(bufferMeta.last_week)}</td></tr>`;
   }
   if (verify && verify.current_episode) {
-    f += `<tr><td>Claims/estimates ledger (curated)</td><td>${fmtDate(verify.current_episode.as_of)}</td></tr>`;
+    f += `<tr><td>Claims &amp; estimates ledger (kept by hand)</td><td>${fmtDate(verify.current_episode.as_of)}</td></tr>`;
   }
   f += '</table>';
   document.getElementById('freshness').innerHTML = f;

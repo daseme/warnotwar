@@ -380,7 +380,7 @@
 </nav>
 
 <header class="masthead">
-  <div class="kicker">warnotwar · a public-records ledger</div>
+  <div class="kicker">warnotwar · who said what, when</div>
   <h1>The <em>Word</em></h1>
   <p class="subtitle">U.S. statements about oil and ship movement through Hormuz</p>
   <div class="coverage-line" id="located-through">loading the archive…</div>
@@ -393,7 +393,7 @@
   <div class="label">How to read<br>this ledger</div>
   <div class="text">
     <p>Every description below is a summary of what was said on the record, not a verbatim quote; every entry links to its source. Status tags show whether a statement remains on the record, was deleted, corrected, or disputed — never whether it is <em>true</em>.</p>
-    <p>Corrections and disputes are added alongside earlier entries rather than replacing them. The ledger includes every statement located in the swept sources, but some remarks may be missing. It currently covers U.S. official statements only; independent estimates live on the <a href="/oilflows.html">verification panel</a>.</p>
+    <p>Corrections and disputes are added alongside earlier entries rather than replacing them. The ledger includes every statement we found in the sources we searched, but some remarks may be missing. It currently covers U.S. official statements only; independent estimates live on the <a href="/oilflows.html">verification panel</a>.</p>
   </div>
 </section>
 
@@ -448,17 +448,17 @@ themeBtn.onclick = () => {
   const A = arch.claims;
   let verify = null;
   try { verify = await fetch('/data/hormuz_verification.json').then(r => r.json()); } catch (e) {}
-  if (arch._coverage) {
-    document.getElementById('located-through').innerHTML =
-      'located through <b>' + arch._coverage.located_through + '</b><span class="dot">·</span>' +
-      arch.statement_event_count + ' statements<span class="dot">·</span>' + arch.claim_count + ' normalized rows';
-  }
 
   const MN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   const DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   function fmtDate(d) {
     const [y, m, day] = d.split('-').map(Number);
     return `${MN[m - 1].slice(0,3)} ${day} ${y}`;
+  }
+  if (arch._coverage) {
+    document.getElementById('located-through').innerHTML =
+      'through <b>' + fmtDate(arch._coverage.located_through) + '</b><span class="dot">·</span>' +
+      arch.statement_event_count + ' statements<span class="dot">·</span>' + arch.claim_count + ' rows';
   }
   function dowOf(d) { const [y,m,day] = d.split('-').map(Number); return DOW[new Date(Date.UTC(y, m-1, day)).getUTCDay()]; }
 
@@ -592,12 +592,12 @@ themeBtn.onclick = () => {
       const nameHtml = `<span class="m-name">${MN[+mo.slice(5) - 1]} <em>${mo.slice(0,4)}</em></span>`;
       if (!group.length) {
         h += `<div class="monthhead" style="top:var(--controls-h)">${nameHtml}` +
-          `<span class="m-count">no statements located</span>` +
-          `<span class="cav">coverage varies by month; absence of located statements is not evidence of silence</span></div>`;
+          `<span class="m-count">none found</span>` +
+          `<span class="cav">how hard we searched varies by month — an empty month is not proof of silence</span></div>`;
         return;
       }
       h += `<div class="monthhead" style="top:var(--controls-h)">${nameHtml}` +
-        `<span class="m-count">${group.length} row${group.length > 1 ? 's' : ''} located` +
+        `<span class="m-count">${group.length} row${group.length > 1 ? 's' : ''}` +
         (filtered ? ` · ${shown.length ? shown.length + ' shown' : 'none match'}` : '') + `</span></div>`;
       shown.forEach(c => { h += entryHtml(c); });
     });
@@ -696,7 +696,7 @@ themeBtn.onclick = () => {
       const key = c.statement_date.slice(0, 7) + '|' + groupOf(c.claim_kind);
       (cell[key] = cell[key] || new Set()).add(c.statement_event_id);
     });
-    let h = '<div class="strip-wrap"><table class="strip"><thead><tr><th>Kinds of located statements</th>' +
+    let h = '<div class="strip-wrap"><table class="strip"><thead><tr><th>Kinds of statements found</th>' +
       all.map(mo => `<th>${MN[+mo.slice(5)-1].slice(0,3)} ’${mo.slice(2,4)}</th>`).join('') + '</tr></thead><tbody>';
     let maxN = 1;
     Object.values(cell).forEach(s => { if (s.size > maxN) maxN = s.size; });
@@ -709,7 +709,7 @@ themeBtn.onclick = () => {
       }).join('') + '</tr>';
     });
     h += '</tbody></table></div>';
-    h += '<div class="strip-note">Counts are distinct located statements (one public statement can mention several kinds and counts in each it touched). Collection effort varies by month and channel — a sparse month is not evidence of silence.</div>';
+    h += '<div class="strip-note">Each count is one distinct statement; a single statement can touch several kinds. How hard we searched varies by month and channel — a sparse month is not proof of silence.</div>';
     el.innerHTML = h;
   }
 
@@ -819,7 +819,7 @@ themeBtn.onclick = () => {
     const multi = keys.filter(k => lanes[k].length >= 2);
     const single = keys.filter(k => lanes[k].length === 1);
 
-    let h = `<div class="panel-note">${figs.length} of ${A.length} located rows carry figures; the rest appear in the Ledger. Each panel below answers a different question — <b style="color:var(--ink-60)">vertical position is never comparable across panels</b>, and points within a panel can still differ by time window (shapes: ● multi-day average, ■ single day/night, ▲ running total, ○ window unstated, dashed = planned/forecast; ▲ above a point = "more than").</div>`;
+    let h = `<div class="panel-note">${figs.length} of ${A.length} rows carry a figure; the rest appear in the Ledger. Each panel below answers a different question — <b style="color:var(--ink-60)">vertical position is never comparable across panels</b>, and points within a panel can still differ by time window (shapes: ● multi-day average, ■ single day/night, ▲ running total, ○ window unstated, dashed = planned/forecast; ▲ above a point = "more than").</div>`;
     multi.forEach(k => {
       const [unit, scope] = k.split('|');
       const tall = k === 'million_barrels_per_day|hormuz_only';
@@ -850,7 +850,7 @@ themeBtn.onclick = () => {
     });
     if (single.length) {
       const rows = single.map(k => lanes[k][0]);
-      h += `<div class="panel">` + laneSvg(rows, { title: 'single located figures — one point per question; not comparable with each other' }) + `</div>`;
+      h += `<div class="panel">` + laneSvg(rows, { title: 'single figures — one point per question; not comparable with each other' }) + `</div>`;
     }
     el.innerHTML = h;
   }
@@ -865,11 +865,11 @@ themeBtn.onclick = () => {
       named[k] = named[k] || { rows: 0, events: new Set(), role: c.role || '', attribution: c.attribution };
       named[k].rows++; named[k].events.add(c.statement_event_id);
     });
-    let h = `<div class="panel-note" style="margin-top:14px;">An index of who is on the record — alphabetical, never ranked. Counts are of located statements (rows in parentheses); collection effort varies by channel, so counts describe the ledger, not any speaker's talkativeness or reliability.</div>`;
+    let h = `<div class="panel-note" style="margin-top:14px;">Who is on the record — alphabetical, never ranked. Counts are statements we found (rows in parentheses); they depend on where we looked, not on how much anyone talks or how reliable they are.</div>`;
     Object.keys(named).sort().forEach(k => {
       const s = named[k];
       h += `<div class="voice"><div class="v-name">${k}</div>` +
-        `<div class="v-meta">${s.role}${s.attribution === 'institutional' ? ' · institutional statement' : ''} · ${s.events.size} statement${s.events.size > 1 ? 's' : ''} located (${s.rows} row${s.rows > 1 ? 's' : ''}) · <a href="#" data-sp="${k}">view in ledger →</a></div></div>`;
+        `<div class="v-meta">${s.role}${s.attribution === 'institutional' ? ' · institutional statement' : ''} · ${s.events.size} statement${s.events.size > 1 ? 's' : ''} (${s.rows} row${s.rows > 1 ? 's' : ''}) · <a href="#" data-sp="${k}">view in ledger →</a></div></div>`;
     });
     h += `<div class="voice"><div class="v-name" style="font-style:italic;color:var(--ink-60)">anonymous officials</div>` +
       `<div class="v-meta">not one person — ${anon.events.size} statements (${anon.rows} rows) whose speakers are known to reporters, not the public · <a href="#" data-anon="1">view in ledger →</a></div></div>`;
