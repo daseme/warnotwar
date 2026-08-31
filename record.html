@@ -361,7 +361,11 @@
         s += `<text x="${W-4}" y="${yv(v)+3}" fill="rgba(255,255,255,0.3)" font-size="9" font-family="monospace" text-anchor="end">${v}</text>`;
       });
     }
-    // tracker marks: first-class, dated, attributed — never a background field
+    // tracker marks: first-class, dated, attributed — never a background
+    // field. Labels stack as a list in the panel's empty lower-left so a
+    // dense week of estimates stays legible; each list line repeats the
+    // mark's date and figure for the pairing.
+    const trList = [];
     (opts.trackers || []).forEach(tr => {
       const tx = x(tr.date);
       if (tr.lo !== tr.hi) {
@@ -371,8 +375,11 @@
       } else {
         s += `<path d="M${tx},${yv(tr.lo)-5} l5,5 -5,5 -5,-5 z" fill="#4ec9b0"/>`;
       }
-      const ta = tx > W - 320 ? 'end' : 'start';
-      s += `<text x="${tx + (ta === 'end' ? -8 : 8)}" y="${yv(tr.lo)+12}" fill="#4ec9b0" font-size="8.5" font-family="monospace" text-anchor="${ta}">${tr.label}</text>`;
+      const fig = tr.lo === tr.hi ? String(tr.lo) : `${tr.lo}–${tr.hi}`;
+      trList.push(`${fig} · ${tr.label}`);
+    });
+    trList.forEach((t, i) => {
+      s += `<text x="8" y="${H - 20 - (trList.length - 1 - i) * 11}" fill="#4ec9b0" font-size="8.5" font-family="monospace">◆ ${t}</text>`;
     });
     // cluster-aware label rows: points landing near each other in x get
     // successive label levels so dense weeks stay legible
@@ -424,20 +431,30 @@
     multi.forEach(k => {
       const [unit, scope] = k.split('|');
       const tall = k === 'million_barrels_per_day|hormuz_only';
-      const trackers = [];
+      const trackers = [], wider = [];
       if (tall && verify) {
+        // only crude-family estimates overlay this panel: an all-liquids
+        // figure (crude + refined products) answers a different question
+        // and never draws against crude claims
+        const EST_WHO = {
+          commercial_tracker_model: 'tanker trackers',
+          market_participant_estimate: 'market participants',
+        };
         verify.estimates.forEach(e => {
-          if (e.unit === 'mbd' && e.scope === 'hormuz_outbound') {
-            trackers.push({ date: e.estimate_date, lo: e.value_low, hi: e.value_high,
-              label: `tanker trackers, as reported by ${e.as_reported_by}, ${fmtDate(e.estimate_date).replace(' 2026','')} — period estimate` });
+          if (e.unit !== 'mbd' || e.scope !== 'hormuz_outbound') return;
+          if (e.commodity === 'all_liquids') {
+            wider.push(`${e.tracker.split(' (')[0]}, ${e.value_low.toFixed(0)}–${e.value_high.toFixed(0)}, ${fmtDate(e.estimate_date).replace(' 2026','')}`);
+            return;
           }
+          trackers.push({ date: e.estimate_date, lo: e.value_low, hi: e.value_high,
+            label: `${EST_WHO[e.evidence_type] || 'independent estimate'}, as reported by ${e.as_reported_by}, ${fmtDate(e.estimate_date).replace(' 2026','')} — period estimate` });
         });
       }
       h += `<div style="margin:14px 0;">` + laneSvg(lanes[k], {
         title: `${UNIT_TITLE[unit] || unit} · ${AS_PLAIN[scope] || scope}`,
         tall, trackers,
       }) + `</div>`;
-      if (tall) h += `<div class="note" style="margin:2px 0 12px;">Trackers estimate; a claim outside their range is unverified against them — differences can reflect scope, timing, or method. Tracker figures exist for August only.</div>`;
+      if (tall) h += `<div class="note" style="margin:2px 0 12px;">Independent estimates (trackers and market participants) overlay this panel where they count the same thing; a claim outside their range is unverified against them — differences can reflect scope, timing, or method.${wider.length ? ` Crude-plus-products figures (${wider.join('; ')}) count a wider quantity and are listed on the <a href="/oilflows.html">verification panel</a> instead of drawn here.` : ''} Independent figures exist for August only.</div>`;
     });
     if (single.length) {
       const rows = single.map(k => lanes[k][0]);
