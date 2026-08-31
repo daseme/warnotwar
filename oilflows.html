@@ -1170,10 +1170,7 @@ themeBtn.onclick = () => {
 
     linePanel(document.getElementById('chart-buffer'),
       [
-        { field: 'days_supply_incl_spr', name: 'incl. SPR', color: INK, fmt: days,
-          label: 'total incl. SPR', labelAt: '1998-06-01' },
-        { field: 'commercial_days_supply', name: 'commercial', color: BLUE, fmt: days,
-          label: 'commercial only', labelAt: '2004-01-01' },
+        { field: 'days_supply_incl_spr', name: 'total incl. SPR', color: INK, fmt: days },
       ],
       {
         data: buffer,
@@ -1189,9 +1186,6 @@ themeBtn.onclick = () => {
           bShock && { date: bShock.date, v: bShock.days_supply_incl_spr,
             text: `${bShock.days_supply_incl_spr.toFixed(0)} days &middot; shock`,
             anchor: 'end', dx: -12, dy: -12 },
-          bRank > 1 && { date: bMinRow.date, v: minV,
-            text: `low ${minV.toFixed(1)} &middot; ${fmtDate(bMinRow.date).replace(' ' + bm.last_week.slice(0, 4), '')}`,
-            anchor: 'end', dx: -12, dy: 20 },
           { date: bLatest.date, v: latestV,
             text: `${latestV.toFixed(1)} &middot; ${fmtDate(bLatest.date).replace(' ' + bm.last_week.slice(0, 4), '')}`,
             anchor: 'end', dx: -12, dy: -8 },
@@ -1422,16 +1416,14 @@ themeBtn.onclick = () => {
           ], { refLine: 100, refLabel: '100' }) },
       { act: 'buffer', render: () => linePanelS(chartEl,
           [
-            { field: 'days_supply_incl_spr', name: 'incl. SPR', color: INK, fmt: v => v.toFixed(1) + ' days' },
-            { field: 'commercial_days_supply', name: 'commercial', color: BLUE, fmt: v => v.toFixed(1) + ' days' },
+            { field: 'days_supply_incl_spr', name: 'total incl. SPR', color: INK, fmt: v => v.toFixed(1) + ' days' },
           ],
           { data: buffer, includeZero: false, dateLabel: 'week ending ',
             refLine: bufferMeta.historical_mean_days_supply_incl_spr,
             refLabel: 'mean ' + bufferMeta.historical_mean_days_supply_incl_spr }) },
       { act: 'buffer', render: () => linePanelS(chartEl,
           [
-            { field: 'days_supply_incl_spr', name: 'incl. SPR', color: INK, fmt: v => v.toFixed(1) + ' days' },
-            { field: 'commercial_days_supply', name: 'commercial', color: BLUE, fmt: v => v.toFixed(1) + ' days' },
+            { field: 'days_supply_incl_spr', name: 'total incl. SPR', color: INK, fmt: v => v.toFixed(1) + ' days' },
           ],
           { data: buffer, includeZero: false, markLast: true, dateLabel: 'week ending ',
             refLine: bufferMeta.historical_mean_days_supply_incl_spr,
