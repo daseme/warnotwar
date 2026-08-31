@@ -1,85 +1,347 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="paper">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Every located U.S. statement about oil and ship movement through Hormuz — normalized, sourced, compared only like-with-like.">
-<title>The Word</title>
+<title>The Word — warnotwar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
-  html, body {
-    margin: 0; min-height: 100%;
-    font-family: Georgia, 'Times New Roman', serif;
-    background: #1a1a1a; color: #fff;
+  /* ---------- themes ---------- */
+  :root, [data-theme="paper"] {
+    --bg: #f7f2e7;
+    --bg-raise: #fcfaf3;
+    --ink: #1a1610;
+    --ink-80: rgba(26,22,16,0.8);
+    --ink-60: rgba(26,22,16,0.6);
+    --ink-45: rgba(26,22,16,0.45);
+    --ink-30: rgba(26,22,16,0.3);
+    --ink-18: rgba(26,22,16,0.18);
+    --ink-10: rgba(26,22,16,0.1);
+    --ink-06: rgba(26,22,16,0.06);
+    --rate: #1d4e89;
+    --volume: #8a6d1f;
+    --ships: #51697d;
+    --teal: #0e7c66;
+    --gold: #8f6d14;
+    --danger: #a03428;
+    --chip-on-bg: #1a1610;
+    --chip-on-ink: #f7f2e7;
+    --svg-bg: rgba(26,22,16,0.035);
+  }
+  [data-theme="ink"] {
+    --bg: #17140f;
+    --bg-raise: #1e1a14;
+    --ink: #efe8d8;
+    --ink-80: rgba(239,232,216,0.8);
+    --ink-60: rgba(239,232,216,0.6);
+    --ink-45: rgba(239,232,216,0.45);
+    --ink-30: rgba(239,232,216,0.3);
+    --ink-18: rgba(239,232,216,0.18);
+    --ink-10: rgba(239,232,216,0.1);
+    --ink-06: rgba(239,232,216,0.06);
+    --rate: #7aa8dd;
+    --volume: #cdb271;
+    --ships: #9db4c7;
+    --teal: #4ec9b0;
+    --gold: #c9a94f;
+    --danger: #d06a5c;
+    --chip-on-bg: #efe8d8;
+    --chip-on-ink: #17140f;
+    --svg-bg: rgba(239,232,216,0.045);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    transition: background .25s ease, color .25s ease;
     overflow-x: clip;
   }
-  body { display: flex; flex-direction: column; align-items: center; padding: 40px 20px 60px; box-sizing: border-box; }
-  h1 { font-size: 1.6em; font-weight: normal; letter-spacing: 0.03em; margin: 0 0 0.4em; text-align: center; }
-  .subtitle { max-width: 640px; text-align: center; color: rgba(255,255,255,0.6); font-size: 0.95em; line-height: 1.7; margin: 0 0 1.2em; }
-  main { width: 100%; max-width: 860px; }
-  .topnav {
-    font-family: monospace; font-size: 11px;
-    display: flex; gap: 18px; flex-wrap: wrap; justify-content: center;
-    margin: 0 0 2.4em; letter-spacing: 0.04em;
+  ::selection { background: var(--rate); color: var(--bg); }
+  a { color: inherit; }
+  .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+
+  /* ---------- fixed nav (blend-difference) ---------- */
+  nav.topnav {
+    position: fixed; inset: 0 0 auto 0; z-index: 50; height: 52px;
+    display: flex; align-items: center; gap: 22px; flex-wrap: nowrap;
+    overflow: hidden; padding: 0 28px;
+    mix-blend-mode: difference; color: #fff;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase;
   }
-  .topnav a { color: rgba(255,255,255,0.45); text-decoration: none; }
-  .topnav a:hover { color: rgba(255,255,255,0.85); }
-  .topnav a.here { color: rgba(255,255,255,0.9); border-bottom: 1px solid rgba(255,255,255,0.4); }
+  nav.topnav a {
+    position: relative; color: #fff; text-decoration: none; opacity: 0.62;
+    transition: opacity .2s ease; white-space: nowrap; flex-shrink: 0;
+  }
+  nav.topnav a::after {
+    content: ''; position: absolute; left: 0; bottom: -3px;
+    width: 0; height: 1px; background: #fff; transition: width .25s ease;
+  }
+  nav.topnav a:hover { opacity: 1; }
+  nav.topnav a:hover::after, nav.topnav a.here::after { width: 100%; }
+  nav.topnav a.here { opacity: 1; }
+  nav.topnav .spacer { flex: 1; }
+  button.theme-toggle {
+    font: inherit; letter-spacing: inherit; text-transform: inherit;
+    background: none; border: 1px solid rgba(255,255,255,0.5); color: #fff;
+    padding: 4px 10px; cursor: pointer; border-radius: 999px;
+    transition: background .2s ease;
+  }
+  button.theme-toggle:hover { background: rgba(255,255,255,0.15); }
+
+  /* ---------- hero ---------- */
+  header.masthead {
+    max-width: 1160px; margin: 0 auto; width: 100%;
+    padding: 132px 28px 44px;
+  }
+  .kicker {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-45);
+    margin-bottom: 18px;
+  }
+  h1 {
+    margin: 0 0 10px;
+    font-weight: 300; font-size: clamp(56px, 9vw, 118px);
+    line-height: 0.94; letter-spacing: -0.02em;
+  }
+  h1 em { font-style: italic; font-weight: 300; }
+  .subtitle {
+    max-width: 560px; font-size: 19px; line-height: 1.55; color: var(--ink-80);
+    margin: 18px 0 14px;
+  }
+  .coverage-line {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11.5px;
+    color: var(--ink-45); letter-spacing: 0.04em;
+  }
+  .coverage-line .dot { margin: 0 8px; }
+
+  main { max-width: 1160px; margin: 0 auto; width: 100%; padding: 0 28px 40px; }
+
+  /* ---------- orient (wall label) ---------- */
   .orient {
-    font-family: monospace; font-size: 11.5px;
-    color: rgba(255,255,255,0.6); line-height: 1.8;
-    border: 1px solid rgba(255,255,255,0.18);
-    padding: 12px 14px; margin-bottom: 18px;
+    border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink-18);
+    padding: 22px 0; margin-bottom: 34px;
+    display: grid; grid-template-columns: 180px 1fr; gap: 32px;
   }
-  .orient b { color: #fff; font-weight: normal; }
-  .btnrow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 6px 0 14px; }
-  .btnrow .grp { font-family: monospace; font-size: 9px; letter-spacing: 0.08em; color: rgba(255,255,255,0.4); text-transform: uppercase; }
+  .orient .label {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10.5px;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-45);
+    padding-top: 4px;
+  }
+  .orient .text { font-size: 15.5px; line-height: 1.65; color: var(--ink-80); max-width: 62ch; }
+  .orient .text p { margin: 0 0 0.8em; }
+  .orient .text p:last-child { margin-bottom: 0; }
+  .orient a { color: var(--rate); text-decoration: none; border-bottom: 1px solid var(--ink-18); }
+  .orient a:hover { border-bottom-color: var(--rate); }
+
+  /* ---------- sticky controls ---------- */
+  .controls {
+    position: sticky; top: 52px; z-index: 40;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--ink-18);
+    padding: 12px 0 10px; margin-bottom: 8px;
+  }
+  .controls-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .controls-row + .controls-row { margin-top: 8px; }
+  .grp {
+    font-family: 'IBM Plex Mono', monospace; font-size: 9.5px;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-45);
+    margin-right: 4px;
+  }
   button.chip {
-    font-family: monospace; font-size: 11px; background: none;
-    color: rgba(255,255,255,0.75); border: 1px solid rgba(255,255,255,0.3);
-    padding: 6px 10px; cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: none; color: var(--ink-80);
+    border: 1px solid var(--ink-30); border-radius: 0;
+    padding: 7px 14px; cursor: pointer;
+    transition: background .18s ease, color .18s ease, border-color .18s ease;
   }
-  button.chip:hover { border-color: rgba(255,255,255,0.6); }
-  button.chip.on { border-color: #4a8fd4; color: #fff; background: rgba(74,143,212,0.12); }
-  select.filter {
-    font-family: monospace; font-size: 11px;
-    background: #1a1a1a; color: rgba(255,255,255,0.75);
-    border: 1px solid rgba(255,255,255,0.3); padding: 5px 6px;
+  button.chip:hover { border-color: var(--ink); }
+  button.chip.on { background: var(--chip-on-bg); color: var(--chip-on-ink); border-color: var(--chip-on-bg); }
+  button.chip.ghost { border-style: dashed; color: var(--ink-45); }
+  select.filter, input.search {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11.5px;
+    background: var(--bg); color: var(--ink-80);
+    border: 1px solid var(--ink-30); border-radius: 0; padding: 7px 8px;
+    transition: border-color .18s ease;
   }
+  select.filter:hover, select.filter:focus, input.search:focus { border-color: var(--ink); outline: none; }
+  select.filter.active { border-color: var(--rate); color: var(--rate); }
+  input.search { min-width: 220px; }
+  input.search::placeholder { color: var(--ink-30); }
+  .result-count {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-45);
+    margin-left: auto; letter-spacing: 0.03em;
+  }
+
+  /* ---------- genre strip ---------- */
+  .strip-wrap { overflow-x: auto; margin-bottom: 6px; }
+  table.strip {
+    border-collapse: collapse; width: 100%; table-layout: fixed;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: var(--ink-80);
+  }
+  table.strip tr > *:first-child { width: 190px; }
+  table.strip th, table.strip td { border: 1px solid var(--ink-18); padding: 7px 12px; }
+  table.strip thead th {
+    font-weight: 400; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-45); text-align: center; white-space: nowrap;
+  }
+  table.strip thead th:first-child { text-align: left; }
+  table.strip tbody th { font-weight: 400; text-align: left; white-space: nowrap; color: var(--ink-60); }
+  table.strip td { text-align: center; font-variant-numeric: tabular-nums; min-width: 44px; transition: background .15s ease; }
+  table.strip td.zero { color: var(--ink-30); }
+  table.strip tbody tr:hover td, table.strip tbody tr:hover th { background: var(--ink-06); }
+  .strip-note, .ledger-note {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; line-height: 1.7;
+    color: var(--ink-45); margin: 8px 0 18px; max-width: 72ch;
+  }
+
+  /* ---------- ledger ---------- */
   .monthhead {
-    font-family: monospace; font-size: 11px; letter-spacing: 0.08em;
-    color: rgba(255,255,255,0.55); text-transform: uppercase;
-    border-bottom: 1px solid rgba(255,255,255,0.15);
-    padding-bottom: 4px; margin: 26px 0 4px;
+    position: sticky; z-index: 30;
+    background: var(--bg);
+    border-bottom: 1px solid var(--ink);
+    padding: 10px 0 8px; margin: 34px 0 2px;
+    display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap;
+    transition: background .25s ease;
   }
-  .monthhead .cav { text-transform: none; letter-spacing: 0; color: rgba(255,255,255,0.4); }
-  .tl-entry {
-    border-left: 2px solid rgba(255,255,255,0.18);
-    padding: 8px 0 8px 14px; margin: 10px 0;
-    font-family: monospace; font-size: 11.5px;
-    color: rgba(255,255,255,0.7); line-height: 1.7;
+  .monthhead .m-name { font-size: 30px; font-weight: 300; letter-spacing: -0.01em; }
+  .monthhead .m-name em { font-style: italic; }
+  .monthhead .m-count {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10.5px;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-45);
   }
-  .tl-frame { color: rgba(255,255,255,0.5); font-size: 10.5px; letter-spacing: 0.04em; }
-  .tl-fig { font-size: 13px; margin: 2px 0; }
-  .tl-fig .fam {
-    font-size: 9px; letter-spacing: 0.08em; border: 1px solid rgba(255,255,255,0.25);
-    padding: 0 5px; border-radius: 7px; margin-right: 6px; vertical-align: 1px;
+  .monthhead .cav {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+    color: var(--ink-30); letter-spacing: 0.02em; flex-basis: 100%;
   }
-  .tl-fig.rate { color: #fff; }
-  .tl-fig.volume { color: #d9c391; }
-  .tl-fig.ships { color: #9fb8d1; }
-  .tl-fig.prospective { color: rgba(255,255,255,0.65); font-style: italic; }
-  .tl-desc { color: rgba(255,255,255,0.78); max-width: 46em; }
-  .tl-meta { color: rgba(255,255,255,0.45); font-size: 10.5px; margin-top: 3px; }
-  .tl-meta a { color: rgba(255,255,255,0.55); }
-  .tl-link { color: #c9b06a; font-size: 10.5px; margin-top: 3px; }
+
+  article.entry {
+    display: grid;
+    grid-template-columns: 118px minmax(190px, 250px) 1fr;
+    gap: 8px 28px;
+    padding: 18px 0 16px;
+    border-bottom: 1px solid var(--ink-10);
+    transition: background .15s ease;
+  }
+  article.entry:hover { background: var(--ink-06); }
+  .e-date {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    color: var(--ink-60); letter-spacing: 0.04em; padding-top: 5px;
+  }
+  .e-date .dow { color: var(--ink-30); }
+  .e-fig .fam {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.12em;
+    border: 1px solid currentColor; border-radius: 999px;
+    padding: 2px 8px 1px; margin-bottom: 6px; opacity: 0.75;
+  }
+  .e-fig .num {
+    font-family: 'IBM Plex Mono', monospace; font-size: 19px; line-height: 1.25;
+    font-variant-numeric: tabular-nums; font-weight: 500;
+  }
+  .e-fig.rate { color: var(--rate); }
+  .e-fig.volume { color: var(--volume); }
+  .e-fig.ships { color: var(--ships); }
+  .e-fig.prospective { color: var(--ink-45); }
+  .e-fig.prospective .num { font-style: italic; font-weight: 400; }
+  .e-fig.nofig .num { display: none; }
+  .e-fig.nofig .qual {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ink-30); border: 1px dashed var(--ink-18);
+    border-radius: 999px; padding: 3px 10px; display: inline-block;
+  }
+  .e-body .frame {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10.5px;
+    color: var(--ink-45); letter-spacing: 0.05em; margin-bottom: 6px;
+  }
+  .e-body .desc { font-size: 16.5px; line-height: 1.55; color: var(--ink); max-width: 58ch; }
+  .e-body .desc .pre { color: var(--ink-45); font-style: italic; }
+  .e-meta {
+    margin-top: 8px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 10.5px;
+    color: var(--ink-45); line-height: 1.8; letter-spacing: 0.02em;
+  }
+  .e-meta a { color: var(--ink-60); text-decoration: none; border-bottom: 1px solid var(--ink-18); }
+  .e-meta a:hover { color: var(--rate); border-bottom-color: var(--rate); }
   .chip2 {
-    font-family: monospace; font-size: 10px; border: 1px solid rgba(255,255,255,0.3);
-    padding: 1px 7px; border-radius: 8px; color: rgba(255,255,255,0.65); white-space: nowrap;
+    font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.06em;
+    border: 1px solid var(--ink-30); border-radius: 999px;
+    padding: 1px 8px; color: var(--ink-60); white-space: nowrap;
   }
-  .note { font-size: 11.5px; color: rgba(255,255,255,0.4); margin-top: 20px; line-height: 1.7; font-family: monospace; }
-  .note a { color: rgba(255,255,255,0.55); }
+  .chip2.warn { border-color: var(--gold); color: var(--gold); }
+  .e-link {
+    margin-top: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px;
+    color: var(--gold); letter-spacing: 0.02em;
+  }
+
+  /* ---------- numbers view ---------- */
+  .panel { border: 1px solid var(--ink-18); margin: 18px 0; padding: 6px; background: var(--svg-bg); }
+  .panel-note {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; line-height: 1.7;
+    color: var(--ink-45); margin: 4px 0 16px; max-width: 76ch;
+  }
+  .panel-note a { color: var(--rate); }
+
+  /* ---------- attribution view ---------- */
+  .voice {
+    display: grid; grid-template-columns: minmax(200px, 320px) 1fr; gap: 8px 28px;
+    padding: 16px 0 14px; border-bottom: 1px solid var(--ink-10);
+    transition: background .15s ease;
+  }
+  .voice:hover { background: var(--ink-06); }
+  .voice .v-name { font-size: 22px; font-weight: 400; letter-spacing: -0.01em; }
+  .voice .v-meta {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-45);
+    line-height: 1.8; padding-top: 6px;
+  }
+  .voice .v-meta a { color: var(--rate); text-decoration: none; border-bottom: 1px solid var(--ink-18); }
+  .voice .v-meta a:hover { border-bottom-color: var(--rate); }
+
+  /* ---------- footer ---------- */
+  footer.colophon {
+    max-width: 1160px; margin: 60px auto 0; width: 100%;
+    padding: 26px 28px 20px; border-top: 1px solid var(--ink);
+  }
+  .foot-links {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-45);
+    letter-spacing: 0.04em; line-height: 2;
+  }
+  .foot-links a { color: var(--ink-60); text-decoration: none; border-bottom: 1px solid var(--ink-18); }
+  .foot-links a:hover { color: var(--rate); border-bottom-color: var(--rate); }
+  .wordmark {
+    font-size: clamp(44px, 8.5vw, 120px); font-weight: 300; font-style: italic;
+    letter-spacing: -0.02em; line-height: 1; color: var(--ink-18);
+    margin: 34px 0 10px; user-select: none; white-space: nowrap; overflow: hidden;
+  }
+
+  #load-error {
+    display: none; font-family: 'IBM Plex Mono', monospace; font-size: 13px;
+    color: var(--danger); margin-top: 2em; padding: 20px 0;
+  }
   #view-numbers, #view-voices { display: none; }
-  #load-error { display: none; font-family: monospace; font-size: 13px; color: #b3413d; margin-top: 2em; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 860px) {
+    .orient { grid-template-columns: 1fr; gap: 10px; }
+    article.entry { grid-template-columns: 1fr; gap: 6px; }
+    .e-date { padding-top: 0; }
+    .voice { grid-template-columns: 1fr; gap: 2px; }
+    .voice .v-meta { padding-top: 0; }
+    nav.topnav { gap: 14px; padding: 12px 16px; overflow-x: auto; overflow-y: hidden; }
+    header.masthead { padding: 108px 20px 30px; }
+    main { padding: 0 20px 30px; }
+  }
 </style>
 </head>
 <body>
@@ -92,68 +354,85 @@
   <a href="/lab.html">the lab</a>
   <a href="/teaching-module/index.html">hormuz lab (sim)</a>
   <a href="/methodology.html">methodology</a>
+  <span class="spacer"></span>
+  <button class="theme-toggle" id="theme-toggle" title="switch paper / ink">◑ ink</button>
 </nav>
 
-<h1>The Word</h1>
-<p class="subtitle">
-  U.S. statements about oil and ship movement through Hormuz
-  <span id="located-through" style="display:block;font-family:monospace;font-size:11px;color:rgba(255,255,255,0.45);margin-top:6px;"></span>
-</p>
+<header class="masthead">
+  <div class="kicker">warnotwar · a public-records ledger</div>
+  <h1>The <em>Word</em></h1>
+  <p class="subtitle">U.S. statements about oil and ship movement through Hormuz — normalized, sourced, and compared only like-with-like.</p>
+  <div class="coverage-line" id="located-through">loading the archive…</div>
+</header>
 
 <main>
 <div id="load-error">Could not load the statements archive.</div>
 
-<div class="orient">
-  These are summaries of reported statements, not verbatim quotes; each
-  entry links to its source. Status tags show whether a statement remains
-  on the record, was deleted, or disputed &mdash; not whether it is true.
-  <br><br>
-  Corrections and disputes are added rather than replacing earlier
-  entries. The ledger includes every statement we located in the sources
-  searched, but some remarks may be missing. It currently covers U.S.
-  official statements only. Independent estimates are on the
-  <a href="/oilflows.html" style="color:rgba(255,255,255,0.7)">verification panel</a>.
-</div>
+<section class="orient">
+  <div class="label">How to read<br>this ledger</div>
+  <div class="text">
+    <p>These are summaries of reported statements, not verbatim quotes; every entry links to its source. Status tags show whether a statement remains on the record, was deleted, corrected, or disputed — never whether it is <em>true</em>.</p>
+    <p>Corrections and disputes are added alongside earlier entries rather than replacing them. The ledger includes every statement located in the swept sources, but some remarks may be missing. It currently covers U.S. official statements only; independent estimates live on the <a href="/oilflows.html">verification panel</a>.</p>
+  </div>
+</section>
 
 <div id="genre-strip"></div>
 
-<div class="btnrow" id="views"></div>
-<div class="btnrow" id="filters"></div>
+<div class="controls" id="controls">
+  <div class="controls-row" id="views"></div>
+  <div class="controls-row" id="filters"></div>
+</div>
 
 <div id="view-ledger"></div>
 <div id="view-numbers"></div>
 <div id="view-voices"></div>
-
-<div class="note">
-  Data: <a href="/data/us_oil_flow_claims.json">full archive (JSON)</a> &middot;
-  <a href="/methodology.html">how the ledger is built</a> &middot;
-  teaching version in <a href="/lab.html">the lab</a>.
-</div>
 </main>
 
+<footer class="colophon">
+  <div class="wordmark">on the record.</div>
+  <div class="foot-links">
+    Data: <a href="/data/us_oil_flow_claims.json">full archive (JSON)</a> ·
+    <a href="/methodology.html">how the ledger is built</a> ·
+    teaching version in <a href="/lab.html">the lab</a>.
+  </div>
+</footer>
 <script>
+/* ---------- theme ---------- */
+const rootEl = document.documentElement;
+const themeBtn = document.getElementById('theme-toggle');
+function applyTheme(t) {
+  rootEl.dataset.theme = t;
+  themeBtn.textContent = t === 'paper' ? '◑ ink' : '◐ paper';
+  try { localStorage.setItem('ww-theme', t); } catch (e) {}
+}
+applyTheme((() => { try { return localStorage.getItem('ww-theme') || 'paper'; } catch (e) { return 'paper'; } })());
+themeBtn.onclick = () => applyTheme(rootEl.dataset.theme === 'paper' ? 'ink' : 'paper');
+
 (async function () {
   let arch;
   try {
     arch = await fetch('/data/us_oil_flow_claims.json').then(r => r.json());
   } catch (e) {
     document.getElementById('load-error').style.display = 'block';
+    document.getElementById('located-through').textContent = '';
     return;
   }
   const A = arch.claims;
   let verify = null;
   try { verify = await fetch('/data/hormuz_verification.json').then(r => r.json()); } catch (e) {}
   if (arch._coverage) {
-    document.getElementById('located-through').textContent =
-      'located through ' + arch._coverage.located_through + ' · ' +
-      arch.statement_event_count + ' statements, ' + arch.claim_count + ' normalized rows';
+    document.getElementById('located-through').innerHTML =
+      'located through <b>' + arch._coverage.located_through + '</b><span class="dot">·</span>' +
+      arch.statement_event_count + ' statements<span class="dot">·</span>' + arch.claim_count + ' normalized rows';
   }
 
   const MN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   function fmtDate(d) {
     const [y, m, day] = d.split('-').map(Number);
     return `${MN[m - 1].slice(0,3)} ${day} ${y}`;
   }
+  function dowOf(d) { const [y,m,day] = d.split('-').map(Number); return DOW[new Date(Date.UTC(y, m-1, day)).getUTCDay()]; }
 
   const AS_PLAIN = {
     hormuz_only: 'the Strait of Hormuz',
@@ -163,22 +442,23 @@
     iran_exports_via_hormuz: 'Iranian exports via Hormuz',
   };
   const SHIP_UNITS = { ships: 'ships', tanker: 'tanker', tankers: 'tankers', vessels: 'vessels', tankers_per_night: 'tankers per night' };
+  const UNIT_SHORT = { million_barrels_per_day: 'M bbl / day', million_barrels: 'M bbl' };
 
   const figOf = c => {
     if (c.value_min == null && c.value_max == null) return null;
     const open = c.value_max == null;
     const n = v => v % 1 ? v : v.toFixed(0);
-    const range = open ? 'more than ' + n(c.value_min)
+    const range = open ? '>' + n(c.value_min)
       : c.value_min === c.value_max ? n(c.value_min)
       : n(c.value_min) + '–' + n(c.value_max);
     if (c.unit === 'million_barrels_per_day')
-      return { fam: 'RATE', cls: 'rate', txt: `${range} million barrels per day` };
+      return { fam: 'RATE', cls: 'rate', num: range, unit: UNIT_SHORT[c.unit], txt: `${open ? 'more than ' + n(c.value_min) : range} million barrels per day` };
     if (c.unit === 'million_barrels')
       return { fam: c.time_basis.startsWith('cumulative') ? 'RUNNING TOTAL' : 'VOLUME',
-               cls: 'volume', txt: `${range} million barrels` };
+               cls: 'volume', num: range, unit: UNIT_SHORT[c.unit], txt: `${open ? 'more than ' + n(c.value_min) : range} million barrels` };
     if (c.unit in SHIP_UNITS)
-      return { fam: 'SHIPS', cls: 'ships', txt: `${range} ${SHIP_UNITS[c.unit]}` };
-    return { fam: 'FIGURE', cls: 'volume', txt: `${range} ${c.unit}` };
+      return { fam: 'SHIPS', cls: 'ships', num: range, unit: SHIP_UNITS[c.unit], txt: `${open ? 'more than ' + n(c.value_min) : range} ${SHIP_UNITS[c.unit]}` };
+    return { fam: 'FIGURE', cls: 'volume', num: range, unit: c.unit, txt: `${range} ${c.unit}` };
   };
 
   const byId = {};
@@ -191,28 +471,34 @@
   function entryHtml(c) {
     const f = figOf(c);
     const frame = `${AS_PLAIN[c.scope] || c.scope} · ${c.direction === 'outbound' ? 'outbound' : c.direction === 'transit' ? 'transit' : 'both directions'} · ${c.time_basis_plain}`;
-    let h = `<div class="tl-entry">`;
-    h += `<div class="tl-frame">${frame}</div>`;
+    let h = `<article class="entry">`;
+    h += `<div class="e-date">${fmtDate(c.statement_date).replace(' ', '&nbsp;').replace(' ', '&nbsp;')}<br><span class="dow">${dowOf(c.statement_date)}</span></div>`;
     if (f) {
       const pro = c.prospective;
-      h += `<div class="tl-fig ${pro ? 'prospective' : f.cls}"><span class="fam">${pro ? (c.time_basis === 'forecast' ? 'FORECAST' : 'PLANNED') : f.fam}</span>${pro ? (c.time_basis === 'forecast' ? 'forecast: ' : 'planned: ') : ''}${f.txt}</div>`;
+      h += `<div class="e-fig ${pro ? 'prospective' : f.cls}">` +
+        `<span class="fam">${pro ? (c.time_basis === 'forecast' ? 'FORECAST' : 'PLANNED') : f.fam}</span>` +
+        `<div class="num">${f.num} <span style="font-size:11px;opacity:.65;font-weight:400">${f.unit}</span></div></div>`;
+    } else {
+      h += `<div class="e-fig nofig"><span class="qual">qualitative</span></div>`;
     }
-    h += `<div class="tl-desc">description on record: ${c.claim_text}</div>`;
-    h += `<div class="tl-meta">${fmtDate(c.statement_date)} · ${c.speaker}` +
+    h += `<div class="e-body">`;
+    h += `<div class="frame">${frame}</div>`;
+    h += `<div class="desc"><span class="pre">on record — </span>${c.claim_text}</div>`;
+    h += `<div class="e-meta">${c.speaker}` +
       (c.attribution === 'anonymous' ? ` <span class="chip2" title="the reporter knows who spoke; the public does not">anonymous</span>` : '') +
       (c.attribution === 'institutional' ? ` <span class="chip2">institutional</span>` : '') +
       ` · ${c.channel}` +
-      (c.status !== 'active' ? ` · <span class="chip2">${c.status_plain}</span>` : '') +
-      ` · <a href="${c.source_url}">${c.source_publisher}</a></div>`;
-    if (c.disputes_claim_id) h += `<div class="tl-link">&harr; disputes, same day: ${refTxt(c.disputes_claim_id)} — neither statement independently verified</div>`;
-    if (c.disputed_by) h += `<div class="tl-link">&harr; disputed, same day, by: ${refTxt(c.disputed_by)} — neither statement independently verified</div>`;
-    h += `</div>`;
+      (c.status !== 'active' ? ` · <span class="chip2 warn">${c.status_plain}</span>` : '') +
+      ` · <a href="${c.source_url}" target="_blank" rel="noopener">${c.source_publisher} ↗</a></div>`;
+    if (c.disputes_claim_id) h += `<div class="e-link">&harr; disputes, same day: ${refTxt(c.disputes_claim_id)} — neither statement independently verified</div>`;
+    if (c.disputed_by) h += `<div class="e-link">&harr; disputed, same day, by: ${refTxt(c.disputed_by)} — neither statement independently verified</div>`;
+    h += `</div></article>`;
     return h;
   }
 
   /* ---------- state ---------- */
   let view = 'ledger', order = 'newest';
-  const F = { speaker: '', kind: '', scope: '', figure: '' };
+  const F = { speaker: '', kind: '', scope: '', figure: '', q: '' };
 
   /* ---------- ledger view ---------- */
   function passes(c) {
@@ -221,8 +507,13 @@
     if (F.scope && c.scope !== F.scope) return false;
     if (F.figure === 'yes' && figOf(c) == null) return false;
     if (F.figure === 'no' && figOf(c) != null) return false;
+    if (F.q) {
+      const hay = (c.claim_text + ' ' + c.speaker + ' ' + c.source_publisher + ' ' + c.claim_kind).toLowerCase();
+      if (!hay.includes(F.q.toLowerCase())) return false;
+    }
     return true;
   }
+  const anyFilter = () => F.speaker || F.kind || F.scope || F.figure || F.q;
 
   function renderLedger() {
     const el = document.getElementById('view-ledger');
@@ -235,36 +526,35 @@
     }
     if (order === 'newest') months.reverse();
 
-    const filtered = F.speaker || F.kind || F.scope || F.figure;
+    const filtered = anyFilter();
     let h = '';
     months.forEach(mo => {
       let group = A.filter(c => c.statement_date.startsWith(mo));
       const shown = group.filter(passes);
       if (order === 'newest') shown.reverse();
-      const label = MN[+mo.slice(5) - 1] + ' ' + mo.slice(0, 4);
+      const nameHtml = `<span class="m-name">${MN[+mo.slice(5) - 1]} <em>${mo.slice(0,4)}</em></span>`;
       if (!group.length) {
-        h += `<div class="monthhead">${label} — <span class="cav">no statements located in the swept sources · coverage varies by month; absence of located statements is not evidence of silence</span></div>`;
+        h += `<div class="monthhead" style="top:var(--controls-h)">${nameHtml}` +
+          `<span class="m-count">no statements located</span>` +
+          `<span class="cav">coverage varies by month; absence of located statements is not evidence of silence</span></div>`;
         return;
       }
-      h += `<div class="monthhead">${label} — ${group.length} row${group.length > 1 ? 's' : ''} located` +
-        (filtered ? ` <span class="cav">· ${shown.length ? shown.length + ' matching the filter' : 'none matching current filters'}</span>` : '') + `</div>`;
+      h += `<div class="monthhead" style="top:var(--controls-h)">${nameHtml}` +
+        `<span class="m-count">${group.length} row${group.length > 1 ? 's' : ''} located` +
+        (filtered ? ` · ${shown.length ? shown.length + ' shown' : 'none match'}` : '') + `</span></div>`;
       shown.forEach(c => { h += entryHtml(c); });
     });
-    if (filtered) {
-      const nShown = A.filter(passes).length;
-      h = `<div class="note" style="margin:4px 0 0">Showing ${nShown} of ${A.length} located rows — a filtered selection, not the ledger. Month counts always show the full ledger; status tags remain lifecycle states, never verdicts.</div>` + h;
-    }
     el.innerHTML = h;
   }
 
-  /* ---------- view toggle + filters ---------- */
+  /* ---------- controls ---------- */
   function renderControls() {
     const v = document.getElementById('views');
     v.innerHTML =
       `<span class="grp">view</span>` +
       ['ledger', 'numbers', 'attribution'].map(x =>
         `<button class="chip${view === x ? ' on' : ''}" data-v="${x}">${x}</button>`).join('') +
-      `<button class="chip" data-o="1">order: ${order} first</button>`;
+      `<button class="chip ghost" data-o="1">order · ${order} first</button>`;
     v.querySelectorAll('[data-v]').forEach(b => b.onclick = () => { view = b.dataset.v; syncView(); });
     v.querySelector('[data-o]').onclick = () => { order = order === 'newest' ? 'oldest' : 'newest'; renderControls(); renderLedger(); };
 
@@ -276,12 +566,32 @@
       `<select class="filter" data-f="speaker">${opts(A.map(c => c.speaker), 'speaker')}</select>` +
       `<select class="filter" data-f="kind">${opts(A.map(c => c.claim_kind), 'kind')}</select>` +
       `<select class="filter" data-f="scope">${opts(A.map(c => c.scope), 'scope')}</select>` +
-      `<select class="filter" data-f="figure"><option value="">figure: all</option><option value="yes">has figure</option><option value="no">qualitative</option></select>`;
+      `<select class="filter" data-f="figure"><option value="">figure: all</option><option value="yes">has figure</option><option value="no">qualitative</option></select>` +
+      `<input class="search" data-f="q" type="search" placeholder="search text, speaker, source…" value="${F.q.replace(/"/g, '&quot;')}">` +
+      `<button class="chip ghost" data-clear="1"${anyFilter() ? '' : ' style="visibility:hidden"'}>clear ×</button>` +
+      `<span class="result-count"></span>`;
     f.querySelectorAll('select').forEach(s => {
       s.value = F[s.dataset.f];
-      s.onchange = () => { F[s.dataset.f] = s.value; renderLedger(); };
+      if (s.value) s.classList.add('active');
+      s.onchange = () => { F[s.dataset.f] = s.value; renderControls(); renderLedger(); };
     });
+    const si = f.querySelector('input.search');
+    si.oninput = () => {
+      F.q = si.value; renderLedger(); updateCount(f);
+      const cb = f.querySelector('[data-clear]');
+      if (cb) cb.style.visibility = anyFilter() ? 'visible' : 'hidden';
+    };
+    const clr = f.querySelector('[data-clear]');
+    clr.onclick = () => { F.speaker = F.kind = F.scope = F.figure = F.q = ''; renderControls(); renderLedger(); };
+    updateCount(f);
     f.style.display = view === 'ledger' ? '' : 'none';
+  }
+
+  function updateCount(fEl) {
+    const rc = (fEl || document.getElementById('filters')).querySelector('.result-count');
+    if (!rc) return;
+    const n = A.filter(passes).length;
+    rc.textContent = anyFilter() ? `${n} of ${A.length} rows — a filtered selection, not the ledger` : `${A.length} rows`;
   }
 
   function syncView() {
@@ -294,7 +604,15 @@
     document.getElementById('genre-strip').style.display = view === 'ledger' ? 'block' : 'none';
   }
 
-  /* ---------- genre strip: kinds of located statements per month ---------- */
+  /* ---------- sticky offsets ---------- */
+  const controlsEl = document.getElementById('controls');
+  function measureControls() {
+    rootEl.style.setProperty('--controls-h', (52 + controlsEl.offsetHeight) + 'px');
+  }
+  new ResizeObserver(measureControls).observe(controlsEl);
+  window.addEventListener('resize', measureControls);
+
+  /* ---------- genre strip ---------- */
   const GROUPS = [
     ['forecasts', k => k === 'forecast'],
     ['status claims', k => ['operational_status','escort_status','control_status','qualitative_flow','trend'].includes(k) || k.includes('status')],
@@ -313,27 +631,25 @@
       all.push(`${y}-${String(m).padStart(2, '0')}`);
       m++; if (m > 12) { m = 1; y++; }
     }
-    // distinct statement events per (month, group)
     const cell = {};
     A.forEach(c => {
       const key = c.statement_date.slice(0, 7) + '|' + groupOf(c.claim_kind);
       (cell[key] = cell[key] || new Set()).add(c.statement_event_id);
     });
-    let h = '<table class="mono" style="font-family:monospace;font-size:11px;color:rgba(255,255,255,0.65);border-collapse:collapse;margin-bottom:4px;display:block;overflow-x:auto;">';
-    h += '<tr><th style="text-align:left;padding:2px 12px 2px 0;color:rgba(255,255,255,0.4);font-weight:normal;font-size:9px;letter-spacing:0.06em;">KINDS OF LOCATED STATEMENTS</th>' +
-      all.map(mo => `<th style="padding:2px 10px;color:rgba(255,255,255,0.4);font-weight:normal;">${MN[+mo.slice(5)-1].slice(0,3)}</th>`).join('') + '</tr>';
+    let h = '<div class="strip-wrap"><table class="strip"><thead><tr><th>Kinds of located statements</th>' +
+      all.map(mo => `<th>${MN[+mo.slice(5)-1].slice(0,3)} ’${mo.slice(2,4)}</th>`).join('') + '</tr></thead><tbody>';
     GROUPS.forEach(([g]) => {
-      h += `<tr><td style="padding:2px 12px 2px 0;">${g}</td>` + all.map(mo => {
+      h += `<tr><th>${g}</th>` + all.map(mo => {
         const n = (cell[mo + '|' + g] || new Set()).size;
-        return `<td style="text-align:center;padding:2px 10px;color:${n ? '#fff' : 'rgba(255,255,255,0.2)'};">${n || '·'}</td>`;
+        return `<td class="${n ? '' : 'zero'}">${n || '·'}</td>`;
       }).join('') + '</tr>';
     });
-    h += '</table>';
-    h += '<div class="note" style="margin:0 0 14px;">Counts are distinct located statements (one public statement can mention several kinds and counts in each it touched). Collection effort varies by month and channel — a sparse month is not evidence of silence.</div>';
+    h += '</tbody></table></div>';
+    h += '<div class="strip-note">Counts are distinct located statements (one public statement can mention several kinds and counts in each it touched). Collection effort varies by month and channel — a sparse month is not evidence of silence.</div>';
     el.innerHTML = h;
   }
 
-  /* ---------- numbers view: one panel per question ---------- */
+  /* ---------- numbers view ---------- */
   const BASIS_SHAPE = c => {
     if (c.prospective) return 'hollow';
     const tb = c.time_basis;
@@ -345,20 +661,26 @@
   const shortWho = s => s.split(',')[0].replace('U.S. ', '');
 
   function laneSvg(rows, opts) {
-    const W = 900, H = opts.tall ? 190 : 118, L = 10, R = 10;
+    const W = 900, H = opts.tall ? 220 : 138, L = 12, R = 12;
     const t0 = Date.UTC(2026, 2, 1), t1 = Date.UTC(2026, 8, 15);
     const x = d => L + ((Date.UTC(+d.slice(0,4), +d.slice(5,7)-1, +d.slice(8,10)) - t0) / (t1 - t0)) * (W - L - R);
-    const base = H - 26;
-    const yv = opts.tall ? (v => base - (v / 12) * (H - 105)) : (() => base);
-    let s = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;background:rgba(255,255,255,0.025);border-radius:6px;">`;
-    s += `<text x="12" y="16" fill="rgba(255,255,255,0.6)" font-size="10.5" font-family="monospace">${opts.title}</text>`;
-    s += `<line x1="${L}" y1="${base}" x2="${W-R}" y2="${base}" stroke="rgba(255,255,255,0.15)"/>`;
+    const base = H - 28;
+    const vmaxRaw = Math.max(12,
+      ...rows.map(c => c.value_max != null ? c.value_max : c.value_min),
+      ...(opts.trackers || []).map(t => t.hi));
+    const vscale = Math.ceil(vmaxRaw / 5) * 5;
+    const yv = opts.tall ? (v => base - (v / vscale) * (H - 120)) : (() => base);
+    const st = (fill) => `style="fill:${fill}"`;
+    let s = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;font-family:'IBM Plex Mono',monospace;">`;
+    s += `<text x="14" y="18" ${st('var(--ink-60)')} font-size="10.5" letter-spacing="0.06em">${opts.title}</text>`;
+    s += `<line x1="${L}" y1="${base}" x2="${W-R}" y2="${base}" style="stroke:var(--ink-18)"/>`;
     ['2026-03-01','2026-05-01','2026-07-01','2026-09-01'].forEach(d => {
-      s += `<text x="${x(d)}" y="${H-6}" fill="rgba(255,255,255,0.3)" font-size="9" font-family="monospace" text-anchor="middle">${MN[+d.slice(5,7)-1].slice(0,3)}</text>`;
+      s += `<text x="${x(d)}" y="${H-8}" ${st('var(--ink-30)')} font-size="9" text-anchor="middle">${MN[+d.slice(5,7)-1].slice(0,3)}</text>`;
     });
     if (opts.tall) {
-      [0, 5, 10].forEach(v => {
-        s += `<text x="${W-4}" y="${yv(v)+3}" fill="rgba(255,255,255,0.3)" font-size="9" font-family="monospace" text-anchor="end">${v}</text>`;
+      [0, vscale / 2, vscale].forEach(v => {
+        s += `<line x1="${L}" y1="${yv(v)}" x2="${W-R}" y2="${yv(v)}" style="stroke:var(--ink-06)"/>`;
+        s += `<text x="${W-6}" y="${yv(v)+3}" ${st('var(--ink-30)')} font-size="9" text-anchor="end">${v}</text>`;
       });
     }
     // tracker marks: first-class, dated, attributed — never a background
@@ -369,42 +691,48 @@
     (opts.trackers || []).forEach(tr => {
       const tx = x(tr.date);
       if (tr.lo !== tr.hi) {
-        s += `<line x1="${tx}" y1="${yv(tr.lo)}" x2="${tx}" y2="${yv(tr.hi)}" stroke="#4ec9b0" stroke-width="2"/>`;
-        s += `<line x1="${tx-4}" y1="${yv(tr.lo)}" x2="${tx+4}" y2="${yv(tr.lo)}" stroke="#4ec9b0" stroke-width="2"/>`;
-        s += `<line x1="${tx-4}" y1="${yv(tr.hi)}" x2="${tx+4}" y2="${yv(tr.hi)}" stroke="#4ec9b0" stroke-width="2"/>`;
+        s += `<line x1="${tx}" y1="${yv(tr.lo)}" x2="${tx}" y2="${yv(tr.hi)}" style="stroke:var(--teal)" stroke-width="2"/>`;
+        s += `<line x1="${tx-4}" y1="${yv(tr.lo)}" x2="${tx+4}" y2="${yv(tr.lo)}" style="stroke:var(--teal)" stroke-width="2"/>`;
+        s += `<line x1="${tx-4}" y1="${yv(tr.hi)}" x2="${tx+4}" y2="${yv(tr.hi)}" style="stroke:var(--teal)" stroke-width="2"/>`;
       } else {
-        s += `<path d="M${tx},${yv(tr.lo)-5} l5,5 -5,5 -5,-5 z" fill="#4ec9b0"/>`;
+        s += `<path d="M${tx},${yv(tr.lo)-5} l5,5 -5,5 -5,-5 z" ${st('var(--teal)')}/>`;
       }
       const fig = tr.lo === tr.hi ? String(tr.lo) : `${tr.lo}–${tr.hi}`;
       trList.push(`${fig} · ${tr.label}`);
     });
     trList.forEach((t, i) => {
-      s += `<text x="8" y="${H - 20 - (trList.length - 1 - i) * 11}" fill="#4ec9b0" font-size="8.5" font-family="monospace">◆ ${t}</text>`;
+      s += `<text x="10" y="${H - 24 - (trList.length - 1 - i) * 11}" ${st('var(--teal)')} font-size="8.5">◆ ${t}</text>`;
     });
-    // cluster-aware label rows: points landing near each other in x get
-    // successive label levels so dense weeks stay legible
+    // collision-aware label rows: each label's estimated span is checked
+    // against the right edge of the last label on each level; the first
+    // clear level wins, so dense weeks stay legible
     const sorted = [...rows].sort((a, b) => a.statement_date < b.statement_date ? -1 : 1);
-    let prevX = -1e9, level = 0;
+    const levelEdge = [-1e9, -1e9, -1e9, -1e9, -1e9];
     sorted.forEach(c => {
       const f = figOf(c);
       const v = c.value_max != null ? (c.value_min + c.value_max) / 2 : c.value_min;
-      const cx = x(c.statement_date), cy = opts.tall ? yv(Math.min(v, 12)) : base;
-      const col = '#4a8fd4';
+      const cx = x(c.statement_date), cy = opts.tall ? yv(v) : base;
+      const col = 'var(--rate)';
       const shape = BASIS_SHAPE(c);
-      if (shape === 'sq') s += `<rect x="${cx-4}" y="${cy-4}" width="8" height="8" fill="${col}"/>`;
-      else if (shape === 'tri') s += `<path d="M${cx},${cy-5} l5,9 -10,0 z" fill="${col}"/>`;
-      else if (shape === 'ring') s += `<circle cx="${cx}" cy="${cy}" r="4.5" fill="none" stroke="${col}" stroke-width="2"/>`;
-      else if (shape === 'hollow') s += `<circle cx="${cx}" cy="${cy}" r="4.5" fill="none" stroke="${col}" stroke-width="1.5" stroke-dasharray="2 2"/>`;
-      else s += `<circle cx="${cx}" cy="${cy}" r="4.5" fill="${col}"/>`;
-      if (c.value_max == null) s += `<path d="M${cx},${cy-13} l3,5 -6,0 z" fill="${col}"/>`;
-      level = (cx - prevX < 190) ? (level + 1) % 4 : 0;
-      prevX = cx;
-      const ly = 30 + level * 11;
-      const anchor = cx > W - 180 ? 'end' : (cx < 180 ? 'start' : 'middle');
+      if (shape === 'sq') s += `<rect x="${cx-4}" y="${cy-4}" width="8" height="8" ${st(col)}/>`;
+      else if (shape === 'tri') s += `<path d="M${cx},${cy-5} l5,9 -10,0 z" ${st(col)}/>`;
+      else if (shape === 'ring') s += `<circle cx="${cx}" cy="${cy}" r="4.5" fill="none" style="stroke:${col}" stroke-width="2"/>`;
+      else if (shape === 'hollow') s += `<circle cx="${cx}" cy="${cy}" r="4.5" fill="none" style="stroke:${col}" stroke-width="1.5" stroke-dasharray="2 2"/>`;
+      else s += `<circle cx="${cx}" cy="${cy}" r="4.5" ${st(col)}/>`;
+      if (c.value_max == null) s += `<path d="M${cx},${cy-13} l3,5 -6,0 z" ${st(col)}/>`;
       const fig = f.txt.replace(' million barrels per day', '').replace(' million barrels', 'M').replace('more than ', '>');
-      s += `<line x1="${cx}" y1="${ly + 2}" x2="${cx}" y2="${cy - 7}" stroke="rgba(255,255,255,0.12)"/>`;
-      s += `<text x="${cx}" y="${ly}" fill="rgba(255,255,255,0.75)" font-size="9" font-family="monospace" text-anchor="${anchor}">${fig} · ${shortWho(c.speaker)} · ${fmtDate(c.statement_date).replace(' 2026','')}` +
-        (c.status !== 'active' ? ` · <tspan fill="#c9b06a">${c.status_plain}</tspan>` : '') + `</text>`;
+      const label = `${fig} · ${shortWho(c.speaker)} · ${fmtDate(c.statement_date).replace(' 2026','')}` +
+        (c.status !== 'active' ? ` · ${c.status_plain}` : '');
+      const w = label.length * 5.7;
+      const anchor = cx > W - 200 ? 'end' : (cx < 200 ? 'start' : 'middle');
+      const lo = anchor === 'end' ? cx - w : anchor === 'start' ? cx : cx - w / 2;
+      let lvl = levelEdge.findIndex(edge => lo > edge + 8);
+      if (lvl === -1) lvl = levelEdge.length - 1;
+      levelEdge[lvl] = lo + w;
+      const ly = 36 + lvl * 11;
+      s += `<line x1="${cx}" y1="${ly + 2}" x2="${cx}" y2="${cy - 7}" style="stroke:var(--ink-10)"/>`;
+      s += `<text x="${cx}" y="${ly}" ${st('var(--ink-60)')} font-size="9" text-anchor="${anchor}">${fig} · ${shortWho(c.speaker)} · ${fmtDate(c.statement_date).replace(' 2026','')}` +
+        (c.status !== 'active' ? ` · <tspan style="fill:var(--gold)">${c.status_plain}</tspan>` : '') + `</text>`;
     });
     s += `</svg>`;
     return s;
@@ -427,7 +755,7 @@
     const multi = keys.filter(k => lanes[k].length >= 2);
     const single = keys.filter(k => lanes[k].length === 1);
 
-    let h = `<div class="note" style="margin:0 0 10px;">${figs.length} of ${A.length} located rows carry figures; the rest appear in the Ledger. Each panel below answers a different question — <b style="color:rgba(255,255,255,0.7)">vertical position is never comparable across panels</b>, and points within a panel can still differ by time window (shapes: ● multi-day average, ■ single day/night, ▲ running total, ○ window unstated, dashed = planned/forecast; ▲ above a point = "more than").</div>`;
+    let h = `<div class="panel-note">${figs.length} of ${A.length} located rows carry figures; the rest appear in the Ledger. Each panel below answers a different question — <b style="color:var(--ink-60)">vertical position is never comparable across panels</b>, and points within a panel can still differ by time window (shapes: ● multi-day average, ■ single day/night, ▲ running total, ○ window unstated, dashed = planned/forecast; ▲ above a point = "more than").</div>`;
     multi.forEach(k => {
       const [unit, scope] = k.split('|');
       const tall = k === 'million_barrels_per_day|hormuz_only';
@@ -450,15 +778,15 @@
             label: `${EST_WHO[e.evidence_type] || 'independent estimate'}, as reported by ${e.as_reported_by}, ${fmtDate(e.estimate_date).replace(' 2026','')} — period estimate` });
         });
       }
-      h += `<div style="margin:14px 0;">` + laneSvg(lanes[k], {
+      h += `<div class="panel">` + laneSvg(lanes[k], {
         title: `${UNIT_TITLE[unit] || unit} · ${AS_PLAIN[scope] || scope}`,
         tall, trackers,
       }) + `</div>`;
-      if (tall) h += `<div class="note" style="margin:2px 0 12px;">Independent estimates (trackers and market participants) overlay this panel where they count the same thing; a claim outside their range is unverified against them — differences can reflect scope, timing, or method.${wider.length ? ` Crude-plus-products figures (${wider.join('; ')}) count a wider quantity and are listed on the <a href="/oilflows.html">verification panel</a> instead of drawn here.` : ''} Independent figures exist for August only.</div>`;
+      if (tall) h += `<div class="panel-note">Independent estimates (trackers and market participants) overlay this panel where they count the same thing; a claim outside their range is unverified against them — differences can reflect scope, timing, or method.${wider.length ? ` Crude-plus-products figures (${wider.join('; ')}) count a wider quantity and are listed on the <a href="/oilflows.html">verification panel</a> instead of drawn here.` : ''} Independent figures exist for August only.</div>`;
     });
     if (single.length) {
       const rows = single.map(k => lanes[k][0]);
-      h += `<div style="margin:14px 0;">` + laneSvg(rows, { title: 'single located figures — one point per question; not comparable with each other' }) + `</div>`;
+      h += `<div class="panel">` + laneSvg(rows, { title: 'single located figures — one point per question; not comparable with each other' }) + `</div>`;
     }
     el.innerHTML = h;
   }
@@ -473,31 +801,32 @@
       named[k] = named[k] || { rows: 0, events: new Set(), role: c.role || '', attribution: c.attribution };
       named[k].rows++; named[k].events.add(c.statement_event_id);
     });
-    let h = `<div class="note" style="margin:0 0 10px;">An index of who is on the record — alphabetical, never ranked. Counts are of located statements (rows in parentheses); collection effort varies by channel, so counts describe the ledger, not any speaker's talkativeness or reliability.</div>`;
+    let h = `<div class="panel-note" style="margin-top:14px;">An index of who is on the record — alphabetical, never ranked. Counts are of located statements (rows in parentheses); collection effort varies by channel, so counts describe the ledger, not any speaker's talkativeness or reliability.</div>`;
     Object.keys(named).sort().forEach(k => {
       const s = named[k];
-      h += `<div class="tl-entry"><div class="tl-fig rate">${k}</div>` +
-        `<div class="tl-meta">${s.role}${s.attribution === 'institutional' ? ' · institutional statement' : ''} · ${s.events.size} statement${s.events.size > 1 ? 's' : ''} located (${s.rows} row${s.rows > 1 ? 's' : ''}) · <a href="#" data-sp="${k}">view in ledger →</a></div></div>`;
+      h += `<div class="voice"><div class="v-name">${k}</div>` +
+        `<div class="v-meta">${s.role}${s.attribution === 'institutional' ? ' · institutional statement' : ''} · ${s.events.size} statement${s.events.size > 1 ? 's' : ''} located (${s.rows} row${s.rows > 1 ? 's' : ''}) · <a href="#" data-sp="${k}">view in ledger →</a></div></div>`;
     });
-    h += `<div class="tl-entry"><div class="tl-fig volume">anonymous officials</div>` +
-      `<div class="tl-meta">not one person — ${anon.events.size} statements (${anon.rows} rows) whose speakers are known to reporters, not the public · <a href="#" data-anon="1">view in ledger →</a></div></div>`;
+    h += `<div class="voice"><div class="v-name" style="font-style:italic;color:var(--ink-60)">anonymous officials</div>` +
+      `<div class="v-meta">not one person — ${anon.events.size} statements (${anon.rows} rows) whose speakers are known to reporters, not the public · <a href="#" data-anon="1">view in ledger →</a></div></div>`;
     el.innerHTML = h;
     el.querySelectorAll('a[data-sp]').forEach(a => a.onclick = e => {
-      e.preventDefault(); F.speaker = a.dataset.sp; F.kind = F.scope = F.figure = ''; view = 'ledger'; syncView(); renderLedger();
+      e.preventDefault(); F.speaker = a.dataset.sp; F.kind = F.scope = F.figure = F.q = ''; view = 'ledger'; syncView(); renderLedger();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
     const an = el.querySelector('a[data-anon]');
-    if (an) an.onclick = e => { e.preventDefault(); F.speaker = ''; view = 'ledger'; syncView(); renderLedger(); };
+    if (an) an.onclick = e => { e.preventDefault(); F.speaker = ''; view = 'ledger'; syncView(); renderLedger(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
   }
 
   window._rec = { A, figOf, fmtDate, AS_PLAIN };
   renderControls();
   renderLedger();
   renderGenreStrip();
+  measureControls();
 
   const P = new URLSearchParams(location.search);
   if (P.get('view')) { view = P.get('view'); syncView(); }
 })();
 </script>
-
 </body>
 </html>
