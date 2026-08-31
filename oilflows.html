@@ -77,22 +77,26 @@
   }
   ::selection { background: var(--rate); color: var(--bg); }
 
-  /* ---- fixed nav (blend-difference, shared with record.html) ---- */
+  /* ---- fixed nav (opaque backdrop, shared with record.html) ---- */
   nav.topnav {
     position: fixed; inset: 0 0 auto 0; z-index: 50; height: 52px;
     display: flex; align-items: center; gap: 22px; flex-wrap: nowrap;
     overflow: hidden; padding: 0 28px;
-    mix-blend-mode: difference; color: #fff;
+    background: color-mix(in srgb, var(--bg) 94%, transparent);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--ink-10);
+    color: var(--ink);
+    transition: background 0.25s ease, color 0.25s ease;
     font-family: var(--mono); font-size: 11px;
     letter-spacing: 0.1em; text-transform: uppercase;
   }
   nav.topnav a {
-    position: relative; color: #fff; text-decoration: none; opacity: 0.62;
+    position: relative; color: var(--ink); text-decoration: none; opacity: 0.62;
     transition: opacity 0.2s ease; white-space: nowrap; flex-shrink: 0;
   }
   nav.topnav a::after {
     content: ''; position: absolute; left: 0; bottom: -3px;
-    width: 0; height: 1px; background: #fff; transition: width 0.25s ease;
+    width: 0; height: 1px; background: var(--ink); transition: width 0.25s ease;
   }
   nav.topnav a:hover { opacity: 1; }
   nav.topnav a:hover::after, nav.topnav a.here::after { width: 100%; }
@@ -100,11 +104,11 @@
   nav.topnav .spacer { flex: 1; }
   button.theme-toggle {
     font: inherit; letter-spacing: inherit; text-transform: inherit;
-    background: none; border: 1px solid rgba(255,255,255,0.5); color: #fff;
+    background: none; border: 1px solid var(--ink-30); color: var(--ink);
     padding: 4px 10px; cursor: pointer; border-radius: 999px;
     transition: background 0.2s ease;
   }
-  button.theme-toggle:hover { background: rgba(255,255,255,0.15); }
+  button.theme-toggle:hover { background: var(--ink-06); }
 
   /* ---- hero ---- */
   .hero { width: 100%; max-width: 860px; text-align: center; padding-top: 56px; }
