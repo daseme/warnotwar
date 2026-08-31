@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at_utc": "2026-08-28T18:42:02Z",
+  "generated_at_utc": "2026-08-31T13:36:00Z",
   "current_episode": {
     "scope": "hormuz_outbound",
-    "as_of": "2026-08-24",
+    "as_of": "2026-08-28",
     "window_days": 45,
     "claim_low_mbd": 8.0,
     "claim_high_mbd": 10.0,
@@ -11,7 +11,7 @@
     "independent_low_mbd": 2.0,
     "independent_high_mbd": 6.0,
     "independent_consensus_mbd": 5.0,
-    "estimate_count": 2,
+    "estimate_count": 3,
     "gap_low_mbd": 3.0,
     "gap_high_mbd": 5.0,
     "coverage_low_pct": 50.0,
@@ -189,6 +189,24 @@
       "as_reported_by": "Reuters",
       "source_url": "https://www.reuters.com/commentary/reuters-open-interest/hormuz-crude-volume-debate-masks-real-shortage-refined-fuels-2026-08-24/",
       "entered_date": "2026-08-26"
+    },
+    {
+      "estimate_id": "e3",
+      "estimate_date": "2026-08-28",
+      "date_precision": "day",
+      "tracker": "Kpler",
+      "value_low": 5.0,
+      "value_high": 6.0,
+      "value_central": null,
+      "unit": "mbd",
+      "scope": "hormuz_outbound",
+      "period": "unspecified",
+      "commodity": "crude",
+      "evidence_type": "commercial_tracker_model",
+      "note": "Named-tracker figure distinct from e1 (anonymous 'vessel-monitoring services consensus,' Reuters, Aug. 24) and e2 (WSJ range, Aug. 1); reported alongside continuing administration figures well above this range, underscoring the persistent gap between administration and tracker figures.",
+      "as_reported_by": "CNBC",
+      "source_url": "https://www.cnbc.com/2026/08/28/navy-blockade-iran-oil-exports-sanctions-trump.html",
+      "entered_date": "2026-08-31"
     }
   ],
   "scope_definitions": {
