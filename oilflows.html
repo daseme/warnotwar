@@ -759,10 +759,17 @@ const themeBtn = document.getElementById('theme-toggle');
 function applyTheme(t) {
   rootEl.dataset.theme = t;
   themeBtn.textContent = t === 'paper' ? '◑ ink' : '◐ paper';
-  try { localStorage.setItem('ww-theme', t); } catch (e) {}
 }
-applyTheme((() => { try { return localStorage.getItem('ww-theme') || 'paper'; } catch (e) { return 'paper'; } })());
-themeBtn.onclick = () => applyTheme(rootEl.dataset.theme === 'paper' ? 'ink' : 'paper');
+// first visit follows the OS preference; a manual toggle persists
+applyTheme((() => {
+  try { const s = localStorage.getItem('ww-theme'); if (s) return s; } catch (e) {}
+  return matchMedia('(prefers-color-scheme: dark)').matches ? 'ink' : 'paper';
+})());
+themeBtn.onclick = () => {
+  const t = rootEl.dataset.theme === 'paper' ? 'ink' : 'paper';
+  applyTheme(t);
+  try { localStorage.setItem('ww-theme', t); } catch (e) {}
+};
 </script>
 
 <script>

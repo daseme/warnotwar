@@ -233,8 +233,18 @@
     padding: 18px 0 16px;
     border-bottom: 1px solid var(--ink-10);
     transition: background .15s ease;
+    scroll-margin-top: calc(var(--controls-h, 140px) + 16px);
   }
   article.entry:hover { background: var(--ink-06); }
+  article.entry.hilite { background: color-mix(in srgb, var(--gold) 9%, transparent); }
+  a.anchor {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    color: var(--ink-30); text-decoration: none;
+    opacity: 0; transition: opacity .15s ease;
+    margin-left: 6px;
+  }
+  article.entry:hover a.anchor { opacity: 1; }
+  a.anchor:hover { color: var(--rate); }
   .e-date {
     font-family: 'IBM Plex Mono', monospace; font-size: 11px;
     color: var(--ink-60); letter-spacing: 0.04em; padding-top: 5px;
@@ -332,6 +342,11 @@
   #view-numbers, #view-voices { display: none; }
 
   /* ---------- responsive ---------- */
+  @media (max-width: 640px) {
+    /* numbers panels: keep labels legible, let the panel pan sideways */
+    .panel { overflow-x: auto; }
+    .panel svg { min-width: 640px; }
+  }
   @media (max-width: 860px) {
     .orient { grid-template-columns: 1fr; gap: 10px; }
     article.entry { grid-template-columns: 1fr; gap: 6px; }
@@ -403,10 +418,17 @@ const themeBtn = document.getElementById('theme-toggle');
 function applyTheme(t) {
   rootEl.dataset.theme = t;
   themeBtn.textContent = t === 'paper' ? '◑ ink' : '◐ paper';
-  try { localStorage.setItem('ww-theme', t); } catch (e) {}
 }
-applyTheme((() => { try { return localStorage.getItem('ww-theme') || 'paper'; } catch (e) { return 'paper'; } })());
-themeBtn.onclick = () => applyTheme(rootEl.dataset.theme === 'paper' ? 'ink' : 'paper');
+// first visit follows the OS preference; a manual toggle persists
+applyTheme((() => {
+  try { const s = localStorage.getItem('ww-theme'); if (s) return s; } catch (e) {}
+  return matchMedia('(prefers-color-scheme: dark)').matches ? 'ink' : 'paper';
+})());
+themeBtn.onclick = () => {
+  const t = rootEl.dataset.theme === 'paper' ? 'ink' : 'paper';
+  applyTheme(t);
+  try { localStorage.setItem('ww-theme', t); } catch (e) {}
+};
 
 (async function () {
   let arch;
@@ -443,6 +465,22 @@ themeBtn.onclick = () => applyTheme(rootEl.dataset.theme === 'paper' ? 'ink' : '
   };
   const SHIP_UNITS = { ships: 'ships', tanker: 'tanker', tankers: 'tankers', vessels: 'vessels', tankers_per_night: 'tankers per night' };
   const UNIT_SHORT = { million_barrels_per_day: 'M bbl / day', million_barrels: 'M bbl' };
+  // schema enums never leak raw into the UI
+  const KIND_PLAIN = {
+    control_status: 'control status',
+    cumulative_ship_count: 'ship count · running total',
+    cumulative_volume: 'volume · running total',
+    escort_status: 'escort status',
+    flow_rate: 'flow rate',
+    flow_volume: 'flow volume',
+    forecast: 'forecast',
+    operational_status: 'operational status',
+    qualitative_flow: 'qualitative flow',
+    ship_count: 'ship count',
+    ship_count_and_potential_volume: 'ship count + potential volume',
+    trend: 'trend',
+  };
+  const kindPlain = k => KIND_PLAIN[k] || k.replace(/_/g, ' ');
 
   const figOf = c => {
     if (c.value_min == null && c.value_max == null) return null;
@@ -471,8 +509,8 @@ themeBtn.onclick = () => applyTheme(rootEl.dataset.theme === 'paper' ? 'ink' : '
   function entryHtml(c) {
     const f = figOf(c);
     const frame = `${AS_PLAIN[c.scope] || c.scope} · ${c.direction === 'outbound' ? 'outbound' : c.direction === 'transit' ? 'transit' : 'both directions'} · ${c.time_basis_plain}`;
-    let h = `<article class="entry">`;
-    h += `<div class="e-date">${fmtDate(c.statement_date).replace(' ', '&nbsp;').replace(' ', '&nbsp;')}<br><span class="dow">${dowOf(c.statement_date)}</span></div>`;
+    let h = `<article class="entry" id="${c.claim_id}">`;
+    h += `<div class="e-date">${fmtDate(c.statement_date).replace(' ', '&nbsp;').replace(' ', '&nbsp;')}<a class="anchor" href="#${c.claim_id}" title="link to this entry (${c.claim_id})">§</a><br><span class="dow">${dowOf(c.statement_date)}</span></div>`;
     if (f) {
       const pro = c.prospective;
       h += `<div class="e-fig ${pro ? 'prospective' : f.cls}">` +
@@ -496,9 +534,17 @@ themeBtn.onclick = () => applyTheme(rootEl.dataset.theme === 'paper' ? 'ink' : '
     return h;
   }
 
-  /* ---------- state ---------- */
+  /* ---------- state, mirrored into the URL so any view is shareable ---------- */
   let view = 'ledger', order = 'newest';
   const F = { speaker: '', kind: '', scope: '', figure: '', q: '' };
+  function syncURL() {
+    const p = new URLSearchParams();
+    if (view !== 'ledger') p.set('view', view);
+    if (order !== 'newest') p.set('order', order);
+    ['speaker', 'kind', 'scope', 'figure', 'q'].forEach(k => { if (F[k]) p.set(k, F[k]); });
+    const qs = p.toString();
+    history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
+  }
 
   /* ---------- ledger view ---------- */
   function passes(c) {
@@ -545,6 +591,7 @@ themeBtn.onclick = () => applyTheme(rootEl.dataset.theme === 'paper' ? 'ink' : '
       shown.forEach(c => { h += entryHtml(c); });
     });
     el.innerHTML = h;
+    syncURL();
   }
 
   /* ---------- controls ---------- */
@@ -559,13 +606,14 @@ themeBtn.onclick = () => applyTheme(rootEl.dataset.theme === 'paper' ? 'ink' : '
     v.querySelector('[data-o]').onclick = () => { order = order === 'newest' ? 'oldest' : 'newest'; renderControls(); renderLedger(); };
 
     const f = document.getElementById('filters');
-    const opts = (vals, label) =>
-      `<option value="">${label}: all</option>` + [...new Set(vals)].sort().map(x => `<option>${x}</option>`).join('');
+    const opts = (vals, label, plain) =>
+      `<option value="">${label}: all</option>` + [...new Set(vals)].sort().map(x =>
+        `<option value="${x}">${plain ? plain(x) : x}</option>`).join('');
     f.innerHTML =
       `<span class="grp">filter</span>` +
       `<select class="filter" data-f="speaker">${opts(A.map(c => c.speaker), 'speaker')}</select>` +
-      `<select class="filter" data-f="kind">${opts(A.map(c => c.claim_kind), 'kind')}</select>` +
-      `<select class="filter" data-f="scope">${opts(A.map(c => c.scope), 'scope')}</select>` +
+      `<select class="filter" data-f="kind">${opts(A.map(c => c.claim_kind), 'kind', kindPlain)}</select>` +
+      `<select class="filter" data-f="scope">${opts(A.map(c => c.scope), 'scope', s => AS_PLAIN[s] || s)}</select>` +
       `<select class="filter" data-f="figure"><option value="">figure: all</option><option value="yes">has figure</option><option value="no">qualitative</option></select>` +
       `<input class="search" data-f="q" type="search" placeholder="search text, speaker, source…" value="${F.q.replace(/"/g, '&quot;')}">` +
       `<button class="chip ghost" data-clear="1"${anyFilter() ? '' : ' style="visibility:hidden"'}>clear ×</button>` +
@@ -602,6 +650,7 @@ themeBtn.onclick = () => applyTheme(rootEl.dataset.theme === 'paper' ? 'ink' : '
     if (view === 'numbers') renderNumbers();
     if (view === 'attribution') renderAttribution();
     document.getElementById('genre-strip').style.display = view === 'ledger' ? 'block' : 'none';
+    syncURL();
   }
 
   /* ---------- sticky offsets ---------- */
@@ -638,10 +687,14 @@ themeBtn.onclick = () => applyTheme(rootEl.dataset.theme === 'paper' ? 'ink' : '
     });
     let h = '<div class="strip-wrap"><table class="strip"><thead><tr><th>Kinds of located statements</th>' +
       all.map(mo => `<th>${MN[+mo.slice(5)-1].slice(0,3)} ’${mo.slice(2,4)}</th>`).join('') + '</tr></thead><tbody>';
+    let maxN = 1;
+    Object.values(cell).forEach(s => { if (s.size > maxN) maxN = s.size; });
     GROUPS.forEach(([g]) => {
       h += `<tr><th>${g}</th>` + all.map(mo => {
         const n = (cell[mo + '|' + g] || new Set()).size;
-        return `<td class="${n ? '' : 'zero'}">${n || '·'}</td>`;
+        // subtle heat: darker cell = more located statements that month
+        const heat = n ? (4 + 12 * n / maxN).toFixed(0) : 0;
+        return `<td class="${n ? '' : 'zero'}"${n ? ` style="background:color-mix(in srgb, var(--ink) ${heat}%, transparent)"` : ''}>${n || '·'}</td>`;
       }).join('') + '</tr>';
     });
     h += '</tbody></table></div>';
@@ -819,13 +872,28 @@ themeBtn.onclick = () => applyTheme(rootEl.dataset.theme === 'paper' ? 'ink' : '
   }
 
   window._rec = { A, figOf, fmtDate, AS_PLAIN };
-  renderControls();
+
+  // restore any shared state from the URL before first render
+  const P = new URLSearchParams(location.search);
+  if (['ledger', 'numbers', 'attribution'].includes(P.get('view'))) view = P.get('view');
+  if (P.get('order') === 'oldest') order = 'oldest';
+  ['speaker', 'kind', 'scope', 'figure', 'q'].forEach(k => {
+    if (P.get(k)) F[k] = P.get(k);
+  });
+
   renderLedger();
   renderGenreStrip();
+  syncView();
   measureControls();
 
-  const P = new URLSearchParams(location.search);
-  if (P.get('view')) { view = P.get('view'); syncView(); }
+  // a #USOF-... hash cites one entry: scroll to it and mark it
+  if (location.hash) {
+    const target = document.getElementById(location.hash.slice(1));
+    if (target && target.classList.contains('entry')) {
+      target.classList.add('hilite');
+      requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
+    }
+  }
 })();
 </script>
 </body>
