@@ -198,8 +198,8 @@
   }
   table.strip thead th:first-child { text-align: left; }
   table.strip tbody th { font-weight: 400; text-align: left; white-space: nowrap; color: var(--ink-60); }
-  table.strip td { text-align: center; font-variant-numeric: tabular-nums; min-width: 44px; transition: background .15s ease; }
-  table.strip td.zero { color: var(--ink-30); }
+  table.strip td { text-align: center; font-variant-numeric: tabular-nums; min-width: 44px; transition: background .15s ease; color: var(--ink); font-weight: 500; }
+  table.strip td.zero { color: var(--ink-30); font-weight: 400; }
   table.strip tbody tr:hover td, table.strip tbody tr:hover th { background: var(--ink-06); }
   .strip-note, .ledger-note {
     font-family: 'IBM Plex Mono', monospace; font-size: 11px; line-height: 1.7;
@@ -237,6 +237,12 @@
   }
   article.entry:hover { background: var(--ink-06); }
   article.entry.hilite { background: color-mix(in srgb, var(--gold) 9%, transparent); }
+  /* the dispute pair is the most analytically important content on the
+     page: a thin gold rule binds the two same-day entries visually */
+  article.entry.disputed {
+    border-left: 2px solid color-mix(in srgb, var(--gold) 65%, transparent);
+    padding-left: 14px;
+  }
   a.anchor {
     font-family: 'IBM Plex Mono', monospace; font-size: 11px;
     color: var(--ink-30); text-decoration: none;
@@ -275,8 +281,8 @@
     font-family: 'IBM Plex Mono', monospace; font-size: 10.5px;
     color: var(--ink-45); letter-spacing: 0.05em; margin-bottom: 6px;
   }
+  .e-body { max-width: 62ch; }
   .e-body .desc { font-size: 16.5px; line-height: 1.55; color: var(--ink); max-width: 58ch; }
-  .e-body .desc .pre { color: var(--ink-45); font-style: italic; }
   .e-meta {
     margin-top: 8px;
     font-family: 'IBM Plex Mono', monospace; font-size: 10.5px;
@@ -386,7 +392,7 @@
 <section class="orient">
   <div class="label">How to read<br>this ledger</div>
   <div class="text">
-    <p>These are summaries of reported statements, not verbatim quotes; every entry links to its source. Status tags show whether a statement remains on the record, was deleted, corrected, or disputed — never whether it is <em>true</em>.</p>
+    <p>Every description below is a summary of what was said on the record, not a verbatim quote; every entry links to its source. Status tags show whether a statement remains on the record, was deleted, corrected, or disputed — never whether it is <em>true</em>.</p>
     <p>Corrections and disputes are added alongside earlier entries rather than replacing them. The ledger includes every statement located in the swept sources, but some remarks may be missing. It currently covers U.S. official statements only; independent estimates live on the <a href="/oilflows.html">verification panel</a>.</p>
   </div>
 </section>
@@ -508,8 +514,8 @@ themeBtn.onclick = () => {
 
   function entryHtml(c) {
     const f = figOf(c);
-    const frame = `${AS_PLAIN[c.scope] || c.scope} · ${c.direction === 'outbound' ? 'outbound' : c.direction === 'transit' ? 'transit' : 'both directions'} · ${c.time_basis_plain}`;
-    let h = `<article class="entry" id="${c.claim_id}">`;
+    const disputed = c.disputes_claim_id || c.disputed_by;
+    let h = `<article class="entry${disputed ? ' disputed' : ''}" id="${c.claim_id}">`;
     h += `<div class="e-date">${fmtDate(c.statement_date).replace(' ', '&nbsp;').replace(' ', '&nbsp;')}<a class="anchor" href="#${c.claim_id}" title="link to this entry (${c.claim_id})">§</a><br><span class="dow">${dowOf(c.statement_date)}</span></div>`;
     if (f) {
       const pro = c.prospective;
@@ -520,12 +526,17 @@ themeBtn.onclick = () => {
       h += `<div class="e-fig nofig"><span class="qual">qualitative</span></div>`;
     }
     h += `<div class="e-body">`;
-    h += `<div class="frame">${frame}</div>`;
-    h += `<div class="desc"><span class="pre">on record — </span>${c.claim_text}</div>`;
+    // scope shows only when it is not the default Hormuz-only frame,
+    // so non-default scopes stand out precisely because they are rare
+    if (c.scope !== 'hormuz_only') {
+      h += `<div class="frame">${AS_PLAIN[c.scope] || c.scope}</div>`;
+    }
+    h += `<div class="desc">${c.claim_text}</div>`;
+    const dirTxt = c.direction === 'outbound' ? 'outbound' : c.direction === 'transit' ? 'transit' : 'both directions';
     h += `<div class="e-meta">${c.speaker}` +
       (c.attribution === 'anonymous' ? ` <span class="chip2" title="the reporter knows who spoke; the public does not">anonymous</span>` : '') +
       (c.attribution === 'institutional' ? ` <span class="chip2">institutional</span>` : '') +
-      ` · ${c.channel}` +
+      ` · ${c.channel} · ${dirTxt} · ${c.time_basis_plain}` +
       (c.status !== 'active' ? ` · <span class="chip2 warn">${c.status_plain}</span>` : '') +
       ` · <a href="${c.source_url}" target="_blank" rel="noopener">${c.source_publisher} ↗</a></div>`;
     if (c.disputes_claim_id) h += `<div class="e-link">&harr; disputes, same day: ${refTxt(c.disputes_claim_id)} — neither statement independently verified</div>`;
