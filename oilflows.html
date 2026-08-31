@@ -652,14 +652,11 @@
 </section>
 
 <section class="panel" id="panel-buffer" style="display:none">
-  <h2>5 &middot; The buffer</h2>
-  <p class="panel-sub" id="sub-buffer">U.S. crude stocks &divide; refinery crude inputs, in days of refinery use &middot; weekly, 1982&ndash;present &middot; EIA</p>
+  <h2 id="h2-buffer">5 &middot; The buffer</h2>
+  <p class="panel-sub" id="sub-buffer">Stored U.S. crude, in days of refinery use &middot; weekly since 1982 &middot; EIA</p>
   <div class="tiles" id="buffer-tiles"></div>
+  <div class="prose" id="buffer-lede" style="margin:0 0 16px"></div>
   <div class="chart-wrap" id="chart-buffer"></div>
-  <div class="legend">
-    <span><span class="dot" style="background:var(--ink)"></span>total incl. Strategic Petroleum Reserve</span>
-    <span><span class="dot" style="background:var(--rate)"></span>commercial only</span>
-  </div>
   <div class="note">
     Stored U.S. crude, including the Strategic Petroleum Reserve, divided by
     that week's refinery crude inputs. This is a cushion ratio, not a
@@ -875,11 +872,18 @@ themeBtn.onclick = () => {
       svg += `<text x="${PAD_L - 7}" y="${(yy + 3.5).toFixed(1)}" fill="${TICK}" font-size="11" text-anchor="end">${fmtTick(v)}</text>`;
     }
 
-    // baseline reference (e.g. index = 100)
+    // baseline reference (e.g. index = 100); refFaint demotes it so it
+    // never competes with the actual data
     if (opts.refLine != null && opts.refLine > vMin && opts.refLine < vMax) {
       const yy = y(opts.refLine);
-      svg += `<line x1="${PAD_L}" y1="${yy.toFixed(1)}" x2="${W - PAD_R}" y2="${yy.toFixed(1)}" stroke="var(--ink-30)" stroke-dasharray="4 4"/>`;
-      svg += `<text x="${W - PAD_R - 2}" y="${(yy - 5).toFixed(1)}" fill="${TICK}" font-size="10" text-anchor="end">${opts.refLabel || opts.refLine}</text>`;
+      const rs = opts.refFaint ? 'var(--ink-18)' : 'var(--ink-30)';
+      const rf = opts.refFaint ? 'var(--ink-30)' : TICK;
+      svg += `<line x1="${PAD_L}" y1="${yy.toFixed(1)}" x2="${W - PAD_R}" y2="${yy.toFixed(1)}" stroke="${rs}" stroke-dasharray="4 4"/>`;
+      // refLabelAt places the label at a chosen date (a calm stretch of
+      // the chart) instead of the crowded right edge
+      const rx = opts.refLabelAt ? x(dayMs(opts.refLabelAt)) : W - PAD_R - 2;
+      const rdy = opts.refLabelAt ? 13 : -5;
+      svg += `<text x="${rx.toFixed ? rx.toFixed(1) : rx}" y="${(yy + rdy).toFixed(1)}" fill="${rf}" font-size="10" text-anchor="${opts.refLabelAt ? 'middle' : 'end'}">${opts.refLabel || opts.refLine}</text>`;
     }
 
     // time ticks: months for the recent daily window, years for long spans
@@ -937,6 +941,18 @@ themeBtn.onclick = () => {
           if (v != null) svg += `<circle cx="${x(r.t).toFixed(1)}" cy="${y(v).toFixed(1)}" r="2.6" fill="${s.color}"/>`;
         });
       }
+      // direct label on the line itself (at a chosen date), replacing a legend
+      if (s.labelAt) {
+        const lr = data.find(r => r.date >= s.labelAt && r[s.field] != null);
+        if (lr) svg += `<text x="${x(lr.t).toFixed(1)}" y="${(y(lr[s.field]) - 16).toFixed(1)}" fill="${s.color}" font-size="10.5" text-anchor="middle">${s.label || s.name}</text>`;
+      }
+    });
+
+    // dated point annotations: a dot plus a short label
+    (opts.pointLabels || []).forEach(pl => {
+      const px = x(dayMs(pl.date)), py = y(pl.v);
+      svg += `<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="3" fill="${INK}"/>`;
+      svg += `<text x="${(px + (pl.dx || 0)).toFixed(1)}" y="${(py + (pl.dy || 0)).toFixed(1)}" fill="var(--ink-80)" font-size="10" text-anchor="${pl.anchor || 'middle'}">${pl.text}</text>`;
     });
 
     // mark the most recent observation of the first series
@@ -1126,20 +1142,59 @@ themeBtn.onclick = () => {
       `<div class="tile"><div class="k">${t[0]}</div><div class="v">${t[1]}</div><div class="u">${t[2]}</div></div>`
     ).join('');
 
+    // The headline states the extremity, computed fresh each week so it
+    // retires itself if the cushion recovers.
+    const latestV = bLatest.days_supply_incl_spr;
+    const minV = bMinRow.days_supply_incl_spr;
+    const years = +bm.last_week.slice(0, 4) - +bm.first_week.slice(0, 4);
+    const nearLow = bRank === 1 || (latestV - minV) <= 1.0 || bRank <= 3;
+    if (nearLow) {
+      document.getElementById('h2-buffer').innerHTML =
+        `5 &middot; The buffer &mdash; near a ${years}-year low`;
+    }
+
+    const bShock = lastThresh
+      ? [...bDays].reverse().find(r => r.t <= dayMs(lastThresh.date)) : null;
+    if (bShock) {
+      const shockV = bShock.days_supply_incl_spr;
+      const pct = Math.round((1 - latestV / shockV) * 100);
+      const gap = latestV - minV;
+      const lede = document.getElementById('buffer-lede');
+      lede.innerHTML = `<p style="margin:0">Since the shock, the cushion has fallen ` +
+        `from about ${shockV.toFixed(0)} days to ${latestV.toFixed(1)} &mdash; down ${pct}%. ` +
+        (bRank === 1
+          ? `That is a new ${years}-year low.`
+          : `That is ${gap.toFixed(1)} days above the ${years}-year low of ${minV.toFixed(1)}, reached ${fmtDate(bMinRow.date)}.`) +
+        `</p>`;
+    }
+
     linePanel(document.getElementById('chart-buffer'),
       [
-        { field: 'days_supply_incl_spr', name: 'incl. SPR', color: INK, fmt: days },
-        { field: 'commercial_days_supply', name: 'commercial', color: BLUE, fmt: days },
+        { field: 'days_supply_incl_spr', name: 'incl. SPR', color: INK, fmt: days,
+          label: 'total incl. SPR', labelAt: '1998-06-01' },
+        { field: 'commercial_days_supply', name: 'commercial', color: BLUE, fmt: days,
+          label: 'commercial only', labelAt: '2004-01-01' },
       ],
       {
         data: buffer,
         height: 300, includeZero: false,
         refLine: bm.historical_mean_days_supply_incl_spr,
-        refLabel: 'mean ' + bm.historical_mean_days_supply_incl_spr,
-        markLast: true,
+        refLabel: `${bm.first_week.slice(0, 4)}&ndash;${bm.last_week.slice(0, 4)} avg ${bm.historical_mean_days_supply_incl_spr}`,
+        refFaint: true, refLabelAt: '2012-01-01',
         dateLabel: 'week ending ',
         events: [
-          lastThresh && { date: lastThresh.date, label: 'Hormuz shock', side: 'left' },
+          lastThresh && { date: lastThresh.date, label: '', side: 'left' },
+        ].filter(Boolean),
+        pointLabels: [
+          bShock && { date: bShock.date, v: bShock.days_supply_incl_spr,
+            text: `${bShock.days_supply_incl_spr.toFixed(0)} days &middot; shock`,
+            anchor: 'end', dx: -12, dy: -12 },
+          bRank > 1 && { date: bMinRow.date, v: minV,
+            text: `low ${minV.toFixed(1)} &middot; ${fmtDate(bMinRow.date).replace(' ' + bm.last_week.slice(0, 4), '')}`,
+            anchor: 'end', dx: -12, dy: 20 },
+          { date: bLatest.date, v: latestV,
+            text: `${latestV.toFixed(1)} &middot; ${fmtDate(bLatest.date).replace(' ' + bm.last_week.slice(0, 4), '')}`,
+            anchor: 'end', dx: -12, dy: -8 },
         ].filter(Boolean),
       });
 
