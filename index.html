@@ -70,18 +70,30 @@
     }, 400);
   }
 
+  function render(price) {
+    if (price < LOW_MAX) setMessage(MSG_LOW, "#173a1e");
+    else if (price > HIGH_MIN) setMessage(MSG_HIGH, "#3a1717");
+    else setMessage(MSG_MID, "#3a2f17");
+  }
+
   async function fetchPrice() {
     try {
       const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${TICKER}&token=${API_KEY}`);
       const data = await res.json();
       const price = data.c; // current price
       if (!price) throw new Error("no price");
-
-      if (price < LOW_MAX) setMessage(MSG_LOW, "#173a1e");
-      else if (price > HIGH_MIN) setMessage(MSG_HIGH, "#3a1717");
-      else setMessage(MSG_MID, "#3a2f17");
+      render(price);
     } catch (e) {
-      setMessage("Error", "#1a1a1a");
+      // live quote unavailable (rate limit, blocked request): fall back
+      // to the last stored daily close from this site's own history
+      try {
+        const hist = await fetch("/history.json").then(r => r.json());
+        const last = hist[hist.length - 1];
+        if (!last || !last.p) throw new Error("no history");
+        render(last.p);
+      } catch (e2) {
+        setMessage("Error", "#1a1a1a");
+      }
     }
   }
 
