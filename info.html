@@ -16,7 +16,7 @@
   }
   body {
     display: flex; flex-direction: column; align-items: center;
-    padding: 48px 20px 60px;
+    padding: 28px 20px 28px;
     box-sizing: border-box;
   }
 
@@ -34,7 +34,7 @@
     color: rgba(240,236,230,0.35);
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin-bottom: 2em;
+    margin-bottom: 1.2em;
   }
 
   .rules {
@@ -42,7 +42,7 @@
     gap: 32px;
     justify-content: center;
     flex-wrap: wrap;
-    margin: 0 0 2.5em;
+    margin: 0 0 1.3em;
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.82em;
     letter-spacing: 0.02em;
@@ -96,10 +96,10 @@
   #chart-wrap {
     width: 100%;
     max-width: 900px;
-    margin-top: 1em;
+    margin-top: 0.7em;
     background: rgba(255,255,255,0.015);
     border-radius: 12px;
-    padding: 20px 12px 12px;
+    padding: 14px 12px 10px;
     border: 1px solid rgba(255,255,255,0.04);
   }
   svg { width: 100%; height: auto; display: block; }
@@ -108,7 +108,7 @@
     display: flex; gap: 24px; justify-content: center;
     font-family: 'JetBrains Mono', monospace; font-size: 11px;
     color: rgba(240,236,230,0.45);
-    margin-top: 16px;
+    margin-top: 10px;
     flex-wrap: wrap;
   }
   .legend span { display: inline-flex; align-items: center; gap: 6px; }
@@ -119,14 +119,20 @@
     font-size: 11px;
     color: rgba(240,236,230,0.28);
     text-align: center;
-    margin-top: 18px;
+    margin-top: 10px;
     line-height: 1.7;
     font-family: 'JetBrains Mono', monospace;
   }
 
+  .backrow {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1.4em;
+  }
   a.back {
     display: inline-block;
-    margin-top: 2.5em;
     color: rgba(240,236,230,0.35);
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
@@ -176,9 +182,11 @@
 
 <div class="note" id="note">Loading price history…</div>
 
-<a class="back" href="/oilflows.html">?</a>
-<a class="back" href="/lab.html">reading the hormuz numbers</a>
-<a class="back" href="/">&larr; back</a>
+<div class="backrow">
+  <a class="back" href="/oilflows.html">?</a>
+  <a class="back" href="/lab.html">reading the hormuz numbers</a>
+  <a class="back" href="/">&larr; back</a>
+</div>
 
 <script>
   const TICKER = "BNO";
