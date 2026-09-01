@@ -86,7 +86,7 @@
   <span><span class="dot" style="background:#2e7d4f"></span>peace (&lt; 49)</span>
   <span><span class="dot" style="background:#c9962c"></span>sweet spot (49–55)</span>
   <span><span class="dot" style="background:#b3413d"></span>war (&gt; 55)</span>
-  <span><span style="width:2px;height:12px;background:#b3413d;display:inline-block"></span>touched war intraday</span>
+  <span><span style="width:3px;height:12px;background:#b3413d;display:inline-block"></span>touched war intraday · wider = more days in a row</span>
 </div>
 <div class="note" id="note">Loading price history…</div>
 
@@ -146,14 +146,20 @@
     });
     svg += `<path d="${path}" fill="none" stroke="#fff" stroke-width="1.5"/>`;
 
-    // days that touched war intraday but closed back out: a wick from
-    // close up to the day's high
-    points.forEach(pt => {
-      if (!pt.h || pt.h <= HIGH_MIN || pt.p > HIGH_MIN) return;
-      const wx = +x(pt.t).toFixed(1), wy = y(pt.h).toFixed(1);
-      svg += `<line x1="${wx}" y1="${y(pt.p).toFixed(1)}" x2="${wx}" y2="${wy}" stroke="#b3413d" stroke-width="1.2"/>`;
-      svg += `<line x1="${wx - 2.5}" y1="${wy}" x2="${wx + 2.5}" y2="${wy}" stroke="#b3413d" stroke-width="1.2"/>`;
-    });
+    // days that touched war intraday but closed back out: a full-height
+    // line; consecutive touch days merge into one band that widens with
+    // the length of the run
+    const touches = points.map(pt => pt.h > HIGH_MIN && pt.p <= HIGH_MIN);
+    for (let i = 0; i < points.length; i++) {
+      if (!touches[i]) continue;
+      let j = i;
+      while (j + 1 < points.length && touches[j + 1]) j++;
+      const n = j - i + 1;
+      const cx = (x(points[i].t) + x(points[j].t)) / 2;
+      const w = 2 + (n - 1) * 2.5;
+      svg += `<rect x="${(cx - w / 2).toFixed(1)}" y="${PAD_T}" width="${w.toFixed(1)}" height="${H - PAD_B - PAD_T}" fill="#b3413d" opacity="0.55"/>`;
+      i = j;
+    }
 
     points.forEach((pt, i) => {
       if (i % 3 !== 0 && i !== points.length - 1) return;
