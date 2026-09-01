@@ -206,36 +206,10 @@
     return null;
   }
 
-  function smoothPath(points, xFn, yFn) {
-    if (points.length < 2) return "";
-    let d = `M${xFn(points[0]).toFixed(1)},${yFn(points[0]).toFixed(1)}`;
-    for (let i = 0; i < points.length - 1; i++) {
-      const p0 = points[Math.max(0, i - 1)];
-      const p1 = points[i];
-      const p2 = points[i + 1];
-      const p3 = points[Math.min(points.length - 1, i + 2)];
-
-      const x0 = xFn(p0), y0 = yFn(p0);
-      const x1 = xFn(p1), y1 = yFn(p1);
-      const x2 = xFn(p2), y2 = yFn(p2);
-      const x3 = xFn(p3), y3 = yFn(p3);
-
-      const cp1x = x1 + (x2 - x0) / 6;
-      const cp1y = y1 + (y2 - y0) / 6;
-      const cp2x = x2 - (x3 - x1) / 6;
-      const cp2y = y2 - (y3 - y1) / 6;
-
-      d += ` C${cp1x.toFixed(1)},${cp1y.toFixed(1)} ${cp2x.toFixed(1)},${cp2y.toFixed(1)} ${x2.toFixed(1)},${y2.toFixed(1)}`;
-    }
-    return d;
-  }
-
-  function buildAreaPath(points, xFn, yFn, baselineY) {
-    const line = smoothPath(points, xFn, yFn);
-    if (!line) return "";
-    const lastX = xFn(points[points.length - 1]);
-    const firstX = xFn(points[0]);
-    return `${line} L${lastX.toFixed(1)},${baselineY.toFixed(1)} L${firstX.toFixed(1)},${baselineY.toFixed(1)} Z`;
+  // straight segments: the line only ever passes through actual closes
+  function linePath(points, xFn, yFn) {
+    return points.map((pt, i) =>
+      `${i === 0 ? "M" : "L"}${xFn(pt).toFixed(1)},${yFn(pt).toFixed(1)}`).join(" ");
   }
 
   async function buildChart(history, live) {
@@ -258,18 +232,9 @@
 
     let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
 
-    svg += `<defs>`;
-    svg += `<linearGradient id="areaPeace" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3d9f6b" stop-opacity="0.25"/><stop offset="100%" stop-color="#3d9f6b" stop-opacity="0.02"/></linearGradient>`;
-    svg += `<linearGradient id="areaSweet" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d4a843" stop-opacity="0.25"/><stop offset="100%" stop-color="#d4a843" stop-opacity="0.02"/></linearGradient>`;
-    svg += `<linearGradient id="areaWar" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c94e4e" stop-opacity="0.25"/><stop offset="100%" stop-color="#c94e4e" stop-opacity="0.02"/></linearGradient>`;
-    svg += `<filter id="glowPeace" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>`;
-    svg += `<filter id="glowSweet" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>`;
-    svg += `<filter id="glowWar" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>`;
-    svg += `</defs>`;
-
-    svg += `<rect x="${PAD_L}" y="${PAD_T}" width="${W-PAD_L-PAD_R}" height="${yHigh-PAD_T}" fill="#c94e4e" opacity="0.06"/>`;
-    svg += `<rect x="${PAD_L}" y="${yHigh}" width="${W-PAD_L-PAD_R}" height="${yLow-yHigh}" fill="#d4a843" opacity="0.06"/>`;
-    svg += `<rect x="${PAD_L}" y="${yLow}" width="${W-PAD_L-PAD_R}" height="${H-PAD_B-yLow}" fill="#3d9f6b" opacity="0.06"/>`;
+    svg += `<rect x="${PAD_L}" y="${PAD_T}" width="${W-PAD_L-PAD_R}" height="${yHigh-PAD_T}" fill="#c94e4e" opacity="0.12"/>`;
+    svg += `<rect x="${PAD_L}" y="${yHigh}" width="${W-PAD_L-PAD_R}" height="${yLow-yHigh}" fill="#d4a843" opacity="0.12"/>`;
+    svg += `<rect x="${PAD_L}" y="${yLow}" width="${W-PAD_L-PAD_R}" height="${H-PAD_B-yLow}" fill="#3d9f6b" opacity="0.12"/>`;
 
     for (let p = Math.ceil(yMin / 5) * 5; p <= yMax; p += 5) {
       const gy = y(p);
@@ -297,25 +262,9 @@
     runs.push({ zone: currentZone, start: runStart, end: points.length - 1 });
 
     runs.forEach(run => {
-      const startIdx = Math.max(0, run.start - 1);
-      const endIdx = Math.min(points.length - 1, run.end + 1);
-      const runPoints = points.slice(startIdx, endIdx + 1);
-      const areaD = buildAreaPath(runPoints, px, py, baselineY);
-      let fillId = "areaSweet";
-      if (run.zone === "#3d9f6b") fillId = "areaPeace";
-      if (run.zone === "#c94e4e") fillId = "areaWar";
-      svg += `<path d="${areaD}" fill="url(#${fillId})" opacity="0.7"/>`;
-    });
-
-    runs.forEach(run => {
-      const startIdx = Math.max(0, run.start - 1);
-      const endIdx = Math.min(points.length - 1, run.end + 1);
-      const runPoints = points.slice(startIdx, endIdx + 1);
-      const lineD = smoothPath(runPoints, px, py);
-      let glowId = "glowSweet";
-      if (run.zone === "#3d9f6b") glowId = "glowPeace";
-      if (run.zone === "#c94e4e") glowId = "glowWar";
-      svg += `<path d="${lineD}" fill="none" stroke="${run.zone}" stroke-width="2" filter="url(#${glowId})" opacity="0.95"/>`;
+      const runPoints = points.slice(run.start, run.end + 1);
+      const lineD = linePath(runPoints, px, py);
+      svg += `<path d="${lineD}" fill="none" stroke="${run.zone}" stroke-width="1.5" stroke-linejoin="round"/>`;
     });
 
     const touches = points.map(pt => pt.h > HIGH_MIN && pt.p <= HIGH_MIN);
