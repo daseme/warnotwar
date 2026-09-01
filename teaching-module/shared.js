@@ -116,7 +116,7 @@ function renderEpilogue() {
   div.className = 'detail-panel sim-epilogue';
   div.innerHTML = '<h4>This scenario is one path — the real 2026 took another</h4>' +
     '<p>In this simulation, a collapsed flow and a thin cushion send the price steadily higher. ' +
-    'The live record did not follow that script. Compare it against the sourced, current data at ' +
+    'The live record did not follow that script. Compare it against the live, sourced data at ' +
     '<a href="/oilflows.html">warnotwar.com/oilflows</a> — explaining prices is hard, and that is the lesson.</p>';
   host.appendChild(div);
 }

@@ -137,7 +137,7 @@ function renderL5(){
     h+=`<div class="roll-vis"><div class="roll-barrel"><div class="rl">Near-month</div><div class="rp" style="color:var(--accent)">$${l5Brent.toFixed(2)}</div></div><div class="roll-arrow">→</div><div class="roll-barrel"><div class="rl">Next-month</div><div class="rp" style="color:var(--c3)">$${l5Next.toFixed(2)}</div><span class="roll-tag" style="background:${isContango?'rgba(210,153,34,0.12)':'rgba(63,185,80,0.12)'};color:${isContango?'var(--c3)':'var(--c2)'}">${isContango?'Contango':'Backwardation'}</span></div></div>`;
     h+=`<div class="slider-row"><label>Next-month price</label><input type="range" id="l5-next" min="70" max="150" step="0.5" value="${l5Next}"><span class="slider-val" id="l5v-next">$${l5Next.toFixed(2)}</span></div>`;
   } else if(l5Gear==='collateral'){
-    h+=`<p>${grade===5?'BNO keeps some money in safe investments like government bonds. They earn a little interest.':'BNO collateralizes futures with cash and Treasuries. In a high-rate environment, this income is meaningful.'}</p>`;
+    h+=`<p>${grade===5?'BNO keeps some money in safe investments like government bonds. They earn a little interest.':'BNO collateralizes futures with cash and Treasuries. When rates are high, this income is meaningful.'}</p>`;
     h+=`<div class="slider-row"><label>Collateral rate</label><input type="range" id="l5-coll" min="0" max="8" step="0.1" value="${l5Coll}"><span class="slider-val" id="l5v-coll">${l5Coll.toFixed(1)}%</span></div>`;
   } else if(l5Gear==='expenses'){
     h+=`<p>${grade===5?'Running a fund costs money. BNO charges a small annual fee — like a tiny leak in a bucket.':'BNO\'s expense ratio is ~'+l5Exp+'% annually, deducted daily. Over 10 years, this drag compounds.'}</p>`;

@@ -163,7 +163,7 @@ function renderL3() {
       <h4>What Brent actually did</h4>
       <p>On ${d.label}, Brent futures were at <strong>$${d.brent.toFixed(2)}</strong>${dateIdx > 0 ? ', up from $' + dates[dateIdx - 1].brent.toFixed(2) + ' a week earlier' : ''}.</p>
       <p>${grade === 8 ? 'The market had already moved before official export data confirmed anything. It was trading the probability of sustained disruption, not the confirmed fact.' : 'The market moved under information asymmetry. The futures price aggregates heterogeneous, incomplete beliefs into a single sufficient statistic. Official export records (SOMO, JODI) lag by weeks to months.'}</p>
-      <div class="note">${grade === 8 ? 'Even if your probabilities differ from the market\'s, the key insight is: prices reflect weighted guesses about the future.' : 'The exercise is not to "beat" the market but to understand what information set the market was processing.'}</div>
+      <div class="note">${grade === 8 ? 'Even if your probabilities differ from the market\'s, prices reflect weighted guesses about the future.' : 'The exercise is not to "beat" the market but to understand what information set the market was processing.'}</div>
     </div>`;
 
   const pq = $('p-quick'), pp = $('p-partial'), pf = $('p-full');
@@ -227,7 +227,7 @@ function renderCandidates(){
       '<div class="cand-disc">what would settle it: '+c.disc+'</div></div>';
   });
   h+='<div id="l3-spread" class="cand-disc" style="margin-top:8px;"></div>'+
-    '<p style="font-size:11px;color:var(--text-tertiary);margin-top:8px;">There is no answer key and no aggregate score — attribution has none. Some rows resolve when their data arrives; check the live site then.</p></div>';
+    '<p style="font-size:11px;color:var(--text-tertiary);margin-top:8px;">No answer key, no aggregate score — attribution has none. Some rows resolve when their data arrives; check the live site then.</p></div>';
   el.innerHTML=h;
   const upd=()=>{
     const vals=liveCandidates.map(c=>l3cand[c.key]);
@@ -235,7 +235,7 @@ function renderCandidates(){
     if(!spreadEl) return;
     const range=Math.max(...vals)-Math.min(...vals);
     spreadEl.textContent = range<20
-      ? 'You rate these similarly — genuinely undecided between stories is a defensible position.'
+      ? 'You rate these similarly — undecided between stories is a defensible position.'
       : 'You find some stories much more plausible than others — the "what would settle it" lines say which data would test that.';
   };
   el.querySelectorAll('input[data-cand]').forEach(s=>{
