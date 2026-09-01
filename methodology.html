@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="How the U.S. oil-flow claims record is built: normalization, the never-overwrite rule, collection tiers, and the completeness bounds.">
-<title>Claims Ledger Methodology</title>
+<meta name="description" content="How the U.S. oil-flow claims record is built: the standard form, the never-overwrite rule, collection tiers, and what completeness means.">
+<title>Claims Record Methodology</title>
 <style>
   html, body {
     margin: 0; min-height: 100%;
@@ -70,10 +70,10 @@
 </nav>
 <main>
 
-<h1>How the Claims Ledger Is Built</h1>
+<h1>How the Claims Record Is Built</h1>
 <p class="subtitle">
-  A durable, auditable record of reported U.S. government statements about
-  oil and vessel movement through the Strait of Hormuz and the Gulf bypass
+  A lasting, checkable record of reported U.S. government statements about
+  oil and ship movement through the Strait of Hormuz and the Gulf bypass
   routes &mdash; what was said, what each number measures, and what we can
   and cannot promise about completeness.
 </p>
@@ -81,14 +81,14 @@
 <h2>Purpose</h2>
 <p>
   The record does <strong>not</strong> decide which claims are correct. It
-  records exactly what was claimed, normalizes what each number measures,
-  and preserves corrections, disputes and revisions. It currently holds
-  32 normalized statements from March 10 through August 21, 2026, and
+  records exactly what was claimed, puts what each number measures into a
+  standard form, and preserves corrections, disputes and revisions. It
+  currently holds 32 statements from March 10 through August 21, 2026, and
   feeds the <a href="/lab.html">Reading the Hormuz Numbers</a> tools and
   the <a href="/oilflows.html">verification panel</a>.
 </p>
 
-<h2>Core normalization</h2>
+<h2>The standard form</h2>
 <p>Every recorded statement answers seven questions:</p>
 <ul>
   <li><strong>What?</strong> oil, oil and products, tankers, all ships</li>
@@ -97,7 +97,7 @@
   <li><strong>When?</strong> one night, one day, a 7-day average, a running total, current</li>
   <li><strong>Who?</strong> a named official, an anonymous official, an institutional statement</li>
   <li><strong>Status?</strong> on the record, revised, deleted, disputed</li>
-  <li><strong>Source?</strong> exact provenance, with a dated link on every row</li>
+  <li><strong>Source?</strong> exactly where it came from, with a dated link on every row</li>
 </ul>
 <p>
   One public statement can produce several rows: a single post that gives
@@ -117,16 +117,16 @@
   <b>Never overwrite history.</b> A deleted post, a same-day denial, a
   revised figure &mdash; all remain as separate rows, joined by links.
   Nothing is edited away.<br><br>
-  <b>Reporting verbs are never verdicts.</b> Every description uses the
-  same neutral verb ("Said"). Verbs that grade credibility &mdash;
-  claimed, confirmed, admitted, insisted &mdash; are rejected by the
-  loader, for every speaker equally.<br><br>
-  <b>Disputes are not supersessions.</b> When a different speaker
-  contradicts a statement, the two rows are linked symmetrically and
-  neither is marked the successor &mdash; a denial does not "win" in the
-  data model. Supersession is reserved for the same speaker restating the
-  same quantity.<br><br>
-  <b>Successive readings are not corrections.</b> Two seven-day averages
+  <b>Every speaker gets the same verb.</b> Every description uses
+  "Said." Verbs that grade credibility &mdash; claimed, confirmed,
+  admitted, insisted &mdash; are rejected by the loader, for every
+  speaker equally.<br><br>
+  <b>Contradictions sit side by side.</b> When a different speaker
+  contradicts a statement, the two rows are linked both ways and neither
+  replaces the other &mdash; a denial does not "win" in the data model.
+  A figure is only replaced when the same speaker restates the same
+  quantity.<br><br>
+  <b>Each reading describes its own week.</b> Two seven-day averages
   stated ten days apart describe different weeks; a lower later reading
   is recorded as a series member, never as a walk-back.<br><br>
   <b>One figure per row; no figure for qualitative statements.</b> A
@@ -141,19 +141,19 @@
   Most recorded numbers cannot be directly compared with each other or
   with independent tracker estimates &mdash; they measure different
   waterways, different units, or different time windows. The pipeline
-  derives a strict <span class="mono">comparable_hormuz_flow_claims</span>
-  view: outbound, Hormuz-only, oil flow-rate claims in million barrels
+  builds a strict <span class="mono">comparable_hormuz_flow_claims</span>
+  list: outbound, Hormuz-only, oil flow-rate claims in million barrels
   per day. That series (currently three claims) is what the
   <a href="/oilflows.html#panel-verify">verification gap</a> is computed
-  from. Exclusions are visible and rule-based, never editorial.
+  from. What is left out is shown, and left out by rule, never by judgment.
 </p>
 
-<h2>Collection protocol</h2>
+<h2>How statements are collected</h2>
 <p>
-  Absolute completeness cannot be guaranteed: statements occur in press
+  Absolute completeness cannot be guaranteed: statements happen in press
   gaggles, television interviews, deleted social posts, anonymous
   briefings and unindexed remarks. The approach is to make coverage
-  systematic and auditable instead.
+  systematic and checkable instead.
 </p>
 <table>
   <tr><th>tier</th><th>sources</th><th>what it catches</th></tr>
@@ -189,12 +189,12 @@
 <ul>
   <li><span class="mono">collection_runs</span> &mdash; recording which
   source families were swept and through what date, so "complete through
-  a date" has an auditable meaning;</li>
+  a date" has a checkable meaning;</li>
   <li><span class="mono">verification_snapshots</span> &mdash; attaching
   the independent evidence that existed <em>at the time</em> of each
   claim (tracker estimates, activity indices), without ever altering the
   historical claim itself;</li>
-  <li>retrospective resolution &mdash; official export data and
+  <li>later resolution &mdash; official export data and
   destination import statistics arriving months later are the referee
   that can move a claim's status from unverified to consistent or not
   corroborated, always with a citation.</li>
@@ -204,7 +204,7 @@
   Data: <a href="/data/us_oil_flow_claims.json">the full archive (JSON)</a>
   &middot; <a href="/US_OIL_FLOW_CLAIMS_DATABASE_BRIEF.md">original brief (raw markdown)</a>
   &middot; source CSV and validation code in the site repository.
-  Ledger seeded Aug 26 2026; statements Mar 10 &ndash; Aug 21 2026.
+  Record seeded Aug 26 2026; statements Mar 10 &ndash; Aug 21 2026.
 </div>
 
 <a class="back" href="/lab.html">&larr; back to Reading the Hormuz Numbers</a>
