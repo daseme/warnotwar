@@ -1669,7 +1669,7 @@ themeBtn.onclick = () => {
       `<div class="row">${stocksM.toFixed(0)} million barrels stored &divide; ` +
       `<input type="range" id="rw-slider" min="${inMin}" max="${inMax}" step="0.1" value="${curIn.toFixed(1)}">` +
       `<span id="rw-in"></span> = <span class="out" id="rw-out"></span></div>` +
-      `<div class="fine">Stocks are frozen at the latest week; only the denominator moves, and the slider spans only paces U.S. refineries have actually run since 1982 (${inMin}&ndash;${inMax}). This is arithmetic, not a forecast. And note the trap: in real disruptions refinery runs often <em>fall</em>, which makes this number rise even as conditions worsen. Actual current pace: ${curIn.toFixed(1)} million barrels/day.</div>`;
+      `<div class="fine">The stored oil stays fixed at the latest week &mdash; the slider only changes how fast refineries run, and it only covers speeds they have actually run since 1982 (${inMin}&ndash;${inMax}). In a real crisis refineries often <em>slow down</em>, so this number can rise even as things get worse. Right now they run ${curIn.toFixed(1)} million barrels a day.</div>`;
     const slider = document.getElementById('rw-slider');
     const update = () => {
       const v = parseFloat(slider.value);
