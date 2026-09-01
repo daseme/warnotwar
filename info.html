@@ -86,6 +86,7 @@
   <span><span class="dot" style="background:#2e7d4f"></span>peace (&lt; 49)</span>
   <span><span class="dot" style="background:#c9962c"></span>sweet spot (49–55)</span>
   <span><span class="dot" style="background:#b3413d"></span>war (&gt; 55)</span>
+  <span><span style="width:2px;height:12px;background:#b3413d;display:inline-block"></span>touched war intraday</span>
 </div>
 <div class="note" id="note">Loading price history…</div>
 
@@ -109,14 +110,14 @@
     try {
       const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${TICKER}&token=${API_KEY}`);
       const data = await res.json();
-      if (data && data.c) return data.c;
+      if (data && data.c) return { c: data.c, h: data.h };
     } catch (e) {}
     return null;
   }
 
-  async function buildChart(history, livePrice) {
-    let points = history.map(pt => ({ t: new Date(pt.d + "T00:00:00Z").getTime(), p: pt.p }));
-    if (livePrice) points.push({ t: Date.now(), p: livePrice });
+  async function buildChart(history, live) {
+    let points = history.map(pt => ({ t: new Date(pt.d + "T00:00:00Z").getTime(), p: pt.p, h: pt.h }));
+    if (live) points.push({ t: Date.now(), p: live.c, h: live.h });
 
     const W = 900, H = 380, PAD_L = 46, PAD_R = 16, PAD_T = 16, PAD_B = 30;
     const t0 = points[0].t, t1 = points[points.length - 1].t;
@@ -144,6 +145,15 @@
       path += `${cmd}${x(pt.t).toFixed(1)},${y(pt.p).toFixed(1)} `;
     });
     svg += `<path d="${path}" fill="none" stroke="#fff" stroke-width="1.5"/>`;
+
+    // days that touched war intraday but closed back out: a wick from
+    // close up to the day's high
+    points.forEach(pt => {
+      if (!pt.h || pt.h <= HIGH_MIN || pt.p > HIGH_MIN) return;
+      const wx = +x(pt.t).toFixed(1), wy = y(pt.h).toFixed(1);
+      svg += `<line x1="${wx}" y1="${y(pt.p).toFixed(1)}" x2="${wx}" y2="${wy}" stroke="#b3413d" stroke-width="1.2"/>`;
+      svg += `<line x1="${wx - 2.5}" y1="${wy}" x2="${wx + 2.5}" y2="${wy}" stroke="#b3413d" stroke-width="1.2"/>`;
+    });
 
     points.forEach((pt, i) => {
       if (i % 3 !== 0 && i !== points.length - 1) return;
@@ -175,20 +185,20 @@
   }
 
   async function init() {
-    const [historyRes, livePrice] = await Promise.all([
+    const [historyRes, live] = await Promise.all([
       fetch("/history.json"),
       fetchLive()
     ]);
     const history = await historyRes.json();
 
-    if (livePrice) {
+    if (live) {
       document.getElementById("price").textContent =
-        `${TICKER} $${livePrice.toFixed(2)} \u2014 updated ${new Date().toLocaleTimeString()}`;
+        `${TICKER} $${live.c.toFixed(2)} \u2014 updated ${new Date().toLocaleTimeString()}`;
     } else {
       document.getElementById("price").textContent = "Error fetching live price.";
     }
 
-    buildChart(history, livePrice);
+    buildChart(history, live);
   }
 
   init();

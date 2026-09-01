@@ -7,6 +7,7 @@ with urllib.request.urlopen(url) as resp:
     data = json.load(resp)
 
 price = data.get("c")
+high = data.get("h")
 if not price:
     print("No price returned, exiting")
     sys.exit(1)
@@ -18,9 +19,15 @@ with open("history.json") as f:
 
 if history and history[-1]["d"] == today:
     history[-1]["p"] = round(price, 2)
+    if high:
+        # keep the highest high seen across runs on the same day
+        history[-1]["h"] = round(max(high, history[-1].get("h", 0)), 2)
     print(f"Updated today's entry: {today} = {price}")
 else:
-    history.append({"d": today, "p": round(price, 2)})
+    entry = {"d": today, "p": round(price, 2)}
+    if high:
+        entry["h"] = round(high, 2)
+    history.append(entry)
     print(f"Appended new entry: {today} = {price}")
 
 with open("history.json", "w") as f:
