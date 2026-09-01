@@ -75,7 +75,7 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 11.5px;
     color: rgba(240,236,230,0.45);
-    margin-bottom: 8px;
+    margin-bottom: 1.2em;
   }
   #live-price {
     font-size: 1.4em;
@@ -160,15 +160,15 @@
 <h1>The Dean Street Heuristic</h1>
 <div class="subtitle">BNO &middot; an oil fund that tracks Brent crude</div>
 
+<div id="live-bar">
+  <span class="live-pulse"></span>
+  <span id="price">Loading…</span>
+</div>
+
 <div class="rules">
   <div class="rule rule-peace"><span class="rule-dot"></span>&lt; 49 peace</div>
   <div class="rule rule-sweet"><span class="rule-dot"></span>50 perpetual war sweet spot</div>
   <div class="rule rule-war"><span class="rule-dot"></span>&gt; 55 war</div>
-</div>
-
-<div id="live-bar">
-  <span class="live-pulse"></span>
-  <span id="price">Loading…</span>
 </div>
 
 <div id="chart-wrap"></div>
