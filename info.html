@@ -4,94 +4,180 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Dean Street Heuristic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
   html, body {
     margin: 0; min-height: 100%;
-    font-family: Georgia, 'Times New Roman', serif;
-    background: #1a1a1a;
-    color: #fff;
+    font-family: 'Playfair Display', Georgia, serif;
+    background: #0f0f11;
+    color: #e8e6e3;
   }
   body {
     display: flex; flex-direction: column; align-items: center;
-    padding: 40px 20px 50px;
+    padding: 48px 20px 60px;
     box-sizing: border-box;
   }
+
   h1 {
-    font-size: 1.6em;
-    font-weight: normal;
-    letter-spacing: 0.03em;
-    margin: 0 0 1.2em;
+    font-size: 2.2em;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    margin: 0 0 0.3em;
     text-align: center;
+    color: #f0ece6;
   }
-  p.rules {
-    font-size: 1.2em;
-    line-height: 2em;
-    margin: 0;
-    text-align: center;
+  .subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75em;
+    color: rgba(240,236,230,0.35);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 2em;
   }
-  #price {
-    margin-top: 1.6em;
-    font-family: monospace;
-    font-size: 14px;
-    color: rgba(255,255,255,0.5);
-    text-align: center;
+
+  .rules {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 0 0 2.5em;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82em;
+    letter-spacing: 0.02em;
   }
+  .rule {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .rule-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    box-shadow: 0 0 8px currentColor;
+  }
+  .rule-peace { color: #3d9f6b; }
+  .rule-peace .rule-dot { background: #3d9f6b; }
+  .rule-sweet { color: #d4a843; }
+  .rule-sweet .rule-dot { background: #d4a843; }
+  .rule-war { color: #c94e4e; }
+  .rule-war .rule-dot { background: #c94e4e; }
+
+  #live-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: rgba(240,236,230,0.45);
+    margin-bottom: 8px;
+  }
+  #live-price {
+    font-size: 1.4em;
+    font-weight: 500;
+    color: #f0ece6;
+  }
+  .live-pulse {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #3d9f6b;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
   #chart-wrap {
     width: 100%;
-    max-width: 800px;
-    margin-top: 2.5em;
+    max-width: 900px;
+    margin-top: 1em;
+    background: rgba(255,255,255,0.015);
+    border-radius: 12px;
+    padding: 20px 12px 12px;
+    border: 1px solid rgba(255,255,255,0.04);
   }
   svg { width: 100%; height: auto; display: block; }
+
   .legend {
-    display: flex; gap: 18px; justify-content: center;
-    font-family: monospace; font-size: 11px;
-    color: rgba(255,255,255,0.6);
-    margin-top: 10px;
+    display: flex; gap: 24px; justify-content: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: rgba(240,236,230,0.45);
+    margin-top: 16px;
     flex-wrap: wrap;
   }
-  .legend span { display: inline-flex; align-items: center; gap: 5px; }
-  .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+
   .note {
-    max-width: 600px;
-    font-size: 12px;
-    color: rgba(255,255,255,0.35);
+    max-width: 620px;
+    font-size: 11px;
+    color: rgba(240,236,230,0.28);
     text-align: center;
-    margin-top: 14px;
-    line-height: 1.6;
-    font-family: monospace;
+    margin-top: 18px;
+    line-height: 1.7;
+    font-family: 'JetBrains Mono', monospace;
   }
+
   a.back {
     display: inline-block;
     margin-top: 2.5em;
-    color: rgba(255,255,255,0.5);
-    font-family: monospace;
-    font-size: 13px;
+    color: rgba(240,236,230,0.35);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
     text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
   }
-  a.back:hover { color: rgba(255,255,255,0.8); }
+  a.back:hover { color: rgba(240,236,230,0.7); }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 0.75em;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
 </style>
 </head>
 <body>
 
 <h1>The Dean Street Heuristic</h1>
-<p class="rules">
-  &lt; 49 = peace<br>
-  &gt; 55 = war<br>
-  50 = perpetual war sweet spot
-</p>
-<div id="price"></div>
+<div class="subtitle">BNO &middot; an oil fund that tracks Brent crude</div>
+
+<div class="rules">
+  <div class="rule rule-peace"><span class="rule-dot"></span>&lt; 49 peace</div>
+  <div class="rule rule-sweet"><span class="rule-dot"></span>50 perpetual war sweet spot</div>
+  <div class="rule rule-war"><span class="rule-dot"></span>&gt; 55 war</div>
+</div>
+
+<div id="live-bar">
+  <span class="live-pulse"></span>
+  <span id="price">Loading…</span>
+</div>
 
 <div id="chart-wrap"></div>
+
 <div class="legend">
-  <span><span class="dot" style="background:#2e7d4f"></span>peace (&lt; 49)</span>
-  <span><span class="dot" style="background:#c9962c"></span>sweet spot (49–55)</span>
-  <span><span class="dot" style="background:#b3413d"></span>war (&gt; 55)</span>
-  <span><span style="width:3px;height:12px;background:#b3413d;display:inline-block"></span>touched war intraday · wider = more days in a row</span>
+  <span><span class="dot" style="background:#3d9f6b;box-shadow:0 0 6px #3d9f6b"></span>peace (&lt; 49)</span>
+  <span><span class="dot" style="background:#d4a843;box-shadow:0 0 6px #d4a843"></span>sweet spot (49–55)</span>
+  <span><span class="dot" style="background:#c94e4e;box-shadow:0 0 6px #c94e4e"></span>war (&gt; 55)</span>
+  <span><span style="width:3px;height:12px;background:#c94e4e;display:inline-block;opacity:0.7"></span>intraday war touch · wider = more days in a row</span>
 </div>
+
 <div class="note" id="note">Loading price history…</div>
 
-<a class="back" href="/oilflows.html" style="margin-bottom:0">?</a>
-<a class="back" href="/lab.html" style="margin-bottom:0">reading the hormuz numbers</a>
+<a class="back" href="/oilflows.html">?</a>
+<a class="back" href="/lab.html">reading the hormuz numbers</a>
 <a class="back" href="/">&larr; back</a>
 
 <script>
@@ -101,9 +187,14 @@
   const API_KEY = "da68rdhr01qtngrev8kgda68rdhr01qtngrev8l0";
 
   function zoneColor(p) {
-    if (p < LOW_MAX) return "#2e7d4f";
-    if (p > HIGH_MIN) return "#b3413d";
-    return "#c9962c";
+    if (p < LOW_MAX) return "#3d9f6b";
+    if (p > HIGH_MIN) return "#c94e4e";
+    return "#d4a843";
+  }
+  function zoneName(p) {
+    if (p < LOW_MAX) return "peace";
+    if (p > HIGH_MIN) return "war";
+    return "sweet spot";
   }
 
   async function fetchLive() {
@@ -115,40 +206,118 @@
     return null;
   }
 
+  function smoothPath(points, xFn, yFn) {
+    if (points.length < 2) return "";
+    let d = `M${xFn(points[0]).toFixed(1)},${yFn(points[0]).toFixed(1)}`;
+    for (let i = 0; i < points.length - 1; i++) {
+      const p0 = points[Math.max(0, i - 1)];
+      const p1 = points[i];
+      const p2 = points[i + 1];
+      const p3 = points[Math.min(points.length - 1, i + 2)];
+
+      const x0 = xFn(p0), y0 = yFn(p0);
+      const x1 = xFn(p1), y1 = yFn(p1);
+      const x2 = xFn(p2), y2 = yFn(p2);
+      const x3 = xFn(p3), y3 = yFn(p3);
+
+      const cp1x = x1 + (x2 - x0) / 6;
+      const cp1y = y1 + (y2 - y0) / 6;
+      const cp2x = x2 - (x3 - x1) / 6;
+      const cp2y = y2 - (y3 - y1) / 6;
+
+      d += ` C${cp1x.toFixed(1)},${cp1y.toFixed(1)} ${cp2x.toFixed(1)},${cp2y.toFixed(1)} ${x2.toFixed(1)},${y2.toFixed(1)}`;
+    }
+    return d;
+  }
+
+  function buildAreaPath(points, xFn, yFn, baselineY) {
+    const line = smoothPath(points, xFn, yFn);
+    if (!line) return "";
+    const lastX = xFn(points[points.length - 1]);
+    const firstX = xFn(points[0]);
+    return `${line} L${lastX.toFixed(1)},${baselineY.toFixed(1)} L${firstX.toFixed(1)},${baselineY.toFixed(1)} Z`;
+  }
+
   async function buildChart(history, live) {
     let points = history.map(pt => ({ t: new Date(pt.d + "T00:00:00Z").getTime(), p: pt.p, h: pt.h }));
     if (live) points.push({ t: Date.now(), p: live.c, h: live.h });
 
-    const W = 900, H = 380, PAD_L = 46, PAD_R = 16, PAD_T = 16, PAD_B = 30;
+    const W = 960, H = 420, PAD_L = 52, PAD_R = 20, PAD_T = 24, PAD_B = 36;
     const t0 = points[0].t, t1 = points[points.length - 1].t;
     const prices = points.map(pt => pt.p);
     const yMin = Math.floor(Math.min(...prices, LOW_MAX) / 5) * 5 - 5;
     const yMax = Math.ceil(Math.max(...prices, HIGH_MIN) / 5) * 5 + 5;
+    const baselineY = H - PAD_B;
 
     function x(t) { return PAD_L + ((t - t0) / (t1 - t0)) * (W - PAD_L - PAD_R); }
     function y(p) { return H - PAD_B - ((p - yMin) / (yMax - yMin)) * (H - PAD_T - PAD_B); }
+    // smoothPath/buildAreaPath take whole points; adapt to the raw scales
+    const px = pt => x(pt.t), py = pt => y(pt.p);
 
     const yLow = y(LOW_MAX), yHigh = y(HIGH_MIN);
 
     let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
-    svg += `<rect x="${PAD_L}" y="${PAD_T}" width="${W-PAD_L-PAD_R}" height="${yHigh-PAD_T}" fill="#b3413d" opacity="0.12"/>`;
-    svg += `<rect x="${PAD_L}" y="${yHigh}" width="${W-PAD_L-PAD_R}" height="${yLow-yHigh}" fill="#c9962c" opacity="0.12"/>`;
-    svg += `<rect x="${PAD_L}" y="${yLow}" width="${W-PAD_L-PAD_R}" height="${H-PAD_B-yLow}" fill="#2e7d4f" opacity="0.12"/>`;
-    svg += `<line x1="${PAD_L}" y1="${yLow}" x2="${W-PAD_R}" y2="${yLow}" stroke="rgba(255,255,255,0.25)" stroke-dasharray="4 4"/>`;
-    svg += `<line x1="${PAD_L}" y1="${yHigh}" x2="${W-PAD_R}" y2="${yHigh}" stroke="rgba(255,255,255,0.25)" stroke-dasharray="4 4"/>`;
-    svg += `<text x="${PAD_L+4}" y="${yLow-4}" fill="rgba(255,255,255,0.4)" font-size="10" font-family="monospace">$49</text>`;
-    svg += `<text x="${PAD_L+4}" y="${yHigh-4}" fill="rgba(255,255,255,0.4)" font-size="10" font-family="monospace">$55</text>`;
 
-    let path = "";
-    points.forEach((pt, i) => {
-      const cmd = i === 0 ? "M" : "L";
-      path += `${cmd}${x(pt.t).toFixed(1)},${y(pt.p).toFixed(1)} `;
+    svg += `<defs>`;
+    svg += `<linearGradient id="areaPeace" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3d9f6b" stop-opacity="0.25"/><stop offset="100%" stop-color="#3d9f6b" stop-opacity="0.02"/></linearGradient>`;
+    svg += `<linearGradient id="areaSweet" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d4a843" stop-opacity="0.25"/><stop offset="100%" stop-color="#d4a843" stop-opacity="0.02"/></linearGradient>`;
+    svg += `<linearGradient id="areaWar" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c94e4e" stop-opacity="0.25"/><stop offset="100%" stop-color="#c94e4e" stop-opacity="0.02"/></linearGradient>`;
+    svg += `<filter id="glowPeace" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>`;
+    svg += `<filter id="glowSweet" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>`;
+    svg += `<filter id="glowWar" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>`;
+    svg += `</defs>`;
+
+    svg += `<rect x="${PAD_L}" y="${PAD_T}" width="${W-PAD_L-PAD_R}" height="${yHigh-PAD_T}" fill="#c94e4e" opacity="0.06"/>`;
+    svg += `<rect x="${PAD_L}" y="${yHigh}" width="${W-PAD_L-PAD_R}" height="${yLow-yHigh}" fill="#d4a843" opacity="0.06"/>`;
+    svg += `<rect x="${PAD_L}" y="${yLow}" width="${W-PAD_L-PAD_R}" height="${H-PAD_B-yLow}" fill="#3d9f6b" opacity="0.06"/>`;
+
+    for (let p = Math.ceil(yMin / 5) * 5; p <= yMax; p += 5) {
+      const gy = y(p);
+      const isZoneLine = (p === LOW_MAX || p === HIGH_MIN);
+      svg += `<line x1="${PAD_L}" y1="${gy.toFixed(1)}" x2="${W-PAD_R}" y2="${gy.toFixed(1)}" stroke="rgba(240,236,230,${isZoneLine ? 0.18 : 0.06})" stroke-dasharray="${isZoneLine ? "6 4" : "2 4"}" stroke-width="${isZoneLine ? 1.2 : 0.8}"/>`;
+      if (!isZoneLine) {
+        svg += `<text x="${PAD_L - 8}" y="${gy + 3}" fill="rgba(240,236,230,0.2)" font-size="9" font-family="JetBrains Mono, monospace" text-anchor="end">$${p}</text>`;
+      }
+    }
+
+    svg += `<text x="${PAD_L + 6}" y="${yLow - 6}" fill="#3d9f6b" font-size="10" font-family="JetBrains Mono, monospace" font-weight="500" opacity="0.8">$49</text>`;
+    svg += `<text x="${PAD_L + 6}" y="${yHigh - 6}" fill="#c94e4e" font-size="10" font-family="JetBrains Mono, monospace" font-weight="500" opacity="0.8">$55</text>`;
+
+    let runs = [];
+    let currentZone = zoneColor(points[0].p);
+    let runStart = 0;
+    for (let i = 1; i < points.length; i++) {
+      const z = zoneColor(points[i].p);
+      if (z !== currentZone) {
+        runs.push({ zone: currentZone, start: runStart, end: i - 1 });
+        currentZone = z;
+        runStart = i - 1;
+      }
+    }
+    runs.push({ zone: currentZone, start: runStart, end: points.length - 1 });
+
+    runs.forEach(run => {
+      const startIdx = Math.max(0, run.start - 1);
+      const endIdx = Math.min(points.length - 1, run.end + 1);
+      const runPoints = points.slice(startIdx, endIdx + 1);
+      const areaD = buildAreaPath(runPoints, px, py, baselineY);
+      let fillId = "areaSweet";
+      if (run.zone === "#3d9f6b") fillId = "areaPeace";
+      if (run.zone === "#c94e4e") fillId = "areaWar";
+      svg += `<path d="${areaD}" fill="url(#${fillId})" opacity="0.7"/>`;
     });
-    svg += `<path d="${path}" fill="none" stroke="#fff" stroke-width="1.5"/>`;
 
-    // days that touched war intraday but closed back out: a full-height
-    // line; consecutive touch days merge into one band that widens with
-    // the length of the run
+    runs.forEach(run => {
+      const startIdx = Math.max(0, run.start - 1);
+      const endIdx = Math.min(points.length - 1, run.end + 1);
+      const runPoints = points.slice(startIdx, endIdx + 1);
+      const lineD = smoothPath(runPoints, px, py);
+      let glowId = "glowSweet";
+      if (run.zone === "#3d9f6b") glowId = "glowPeace";
+      if (run.zone === "#c94e4e") glowId = "glowWar";
+      svg += `<path d="${lineD}" fill="none" stroke="${run.zone}" stroke-width="2" filter="url(#${glowId})" opacity="0.95"/>`;
+    });
+
     const touches = points.map(pt => pt.h > HIGH_MIN && pt.p <= HIGH_MIN);
     for (let i = 0; i < points.length; i++) {
       if (!touches[i]) continue;
@@ -156,18 +325,23 @@
       while (j + 1 < points.length && touches[j + 1]) j++;
       const n = j - i + 1;
       const cx = (x(points[i].t) + x(points[j].t)) / 2;
-      const w = 2 + (n - 1) * 2.5;
-      svg += `<rect x="${(cx - w / 2).toFixed(1)}" y="${PAD_T}" width="${w.toFixed(1)}" height="${H - PAD_B - PAD_T}" fill="#b3413d" opacity="0.55"/>`;
+      const w = Math.min(2 + (n - 1) * 2.2, 10);
+      svg += `<rect x="${(cx - w / 2).toFixed(1)}" y="${PAD_T}" width="${w.toFixed(1)}" height="${H - PAD_B - PAD_T}" fill="#c94e4e" opacity="0.35" rx="1"/>`;
       i = j;
     }
 
     points.forEach((pt, i) => {
       if (i % 3 !== 0 && i !== points.length - 1) return;
-      svg += `<circle cx="${x(pt.t).toFixed(1)}" cy="${y(pt.p).toFixed(1)}" r="1.8" fill="${zoneColor(pt.p)}"/>`;
+      const cx = x(pt.t), cy = y(pt.p);
+      const zc = zoneColor(pt.p);
+      svg += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="1.6" fill="${zc}" opacity="0.6"/>`;
     });
 
     const last = points[points.length - 1];
-    svg += `<circle cx="${x(last.t).toFixed(1)}" cy="${y(last.p).toFixed(1)}" r="5" fill="${zoneColor(last.p)}" stroke="#1a1a1a" stroke-width="1.5"/>`;
+    const lastX = x(last.t), lastY = y(last.p);
+    const lastZc = zoneColor(last.p);
+    svg += `<circle cx="${lastX.toFixed(1)}" cy="${lastY.toFixed(1)}" r="5" fill="${lastZc}" stroke="#0f0f11" stroke-width="2.5"/>`;
+    svg += `<circle cx="${lastX.toFixed(1)}" cy="${lastY.toFixed(1)}" r="9" fill="none" stroke="${lastZc}" stroke-width="1" opacity="0.4"/>`;
 
     const months = [];
     let cursor = new Date(Date.UTC(new Date(t0).getUTCFullYear(), new Date(t0).getUTCMonth(), 1));
@@ -180,14 +354,18 @@
       const mx = x(m.getTime());
       if (mx >= PAD_L && mx <= W - PAD_R) {
         const label = m.toLocaleDateString(undefined, { month: "short", year: "2-digit" });
-        svg += `<text x="${mx.toFixed(1)}" y="${H-10}" fill="rgba(255,255,255,0.4)" font-size="9" font-family="monospace" text-anchor="middle">${label}</text>`;
+        svg += `<text x="${mx.toFixed(1)}" y="${H-10}" fill="rgba(240,236,230,0.3)" font-size="9" font-family="JetBrains Mono, monospace" text-anchor="middle">${label}</text>`;
       }
     });
 
     svg += `</svg>`;
     document.getElementById("chart-wrap").innerHTML = svg;
-    document.getElementById("note").textContent =
-      "Daily close data, Jun 23 2025 roughly tracking since Operation Midnight Hammer \u2013 present; the final point updates live.";
+
+    const zone = zoneName(last.p);
+    const zoneColorVal = zoneColor(last.p);
+    document.getElementById("note").innerHTML =
+      `Daily close data, Jun 23 2025 roughly tracking since Operation Midnight Hammer — present; the final point updates live.<br>` +
+      `Currently: <span style="color:${zoneColorVal};font-weight:500">${zone}</span>`;
   }
 
   async function init() {
@@ -198,10 +376,14 @@
     const history = await historyRes.json();
 
     if (live) {
-      document.getElementById("price").textContent =
-        `${TICKER} $${live.c.toFixed(2)} \u2014 updated ${new Date().toLocaleTimeString()}`;
+      const zc = zoneColor(live.c);
+      const zn = zoneName(live.c);
+      document.getElementById("price").innerHTML =
+        `<span id="live-price" style="color:${zc}">$${live.c.toFixed(2)}</span> ` +
+        `<span class="status-badge" style="background:${zc}15;color:${zc};border:1px solid ${zc}30">${zn}</span> ` +
+        `<span style="opacity:0.5">${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</span>`;
     } else {
-      document.getElementById("price").textContent = "Error fetching live price.";
+      document.getElementById("price").innerHTML = `<span style="color:#c94e4e">Error fetching live price</span>`;
     }
 
     buildChart(history, live);
