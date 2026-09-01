@@ -32,7 +32,7 @@
     <div id="l5-detail"></div>
 
     <h2 style="margin-top:40px;">Who Holds BNO?</h2>
-    <p class="subtitle">BNO is an ETF, but who actually owns the shares? The holder base matters for liquidity, volatility, and how the product behaves in a crisis.</p>
+    <p class="subtitle" id="l5-holders-sub">BNO is an ETF, but who actually owns the shares? The holder base matters for liquidity, volatility, and how the product behaves in a crisis.</p>
     <div class="holder-grid" id="l5-holders"></div>
     <div id="l5-holder-detail"></div>
   </section>
@@ -45,13 +45,14 @@ let l5Gear='futures', l5Brent=95.74, l5Next=98.20, l5Coll=4.5, l5Exp=0.45, l5Pre
 let l5HolderOpen='retail';
 
 const l5Gears=[
-  {key:'futures',label:'Brent futures',sub:'biggest driver',color:'var(--accent)',x:90,y:70},
-  {key:'roll',label:'The roll',sub:'contango/backward',color:'var(--c3)',x:230,y:70},
-  {key:'collateral',label:'Collateral',sub:'interest income',color:'var(--c2)',x:370,y:70},
-  {key:'expenses',label:'Expenses',sub:'annual fee drag',color:'var(--c4)',x:160,y:170},
-  {key:'premium',label:'Premium/discount',sub:'market vs NAV',color:'var(--c5)',x:300,y:170}
+  {key:'futures',label:'Brent futures',sub:'biggest driver',sub5:'biggest driver',color:'var(--accent)',x:90,y:70},
+  {key:'roll',label:'The roll',sub:'contango/backward',sub5:'the swap',color:'var(--c3)',x:230,y:70},
+  {key:'collateral',label:'Collateral',sub:'interest income',sub5:'extra interest',color:'var(--c2)',x:370,y:70},
+  {key:'expenses',label:'Expenses',sub:'annual fee drag',sub5:'the fee',color:'var(--c4)',x:160,y:170},
+  {key:'premium',label:'Premium/discount',sub:'market vs NAV',sub5:'two prices',color:'var(--c5)',x:300,y:170}
 ];
 const l5Conns=[{from:'futures',to:'roll'},{from:'roll',to:'collateral'},{from:'collateral',to:'premium'},{from:'expenses',to:'premium'}];
+const l5HolderLabel5={retail:'Regular people',ria:'Financial advisors',institutional:'Big funds',aps:'Special traders',notindex:'NOT: Index funds'};
 
 const l5Holders=[
   {
@@ -110,7 +111,7 @@ function renderL5(){
     const on=g.key===l5Gear, r=28;
     s+=`<g class="gear${on?' on':''}" data-key="${g.key}" transform="translate(${g.x},${g.y})"><circle cx="0" cy="0" r="${r}" fill="none" stroke="${on?'var(--accent)':'var(--border)'}" stroke-width="${on?2.5:1.5}" class="gear-ring"/><circle cx="0" cy="0" r="${on?9:7}" fill="${on?'var(--accent)':'var(--bg)'}" stroke="${g.color}" stroke-width="2" class="gear-hub"/><text x="0" y="4" text-anchor="middle" fill="${on?'var(--bg)':g.color}" font-size="11" font-weight="600">${l5Gears.indexOf(g)+1}</text></g>`;
     s+=`<text x="${g.x}" y="${g.y+r+13}" fill="var(--text-primary)" font-size="10" font-weight="500" text-anchor="middle">${g.label}</text>`;
-    s+=`<text x="${g.x}" y="${g.y+r+24}" fill="var(--text-tertiary)" font-size="9" text-anchor="middle">${g.sub}</text>`;
+    s+=`<text x="${g.x}" y="${g.y+r+24}" fill="var(--text-tertiary)" font-size="9" text-anchor="middle">${grade===5?g.sub5:g.sub}</text>`;
   });
   const c=l5Calc();
   s+=`<g transform="translate(${W-55},${H/2})"><rect x="-42" y="-22" width="84" height="44" rx="8" fill="var(--bg-elevated)" stroke="var(--border)" stroke-width="1.5"/><text x="0" y="-6" text-anchor="middle" fill="var(--text-tertiary)" font-size="9">BNO</text><text x="0" y="12" text-anchor="middle" fill="var(--text-primary)" font-size="15" font-weight="600" font-variant-numeric="tabular-nums">$${c.price.toFixed(2)}</text></g>`;
@@ -121,7 +122,9 @@ function renderL5(){
   $('l5-machine').querySelectorAll('.gear').forEach(g=>{ g.onclick=()=>{ l5Gear=g.dataset.key; renderL5(); }; });
 
   const calc=l5Calc();
-  $('l5-output').innerHTML=`<div class="r-eq">BNO estimated NAV per share</div><div class="r-num">$${calc.price.toFixed(2)}</div><div class="r-label">Roll yield: ${calc.rollYield>0?'+':''}${calc.rollYield.toFixed(2)}% · Expenses: ${l5Exp}%/yr</div>`;
+  $('l5-output').innerHTML=grade===5
+    ?`<div class="r-eq">what one BNO share is worth</div><div class="r-num">$${calc.price.toFixed(2)}</div><div class="r-label">Swap effect: ${calc.rollYield>0?'+':''}${calc.rollYield.toFixed(2)}% · Fee: ${l5Exp}% a year</div>`
+    :`<div class="r-eq">BNO estimated NAV per share</div><div class="r-num">$${calc.price.toFixed(2)}</div><div class="r-label">Roll yield: ${calc.rollYield>0?'+':''}${calc.rollYield.toFixed(2)}% · Expenses: ${l5Exp}%/yr</div>`;
 
   const g=l5Gears.find(x=>x.key===l5Gear);
   let h=`<div class="detail-panel"><h4>Gear ${l5Gears.indexOf(g)+1}: ${g.label}</h4>`;
@@ -130,7 +133,7 @@ function renderL5(){
     h+=`<div class="slider-row"><label>Brent futures</label><input type="range" id="l5-brent" min="70" max="140" step="0.5" value="${l5Brent}"><span class="slider-val" id="l5v-brent">$${l5Brent.toFixed(2)}</span></div>`;
   } else if(l5Gear==='roll'){
     const isContango=l5Next>l5Brent;
-    h+=`<p>${grade===5?'Every so often, BNO swaps an old oil promise for a new one. Sometimes the new one costs more (contango = loss). Sometimes less (backwardation = gain).':'USCF rolls the benchmark into the next month as expiration approaches. The price difference is the roll yield.'}</p>`;
+    h+=`<p>${grade===5?'Every so often, BNO swaps an old oil promise for a new one. Sometimes the new one costs more, and BNO loses a little. Sometimes it costs less, and BNO gains a little.':'USCF rolls the benchmark into the next month as expiration approaches. The price difference is the roll yield.'}</p>`;
     h+=`<div class="roll-vis"><div class="roll-barrel"><div class="rl">Near-month</div><div class="rp" style="color:var(--accent)">$${l5Brent.toFixed(2)}</div></div><div class="roll-arrow">→</div><div class="roll-barrel"><div class="rl">Next-month</div><div class="rp" style="color:var(--c3)">$${l5Next.toFixed(2)}</div><span class="roll-tag" style="background:${isContango?'rgba(210,153,34,0.12)':'rgba(63,185,80,0.12)'};color:${isContango?'var(--c3)':'var(--c2)'}">${isContango?'Contango':'Backwardation'}</span></div></div>`;
     h+=`<div class="slider-row"><label>Next-month price</label><input type="range" id="l5-next" min="70" max="150" step="0.5" value="${l5Next}"><span class="slider-val" id="l5v-next">$${l5Next.toFixed(2)}</span></div>`;
   } else if(l5Gear==='collateral'){
@@ -164,11 +167,15 @@ function refreshL5(){
 }
 
 function renderHolders(){
+  const sub=$('l5-holders-sub');
+  if(sub) sub.textContent=grade===5
+    ?'BNO is a fund people can buy shares of. Who actually owns those shares?'
+    :'BNO is an ETF, but who actually owns the shares? The holder base matters for liquidity, volatility, and how the product behaves in a crisis.';
   const grid=$('l5-holders');
   grid.innerHTML=l5Holders.map(h=>{
     const on=h.key===l5HolderOpen;
     const desc=grade===5?h.desc5:(grade===8?h.desc8:h.desc12);
-    return `<div class="card${on?' on':''}${h.notIncluded?' not-included':''}" data-key="${h.key}" style="padding:14px 16px;"><div class="hh-label" style="color:${h.color}">${h.notIncluded?'EXCLUDED':'HOLDER TYPE'}</div><div class="hh-title">${h.label}</div></div>`;
+    return `<div class="card${on?' on':''}${h.notIncluded?' not-included':''}" data-key="${h.key}" style="padding:14px 16px;"><div class="hh-label" style="color:${h.color}">${h.notIncluded?'EXCLUDED':'HOLDER TYPE'}</div><div class="hh-title">${grade===5?l5HolderLabel5[h.key]:h.label}</div></div>`;
   }).join('');
   grid.querySelectorAll('.card').forEach(c=>{
     c.onclick=()=>{ l5HolderOpen=c.dataset.key; renderHolders(); };
@@ -176,7 +183,10 @@ function renderHolders(){
 
   const h=l5Holders.find(x=>x.key===l5HolderOpen);
   const desc=grade===5?h.desc5:(grade===8?h.desc8:h.desc12);
-  $('l5-holder-detail').innerHTML=`<div class="detail-panel" style="border-left:3px solid ${h.color};"><h4>${h.label}</h4><p>${desc}</p>${h.notIncluded?'<div class="note">This is structurally important. BNO demand is driven by active allocation decisions, not passive equity inflows.</div>':''}</div>`;
+  const notNote=grade===5
+    ?'Index funds never buy BNO automatically. Everyone who owns it chose it.'
+    :'This is structurally important. BNO demand is driven by active allocation decisions, not passive equity inflows.';
+  $('l5-holder-detail').innerHTML=`<div class="detail-panel" style="border-left:3px solid ${h.color};"><h4>${grade===5?l5HolderLabel5[h.key]:h.label}</h4><p>${desc}</p>${h.notIncluded?'<div class="note">'+notNote+'</div>':''}</div>`;
 }
 
 function onDateChange() {

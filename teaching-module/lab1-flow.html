@@ -50,9 +50,22 @@ function renderL1() {
   });
 
   const it = items.find(x => x.id === l1Open);
-  const what = it.unit==='tankers_per_night' ? 'ship movements — not oil volume' : COMM[it.commodity];
-  const dir = it.scope==='ship_transits_in_and_out' ? 'both directions — inbound tankers travel empty' : 'outbound';
-  $('l1-detail').innerHTML = `<div class="detail-panel"><h4>${it.speaker} — ${figText(it)}</h4><p><strong>What:</strong> ${what}</p><p><strong>Where:</strong> ${SCOPE[it.scope]}</p><p><strong>Direction:</strong> ${dir}</p><p><strong>Window:</strong> ${WINDOW[it.period]}</p><p><strong>Source:</strong> ${EVIDENCE[it.evidence]}</p><p><strong>Checkability:</strong> ${it.check}</p>${it.differs?(()=>{const o=items.find(x=>x.id===it.differs);return '<p><strong>Figures differ:</strong> compare with '+o.speaker+' — '+figText(o)+'. Both readings are shown equal-weight; the difference is unverified, and neither card wins. <a href="#" id="l1-goto" data-goto="'+o.id+'">View the other card →</a></p>';})():''}<div class="note">"${it.quote}" — ${it.source}</div></div>`;
+  const g5 = grade === 5;
+  const CHECK5 = {
+    c1:'No one outside the government can check this number.',
+    c2:'Can be checked later, against official export numbers.',
+    c3:'Matches ship tracking — but it counts ships, not oil.',
+    c4:'Can be checked when loading data comes out.',
+    c5:'No one can check this — there is no public count for the whole region.',
+  };
+  const EVIDENCE5 = {
+    government_estimate:'a government estimate — the data behind it is secret',
+    commercial_tracker_model:'a company’s estimate, reported in the news',
+    activity_index:'a count of ship signals — not barrels',
+  };
+  const what = it.unit==='tankers_per_night' ? (g5?'ship movements — not oil':'ship movements — not oil volume') : COMM[it.commodity];
+  const dir = it.scope==='ship_transits_in_and_out' ? (g5?'both directions — ships coming in are empty':'both directions — inbound tankers travel empty') : 'outbound';
+  $('l1-detail').innerHTML = `<div class="detail-panel"><h4>${it.speaker} — ${figText(it)}</h4><p><strong>What:</strong> ${what}</p><p><strong>Where:</strong> ${SCOPE[it.scope]}</p><p><strong>Direction:</strong> ${dir}</p><p><strong>Window:</strong> ${WINDOW[it.period]}</p><p><strong>Source:</strong> ${g5?EVIDENCE5[it.evidence]:EVIDENCE[it.evidence]}</p><p><strong>${g5?'Can we check it?':'Checkability:'}</strong> ${g5?CHECK5[it.id]:it.check}</p>${it.differs?(()=>{const o=items.find(x=>x.id===it.differs);return '<p><strong>Figures differ:</strong> '+(g5?'Another card gives a different number for the same thing: '+o.speaker+' — '+figText(o)+'. Nobody knows yet which is right.':'compare with '+o.speaker+' — '+figText(o)+'. Both readings are shown equal-weight; the difference is unverified, and neither card wins.')+' <a href="#" id="l1-goto" data-goto="'+o.id+'">View the other card →</a></p>';})():''}<div class="note">"${it.quote}" — ${it.source}</div></div>`;
   const goto=$('l1-goto'); if(goto) goto.onclick=(e)=>{e.preventDefault(); l1Open=goto.dataset.goto; renderL1();};
 
   // Schematic
@@ -88,7 +101,7 @@ function renderL1() {
     if (lit) s += `<circle r="2" fill="var(--accent)"><animateMotion dur="2s" repeatCount="indefinite" path="M65,${c.y} Q${cp},${c.y} ${SX},${c.y < 170 ? 155 : (c.y > 230 ? 215 : 185)}"/></circle>`;
   });
   if (isHormuz || isRegional) {
-    s += `<text x="${(60+SX)/2}" y="${245-9}" fill="#d29922" font-size="8.5" font-family="var(--font-mono)" text-anchor="middle">fully counted — share not separable in public data</text>`;
+    s += `<text x="${(60+SX)/2}" y="${245-9}" fill="#d29922" font-size="8.5" font-family="var(--font-mono)" text-anchor="middle">counted in the total — no public number says how much</text>`;
   }
   s += `<rect x="${SX}" y="70" width="24" height="200" rx="4" fill="${isShips?'rgba(88,166,255,0.3)':'rgba(255,255,255,0.06)'}" stroke="${isShips?'var(--accent)':'rgba(255,255,255,0.15)'}" stroke-width="1.5"/>`;
   s += `<text x="${SX+12}" y="62" fill="${isShips?'var(--accent)':'rgba(255,255,255,0.3)'}" font-size="10" font-family="var(--font-mono)" text-anchor="middle">HORMUZ</text>`;
@@ -120,7 +133,7 @@ function renderL1() {
   s += `<circle cx="${800-150}" cy="56" r="3" fill="#d29922"/>`;
   s += `<text x="${800-142}" y="59" fill="rgba(255,255,255,0.4)" font-size="9" font-family="var(--font-mono)">in total — not separable</text>`;
   if (isShips) { s += `<text x="${800-150}" y="76" font-size="12" fill="#d29922">🚢</text>`; s += `<text x="${800-135}" y="78" fill="rgba(255,255,255,0.4)" font-size="9" font-family="var(--font-mono)">ship count</text>`; }
-  s += `<text x="400" y="${H-4}" fill="rgba(255,255,255,0.2)" font-size="9" font-family="var(--font-mono)" text-anchor="middle">connections only — geometry never encodes quantity</text>`;
+  s += `<text x="400" y="${H-4}" fill="rgba(255,255,255,0.2)" font-size="9" font-family="var(--font-mono)" text-anchor="middle">lines show connections, not amounts</text>`;
   s += `</svg>`;
   $('l1-schematic').innerHTML = s;
 }

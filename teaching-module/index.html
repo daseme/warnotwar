@@ -27,7 +27,7 @@
 
   <div class="landing-hero">
     <h1>How a Strait Becomes a Price</h1>
-    <p>Eight interactive labs that trace the chain from a geopolitical event in the Persian Gulf to the number on your screen. Follow the oil, measure the cushion, guess the market, meet Brent, and see what BNO actually is.</p>
+    <p>Eight interactive labs that trace the chain from an event in the Persian Gulf to the number on your screen. Follow the oil, measure the cushion, guess the market, meet Brent, and see what BNO actually is.</p>
   </div>
 
   <!-- Chain Diagram -->
@@ -96,11 +96,11 @@
       <!-- Labels -->
       <text x="62" y="34" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-size="9" font-family="var(--font-mono)" letter-spacing="1">DATA</text>
       <text x="238" y="34" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-size="9" font-family="var(--font-mono)" letter-spacing="1">BUFFER</text>
-      <text x="412" y="34" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-size="9" font-family="var(--font-mono)" letter-spacing="1">EXPECTATIONS</text>
+      <text x="412" y="34" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-size="9" font-family="var(--font-mono)" letter-spacing="1">GUESSES</text>
       <text x="588" y="34" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-size="9" font-family="var(--font-mono)" letter-spacing="1">PRICE</text>
       <text x="762" y="34" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-size="9" font-family="var(--font-mono)" letter-spacing="1">PRODUCT</text>
-      <text x="62" y="254" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-size="9" font-family="var(--font-mono)" letter-spacing="1">SYNTHESIS</text>
-      <text x="238" y="254" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-size="9" font-family="var(--font-mono)" letter-spacing="1">NARRATIVE</text>
+      <text x="62" y="254" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-size="9" font-family="var(--font-mono)" letter-spacing="1">PUT IT TOGETHER</text>
+      <text x="238" y="254" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-size="9" font-family="var(--font-mono)" letter-spacing="1">STORY</text>
       <text x="412" y="254" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-size="9" font-family="var(--font-mono)" letter-spacing="1">TEST</text>
     </svg>
   </div>
@@ -118,12 +118,12 @@
     <a href="lab2-buffer.html" class="lab-card">
       <div class="lc-num">2</div>
       <div class="lc-title">The Cushion</div>
-      <div class="lc-desc">Interactive tank simulator. Change storage, refinery use, and SPR. Watch days-of-supply recalculate in real time.</div>
+      <div class="lc-desc">An interactive tank. Change storage, refinery use, and the reserve. Watch days of supply change as you slide.</div>
     </a>
     <a href="lab3-expectations.html" class="lab-card">
       <div class="lc-num">3</div>
       <div class="lc-title">The Market Guesses</div>
-      <div class="lc-desc">Markets trade expectations, not yesterday's data. Assign probabilities and see what sentiment emerges.</div>
+      <div class="lc-desc">The market tries to guess the future. Make your own guesses and see what they add up to.</div>
     </a>
     <a href="lab4-brent.html" class="lab-card">
       <div class="lc-num">4</div>
@@ -173,7 +173,7 @@ function renderScenario() {
   h += '<div class="card" style="cursor:default;padding:10px 12px;"><div class="c-label">Brent</div><div class="c-value" style="font-size:18px;">' + fmt$(d.brent) + '</div><div style="font-size:11px;color:' + (brentChg>0?'var(--c4)':'var(--c2)') + ';">' + (brentChg>0?'▲':'▼') + ' ' + Math.abs(brentChg) + '%</div></div>';
   h += '<div class="card" style="cursor:default;padding:10px 12px;"><div class="c-label">BNO</div><div class="c-value" style="font-size:18px;">' + fmt$(d.bno) + '</div><div style="font-size:11px;color:' + (bnoChg>0?'var(--c4)':'var(--c2)') + ';">' + (bnoChg>0?'▲':'▼') + ' ' + Math.abs(bnoChg) + '%</div></div>';
   h += '</div>';
-  h += '<div style="margin-top:10px;font-size:12px;color:var(--text-tertiary);line-height:1.5;"><strong>News:</strong> ' + d.news + '. Saudi Yanbu bypass at ' + d.yanbu + '% of baseline. UAE Fujairah at ' + d.fujairah + '%.</div>';
+  h += '<div style="margin-top:10px;font-size:12px;color:var(--text-tertiary);line-height:1.5;"><strong>News:</strong> ' + d.news + '. Saudi Yanbu bypass at ' + d.yanbu + '% of ' + (grade===5?'normal':'baseline') + '. UAE Fujairah at ' + d.fujairah + '%.</div>';
   h += '</div>';
   el.innerHTML = h;
 }

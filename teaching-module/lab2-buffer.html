@@ -169,19 +169,21 @@ function renderLive(){
   drawTank(l2ShowPreshock?preComm:ls.commercial_mbbl, l2ShowPreshock?preSpr:ls.spr_mbbl);
   if(ctrl) ctrl.innerHTML='<div class="live-record"><div class="lr-head">LIVE RECORD · EIA · week ending '+m.last_week+' · <a href="/oilflows.html">full instrument</a></div>'+
     '<p>Commercial stocks <strong>'+ls.commercial_mbbl+'M bbl</strong> · Strategic Petroleum Reserve <strong>'+ls.spr_mbbl+'M bbl</strong> · refinery inputs <strong>'+ls.refinery_inputs_mbd+' mb/d</strong></p>'+
-    '<p>Since the pre-shock week ('+sp.preshock_anchor_week+'): SPR <strong>'+sp.spr_delta_since_preshock_mbbl+'M</strong> · commercial <strong>'+sp.commercial_delta_since_preshock_mbbl+'M</strong> — the cushion is being drawn from the strategic side. SPR barrels are sold into the commercial system, so steady commercial stocks during releases is the expected mechanical signature.</p>'+
+    '<p>Since the pre-shock week ('+sp.preshock_anchor_week+'): SPR <strong>'+sp.spr_delta_since_preshock_mbbl+'M</strong> · commercial <strong>'+sp.commercial_delta_since_preshock_mbbl+'M</strong> — the cushion is being drawn from the strategic side. SPR barrels are sold into the commercial system, so when releases reach the market the SPR falls while commercial stocks hold roughly steady.</p>'+
     '<button class="lr-toggle" id="l2-pre">'+(l2ShowPreshock?'Show today':'Show the pre-shock tank')+'</button>'+
     (l2ShowPreshock?'<span style="font-size:11px;color:var(--text-tertiary);margin-left:8px;">tank shows '+sp.preshock_anchor_week+'</span>':'')+
     '</div>';
   const pre=$('l2-pre'); if(pre) pre.onclick=()=>{ l2ShowPreshock=!l2ShowPreshock; renderL2(); };
-  if(result) result.innerHTML='<div class="r-eq">days of supply = stored oil ÷ refinery inputs</div><div class="r-num" style="color:var(--c3)">'+m.latest_days_supply_incl_spr+'</div><div class="r-label">days — the '+(m.days_rank_from_low===1?'lowest':m.days_rank_from_low+'nd-lowest')+' of '+m.weeks_observed.toLocaleString()+' weekly readings since 1982</div><div class="r-note">A cushion ratio, not a countdown — production and imports continue, and release rates are policy decisions.</div>';
+  const rk=m.days_rank_from_low;
+  const rankTxt=rk===1?'lowest':rk+(rk===2?'nd':rk===3?'rd':'th')+'-lowest';
+  if(result) result.innerHTML='<div class="r-eq">days of supply = stored oil ÷ refinery inputs</div><div class="r-num" style="color:var(--c3)">'+m.latest_days_supply_incl_spr+'</div><div class="r-label">days — the '+rankTxt+' of '+m.weeks_observed.toLocaleString()+' weekly readings since 1982</div><div class="r-note">Oil keeps arriving while it is used — production and imports continue, and release rates are policy decisions.</div>';
   if(ins){
     let h='';
     if(liveProd){
       const g=liveProd.gasoline_days_cover, dz=liveProd.distillate_days_cover, lt=liveProd.latest;
       h='<div class="live-record"><div class="lr-head">SAME EQUATION, OTHER TANKS · EIA · week ending '+liveProd.last_week+'</div>'+
         '<p>Gasoline: <strong>'+g.latest+' days of cover</strong> · Distillate (diesel): <strong>'+dz.latest+' days</strong> ('+dz.rank_from_low+'-lowest of '+dz.weeks_observed.toLocaleString()+' weeks since 1991) · products supplied '+lt.products_supplied_mbd+' mb/d</p>'+
-        '<p style="color:var(--text-secondary)">diesel days = distillate stocks ÷ distillate supplied — the crude equation generalizes to every fuel.</p></div>';
+        '<p style="color:var(--text-secondary)">diesel days = distillate stocks ÷ distillate supplied — the same equation works for every fuel.</p></div>';
     }
     ins.innerHTML=h;
   }

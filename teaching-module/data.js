@@ -37,11 +37,11 @@ const EVIDENCE = { government_estimate:'U.S. government estimate — underlying 
 // Only factual reads of the freeze frame are ever scored; causal
 // attribution has no answer key and is shown unscored after the reveal.
 const chalReasonsList = [
-  {key:'flow',label:'Hormuz activity is below 15% of baseline',correct:d=>d.hormuz<15},
-  {key:'bypass',label:'Yanbu activity is above its baseline',correct:d=>d.yanbu>110},
-  {key:'buffer',label:'The cushion is below 45 days',correct:d=>d.buffer<45},
-  {key:'brent',label:'Brent is up more than 25% from Feb 23',correct:d=>d.brent>89.9},
-  {key:'calm',label:'Hormuz activity is above half of baseline',correct:d=>d.hormuz>50}
+  {key:'flow',label:'Hormuz activity is below 15% of baseline',label5:'Ship traffic is below 15% of normal',correct:d=>d.hormuz<15},
+  {key:'bypass',label:'Yanbu activity is above its baseline',label5:'Yanbu is busier than normal',correct:d=>d.yanbu>110},
+  {key:'buffer',label:'The cushion is below 45 days',label5:'The oil cushion is below 45 days',correct:d=>d.buffer<45},
+  {key:'brent',label:'Brent is up more than 25% from Feb 23',label5:'The oil price is up more than 25% since Feb 23',correct:d=>d.brent>89.9},
+  {key:'calm',label:'Hormuz activity is above half of baseline',label5:'Ship traffic is above half of normal',correct:d=>d.hormuz>50}
 ];
 
 
@@ -49,27 +49,27 @@ const chalReasonsList = [
 // from `dates` so the two can never drift again.
 const storyMeta = {
   feb23: { title:'The Calm Before', subtitle:'Tanker traffic through Hormuz is normal. The market is relaxed.', signals:[
-    {icon:'\u{1F6A2}',title:'Hormuz traffic',desc:'Visible tanker transits at baseline levels',valueFrom:'hormuz',color:'rgba(63,185,80,0.15)',textColor:'#3fb950'},
-    {icon:'\u{1F6E2}\uFE0F',title:'Oil cushion',desc:'U.S. combined stocks at comfortable levels',valueFrom:'buffer',color:'rgba(63,185,80,0.15)',textColor:'#3fb950'},
-    {icon:'\u{1F4F0}',title:'News',desc:'No significant supply disruptions reported',value:'Calm',color:'rgba(255,255,255,0.06)',textColor:'var(--text-secondary)'}]},
+    {icon:'\u{1F6A2}',title:'Hormuz traffic',desc:'Tanker traffic at its normal level',valueFrom:'hormuz',color:'rgba(63,185,80,0.15)',textColor:'#3fb950'},
+    {icon:'\u{1F6E2}\uFE0F',title:'Oil cushion',desc:'Plenty of stored oil',valueFrom:'buffer',color:'rgba(63,185,80,0.15)',textColor:'#3fb950'},
+    {icon:'\u{1F4F0}',title:'News',desc:'Nothing unusual reported',value:'Calm',color:'rgba(255,255,255,0.06)',textColor:'var(--text-secondary)'}]},
   mar02: { title:'The First Rattle', subtitle:'Traffic starts falling. Traders begin to notice.', signals:[
-    {icon:'\u{1F6A2}',title:'Hormuz traffic',desc:'Visible transits down sharply from baseline',valueFrom:'hormuz',color:'rgba(210,153,34,0.15)',textColor:'#d29922'},
-    {icon:'\u{1F6E2}\uFE0F',title:'Oil cushion',desc:'Still adequate but starting to thin',valueFrom:'buffer',color:'rgba(210,153,34,0.15)',textColor:'#d29922'},
-    {icon:'\u{1F4F0}',title:'News',desc:'Reports of escalating tensions in the Gulf',value:'Concern',color:'rgba(210,153,34,0.15)',textColor:'#d29922'}]},
+    {icon:'\u{1F6A2}',title:'Hormuz traffic',desc:'Tanker traffic falling fast',valueFrom:'hormuz',color:'rgba(210,153,34,0.15)',textColor:'#d29922'},
+    {icon:'\u{1F6E2}\uFE0F',title:'Oil cushion',desc:'Still okay, but shrinking',valueFrom:'buffer',color:'rgba(210,153,34,0.15)',textColor:'#d29922'},
+    {icon:'\u{1F4F0}',title:'News',desc:'Reports of rising tensions in the Gulf',value:'Concern',color:'rgba(210,153,34,0.15)',textColor:'#d29922'}]},
   mar07: { title:'The Halt', subtitle:'Hormuz traffic collapses. In this scenario, prices jump sharply.', signals:[
-    {icon:'\u{1F6A2}',title:'Hormuz traffic',desc:'Near-total collapse of visible transits',valueFrom:'hormuz',color:'rgba(248,81,73,0.15)',textColor:'#f85149'},
-    {icon:'\u{1F6E2}\uFE0F',title:'Oil cushion',desc:'Below 5-year average. System is tight.',valueFrom:'buffer',color:'rgba(248,81,73,0.15)',textColor:'#f85149'},
+    {icon:'\u{1F6A2}',title:'Hormuz traffic',desc:'Ship traffic has almost stopped',valueFrom:'hormuz',color:'rgba(248,81,73,0.15)',textColor:'#f85149'},
+    {icon:'\u{1F6E2}\uFE0F',title:'Oil cushion',desc:'Lower than usual. Not much to spare.',valueFrom:'buffer',color:'rgba(248,81,73,0.15)',textColor:'#f85149'},
     {icon:'\u{1F4F0}',title:'News',desc:'Officials say most oil still flows; independent trackers see far less.',value:'Crisis',color:'rgba(248,81,73,0.15)',textColor:'#f85149'},
-    {icon:'\u{1F504}',title:'Bypass routes',desc:'Yanbu and Fujairah increasing but insufficient',valueFrom:'yanbuDelta',color:'rgba(88,166,255,0.15)',textColor:'#58a6ff'}]},
+    {icon:'\u{1F504}',title:'Bypass routes',desc:'Yanbu and Fujairah busier, but not enough',valueFrom:'yanbuDelta',color:'rgba(88,166,255,0.15)',textColor:'#58a6ff'}]},
   mar12: { title:'The Standstill', subtitle:'The strait is effectively closed. Prices keep climbing.', signals:[
-    {icon:'\u{1F6A2}',title:'Hormuz traffic',desc:'Effectively zero visible transits',valueFrom:'hormuz',color:'rgba(248,81,73,0.15)',textColor:'#f85149'},
-    {icon:'\u{1F6E2}\uFE0F',title:'Oil cushion',desc:'Critically low in this scenario.',valueFrom:'buffer',color:'rgba(248,81,73,0.15)',textColor:'#f85149'},
-    {icon:'\u{1F4F0}',title:'News',desc:'Escort operations announced; no reopening announced.',value:'Severe',color:'rgba(248,81,73,0.15)',textColor:'#f85149'},
-    {icon:'\u{1F504}',title:'Bypass routes',desc:'In this scenario, bypass runs at its assumed ceiling — below Hormuz volumes.',value:'Max',color:'rgba(88,166,255,0.15)',textColor:'#58a6ff'}]},
+    {icon:'\u{1F6A2}',title:'Hormuz traffic',desc:'Almost no ships moving',valueFrom:'hormuz',color:'rgba(248,81,73,0.15)',textColor:'#f85149'},
+    {icon:'\u{1F6E2}\uFE0F',title:'Oil cushion',desc:'Very low in this scenario.',valueFrom:'buffer',color:'rgba(248,81,73,0.15)',textColor:'#f85149'},
+    {icon:'\u{1F4F0}',title:'News',desc:'Navy escorts announced. The strait stays shut.',value:'Severe',color:'rgba(248,81,73,0.15)',textColor:'#f85149'},
+    {icon:'\u{1F504}',title:'Bypass routes',desc:'Bypass routes are maxed out in this scenario — still less than Hormuz carried.',value:'Max',color:'rgba(88,166,255,0.15)',textColor:'#58a6ff'}]},
   apr07: { title:'The Peak', subtitle:'Partial reopening begins; prices peak in this scenario.', signals:[
-    {icon:'\u{1F6A2}',title:'Hormuz traffic',desc:'Minimal traffic resuming. Very slow recovery.',valueFrom:'hormuz',color:'rgba(210,153,34,0.15)',textColor:'#d29922'},
-    {icon:'\u{1F6E2}\uFE0F',title:'Oil cushion',desc:'Depleted. Takes months to rebuild.',valueFrom:'buffer',color:'rgba(248,81,73,0.15)',textColor:'#f85149'},
-    {icon:'\u{1F4F0}',title:'News',desc:'Diplomatic talks underway. Market remains skeptical.',value:'Tense',color:'rgba(210,153,34,0.15)',textColor:'#d29922'},
+    {icon:'\u{1F6A2}',title:'Hormuz traffic',desc:'A little traffic returning. Recovery is slow.',valueFrom:'hormuz',color:'rgba(210,153,34,0.15)',textColor:'#d29922'},
+    {icon:'\u{1F6E2}\uFE0F',title:'Oil cushion',desc:'Used up. Takes months to refill.',valueFrom:'buffer',color:'rgba(248,81,73,0.15)',textColor:'#f85149'},
+    {icon:'\u{1F4F0}',title:'News',desc:'Peace talks under way. The market is not convinced.',value:'Tense',color:'rgba(210,153,34,0.15)',textColor:'#d29922'},
     {icon:'\u{1F4C8}',title:'Brent peak',desc:'Highest price since the crisis began.',valueFrom:'brent',color:'rgba(248,81,73,0.15)',textColor:'#f85149'}]},
 };
 function _sigVal(d, s) {
