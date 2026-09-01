@@ -150,9 +150,9 @@ function renderL3() {
         <div id="l3-gauge" class="gauge-fill${sent < 0 ? ' negative' : ''}" style="width:${Math.abs(sent) * 50}%;background:${sent > 0 ? 'var(--c4)' : (sent < 0 ? 'var(--c2)' : 'transparent')}"></div>
       </div>
       <div class="gauge-labels">
-        <span>${grade === 8 ? 'Bearish' : 'Bearish (normalizes)'}</span>
+        <span>${grade === 8 ? 'Bearish (expects prices to fall)' : 'Bearish (normalizes)'}</span>
         <span>Neutral</span>
-        <span>${grade === 8 ? 'Bullish' : 'Bullish (scarcity)'}</span>
+        <span>${grade === 8 ? 'Bullish (expects prices to rise)' : 'Bullish (scarcity)'}</span>
       </div>
       <div class="gauge-center" id="l3-gauge-text">
         <strong>${sent < -0.3 ? 'Expects supply to normalize' : (sent > 0.3 ? 'Expects sustained scarcity' : 'Sees mixed signals')}</strong>
@@ -218,13 +218,13 @@ function renderCandidates(){
   liveCandidates.forEach(c=>{ if(!(c.key in l3cand)) l3cand[c.key]=50; });
   let h='<div class="live-record"><div class="lr-head">FROM THE LIVE INVESTIGATION · not part of the simulation · <a href="/oilflows.html">warnotwar.com/oilflows</a></div>'+
     '<h4 style="margin:8px 0 4px;">The real open question</h4>'+
-    '<p style="font-size:13px;color:var(--text-secondary);line-height:1.6;">In the real 2026 record, flow reads far below baseline and the cushion is historically thin — yet the price sits well below its peak. Rate how consistent each candidate explanation feels with the evidence so far. These are <em>independent</em> ratings: the explanations are not exclusive, several can be true at once, and they do not need to add up to anything.</p>';
+    '<p style="font-size:13px;color:var(--text-secondary);line-height:1.6;">In the real 2026 record, flow reads far below baseline and the cushion is historically thin — yet the price sits well below its peak. Rate how consistent each possible explanation feels with the evidence so far. These are <em>independent</em> ratings: the explanations are not exclusive, several can be true at once, and they do not need to add up to anything.</p>';
   liveCandidates.forEach(c=>{
     h+='<div class="cand-row"><div class="cand-head"><span>'+c.label+'</span><span class="c-tag tag-info">explains '+c.explains+'</span></div>'+
       '<div class="slider-row"><label style="font-size:11px;color:var(--text-tertiary)">implausible</label>'+
       '<input type="range" data-cand="'+c.key+'" min="0" max="100" value="'+l3cand[c.key]+'">'+
       '<span class="slider-val" id="cv-'+c.key+'">'+l3cand[c.key]+'</span></div>'+
-      '<div class="cand-disc">what would discriminate: '+c.disc+'</div></div>';
+      '<div class="cand-disc">what would settle it: '+c.disc+'</div></div>';
   });
   h+='<div id="l3-spread" class="cand-disc" style="margin-top:8px;"></div>'+
     '<p style="font-size:11px;color:var(--text-tertiary);margin-top:8px;">There is no answer key and no aggregate score — attribution has none. Some rows resolve when their data arrives; check the live site then.</p></div>';
@@ -236,7 +236,7 @@ function renderCandidates(){
     const range=Math.max(...vals)-Math.min(...vals);
     spreadEl.textContent = range<20
       ? 'You rate these similarly — genuinely undecided between stories is a defensible position.'
-      : 'You find some stories much more plausible than others — the discriminators above say which data would test that.';
+      : 'You find some stories much more plausible than others — the "what would settle it" lines say which data would test that.';
   };
   el.querySelectorAll('input[data-cand]').forEach(s=>{
     s.oninput=()=>{ l3cand[s.dataset.cand]=+s.value; $('cv-'+s.dataset.cand).textContent=s.value; upd(); };

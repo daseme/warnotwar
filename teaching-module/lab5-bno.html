@@ -58,7 +58,7 @@ const l5Holders=[
   {
     key:'retail', label:'Retail investors',
     desc5:'Regular people buy BNO through apps like Robinhood or Fidelity. They want oil exposure without opening a futures account.',
-    desc8:'Direct retail purchase via brokerage accounts. BNO offers commodity exposure without margin requirements or futures knowledge. Retail flow can be sentiment-driven and procyclical.',
+    desc8:'Direct retail purchase via brokerage accounts. BNO offers oil exposure without opening a futures account. Retail buying tends to follow the mood — money comes in when oil is in the headlines.',
     desc12:'Direct retail ownership through self-directed brokerage accounts. Retail flows into BNO are often sentiment-driven and procyclical — inflows spike when oil makes headlines. This creates a "dumb money" overlay on top of the underlying futures price. Retail holders do not create/redeem directly; they trade on secondary markets.',
     color:'var(--c1)'
   },
@@ -79,7 +79,7 @@ const l5Holders=[
   {
     key:'aps', label:'Authorized Participants',
     desc5:'Special traders who can create or destroy BNO shares to keep the price fair. They don\'t hold BNO for long.',
-    desc8:'APs (usually market makers) create/redeem shares at NAV to arbitrage premium/discounts. Their holdings are temporary and mechanical.',
+    desc8:'APs (usually market makers) create and redeem shares at NAV, profiting when the market price drifts from it — which pulls the two prices back together. Their holdings are temporary and mechanical.',
     desc12:'Authorized Participants (typically large market makers like Jane Street, Citadel Securities) create and redeem Creation Units (25,000 shares) at NAV. AP holdings are transient — they exist only during the arbitrage window. AP activity is the mechanism that keeps BNO\'s market price tethered to NAV. In stressed markets, AP capacity constraints can cause premium/discount persistence.',
     color:'var(--c5)'
   },
@@ -133,7 +133,7 @@ function renderL5(){
     h+=`<div class="slider-row"><label>Brent futures</label><input type="range" id="l5-brent" min="70" max="140" step="0.5" value="${l5Brent}"><span class="slider-val" id="l5v-brent">$${l5Brent.toFixed(2)}</span></div>`;
   } else if(l5Gear==='roll'){
     const isContango=l5Next>l5Brent;
-    h+=`<p>${grade===5?'Every so often, BNO swaps an old oil promise for a new one. Sometimes the new one costs more, and BNO loses a little. Sometimes it costs less, and BNO gains a little.':'USCF rolls the benchmark into the next month as expiration approaches. The price difference is the roll yield.'}</p>`;
+    h+=`<p>${grade===5?'Every so often, BNO swaps an old oil promise for a new one. Sometimes the new one costs more, and BNO loses a little. Sometimes it costs less, and BNO gains a little.':'The fund\'s manager (USCF) rolls the benchmark into the next month as expiration approaches. The price difference is the roll yield.'}</p>`;
     h+=`<div class="roll-vis"><div class="roll-barrel"><div class="rl">Near-month</div><div class="rp" style="color:var(--accent)">$${l5Brent.toFixed(2)}</div></div><div class="roll-arrow">→</div><div class="roll-barrel"><div class="rl">Next-month</div><div class="rp" style="color:var(--c3)">$${l5Next.toFixed(2)}</div><span class="roll-tag" style="background:${isContango?'rgba(210,153,34,0.12)':'rgba(63,185,80,0.12)'};color:${isContango?'var(--c3)':'var(--c2)'}">${isContango?'Contango':'Backwardation'}</span></div></div>`;
     h+=`<div class="slider-row"><label>Next-month price</label><input type="range" id="l5-next" min="70" max="150" step="0.5" value="${l5Next}"><span class="slider-val" id="l5v-next">$${l5Next.toFixed(2)}</span></div>`;
   } else if(l5Gear==='collateral'){
@@ -143,7 +143,7 @@ function renderL5(){
     h+=`<p>${grade===5?'Running a fund costs money. BNO charges a small annual fee — like a tiny leak in a bucket.':'BNO\'s expense ratio is ~'+l5Exp+'% annually, deducted daily. Over 10 years, this drag compounds.'}</p>`;
     h+=`<div class="slider-row"><label>Expense ratio</label><input type="range" id="l5-exp" min="0" max="2" step="0.05" value="${l5Exp}"><span class="slider-val" id="l5v-exp">${l5Exp.toFixed(2)}%</span></div>`;
   } else if(l5Gear==='premium'){
-    h+=`<p>${grade===5?'BNO has two prices: what the fund says it\'s worth (NAV), and what people pay on the stock market. Usually almost the same.':'BNO trades on NYSE. APs create/redeem shares at NAV, which normally keeps market price close to NAV. In stress, premiums/discounts can widen.'}</p>`;
+    h+=`<p>${grade===5?'BNO has two prices: what the fund says it\'s worth (NAV), and what people pay on the stock market. Usually almost the same.':'BNO trades on NYSE. Special traders (Authorized Participants) create and destroy shares at NAV — the fund\'s own tally of a share\'s worth — which normally keeps the market price close to it. In stress, the two prices can drift apart.'}</p>`;
     h+=`<div class="slider-row"><label>Market premium</label><input type="range" id="l5-prem" min="-2" max="2" step="0.1" value="${l5Prem}"><span class="slider-val" id="l5v-prem">${l5Prem>0?'+':''}${l5Prem.toFixed(1)}%</span></div>`;
   }
   h+=`</div>`;
@@ -170,7 +170,9 @@ function renderHolders(){
   const sub=$('l5-holders-sub');
   if(sub) sub.textContent=grade===5
     ?'BNO is a fund people can buy shares of. Who actually owns those shares?'
-    :'BNO is an ETF, but who actually owns the shares? The holder base matters for liquidity, volatility, and how the product behaves in a crisis.';
+    :(grade===8
+      ?'BNO is an ETF, but who actually owns the shares? Who holds it shapes how easily it trades, how jumpy it is, and how it behaves in a crisis.'
+      :'BNO is an ETF, but who actually owns the shares? The holder base matters for liquidity, volatility, and how the product behaves in a crisis.');
   const grid=$('l5-holders');
   grid.innerHTML=l5Holders.map(h=>{
     const on=h.key===l5HolderOpen;

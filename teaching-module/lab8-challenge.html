@@ -138,10 +138,10 @@ function renderChallengeReveal(){
   });
   h+=`</div>`;
 
-  h+=`<div style="margin-top:10px;font-size:12px;color:var(--text-tertiary);line-height:1.6;">${g5?'Nobody scores the why. Stories about why prices moved have no answer key.':'Attribution is never scored: explanations such as scarcity expectations, bypass compensation, or expectations of quick resolution have no answer key.'}</div>`;
+  h+=`<div style="margin-top:10px;font-size:12px;color:var(--text-tertiary);line-height:1.6;">${g5?'Nobody scores the why. Stories about why prices moved have no answer key.':'The "why" is never scored: stories like fear of scarcity, relief from bypass routes, or hopes of a quick fix have no answer key.'}</div>`;
   h+=`<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);"><div style="font-size:12px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;font-weight:500;">One reading of the move</div>`;
   h+=`<div style="font-size:13px;line-height:1.7;color:var(--text-secondary);">`;
-  if(d.hormuz<10) h+=g5?`On ${d.label} in this scenario, ship traffic read ${d.hormuz}% of normal, Yanbu ${d.yanbu}%, the cushion ${d.buffer} days — and Brent stood at ${fmt$(d.brent)}, BNO at ${fmt$(d.bno)}. One story: traders feared oil would get scarce. But prices move for many reasons at once — no one can point to a single cause.`:`On ${d.label} in this scenario, Hormuz read ${d.hormuz}% of baseline, Yanbu ${d.yanbu}%, the cushion ${d.buffer} days — and Brent stood at ${fmt$(d.brent)}, BNO at ${fmt$(d.bno)}. One consistent story is scarcity expectations; prices aggregate many signals, and no single cause is observable.`;
+  if(d.hormuz<10) h+=g5?`On ${d.label} in this scenario, ship traffic read ${d.hormuz}% of normal, Yanbu ${d.yanbu}%, the cushion ${d.buffer} days — and Brent stood at ${fmt$(d.brent)}, BNO at ${fmt$(d.bno)}. One story: traders feared oil would get scarce. But prices move for many reasons at once — no one can point to a single cause.`:`On ${d.label} in this scenario, Hormuz read ${d.hormuz}% of baseline, Yanbu ${d.yanbu}%, the cushion ${d.buffer} days — and Brent stood at ${fmt$(d.brent)}, BNO at ${fmt$(d.bno)}. One consistent story is scarcity expectations; prices bundle many signals at once, and no single cause is visible.`;
   else if(d.hormuz<50) h+=g5?`Traffic was falling (${d.hormuz}% of normal) but no one knew how bad it would get. Prices often jump when no one is sure what happens next.`:`Traffic was deteriorating (${d.hormuz}% of baseline) but the full extent wasn't yet clear. Markets update beliefs as new signals arrive, and prices often move sharply during the uncertain phase — one pattern among several, not a law.`;
   else h+=g5?`Things looked normal in this scenario. BNO sat around ${fmt$(d.bno)}.`:`Conditions were relatively normal in this scenario; no major supply disruption was visible. BNO sat around ${fmt$(d.bno)}.`;
   h+=`</div></div>`;
@@ -252,7 +252,7 @@ function renderChallengeRealReveal(){
 
   const ann=tapeAnnotationsBetween(d,next);
   if(ann.length) h+=`<div style="margin-top:10px;font-size:12px;color:var(--text-tertiary);line-height:1.6;">${ann.map(a=>`Between these checkpoints the record contains the ${a.label}: ${fmt$(a.value)} on ${tapeDayFull(a.date)} — ${a.note}.`).join(' ')}</div>`;
-  h+=`<div style="margin-top:10px;font-size:12px;color:var(--text-tertiary);line-height:1.6;">Attribution is never scored: explanations such as scarcity expectations, bypass compensation, or expectations of quick resolution have no answer key. Candidate explanations for the real record are laid out at <a href="/oilflows.html">oilflows</a>.</div>`;
+  h+=`<div style="margin-top:10px;font-size:12px;color:var(--text-tertiary);line-height:1.6;">The "why" is never scored: stories like fear of scarcity, relief from bypass routes, or hopes of a quick fix have no answer key. Possible explanations for the real record are laid out at <a href="/oilflows.html">oilflows</a>.</div>`;
   h+=`</div>`;
   el.innerHTML=h;
   el.scrollIntoView({behavior:'smooth',block:'nearest'});

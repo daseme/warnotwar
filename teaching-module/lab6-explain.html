@@ -87,9 +87,9 @@ function renderL6(){
       const caveat=g5r?'One right guess can\'t prove your reasoning — and one wrong guess can\'t break it.':'One outcome can\'t validate or refute a line of reasoning.';
       $('l6-rl').innerHTML=correct?`<span style="color:var(--c2)">Correct direction.</span> ${caveat} BNO moved from ${fmt$(d.bno)} to ${fmt$(next.bno)} — <strong>${actualChg>0?'+':''}${actualChg.toFixed(1)}%</strong>.`:`BNO moved from ${fmt$(d.bno)} to ${fmt$(next.bno)} — <strong>${actualChg>0?'+':''}${actualChg.toFixed(1)}%</strong>.`;
       let note='';
-      if(d.hormuz<10&&actualChg>0) note=g5r?'Prices rose while almost no oil moved and the cushion was thin. One story: traders feared oil would get scarce. But prices move for many reasons at once — no one can point to a single cause.':'Prices rose while Hormuz traffic was near zero and the cushion was thin. One consistent story is scarcity expectations — but prices aggregate many signals, and no single cause is observable.';
+      if(d.hormuz<10&&actualChg>0) note=g5r?'Prices rose while almost no oil moved and the cushion was thin. One story: traders feared oil would get scarce. But prices move for many reasons at once — no one can point to a single cause.':'Prices rose while Hormuz traffic was near zero and the cushion was thin. One consistent story is scarcity expectations — but prices bundle many signals at once, and no single cause is visible.';
       else if(d.hormuz<50&&actualChg>0) note=g5r?'Traffic was falling but not gone. Prices often jump when no one is sure what happens next.':'Traffic was falling but not yet collapsed. Prices often move sharply amid uncertainty — one pattern among several, not a law.';
-      else note=g5r?'The market watches many signals at once. What matters is thinking through the chain: is oil moving, how big is the cushion, what do traders expect, what is the price.':'Markets aggregate many signals simultaneously. Reasoning through the chain (flow → buffer → expectations → price) is what matters.';
+      else note=g5r?'The market watches many signals at once. What matters is thinking through the chain: is oil moving, how big is the cushion, what do traders expect, what is the price.':'Markets weigh many signals at once. Reasoning through the chain (flow → buffer → expectations → price) is what matters.';
       $('l6-rn').textContent=note;
     };
   });
