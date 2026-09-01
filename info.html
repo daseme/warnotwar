@@ -209,7 +209,7 @@
     try {
       const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${TICKER}&token=${API_KEY}`);
       const data = await res.json();
-      if (data && data.c) return { c: data.c, h: data.h };
+      if (data && data.c) return { c: data.c, h: data.h, t: data.t };
     } catch (e) {}
     return null;
   }
@@ -335,10 +335,20 @@
     if (live) {
       const zc = zoneColor(live.c);
       const zn = zoneName(live.c);
+      // finnhub's t = time of the last trade, shown in the viewer's own
+      // timezone; outside market hours this honestly reads as stale
+      let when = "";
+      if (live.t) {
+        const tr = new Date(live.t * 1000);
+        const sameDay = tr.toDateString() === new Date().toDateString();
+        when = sameDay
+          ? tr.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+          : tr.toLocaleString([], { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
+      }
       document.getElementById("price").innerHTML =
         `<span id="live-price" style="color:${zc}">$${live.c.toFixed(2)}</span> ` +
         `<span class="status-badge" style="background:${zc}15;color:${zc};border:1px solid ${zc}30">${zn}</span> ` +
-        `<span style="opacity:0.5">${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</span>`;
+        (when ? `<span style="opacity:0.5">last trade ${when}</span>` : "");
     } else {
       document.getElementById("price").innerHTML = `<span style="color:#c94e4e">Error fetching live price</span>`;
     }
