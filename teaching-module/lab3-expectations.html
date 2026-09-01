@@ -155,7 +155,7 @@ function renderL3() {
     <div class="detail-panel">
       <h4>What Brent actually did</h4>
       <p>On ${d.label}, Brent futures were at <strong>$${d.brent.toFixed(2)}</strong>${dateIdx > 0 ? ', up from $' + dates[dateIdx - 1].brent.toFixed(2) + ' a week earlier' : ''}.</p>
-      <p>${grade === 8 ? 'The market had already moved before official export data confirmed anything. It was trading the probability of sustained disruption, not the confirmed fact.' : 'The market moved under information asymmetry. The futures price aggregates heterogeneous, incomplete beliefs into a single sufficient statistic. Official export ledgers (SOMO, JODI) lag by weeks to months.'}</p>
+      <p>${grade === 8 ? 'The market had already moved before official export data confirmed anything. It was trading the probability of sustained disruption, not the confirmed fact.' : 'The market moved under information asymmetry. The futures price aggregates heterogeneous, incomplete beliefs into a single sufficient statistic. Official export records (SOMO, JODI) lag by weeks to months.'}</p>
       <div class="note">${grade === 8 ? 'Even if your probabilities differ from the market\'s, the key insight is: prices reflect weighted guesses about the future.' : 'The exercise is not to "beat" the market but to understand what information set the market was processing.'}</div>
     </div>`;
 

@@ -818,7 +818,7 @@
     what independent evidence can verify it.
   </p>
     <p class="housenote">
-    Built from the live, sourced claims ledger. Nothing here adjudicates who
+    Built from the live, sourced claims record. Nothing here adjudicates who
     is right; anything you set yourself is labeled hypothetical.
     The earlier prototype is preserved at <a href="/lab1.html">lab1</a> &middot; part of
     <a href="/oilflows.html">the Hormuz oil-flow coverage</a>.
@@ -833,7 +833,7 @@
   </div>
 </div>
 
-<div id="load-error">Could not load the claims ledger.</div>
+<div id="load-error">Could not load the claims record.</div>
 
 <!-- ─── Router ─── -->
 <div id="router">
@@ -902,7 +902,7 @@
     <div class="rung"><div class="t">ship signals</div>PortWatch / AIS<br><span class="lag">hours&ndash;days</span><br>fastest, but incomplete &mdash; activity only, never barrels</div>
     <div class="rung"><div class="t">tracker models</div>Kpler / Vortexa class<br><span class="lag">days</span><br>volume estimate, but model-dependent</div>
     <div class="rung"><div class="t">destination arrivals</div>ports, discharge data<br><span class="lag">weeks</span><br>confirms individual cargo</div>
-    <div class="rung"><div class="t">official ledgers</div>SOMO / JODI / customs<br><span class="lag">weeks&ndash;months</span><br>most complete accounting when published &mdash; but self-reported; reliability varies by country</div>
+    <div class="rung"><div class="t">official records</div>SOMO / JODI / customs<br><span class="lag">weeks&ndash;months</span><br>most complete accounting when published &mdash; but self-reported; reliability varies by country</div>
   </div>
   <div class="offladder">
     <div class="t">not on the ladder</div>
@@ -935,7 +935,7 @@
   <h2>4 &middot; What Washington said, statement by statement</h2>
   <p class="learn">Every recorded U.S. statement about oil and ship movement, in order &mdash; each measuring something different: different waterways, different units, different time windows. The list shows what each one measured.</p>
   <div class="orient">
-    <b>How to read this ledger.</b> These are reported statements, normalized
+    <b>How to read this record.</b> These are reported statements, normalized
     by this project's curator &mdash; the descriptions are records, not
     verbatim quotes; each links to its source. Status tags are lifecycle
     states (on the record, deleted, disputed), never verdicts about truth.
@@ -951,7 +951,7 @@
   <div class="note">
     Full archive: <a href="/data/us_oil_flow_claims.json">us_oil_flow_claims.json</a>
     &middot; how statements are collected and normalized:
-    <a href="/methodology.html">the ledger methodology</a>.
+    <a href="/methodology.html">how the record is built</a>.
   </div>
 </section>
 
@@ -1015,7 +1015,7 @@
     government_estimate: 'U.S. government estimate — underlying observations not public',
     commercial_tracker_model: 'commercial tracker model — reaches us secondhand via press',
     activity_index: 'ship-signal activity index — never barrels',
-    official_ledger: 'official export ledger — self-reported, delayed',
+    official_ledger: 'official export record — self-reported, delayed',
   };
   const UNIT_PLAIN = {
     mbd: 'million barrels per day',
@@ -1417,7 +1417,7 @@
     s += `<text x="${x(ep.independent_consensus_mbd)}" y="120" fill="rgba(255,255,255,0.6)" font-size="8.5" font-family="monospace" text-anchor="middle">consensus ~${ep.independent_consensus_mbd}</text>`;
     s += `<text x="${x(ep.independent_high_mbd) + 12}" y="98" fill="rgba(255,255,255,0.45)" font-size="9" font-family="monospace">range ${ep.independent_low_mbd}–${ep.independent_high_mbd} — a model estimate, not an observation</text>`;
     s += `<text x="${X0}" y="152" fill="#c9a84c" font-size="10" font-family="monospace">difference vs consensus: ~${ep.gap_low_mbd.toFixed(0)}–${ep.gap_high_mbd.toFixed(0)} mb/d — unverified · vs the full tracker range: ${(ep.claim_low_mbd - ep.independent_high_mbd).toFixed(0)}–${(ep.claim_high_mbd - ep.independent_low_mbd).toFixed(0)} mb/d</text>`;
-    s += `<text x="848" y="166" fill="rgba(255,255,255,0.3)" font-size="8.5" font-family="monospace" text-anchor="end">ledger data as of ${fmtDate(ep.as_of)}</text>`;
+    s += `<text x="848" y="166" fill="rgba(255,255,255,0.3)" font-size="8.5" font-family="monospace" text-anchor="end">record as of ${fmtDate(ep.as_of)}</text>`;
     s += `<text x="${X0}" y="166" fill="rgba(255,255,255,0.35)" font-size="8.5" font-family="monospace">seven-day averages stated on different dates describe different weeks — a lower later reading is not a correction</text>`;
     s += `</svg>`;
     document.getElementById('bars').innerHTML = s;
@@ -1455,7 +1455,7 @@
       box.innerHTML =
         (hypo ? `<div class="hypo">hypothetical — reader-set assumption, not evidence</div><br>` : '') +
         headline +
-        `<div style="margin-top:6px;color:rgba(255,255,255,0.5)">assumes the movement is invisible to trackers even though they state they already model dark transits and ship-to-ship transfers · ledger as of ${fmtDate(ep.as_of)}</div>` +
+        `<div style="margin-top:6px;color:rgba(255,255,255,0.5)">assumes the movement is invisible to trackers even though they state they already model dark transits and ship-to-ship transfers · record as of ${fmtDate(ep.as_of)}</div>` +
         arms + chain;
     }
     presetRow.addEventListener('click', e => {
@@ -1524,7 +1524,7 @@
       if (c.unit === 'million_barrels')
         return c.time_basis.startsWith('cumulative') ? 'running total, not a rate' : 'one-day volume, not a rate';
       if (c.unit in SHIP_UNITS) return 'counts ships, not oil';
-      return 'different measure per ledger';
+      return 'different measure per record';
     };
     const trackerNote = c => {
       const f = figOf(c);

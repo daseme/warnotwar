@@ -148,7 +148,7 @@
   Each exhibit teaches one idea you can hold in your hands.
 </p>
 <p class="housenote">
-  Exhibits start from the live, sourced claims ledger. Anything you change
+  Exhibits start from the live, sourced claims record. Anything you change
   yourself is labeled hypothetical. Nothing here adjudicates who is right.
 </p>
 <p class="housenote" style="border:1px dashed rgba(255,255,255,0.25);padding:8px 12px;margin-top:10px">
@@ -158,7 +158,7 @@
   <a href="/lab.html">Reading the Hormuz Numbers &rarr;</a>
 </p>
 
-<div id="load-error">Could not load the claims ledger.</div>
+<div id="load-error">Could not load the claims record.</div>
 
 <section class="exhibit" id="ex1">
   <h2>1 &middot; What each number counts</h2>
@@ -197,9 +197,9 @@
       <input type="range" id="s-track" min="2" max="8" step="0.5">
       <span class="val" id="v-track"></span>
     </div>
-    <div class="row"><button class="preset" id="btn-preset">show today's ledger numbers</button></div>
+    <div class="row"><button class="preset" id="btn-preset">show today's real numbers</button></div>
   </div>
-  <div class="hypo" id="hypo-stamp">hypothetical &mdash; reader-set values, not ledger data</div>
+  <div class="hypo" id="hypo-stamp">hypothetical &mdash; values you set, not the record</div>
   <div id="lanes"></div>
   <div class="arms" id="arms"></div>
   <div class="note" id="ex2-note"></div>
@@ -347,7 +347,7 @@
       caption: 'This site’s fast layer: AIS activity at the strait and at the terminals it can see. Saudi Arabia’s main Gulf terminal Ras Tanura is NOT visible to this source (dashed line) — but that is a limit of our activity index, not of the commercial trackers’ volume estimate. PortWatch numbers are activity signals and are never converted into barrels.',
     },
     {
-      id: 'official', grp: 'this site’s instruments', label: 'official ledgers (SOMO / JODI)',
+      id: 'official', grp: 'this site’s instruments', label: 'official records (SOMO / JODI)',
       sub: 'monthly · months behind',
       state: { lit: [], counted: [], dashed: [], gate: 'dim', track: false, srcLit: ['iraq', 'kuwait', 'saudi'] },
       caption: 'The slow referee: official monthly export figures for Iraq, Kuwait and Saudi Arabia (Saudi’s is national and includes bypass routes). They lag by roughly two months — the August numbers that bear on the current dispute arrive around October–November.',
@@ -503,7 +503,7 @@
     if (!preset) {
       s += `<text x="878" y="182" fill="rgba(184,134,42,0.8)" font-size="9" font-family="monospace" text-anchor="end">HYPOTHETICAL — READER-SET VALUES</text>`;
     } else {
-      s += `<text x="878" y="182" fill="rgba(255,255,255,0.35)" font-size="9" font-family="monospace" text-anchor="end">ledger data as of ${fmtDate(ep.as_of)} · one glyph = 2M bbl of volume</text>`;
+      s += `<text x="878" y="182" fill="rgba(255,255,255,0.35)" font-size="9" font-family="monospace" text-anchor="end">record as of ${fmtDate(ep.as_of)} · one glyph = 2M bbl of volume</text>`;
     }
     s += `</svg>`;
     document.getElementById('lanes').innerHTML = s;
@@ -530,7 +530,7 @@
       'Trackers state their estimate already attempts to include dark (AIS-off) transits and ship-to-ship transfers. ' +
       'Resolution is slow and partial: barrels can sit in floating or bonded storage for months, and destination customs data lag — but official export and import figures can be checked against counterparties, which a podium statement cannot. ' +
       'This exhibit prices the reconciliation; it does not adjudicate it.' +
-      (preset ? '' : ' The values shown were set by you, not by the ledger.');
+      (preset ? '' : ' The values shown were set by you, not by the record.');
   }
 
   document.getElementById('btn-preset').addEventListener('click', () => {

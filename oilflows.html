@@ -563,7 +563,7 @@
 
 <div class="instruments-heading" id="instruments-heading" style="display:none">
   <h2>The instruments in detail</h2>
-  <p>every chart below, with definitions, caveats, freshness dates and the raw data</p>
+  <p>every chart below &mdash; what each one measures, its limits, how current it is, and the raw data</p>
 </div>
 
 <section class="panel" id="panel-hormuz">
@@ -572,8 +572,8 @@
   <div class="chart-wrap" id="chart-hormuz"></div>
   <div id="threshold-table"></div>
   <div class="note">
-    This is a tanker-activity index, not barrels of crude. It answers
-    <em>when</em> shipping activity broke, day by day.
+    This index counts tanker activity, not barrels of crude. It answers
+    <em>when</em> shipping broke, day by day.
   </div>
 </section>
 
@@ -583,12 +583,12 @@
   <div class="tiles" id="verify-tiles"></div>
   <div id="verify-layers"></div>
   <div class="prose" style="font-size:0.95rem" id="verify-explainer">
-    <p>Wartime tanker tracking is unusually uncertain because vessels may
-    switch off their transponders. U.S. military surveillance can therefore
+    <p>Wartime tanker tracking is unusually uncertain because ships can
+    switch off the beacons that report their position. U.S. military surveillance can therefore
     see ships that commercial tracking misses. We show both the U.S.
     government's stated oil flow and the volume independently estimated by
     commercial trackers. The difference is labeled <em>unverified</em> until
-    subsequent loading, arrival and official trade data can resolve it.</p>
+    later loading, arrival and official trade data can resolve it.</p>
     <p>Part of the confusion is that several different official numbers are
     circulating, and they answer different questions:</p>
   </div>
@@ -601,7 +601,7 @@
     with a transponder signal: every unverified million barrels a day is
     seven million barrels a week that must load, sail, unload, and
     eventually appear in import and trade statistics. This page labels the
-    difference unverified; it does not decide who is right. Comparisons never mix
+    difference unverified &mdash; no one is declared right. Comparisons never mix
     scopes or units, and the PortWatch index above is a third, different
     measure &mdash; publicly visible AIS activity &mdash; never converted
     into barrels.
@@ -659,12 +659,12 @@
   <div class="chart-wrap" id="chart-buffer"></div>
   <div class="note">
     Stored U.S. crude, including the Strategic Petroleum Reserve, divided by
-    that week's refinery crude inputs. This is a cushion ratio, not a
-    countdown &mdash; domestic production and imports continue, refinery runs
-    change, and SPR releases are policy decisions. The SPR share is also
-    rate-limited: it can only be drawn down so fast, so the cushion is not
-    one uniform pool. The denominator is seasonal: days of supply can fall
-    simply because refineries run harder.
+    that week's refinery crude inputs. Oil keeps arriving while it is used
+    &mdash; domestic production and imports continue, refinery runs
+    change, and SPR releases are policy decisions. The SPR can only be
+    pumped out so fast, so the cushion is not one uniform pool. Refinery
+    pace is seasonal, so days of supply can fall simply because refineries
+    run harder.
   </div>
   <div id="ratio-widget"></div>
   <div id="spr-block"></div>
@@ -677,7 +677,7 @@
   <p class="panel-sub" style="margin-top:32px" id="sub-bno">BNO, an oil fund ordinary investors can buy, in dollars &middot; tracks Brent imperfectly &mdash; not the actual barrel price</p>
   <div class="chart-wrap" id="chart-bno"></div>
   <div class="note" id="market-note">
-    Prices repriced sharply while the physical shutdown was developing and
+    Prices moved sharply while the physical shutdown was developing and
     peaked only after tanker activity had already collapsed. Hover a chart:
     values are marked as an actual market observation or a carried-forward
     last close.
@@ -697,9 +697,9 @@
     Reading it: 25 on the flow line means Hormuz activity at 25% of
     <em>its own</em> pre-shock level &mdash; not 25% of the other lines.
     The buffer line holds its latest weekly reading between dots; only the
-    dots are observations. Putting the three on one clock shows timing, not
-    mechanism &mdash; their alignment is not a claim that one causes
-    another. Full detail for each instrument is in the panels above.
+    dots are observations. Putting the three on one clock shows timing &mdash; it does not
+    mean one causes another. Full detail for each instrument is in the
+    panels above.
   </div>
   <div id="open-question"></div>
 </section>
@@ -707,8 +707,8 @@
 <section class="panel" id="panel-method">
   <h2>8 &middot; How we know</h2>
   <div class="prose">
-    <p><strong>The traffic sensor.</strong> IMF PortWatch derives daily
-    tanker-activity signals from AIS data &mdash; the position beacons ships broadcast &mdash; at the Strait of Hormuz
+    <p><strong>The traffic sensor.</strong> IMF PortWatch counts daily
+    tanker activity from AIS data &mdash; the position beacons ships broadcast &mdash; at the Strait of Hormuz
     and at export terminals. It is fast and shows when activity disappears,
     but it does not count barrels of crude on each ship.</p>
     <p><strong>The official tally.</strong> SOMO (Iraq) and JODI (Kuwait,
@@ -723,11 +723,11 @@
     <p><strong>The buffer gauge.</strong> The U.S. holds crude in commercial
     inventories and in the Strategic Petroleum Reserve. Dividing those stocks
     (EIA, weekly) by what U.S. refineries are currently processing gives the
-    size of the cushion in "days of refinery use." It is a ratio, not a
-    countdown &mdash; production, imports, and policy all keep moving.</p>
+    size of the cushion in "days of refinery use." Production, imports,
+    and policy all keep moving.</p>
     <p><strong>The market price.</strong> Brent spot and the BNO ETF show how
     traders priced the disruption as it developed.</p>
-    <p><strong>The claims ledger.</strong> Officials describe the flow;
+    <p><strong>The claims record.</strong> Officials describe the flow;
     independent trackers estimate it; the two disagree. Every recorded
     statement is written down in a standard form with its source, compared
     only with figures that count the same thing, and the difference is
@@ -746,7 +746,7 @@
     <a href="/data/us_crude_buffer_weekly.csv">buffer weekly (CSV)</a> &middot;
     <a href="/data/us_crude_buffer_weekly.json">JSON</a> &middot;
     <a href="/data/us_crude_buffer_meta.json">metadata</a> &middot;
-    <a href="/data/hormuz_verification.json">claims ledger (JSON)</a> &middot;
+    <a href="/data/hormuz_verification.json">claims record (JSON)</a> &middot;
     <a href="/data/us_oil_flow_claims.json">full U.S. statements archive, Mar&ndash;Aug (JSON)</a> &middot;
     <a href="/methodology.html">claims-collection methodology</a>
   </div>
@@ -1267,9 +1267,9 @@ themeBtn.onclick = () => {
           `the crude cushion at its ${rankLabel} level since 1982${drawing ? ' and being drawn from the strategic side' : ''}, ` +
           `and Brent at $${b.toFixed(2)} — ${cmp} its March 12 level of $${b12.toFixed(2)}. ` +
           `The flow reading is itself one of the unverified quantities (referee: official export data, ~Oct–Nov 2026) — and if the official flow figures are right, the tension dissolves. ` +
-          `None of our instruments resolves this alone. Candidate explanations, in no order:</p></div>`;
+          `None of our instruments resolves this alone. Possible explanations, in no order:</p></div>`;
 
-        h += `<table class="mono"><tr><th>candidate explanation</th><th>explains which observation</th><th>what would discriminate, and when</th></tr>`;
+        h += `<table class="mono"><tr><th>possible explanation</th><th>explains which observation</th><th>what would settle it, and when</th></tr>`;
         h += `<tr><td>Demand destruction</td><td>the price</td><td>consumption ("products supplied") data — published weekly by EIA; not yet integrated here</td></tr>`;
         h += `<tr><td>Bypass routes carrying more than modeled</td><td>the flow reading</td><td>partially observable now: the Yanbu terminal-activity index runs at multiples of its baseline — an activity signal; index multiples cannot be converted to barrels</td></tr>`;
         h += `<tr><td>Strategic releases bridging supply</td><td>the cushion and the price</td><td>observable now: the U.S. SPR is ${drawing ? 'drawing' : 'moving'} at a rate equivalent to ~${mbdEq} million barrels/day (${Math.abs(sp.spr_weekly_change_avg_mbbl).toFixed(1)}M bbl/week ÷ 7 — EIA); <em>if</em> those barrels reach the market, that is added supply. Allied releases are not tracked here</td></tr>`;
@@ -1277,7 +1277,7 @@ themeBtn.onclick = () => {
         h += `<tr><td>Expectations of de-escalation priced in</td><td>the price</td><td>not directly measurable; resolves only in hindsight</td></tr>`;
         h += `</table>`;
 
-        h += `<div class="note">A circulating claim that prices are being suppressed names no mechanism our instruments could test, and no evidence for it appears in our sources. If a specific, testable version emerges, it would join the table with a discriminator like the others.</div>`;
+        h += `<div class="note">A circulating claim that prices are being suppressed names no mechanism our instruments could test, and no evidence for it appears in our sources. If a specific, testable version emerges, it would join the table with a test like the others.</div>`;
         oq.innerHTML = h;
       })();
 
@@ -1324,7 +1324,7 @@ themeBtn.onclick = () => {
     topTiles.push(
       `<div class="tile"><div class="q">How thick is the cushion?</div>` +
       `<div class="v">${bLatest.days_supply_incl_spr.toFixed(1)} <span style="font-size:0.42em;color:var(--ink-60)">vs ${bufferMeta.historical_mean_days_supply_incl_spr} avg</span></div>` +
-      `<div class="u">stored U.S. crude per day of refinery use, incl. the Strategic Petroleum Reserve (${bLatest.commercial_days_supply.toFixed(1)} commercial only) &mdash; a cushion ratio, not a countdown &middot; week ending ${fmtDate(bLatest.date)}</div>${spark}</div>`);
+      `<div class="u">stored U.S. crude per day of refinery use, incl. the Strategic Petroleum Reserve (${bLatest.commercial_days_supply.toFixed(1)} commercial only) &middot; week ending ${fmtDate(bLatest.date)}</div>${spark}</div>`);
   }
   if (brentRow) {
     topTiles.push(
@@ -1342,7 +1342,7 @@ themeBtn.onclick = () => {
   }
   document.getElementById('top-tiles').innerHTML = topTiles.join('');
   document.getElementById('top-kicker').textContent =
-    'Four separate measurements answering four separate questions. Their alignment on this page is not a claim that one causes another.';
+    'Four separate measurements answering four separate questions. Their alignment on this page does not mean one causes another.';
 
   // ---- Scrollytelling: the March 2026 event, told over the live data ----
   if (buffer && bLatest && firstThresh && lastThresh && brentPeak
@@ -1379,7 +1379,7 @@ themeBtn.onclick = () => {
       },
       buffer: {
         title: 'U.S. stored crude · days of refinery use · weekly since 1982',
-        guard: 'a cushion ratio — not a countdown',
+        guard: 'oil keeps arriving as it is used',
       },
       price: {
         title: 'Brent crude · dollars per barrel',
@@ -1442,12 +1442,12 @@ themeBtn.onclick = () => {
       { s: 0, t: `The Strait of Hormuz is the narrow exit from the Persian Gulf and one of the world's most important oil corridors. A traffic counter &mdash; satellite ship signals, averaged over seven days &mdash; watches tanker activity there. Through late 2025 it held around its normal level: 100 on this index.` },
       { s: 1, t: `In early March 2026 the traffic broke. On ${fmtDate(firstThresh.date)} the index fell below three-quarters of its 2025 baseline.` },
       { s: 2, t: `Ten days later it was under 1. Tanker activity near the strait had not drifted lower &mdash; it had effectively stopped registering.` },
-      { s: 2, t: `One caution before going on: this instrument counts ship signals, not barrels. Tankers going quiet is strong evidence that crude stopped moving &mdash; but it is not itself a count of oil.` },
+      { s: 2, t: `This chart counts ship signals, not barrels. Tankers going quiet is strong evidence that crude stopped moving &mdash; but it is not itself a count of oil.` },
       { s: 3, t: `The official books, which arrive months later, confirmed it. Iraqi and Kuwaiti crude exports &mdash; about ${officialFeb ? officialFeb.known_gulf_official_7d_mbd.toFixed(1) : 'five'} million barrels a day before the shock &mdash; fell close to zero by late March.` },
       { s: 4, t: `Some activity found a way around. Terminal signals at Saudi Arabia's Red Sea port of Yanbu rose to multiples of their 2025 norm while its Gulf-side terminal went quiet &mdash; signals of a detour, not a count of barrels rerouted.` },
       { s: 5, t: `Now pull the camera back: the axis below spans 1982 to today. The United States stores crude commercially and in its Strategic Petroleum Reserve. Measured in days of current refinery use, that cushion has been thinning for a decade.` },
       { s: 6, t: `In the week of the shock the cushion stood near ${bufferAtShock ? bufferAtShock.days_supply_incl_spr.toFixed(0) : ''} days of refinery use. By the week ending ${fmtDate(bLatest.date)} it was ${bLatest.days_supply_incl_spr.toFixed(1)} &mdash; the ${rankLabel} weekly reading since 1982${bRank > 1 ? ` (the lowest, ${bMinRow.days_supply_incl_spr.toFixed(1)}, came ${fmtDate(bMinRow.date)})` : ''}.` },
-      { s: 6, t: `That number is a ratio: all the crude the U.S. has in storage, divided by what its refineries use in a day &mdash; about ${(bLatest.crude_stocks_incl_spr_mbbl / 1000).toFixed(0)} million barrels &divide; ${(bLatest.refinery_crude_inputs_mbd / 1000).toFixed(1)} million a day = ${bLatest.days_supply_incl_spr.toFixed(1)} days. It is not a countdown: wells keep pumping, imports keep arriving, and refinery runs change &mdash; which moves the number by itself. It says the shock absorber is thin, not that the tank runs dry.` },
+      { s: 6, t: `That number is a ratio: all the crude the U.S. has in storage, divided by what its refineries use in a day &mdash; about ${(bLatest.crude_stocks_incl_spr_mbbl / 1000).toFixed(0)} million barrels &divide; ${(bLatest.refinery_crude_inputs_mbd / 1000).toFixed(1)} million a day = ${bLatest.days_supply_incl_spr.toFixed(1)} days. Wells keep pumping, imports keep arriving, and refinery runs change &mdash; that alone moves the number. It says the shock absorber is thin, not that the tank runs dry.` },
       { s: 7, t: `Markets did not wait for the bottom. Brent went from about $${firstThresh.brent_spot_last_usd.toFixed(0)} on ${fmtDate(firstThresh.date)} to $${lastThresh.brent_spot_last_usd.toFixed(0)} by ${fmtDate(lastThresh.date)}, while the collapse was still developing &mdash; and kept climbing to $${brentPeak.brent_spot_last_usd.toFixed(0)} on ${fmtDate(brentPeak.date)}, after tanker traffic had already stopped registering.` },
       { s: 7, t: `Three instruments, three questions: is the oil moving, how thick is the cushion, and what is the market charging. Each is a separate measurement &mdash; why prices moved the way they did is a question none of them can answer alone. The full instruments, with their caveats and raw data, are below.` },
     ];
@@ -1523,7 +1523,7 @@ themeBtn.onclick = () => {
 
     document.getElementById('verify-layers').innerHTML =
       `<div class="vlayer"><div class="k">u.s. claim</div><div class="v">${claimTxt} mb/d</div><div class="u">as of ${fmtDate(ep.as_of)} · Hormuz outbound only</div></div>` +
-      `<div class="vconn">verification gap ~${gapTxt} mb/d — currently unverified</div>` +
+      `<div class="vconn">gap ~${gapTxt} mb/d — currently unverified</div>` +
       `<div class="vlayer"><div class="k">independent estimate</div><div class="v">${consTxt} mb/d</div><div class="u">commercial trackers (range ${range(ep.independent_low_mbd, ep.independent_high_mbd, 0)}), as reported in the press; tries to count ships that hide their signals</div></div>` +
       `<div class="vconn">later reconciliation — loadings, arrivals, official trade data</div>` +
       `<div class="vlayer"><div class="k">destination confirmation</div><div class="v">pending</div><div class="u">first referee: official Iraq/Kuwait/Saudi export data for Aug 2026, expected ~Oct–Nov — already tracked in panel 3</div></div>`;
@@ -1568,7 +1568,7 @@ themeBtn.onclick = () => {
         `<td><a href="${e.source_url}" target="_blank" rel="noopener">${e.as_reported_by}</a></td></tr>`;
     });
     lt += '</table>';
-    lt += '<div class="fine" style="font-family:var(--mono);font-size:10.5px;color:var(--ink-45);line-height:1.8;margin-top:10px">Estimates that count different things are listed together but never compared: a crude-only figure and a crude-plus-products figure answer different questions, and only crude-family figures enter the episode arithmetic above.</div>';
+    lt += '<div class="fine" style="font-family:var(--mono);font-size:10.5px;color:var(--ink-45);line-height:1.8;margin-top:10px">Estimates that count different things are listed together but never compared: a crude-only figure and a crude-plus-products figure answer different questions, and only the crude figures enter the arithmetic above.</div>';
     document.getElementById('verify-scopes').innerHTML = lt;
 
     // Conservation-of-barrels exhibit: ships can leave AIS, oil cannot.
@@ -1616,10 +1616,10 @@ themeBtn.onclick = () => {
        lowLine + prewarLine + ' · ' + asOf],
       [drawing ? 'being drawn at' : 'being refilled at',
        (drawing ? '−' : '+') + rate.toFixed(1) + 'M bbl/week',
-       `${sp.spr_change_window_weeks}-week average; weekly moves ranged ${rlo.toFixed(1)}–${rhi.toFixed(1)}M · the rate is set week to week and can slow, stop or reverse — the current rate implies nothing about duration · ` + asOf],
+       `${sp.spr_change_window_weeks}-week average; weekly moves ranged ${rlo.toFixed(1)}–${rhi.toFixed(1)}M · the rate is set week to week and can slow, stop or reverse — it says nothing about how long the drawdown lasts · ` + asOf],
       ['change since the pre-shock week',
        `${sp.spr_delta_since_preshock_mbbl.toFixed(0)}M vs ${sp.commercial_delta_since_preshock_mbbl.toFixed(0)}M`,
-       `SPR vs commercial stocks since ${fmtDate(sp.preshock_anchor_week)} · SPR barrels are sold into the commercial system, so steady commercial stocks during releases is the expected mechanical signature of releases reaching the market · ` + asOf],
+       `SPR vs commercial stocks since ${fmtDate(sp.preshock_anchor_week)} · SPR barrels are sold into the commercial system, so when releases reach the market the SPR falls while commercial stocks hold roughly steady · ` + asOf],
     ];
 
     const blk = document.getElementById('spr-block');
@@ -1687,10 +1687,10 @@ themeBtn.onclick = () => {
     hormuz: 'Hormuz tanker activity (PortWatch)',
     known_gulf_official: 'Iraq Basrah + Kuwait official exports',
     core_official_exports: 'Core producer official exports',
-    saudi_gulf_proxy: 'Saudi Gulf proxy (Juaymah)',
-    saudi_bypass_proxy: 'Saudi bypass proxy (Yanbu)',
-    uae_gulf_proxy: 'UAE Gulf proxy',
-    uae_bypass_proxy: 'UAE bypass proxy (Fujairah)',
+    saudi_gulf_proxy: 'Saudi Gulf terminal signal (Juaymah)',
+    saudi_bypass_proxy: 'Saudi bypass terminal signal (Yanbu)',
+    uae_gulf_proxy: 'UAE Gulf terminal signal',
+    uae_bypass_proxy: 'UAE bypass terminal signal (Fujairah)',
     brent: 'Brent spot, last observation',
     bno: 'BNO close, last observation',
   };
@@ -1703,7 +1703,7 @@ themeBtn.onclick = () => {
     f += `<tr><td>U.S. crude buffer (EIA, weekly)</td><td>week ending ${fmtDate(bufferMeta.last_week)}</td></tr>`;
   }
   if (verify && verify.current_episode) {
-    f += `<tr><td>Claims &amp; estimates ledger (kept by hand)</td><td>${fmtDate(verify.current_episode.as_of)}</td></tr>`;
+    f += `<tr><td>Claims &amp; estimates record (kept by hand)</td><td>${fmtDate(verify.current_episode.as_of)}</td></tr>`;
   }
   f += '</table>';
   document.getElementById('freshness').innerHTML = f;

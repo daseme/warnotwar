@@ -394,7 +394,7 @@
 <div id="load-error">Could not load the statements archive.</div>
 
 <section class="orient">
-  <div class="label">How to read<br>this ledger</div>
+  <div class="label">How to read<br>this record</div>
   <div class="text">
     <p>Summaries; each entry links to its source. Status tags say what happened to a statement — kept, deleted, corrected, disputed.</p>
     <p>U.S. official statements only. Not exhaustive. Independent estimates are on the <a href="/oilflows.html">verification panel</a>.</p>
@@ -417,7 +417,7 @@
   <div class="wordmark">on the record.</div>
   <div class="foot-links">
     Data: <a href="/data/us_oil_flow_claims.json">full archive (JSON)</a> ·
-    <a href="/methodology.html">how the ledger is built</a> ·
+    <a href="/methodology.html">how the record is built</a> ·
     teaching version in <a href="/lab.html">the lab</a>.
   </div>
 </footer>
@@ -550,11 +550,11 @@ themeBtn.onclick = () => {
   }
 
   /* ---------- state, mirrored into the URL so any view is shareable ---------- */
-  let view = 'ledger', order = 'newest';
+  let view = 'record', order = 'newest';
   const F = { speaker: '', kind: '', scope: '', figure: '', q: '' };
   function syncURL() {
     const p = new URLSearchParams();
-    if (view !== 'ledger') p.set('view', view);
+    if (view !== 'record') p.set('view', view);
     if (order !== 'newest') p.set('order', order);
     ['speaker', 'kind', 'scope', 'figure', 'q'].forEach(k => { if (F[k]) p.set(k, F[k]); });
     const qs = p.toString();
@@ -614,7 +614,7 @@ themeBtn.onclick = () => {
     const v = document.getElementById('views');
     v.innerHTML =
       `<span class="grp">view</span>` +
-      ['ledger', 'numbers', 'attribution'].map(x =>
+      ['record', 'numbers', 'attribution'].map(x =>
         `<button class="chip${view === x ? ' on' : ''}" data-v="${x}">${x}</button>`).join('') +
       `<button class="chip ghost" data-o="1">order · ${order} first</button>`;
     v.querySelectorAll('[data-v]').forEach(b => b.onclick = () => { view = b.dataset.v; syncView(); });
@@ -647,24 +647,24 @@ themeBtn.onclick = () => {
     const clr = f.querySelector('[data-clear]');
     clr.onclick = () => { F.speaker = F.kind = F.scope = F.figure = F.q = ''; renderControls(); renderLedger(); };
     updateCount(f);
-    f.style.display = view === 'ledger' ? '' : 'none';
+    f.style.display = view === 'record' ? '' : 'none';
   }
 
   function updateCount(fEl) {
     const rc = (fEl || document.getElementById('filters')).querySelector('.result-count');
     if (!rc) return;
     const n = A.filter(passes).length;
-    rc.textContent = anyFilter() ? `${n} of ${A.length} rows — a filtered selection, not the ledger` : `${A.length} rows`;
+    rc.textContent = anyFilter() ? `${n} of ${A.length} rows — a filtered selection, not the full record` : `${A.length} rows`;
   }
 
   function syncView() {
     renderControls();
-    document.getElementById('view-ledger').style.display = view === 'ledger' ? 'block' : 'none';
+    document.getElementById('view-ledger').style.display = view === 'record' ? 'block' : 'none';
     document.getElementById('view-numbers').style.display = view === 'numbers' ? 'block' : 'none';
     document.getElementById('view-voices').style.display = view === 'attribution' ? 'block' : 'none';
     if (view === 'numbers') renderNumbers();
     if (view === 'attribution') renderAttribution();
-    document.getElementById('genre-strip').style.display = view === 'ledger' ? 'block' : 'none';
+    document.getElementById('genre-strip').style.display = view === 'record' ? 'block' : 'none';
     syncURL();
   }
 
@@ -873,24 +873,24 @@ themeBtn.onclick = () => {
     Object.keys(named).sort().forEach(k => {
       const s = named[k];
       h += `<div class="voice"><div class="v-name">${k}</div>` +
-        `<div class="v-meta">${s.role}${s.attribution === 'institutional' ? ' · institutional statement' : ''} · ${s.events.size} statement${s.events.size > 1 ? 's' : ''} (${s.rows} row${s.rows > 1 ? 's' : ''}) · <a href="#" data-sp="${k}">view in ledger →</a></div></div>`;
+        `<div class="v-meta">${s.role}${s.attribution === 'institutional' ? ' · institutional statement' : ''} · ${s.events.size} statement${s.events.size > 1 ? 's' : ''} (${s.rows} row${s.rows > 1 ? 's' : ''}) · <a href="#" data-sp="${k}">view in record →</a></div></div>`;
     });
     h += `<div class="voice"><div class="v-name" style="font-style:italic;color:var(--ink-60)">anonymous officials</div>` +
-      `<div class="v-meta">not one person — ${anon.events.size} statements (${anon.rows} rows) whose speakers are known to reporters, not the public · <a href="#" data-anon="1">view in ledger →</a></div></div>`;
+      `<div class="v-meta">not one person — ${anon.events.size} statements (${anon.rows} rows) whose speakers are known to reporters, not the public · <a href="#" data-anon="1">view in record →</a></div></div>`;
     el.innerHTML = h;
     el.querySelectorAll('a[data-sp]').forEach(a => a.onclick = e => {
-      e.preventDefault(); F.speaker = a.dataset.sp; F.kind = F.scope = F.figure = F.q = ''; view = 'ledger'; syncView(); renderLedger();
+      e.preventDefault(); F.speaker = a.dataset.sp; F.kind = F.scope = F.figure = F.q = ''; view = 'record'; syncView(); renderLedger();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
     const an = el.querySelector('a[data-anon]');
-    if (an) an.onclick = e => { e.preventDefault(); F.speaker = ''; view = 'ledger'; syncView(); renderLedger(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+    if (an) an.onclick = e => { e.preventDefault(); F.speaker = ''; view = 'record'; syncView(); renderLedger(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
   }
 
   window._rec = { A, figOf, fmtDate, AS_PLAIN };
 
   // restore any shared state from the URL before first render
   const P = new URLSearchParams(location.search);
-  if (['ledger', 'numbers', 'attribution'].includes(P.get('view'))) view = P.get('view');
+  if (['record', 'numbers', 'attribution'].includes(P.get('view'))) view = P.get('view');
   if (P.get('order') === 'oldest') order = 'oldest';
   ['speaker', 'kind', 'scope', 'figure', 'q'].forEach(k => {
     if (P.get(k)) F[k] = P.get(k);

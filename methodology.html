@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="How the U.S. oil-flow claims ledger is built: normalization, the never-overwrite rule, collection tiers, and the completeness bounds.">
+<meta name="description" content="How the U.S. oil-flow claims record is built: normalization, the never-overwrite rule, collection tiers, and the completeness bounds.">
 <title>Claims Ledger Methodology</title>
 <style>
   html, body {
@@ -80,7 +80,7 @@
 
 <h2>Purpose</h2>
 <p>
-  The ledger does <strong>not</strong> decide which claims are correct. It
+  The record does <strong>not</strong> decide which claims are correct. It
   records exactly what was claimed, normalizes what each number measures,
   and preserves corrections, disputes and revisions. It currently holds
   32 normalized statements from March 10 through August 21, 2026, and
@@ -109,7 +109,7 @@
 
 <h2>The rules the pipeline enforces</h2>
 <p>
-  These constraints are checked mechanically every time the ledger is
+  These constraints are checked mechanically every time the record is
   loaded; a row that violates them fails the build rather than reaching
   the page.
 </p>
