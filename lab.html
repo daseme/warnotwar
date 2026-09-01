@@ -532,7 +532,7 @@
   <div class="kicker">warnotwar · a reading tool for the claims record</div>
   <h1>Reading the <em>Hormuz numbers</em></h1>
   <p class="subtitle">Different numbers describe different things. This tool shows what each claim measures, which other claims it can fairly be compared with, and what independent evidence can verify it.</p>
-  <p class="housenote">Built from the live, sourced claims record. Nothing here adjudicates who is right; anything you set yourself is labeled hypothetical. The earlier prototype is preserved at <a href="/lab1.html">lab1</a> · part of <a href="/oilflows.html">the Hormuz oil-flow coverage</a>.</p>
+  <p class="housenote">Built from the live, sourced claims record. Nothing here decides who is right; anything you set yourself is labeled hypothetical. The earlier prototype is preserved at <a href="/lab1.html">lab1</a> · part of <a href="/oilflows.html">the Hormuz oil-flow coverage</a>.</p>
 </header>
 
 <main>
@@ -554,7 +554,7 @@
 <!-- ─── Section 1 ─── -->
 <section class="exhibit" id="ex1">
   <h2><span class="section-num">01</span> What each number counts</h2>
-  <p class="learn">Select any figure. It translates itself into plain English first; the route map is the second layer.</p>
+  <p class="learn">Select any figure. What it measures comes first, in plain words; the route map follows.</p>
   <div class="cards" id="item-cards"></div>
   <div id="anatomy">
     <div class="sentence" id="an-sentence"></div>
@@ -568,7 +568,7 @@
 <!-- ─── Section 2 ─── -->
 <section class="exhibit" id="ex2">
   <h2><span class="section-num">02</span> Which numbers can be compared</h2>
-  <p class="learn">Pick any two figures. The verdict is derived from what each one measures &mdash; comparability of the question, never of credibility.</p>
+  <p class="learn">Pick any two figures. The verdict comes from what each one measures &mdash; questions are compared, never credibility.</p>
   <div class="btnrow" id="cmp-chips"></div>
   <div class="verdict" id="verdict">
     <span class="vhead" id="v-head"></span>
@@ -648,16 +648,15 @@
   <div class="orient" style="margin-bottom:22px">
     <div class="label">How to read<br>this record</div>
     <div class="text">
-      <p>These are reported statements, normalized by this project's curator &mdash; the descriptions are records, not verbatim quotes; each links to its source. Status tags are lifecycle states (on the record, deleted, disputed), never verdicts about truth. &ldquo;Anonymous&rdquo; means the reporter knows who spoke; the public does not.</p>
-      <p>Nothing is ever overwritten: corrections and disputes are added as linked entries. Completeness is bounded: this is every statement <em>located</em> through Aug 26 across the swept source sets (official channels, wire services, specialist press) &mdash; statements can occur in gaggles, deleted posts and unindexed remarks.</p>
+      <p>These are reported statements, written down in a standard form by this project &mdash; the descriptions are records, not verbatim quotes; each links to its source. Status tags are lifecycle states (on the record, deleted, disputed), never verdicts about truth. &ldquo;Anonymous&rdquo; means the reporter knows who spoke; the public does not.</p>
+      <p>Nothing is ever overwritten: corrections and disputes are added as linked entries. Not everything is here: this is every statement <em>located</em> through Aug 26 across the sources swept (official channels, wire services, specialist press) &mdash; statements can happen in gaggles, deleted posts and unindexed remarks.</p>
     </div>
   </div>
   <div class="btnrow" id="tl-filters"></div>
   <div id="timeline"></div>
   <div class="note">
     Full archive: <a href="/data/us_oil_flow_claims.json">us_oil_flow_claims.json</a>
-    &middot; how statements are collected and normalized:
-    <a href="/methodology.html">how the record is built</a>.
+    &middot; <a href="/methodology.html">how the record is built</a>.
   </div>
 </section>
 
@@ -1069,7 +1068,7 @@ themeBtn.onclick = () => {
       }
       expl.innerHTML =
         `Both put a number on oil moving ${SCOPE_PLAIN[a.scope]}. ${periods} ` +
-        `They rest on different kinds of evidence — comparable question, not equal verifiability.` +
+        `They rest on different kinds of evidence — the same question, but not equally checkable.` +
         (differ ? `<br>The figures differ. Possible explanations, in no order:${arms}` : '');
     } else if (a.unit === b.unit) {
       head.textContent = 'different questions — not contradictory';
@@ -1165,7 +1164,7 @@ themeBtn.onclick = () => {
       const chain =
         `<div class="chain">If ${X.toFixed(1)} mb/d really moves uncounted, it is ${(X * 7).toFixed(0)}M barrels a week that must appear downstream: Gulf loadings &rarr; destination arrivals &rarr; customs/import data &rarr; inventories. If it does not exist, it stays absent from all four.</div>`;
       box.innerHTML =
-        (hypo ? `<div class="hypo">hypothetical — reader-set assumption, not evidence</div><br>` : '') +
+        (hypo ? `<div class="hypo">hypothetical — an assumption you set, not evidence</div><br>` : '') +
         headline +
         `<div style="margin-top:6px;color:var(--ink-45);font-size:13px">assumes the movement is invisible to trackers even though they state they already model dark transits and ship-to-ship transfers · record as of ${fmtDate(ep.as_of)}</div>` +
         arms + chain;
@@ -1248,7 +1247,7 @@ themeBtn.onclick = () => {
       if (c.unit === 'million_barrels_per_day') {
         return c.statement_date >= '2026-08'
           ? (seriesIds.has(c.claim_id) ? 'compared with independent estimates in section 3 above' : null)
-          : 'no contemporaneous independent estimate recorded — the trackers in this dataset begin Aug 2026';
+          : 'no independent estimate from the same period recorded — the trackers in this dataset begin Aug 2026';
       }
       return 'no independent series measures this quantity';
     };
