@@ -82,7 +82,7 @@
 <p>
   The record retains what was claimed, puts what each number measures
   into a standard form, and preserves corrections, disputes and
-  revisions. It currently holds 32 statements from March 10 through
+  revisions. It holds 32 statements from March 10 through
   August 21, 2026, and
   feeds the <a href="/lab.html">Reading the Hormuz Numbers</a> tools and
   the <a href="/oilflows.html">verification panel</a>.
@@ -103,28 +103,27 @@
   One public statement can produce several rows: a single post that gives
   a Hormuz rate, a bypass rate, a regional total and a one-day volume is
   recorded as four claims, one figure per row, each with its own scope
-  and time basis. This is what prevents the apples-and-oranges confusion
+  and time basis. This prevents the apples-and-oranges confusion
   the numbers otherwise invite.
 </p>
 
 <h2>The rules the pipeline enforces</h2>
 <p>
-  These constraints are checked mechanically every time the record is
-  loaded; a row that violates them fails the build rather than reaching
-  the page.
+  The pipeline checks these every time the record loads; a row that
+  violates them fails the build rather than reaching the page.
 </p>
 <div class="rulebox">
   <b>Never overwrite history.</b> A deleted post, a same-day denial, a
   revised figure &mdash; all remain as separate rows, joined by links.
   Nothing is edited away.<br><br>
   <b>Every speaker gets the same verb.</b> Every description uses
-  "Said." Verbs that grade credibility &mdash; claimed, confirmed,
-  admitted, insisted &mdash; are rejected by the loader, for every
-  speaker equally.<br><br>
+  "Said." The loader rejects verbs that grade
+  credibility &mdash; claimed, confirmed, admitted, insisted &mdash; for
+  every speaker equally.<br><br>
   <b>Contradictions sit side by side.</b> When a different speaker
   contradicts a statement, the two rows are linked both ways and neither
   replaces the other &mdash; a denial does not "win" in the data model.
-  A figure is only replaced when the same speaker restates the same
+  A figure is replaced only when the same speaker restates the same
   quantity.<br><br>
   <b>Each reading describes its own week.</b> Two seven-day averages
   stated ten days apart describe different weeks; a lower later reading
@@ -143,17 +142,17 @@
   waterways, different units, or different time windows. The pipeline
   builds a strict <span class="mono">comparable_hormuz_flow_claims</span>
   list: outbound, Hormuz-only, oil flow-rate claims in million barrels
-  per day. That series (currently three claims) is what the
+  per day. The
   <a href="/oilflows.html#panel-verify">verification gap</a> is computed
-  from. What is left out is shown, and left out by rule, never by judgment.
+  from that series (currently three claims). What is left out is shown, and left out by rule, never by judgment.
 </p>
 
 <h2>How statements are collected</h2>
 <p>
-  Absolute completeness cannot be guaranteed: statements happen in press
+  Completeness cannot be guaranteed: statements happen in press
   gaggles, television interviews, deleted social posts, anonymous
-  briefings and unindexed remarks. The approach is to make coverage
-  systematic and checkable instead.
+  briefings and unindexed remarks. Instead, the project makes
+  coverage systematic and checkable.
 </p>
 <table>
   <tr><th>tier</th><th>sources</th><th>what it catches</th></tr>
@@ -192,8 +191,8 @@
   a date" has a checkable meaning;</li>
   <li><span class="mono">verification_snapshots</span> &mdash; attaching
   the independent evidence that existed <em>at the time</em> of each
-  claim (tracker estimates, activity indices), without ever altering the
-  historical claim itself;</li>
+  claim (tracker estimates, activity indices), without altering the
+  historical claim;</li>
   <li>later resolution &mdash; official export data and
   destination import statistics arriving months later are the referee
   that can move a claim's status from unverified to consistent or not
