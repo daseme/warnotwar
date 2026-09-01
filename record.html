@@ -850,7 +850,7 @@ themeBtn.onclick = () => {
         title: `${UNIT_TITLE[unit] || unit} · ${AS_PLAIN[scope] || scope}`,
         tall, trackers,
       }) + `</div>`;
-      if (tall) h += `<div class="panel-note">Independent estimates (trackers and market participants) overlay this panel where they count the same thing; a claim outside their range is unverified against them — differences can reflect scope, timing, or method.${wider.length ? ` Crude-plus-products figures (${wider.join('; ')}) count a wider quantity and are listed on the <a href="/oilflows.html">verification panel</a> instead of drawn here.` : ''} Independent figures exist for August only.</div>`;
+      if (tall) h += `<div class="panel-note">Independent estimates (trackers and market participants) overlay this panel where they count the same thing; a claim outside their range is unverified against them — differences can reflect scope, timing, or method.${wider.length ? ` Crude-plus-products figures (${wider.join('; ')}) count a wider quantity and are listed on the <a href="/oilflows.html">verification panel</a> rather than drawn here.` : ''} Independent figures exist for August only.</div>`;
     });
     if (single.length) {
       const rows = single.map(k => lanes[k][0]);
