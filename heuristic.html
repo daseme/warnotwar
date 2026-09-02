@@ -171,9 +171,6 @@
     svg += `<rect x="${PAD_L}" y="${PAD_T}" width="${xR-PAD_L}" height="${yHigh-PAD_T}" fill="${C_WAR}" opacity="0.10"/>`;
     svg += `<rect x="${PAD_L}" y="${yHigh}" width="${xR-PAD_L}" height="${yLow-yHigh}" fill="${C_SWEET}" opacity="0.10"/>`;
     svg += `<rect x="${PAD_L}" y="${yLow}" width="${xR-PAD_L}" height="${H-PAD_B-yLow}" fill="${C_PEACE}" opacity="0.10"/>`;
-    svg += `<text x="${xR+10}" y="${(PAD_T+yHigh)/2+3}" fill="${C_WAR}" font-size="11" letter-spacing="2" opacity="0.9">WAR</text>`;
-    svg += `<text x="${xR+10}" y="${(yHigh+yLow)/2+3}" fill="${C_SWEET}" font-size="11" letter-spacing="2" opacity="0.9">SWEET</text>`;
-    svg += `<text x="${xR+10}" y="${(yLow+H-PAD_B)/2+3}" fill="${C_PEACE}" font-size="11" letter-spacing="2" opacity="0.9">PEACE</text>`;
 
     // sparse horizontal grid: every $10, label above the line, no $ signs
     for (let p = yMin; p <= yMax; p += 10) {
