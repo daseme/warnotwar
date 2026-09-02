@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-09-02T14:11:44Z",
+ "generated_at_utc": "2026-09-02T23:33:28Z",
  "schema_version": 1,
  "window_start": "2025-06-23",
  "war_start": "2026-02-28",
@@ -15,16 +15,16 @@
  },
  "latest": {
   "brent_spot": {
-   "date": "2026-08-25",
-   "value": 88.24
+   "date": "2026-09-01",
+   "value": 96.02
   },
   "brent_yoy_pct": {
-   "date": "2026-08-25",
-   "value": 29.2
+   "date": "2026-09-01",
+   "value": 43.1
   },
   "bno": {
-   "date": "2026-09-01",
-   "value": 55.56
+   "date": "2026-09-02",
+   "value": 55.74
   },
   "ovx": {
    "date": "2026-09-01",
@@ -39,21 +39,21 @@
    "value": 3.01
   },
   "corr20": {
-   "date": "2026-09-01",
-   "value": -0.408
+   "date": "2026-09-02",
+   "value": -0.419
   },
   "spy_drawdown_pct": {
-   "date": "2026-09-01",
-   "value": -2.07
+   "date": "2026-09-02",
+   "value": -1.64
   },
   "us10y": {
-   "date": "2026-08-31",
-   "value": 4.75
+   "date": "2026-09-01",
+   "value": 4.79
   }
  },
- "bno_brent_ratio_60obs_median": 0.5475,
- "brent_equiv_of_bno_high": 100.4,
- "brent_equiv_of_bno_low": 89.5,
+ "bno_brent_ratio_60obs_median": 0.5541,
+ "brent_equiv_of_bno_high": 99.3,
+ "brent_equiv_of_bno_low": 88.4,
  "jump_days": [
   "2026-01-08",
   "2026-02-18",
