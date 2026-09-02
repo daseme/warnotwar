@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Is this really a war? The shock is measurable. Whether anyone outside the oil pit is paying for it is a different question, and this page asks it.">
+<meta name="description" content="Is this really a war? The oil shock is easy to measure. This page asks whether anyone outside the oil pit is paying for it.">
 <title>Is this really a war? — the market</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -258,8 +258,8 @@
   <div class="hero-kicker">shock &middot; fear &middot; spread</div>
   <h1>Is this really a war?</h1>
   <p class="subtitle">
-    The heuristic reads one price. This page asks the wider question.
-    A war, by the market's lights, is something people pay to hedge.
+    The heuristic reads one price. This page asks a bigger question.
+    To the market, a war is something people pay to hedge.
     <em>Shock:</em> How big is the oil move?
     <em>Fear:</em> Is the worry priced only in oil?
     <em>Spread:</em> Is anyone outside the oil pit reacting?
@@ -304,9 +304,9 @@
   <h2>Shock: how big is the oil move?</h2>
   <p class="panel-sub">
     Brent spot, percent change from a year earlier. Strategists put the trouble zone
-    at +75% to +100%: past that, oil shocks have tended to tip economies over.
-    This is the right x-axis for the whole question, but on its own it measures the
-    size of the shock, not how anyone is taking it.
+    at +75% to +100%. Past that, oil shocks have tended to tip economies over.
+    This line measures the size of the shock. The rest of the page asks how anyone
+    is taking it.
   </p>
   <div class="chart-wrap" id="c-yoy"></div>
   <div class="legend">
@@ -320,10 +320,10 @@
 <section class="panel" id="panel-bno">
   <h2>The trigger: BNO, level and jumps</h2>
   <p class="panel-sub">
-    The heuristic's own series. The level says which regime we are in.
-    The jumps say when something happened: oil reacts to strike headlines first,
-    so a one-day move of +4% or more catches event days more cleanly than a line
-    the price drifts across.
+    The heuristic's own series. The level says which zone we are in.
+    The jumps say when something happened. Oil reacts to strike headlines first,
+    so a one-day move of 4% or more marks the event days better than a line
+    the price can drift across.
   </p>
   <div class="chart-wrap" id="c-bno"></div>
   <div class="legend">
@@ -339,10 +339,10 @@
 <section class="panel" id="panel-fear">
   <h2>Fear: is the worry priced only in oil?</h2>
   <p class="panel-sub">
-    OVX is the options market's expected swing in crude over the next month.
-    VIX is the same for the S&amp;P 500. Their ratio is the useful line: a high
-    ratio means the fear is trapped in oil while stocks shrug. The ratio
-    compressing because VIX is rising would mean the fear is spreading.
+    OVX is how big a swing in oil the options market expects over the next month.
+    VIX is the same for the S&amp;P 500. The ratio is the line to watch. A high
+    ratio means the fear is trapped in oil while stocks shrug. If the ratio falls
+    because VIX rises, the fear is spreading.
   </p>
   <div class="chart-wrap" id="c-vol"></div>
   <div class="legend">
@@ -357,9 +357,9 @@
 <section class="panel" id="panel-spread">
   <h2>Spread: is anyone outside the oil pit reacting?</h2>
   <p class="panel-sub">
-    The 20-day rolling correlation between daily moves in SPY and BNO.
-    Below zero is a supply-shock regime: stocks fall on the days oil rises.
-    Near zero or positive is a shrug. This is the single cleanest line for the
+    The 20-day correlation between daily moves in stocks (SPY) and oil (BNO).
+    Below zero is a supply shock: stocks fall on the days oil rises.
+    Near zero or above is a shrug. This is the cleanest line for the
     question the site asks.
   </p>
   <div class="chart-wrap" id="c-corr"></div>
@@ -369,7 +369,7 @@
 <section class="panel" id="panel-channels">
   <h2>Other channels</h2>
   <p class="panel-sub">
-    Two more places a war would show up if it were being priced as one.
+    Two more places a war would show up if the market priced it as one.
   </p>
   <div class="duo">
     <div>
@@ -400,11 +400,11 @@
     <tr><td>10-year yield</td><td id="s-10y">Treasury constant maturity</td><td>Via FRED when available, otherwise the Cboe 10-year index (^TNX), which can differ by a few basis points.</td></tr>
   </table>
   <div class="note">
-    Two things to watch on the year-over-year line. The denominator drifts: a year ago Brent
-    was already well off its lows, so the same price today reads as a smaller shock.
-    And from late February 2027 the base rolls through the 2026 spike, so the line will
-    collapse mechanically even if nothing changes. Data refreshes on weekday evenings.
-    Nothing here is forward-filled; a gap in a line is a gap in the data.
+    The year-over-year line has two quirks. A year ago Brent was already well off its
+    lows, so the same price today reads as a smaller shock. And from late February 2027
+    the comparison rolls through the 2026 spike, so the line will drop even if nothing
+    changes. Data refreshes on weekday evenings. Nothing is forward-filled. A gap in a
+    line is a gap in the data.
   </div>
   <div class="stamp" id="stamp"></div>
   <a class="back" href="/heuristic.html">&larr; the heuristic</a>
@@ -684,7 +684,7 @@ themeBtn.onclick = () => {
 
   document.getElementById('t-ratio').textContent = ratioLast.ovx_vix.toFixed(1) + '×';
   document.getElementById('t-ratio-u').textContent =
-    `OVX ${ratioLast.ovx.toFixed(0)} vs VIX ${ratioLast.vix.toFixed(0)} · above 1 means oil is the scared one · peak ${ratioPeak.ovx_vix.toFixed(1)}× on ${fmtShort(ratioPeak.date)}`;
+    `OVX ${ratioLast.ovx.toFixed(0)} vs VIX ${ratioLast.vix.toFixed(0)} · above 1 means the fear is in oil · peak ${ratioPeak.ovx_vix.toFixed(1)}× on ${fmtShort(ratioPeak.date)}`;
 
   document.getElementById('t-corr').textContent = signed(corrLast.corr20, 2);
   document.getElementById('t-corr-u').textContent =
@@ -702,13 +702,13 @@ themeBtn.onclick = () => {
   const yoyAtWar = rows.find(r => r.date >= WAR && r.brent_yoy_pct != null);
   const inZone = rows.filter(r => r.brent_yoy_pct != null && r.brent_yoy_pct >= TROUBLE_LO);
   document.getElementById('n-yoy').innerHTML =
-    `Latest reading <em>${pct(yoyLast.brent_yoy_pct, 1)}</em> on ${fmtDate(yoyLast.date)}, Brent spot $${yoyLast.brent_spot.toFixed(2)}. ` +
-    `Peak <em>${pct(yoyPeak.brent_yoy_pct, 1)}</em> on ${fmtDate(yoyPeak.date)}. ` +
-    (yoyAtWar ? `On the first reading after the war began (${fmtDate(yoyAtWar.date)}) it was ${pct(yoyAtWar.brent_yoy_pct, 1)}. ` : '') +
+    `Brent was up <em>${pct(yoyLast.brent_yoy_pct, 1).replace(/^\+/, '')}</em> on the year on ${fmtDate(yoyLast.date)}, at $${yoyLast.brent_spot.toFixed(2)}. ` +
+    `It peaked at <em>${pct(yoyPeak.brent_yoy_pct, 1)}</em> on ${fmtDate(yoyPeak.date)}. ` +
+    (yoyAtWar ? `The first reading after the war began, on ${fmtDate(yoyAtWar.date)}, was ${pct(yoyAtWar.brent_yoy_pct, 1)}. ` : '') +
     (inZone.length
       ? `The line has spent <em>${inZone.length}</em> trading days inside the trouble zone.`
-      : `The line has <em>not entered</em> the trouble zone at any point in this window. By the strategists' rule the shock is real but not yet the kind that tips economies over.`) +
-    ` Brent spot is published weekly by EIA, so this panel runs up to a week behind the others.`;
+      : `The line has <em>stayed out</em> of the trouble zone. By the strategists' rule the shock is real but not yet the kind that tips economies over.`) +
+    ` EIA publishes Brent spot weekly, so this panel runs up to a week behind the others.`;
 
   // ---------- panel 2: BNO level, jumps, ratio ----------
   linePanel(document.getElementById('c-bno'),
@@ -732,12 +732,12 @@ themeBtn.onclick = () => {
   const brentAt55War = ratioWarRow ? T.bno_high / ratioWarRow.bno_brent_ratio : null;
   document.getElementById('n-bno').innerHTML =
     `<em>${jumpsSinceWar.length}</em> jump days in the ${daysSinceWar} trading days since Feb 28, ` +
-    `${jumpDays.length - jumpsSinceWar.length} in the ${rows.filter(r => r.date < WAR && r.bno != null).length} before. ` +
-    `Latest close $${bnoLast.bno.toFixed(2)} on ${fmtDate(bnoLast.date)}${bnoLast.bno_jump ? ', itself a jump day' : ''}. ` +
-    `<br>Translation: over the last 60 readings BNO has traded at a median <em>${ratioNow.toFixed(3)}</em> of Brent spot, ` +
-    `so the 55 line sits at about <em>Brent $${brentAt55Now.toFixed(0)}</em> and the 49 line at about $${meta.brent_equiv_of_bno_low.toFixed(0)}. ` +
+    `and ${jumpDays.length - jumpsSinceWar.length} in the ${rows.filter(r => r.date < WAR && r.bno != null).length} trading days before. ` +
+    `BNO closed at $${bnoLast.bno.toFixed(2)} on ${fmtDate(bnoLast.date)}${bnoLast.bno_jump ? ', itself a jump day' : ''}. ` +
+    `<br>Over the last 60 trading days BNO has traded at a median <em>${ratioNow.toFixed(3)}</em> of Brent spot, ` +
+    `so 55 now means about <em>Brent $${brentAt55Now.toFixed(0)}</em> and 49 about $${meta.brent_equiv_of_bno_low.toFixed(0)}. ` +
     (brentAt55War ? `On ${fmtDate(ratioWarRow.date)} the ratio was ${ratioWarRow.bno_brent_ratio.toFixed(3)}, so 55 then meant Brent $${brentAt55War.toFixed(0)}. ` : '') +
-    `The ratio climbs when the futures curve is backwardated, which is what a supply shock does. The level line has drifted in meaning; the jumps have not.`;
+    `The ratio climbs when oil for delivery now costs more than oil for later, which is what a supply shock does. So the level line has drifted in meaning. The jumps have not.`;
 
   // ---------- panel 3: OVX, VIX, ratio ----------
   linePanel(document.getElementById('c-vol'),
@@ -753,27 +753,31 @@ themeBtn.onclick = () => {
   const ratioWar = rows.find(r => r.date >= WAR && r.ovx_vix != null);
   const vixPeak = maxRow('vix'), ovxPeak = maxRow('ovx');
   document.getElementById('n-fear').innerHTML =
-    `Today OVX ${ratioLast.ovx.toFixed(1)} against VIX ${ratioLast.vix.toFixed(1)}: a ratio of <em>${ratioLast.ovx_vix.toFixed(2)}×</em>. ` +
-    `OVX peaked at ${ovxPeak.ovx.toFixed(0)} on ${fmtDate(ovxPeak.date)}; VIX peaked at ${vixPeak.vix.toFixed(0)} on ${fmtDate(vixPeak.date)}. ` +
+    `OVX is ${ratioLast.ovx.toFixed(1)} and VIX is ${ratioLast.vix.toFixed(1)}, a ratio of <em>${ratioLast.ovx_vix.toFixed(2)}×</em>. ` +
+    `OVX peaked at ${ovxPeak.ovx.toFixed(0)} on ${fmtDate(ovxPeak.date)}. VIX peaked at ${vixPeak.vix.toFixed(0)} on ${fmtDate(vixPeak.date)}. ` +
     (ratioWar ? `The ratio was ${ratioWar.ovx_vix.toFixed(2)}× on the first trading day of the war and hit ${ratioPeak.ovx_vix.toFixed(2)}× on ${fmtDate(ratioPeak.date)}. ` : '') +
-    `A ratio this high says the options market is paying up to protect against oil, not against stocks. Watch for the ratio falling <em>because VIX rises</em>; that is the fear spreading.`;
+    (ratioLast.ovx_vix >= 2
+      ? `A ratio this high says the options market is paying to protect against oil, not stocks.`
+      : ratioLast.ovx_vix >= 1
+        ? `The options market is still paying more to protect against oil than against stocks.`
+        : `The options market is now paying more to protect against stocks than against oil. That is the fear spreading.`);
 
   // ---------- panel 4: rolling correlation ----------
   linePanel(document.getElementById('c-corr'),
     [{ field: 'corr20', name: '20-day correlation', color: INK, fmt: v => signed(v, 2) }],
     { yFloor: -1, yCeil: 1, refLines: [{ v: 0, strong: true }],
-      bands: [{ lo: -1, hi: 0, color: 'color-mix(in srgb, var(--danger) 7%, transparent)', label: 'supply-shock regime' }],
+      bands: [{ lo: -1, hi: 0, color: 'color-mix(in srgb, var(--danger) 7%, transparent)', label: 'supply shock' }],
       events: [warEvent], fmtTick: v => signed(v, 1) });
 
   const corrSinceWar = rows.filter(r => r.date >= WAR && r.corr20 != null);
   const negDays = corrSinceWar.filter(r => r.corr20 < 0).length;
   const corrWar = corrSinceWar[0];
   document.getElementById('n-corr').innerHTML =
-    `Latest <em>${signed(corrLast.corr20, 2)}</em> on ${fmtDate(corrLast.date)}. ` +
+    `The correlation was <em>${signed(corrLast.corr20, 2)}</em> on ${fmtDate(corrLast.date)}. ` +
     `Since the war began the correlation has been below zero on <em>${negDays} of ${corrSinceWar.length}</em> trading days` +
     (corrWar ? `, starting at ${signed(corrWar.corr20, 2)} on ${fmtDate(corrWar.date)}` : '') +
     `. Its low was ${signed(corrMin.corr20, 2)} on ${fmtDate(corrMin.date)}. ` +
-    `Twenty daily observations is a short window and the line is noisy by design; read the sign and the drift, not the wiggles.`;
+    `Twenty days is a short window, so the line is noisy. Read the sign and the drift, not the wiggles.`;
 
   // ---------- panel 5: other channels ----------
   const zoneSpans = [];
@@ -797,22 +801,27 @@ themeBtn.onclick = () => {
   const y10Last = lastRow('us10y'), y10War = rows.find(r => r.date >= WAR && r.us10y != null);
   const ddLast = lastRow('spy_drawdown_pct'), ddMin = minRow('spy_drawdown_pct');
   document.getElementById('n-channels').innerHTML =
-    `10-year yield <em>${y10Last.us10y.toFixed(2)}%</em> on ${fmtDate(y10Last.date)}` +
+    `The 10-year yield was <em>${y10Last.us10y.toFixed(2)}%</em> on ${fmtDate(y10Last.date)}` +
     (y10War ? `, against ${y10War.us10y.toFixed(2)}% on ${fmtDate(y10War.date)}` : '') +
-    `. Right now this is the channel where the war is being priced, if it is being priced anywhere outside oil. ` +
-    `S&amp;P 500 is <em>${ddLast.spy_drawdown_pct.toFixed(1)}%</em> off its high; the deepest drawdown in this window was ${ddMin.spy_drawdown_pct.toFixed(1)}% on ${fmtDate(ddMin.date)}. ` +
+    `. ` +
+    (y10War && y10Last.us10y - y10War.us10y >= 0.25
+      ? `If the war is priced anywhere outside oil, it is here. `
+      : y10War && y10War.us10y - y10Last.us10y >= 0.25
+        ? `Yields have fallen since the war began, which is what a growth scare looks like. `
+        : y10War ? `Yields have barely moved since the war began. ` : '') +
+    `The S&amp;P 500 is <em>${Math.abs(ddLast.spy_drawdown_pct).toFixed(1)}%</em> off its high. Its deepest dip in this window was ${Math.abs(ddMin.spy_drawdown_pct).toFixed(1)}% on ${fmtDate(ddMin.date)}. ` +
     (zoneSpans.length
       ? `Shaded spans mark the days Brent was inside the trouble zone.`
-      : `Shading would mark the days Brent was inside the trouble zone. There are none yet.`);
+      : `Shading marks the days Brent was inside the trouble zone. So far there are none.`);
 
   // ---------- the reading ----------
   const shockLine = yoyLast.brent_yoy_pct >= TROUBLE_LO
-    ? `Brent is up ${pct(yoyLast.brent_yoy_pct)} on the year, inside the zone where oil shocks have tipped economies over.`
-    : `Brent is up ${pct(yoyLast.brent_yoy_pct)} on the year, well short of the +${TROUBLE_LO}% line where oil shocks have tipped economies over.`;
+    ? `Brent is up ${pct(yoyLast.brent_yoy_pct).replace(/^\+/, '')} on the year, inside the zone where oil shocks have tipped economies over.`
+    : `Brent is up ${pct(yoyLast.brent_yoy_pct).replace(/^\+/, '')} on the year, well short of the +${TROUBLE_LO}% line where oil shocks have tipped economies over.`;
   const fearLine = ratioLast.ovx_vix >= 2
     ? `The options market is ${ratioLast.ovx_vix.toFixed(1)} times as worried about oil as about stocks. The fear is in the oil pit and it is staying there.`
     : ratioLast.ovx_vix >= 1
-      ? `The options market is ${ratioLast.ovx_vix.toFixed(1)} times as worried about oil as about stocks. That is elevated, not extreme.`
+      ? `The options market is ${ratioLast.ovx_vix.toFixed(1)} times as worried about oil as about stocks. That is high, not extreme.`
       : `The options market is now more worried about stocks than about oil. That is what spreading looks like.`;
   const spreadLine = corrLast.corr20 < -0.2
     ? `Stocks are falling on the days oil rises (correlation ${signed(corrLast.corr20, 2)}). Someone outside oil is at least flinching.`
@@ -822,8 +831,11 @@ themeBtn.onclick = () => {
   document.getElementById('reading').innerHTML =
     `<p><strong>Shock.</strong> ${shockLine}</p>` +
     `<p><strong>Fear.</strong> ${fearLine}</p>` +
-    `<p><strong>Spread.</strong> ${spreadLine} The S&amp;P 500 sits ${ddLast.spy_drawdown_pct.toFixed(1)}% off its high.</p>` +
-    `<p><em>So, is this really a war?</em> By the oil market's lights, yes: it hedges like one, and the heuristic reads it as one ${bnoLast.bno >= T.bno_high ? 'today' : 'on its war days'}. By everyone else's lights, so far, it is a line item. This page will say so the day that changes.</p>`;
+    `<p><strong>Spread.</strong> ${spreadLine} The S&amp;P 500 is ${Math.abs(ddLast.spy_drawdown_pct).toFixed(1)}% off its high.</p>` +
+    `<p><em>So, is this really a war?</em> To the oil market, yes. It hedges like one, and the heuristic reads it as one ${bnoLast.bno >= T.bno_high ? 'today' : 'on its war days'}. ` +
+    (ratioLast.ovx_vix < 1 || ddLast.spy_drawdown_pct <= -10
+      ? `To everyone else it is starting to look like one too.</p>`
+      : `To everyone else, so far, it is a line item. This page will say so the day that changes.</p>`);
 
   const src = meta.sources || {};
   if (src.brent_spot) document.getElementById('s-brent').textContent = src.brent_spot.replace(/ \(.*$/, '') + ', EIA Europe Brent FOB, daily';
