@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="paper">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Is this really a war? The shock is measurable. Whether anyone outside the oil pit is paying for it is a different question, and this page asks it.">
+<title>Is this really a war? — the market</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ---------- themes (shared with record.html / oilflows.html) ---------- */
+  :root, [data-theme="paper"] {
+    --bg: #f7f2e7;
+    --bg-raise: #fcfaf3;
+    --bg-sink: #efe8da;
+    --ink: #1a1610;
+    --ink-80: rgba(26,22,16,0.8);
+    --ink-60: rgba(26,22,16,0.6);
+    --ink-45: rgba(26,22,16,0.45);
+    --ink-30: rgba(26,22,16,0.3);
+    --ink-18: rgba(26,22,16,0.18);
+    --ink-10: rgba(26,22,16,0.1);
+    --ink-06: rgba(26,22,16,0.06);
+    --rate: #1d4e89;
+    --volume: #8a6d1f;
+    --gold: #8f6d14;
+    --danger: #a03428;
+    --svg-bg: rgba(26,22,16,0.035);
+  }
+  [data-theme="ink"] {
+    --bg: #17140f;
+    --bg-raise: #1e1a14;
+    --bg-sink: #14110c;
+    --ink: #efe8d8;
+    --ink-80: rgba(239,232,216,0.8);
+    --ink-60: rgba(239,232,216,0.6);
+    --ink-45: rgba(239,232,216,0.45);
+    --ink-30: rgba(239,232,216,0.3);
+    --ink-18: rgba(239,232,216,0.18);
+    --ink-10: rgba(239,232,216,0.1);
+    --ink-06: rgba(239,232,216,0.06);
+    --rate: #7aa8dd;
+    --volume: #cdb271;
+    --gold: #c9a94f;
+    --danger: #d06a5c;
+    --svg-bg: rgba(239,232,216,0.045);
+  }
+  :root {
+    --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+    --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body {
+    margin: 0; min-height: 100%;
+    font-family: var(--serif);
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.25s ease, color 0.25s ease;
+    overflow-x: clip;
+  }
+  body {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 52px 24px 120px;
+  }
+  ::selection { background: var(--rate); color: var(--bg); }
+
+  /* ---- fixed nav (shared) ---- */
+  nav.topnav {
+    position: fixed; inset: 0 0 auto 0; z-index: 50; height: 52px;
+    display: flex; align-items: center; gap: 22px; flex-wrap: nowrap;
+    overflow: hidden; padding: 0 28px;
+    background: color-mix(in srgb, var(--bg) 94%, transparent);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--ink-10);
+    color: var(--ink);
+    transition: background 0.25s ease, color 0.25s ease;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  nav.topnav a {
+    position: relative; color: var(--ink); text-decoration: none; opacity: 0.62;
+    transition: opacity 0.2s ease; white-space: nowrap; flex-shrink: 0;
+  }
+  nav.topnav a::after {
+    content: ''; position: absolute; left: 0; bottom: -3px;
+    width: 0; height: 1px; background: var(--ink); transition: width 0.25s ease;
+  }
+  nav.topnav a:hover { opacity: 1; }
+  nav.topnav a:hover::after, nav.topnav a.here::after { width: 100%; }
+  nav.topnav a.here { opacity: 1; }
+  nav.topnav .spacer { flex: 1; }
+  button.theme-toggle {
+    font: inherit; letter-spacing: inherit; text-transform: inherit;
+    background: none; border: 1px solid var(--ink-30); color: var(--ink);
+    padding: 4px 10px; cursor: pointer; border-radius: 999px;
+    transition: background 0.2s ease;
+  }
+  button.theme-toggle:hover { background: var(--ink-06); }
+
+  /* ---- hero ---- */
+  .hero { width: 100%; max-width: 860px; text-align: center; padding-top: 56px; }
+  .hero-kicker {
+    font-family: var(--mono); font-size: 10.5px;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.6em;
+  }
+  h1 {
+    font-size: clamp(2rem, 4.8vw, 3.3rem);
+    font-weight: 500; letter-spacing: -0.015em; line-height: 1.12;
+    margin: 0 0 0.55em; text-align: center;
+  }
+  .subtitle {
+    max-width: 640px; text-align: center;
+    color: var(--ink-80); font-size: 1.08rem; line-height: 1.75;
+    margin: 0 auto 1em;
+  }
+  .subtitle em { color: var(--gold); font-style: italic; }
+
+  /* ---- contents rail ---- */
+  .contents {
+    width: 100%; max-width: 1080px; margin-top: 2.4em;
+    display: flex; gap: 8px; flex-wrap: wrap; align-items: baseline;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.04em;
+  }
+  .contents-k { color: var(--ink-45); text-transform: uppercase; letter-spacing: 0.14em; margin-right: 6px; }
+  .contents a {
+    color: var(--ink-60); text-decoration: none;
+    border: 1px solid var(--ink-10); padding: 4px 10px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .contents a:hover { color: var(--ink); border-color: var(--gold); }
+
+  #load-error {
+    display: none; width: 100%; max-width: 1080px;
+    font-family: var(--mono); font-size: 11px; line-height: 1.7;
+    color: var(--danger);
+    border: 1px solid color-mix(in srgb, var(--danger) 40%, transparent);
+    background: color-mix(in srgb, var(--danger) 6%, transparent);
+    padding: 10px 14px; margin-top: 2em;
+  }
+
+  /* ---- stat tiles ---- */
+  .tiles {
+    display: flex; flex-wrap: wrap; gap: 0; margin: 0 0 20px;
+    border-top: 1px solid var(--ink-18); border-left: 1px solid var(--ink-18);
+  }
+  .tile {
+    flex: 1 1 180px;
+    border-right: 1px solid var(--ink-18); border-bottom: 1px solid var(--ink-18);
+    padding: 18px 20px 16px; transition: background 0.15s ease;
+  }
+  .tile:hover { background: var(--ink-06); }
+  .tile .k { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; color: var(--ink-45); text-transform: uppercase; }
+  .tile .v { font-size: 1.65rem; font-weight: 500; letter-spacing: -0.01em; margin-top: 8px; color: var(--ink); }
+  .tile .u { font-family: var(--mono); font-size: 10.5px; color: var(--ink-60); margin-top: 6px; line-height: 1.7; }
+  #top-tiles { width: 100%; max-width: 1080px; margin-top: 2.6em; }
+  #top-tiles .tile { flex: 1 1 220px; }
+  #top-tiles .tile .q { font-size: 1.05rem; font-style: italic; color: var(--ink-80); margin-bottom: 8px; }
+  #top-tiles .tile .v { font-size: 2.05rem; }
+  @media (max-width: 640px) { #top-tiles { flex-direction: column; } #top-tiles .tile { flex: 0 0 auto; } }
+
+  /* ---- sections ---- */
+  section.panel {
+    width: 100%; max-width: 1080px; margin-top: 96px; padding-top: 44px;
+    border-top: 1px solid var(--ink-18); scroll-margin-top: 72px;
+  }
+  h2 { font-size: 1.5rem; font-weight: 500; letter-spacing: -0.005em; margin: 0 0 0.35em; }
+  .panel-sub {
+    font-family: var(--mono); font-size: 11.5px; color: var(--ink-60);
+    margin: 0 0 20px; line-height: 1.75; max-width: 78em;
+  }
+  h3 {
+    font-family: var(--mono); font-weight: 500; font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-60);
+    margin: 28px 0 10px;
+  }
+  .chart-wrap { position: relative; width: 100%; }
+  svg { width: 100%; height: auto; display: block; }
+  svg text { font-family: var(--mono); }
+  .duo { display: flex; gap: 32px; flex-wrap: wrap; }
+  .duo > div { flex: 1 1 340px; min-width: 0; }
+  .duo h3 { margin-top: 0; }
+
+  .legend {
+    display: flex; gap: 20px; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 11px; color: var(--ink-80); margin-top: 14px;
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .swatch { width: 14px; height: 9px; display: inline-block; }
+
+  .note {
+    font-size: 11.5px; color: var(--ink-60); margin-top: 18px; line-height: 1.85;
+    font-family: var(--mono); max-width: 72em;
+    padding-left: 16px; border-left: 1px solid var(--ink-18);
+  }
+  .note em { color: var(--ink-80); font-style: normal; }
+  .prose { font-size: 1.02rem; line-height: 1.85; color: var(--ink-80); max-width: 46em; }
+  .prose strong { color: var(--ink); font-weight: 500; box-shadow: inset 0 -1px 0 var(--ink-18); }
+  .prose em { color: var(--ink); }
+
+  table.mono {
+    font-family: var(--mono); font-size: 11.5px; border-collapse: collapse;
+    color: var(--ink-80); margin-top: 14px; display: block; overflow-x: auto; max-width: 100%;
+  }
+  table.mono td, table.mono th {
+    padding: 6px 20px 6px 0; text-align: left; font-weight: normal;
+    border-bottom: 1px solid var(--ink-10); vertical-align: top;
+  }
+  table.mono th { color: var(--ink-45); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; border-bottom: 1px solid var(--ink-18); }
+  table.mono a { color: var(--rate); }
+
+  .tooltip {
+    position: absolute; pointer-events: none;
+    background: var(--bg-sink); border: 1px solid var(--ink-18);
+    font-family: var(--mono); font-size: 11px; line-height: 1.7; color: var(--ink-80);
+    padding: 8px 11px; white-space: nowrap; display: none; z-index: 5;
+  }
+  .tooltip b { color: var(--ink); font-weight: 500; }
+
+  a { color: var(--ink-80); text-underline-offset: 3px; }
+  a:hover { color: var(--ink); }
+  a.back {
+    display: inline-block; margin-top: 5em; color: var(--ink-60);
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; text-decoration: none;
+  }
+  a.back:hover { color: var(--ink); }
+  .stamp { font-family: var(--mono); font-size: 10.5px; color: var(--ink-45); margin-top: 3em; line-height: 1.8; }
+
+  @media (max-width: 720px) {
+    body { padding: 52px 16px 100px; }
+    nav.topnav { gap: 14px; padding: 12px 16px; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+    nav.topnav::-webkit-scrollbar { display: none; }
+    section.panel { margin-top: 72px; padding-top: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="/">warnotwar</a>
+  <a href="/heuristic.html">the heuristic</a>
+  <a href="/market.html" class="here">the market</a>
+  <a href="/oilflows.html">oilflows</a>
+  <a href="/record.html">the word</a>
+  <a href="/lab.html">the lab</a>
+  <a href="/teaching-module/index.html">hormuz lab (sim)</a>
+  <a href="/methodology.html">methodology</a>
+  <span class="spacer"></span>
+  <button class="theme-toggle" id="theme-toggle" title="switch paper / ink">&#9705; ink</button>
+</nav>
+
+<header class="hero">
+  <div class="hero-kicker">shock &middot; fear &middot; spread</div>
+  <h1>Is this really a war?</h1>
+  <p class="subtitle">
+    The heuristic reads one price. This page asks the wider question.
+    A war, by the market's lights, is something people pay to hedge.
+    <em>Shock:</em> How big is the oil move?
+    <em>Fear:</em> Is the worry priced only in oil?
+    <em>Spread:</em> Is anyone outside the oil pit reacting?
+  </p>
+</header>
+
+<div id="load-error">Could not load market data.</div>
+
+<div class="tiles" id="top-tiles">
+  <div class="tile">
+    <div class="q">How big is the shock?</div>
+    <div class="k">Brent spot, year over year</div>
+    <div class="v" id="t-yoy">&nbsp;</div>
+    <div class="u" id="t-yoy-u"></div>
+  </div>
+  <div class="tile">
+    <div class="q">Is the fear stuck in oil?</div>
+    <div class="k">OVX &divide; VIX</div>
+    <div class="v" id="t-ratio">&nbsp;</div>
+    <div class="u" id="t-ratio-u"></div>
+  </div>
+  <div class="tile">
+    <div class="q">Is anyone else reacting?</div>
+    <div class="k">20-day correlation, stocks vs oil</div>
+    <div class="v" id="t-corr">&nbsp;</div>
+    <div class="u" id="t-corr-u"></div>
+  </div>
+</div>
+
+<nav class="contents" aria-label="contents">
+  <span class="contents-k">contents</span>
+  <a href="#panel-shock">shock</a>
+  <a href="#panel-bno">the trigger</a>
+  <a href="#panel-fear">fear</a>
+  <a href="#panel-spread">spread</a>
+  <a href="#panel-channels">other channels</a>
+  <a href="#panel-reading">the reading</a>
+  <a href="#panel-method">sources</a>
+</nav>
+
+<section class="panel" id="panel-shock">
+  <h2>Shock: how big is the oil move?</h2>
+  <p class="panel-sub">
+    Brent spot, percent change from a year earlier. Strategists put the trouble zone
+    at +75% to +100%: past that, oil shocks have tended to tip economies over.
+    This is the right x-axis for the whole question, but on its own it measures the
+    size of the shock, not how anyone is taking it.
+  </p>
+  <div class="chart-wrap" id="c-yoy"></div>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--ink)"></i> Brent spot, year over year</span>
+    <span><i class="swatch" style="background:color-mix(in srgb, var(--danger) 14%, transparent)"></i> trouble zone, +75% to +100%</span>
+    <span><i class="dot" style="background:var(--danger)"></i> Feb 28 2026, start of the war</span>
+  </div>
+  <div class="note" id="n-yoy"></div>
+</section>
+
+<section class="panel" id="panel-bno">
+  <h2>The trigger: BNO, level and jumps</h2>
+  <p class="panel-sub">
+    The heuristic's own series. The level says which regime we are in.
+    The jumps say when something happened: oil reacts to strike headlines first,
+    so a one-day move of +4% or more catches event days more cleanly than a line
+    the price drifts across.
+  </p>
+  <div class="chart-wrap" id="c-bno"></div>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--ink)"></i> BNO close</span>
+    <span><i class="dot" style="background:var(--danger)"></i> jump day, +4% or more</span>
+    <span><i class="dot" style="background:var(--ink-45)"></i> 49 / 55 lines</span>
+  </div>
+  <h3>What 55 means in Brent: the BNO-to-Brent ratio</h3>
+  <div class="chart-wrap" id="c-ratio"></div>
+  <div class="note" id="n-bno"></div>
+</section>
+
+<section class="panel" id="panel-fear">
+  <h2>Fear: is the worry priced only in oil?</h2>
+  <p class="panel-sub">
+    OVX is the options market's expected swing in crude over the next month.
+    VIX is the same for the S&amp;P 500. Their ratio is the useful line: a high
+    ratio means the fear is trapped in oil while stocks shrug. The ratio
+    compressing because VIX is rising would mean the fear is spreading.
+  </p>
+  <div class="chart-wrap" id="c-vol"></div>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--rate)"></i> OVX, crude oil</span>
+    <span><i class="dot" style="background:var(--volume)"></i> VIX, S&amp;P 500</span>
+  </div>
+  <h3>OVX divided by VIX</h3>
+  <div class="chart-wrap" id="c-ovxvix"></div>
+  <div class="note" id="n-fear"></div>
+</section>
+
+<section class="panel" id="panel-spread">
+  <h2>Spread: is anyone outside the oil pit reacting?</h2>
+  <p class="panel-sub">
+    The 20-day rolling correlation between daily moves in SPY and BNO.
+    Below zero is a supply-shock regime: stocks fall on the days oil rises.
+    Near zero or positive is a shrug. This is the single cleanest line for the
+    question the site asks.
+  </p>
+  <div class="chart-wrap" id="c-corr"></div>
+  <div class="note" id="n-corr"></div>
+</section>
+
+<section class="panel" id="panel-channels">
+  <h2>Other channels</h2>
+  <p class="panel-sub">
+    Two more places a war would show up if it were being priced as one.
+  </p>
+  <div class="duo">
+    <div>
+      <h3>10-year Treasury yield, %</h3>
+      <div class="chart-wrap" id="c-10y"></div>
+    </div>
+    <div>
+      <h3>S&amp;P 500, drawdown from its high, %</h3>
+      <div class="chart-wrap" id="c-dd"></div>
+    </div>
+  </div>
+  <div class="note" id="n-channels"></div>
+</section>
+
+<section class="panel" id="panel-reading">
+  <h2>The reading, today</h2>
+  <div class="prose" id="reading"></div>
+</section>
+
+<section class="panel" id="panel-method">
+  <h2>Sources and method</h2>
+  <table class="mono">
+    <tr><th>series</th><th>source</th><th>note</th></tr>
+    <tr><td>Brent spot</td><td id="s-brent"><a href="https://www.eia.gov/dnav/pet/hist/RBRTED.htm">EIA, Europe Brent FOB, daily</a></td><td>Published weekly, so it lags the rest by up to a week. Year over year uses the last observation on or before the same date a year earlier.</td></tr>
+    <tr><td>BNO</td><td>Yahoo Finance daily close</td><td>The heuristic's ticker. Holds front-month Brent futures and rolls them, so its return includes roll yield. That is why year over year uses spot Brent, not BNO.</td></tr>
+    <tr><td>OVX, VIX</td><td id="s-vol">Cboe</td><td>OVX is built on WTI options, not Brent. It tracks the same fear.</td></tr>
+    <tr><td>SPY</td><td>Yahoo Finance daily close</td><td>Correlation is Pearson on the last 20 daily percent returns, both series present.</td></tr>
+    <tr><td>10-year yield</td><td id="s-10y">Treasury constant maturity</td><td>Via FRED when available, otherwise the Cboe 10-year index (^TNX), which can differ by a few basis points.</td></tr>
+  </table>
+  <div class="note">
+    Two things to watch on the year-over-year line. The denominator drifts: a year ago Brent
+    was already well off its lows, so the same price today reads as a smaller shock.
+    And from late February 2027 the base rolls through the 2026 spike, so the line will
+    collapse mechanically even if nothing changes. Data refreshes on weekday evenings.
+    Nothing here is forward-filled; a gap in a line is a gap in the data.
+  </div>
+  <div class="stamp" id="stamp"></div>
+  <a class="back" href="/heuristic.html">&larr; the heuristic</a>
+</section>
+
+<script>
+const rootEl = document.documentElement;
+const themeBtn = document.getElementById('theme-toggle');
+function applyTheme(t) {
+  rootEl.dataset.theme = t;
+  themeBtn.textContent = t === 'paper' ? '◑ ink' : '◐ paper';
+}
+applyTheme((() => {
+  try { const s = localStorage.getItem('ww-theme'); if (s) return s; } catch (e) {}
+  return matchMedia('(prefers-color-scheme: dark)').matches ? 'ink' : 'paper';
+})());
+themeBtn.onclick = () => {
+  const t = rootEl.dataset.theme === 'paper' ? 'ink' : 'paper';
+  applyTheme(t);
+  try { localStorage.setItem('ww-theme', t); } catch (e) {}
+};
+</script>
+
+<script>
+(async function () {
+  let rows, meta;
+  const getJSON = url => fetch(url).then(r => {
+    if (!r.ok) throw new Error('http ' + r.status);
+    return r.json();
+  });
+  try {
+    [rows, meta] = await Promise.all([
+      getJSON('/data/market_daily.json'),
+      getJSON('/data/market_meta.json'),
+    ]);
+  } catch (e) {
+    document.getElementById('load-error').style.display = 'block';
+    return;
+  }
+
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function dayMs(d) { const [y, m, day] = d.split('-').map(Number); return Date.UTC(y, m - 1, day); }
+  function fmtDate(d) { const [y, m, day] = d.split('-').map(Number); return `${MONTHS[m - 1]} ${day} ${y}`; }
+  function fmtShort(d) { const [y, m, day] = d.split('-').map(Number); return `${MONTHS[m - 1]} ${day}`; }
+  rows.forEach(r => { r.t = dayMs(r.date); });
+
+  const T = meta.thresholds;
+  const WAR = meta.war_start;
+  const warEvent = { date: WAR, label: 'war starts', side: 'right' };
+
+  const GRID = 'var(--ink-06)', TICK = 'var(--ink-45)';
+  const INK = 'var(--ink)', BLUE = 'var(--rate)', AMBER = 'var(--volume)', RED = 'var(--danger)';
+
+  const pct = (v, nd = 0) => (v > 0 ? '+' : '') + v.toFixed(nd) + '%';
+  const signed = (v, nd = 2) => (v > 0 ? '+' : '') + v.toFixed(nd);
+  function lastRow(field) {
+    for (let i = rows.length - 1; i >= 0; i--) if (rows[i][field] != null) return rows[i];
+    return null;
+  }
+  function rowAt(date) { return rows.find(r => r.date >= date) || null; }
+  function maxRow(field) {
+    let best = null;
+    rows.forEach(r => { if (r[field] != null && (!best || r[field] > best[field])) best = r; });
+    return best;
+  }
+  function minRow(field) {
+    let best = null;
+    rows.forEach(r => { if (r[field] != null && (!best || r[field] < best[field])) best = r; });
+    return best;
+  }
+
+  // ---------- line panel: theme-aware inline SVG ----------
+  function linePanel(el, series, opts) {
+    opts = opts || {};
+    const data = rows;
+    const d0 = data[0].t, d1 = data[data.length - 1].t;
+    const W = opts.width || 900, H = opts.height || 300,
+          PAD_L = 50, PAD_R = 14, PAD_T = 18, PAD_B = 30;
+
+    let vMax = -Infinity, vMin = Infinity;
+    series.forEach(s => data.forEach(r => {
+      const v = r[s.field];
+      if (v != null) { if (v > vMax) vMax = v; if (v < vMin) vMin = v; }
+    }));
+    if (opts.includeZero) vMin = Math.min(vMin, 0), vMax = Math.max(vMax, 0);
+    if (opts.yFloor != null) vMin = Math.min(vMin, opts.yFloor);
+    if (opts.yCeil != null) vMax = Math.max(vMax, opts.yCeil);
+    const span = vMax - vMin || 1;
+    vMax += span * 0.08; vMin -= span * 0.04;
+
+    const x = t => PAD_L + ((t - d0) / (d1 - d0)) * (W - PAD_L - PAD_R);
+    const y = v => H - PAD_B - ((v - vMin) / (vMax - vMin)) * (H - PAD_T - PAD_B);
+    const yc = v => Math.max(PAD_T, Math.min(H - PAD_B, y(v)));
+
+    let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+
+    // shaded y-band (e.g. the trouble zone)
+    (opts.bands || []).forEach(b => {
+      const top = yc(b.hi), bot = yc(b.lo);
+      if (bot - top > 0.5) {
+        svg += `<rect x="${PAD_L}" y="${top.toFixed(1)}" width="${W - PAD_L - PAD_R}" height="${(bot - top).toFixed(1)}" fill="${b.color}"/>`;
+        if (b.label) svg += `<text x="${PAD_L + 6}" y="${(top + 12).toFixed(1)}" fill="var(--ink-45)" font-size="10" text-anchor="start">${b.label}</text>`;
+      }
+    });
+    // shaded x-spans (date ranges)
+    (opts.spans || []).forEach(sp => {
+      const a = x(dayMs(sp.from)), b = x(dayMs(sp.to));
+      svg += `<rect x="${a.toFixed(1)}" y="${PAD_T}" width="${Math.max(1, b - a).toFixed(1)}" height="${H - PAD_T - PAD_B}" fill="${sp.color}"/>`;
+    });
+
+    // y gridlines
+    const step = niceStep((vMax - vMin) / 4);
+    for (let v = Math.ceil(vMin / step) * step; v <= vMax; v += step) {
+      const yy = y(v);
+      svg += `<line x1="${PAD_L}" y1="${yy.toFixed(1)}" x2="${W - PAD_R}" y2="${yy.toFixed(1)}" stroke="${GRID}"/>`;
+      svg += `<text x="${PAD_L - 7}" y="${(yy + 3.5).toFixed(1)}" fill="${TICK}" font-size="11" text-anchor="end">${(opts.fmtTick || fmtTick)(v)}</text>`;
+    }
+
+    // reference lines
+    (opts.refLines || []).forEach(rl => {
+      if (rl.v <= vMin || rl.v >= vMax) return;
+      const yy = y(rl.v);
+      const stroke = rl.strong ? 'var(--ink-30)' : 'var(--ink-18)';
+      svg += `<line x1="${PAD_L}" y1="${yy.toFixed(1)}" x2="${W - PAD_R}" y2="${yy.toFixed(1)}" stroke="${stroke}" stroke-dasharray="4 4"/>`;
+      if (rl.label) {
+        const rx = rl.labelAt ? x(dayMs(rl.labelAt)) : W - PAD_R - 2;
+        svg += `<text x="${rx.toFixed(1)}" y="${(yy + (rl.below ? 12 : -5)).toFixed(1)}" fill="var(--ink-45)" font-size="10" text-anchor="${rl.labelAt ? 'middle' : 'end'}">${rl.label}</text>`;
+      }
+    });
+
+    // month ticks
+    const monthEvery = opts.monthEvery || 2;
+    let cursor = new Date(d0);
+    cursor = new Date(Date.UTC(cursor.getUTCFullYear(), cursor.getUTCMonth(), 1));
+    let mi = 0;
+    while (cursor.getTime() <= d1) {
+      const mx = x(cursor.getTime());
+      if (mx >= PAD_L && mx <= W - PAD_R && mi % monthEvery === 0) {
+        const label = MONTHS[cursor.getUTCMonth()] + ' ' + String(cursor.getUTCFullYear()).slice(2);
+        svg += `<text x="${mx.toFixed(1)}" y="${H - 10}" fill="${TICK}" font-size="10" text-anchor="middle">${label}</text>`;
+      }
+      cursor = new Date(Date.UTC(cursor.getUTCFullYear(), cursor.getUTCMonth() + 1, 1));
+      mi++;
+    }
+
+    // events
+    (opts.events || []).forEach(ev => {
+      const ex = x(dayMs(ev.date));
+      svg += `<line x1="${ex.toFixed(1)}" y1="${PAD_T}" x2="${ex.toFixed(1)}" y2="${H - PAD_B}" stroke="${RED}" opacity="0.65" stroke-dasharray="3 3"/>`;
+      if (ev.label) {
+        const anchor = ev.side === 'left' ? 'end' : 'start';
+        const dx = ev.side === 'left' ? -5 : 5;
+        svg += `<text x="${(ex + dx).toFixed(1)}" y="${PAD_T + 11 + (ev.dy || 0)}" fill="var(--ink-60)" font-size="10" text-anchor="${anchor}">${ev.label}</text>`;
+      }
+    });
+
+    // series, gap-breaking
+    series.forEach(s => {
+      let path = '', pen = false;
+      data.forEach(r => {
+        const v = r[s.field];
+        if (v == null) { pen = false; return; }
+        path += `${pen ? 'L' : 'M'}${x(r.t).toFixed(1)},${y(v).toFixed(1)} `;
+        pen = true;
+      });
+      svg += `<path d="${path}" fill="none" stroke="${s.color}" stroke-width="${s.width || 2}" stroke-linejoin="round" stroke-linecap="round"/>`;
+      if (s.labelAt) {
+        const lr = data.find(r => r.date >= s.labelAt && r[s.field] != null);
+        if (lr) svg += `<text x="${x(lr.t).toFixed(1)}" y="${(y(lr[s.field]) - 14).toFixed(1)}" fill="${s.color}" font-size="10.5" text-anchor="middle">${s.name}</text>`;
+      }
+    });
+
+    // flagged points (e.g. jump days), a 2px surface ring so they stay legible on the line
+    if (opts.flag) {
+      data.forEach(r => {
+        const v = r[opts.flag.field];
+        if (v != null && r[opts.flag.when]) {
+          svg += `<circle cx="${x(r.t).toFixed(1)}" cy="${y(v).toFixed(1)}" r="4" fill="${RED}" stroke="var(--bg)" stroke-width="1.5"/>`;
+        }
+      });
+    }
+
+    // last observation of the first series
+    if (opts.markLast !== false) {
+      const s = series[0];
+      for (let i = data.length - 1; i >= 0; i--) {
+        const v = data[i][s.field];
+        if (v != null) {
+          svg += `<circle cx="${x(data[i].t).toFixed(1)}" cy="${y(v).toFixed(1)}" r="4" fill="${s.color}" stroke="var(--bg)" stroke-width="1.5"/>`;
+          break;
+        }
+      }
+    }
+
+    svg += `</svg>`;
+    el.innerHTML = svg;
+    attachHover(el, series, opts, { W, H, PAD_L, PAD_R, PAD_T, PAD_B, x, y, data, d0, d1 });
+  }
+
+  function niceStep(raw) {
+    const mag = Math.pow(10, Math.floor(Math.log10(raw)));
+    const n = raw / mag;
+    return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10) * mag;
+  }
+  function fmtTick(v) {
+    return Math.abs(v) >= 100 || Math.abs(v - Math.round(v)) < 1e-9 ? String(Math.round(v)) : v.toFixed(1);
+  }
+
+  function attachHover(el, series, opts, g) {
+    const svg = el.querySelector('svg');
+    const tip = document.createElement('div');
+    tip.className = 'tooltip';
+    el.appendChild(tip);
+    const cross = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    cross.setAttribute('stroke', 'var(--ink-30)');
+    cross.setAttribute('y1', g.PAD_T); cross.setAttribute('y2', g.H - g.PAD_B);
+    cross.style.display = 'none';
+    svg.appendChild(cross);
+
+    function onMove(evt) {
+      const rect = svg.getBoundingClientRect();
+      const px = (evt.clientX - rect.left) / rect.width * g.W;
+      if (px < g.PAD_L || px > g.W - g.PAD_R) { onLeave(); return; }
+      const t = g.d0 + (px - g.PAD_L) / (g.W - g.PAD_L - g.PAD_R) * (g.d1 - g.d0);
+      let i = 0, best = Infinity;
+      for (let j = 0; j < g.data.length; j++) {
+        const d = Math.abs(g.data[j].t - t);
+        if (d < best) { best = d; i = j; } else if (g.data[j].t > t) break;
+      }
+      const r = g.data[i];
+      let html = `<b>${fmtDate(r.date)}</b>`, any = false;
+      series.forEach(s => {
+        const v = r[s.field];
+        if (v == null) return;
+        any = true;
+        html += `<br><span style="color:${s.color}">&#9632;</span> ${s.name}: ${s.fmt ? s.fmt(v) : v}`;
+      });
+      (opts.extra || []).forEach(e => {
+        const v = r[e.field];
+        if (v != null) html += `<br>${e.name}: ${e.fmt ? e.fmt(v) : v}`;
+      });
+      if (opts.flag && r[opts.flag.when]) html += `<br><span style="color:${RED}">${opts.flag.text}</span>`;
+      if (!any) { onLeave(); return; }
+      cross.setAttribute('x1', g.x(r.t)); cross.setAttribute('x2', g.x(r.t));
+      cross.style.display = '';
+      tip.innerHTML = html;
+      tip.style.display = 'block';
+      const wrapRect = el.getBoundingClientRect();
+      const cx = (g.x(r.t) / g.W) * rect.width + (rect.left - wrapRect.left);
+      const flip = cx > wrapRect.width * 0.62;
+      tip.style.left = flip ? '' : (cx + 12) + 'px';
+      tip.style.right = flip ? (wrapRect.width - cx + 12) + 'px' : '';
+      tip.style.top = '8px';
+    }
+    function onLeave() { tip.style.display = 'none'; cross.style.display = 'none'; }
+    svg.addEventListener('pointermove', onMove);
+    svg.addEventListener('pointerleave', onLeave);
+  }
+
+  // ---------- headline numbers ----------
+  const [TROUBLE_LO, TROUBLE_HI] = T.brent_yoy_trouble_pct;
+  const yoyLast = lastRow('brent_yoy_pct');
+  const yoyPeak = maxRow('brent_yoy_pct');
+  const ratioLast = lastRow('ovx_vix');
+  const ratioPeak = maxRow('ovx_vix');
+  const corrLast = lastRow('corr20');
+  const corrMin = minRow('corr20');
+  const bnoLast = lastRow('bno');
+  const warRow = rowAt(WAR);
+  const jumpDays = rows.filter(r => r.bno_jump);
+  const jumpsSinceWar = jumpDays.filter(r => r.date >= WAR);
+  const daysSinceWar = rows.filter(r => r.date >= WAR && r.bno != null).length;
+
+  document.getElementById('t-yoy').textContent = pct(yoyLast.brent_yoy_pct);
+  document.getElementById('t-yoy-u').textContent =
+    `as of ${fmtShort(yoyLast.date)} · trouble zone starts at +${TROUBLE_LO}% · peak ${pct(yoyPeak.brent_yoy_pct)} on ${fmtShort(yoyPeak.date)}`;
+
+  document.getElementById('t-ratio').textContent = ratioLast.ovx_vix.toFixed(1) + '×';
+  document.getElementById('t-ratio-u').textContent =
+    `OVX ${ratioLast.ovx.toFixed(0)} vs VIX ${ratioLast.vix.toFixed(0)} · above 1 means oil is the scared one · peak ${ratioPeak.ovx_vix.toFixed(1)}× on ${fmtShort(ratioPeak.date)}`;
+
+  document.getElementById('t-corr').textContent = signed(corrLast.corr20, 2);
+  document.getElementById('t-corr-u').textContent =
+    `SPY vs BNO daily moves · below zero: stocks fall when oil rises · low ${signed(corrMin.corr20, 2)} on ${fmtShort(corrMin.date)}`;
+
+  // ---------- panel 1: Brent YoY ----------
+  const troubleBand = { lo: TROUBLE_LO, hi: TROUBLE_HI, color: 'color-mix(in srgb, var(--danger) 14%, transparent)', label: 'trouble zone' };
+  linePanel(document.getElementById('c-yoy'),
+    [{ field: 'brent_yoy_pct', name: 'Brent spot, YoY', color: INK, fmt: v => pct(v, 1) }],
+    { includeZero: true, yCeil: TROUBLE_HI + 5, bands: [troubleBand],
+      refLines: [{ v: 0, strong: true }],
+      events: [warEvent], fmtTick: v => v + '%',
+      extra: [{ field: 'brent_spot', name: 'Brent spot', fmt: v => '$' + v.toFixed(2) }] });
+
+  const yoyAtWar = rows.find(r => r.date >= WAR && r.brent_yoy_pct != null);
+  const inZone = rows.filter(r => r.brent_yoy_pct != null && r.brent_yoy_pct >= TROUBLE_LO);
+  document.getElementById('n-yoy').innerHTML =
+    `Latest reading <em>${pct(yoyLast.brent_yoy_pct, 1)}</em> on ${fmtDate(yoyLast.date)}, Brent spot $${yoyLast.brent_spot.toFixed(2)}. ` +
+    `Peak <em>${pct(yoyPeak.brent_yoy_pct, 1)}</em> on ${fmtDate(yoyPeak.date)}. ` +
+    (yoyAtWar ? `On the first reading after the war began (${fmtDate(yoyAtWar.date)}) it was ${pct(yoyAtWar.brent_yoy_pct, 1)}. ` : '') +
+    (inZone.length
+      ? `The line has spent <em>${inZone.length}</em> trading days inside the trouble zone.`
+      : `The line has <em>not entered</em> the trouble zone at any point in this window. By the strategists' rule the shock is real but not yet the kind that tips economies over.`) +
+    ` Brent spot is published weekly by EIA, so this panel runs up to a week behind the others.`;
+
+  // ---------- panel 2: BNO level, jumps, ratio ----------
+  linePanel(document.getElementById('c-bno'),
+    [{ field: 'bno', name: 'BNO close', color: INK, fmt: v => '$' + v.toFixed(2) }],
+    { yFloor: T.bno_low - 5, yCeil: T.bno_high + 3,
+      refLines: [{ v: T.bno_high, label: '55 · war above', strong: true, labelAt: '2025-09-15' },
+                 { v: T.bno_low, label: '49 · peace below', strong: true, labelAt: '2025-09-15', below: true }],
+      events: [warEvent],
+      flag: { field: 'bno', when: 'bno_jump', text: 'jump day' },
+      extra: [{ field: 'bno_ret_pct', name: 'day move', fmt: v => pct(v, 2) }] });
+
+  linePanel(document.getElementById('c-ratio'),
+    [{ field: 'bno_brent_ratio', name: 'BNO ÷ Brent spot', color: BLUE, fmt: v => v.toFixed(3) }],
+    { height: 200, events: [warEvent],
+      extra: [{ field: 'bno', name: 'BNO', fmt: v => '$' + v.toFixed(2) },
+              { field: 'brent_spot', name: 'Brent spot', fmt: v => '$' + v.toFixed(2) }] });
+
+  const ratioNow = meta.bno_brent_ratio_60obs_median;
+  const ratioWarRow = rows.find(r => r.date >= WAR && r.bno_brent_ratio != null);
+  const brentAt55Now = meta.brent_equiv_of_bno_high;
+  const brentAt55War = ratioWarRow ? T.bno_high / ratioWarRow.bno_brent_ratio : null;
+  document.getElementById('n-bno').innerHTML =
+    `<em>${jumpsSinceWar.length}</em> jump days in the ${daysSinceWar} trading days since Feb 28, ` +
+    `${jumpDays.length - jumpsSinceWar.length} in the ${rows.filter(r => r.date < WAR && r.bno != null).length} before. ` +
+    `Latest close $${bnoLast.bno.toFixed(2)} on ${fmtDate(bnoLast.date)}${bnoLast.bno_jump ? ', itself a jump day' : ''}. ` +
+    `<br>Translation: over the last 60 readings BNO has traded at a median <em>${ratioNow.toFixed(3)}</em> of Brent spot, ` +
+    `so the 55 line sits at about <em>Brent $${brentAt55Now.toFixed(0)}</em> and the 49 line at about $${meta.brent_equiv_of_bno_low.toFixed(0)}. ` +
+    (brentAt55War ? `On ${fmtDate(ratioWarRow.date)} the ratio was ${ratioWarRow.bno_brent_ratio.toFixed(3)}, so 55 then meant Brent $${brentAt55War.toFixed(0)}. ` : '') +
+    `The ratio climbs when the futures curve is backwardated, which is what a supply shock does. The level line has drifted in meaning; the jumps have not.`;
+
+  // ---------- panel 3: OVX, VIX, ratio ----------
+  linePanel(document.getElementById('c-vol'),
+    [{ field: 'ovx', name: 'OVX', color: BLUE, fmt: v => v.toFixed(1), labelAt: '2025-10-01' },
+     { field: 'vix', name: 'VIX', color: AMBER, fmt: v => v.toFixed(1), labelAt: '2025-10-01' }],
+    { includeZero: true, events: [warEvent] });
+
+  linePanel(document.getElementById('c-ovxvix'),
+    [{ field: 'ovx_vix', name: 'OVX ÷ VIX', color: INK, fmt: v => v.toFixed(2) + '×' }],
+    { height: 220, includeZero: true, refLines: [{ v: 1, label: '1× · equal fear', strong: true, labelAt: '2025-09-15' }],
+      events: [warEvent], fmtTick: v => v + '×' });
+
+  const ratioWar = rows.find(r => r.date >= WAR && r.ovx_vix != null);
+  const vixPeak = maxRow('vix'), ovxPeak = maxRow('ovx');
+  document.getElementById('n-fear').innerHTML =
+    `Today OVX ${ratioLast.ovx.toFixed(1)} against VIX ${ratioLast.vix.toFixed(1)}: a ratio of <em>${ratioLast.ovx_vix.toFixed(2)}×</em>. ` +
+    `OVX peaked at ${ovxPeak.ovx.toFixed(0)} on ${fmtDate(ovxPeak.date)}; VIX peaked at ${vixPeak.vix.toFixed(0)} on ${fmtDate(vixPeak.date)}. ` +
+    (ratioWar ? `The ratio was ${ratioWar.ovx_vix.toFixed(2)}× on the first trading day of the war and hit ${ratioPeak.ovx_vix.toFixed(2)}× on ${fmtDate(ratioPeak.date)}. ` : '') +
+    `A ratio this high says the options market is paying up to protect against oil, not against stocks. Watch for the ratio falling <em>because VIX rises</em>; that is the fear spreading.`;
+
+  // ---------- panel 4: rolling correlation ----------
+  linePanel(document.getElementById('c-corr'),
+    [{ field: 'corr20', name: '20-day correlation', color: INK, fmt: v => signed(v, 2) }],
+    { yFloor: -1, yCeil: 1, refLines: [{ v: 0, strong: true }],
+      bands: [{ lo: -1, hi: 0, color: 'color-mix(in srgb, var(--danger) 7%, transparent)', label: 'supply-shock regime' }],
+      events: [warEvent], fmtTick: v => signed(v, 1) });
+
+  const corrSinceWar = rows.filter(r => r.date >= WAR && r.corr20 != null);
+  const negDays = corrSinceWar.filter(r => r.corr20 < 0).length;
+  const corrWar = corrSinceWar[0];
+  document.getElementById('n-corr').innerHTML =
+    `Latest <em>${signed(corrLast.corr20, 2)}</em> on ${fmtDate(corrLast.date)}. ` +
+    `Since the war began the correlation has been below zero on <em>${negDays} of ${corrSinceWar.length}</em> trading days` +
+    (corrWar ? `, starting at ${signed(corrWar.corr20, 2)} on ${fmtDate(corrWar.date)}` : '') +
+    `. Its low was ${signed(corrMin.corr20, 2)} on ${fmtDate(corrMin.date)}. ` +
+    `Twenty daily observations is a short window and the line is noisy by design; read the sign and the drift, not the wiggles.`;
+
+  // ---------- panel 5: other channels ----------
+  const zoneSpans = [];
+  let open = null;
+  rows.forEach(r => {
+    if (r.brent_yoy_pct == null) return;
+    if (r.brent_yoy_pct >= TROUBLE_LO) { if (!open) open = { from: r.date, to: r.date }; else open.to = r.date; }
+    else if (open) { zoneSpans.push(open); open = null; }
+  });
+  if (open) zoneSpans.push(open);
+  zoneSpans.forEach(s => s.color = 'color-mix(in srgb, var(--danger) 14%, transparent)');
+
+  linePanel(document.getElementById('c-10y'),
+    [{ field: 'us10y', name: '10-year yield', color: INK, fmt: v => v.toFixed(2) + '%' }],
+    { width: 480, height: 240, monthEvery: 3, events: [{ date: WAR }], spans: zoneSpans, fmtTick: v => v.toFixed(1) });
+  linePanel(document.getElementById('c-dd'),
+    [{ field: 'spy_drawdown_pct', name: 'S&P 500 drawdown', color: INK, fmt: v => v.toFixed(1) + '%' }],
+    { width: 480, height: 240, monthEvery: 3, includeZero: true, events: [{ date: WAR }], spans: zoneSpans, fmtTick: v => v + '%',
+      extra: [{ field: 'spy', name: 'SPY', fmt: v => '$' + v.toFixed(2) }] });
+
+  const y10Last = lastRow('us10y'), y10War = rows.find(r => r.date >= WAR && r.us10y != null);
+  const ddLast = lastRow('spy_drawdown_pct'), ddMin = minRow('spy_drawdown_pct');
+  document.getElementById('n-channels').innerHTML =
+    `10-year yield <em>${y10Last.us10y.toFixed(2)}%</em> on ${fmtDate(y10Last.date)}` +
+    (y10War ? `, against ${y10War.us10y.toFixed(2)}% on ${fmtDate(y10War.date)}` : '') +
+    `. Right now this is the channel where the war is being priced, if it is being priced anywhere outside oil. ` +
+    `S&amp;P 500 is <em>${ddLast.spy_drawdown_pct.toFixed(1)}%</em> off its high; the deepest drawdown in this window was ${ddMin.spy_drawdown_pct.toFixed(1)}% on ${fmtDate(ddMin.date)}. ` +
+    (zoneSpans.length
+      ? `Shaded spans mark the days Brent was inside the trouble zone.`
+      : `Shading would mark the days Brent was inside the trouble zone. There are none yet.`);
+
+  // ---------- the reading ----------
+  const shockLine = yoyLast.brent_yoy_pct >= TROUBLE_LO
+    ? `Brent is up ${pct(yoyLast.brent_yoy_pct)} on the year, inside the zone where oil shocks have tipped economies over.`
+    : `Brent is up ${pct(yoyLast.brent_yoy_pct)} on the year, well short of the +${TROUBLE_LO}% line where oil shocks have tipped economies over.`;
+  const fearLine = ratioLast.ovx_vix >= 2
+    ? `The options market is ${ratioLast.ovx_vix.toFixed(1)} times as worried about oil as about stocks. The fear is in the oil pit and it is staying there.`
+    : ratioLast.ovx_vix >= 1
+      ? `The options market is ${ratioLast.ovx_vix.toFixed(1)} times as worried about oil as about stocks. That is elevated, not extreme.`
+      : `The options market is now more worried about stocks than about oil. That is what spreading looks like.`;
+  const spreadLine = corrLast.corr20 < -0.2
+    ? `Stocks are falling on the days oil rises (correlation ${signed(corrLast.corr20, 2)}). Someone outside oil is at least flinching.`
+    : corrLast.corr20 < 0.2
+      ? `Stocks are ignoring oil day to day (correlation ${signed(corrLast.corr20, 2)}). The shrug.`
+      : `Stocks and oil are rising together (correlation ${signed(corrLast.corr20, 2)}). That is a demand story, not a war story.`;
+  document.getElementById('reading').innerHTML =
+    `<p><strong>Shock.</strong> ${shockLine}</p>` +
+    `<p><strong>Fear.</strong> ${fearLine}</p>` +
+    `<p><strong>Spread.</strong> ${spreadLine} The S&amp;P 500 sits ${ddLast.spy_drawdown_pct.toFixed(1)}% off its high.</p>` +
+    `<p><em>So, is this really a war?</em> By the oil market's lights, yes: it hedges like one, and the heuristic reads it as one ${bnoLast.bno >= T.bno_high ? 'today' : 'on its war days'}. By everyone else's lights, so far, it is a line item. This page will say so the day that changes.</p>`;
+
+  const src = meta.sources || {};
+  if (src.brent_spot) document.getElementById('s-brent').textContent = src.brent_spot.replace(/ \(.*$/, '') + ', EIA Europe Brent FOB, daily';
+  if (src.ovx && src.vix) document.getElementById('s-vol').textContent = 'Cboe, via ' + src.ovx + ' and ' + src.vix;
+  if (src.us10y) document.getElementById('s-10y').textContent = src.us10y + ', Treasury constant maturity';
+  document.getElementById('stamp').textContent =
+    `Data through ${fmtDate(rows[rows.length - 1].date)} · Brent spot through ${fmtDate(yoyLast.date)} · built ${meta.generated_at_utc.replace('T', ' ').replace('Z', ' UTC')}`;
+})();
+</script>
+
+</body>
+</html>

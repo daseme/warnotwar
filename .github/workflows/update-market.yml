@@ -1,0 +1,34 @@
+name: Update market data
+
+on:
+  schedule:
+    - cron: '45 21 * * 1-5'
+    - cron: '45 2 * * 2-6'   # catch-up for days the first run never fires
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install xlrd
+      - run: python3 scripts/build_market.py
+        env:
+          FRED_KEY: ${{ secrets.FRED_KEY }}
+      - name: commit if changed
+        run: |
+          git config user.name "market-bot"
+          git config user.email "actions@github.com"
+          git add data/market_daily.json data/market_meta.json
+          if git diff --cached --quiet; then
+            echo "no data changes"
+          else
+            git commit -m "update market data"
+            git push
+          fi
