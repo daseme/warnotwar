@@ -55,7 +55,7 @@
       budget: 1.0, spent: 0, treasury: 0, mood: 60,
       price: basePrice(1977), spike: 0,
       domes: DOMES.map(d => ({ ...d, cav: [], building: [], plant: 'none' })),   // plant: 'none' | years left (number) | 'ready'
-      log: [], history: [], pain: 0, painAvoided: 0, releasedTotal: 0, boughtTotal: 0, spentTotal: 0,
+      log: [], history: [], pain: 0, painAvoided: 0, releasedTotal: 0, boughtTotal: 0, spentTotal: 0, oilSpend: 0, soldCash: 0, soldCashValue: 0,
       loans: [], mandates: [], crisis: null, done: {}, hurricane: null, flash: null,
       seen1979: false,
     };
@@ -77,6 +77,9 @@
   function domeRate(w, d) { if (d.plant !== 'ready') return 0; const n = d.cav.filter(c => !c.retired).length; if (!n) return 0; return d.rate * (d.cav.filter(usable).length / Math.max(n, d.maxCav * 0.6)); }
   const drawCap = w => w.domes.reduce((a, d) => a + domeRate(w, d), 0) * (w.hurricane ? 0.5 : 1);
   const fillCap = w => w.domes.reduce((a, d) => a + (d.plant === 'ready' ? d.fill : d.fill * 0.5), 0);  // mb/d: filling works with the basic plant, faster with the full one
+  const maxSell = w => Math.min(100, drawCap(w) * 365 * 0.5, Math.max(0, inv(w) - 12));   // a calm-year sale: half the year's pumping, at most 100 mb, never the roof oil
+  const avgBuy = w => w.boughtTotal > 0 ? w.oilSpend / w.boughtTotal : 0;
+  const avgSell = w => w.soldCash > 0 ? w.soldCashValue / w.soldCash : 0;
   const roomFor = w => w.domes.reduce((a, d) => a + d.cav.filter(c => !c.retired && c.offline <= 0).reduce((x, c) => x + Math.max(0, c.cap - c.oil), 0), 0);
   function pushHistory(w) { w.history.push({ year: w.year + (w.week / 52), inv: inv(w), cap: capacity(w), price: w.price }); }
   function log(w, text, cls) { w.log.unshift({ year: w.year, week: w.week, text, cls: cls || '' }); if (w.log.length > 400) w.log.pop(); }
@@ -115,10 +118,14 @@
     // dec: { buy (mb), build (caverns), maintain (0..1 share of wells worked over) }
     const out = { bought: 0, built: 0, spent: 0, notes: [] };
     const price = w.price;
+    // selling for cash comes first, so the money can be used this same year
+    const sellMax = maxSell(w);
+    let sell = clamp(dec.sell || 0, 0, sellMax);
+    if (sell > 0.05) { const r = takeOil(w, sell); out.sold = r.got; out.saleCash = r.got * price / 1000; w.budget += out.saleCash; w.soldCash += r.got; w.soldCashValue += r.got * price; w.releasedTotal += r.got; w.mood = clamp(w.mood + r.got / 40, 5, 100); out.retired = r.retired; }
     let buy = clamp(dec.buy || 0, 0, Math.min(roomFor(w), fillCap(w) * 365));
     let cost = buy * price / 1000;
     if (cost > w.budget - out.spent) { buy = Math.max(0, (w.budget - out.spent) * 1000 / price); cost = buy * price / 1000; out.notes.push('The budget did not stretch to the oil you asked for.'); }
-    const put = putOil(w, buy); out.bought = put; out.spent += put * price / 1000; w.boughtTotal += put;
+    const put = putOil(w, buy); out.bought = put; out.spent += put * price / 1000; w.boughtTotal += put; w.oilSpend += put * price;
     const nBuild = clamp(Math.floor(dec.build || 0), 0, 8);
     for (let i = 0; i < nBuild; i++) {
       if (w.budget - out.spent < BUILD_COST) { out.notes.push('No money left to leach another cavern.'); break; }
@@ -256,5 +263,5 @@
     return { inv: i, cap, caverns: wells.length, health, leftAvg, pain: w.pain, avoided: w.painAvoided, spent: w.spentTotal, treasury: w.treasury, bought: w.boughtTotal, released: w.releasedTotal, mood: w.mood, score, title };
   }
 
-  root.SALT = { PLANT_COST, PLANT_YEARS, BUILD_YEARS, newWorld, yearDecisions, advanceYear, resolveCard, startCrisis, crisisWeek, inv, capacity, cavCount, drawCap, fillCap, roomFor, report, basePrice, budgetFor, SCRIPT, DOMES, HEEL, CAV_MB, BUILD_COST, WORKOVER, domeOil, domeCap, domeRate, rnd };
+  root.SALT = { PLANT_COST, PLANT_YEARS, BUILD_YEARS, maxSell, avgBuy, avgSell, newWorld, yearDecisions, advanceYear, resolveCard, startCrisis, crisisWeek, inv, capacity, cavCount, drawCap, fillCap, roomFor, report, basePrice, budgetFor, SCRIPT, DOMES, HEEL, CAV_MB, BUILD_COST, WORKOVER, domeOil, domeCap, domeRate, rnd };
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -47,6 +47,9 @@
       <div class="help" id="y-help-pumps">A pumping plant for one dome: water intake, injection pumps, pipeline. Without it that dome’s oil cannot come out. Two years, $350m.</div>
       <div class="row"><label>well work</label><input type="range" id="y-maint" min="0" max="100" step="5" value="0"><output id="y-maint-o">0 wells · $0.00bn</output></div>
       <div class="help" id="y-help-maint">Repairs to the steel casings that salt slowly crushes. Skip it and wells fail, shutting caverns for a year.</div>
+      <div class="row"><label>sell oil</label><input type="range" id="y-sell" min="0" max="100" step="1" value="0"><output id="y-sell-o">0 mb · +$0.00bn</output></div>
+      <div class="help" id="y-help-sell">Sell crude on the market; the money lands in your account this year. It needs pumps, and every barrel sold is one you cannot pump in a crisis.</div>
+      <div class="help money" id="y-money"></div>
       <div class="actions"><span class="left">left over <b id="y-left">$1.0bn</b></span><button class="push wide" id="y-go"><span>turn the year →</span></button></div>
     </div>
     <!-- crisis panel -->
@@ -85,14 +88,22 @@
 <div class="overlay" id="intro">
   <div class="card">
     <div class="kicker">1977 · before you begin</div>
-    <h2>Four things you control</h2>
+    <h2>Five things you control</h2>
     <div class="ctl-list">
       <div><b>Buy oil.</b> Crude at this year’s price, poured into caverns that have room. Cheap years are the time to buy.</div>
       <div><b>Dig caverns.</b> New space, dissolved out of the salt with river water. Three years each. You start with fifteen old brine caverns, about 180 million barrels of room.</div>
       <div><b>Build pumps.</b> The plant that gets oil back out of a dome: water intake, injection pumps, a pipeline. You have none. Until a dome has its plant, its oil is stuck. Two years, $350 million a dome.</div>
       <div><b>Well work.</b> Repairs to the casings the salt slowly crushes. Neglect them and wells fail.</div>
+      <div><b>Sell oil.</b> Turn barrels into budget when you need repairs or want to buy back cheaper later. Needs pumps.</div>
     </div>
-    <p>Congress gives you a budget each year. Unspent money mostly goes back. When a shock comes, the year stops and you run the pumps week by week with the knob.</p>
+    <div class="kicker" style="margin-top:6px">how the money works</div>
+    <div class="ctl-list money-list">
+      <div><b>Congress pays.</b> Each year you get a grant. It follows the real pattern: generous after the embargo, near zero in the nineties, a trickle after 2009, more in the refill years. A happy Congress gives up to a fifth more; an angry one, a fifth less.</div>
+      <div><b>Leftover money carries over, at a cost.</b> You keep it, but Congress cuts next year’s grant by half of what you are sitting on. Spend it unless oil is dear this year and you expect it cheaper next year.</div>
+      <div><b>You can sell oil for cash.</b> A fifth lever. Congress has allowed this for real, to pay for repairs in 2015 and for buybacks in 2023. The money is yours the same year. The barrels are gone until you buy them back.</div>
+      <div><b>Emergency sales pay the Treasury, not you.</b> In a crisis you release oil for the country, and the receipts go to the general fund. Congress remembers that you helped.</div>
+    </div>
+    <p>When a shock comes, the year stops and you run the pumps week by week with the knob.</p>
     <div class="foot"><button class="btn primary" id="i-ok">understood →</button></div>
   </div>
 </div>

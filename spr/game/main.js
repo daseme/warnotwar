@@ -37,7 +37,7 @@
   function renderLog() { const L = $('log'); L.innerHTML = w.log.slice(0, 120).map(e => `<div class="${e.cls}"><span>${e.year}${e.week ? ` w${e.week}` : ''}</span>${e.text}</div>`).join(''); }
 
   /* ---------- year panel ---------- */
-  const yb = $('y-buy'), ybd = $('y-build'), ym = $('y-maint'), yp = $('y-pumps');
+  const yb = $('y-buy'), ybd = $('y-build'), ym = $('y-maint'), yp = $('y-pumps'), ys = $('y-sell');
   function yearPanel() {
     $('p-year').hidden = false; $('p-crisis').hidden = true;
     const room = S.roomFor(w), maxBuy = Math.min(room, S.fillCap(w) * 365);
@@ -51,6 +51,7 @@
   }
   function yearOut() {
     const buy = +yb.value, build = +ybd.value, share = +ym.value / 100, pumps = +yp.value;
+    const sellMax = Math.floor(S.maxSell(w)); ys.max = sellMax; if (+ys.value > sellMax) ys.value = sellMax; const sell = +ys.value, cashIn = sell * w.price / 1000;
     const noPlant = w.domes.filter(d => d.plant === 'none').length; yp.max = noPlant; if (pumps > noPlant) yp.value = noPlant;
     const wells = w.domes.flatMap(d => d.cav).filter(c => !c.retired).length, n = Math.round(wells * share);
     const cBuy = buy * w.price / 1000, cBuild = build * S.BUILD_COST, cM = n * S.WORKOVER, cP = +yp.value * S.PLANT_COST;
@@ -67,25 +68,34 @@
     $('y-help-pumps').innerHTML = noPlant ? `<b>${m$(S.PLANT_COST)} per dome, two years</b>: ordered now, ready in <b>${w.year + S.PLANT_YEARS}</b>. ${noPlant} dome${noPlant > 1 ? 's' : ''} still ha${noPlant > 1 ? 've' : 's'} no pumps; oil there cannot come out.` : 'Every dome has its pumping plant. Nothing more to build here.';
     const shut = w.domes.reduce((a, d) => a + d.cav.filter(c => c.offline > 0 && !c.retired).length, 0);
     $('y-help-maint').innerHTML = `<b>${m$(S.WORKOVER)} per well, done within the year</b>. You have ${wells} wells; the salt crushes their casings a little every year. ${shut ? `<b>${shut} cavern${shut > 1 ? 's are' : ' is'} shut after a well failure</b>; work on them brings them back.` : 'A failed well shuts its cavern for a year.'}`;
-    const left = w.budget - cBuy - cBuild - cM - cP; const L = $('y-left'); L.textContent = bn(Math.abs(left)) + (left < 0 ? ' short' : ''); L.style.color = left < -1e-9 ? 'var(--danger)' : 'var(--ink)';
+    $('y-sell-o').innerHTML = `${f0(sell)} mb · +${bn(cashIn)}`;
+    const ab = S.avgBuy(w);
+    $('y-help-sell').innerHTML = sellMax > 0 ? `Sells at <b>$${f0(w.price)} a barrel</b>; the money is in your account this year. Up to ${sellMax} mb this year (half a year of pumping, never the roof oil).${ab ? ` Your oil cost <b>$${f0(ab)}</b> a barrel on average, so this is a ${w.price >= ab ? 'gain' : 'loss'} of about $${f0(Math.abs(w.price - ab))} a barrel.` : ''} Every barrel sold is one you cannot pump in a crisis.` : 'Nothing to sell yet: it takes pumps, and oil above the roof blanket.';
+    const nextGrant = S.budgetFor(w.year + 1) * (0.8 + w.mood / 250);
+    const leftover = w.budget + cashIn - cBuy - cBuild - cM - cP;
+    $('y-money').innerHTML = `Money: unspent cash carries over, but Congress cuts next year’s grant by half of it. Next year’s grant looks like about <b>${bn(nextGrant)}</b>${leftover > 0.05 ? `; carrying ${bn(leftover)} would make it about <b>${bn(Math.max(0, nextGrant - leftover * 0.5) + leftover)}</b> in hand` : ''}.`;
+    const left = leftover; const L = $('y-left'); L.textContent = bn(Math.abs(left)) + (left < 0 ? ' short' : ''); L.style.color = left < -1e-9 ? 'var(--danger)' : 'var(--ink)';
     $('y-go').disabled = left < -1e-9;
+    $('y-budget').textContent = bn(Math.max(0, w.budget)) + (cashIn > 0.005 ? ` + ${bn(cashIn)} from the sale` : '');
   }
-  [yb, ybd, ym, yp].forEach(el => el.addEventListener('input', yearOut));
+  [yb, ybd, ym, yp, ys].forEach(el => el.addEventListener('input', yearOut));
 
   async function turnYear() {
     $('y-go').disabled = true;
-    const dec = { buy: +yb.value, build: +ybd.value, maintain: +ym.value / 100, pumps: +yp.value };
+    const dec = { buy: +yb.value, build: +ybd.value, maintain: +ym.value / 100, pumps: +yp.value, sell: +ys.value };
     const before = new Map(w.domes.flatMap(d => d.cav).map(c => [c, c.oil]));
     const out = S.yearDecisions(w, dec);
     const poured = w.domes.flatMap(d => d.cav).filter(c => c.oil - (before.get(c) ?? c.oil) > 0.05).map(c => ({ cv: c, from: before.get(c), to: c.oil }));
     if (poured.length) { const dur = Math.min(4000, 700 + poured.length * 550); scene.flow.in = Math.min(0.8, out.bought / 100); scene.animateFill(poured, dur); $('y-brief').textContent = `Pouring ${f1(out.bought)} million barrels into ${poured.length} cavern${poured.length > 1 ? 's' : ''}…`; await wait(dur + 150); scene.flow.in = 0; }
     out.notes.forEach(n => w.log.unshift({ year: w.year, week: 0, text: n, cls: 'bad' }));
+    if (out.sold > 0.05) { const as = S.avgSell(w), ab = S.avgBuy(w); w.log.unshift({ year: w.year, week: 0, text: `Sold ${f1(out.sold)} mb at $${f0(w.price)}: ${bn(out.saleCash)} into your account${ab ? ` (your oil cost $${f0(ab)} a barrel on average)` : ''}.`, cls: 'good' }); }
+    if (out.bought > 0.05 && w.soldCash > 0 && w.price < S.avgSell(w)) w.log.unshift({ year: w.year, week: 0, text: `Buying back at $${f0(w.price)} what you sold at an average of $${f0(S.avgSell(w))}: the buy-low, sell-high argument both administrations made.`, cls: 'good' });
     if (out.bought > 0.05) w.log.unshift({ year: w.year, week: 0, text: `Bought ${f1(out.bought)} mb at $${f0(w.price)} for ${bn(out.bought * w.price / 1000)}${out.built ? `; started ${out.built} cavern${out.built > 1 ? 's' : ''}` : ''}${out.maintained ? `; worked over ${out.maintained} wells` : ''}.` });
     else if (out.built || out.maintained) w.log.unshift({ year: w.year, week: 0, text: `${out.built ? `Started ${out.built} cavern${out.built > 1 ? 's' : ''}` : ''}${out.built && out.maintained ? '; ' : ''}${out.maintained ? `worked over ${out.maintained} wells` : ''}.` });
     if (out.plants) w.log.unshift({ year: w.year, week: 0, text: `Began building pumps at ${out.plantAt.join(' and ')}. Ready in ${S.PLANT_YEARS} years.`, cls: 'good' });
     const r = S.advanceYear(w);
     scene.say(String(w.year), r.crisis ? r.crisis.name : r.card ? r.card.name : '');
-    yb.value = 0; ybd.value = 0; ym.value = 0; yp.value = 0;
+    yb.value = 0; ybd.value = 0; ym.value = 0; yp.value = 0; ys.value = 0;
     hud(); renderLog(); yearPanel();
     if (r.end) return endGame();
     if (r.card) return showCard(r.card);
