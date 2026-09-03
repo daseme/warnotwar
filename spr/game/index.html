@@ -12,18 +12,23 @@
 </head>
 <body>
 
-<header>
-  <div class="brand">S<span>A</span>LT</div>
-  <a class="back" href="/spr/">← the reserve</a>
+<header class="console">
+  <div class="plate"><div class="brand">S<span>A</span>LT</div><a class="back" href="/spr/">← the reserve</a><div class="screws"><i></i><i></i></div></div>
+  <div class="instr"><div id="g-price"></div></div>
+  <div class="instr odo-block">
+    <div class="odo-title">barrels in the ground <small>million</small></div><div id="o-inv"></div>
+    <div class="odo-title">room to fill <small>million</small></div><div id="o-cap"></div>
+  </div>
+  <div class="instr"><div id="g-fuel"></div></div>
+  <div class="instr"><div id="g-flow"></div></div>
+  <div class="instr odo-block">
+    <div class="odo-title">to spend this year <small>$ billion</small></div><div id="o-budget"></div>
+    <div class="odo-title">to the treasury <small>$ billion</small></div><div id="o-treasury"></div>
+  </div>
+  <div class="instr"><div id="g-mood"></div></div>
+  <div class="instr lamps"><div id="l-storm"></div><div id="l-well"></div><div id="l-pumps"></div><div id="l-emerg"></div></div>
   <span class="spacer"></span>
-  <div class="stat"><b id="h-price">$14</b><i>crude · $/bbl</i></div>
-  <div class="stat"><b id="h-inv">8</b><i>mb in the ground</i></div>
-  <div class="stat opt"><b id="h-cap">183</b><i>mb of space</i></div>
-  <div class="stat opt"><b id="h-draw">0.0</b><i>mb/day wells can flow</i></div>
-  <div class="stat"><b id="h-budget">$1.0bn</b><i>to spend this year</i></div>
-  <div class="stat opt"><i>congress</i><div class="mood"><i id="h-mood" style="width:60%"></i></div></div>
-  <span class="spacer"></span>
-  <div class="stat"><b class="year" id="h-year">1977</b><i id="h-phase">the year</i></div>
+  <div class="instr yearblock"><div class="odo-title">year</div><div id="o-year"></div><div class="phase" id="h-phase">the year</div></div>
 </header>
 
 <div id="scene-wrap"><canvas id="scene"></canvas><div id="focus-note">click a dome to zoom · four salt domes, sixty caverns</div></div>
@@ -37,7 +42,7 @@
       <div class="row"><label>buy oil</label><input type="range" id="y-buy" min="0" max="100" step="1" value="0"><output id="y-buy-o">0 mb · $0.0bn</output></div>
       <div class="row"><label>leach caverns</label><input type="range" id="y-build" min="0" max="8" step="1" value="0"><output id="y-build-o">0 · ready 1980</output></div>
       <div class="row"><label>well work</label><input type="range" id="y-maint" min="0" max="100" step="5" value="0"><output id="y-maint-o">0 wells · $0.00bn</output></div>
-      <div class="actions"><span class="left">left over <b id="y-left">$1.0bn</b></span><button class="btn primary" id="y-go">turn the year →</button></div>
+      <div class="actions"><span class="left">left over <b id="y-left">$1.0bn</b></span><button class="push wide" id="y-go"><span>turn the year →</span></button></div>
     </div>
     <!-- crisis panel -->
     <div id="p-crisis" hidden>
@@ -47,8 +52,12 @@
         <div class="stat2"><div class="l">your share to cover</div><div class="v" id="c-share">—<small>mb/d</small></div></div>
         <div class="stat2"><div class="l">wells can flow</div><div class="v" id="c-cap">—<small>mb/d</small></div></div>
       </div>
-      <div class="row"><label>release</label><input type="range" id="c-rate" min="0" max="4.4" step="0.05" value="1"><output id="c-rate-o">1.00 mb/d</output></div>
-      <div class="actions"><span class="left" id="c-note">first barrels reach the market in about two weeks</span><button class="btn" id="c-run">run ▸</button><button class="btn primary" id="c-week-btn">next week →</button></div>
+      <div class="crisis-controls">
+        <div id="k-rate"></div><input type="range" id="c-rate" min="0" max="4.4" step="0.05" value="1" class="sr-only" aria-label="release rate">
+        <div id="tg-run"></div>
+        <button class="push" id="c-week-btn"><span>next<br>week</span></button>
+        <div class="c-note mono" id="c-note">first barrels reach the market in about two weeks</div>
+      </div>
     </div>
   </section>
   <section id="right">
@@ -72,6 +81,7 @@
 
 <script src="world.js"></script>
 <script src="render.js"></script>
+<script src="gauges.js"></script>
 <script src="main.js"></script>
 </body>
 </html>

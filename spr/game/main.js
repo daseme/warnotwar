@@ -10,12 +10,28 @@
   let real = null; fetch('../data/spr_stocks.json').then(r => r.json()).then(d => { real = d; }).catch(() => {});
   let autorun = null, pendingCrisis = null;
 
+  /* ---------- instruments ---------- */
+  const I = window.Instruments;
+  const gPrice = new I.Gauge($('g-price'), { min: 0, max: 200, ticks: 4, minor: 5, label: 'crude $/bbl', zones: [{ from: 100, to: 200, color: '#c0392b' }] });
+  const gFuel = new I.Gauge($('g-fuel'), { min: 0, max: 1, ticks: 4, minor: 2, label: 'reserve', labels: ['E', '¼', '½', '¾', 'F'], zones: [{ from: 0, to: 0.25, color: '#c0392b' }] });
+  const gFlow = new I.Gauge($('g-flow'), { min: 0, max: 5, ticks: 5, minor: 4, label: 'wells · mb/day', zones: [{ from: 4.4, to: 5, color: '#c0392b' }, { from: 0, to: 1, color: '#7a6a2a' }] });
+  const gMood = new I.Gauge($('g-mood'), { min: 0, max: 100, ticks: 4, minor: 5, label: 'congress', zones: [{ from: 0, to: 30, color: '#c0392b' }, { from: 70, to: 100, color: '#2e8b6e' }] });
+  const oInv = new I.Counter($('o-inv'), { digits: 3 }), oCap = new I.Counter($('o-cap'), { digits: 3 }), oBudget = new I.Counter($('o-budget'), { digits: 2, decimals: 2, prefix: '$' }), oTreas = new I.Counter($('o-treasury'), { digits: 3, decimals: 1, prefix: '$' }), oYear = new I.Counter($('o-year'), { digits: 4 });
+  const lStorm = new I.Lamp($('l-storm'), { color: 'amber', label: 'storm' }), lWell = new I.Lamp($('l-well'), { color: 'red', label: 'well fail' }), lPumps = new I.Lamp($('l-pumps'), { color: 'green', label: 'pumps' }), lEmerg = new I.Lamp($('l-emerg'), { color: 'red', label: 'emergency' });
+  let lastWellFail = -99;
+
   /* ---------- HUD ---------- */
   function hud() {
-    $('h-year').textContent = w.year; $('h-phase').textContent = w.phase === 'crisis' ? w.crisis.name : 'the year';
-    const p = $('h-price'); p.textContent = `$${f0(w.price)}`; p.className = w.spike > 12 ? 'up' : w.spike > 3 ? '' : 'calm';
-    $('h-inv').textContent = f0(S.inv(w)); $('h-cap').textContent = f0(S.capacity(w)); $('h-draw').textContent = f1(S.drawCap(w));
-    $('h-budget').textContent = bn(Math.max(0, w.budget)); $('h-mood').style.width = `${w.mood}%`; $('h-mood').style.background = w.mood < 30 ? 'var(--danger)' : w.mood < 55 ? 'var(--gold)' : 'var(--teal)';
+    oYear.set(w.year); $('h-phase').textContent = w.phase === 'crisis' ? w.crisis.name : 'the year';
+    gPrice.set(w.price, `$${f0(w.price)}`);
+    const i = S.inv(w), cap = S.capacity(w);
+    oInv.set(i); oCap.set(Math.max(0, cap - i)); gFuel.set(cap > 0 ? i / cap : 0, `${f0(i)} / ${f0(cap)}`);
+    gFlow.set(S.drawCap(w), `${f1(S.drawCap(w))}`);
+    oBudget.set(Math.max(0, w.budget)); oTreas.set(w.treasury);
+    gMood.set(w.mood, `${f0(w.mood)}`);
+    const wellDown = w.domes.some(d => d.cav.some(c => c.offline > 0));
+    if (wellDown) lastWellFail = w.year;
+    lStorm.set(!!w.hurricane, !!w.hurricane); lWell.set(wellDown, w.phase === 'crisis' && wellDown); lPumps.set(S.drawCap(w) > 0); lEmerg.set(w.phase === 'crisis', w.phase === 'crisis' && w.spike > 15);
     $('r-count').textContent = `${w.log.length} entries`;
   }
   function renderLog() { const L = $('log'); L.innerHTML = w.log.slice(0, 120).map(e => `<div class="${e.cls}"><span>${e.year}${e.week ? ` w${e.week}` : ''}</span>${e.text}</div>`).join(''); }
@@ -84,15 +100,16 @@
     $('m-ok').onclick = () => { closeModal(); S.startCrisis(w, s); scene.say(s.name, 'emergency'); crisisPanel(); hud(); renderLog(); };
   }
   const cr = $('c-rate');
+  const knob = new I.Knob($('k-rate'), cr, { label: 'release · mb/day', detents: 22, fmt: v => v.toFixed(2) });
+  const tgRun = new I.Toggle($('tg-run'), { label: 'clock', off: 'hold', on: 'run', onchange: on => { if (on) { if (!autorun) autorun = setInterval(week, 700); } else stopRun(); } });
   function crisisPanel() {
     $('p-year').hidden = true; $('p-crisis').hidden = false;
     const c = w.crisis, cap = S.drawCap(w);
     $('c-name').textContent = c.name; $('c-week').textContent = `week ${c.week + 1}`;
     $('c-short').innerHTML = `${f1(c.ceasefire > 0 ? 0 : c.shortfall)}<small>mb/d</small>`; $('c-share').innerHTML = `${f1((c.ceasefire > 0 ? 0 : c.shortfall) * (c.allies ? 0.44 : 0.7))}<small>mb/d</small>`; $('c-cap').innerHTML = `${f1(cap)}<small>mb/d</small>`;
-    cr.max = Math.max(0.05, cap).toFixed(2); if (+cr.value > cap) cr.value = cap.toFixed(2); $('c-rate-o').textContent = `${(+cr.value).toFixed(2)} mb/d`;
+    cr.max = Math.max(0.05, cap).toFixed(2); if (+cr.value > cap) cr.value = cap.toFixed(2); knob.refresh();
     $('c-note').textContent = cap <= 0 ? 'no pumps: you can only watch' : c.week === 0 ? 'first barrels reach the market in about two weeks' : `${f0(S.inv(w))} mb left · crude $${f0(w.price)}`;
   }
-  cr.addEventListener('input', () => { $('c-rate-o').textContent = `${(+cr.value).toFixed(2)} mb/d`; });
   function week() {
     if (w.phase !== 'crisis') return;
     const r = S.crisisWeek(w, +cr.value);
@@ -101,9 +118,8 @@
     if (r.over) { stopRun(); scene.flow.out = 0; return crisisEnd(r.summary); }
     crisisPanel();
   }
-  function stopRun() { if (autorun) { clearInterval(autorun); autorun = null; $('c-run').textContent = 'run ▸'; } }
+  function stopRun() { if (autorun) { clearInterval(autorun); autorun = null; } tgRun.set(false); }
   $('c-week-btn').onclick = week;
-  $('c-run').onclick = () => { if (autorun) return stopRun(); $('c-run').textContent = 'pause ▮▮'; autorun = setInterval(week, 700); };
   function crisisEnd(s) {
     modal(`<div class="kicker">${w.year} · after ${s.weeks} weeks</div><h2>${s.name} is over.</h2><div class="stats"><div class="stat2"><div class="l">released</div><div class="v">${f1(s.released)}<small>mb</small></div></div><div class="stat2"><div class="l">extra fuel cost to americans</div><div class="v">${bn(s.pain)}</div></div><div class="stat2"><div class="l">your releases saved</div><div class="v">${bn(s.avoided)}</div></div><div class="stat2"><div class="l">to the treasury</div><div class="v">${bn(s.revenue)}</div></div><div class="stat2"><div class="l">left in the ground</div><div class="v">${f0(s.inv)}<small>mb</small></div></div><div class="stat2"><div class="l">congress</div><div class="v">${f0(w.mood)}<small>/100</small></div></div></div><p>${verdictLine(s)}</p><div class="foot"><button class="btn primary" id="m-ok">back to the year →</button></div>`);
     $('m-ok').onclick = () => { closeModal(); hud(); renderLog(); yearPanel(); $('y-go').disabled = false; };
