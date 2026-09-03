@@ -17,7 +17,7 @@
       this.cam = { x: 0.5, y: 0.5, z: 1, tx: 0.5, ty: 0.5, tz: 1 };
       this.parts = []; this.clouds = Array.from({ length: 7 }, (_, i) => ({ x: Math.random(), y: 0.05 + Math.random() * 0.16, s: 0.05 + Math.random() * 0.08, v: 0.004 + Math.random() * 0.006 }));
       this.flash = null; this.flow = { out: 0, in: 0 }; this.hover = null; this.focus = null; this.t0 = performance.now();
-      this.tanker = 0.02; this.shown = new Map();
+      this.tanker = 0.02; this.shown = new Map(); this.anim = null;
       this.resize(); addEventListener('resize', () => this.resize());
       canvas.addEventListener('mousemove', e => this.onMove(e)); canvas.addEventListener('mouseleave', () => { this.hover = null; });
       canvas.addEventListener('click', e => this.onClick(e));
@@ -33,6 +33,15 @@
     onMove(e) { const r = this.c.getBoundingClientRect(); const x = this.ux(e.clientX - r.left), y = this.uy(e.clientY - r.top); this.hover = null; this.mouse = { px: e.clientX - r.left, py: e.clientY - r.top }; this.w.domes.forEach((d, i) => { if (Math.abs(x - d.x) < 0.1 && y > SURF && y < 0.98) this.hover = i; }); this.c.style.cursor = this.hover != null ? 'pointer' : 'default'; }
     onClick() { if (this.hover != null) { this.zoomTo(this.hover); this.onFocus && this.onFocus(this.focus); } else if (this.focus != null) { this.zoomTo(null); this.onFocus && this.onFocus(null); } }
     say(text, sub) { this.flash = { text, sub, t: performance.now() }; }
+    /* pour oil into caverns one after another; items = [{cv, from, to}] */
+    animateFill(items, dur) { if (!items.length) return 0; this.anim = { items, t0: performance.now(), dur }; return dur; }
+    animLevel(cv, t) {
+      const a = this.anim; if (!a) return null;
+      const i = a.items.findIndex(it => it.cv === cv); if (i < 0) return null;
+      const n = a.items.length, p = clamp((t - a.t0) / a.dur, 0, 1) * n;
+      const seg = clamp(p - i, 0, 1), it = a.items[i];
+      return { level: it.from + (it.to - it.from) * seg, active: seg > 0 && seg < 1 };
+    }
     /* cavern layout inside a dome: rows of capsules */
     layout(d) {
       const n = d.cav.length + d.building.length; const cols = Math.min(7, Math.max(3, Math.ceil(n / 3))); const rows = Math.max(1, Math.ceil(n / cols));
@@ -85,7 +94,9 @@
             return;
           }
           // shown level eases toward the real one
-          const key = cv; const shown = this.shown.get(key) ?? cv.oil; const ns = lerp(shown, cv.oil, 1 - Math.pow(0.02, dt / 1000)); this.shown.set(key, ns);
+          const key = cv; const shown = this.shown.get(key) ?? cv.oil; const al = this.animLevel(cv, t);
+          const ns = al ? al.level : lerp(shown, cv.oil, 1 - Math.pow(0.02, dt / 1000)); this.shown.set(key, ns);
+          if (al && al.active) { ctx.save(); ctx.shadowColor = 'rgba(224,137,74,0.9)'; ctx.shadowBlur = 18 * z; ctx.strokeStyle = 'rgba(224,137,74,0.9)'; ctx.lineWidth = 2; roundRect(ctx, x - 2, y - 2, cw + 4, ch + 4, r + 2); ctx.stroke(); ctx.restore(); }
           const f = clamp(ns / cv.cap, 0, 1);
           if (cv.retired) { ctx.fillStyle = 'rgba(70,66,60,0.9)'; roundRect(ctx, x, y, cw, ch, r); ctx.fill(); ctx.strokeStyle = 'rgba(239,232,216,0.25)'; ctx.beginPath(); for (let q = 0; q < ch; q += 6) { ctx.moveTo(x, y + q); ctx.lineTo(x + cw, y + q + 4); } ctx.stroke(); return; }
           ctx.fillStyle = C.brine; roundRect(ctx, x, y, cw, ch, r); ctx.fill();
@@ -109,6 +120,7 @@
       // refineries
       for (let k = 0; k < 4; k++) { const x = 0.915 + k * 0.02; ctx.fillStyle = '#4a4238'; ctx.fillRect(sx(x), sy(SURF - 0.05 - k * 0.012), 0.008 * W * z, (0.05 + k * 0.012) * H * z); ctx.fillStyle = 'rgba(224,137,74,0.8)'; ctx.beginPath(); ctx.arc(sx(x + 0.004), sy(SURF - 0.052 - k * 0.012) - Math.abs(Math.sin(t / 150 + k)) * 3, 2.5 * z, 0, 7); ctx.fill(); }
       ctx.fillStyle = C.dim; ctx.font = `${10 * Math.min(z, 1.6)}px IBM Plex Mono, monospace`; ctx.textAlign = 'center'; ctx.fillText('REFINERIES', sx(0.945), sy(SURF - 0.085)); ctx.fillText('GULF OF MEXICO', sx(0.05), sy(SURF + 0.06));
+      if (this.anim && t - this.anim.t0 > this.anim.dur + 200) this.anim = null;
       /* particles */
       this.spawn(dt); this.parts = this.parts.filter(p => p.life > 0);
       this.parts.forEach(p => { p.life -= dt / 1000; p.x += p.vx * dt / 1000; p.y += p.vy * dt / 1000; ctx.fillStyle = p.col; ctx.globalAlpha = clamp(p.life, 0, 1); ctx.beginPath(); ctx.arc(sx(p.x), sy(p.y), p.r * z, 0, 7); ctx.fill(); }); ctx.globalAlpha = 1;
@@ -134,7 +146,8 @@
           this.parts.push({ x: d.x + 0.004, y: SURF + 0.25, vx: 0, vy: -0.25 / 0.9, life: 0.9, r: 1.3, col: '#c9c2b4' });
           this.parts.push({ x: d.x, y: SURF - 0.006, vx: (0.9 - d.x) / 1.8, vy: 0, life: 1.8, r: 1.3, col: '#c9c2b4' });
         }
-        if (inRate > 0 && Math.random() < dt / 1000 * 40 * inRate / 0.8) {
+        const filling = this.anim && this.anim.items.some(it => d.cav.includes(it.cv) && this.animLevel(it.cv, performance.now())?.active);
+        if (inRate > 0 && (filling || !this.anim) && Math.random() < dt / 1000 * 40 * inRate / 0.8) {
           this.parts.push({ x: 0.05, y: SURF - 0.006, vx: (d.x - 0.05) / 1.6, vy: 0, life: 1.6, r: 1.3, col: '#c9c2b4' });
           this.parts.push({ x: d.x, y: SURF, vx: 0, vy: 0.25 / 1.0, life: 1.0, r: 1.3, col: '#c9c2b4' });
           this.parts.push({ x: d.x + 0.006, y: SURF + 0.3, vx: 0, vy: -0.3 / 1.1, life: 1.1, r: 1.1, col: C.brine });

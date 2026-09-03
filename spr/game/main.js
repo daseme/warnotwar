@@ -46,8 +46,10 @@
   async function turnYear() {
     $('y-go').disabled = true;
     const dec = { buy: +yb.value, build: +ybd.value, maintain: +ym.value / 100 };
+    const before = new Map(w.domes.flatMap(d => d.cav).map(c => [c, c.oil]));
     const out = S.yearDecisions(w, dec);
-    if (out.bought > 0.5) { scene.flow.in = Math.min(0.8, out.bought / 100); await wait(1400); scene.flow.in = 0; }
+    const poured = w.domes.flatMap(d => d.cav).filter(c => c.oil - (before.get(c) ?? c.oil) > 0.05).map(c => ({ cv: c, from: before.get(c), to: c.oil }));
+    if (poured.length) { const dur = Math.min(4000, 700 + poured.length * 550); scene.flow.in = Math.min(0.8, out.bought / 100); scene.animateFill(poured, dur); $('y-brief').textContent = `Pouring ${f1(out.bought)} million barrels into ${poured.length} cavern${poured.length > 1 ? 's' : ''}…`; await wait(dur + 150); scene.flow.in = 0; }
     out.notes.forEach(n => w.log.unshift({ year: w.year, week: 0, text: n, cls: 'bad' }));
     if (out.bought > 0.05) w.log.unshift({ year: w.year, week: 0, text: `Bought ${f1(out.bought)} mb at $${f0(w.price)} for ${bn(out.bought * w.price / 1000)}${out.built ? `; started ${out.built} cavern${out.built > 1 ? 's' : ''}` : ''}${out.maintained ? `; worked over ${out.maintained} wells` : ''}.` });
     else if (out.built || out.maintained) w.log.unshift({ year: w.year, week: 0, text: `${out.built ? `Started ${out.built} cavern${out.built > 1 ? 's' : ''}` : ''}${out.built && out.maintained ? '; ' : ''}${out.maintained ? `worked over ${out.maintained} wells` : ''}.` });
