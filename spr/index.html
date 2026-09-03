@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="paper">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="How the Strategic Petroleum Reserve works: salt caverns, water in, oil out, and what happens when it runs low. With the live weekly level and a game.">
+<title>The Salt Caverns — warnotwar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="spr.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="/">warnotwar</a>
+  <a href="/heuristic.html">the heuristic</a>
+  <a href="/market.html">the market</a>
+  <a href="/oilflows.html">oilflows</a>
+  <a href="/record.html">the word</a>
+  <a href="/lab.html">the lab</a>
+  <a href="/teaching-module/index.html">hormuz lab (sim)</a>
+  <a href="/spr/" class="here">the reserve</a>
+  <a href="/methodology.html">methodology</a>
+  <span class="spacer"></span>
+  <button class="theme-toggle" id="theme-toggle" title="switch paper / ink">&#9705; ink</button>
+</nav>
+
+<header class="hero">
+  <div class="kicker">the reserve &middot; salt, water, oil</div>
+  <h1>The Salt Caverns</h1>
+  <p class="subtitle">
+    The Strategic Petroleum Reserve is sixty holes dissolved in four salt domes under Texas and Louisiana.
+    This page shows how they hold oil, how the oil comes out, and what changes as the level falls.
+  </p>
+</header>
+
+<div class="tiles" id="tiles">
+  <div class="tile"><div class="t-label">in the ground</div><div class="t-value" id="t-inv">—<span>million barrels</span></div><div class="t-sub" id="t-inv-sub">EIA weekly stocks</div></div>
+  <div class="tile"><div class="t-label">last this low</div><div class="t-value" id="t-low">—</div><div class="t-sub" id="t-low-sub"></div></div>
+  <div class="tile"><div class="t-label">can flow today</div><div class="t-value" id="t-cap">2.7<span>mb/day</span></div><div class="t-sub">GAO’s measurement, December 2025. The design figure is 4.4. Big Hill has been closed for construction since January 2025.</div></div>
+</div>
+
+<!-- ============ 1 · where ============ -->
+<section class="block" id="where">
+  <header>
+    <div class="kicker">1 &middot; where it is</div>
+    <h2>Four salt domes, sixty caverns</h2>
+    <p>Gulf Coast salt domes are fingers of Jurassic salt pushed up through miles of sediment. Salt does not let oil through, and it flows slowly enough to heal its own cracks. It is the cheapest place on earth to keep crude: about $3.50 a barrel to build, against $15 to $18 for a steel tank.</p>
+  </header>
+  <div class="sites" id="sites"></div>
+  <p class="fine" style="max-width:760px;margin:14px auto 0;text-align:center">Each small cylinder is one cavern. Oil is dark, brine is blue. Per-site inventories are DOE’s figures for <span id="site-date"></span>; they do not update weekly. The reserve is drawn cavern by cavern, so the picture shows full caverns and empty ones rather than every cavern half full.</p>
+</section>
+
+<!-- ============ 2 · down in the salt ============ -->
+<section class="block" id="depth">
+  <header>
+    <div class="kicker">2 &middot; down in the salt</div>
+    <h2>Half a mile down, a hole the size of a skyscraper</h2>
+  </header>
+  <div class="grid2">
+    <figure class="fig-frame" style="padding:12px"><div id="xsec"></div>
+      <figcaption>Hover a cavern. Depths are West Hackberry’s: about 1,500 feet of sand and clay, 400 feet of caprock, then salt. Bayou Choctaw’s salt starts at 650 feet, Big Hill’s at 1,600.</figcaption>
+    </figure>
+    <div>
+      <p class="lede">A cavern the Department of Energy built is a cylinder about 200 feet across and 2,000 feet tall. Its roof is around 2,500 feet down and its floor around 4,500. It holds ten to twelve million barrels. Chicago’s Willis Tower would fit inside with room to spare.</p>
+      <p>Nobody dug them. A well is drilled into the salt and river water is pumped down it. The water dissolves salt and comes back up as brine, which is piped to the Gulf or injected into deep wells. Seven barrels of water make one barrel of space. A cavern took two and a half to three and a half years to leach.</p>
+      <p>The caverns sit 750 feet apart, centre to centre, leaving about 550 feet of solid salt between them. That web of salt is what holds everything up, and it thins a little every time a cavern is emptied.</p>
+      <p>Eleven of the sixty caverns were not built for the reserve. They were leached for brine in the 1930s to 1960s and bought in 1977. They are shallower, wider and irregular, and most can be emptied only once more before they are retired.</p>
+      <div class="note">The salt is warm. Oil arrives at 70 to 80 degrees and warms to 120 to 130 over the years. The heat difference between roof and floor keeps the oil slowly turning over, so it never separates.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3 · how the oil moves ============ -->
+<section class="block" id="moves">
+  <header>
+    <div class="kicker">3 &middot; how the oil moves</div>
+    <h2>Water goes in at the bottom. Oil comes out at the top.</h2>
+    <p>A cavern is always full of liquid. Oil floats on brine. To take oil out, river water is pumped down a hanging pipe to the floor. The water pushes the oil up the space around the pipe and out the wellhead. To put oil in, the flow reverses: oil goes down onto the roof and brine comes up the pipe to a pond.</p>
+  </header>
+  <div class="grid2">
+    <figure class="fig-frame"><canvas id="cavern"></canvas></figure>
+    <div>
+      <div class="controls">
+        <button class="btn primary" id="c-draw">draw down</button>
+        <button class="btn" id="c-fill">refill</button>
+        <button class="btn" id="c-pause">pause</button>
+        <button class="btn" id="c-reset">reset</button>
+      </div>
+      <div class="controls">
+        <label>well rate <input type="range" id="c-rate" min="0.02" max="0.15" step="0.01" value="0.08"> <output id="c-rate-out">80 kb/d</output></label>
+        <label>speed <input type="range" id="c-speed" min="150" max="1500" step="50" value="700"> <output id="c-speed-out">1 day = 0.7 s</output></label>
+      </div>
+      <div class="readouts">
+        <div class="readout"><div class="r-label">oil in cavern</div><div class="r-value" id="r-oil">—<span>mb</span></div></div>
+        <div class="readout"><div class="r-label">full</div><div class="r-value" id="r-pct">—<span>%</span></div></div>
+        <div class="readout"><div class="r-label">days</div><div class="r-value" id="r-days">0</div></div>
+        <div class="readout"><div class="r-label">water pumped in</div><div class="r-value" id="r-water">0<span>mb</span></div></div>
+        <div class="readout"><div class="r-label">salt dissolved</div><div class="r-value" id="r-salt">0<span>mb</span></div></div>
+        <div class="readout"><div class="r-label">cavern grown</div><div class="r-value" id="r-leach">0<span>%</span></div></div>
+        <div class="readout"><div class="r-label">drawdowns spent</div><div class="r-value" id="r-dd">0<span>of 5</span></div></div>
+        <div class="readout"><div class="r-label">state</div><div class="r-value" id="r-state" style="font-size:1rem">holding</div></div>
+      </div>
+      <p style="margin-top:18px">One well moves 60,000 to 90,000 barrels a day, so a ten million barrel cavern takes about four months to empty. The water that goes in is not saturated, so it keeps dissolving salt: every hundred barrels of oil out costs fifteen barrels of rock wall. A full drawdown grows the cavern by about fifteen percent. Each cavern was designed for five.</p>
+      <p>Refilling is slower. The brine pushed out has to go somewhere, and the disposal wells and Gulf pipelines set the pace. The whole reserve was designed to take in 785,000 barrels a day and give out 4.4 million. Today it can take in about 440,000.</p>
+      <p>The oil never quite runs out. About two percent stays behind on purpose: a blanket of oil on the roof so that water never touches the ceiling. Across the reserve that is about twelve million barrels that will never come up.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4 · when it runs low ============ -->
+<section class="block" id="low">
+  <header>
+    <div class="kicker">4 &middot; when it runs low</div>
+    <h2>Emptiness is not the danger. Speed is.</h2>
+    <p>A cavern is never empty. Water replaces oil barrel for barrel, and the pressure stays where it was. What a low reserve loses is the ability to deliver fast.</p>
+  </header>
+  <div class="grid2">
+    <div>
+      <p class="lede">Each cavern flows through its own well at a set rate. The design figure of 4.4 million barrels a day assumes all sixty caverns hold oil and all sixty wells can run. Oil in fewer caverns means fewer wells.</p>
+      <p>The reserve is drawn cavern by cavern rather than a little from each, so this bites early. West Hackberry held 30 million barrels in August 2026, about three caverns’ worth out of twenty-one. GAO had already rated it at 58 percent of its design rate in December, when it held 88.</p>
+      <p>The chart models this: the rate each site can deliver, times the share of its caverns that still hold oil above the roof blanket. The solid line has all four sites running. The dashed line leaves Big Hill closed, as it has been since January 2025. GAO’s measured 2.7 million barrels a day sits above both lines: a well can run a little faster than its even share, and GAO rated Bryan Mound at its full 1.5 with fourteen of nineteen caverns holding oil. The model errs on the cautious side.</p>
+      <figure class="fig-frame" style="padding:10px"><div id="capchart"></div>
+        <figcaption>Model. DOE’s published tables stop at 430 million barrels and have no row for today’s level.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <figure class="fig-frame" style="padding:10px"><div id="floors"></div>
+        <figcaption>The whole reserve as one tank. Dark is oil, blue is the brine that has taken its place.</figcaption>
+      </figure>
+      <p style="margin-top:16px">People have drawn lines on that tank. They mean different things.</p>
+      <p><b>300.</b> Amos Hochstein, who ran energy policy in the last White House: “I don’t know anyone who believes we can go below 300.” The reserve went below 300 in the week ending August 7, 2026.</p>
+      <p><b>252.4.</b> Federal law. Below this Congress forbids <em>limited</em> drawdowns, the small non-emergency releases capped at 30 million barrels. A presidential emergency finding is not bound by it. The 2026 release is an emergency exchange, so the line does not stop it.</p>
+      <p><b>170.</b> Rapidan Energy’s “soft-ish floor,” where cavern integrity and pumping limits argue against going further.</p>
+      <p><b>70.</b> The Department of Energy’s stated physical minimum. Roughly the roof blankets plus the heels. DOE’s spokesman: “The caverns are always full. All that changes is the ratio of oil and water that is filling them.”</p>
+      <p><b>243.</b> Where analysts expect the level to settle if the full 172 million barrels of the 2026 release are delivered.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5 · wear ============ -->
+<section class="block" id="wear">
+  <header>
+    <div class="kicker">5 &middot; wear</div>
+    <h2>Five drawdowns per cavern</h2>
+  </header>
+  <div class="grid2">
+    <div>
+      <p class="lede">Every full drawdown dissolves salt equal to fifteen percent of the cavern’s volume. The cavern grows; the salt between it and its neighbour shrinks. Sandia National Laboratories counts a fifteen percent growth as one drawdown spent, and no cavern gets more than five.</p>
+      <p>At the end of 2024, 47 of the 60 caverns had at least four drawdowns left. One had one. At Bayou Choctaw three caverns are on their last, and two may already be connected underground.</p>
+      <p>Partial drawdowns wear caverns faster than full ones. Water enters at the hanging pipe near the floor, so a partial draw leaches only the bottom, and repeating it carves the same spot again and again. The reserve made fourteen releases smaller than ten million barrels between 1996 and 2014.</p>
+      <p>Salt also closes in on its own. Under the weight of the rock above, the walls creep inward and the reserve loses about 1.2 million barrels of space a year, plus another million from well repairs that take a cavern off pressure for months. The caverns were built for a 25-year life. The second-newest well is 38 years old.</p>
+      <p>Wells worry Sandia more than caverns now. At Big Hill more than 70 percent of the wells have moderate to severe casing deformation where the moving salt meets the rigid caprock. In May 2024 a Bryan Mound well failed with no warning and about 400,000 barrels of oil were lost. Most West Hackberry caverns have a single well; if it fails, the oil is unreachable until a second is drilled.</p>
+    </div>
+    <figure class="fig-frame" style="padding:10px"><div id="wearfig"></div>
+      <figcaption>Looking down from above. Each dashed ring is the cavern after one more full drawdown, fifteen percent more volume each time. The web of salt to its neighbour starts at 550 feet.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ 6 · speed ============ -->
+<section class="block" id="speed">
+  <header>
+    <div class="kicker">6 &middot; speed</div>
+    <h2>Thirteen days to the first barrel</h2>
+  </header>
+  <div class="grid2">
+    <div>
+      <p class="lede">The reserve’s own performance rule: after a presidential order, run a competitive sale, award contracts and have oil flowing within thirteen days, at full rate by day fifteen. In March 2026 the first shipments left nine days after the order. In 1991 it took twenty.</p>
+      <p>From a full reserve the design lets 4.4 million barrels a day flow for ninety days, about 400 million barrels. Then sites start to run dry and the rate steps down: 3.8, then 3.4, then 1.9 by day 180. The smaller sites go first. Bayou Choctaw holds 76 million barrels and flows at half a million a day, so it lasts about five months at full tilt.</p>
+      <p>No release has come close. The 2022 release ran at one million barrels a day for six months, about a fifth of the design rate. The 2026 release averaged 800,000 a day and peaked at 1.4 million in one week in May. Both were set by what buyers would take and by contract terms, not by the pumps. In 2026 the constraint was also Big Hill: closed, with 89 million barrels sitting untouched in it.</p>
+      <p>The barrels have to fit into pipelines that are already full of commercial oil. DOE said in 2016 that the reserve “can no longer bring oil to market without disturbing commercial oil flows,” and that in a Hormuz closure the United States could not meet its share of an allied release without new marine terminals. The terminals were never built.</p>
+    </div>
+    <figure class="fig-frame" style="padding:10px"><div id="schedule"></div>
+      <figcaption>DOE’s design decline curve from a 695 million barrel reserve, against what 2022 and 2026 actually ran.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ 7 · the game ============ -->
+<section class="block" id="game">
+  <header>
+    <div class="kicker">7 &middot; run the reserve</div>
+    <h2>You have the keys. The strait is shut.</h2>
+    <p>Each turn is one week. Set the release rate. The caverns can only give what their wells can flow, and the number of wells falls as caverns empty. The shortfall lasts as long as it lasts; you will not be told. Hurricanes, well failures and refiners who will not take sour crude happen when they happen.</p>
+  </header>
+  <div class="game">
+    <div>
+      <div class="controls">
+        <label>start from <select id="g-scn" class="mono" style="font:inherit;background:var(--bg-raise);color:var(--ink);border:1px solid var(--ink-30);border-radius:6px;padding:4px 8px"></select></label>
+        <button class="btn primary" id="g-start">start</button>
+      </div>
+      <p class="fine" id="g-scn-desc"></p>
+      <div class="controls">
+        <label>release <input type="range" id="g-rate" min="0" max="2.7" step="0.05" value="0.8"> <output id="g-rate-out">800.0 kb/d</output></label>
+        <button class="btn" id="g-week">next week</button>
+        <button class="btn" id="g-run">run to the end</button>
+      </div>
+      <div class="meter" style="margin:12px 0 6px"><i id="g-meter" style="width:40%"></i></div>
+      <div class="fine" id="g-floor" style="margin-bottom:12px"></div>
+      <div class="sites" id="g-strip"></div>
+    </div>
+    <div>
+      <div class="scorecard">
+        <div class="readout"><div class="r-label">week</div><div class="r-value" id="g-week-n">0</div></div>
+        <div class="readout"><div class="r-label">in the ground</div><div class="r-value" id="g-inv">—<span>mb</span></div></div>
+        <div class="readout"><div class="r-label">wells can flow</div><div class="r-value" id="g-cap">—<span>mb/d</span></div></div>
+        <div class="readout"><div class="r-label">released</div><div class="r-value" id="g-deliv">0<span>mb</span></div></div>
+        <div class="readout"><div class="r-label">shortfall covered</div><div class="r-value" id="g-cover">—</div></div>
+        <div class="readout"><div class="r-label">shortfall missed</div><div class="r-value" id="g-unmet">0<span>mb</span></div></div>
+        <div class="readout"><div class="r-label">salt dissolved</div><div class="r-value" id="g-leach">0<span>mb</span></div></div>
+      </div>
+      <div class="log" id="g-log" style="margin-top:14px"><div>Pick a starting point and press start.</div></div>
+      <div class="verdict" id="g-verdict" hidden></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8 · history ============ -->
+<section class="block" id="history">
+  <header>
+    <div class="kicker">8 &middot; the record</div>
+    <h2>Fifty years of filling and draining</h2>
+    <p>First oil went into West Hackberry on July 21, 1977: 412,000 barrels of Saudi light. The peak was 726.6 million barrels on December 27, 2009. Since 2015 Congress has sold oil to pay for other things, and since 2022 two presidents have released more than 300 million barrels.</p>
+  </header>
+  <figure class="fig-frame" style="padding:12px"><div id="hist"></div>
+    <figcaption id="hist-cap">EIA weekly stocks from 1982, monthly before that. Hover for any week.</figcaption>
+  </figure>
+  <div class="grid3" style="margin-top:22px">
+    <div class="panel"><div class="panel-title">emergency releases</div>
+      <p class="fine">1991 Desert Storm, 17.3 million barrels sold. 2005 Katrina, 11 million sold and 9.8 loaned. 2011 Libya, 30.6 million. 2022 Ukraine, 180 million at about $95 a barrel. 2026 Hormuz, 172 million authorised as loans, to be repaid with a premium of 18 to 28 percent from November 2026.</p></div>
+    <div class="panel"><div class="panel-title">what it cost</div>
+      <p class="fine">The oil in the reserve was bought at an average of $29.70 a barrel. Running the four sites costs about $206 million a year with 120 federal staff and roughly 630 contractors. Life Extension 2, the $1.4 billion rebuild of the surface plant, was due in 2024 and is now expected in 2028 with West Hackberry dropped from it.</p></div>
+    <div class="panel"><div class="panel-title">what it covers</div>
+      <p class="fine">The United States uses about 20 million barrels of petroleum a day. A full reserve is 35 days of that; today’s is 14. Against the 20 million barrels a day that used to pass through Hormuz, even the design rate of 4.4 replaces about a fifth. The reserve moves the world price, which is the price Americans pay; it does not replace the world’s oil.</p></div>
+  </div>
+</section>
+
+<!-- ============ notes ============ -->
+<section class="block" id="notes">
+  <header><div class="kicker">notes &amp; sources</div><h2>Where the numbers come from</h2></header>
+  <div class="sources">
+    <p><b>The live number.</b> EIA weekly series WCSSTUS1, refreshed every Wednesday evening by a GitHub Action into <span class="mono">spr/data/spr_stocks.json</span>. Monthly series MCSSTUS1 fills in 1977 to 1982.</p>
+    <p><b>The model in section 4 and the game.</b> Each site’s rate is its design drawdown rate times the share of its caverns that still hold oil above a two percent heel, times an availability flag (Big Hill zero). Oil is assumed to sit in as few caverns as possible. Leaching is 15 percent of oil displaced. Fill is capped at GAO’s 0.44 million barrels a day. Crisis length in the game is random within a range. These are teaching simplifications; DOE has published no drawdown table below 430 million barrels.</p>
+    <ol>
+      <li>DOE, <a href="https://www.energy.gov/sites/prod/files/2016/09/f33/Long-Term%20Strategic%20Review%20of%20the%20U.%20S.%20Strategic%20Petroleum%20Reserve%20Report%20to%20Congress_0.pdf">Long-Term Strategic Review of the SPR</a>, 2016. Site capacities and rates (Table 1), decline schedule (Table 12, Figure 15), fill and brine limits, roof oil, 7 barrels of water per barrel of space, 750-foot spacing, creep loss.</li>
+      <li>GAO, <a href="https://files.gao.gov/reports/GAO-26-106918/index.html">Energy Security: Congress and DOE Need a Unified Plan for the SPR</a>, GAO-26-106918, May 2026. Effective drawdown 2.7 and fill 0.44 mb/d, per-site status, Big Hill wells, 2024 Bryan Mound failure, drawdowns remaining, LE2 status, maintenance backlog.</li>
+      <li>Sandia, <a href="https://www.osti.gov/servlets/purl/1973473/">Annual Report of Available Drawdowns for Each Oil Storage Cavern</a>, SAND2023-00702; and <a href="https://www.osti.gov/servlets/purl/1870557">SAND2022-7276</a>. The 15 percent rule, roof oil and brine heel, five-drawdown limit, pillar criteria.</li>
+      <li>Sandia site reports: <a href="https://www.osti.gov/servlets/purl/959096">West Hackberry stability</a> (depths, 200 × 2,000 ft caverns), <a href="https://www.osti.gov/servlets/purl/912928">Bayou Choctaw features</a>, <a href="https://www.osti.gov/servlets/purl/888563">Big Hill cavern shapes</a>, <a href="https://www.osti.gov/servlets/purl/1463785">depressurisation effects</a>.</li>
+      <li>DOE, <a href="https://www.energy.gov/hgeo/opr/spr-quick-facts">SPR Quick Facts</a> (per-site and sweet/sour inventory, Aug 20, 2026; $29.70 average cost; 13 days), <a href="https://www.energy.gov/hgeo/opr/spr-storage-sites">Storage Sites</a>, <a href="https://www.energy.gov/hgeo/opr/spr-faqs">FAQs</a>, <a href="https://www.energy.gov/hgeo/opr/history-spr-releases">History of SPR Releases</a>, <a href="https://www.energy.gov/hgeo/opr/statutory-authority-spr-drawdown">Statutory authority</a>.</li>
+      <li>DOE press releases on the 2026 exchange: <a href="https://www.energy.gov/articles/united-states-release-172-million-barrels-oil-strategic-petroleum-reserve">March 11</a>, <a href="https://www.energy.gov/hgeo/articles/energy-department-begins-delivering-spr-barrels-record-speeds">first deliveries</a>, <a href="https://www.energy.gov/hgeo/opr/articles/energy-department-awards-contracts-strategic-petroleum-reserve-advancing">May 11 awards</a>. IEA, <a href="https://www.iea.org/news/iea-confirms-member-country-contributions-to-collective-action-to-release-oil-stocks-in-response-to-middle-east-disruptions">collective action contributions</a>.</li>
+      <li>42 U.S.C. §6241(h), <a href="https://www.law.cornell.edu/uscode/text/42/6241">the 252.4 million barrel limited-drawdown floor</a>. CRS, <a href="https://www.congress.gov/crs_external_products/R/PDF/R42460/R42460.16.pdf">R42460</a> and <a href="https://www.congress.gov/crs_external_products/IN/PDF/IN12542/IN12542.1.pdf">IN12542</a>.</li>
+      <li>The floors: <a href="https://fortune.com/2026/08/17/depleted-us-strategic-oil-reserves-risk-damaging-salt-caverns-iran-war/">Fortune, Aug 17, 2026</a> (Hochstein, DOE spokesman); <a href="https://www.cnbc.com/2026/08/15/strategic-petroleum-reserve-spr-oil-iran-war-caverns.html">CNBC, Aug 15, 2026</a> (DOE 70, Rapidan 170, 243 projection); <a href="https://fortune.com/2026/08/25/strategic-petroleum-reserve-oil-energy-gas-hormuz/">Fortune, Aug 25, 2026</a> (Misra).</li>
+      <li>Geology: <a href="https://geology.com/stories/13/salt-domes/">geology.com on salt domes</a>; <a href="https://www.aapg.org/news-and-media/explorer/the-good-the-bad-and-the-ugly-the-strategic-petroleum-reserve/">AAPG Explorer</a>; <a href="https://www.construction-physics.com/p/how-the-strategic-petroleum-reserve">Construction Physics</a> on the building of the reserve.</li>
+    </ol>
+    <p>Sources disagree on small things. DOE’s pages say 60 or 61 caverns and 714 or 713.5 million barrels; this page uses the 2016 review’s 60 and 713.5. Cavern height is 2,000 feet in Sandia’s reports and 2,500 in DOE’s fact sheets; the difference is the tapered roof and the sump.</p>
+  </div>
+</section>
+
+<footer>warnotwar &middot; the reserve &middot; <span id="gen"></span></footer>
+
+<script src="spr.js"></script>
+<script>
+(function () {
+  const E = window.SPRengine; const { SPR, fmt0, fmt1, monthName, shortDate } = E;
+  const $ = id => document.getElementById(id);
+
+  /* static figures */
+  E.crossSection($('xsec'));
+  E.siteStrip($('sites')); $('site-date').textContent = SPR.siteDate;
+  E.wearDiagram($('wearfig'));
+  E.scheduleChart($('schedule'));
+
+  /* cavern sim */
+  const cav = new E.Cavern($('cavern'), { capacity: 10, oil: 8.5, onchange: c => {
+    $('r-oil').innerHTML = fmt1(c.oil) + '<span>mb</span>';
+    $('r-pct').innerHTML = fmt0(100 * c.oil / (c.capacity * (1 + c.leach))) + '<span>%</span>';
+    $('r-days').textContent = fmt0(c.day);
+    $('r-water').innerHTML = fmt1(c.water) + '<span>mb</span>';
+    $('r-salt').innerHTML = fmt1(c.salt) + '<span>mb</span>';
+    $('r-leach').innerHTML = fmt1(c.leach * 100) + '<span>%</span>';
+    $('r-dd').innerHTML = fmt1(c.drawdowns) + '<span>of 5</span>';
+    $('r-state').textContent = { idle: 'holding', draw: 'drawing down', fill: 'refilling', empty: 'at the roof blanket', full: 'full' }[c.mode];
+  } });
+  const modeBtns = { draw: $('c-draw'), fill: $('c-fill'), pause: $('c-pause') };
+  const setMode = m => { cav.set(m); Object.entries(modeBtns).forEach(([k, b]) => b.classList.toggle('primary', k === m)); };
+  $('c-draw').onclick = () => setMode('draw'); $('c-fill').onclick = () => setMode('fill'); $('c-pause').onclick = () => setMode('idle');
+  $('c-reset').onclick = () => { cav.oil = 8.5; cav.water = cav.salt = cav.leach = cav.drawdowns = cav.brineOut = 0; cav.day = 0; setMode('idle'); };
+  $('c-rate').oninput = e => { cav.rate = +e.target.value; $('c-rate-out').textContent = fmt0(cav.rate * 1000) + ' kb/d'; };
+  $('c-speed').oninput = e => { cav.dayLength = +e.target.value; $('c-speed-out').textContent = `1 day = ${(cav.dayLength / 1000).toFixed(2).replace(/0$/, '')} s`; };
+  setMode('idle');
+
+  /* live data */
+  fetch('data/spr_stocks.json').then(r => r.json()).then(data => {
+    const L = data.latest;
+    $('t-inv').innerHTML = fmt1(L.mb) + '<span>million barrels</span>';
+    $('t-inv-sub').textContent = `Week ending ${shortDate(L.date)}. ${L.week_change_mb < 0 ? 'Down' : 'Up'} ${fmt1(Math.abs(L.week_change_mb))} million on the week. ${fmt0(100 * L.mb / SPR.designCapacity)} percent of what the caverns can hold.`;
+    if (data.last_lower) { $('t-low').textContent = monthName(data.last_lower); $('t-low-sub').textContent = `The reserve was still being filled then. It peaked at ${fmt1(data.peak.mb)} million in ${monthName(data.peak.date)}.`; }
+    else { $('t-low').textContent = 'never'; $('t-low-sub').textContent = 'The reserve has never held less.'; }
+    E.capabilityChart($('capchart'), L.mb);
+    E.floorGauge($('floors'), L.mb, [
+      { mb: 713.5, label: '713.5 · what it can hold', side: 'left' },
+      { mb: 415, label: '415 · before the release', side: 'left' },
+      { mb: 300, label: '300 · Hochstein: nobody goes below' },
+      { mb: Math.round(L.mb * 10) / 10, label: `${fmt1(L.mb)} · today, ${shortDate(L.date)}`, strong: true, color: 'var(--danger)', side: 'left' },
+      { mb: 252.4, label: '252.4 · statute, limited draws' },
+      { mb: 243, label: '243 · projected 2026 low', side: 'left' },
+      { mb: 170, label: '170 · Rapidan: soft floor' },
+      { mb: 70, label: '70 · DOE: physical minimum' },
+      { mb: 12, label: '12 · roof oil, never comes out', side: 'left' },
+    ]);
+    E.historyChart($('hist'), data, [
+      { date: '1977-07-21', label: 'first oil, West Hackberry', lift: 60 },
+      { date: '1991-01-16', label: 'Desert Storm · 17 mb', lift: 30 },
+      { date: '2005-09-02', label: 'Katrina · 11 mb', lift: -64, anchor: 'end' },
+      { date: '2009-12-27', label: 'peak 726.6', lift: 16 },
+      { date: '2011-06-23', label: 'Libya · 30 mb', lift: -46 },
+      { date: '2017-01-01', label: 'Congress sells to pay bills', lift: -96, anchor: 'end' },
+      { date: '2022-03-31', label: 'Ukraine · 180 mb', lift: -50, anchor: 'end' },
+      { date: '2023-07-07', label: 'low · 347', lift: -30, anchor: 'end' },
+      { date: '2026-03-11', label: 'Hormuz · 172 mb', lift: 112, anchor: 'end' },
+    ]);
+    $('gen').textContent = `data ${data.generated.slice(0, 10)}`;
+  }).catch(() => { $('t-inv-sub').textContent = 'The weekly data did not load.'; });
+})();
+</script>
+<script src="game.js"></script>
+</body>
+</html>
