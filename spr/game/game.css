@@ -211,3 +211,14 @@ header .spacer { flex: 1; }
 .lv-out .fx.none { color: var(--ink-30); }
 .odo-delta { font-family: var(--mono); font-size: 9.5px; color: #ffd9a0; margin-bottom: 4px; white-space: nowrap; }
 .odo-delta.neg { color: var(--danger); }
+
+/* receipt */
+table.receipt { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 11.5px; margin-top: 6px; }
+table.receipt th { text-align: left; font-weight: 400; color: var(--ink-45); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 0 0 4px; border-bottom: 1px solid var(--ink-10); }
+table.receipt td { padding: 5px 0; border-bottom: 1px solid var(--ink-06); color: var(--ink-80); vertical-align: top; }
+table.receipt td:first-child { color: var(--ink); width: 34%; }
+table.receipt .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+table.receipt .up { color: var(--teal); } table.receipt .down { color: var(--danger); } .flat { color: var(--ink-30); }
+.events { font-family: var(--mono); font-size: 11.5px; line-height: 1.5; color: var(--ink-80); }
+.events div { padding: 3px 0; border-bottom: 1px solid var(--ink-06); } .events .bad { color: var(--danger); } .events .good { color: var(--teal); }
+.card .foot .skip { margin-right: auto; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-45); display: flex; align-items: center; gap: 6px; cursor: pointer; }

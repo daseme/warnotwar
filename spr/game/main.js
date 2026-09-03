@@ -130,6 +130,7 @@
 
   async function turnYear() {
     $('y-go').disabled = true; clearGhosts();
+    const snap = { year: w.year, inv: S.inv(w), cap: S.capacity(w), draw: S.drawCap(w), budget: w.budget, mood: w.mood, price: w.price, gas: S.gasPrice(w) };
     const dec = { buy: +yb.value, build: +ybd.value, maintain: +ym.value / 100, pumps: +yp.value, sell: +ys.value };
     const before = new Map(w.domes.flatMap(d => d.cav).map(c => [c, c.oil]));
     const out = S.yearDecisions(w, dec);
@@ -145,11 +146,42 @@
     scene.say(String(w.year), r.crisis ? r.crisis.name : r.card ? r.card.name : '');
     yb.value = 0; ybd.value = 0; ym.value = 0; yp.value = 0; ys.value = 0;
     hud(); renderLog(); yearPanel();
-    if (r.end) return endGame();
-    if (r.card) return showCard(r.card);
-    if (r.crisis) return crisisIntro(r.crisis);
-    $('y-go').disabled = false;
+    const next = () => { if (r.end) return endGame(); if (r.card) return showCard(r.card); if (r.crisis) return crisisIntro(r.crisis); $('y-go').disabled = false; };
+    receipt(snap, dec, out, r, next);
   }
+
+  /* ---------- the year-end receipt: what you spent, what you got, what moved ---------- */
+  function receipt(snap, dec, out, r, next) {
+    const now = { inv: S.inv(w), cap: S.capacity(w), draw: S.drawCap(w), budget: w.budget, mood: w.mood, price: w.price, gas: S.gasPrice(w) };
+    const d = (a, b, fmt, unit = '') => { const x = b - a; if (Math.abs(x) < (fmt === f1 ? 0.05 : 0.5)) return `<span class="flat">no change</span>`; return `<span class="${x > 0 ? 'up' : 'down'}">${x > 0 ? '+' : '−'}${fmt(Math.abs(x))}${unit}</span>`; };
+    const spent = [];
+    if (out.sold > 0.05) spent.push(['sold oil', `${f1(out.sold)} mb`, `+${bn(out.saleCash)}`]);
+    if (out.bought > 0.05) spent.push(['bought oil', `${f1(out.bought)} mb at $${f0(snap.price)}`, bn(out.bought * snap.price / 1000)]);
+    if (out.built) spent.push(['caverns started', `${out.built} · ready ${snap.year + S.BUILD_YEARS}`, bn(out.built * S.BUILD_COST)]);
+    if (out.plants) spent.push(['pumps started', `${out.plantAt.join(', ')} · ready ${snap.year + S.PLANT_YEARS}`, bn(out.plants * S.PLANT_COST)]);
+    if (out.maintained) spent.push(['wells repaired', `${out.maintained}`, bn(out.maintained * S.WORKOVER)]);
+    const spentRows = spent.length ? spent.map(([a, b, c]) => `<tr><td>${a}</td><td>${b}</td><td class="num">${c}</td></tr>`).join('') : `<tr><td colspan="3" class="flat">You spent nothing.</td></tr>`;
+    const notes = (out.notes || []).map(n => `<div class="bad">${n}</div>`).join('');
+    const events = (r.events || []).map(e => `<div class="${e.cls || ''}">${e.text}</div>`).join('') || '<div class="flat">A quiet year underground.</div>';
+    const grant = now.budget;
+    modal(`<div class="kicker">${snap.year} → ${w.year} · the receipt</div><h2>${snap.year} in the books</h2>
+      <table class="receipt"><thead><tr><th>you did</th><th></th><th class="num">cost</th></tr></thead><tbody>${spentRows}</tbody></table>${notes}
+      <div class="kicker" style="margin-top:12px">what happened</div><div class="events">${events}</div>
+      <div class="kicker" style="margin-top:12px">the dials</div>
+      <table class="receipt dials"><tbody>
+        <tr><td>barrels in the ground</td><td class="num">${f0(snap.inv)} → ${f0(now.inv)} mb</td><td class="num">${d(snap.inv, now.inv, f0, ' mb')}</td></tr>
+        <tr><td>room to fill</td><td class="num">${f0(snap.cap - snap.inv)} → ${f0(now.cap - now.inv)} mb</td><td class="num">${d(snap.cap - snap.inv, now.cap - now.inv, f0, ' mb')}</td></tr>
+        <tr><td>wells can flow</td><td class="num">${f1(snap.draw)} → ${f1(now.draw)} mb/day</td><td class="num">${d(snap.draw, now.draw, f1, ' mb/d')}</td></tr>
+        <tr><td>crude</td><td class="num">$${f0(snap.price)} → $${f0(now.price)}</td><td class="num">${d(snap.price, now.price, f0, '')}</td></tr>
+        <tr><td>congress</td><td class="num">${f0(snap.mood)} → ${f0(now.mood)}</td><td class="num">${d(snap.mood, now.mood, f0, '')}</td></tr>
+        <tr><td>money for ${w.year}</td><td class="num">${bn(Math.max(0, grant))}</td><td class="num"><span class="flat">grant + what you carried</span></td></tr>
+      </tbody></table>
+      <div class="foot"><label class="skip mono"><input type="checkbox" id="m-skip"> skip receipts</label><button class="btn primary" id="m-ok">${r.crisis ? 'there is news →' : r.card ? 'a decision waits →' : `on to ${w.year} →`}</button></div>`);
+    if (skipReceipts || (params.get('bot') && !params.get('receipt'))) { closeModal(); return next(); }
+    $('m-skip').onchange = e => { skipReceipts = e.target.checked; };
+    $('m-ok').onclick = () => { closeModal(); next(); };
+  }
+  let skipReceipts = false;
   $('y-go').onclick = turnYear;
 
   /* ---------- cards ---------- */
@@ -299,6 +331,7 @@
 
   /* ---------- test hooks: ?skip=1 skips the title; ?bot=YEAR plays sensibly to that year; ?bot=YEAR&stop=crisis stops inside the first crisis after it ---------- */
   if (params.get('skip') || params.get('bot')) { document.documentElement.style.setProperty('--t', '0s'); document.querySelectorAll('.overlay').forEach(o => o.style.transition = 'none'); start(); unDrift(); }
+  if (params.get('receipt')) { setTimeout(() => { yb.value = Math.floor(+yb.max / 2); ybd.value = 2; yp.value = Math.min(1, +yp.max); ym.value = 30; turnYear(); }, 2500); }
   if (params.get('preview')) { setTimeout(() => { yb.value = Math.floor(+yb.max / 2); ybd.value = 3; yp.value = Math.min(1, +yp.max); ym.value = 30; ys.value = Math.min(20, +ys.max); yearOut(); }, 2500); }
   if (params.get('bot')) {
     const target = +params.get('bot'); const stopAt = params.get('stop');
