@@ -56,15 +56,17 @@
     const cBuy = buy * w.price / 1000, cBuild = build * S.BUILD_COST, cM = n * S.WORKOVER, cP = +yp.value * S.PLANT_COST;
     $('y-pumps-o').innerHTML = noPlant ? `${+yp.value} · <small>ready ${w.year + S.PLANT_YEARS}</small> · ${bn(cP)}` : 'every dome has pumps';
     $('y-buy-o').innerHTML = `${f0(buy)} mb · ${bn(cBuy)}`; $('y-build-o').innerHTML = `${build} · <small>ready ${w.year + 3}</small> · ${bn(cBuild)}`; $('y-maint-o').innerHTML = `${n} wells · ${bn(cM)}`;
-    // unit prices, every turn
-    const p = w.price, m$ = v => `$${Math.round(v * 1000)}m`;
-    $('y-prices').textContent = `oil $${f0(p)}/bbl · cavern ${m$(S.BUILD_COST)} · pumps ${m$(S.PLANT_COST)}/dome · well ${m$(S.WORKOVER)}`;
+    // unit prices and lead times, every turn
+    const p = w.price, m$ = v => `$${Math.round(v * 1000)}m`, fillKbd = Math.round(S.fillCap(w) * 1000);
+    $('y-prices').textContent = `oil $${f0(p)}/bbl, pours in at ${fillKbd} kb/d · cavern ${m$(S.BUILD_COST)}, 3 yr · pumps ${m$(S.PLANT_COST)}/dome, 2 yr · well ${m$(S.WORKOVER)}, this year`;
     const maxBuy = +yb.max, roomAll = S.roomFor(w);
-    $('y-help-buy').innerHTML = `Crude is <b>$${f0(p)} a barrel</b> this year: 10 million barrels cost <b>${bn(10 * p / 1000)}</b>. Up to ${f0(maxBuy)} mb can go in this year${roomAll < maxBuy + 1 ? ' (that is all the room you have)' : ' (the fill rate, not the room, is the limit)'}.`;
-    const open = w.domes.reduce((a, d) => a + (d.maxCav - d.cav.length - d.building.length), 0);
-    $('y-help-build').innerHTML = `<b>${m$(S.BUILD_COST)} each</b>, three years, 10.5 million barrels of room apiece. ${open} more can be dug across the four domes${w.domes.some(d => d.building.length) ? `; ${w.domes.reduce((a, d) => a + d.building.length, 0)} being leached now` : ''}.`;
-    $('y-help-pumps').innerHTML = noPlant ? `<b>${m$(S.PLANT_COST)} per dome</b>, two years. ${noPlant} dome${noPlant > 1 ? 's' : ''} still ha${noPlant > 1 ? 've' : 's'} no pumps; oil there cannot come out.` : 'Every dome has its pumping plant. Nothing more to build here.';
-    $('y-help-maint').innerHTML = `<b>${m$(S.WORKOVER)} per well</b>. You have ${wells} wells; the salt crushes their casings a little every year, and a failed well shuts its cavern for a year.`;
+    const months = buy > 0 ? Math.max(1, Math.round(buy / (S.fillCap(w) * 30.4))) : 0;
+    $('y-help-buy').innerHTML = `Crude is <b>$${f0(p)} a barrel</b>: 10 million barrels cost <b>${bn(10 * p / 1000)}</b>. Oil pours in at up to <b>${fillKbd} thousand barrels a day</b>, so ${buy > 0 ? `your ${f0(buy)} mb take about <b>${months} month${months > 1 ? 's' : ''}</b> to arrive` : `${f0(maxBuy)} mb is the most that fits this year`}${roomAll < maxBuy + 1 ? ' (room, not pumps, is the limit)' : ''}.`;
+    const open = w.domes.reduce((a, d) => a + (d.maxCav - d.cav.length - d.building.length), 0), leaching = w.domes.reduce((a, d) => a + d.building.length, 0);
+    $('y-help-build').innerHTML = `<b>${m$(S.BUILD_COST)} each, three years</b>: ordered now, ready in <b>${w.year + S.BUILD_YEARS}</b>. 10.5 million barrels of room apiece. ${open} more can be dug${leaching ? `; ${leaching} being leached now` : ''}.`;
+    $('y-help-pumps').innerHTML = noPlant ? `<b>${m$(S.PLANT_COST)} per dome, two years</b>: ordered now, ready in <b>${w.year + S.PLANT_YEARS}</b>. ${noPlant} dome${noPlant > 1 ? 's' : ''} still ha${noPlant > 1 ? 've' : 's'} no pumps; oil there cannot come out.` : 'Every dome has its pumping plant. Nothing more to build here.';
+    const shut = w.domes.reduce((a, d) => a + d.cav.filter(c => c.offline > 0 && !c.retired).length, 0);
+    $('y-help-maint').innerHTML = `<b>${m$(S.WORKOVER)} per well, done within the year</b>. You have ${wells} wells; the salt crushes their casings a little every year. ${shut ? `<b>${shut} cavern${shut > 1 ? 's are' : ' is'} shut after a well failure</b>; work on them brings them back.` : 'A failed well shuts its cavern for a year.'}`;
     const left = w.budget - cBuy - cBuild - cM - cP; const L = $('y-left'); L.textContent = bn(Math.abs(left)) + (left < 0 ? ' short' : ''); L.style.color = left < -1e-9 ? 'var(--danger)' : 'var(--ink)';
     $('y-go').disabled = left < -1e-9;
   }
