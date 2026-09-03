@@ -119,12 +119,19 @@
   /* ---------- crises ---------- */
   function crisisIntro(s) {
     pendingCrisis = s;
-    modal(`<div class="kicker">${w.year} · emergency</div><h2>${s.name}</h2><p>${s.text}</p><p class="mono" style="font-size:12px;color:var(--ink-60)">World short about ${f1(s.shortfall)} mb/d. ${s.iea ? `Allies cover their part; your share is about ${f1(s.shortfall * 0.44)} mb/d.` : `Most of this lands on you: about ${f1(s.shortfall * 0.7)} mb/d.`} Your wells can flow ${f1(S.drawCap(w))} mb/d${S.drawCap(w) <= 0 ? ' — nothing. No dome has a pumping plant.' : ''}. You hold ${f0(S.inv(w))} mb.</p><div class="foot"><button class="btn primary" id="m-ok">take the desk →</button></div>`);
+    modal(`<div class="kicker">${w.year} · emergency</div><h2>${s.name}</h2><p>${s.text}</p><p class="mono" style="font-size:12px;color:var(--ink-60)">World short about ${f1(s.shortfall)} mb/d. ${s.iea ? `Allies cover their part; your share is about ${f1(s.shortfall * 0.44)} mb/d.` : `Most of this lands on you: about ${f1(s.shortfall * 0.7)} mb/d.`} Your wells can flow ${f1(S.drawCap(w))} mb/d${S.drawCap(w) <= 0 ? ' — nothing. No dome has a pumping plant.' : ''}. You hold ${f0(S.inv(w))} mb.</p>
+      <div class="kicker" style="margin-top:8px">how the desk works</div>
+      <div class="desk-list">
+        <div><b>The year stops.</b> Time now moves one week at a time. Press <b>next week</b> for one week, or flip the <b>clock</b> to run and watch.</div>
+        <div><b>The knob sets your release</b> in millions of barrels a day. Its ceiling is what your wells can flow${S.drawCap(w) <= 0 ? ', which is nothing yet: no dome has pumps, so the knob is dead and you can only watch' : ''}.</div>
+        <div><b>Your barrels shrink the price spike.</b> The world is short; allies cover some; what is left uncovered sets the price. Every barrel you release now is one you will not have for the next shock.</div>
+      </div>
+      <div class="foot"><button class="btn primary" id="m-ok">take the desk →</button></div>`);
     $('m-ok').onclick = () => { closeModal(); S.startCrisis(w, s); scene.say(s.name, 'emergency'); crisisPanel(); hud(); renderLog(); };
   }
   const cr = $('c-rate');
   const knob = new I.Knob($('k-rate'), cr, { label: 'release · mb/day', detents: 22, fmt: v => v.toFixed(2) });
-  const tgRun = new I.Toggle($('tg-run'), { label: 'clock', off: 'hold', on: 'run', onchange: on => { if (on) { if (!autorun) autorun = setInterval(week, 700); } else stopRun(); } });
+  const tgRun = new I.Toggle($('tg-run'), { label: 'clock', off: 'hold', on: 'run', onchange: on => { if (on) { if (!autorun) autorun = setInterval(week, S.drawCap(w) <= 0 ? 220 : 700); } else stopRun(); } });
   function crisisPanel() {
     $('p-year').hidden = true; $('p-crisis').hidden = false;
     const c = w.crisis, cap = S.drawCap(w);
@@ -132,6 +139,10 @@
     $('c-short').innerHTML = `${f1(c.ceasefire > 0 ? 0 : c.shortfall)}<small>mb/d</small>`; $('c-share').innerHTML = `${f1((c.ceasefire > 0 ? 0 : c.shortfall) * (c.allies ? 0.44 : 0.7))}<small>mb/d</small>`; $('c-cap').innerHTML = `${f1(cap)}<small>mb/d</small>`;
     cr.max = Math.max(0.05, cap).toFixed(2); if (+cr.value > cap) cr.value = cap.toFixed(2); knob.refresh();
     $('c-note').textContent = cap <= 0 ? 'no pumps: you can only watch' : c.week === 0 ? 'first barrels reach the market in about two weeks' : `${f0(S.inv(w))} mb left · crude $${f0(w.price)}`;
+    $('k-rate').classList.toggle('dead', cap <= 0);
+    $('c-help').innerHTML = cap <= 0
+      ? `<b>You cannot pump.</b> No dome has a pumping plant, so the knob does nothing. Flip the <b>clock</b> to run and let the weeks pass, or press <b>next week</b>. The lesson of 1979 is the one the real reserve learned: oil in the ground is not oil at the pump.`
+      : `<b>Knob:</b> how much to release each day, up to the ${f1(cap)} mb/day your wells can flow. <b>Next week</b> runs one week; the <b>clock</b> keeps running them. The world is short ${f1(c.ceasefire > 0 ? 0 : c.shortfall)} mb/day and your share to cover is ${f1((c.ceasefire > 0 ? 0 : c.shortfall) * (c.allies ? 0.44 : 0.7))}; release that much and the price spike mostly goes away. Release less and Americans pay more; release more and you run dry sooner.`;
   }
   function week() {
     if (w.phase !== 'crisis') return;
