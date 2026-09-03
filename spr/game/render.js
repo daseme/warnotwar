@@ -17,7 +17,7 @@
       this.cam = { x: 0.5, y: 0.5, z: 1, tx: 0.5, ty: 0.5, tz: 1 };
       this.parts = []; this.clouds = Array.from({ length: 7 }, (_, i) => ({ x: Math.random(), y: 0.05 + Math.random() * 0.16, s: 0.05 + Math.random() * 0.08, v: 0.004 + Math.random() * 0.006 }));
       this.flash = null; this.flow = { out: 0, in: 0 }; this.hover = null; this.focus = null; this.t0 = performance.now();
-      this.tanker = 0.02; this.shown = new Map(); this.anim = null;
+      this.tanker = 0.02; this.shown = new Map(); this.anim = null; this.preview = null;   // preview: { fill: Map, drain: Map, newCav: {key: n}, pumpDomes: Set }
       this.resize(); addEventListener('resize', () => this.resize());
       canvas.addEventListener('mousemove', e => this.onMove(e)); canvas.addEventListener('mouseleave', () => { this.hover = null; });
       canvas.addEventListener('click', e => this.onClick(e));
@@ -44,7 +44,8 @@
     }
     /* cavern layout inside a dome: rows of capsules */
     layout(d) {
-      const n = d.cav.length + d.building.length; const cols = Math.min(7, Math.max(3, Math.ceil(n / 3))); const rows = Math.max(1, Math.ceil(n / cols));
+      const extra = this.preview && this.preview.newCav ? (this.preview.newCav[d.key] || 0) : 0;
+      const n = d.cav.length + d.building.length + extra; const cols = Math.min(7, Math.max(3, Math.ceil(n / 3))); const rows = Math.max(1, Math.ceil(n / cols));
       const cw = 0.018, ch = 0.11, gap = 0.006; const totalW = cols * cw + (cols - 1) * gap;
       const top = SURF + 0.19; const items = [];
       for (let i = 0; i < n; i++) { const r = Math.floor(i / cols), c = i % cols; items.push({ x: d.x - totalW / 2 + c * (cw + gap), y: top + r * (ch + 0.02), w: cw, h: ch }); }
@@ -82,11 +83,16 @@
         const dg = ctx.createLinearGradient(0, sy(top), 0, sy(1.2)); dg.addColorStop(0, C.salt); dg.addColorStop(1, C.salt2); ctx.fillStyle = dg;
         ctx.beginPath(); ctx.moveTo(sx(d.x - hw * 1.4), sy(1.25)); ctx.bezierCurveTo(sx(d.x - hw * 1.3), sy(top + 0.15), sx(d.x - hw * 0.9), sy(top), sx(d.x), sy(top)); ctx.bezierCurveTo(sx(d.x + hw * 0.9), sy(top), sx(d.x + hw * 1.3), sy(top + 0.15), sx(d.x + hw * 1.4), sy(1.25)); ctx.closePath(); ctx.fill();
         if (this.hover === i || this.focus === i) { ctx.strokeStyle = 'rgba(239,232,216,0.35)'; ctx.lineWidth = 1.5; ctx.stroke(); }
+        if (this.preview && this.preview.pumpDomes && this.preview.pumpDomes.has(d.key)) { ctx.save(); ctx.shadowColor = 'rgba(255,217,160,0.9)'; ctx.shadowBlur = 22; ctx.strokeStyle = 'rgba(255,217,160,0.9)'; ctx.lineWidth = 2; ctx.setLineDash([6, 4]); ctx.stroke(); ctx.restore(); const lab = `PUMPS HERE · READY ${w.year + 2}`; ctx.font = `${10.5 * Math.min(z, 1.6)}px IBM Plex Mono, monospace`; ctx.textAlign = 'center'; const tw = ctx.measureText(lab).width; ctx.fillStyle = 'rgba(10,9,8,0.85)'; roundRect(ctx, sx(d.x) - tw / 2 - 8, sy(top + 0.05) - 12, tw + 16, 18, 4); ctx.fill(); ctx.fillStyle = 'rgba(255,217,160,0.95)'; ctx.fillText(lab, sx(d.x), sy(top + 0.05) + 1); }
         // flow lines in the salt
         ctx.strokeStyle = 'rgba(0,0,0,0.08)'; for (let k = 1; k < 6; k++) { const yy = top + k * 0.11; ctx.beginPath(); ctx.moveTo(sx(d.x - hw * 1.1), sy(yy + 0.01)); ctx.quadraticCurveTo(sx(d.x), sy(yy - 0.02), sx(d.x + hw * 1.1), sy(yy + 0.01)); ctx.stroke(); }
         // caverns
         L.items.forEach((it, k) => {
           const cv = d.cav[k]; const x = sx(it.x), y = sy(it.y), cw = it.w * W * z, ch = it.h * H * z, r = cw / 2;
+          if (!cv && k >= d.cav.length + d.building.length) { // previewed: would be dug this year
+            ctx.setLineDash([2, 4]); ctx.strokeStyle = 'rgba(255,217,160,0.8)'; ctx.lineWidth = 1.2; roundRect(ctx, x, y, cw, ch, r); ctx.stroke(); ctx.setLineDash([]);
+            ctx.fillStyle = 'rgba(255,217,160,0.9)'; ctx.font = `${11 * Math.max(1, z / 2)}px IBM Plex Mono, monospace`; ctx.textAlign = 'center'; ctx.fillText('+', x + cw / 2, y + ch / 2 + 4); return;
+          }
           if (!cv) { // under construction
             const left = d.building[k - d.cav.length]; ctx.setLineDash([3, 3]); ctx.strokeStyle = 'rgba(239,232,216,0.5)'; ctx.lineWidth = 1; roundRect(ctx, x, y, cw, ch, r); ctx.stroke(); ctx.setLineDash([]);
             const prog = 1 - left / 3; ctx.fillStyle = 'rgba(169,211,239,0.35)'; roundRect(ctx, x, y + ch * (1 - prog), cw, ch * prog, Math.min(r, ch * prog / 2)); ctx.fill();
@@ -101,6 +107,13 @@
           if (cv.retired) { ctx.fillStyle = 'rgba(70,66,60,0.9)'; roundRect(ctx, x, y, cw, ch, r); ctx.fill(); ctx.strokeStyle = 'rgba(239,232,216,0.25)'; ctx.beginPath(); for (let q = 0; q < ch; q += 6) { ctx.moveTo(x, y + q); ctx.lineTo(x + cw, y + q + 4); } ctx.stroke(); return; }
           ctx.fillStyle = C.brine; roundRect(ctx, x, y, cw, ch, r); ctx.fill();
           const og = ctx.createLinearGradient(0, y, 0, y + ch * f); og.addColorStop(0, C.oil2); og.addColorStop(1, C.oil); ctx.fillStyle = og; roundRect(ctx, x, y, cw, Math.max(0, ch * f), Math.min(r, ch * f / 2)); ctx.fill();
+          // preview: translucent rise or drain to where this year's decisions would leave the cavern
+          if (this.preview) {
+            const nf = this.preview.fill && this.preview.fill.has(cv) ? clamp(this.preview.fill.get(cv) / cv.cap, 0, 1) : null;
+            const df = this.preview.drain && this.preview.drain.has(cv) ? clamp(this.preview.drain.get(cv) / cv.cap, 0, 1) : null;
+            if (nf != null && nf > f + 0.005) { ctx.fillStyle = 'rgba(255,217,160,0.45)'; roundRect(ctx, x, y + ch * f, cw, ch * (nf - f), 2); ctx.fill(); ctx.setLineDash([2, 2]); ctx.strokeStyle = 'rgba(255,217,160,0.95)'; ctx.beginPath(); ctx.moveTo(x, y + ch * nf); ctx.lineTo(x + cw, y + ch * nf); ctx.stroke(); ctx.setLineDash([]); }
+            if (df != null && df < f - 0.005) { ctx.fillStyle = 'rgba(208,106,92,0.5)'; roundRect(ctx, x, y + ch * df, cw, ch * (f - df), 2); ctx.fill(); ctx.setLineDash([2, 2]); ctx.strokeStyle = 'rgba(208,106,92,0.95)'; ctx.beginPath(); ctx.moveTo(x, y + ch * df); ctx.lineTo(x + cw, y + ch * df); ctx.stroke(); ctx.setLineDash([]); }
+          }
           if (f > 0.02 && f < 0.98) { ctx.strokeStyle = 'rgba(255,255,255,0.45)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x + 1, y + ch * f + Math.sin(t / 400 + k) * 0.8); ctx.lineTo(x + cw - 1, y + ch * f + Math.sin(t / 400 + k + 2) * 0.8); ctx.stroke(); }
           ctx.lineWidth = 1; ctx.strokeStyle = cv.offline > 0 ? `rgba(208,106,92,${0.5 + 0.5 * Math.sin(t / 200)})` : cv.acquired ? 'rgba(201,169,79,0.6)' : 'rgba(239,232,216,0.28)'; roundRect(ctx, x, y, cw, ch, r); ctx.stroke();
           // well to surface

@@ -84,7 +84,9 @@ header.console { display: flex; align-items: center; gap: 14px; padding: 8px 16p
 .screws i:first-child { left: 4px; } .screws i:last-child { right: 4px; }
 .instr { display: flex; flex-direction: column; align-items: center; justify-content: center; }
 .dial { width: 108px; height: 108px; display: block; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.6)); }
-.odo-block { align-items: flex-start; gap: 2px; }
+.odo-block { display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 0 6px; max-width: 190px; }
+.odo-block .odo-title { flex-basis: 100%; }
+.odo-block .odo { margin-bottom: 4px; }
 .odo-title { font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(233,226,208,0.6); margin: 0 0 2px 2px; }
 .odo-title small { text-transform: none; letter-spacing: 0; color: rgba(233,226,208,0.4); }
 .odo { display: inline-flex; align-items: center; gap: 1px; background: #0b0a08; border: 1px solid #000; border-radius: 3px; padding: 2px 4px; box-shadow: inset 0 2px 6px rgba(0,0,0,0.9), 0 1px 0 rgba(255,255,255,0.08); font-family: var(--mono); font-size: 18px; line-height: 1; margin-bottom: 6px; }
@@ -193,3 +195,19 @@ header .spacer { flex: 1; }
 .knob-btn:active { transform: translateY(2px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
 .knob-hint { font-family: var(--mono); font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-30); margin-top: 2px; }
 .knob-wrap.dead .knob-btn { pointer-events: none; }
+
+/* the appropriation */
+.approp { margin: 2px 0 8px; }
+.ap-bar { display: flex; height: 14px; border-radius: 4px; overflow: hidden; background: #0b0a08; border: 1px solid #0d0c0a; box-shadow: inset 0 2px 5px rgba(0,0,0,0.8); }
+.ap-bar i { display: block; height: 100%; transition: width 0.25s ease; }
+.ap-bar i.buy { background: #6b5b3e; } .ap-bar i.dig { background: #8b8474; } .ap-bar i.pumps { background: #5f7d93; } .ap-bar i.rep { background: #b08a3c; } .ap-bar i.left { background: repeating-linear-gradient(135deg, rgba(233,226,208,0.12) 0 3px, transparent 3px 6px); } .ap-bar i.over { background: #c0392b; }
+.ap-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-family: var(--mono); font-size: 10px; color: var(--ink-60); margin-top: 4px; }
+.ap-legend span b { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+.ap-legend .sale { color: var(--teal); }
+/* impact lines */
+.lv-out { line-height: 1.35; }
+.lv-out .cost { display: block; color: var(--ink); }
+.lv-out .fx { display: block; font-size: 10.5px; color: #ffd9a0; white-space: normal; }
+.lv-out .fx.none { color: var(--ink-30); }
+.odo-delta { font-family: var(--mono); font-size: 9.5px; color: #ffd9a0; margin-bottom: 4px; white-space: nowrap; }
+.odo-delta.neg { color: var(--danger); }

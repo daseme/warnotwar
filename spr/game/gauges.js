@@ -33,6 +33,10 @@
       }
       const L = el('text', { x: c, y: c + R * 0.5, 'text-anchor': 'middle', fill: 'rgba(233,226,208,0.75)', 'font-size': 6.5, 'letter-spacing': 1, 'font-family': 'IBM Plex Mono, monospace' }, svg); L.textContent = this.o.label.toUpperCase();
       this.read = el('text', { x: c, y: c + R * 0.72, 'text-anchor': 'middle', fill: '#f0a058', 'font-size': 9, 'font-family': 'IBM Plex Mono, monospace' }, svg);
+      this.ghost = el('g', { transform: `rotate(-135 ${c} ${c})`, opacity: 0 }, svg);
+      el('polygon', { points: `${c - 1.4},${c + 6} ${c + 1.4},${c + 6} ${c + 0.4},${c - rT + 6} ${c - 0.4},${c - rT + 6}`, fill: '#f0a058', opacity: 0.45 }, this.ghost);
+      el('polygon', { points: `${c - 1.4},${c + 6} ${c + 1.4},${c + 6} ${c + 0.4},${c - rT + 6} ${c - 0.4},${c - rT + 6}`, fill: 'none', stroke: '#ffd9a0', 'stroke-width': 0.6, 'stroke-dasharray': '2 2' }, this.ghost);
+      this.tag = el('text', { x: c, y: c - R * 0.36, 'text-anchor': 'middle', fill: '#ffd9a0', 'font-size': 6.5, 'font-family': 'IBM Plex Mono, monospace', opacity: 0 }, svg);
       this.needle = el('g', { transform: `rotate(-135 ${c} ${c})` }, svg);
       el('polygon', { points: `${c - 1.6},${c + 8} ${c + 1.6},${c + 8} ${c + 0.5},${c - rT + 4} ${c - 0.5},${c - rT + 4}`, fill: '#f0a058' }, this.needle);
       el('circle', { cx: c, cy: c, r: 4.5, fill: '#2a2621', stroke: '#9a978f', 'stroke-width': 1.2 }, svg);
@@ -41,6 +45,8 @@
     }
     ang(v) { return -135 + 270 * clamp((v - this.o.min) / (this.o.max - this.o.min), 0, 1); }
     set(v, text) { this.v = v; if (text != null) this.read.textContent = text; }
+    /* a faint second needle: where the dial will read after the year turns. tag: e.g. 'in 1991' */
+    setGhost(v, tag) { if (v == null || Math.abs(v - this.v) < 1e-9) { this.ghost.setAttribute('opacity', 0); this.tag.setAttribute('opacity', 0); return; } this.ghost.setAttribute('opacity', 1); this.ghost.setAttribute('transform', `rotate(${this.ang(v).toFixed(2)} ${this.c} ${this.c})`); this.tag.textContent = tag || ''; this.tag.setAttribute('opacity', tag ? 1 : 0); }
     tick(t) {
       // a moving-coil needle: springy, slightly under-damped
       const dt = Math.min(0.05, (t - (this.last || t)) / 1000); this.last = t;
@@ -53,7 +59,8 @@
 
   /* ---- odometer: rolling digit drums ---- */
   class Counter {
-    constructor(host, o) { this.o = Object.assign({ digits: 4, decimals: 0, prefix: '', suffix: '' }, o); this.host = host; host.classList.add('odo'); this.cells = []; this.build(); }
+    constructor(host, o) { this.o = Object.assign({ digits: 4, decimals: 0, prefix: '', suffix: '' }, o); this.host = host; host.classList.add('odo'); this.cells = []; this.build(); this.deltaEl = document.createElement('span'); this.deltaEl.className = 'odo-delta'; host.after(this.deltaEl); }
+    setDelta(text, cls) { this.deltaEl.textContent = text || ''; this.deltaEl.className = 'odo-delta ' + (cls || ''); }
     build() {
       const h = this.host; h.innerHTML = '';
       if (this.o.prefix) { const p = document.createElement('span'); p.className = 'odo-sym'; p.textContent = this.o.prefix; h.appendChild(p); }

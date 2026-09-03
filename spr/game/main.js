@@ -2,6 +2,7 @@
 'use strict';
 (function () {
   const S = window.SALT; const $ = id => document.getElementById(id);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const f0 = n => Math.round(n).toLocaleString('en-US'), f1 = n => (Math.round(n * 10) / 10).toFixed(1), bn = n => `$${(Math.round(n * 100) / 100).toFixed(n < 10 ? 2 : 1)}bn`;
   const params = new URLSearchParams(location.search);
   let w = S.newWorld();
@@ -50,38 +51,85 @@
     $('y-brief').textContent = era + realNote;
     yearOut();
   }
+  /* what this year's settings would do, computed without touching the world */
+  function project() {
+    const buy = +yb.value, build = +ybd.value, share = +ym.value / 100, pumps = +yp.value, sell = +ys.value, p = w.price;
+    const cavs = w.domes.flatMap(d => d.cav.map(c => ({ c, d })));
+    // sell: emptiest usable caverns first, across the domes that can pump
+    const drain = new Map(); let left = sell;
+    cavs.filter(o => o.d.plant === 'ready' && !o.c.retired && o.c.offline <= 0 && o.c.oil > o.c.cap * S.HEEL).sort((a, b) => a.c.oil - b.c.oil).forEach(o => { if (left <= 1e-9) return; const avail = o.c.oil - o.c.cap * S.HEEL, t = Math.min(avail, left); drain.set(o.c, o.c.oil - t); left -= t; });
+    const sold = sell - left, cashIn = sold * p / 1000;
+    // buy: most drawdowns left, healthiest first
+    const fill = new Map(); let room = 0; left = buy;
+    cavs.filter(o => !o.c.retired && o.c.offline <= 0).sort((a, b) => (b.c.left - a.c.left) || (b.c.health - a.c.health)).forEach(o => { const cur = drain.has(o.c) ? drain.get(o.c) : o.c.oil; const rm = Math.max(0, o.c.cap - cur); room += rm; if (left <= 1e-9) return; const t = Math.min(rm, left); if (t > 0.01) fill.set(o.c, cur + t); left -= t; });
+    const bought = buy - left, cBuy = bought * p / 1000;
+    // dig: the dome with most free slots takes each new cavern
+    const newCav = {}; const free = Object.fromEntries(w.domes.map(d => [d.key, d.maxCav - d.cav.length - d.building.length]));
+    for (let i = 0; i < build; i++) { const k = Object.keys(free).sort((a, b) => free[b] - free[a])[0]; if (!k || free[k] <= 0) break; free[k]--; newCav[k] = (newCav[k] || 0) + 1; }
+    const dug = Object.values(newCav).reduce((a, b) => a + b, 0), cBuild = dug * S.BUILD_COST;
+    // pumps: domes without a plant, biggest first
+    const pumpDomes = new Set(); let addRate = 0;
+    w.domes.filter(d => d.plant === 'none').sort((a, b) => (b.cav.length + b.building.length) - (a.cav.length + a.building.length)).slice(0, pumps).forEach(d => { pumpDomes.add(d.key); addRate += d.rate * Math.min(1, d.cav.filter(c => !c.retired && c.oil > c.cap * S.HEEL).length / Math.max(1, d.maxCav * 0.6)); });
+    const cP = pumpDomes.size * S.PLANT_COST;
+    // repairs
+    const wellsAll = cavs.filter(o => !o.c.retired), nRep = Math.round(wellsAll.length * share), cM = nRep * S.WORKOVER;
+    const shut = wellsAll.filter(o => o.c.offline > 0).length, reopen = Math.min(shut, nRep);
+    const reopenRate = wellsAll.filter(o => o.c.offline > 0).slice(0, reopen).reduce((a, o) => a + (o.d.plant === 'ready' ? o.d.rate / Math.max(1, o.d.maxCav * 0.6) : 0), 0);
+    return { buy, sell, sold, cashIn, fill, drain, bought, cBuy, newCav, dug, cBuild, pumpDomes, addRate, cP, nRep, cM, shut, reopen, reopenRate, room, left: w.budget + cashIn - cBuy - cBuild - cP - cM };
+  }
+
   function yearOut() {
-    const buy = +yb.value, build = +ybd.value, share = +ym.value / 100, pumps = +yp.value;
-    const sellMax = Math.floor(S.maxSell(w)); ys.max = sellMax; if (+ys.value > sellMax) ys.value = sellMax; const sell = +ys.value, cashIn = sell * w.price / 1000;
-    const noPlant = w.domes.filter(d => d.plant === 'none').length; yp.max = noPlant; if (pumps > noPlant) yp.value = noPlant;
-    const wells = w.domes.flatMap(d => d.cav).filter(c => !c.retired).length, n = Math.round(wells * share);
-    const cBuy = buy * w.price / 1000, cBuild = build * S.BUILD_COST, cM = n * S.WORKOVER, cP = +yp.value * S.PLANT_COST;
-    $('y-pumps-o').innerHTML = noPlant ? `${+yp.value} · ${bn(cP)}` : '—';
-    $('y-buy-o').innerHTML = `${f0(buy)} mb · ${bn(cBuy)}`; $('y-build-o').innerHTML = `${build} · ${bn(cBuild)}`; $('y-maint-o').innerHTML = `${n} wells · ${bn(cM)}`;
-    // spec line under every lever: cost · time · limit
-    const p = w.price, m$ = v => `$${Math.round(v * 1000)}m`, fillKbd = Math.round(S.fillCap(w) * 1000), sep = '<i>·</i>';
-    const maxBuy = +yb.max, roomAll = S.roomFor(w);
-    const months = buy > 0 ? Math.max(1, Math.round(buy / (S.fillCap(w) * 30.4))) : 0;
-    $('y-spec-buy').innerHTML = `<b>$${f0(p)}/bbl</b>${sep}pours in at ${fillKbd} kb/d${sep}${buy > 0 ? `yours arrive in <b>${months} mo</b>` : `max <b>${f0(maxBuy)} mb</b> this year`}${roomAll < maxBuy + 1 ? `${sep}<span class="warn">room is the limit</span>` : ''}`;
+    const sellMax = Math.floor(S.maxSell(w)); ys.max = sellMax; if (+ys.value > sellMax) ys.value = sellMax;
+    const noPlant = w.domes.filter(d => d.plant === 'none').length; yp.max = noPlant; if (+yp.value > noPlant) yp.value = noPlant;
+    const P = project(); const p = w.price, m$ = v => `$${Math.round(v * 1000)}m`, sep = '<i>·</i>', fillKbd = Math.round(S.fillCap(w) * 1000);
+    const inv0 = S.inv(w), cap0 = S.capacity(w), draw0 = S.drawCap(w);
+    /* spec lines: cost · time · limit */
+    const maxBuy = +yb.max, months = P.bought > 0 ? Math.max(1, Math.round(P.bought / (S.fillCap(w) * 30.4))) : 0;
+    $('y-spec-buy').innerHTML = `<b>$${f0(p)}/bbl</b>${sep}pours in at ${fillKbd} kb/d${sep}${P.buy > 0 ? `arrives over <b>${months} mo</b>` : `max <b>${f0(maxBuy)} mb</b> this year`}${P.room < maxBuy + 1 ? `${sep}<span class="warn">room is the limit</span>` : ''}`;
     const open = w.domes.reduce((a, d) => a + (d.maxCav - d.cav.length - d.building.length), 0), leaching = w.domes.reduce((a, d) => a + d.building.length, 0);
     $('y-spec-build').innerHTML = `<b>${m$(S.BUILD_COST)} each</b>${sep}3 yr, ready <b>${w.year + S.BUILD_YEARS}</b>${sep}10.5 mb each${sep}${open} slots left${leaching ? `${sep}<span class="good">${leaching} leaching</span>` : ''}`;
     $('y-spec-pumps').innerHTML = noPlant ? `<b>${m$(S.PLANT_COST)}/dome</b>${sep}2 yr, ready <b>${w.year + S.PLANT_YEARS}</b>${sep}<span class="bad">${noPlant} dome${noPlant > 1 ? 's' : ''} without pumps</span>` : `<span class="good">every dome has pumps</span>`;
-    const shut = w.domes.reduce((a, d) => a + d.cav.filter(c => c.offline > 0 && !c.retired).length, 0);
-    $('y-spec-maint').innerHTML = `<b>${m$(S.WORKOVER)}/well</b>${sep}done this year${sep}${wells} wells${shut ? `${sep}<span class="bad">${shut} cavern${shut > 1 ? 's' : ''} shut, repairs reopen</span>` : ''}`;
-    $('y-sell-o').innerHTML = `${f0(sell)} mb · +${bn(cashIn)}`;
+    const wells = w.domes.flatMap(d => d.cav).filter(c => !c.retired).length;
+    $('y-spec-maint').innerHTML = `<b>${m$(S.WORKOVER)}/well</b>${sep}done this year${sep}${wells} wells${P.shut ? `${sep}<span class="bad">${P.shut} cavern${P.shut > 1 ? 's' : ''} shut</span>` : ''}`;
     const ab = S.avgBuy(w);
     $('y-spec-sell').innerHTML = sellMax > 0 ? `<b>$${f0(p)}/bbl</b>${sep}cash this year${sep}max <b>${sellMax} mb</b>${ab ? `${sep}your cost $${f0(ab)} → <span class="${p >= ab ? 'good' : 'bad'}">${p >= ab ? 'gain' : 'loss'} $${f0(Math.abs(p - ab))}/bbl</span>` : ''}` : `<span class="warn">needs pumps and oil above the roof blanket</span>`;
+    /* impact lines: cost, then the effect in the words of the thing it changes */
+    const fx = (cost, effect, none) => `<span class="cost">${cost}</span><span class="fx${none ? ' none' : ''}">${effect}</span>`;
+    $('y-buy-o').innerHTML = fx(`${f0(P.bought)} mb · ${bn(P.cBuy)}`, P.bought > 0.5 ? `+${f0(P.bought)} mb in the ground${P.bought < P.buy - 0.5 ? ', room ran out' : ''}` : 'no change', P.bought <= 0.5);
+    const domesDug = Object.entries(P.newCav).map(([k, n]) => `${n} at ${w.domes.find(d => d.key === k).name.split(' ')[0]}`).join(', ');
+    $('y-build-o').innerHTML = fx(`${P.dug} · ${bn(P.cBuild)}`, P.dug ? `+${f1(P.dug * S.CAV_MB)} mb of space in ${w.year + S.BUILD_YEARS} (${domesDug})` : 'no change', !P.dug);
+    const pumpNames = [...P.pumpDomes].map(k => w.domes.find(d => d.key === k).name).join(', ');
+    $('y-pumps-o').innerHTML = noPlant ? fx(`${P.pumpDomes.size} · ${bn(P.cP)}`, P.pumpDomes.size ? `+${f1(P.addRate)} mb/day of flow in ${w.year + S.PLANT_YEARS} · ${pumpNames}` : 'no change', !P.pumpDomes.size) : fx('—', 'all four domes can pump', true);
+    $('y-maint-o').innerHTML = fx(`${P.nRep} wells · ${bn(P.cM)}`, P.nRep ? `${P.nRep} wells made safer${P.reopen ? ` · ${P.reopen} shut cavern${P.reopen > 1 ? 's' : ''} reopen${P.reopen > 1 ? '' : 's'}` : ''}` : 'no change', !P.nRep);
+    $('y-sell-o').innerHTML = fx(`${f0(P.sold)} mb · +${bn(P.cashIn)}`, P.sold > 0.5 ? `−${f0(P.sold)} mb in the ground · +${bn(P.cashIn)} to spend now` : 'no change', P.sold <= 0.5);
+    /* the appropriation bar */
+    const total = w.budget + P.cashIn, over = P.left < 0;
+    const seg = (cls, v) => `<i class="${cls}" style="width:${clamp(v / Math.max(total, 1e-9) * 100, 0, 100).toFixed(1)}%"></i>`;
+    $('ap-bar').innerHTML = seg('buy', P.cBuy) + seg('dig', P.cBuild) + seg('pumps', P.cP) + seg('rep', P.cM) + (over ? seg('over', -P.left) : seg('left', P.left));
+    $('ap-legend').innerHTML = `<span><b style="background:#6b5b3e"></b>oil ${bn(P.cBuy)}</span><span><b style="background:#8b8474"></b>caverns ${bn(P.cBuild)}</span><span><b style="background:#5f7d93"></b>pumps ${bn(P.cP)}</span><span><b style="background:#b08a3c"></b>repairs ${bn(P.cM)}</span><span><b style="background:rgba(233,226,208,0.2)"></b>${over ? `<span class="bad" style="color:var(--danger)">over by ${bn(-P.left)}</span>` : `left ${bn(P.left)}`}</span>${P.cashIn > 0.005 ? `<span class="sale">+${bn(P.cashIn)} from the sale is in the total</span>` : ''}<span>of ${bn(total)}</span>`;
+    /* ghost needles and odometer deltas */
+    const inv1 = inv0 + P.bought - P.sold;
+    gFuel.setGhost(cap0 > 0 && Math.abs(inv1 - inv0) > 0.5 ? inv1 / cap0 : null, Math.abs(inv1 - inv0) > 0.5 ? `${inv1 > inv0 ? '+' : '−'}${f0(Math.abs(inv1 - inv0))} mb` : '');
+    oInv.setDelta(Math.abs(inv1 - inv0) > 0.5 ? `${inv1 > inv0 ? '+' : '−'}${f0(Math.abs(inv1 - inv0))}` : '', inv1 < inv0 ? 'neg' : '');
+    oCap.setDelta(P.dug ? `+${f0(P.dug * S.CAV_MB)} in ${w.year + S.BUILD_YEARS}` : (Math.abs(inv1 - inv0) > 0.5 ? `${inv1 > inv0 ? '−' : '+'}${f0(Math.abs(inv1 - inv0))}` : ''), inv1 > inv0 && !P.dug ? 'neg' : '');
+    const draw1 = draw0 + P.addRate + P.reopenRate;
+    gFlow.setGhost(draw1 - draw0 > 0.02 ? draw1 : null, P.addRate > 0.02 ? `+${f1(P.addRate)} in ${w.year + S.PLANT_YEARS}` : P.reopenRate > 0.02 ? `+${f1(P.reopenRate)} now` : '');
+    oBudget.setDelta(Math.abs(w.budget - Math.max(0, P.left)) > 0.005 ? `→ ${bn(Math.max(0, P.left))} left` : '', over ? 'neg' : '');
+    gMood.setGhost(P.sold > 0.5 ? clamp(w.mood + P.sold / 40, 5, 100) : null, P.sold > 0.5 ? 'sale' : '');
+    /* preview in the scene */
+    scene.preview = (P.fill.size || P.drain.size || P.dug || P.pumpDomes.size) ? { fill: P.fill, drain: P.drain, newCav: P.newCav, pumpDomes: P.pumpDomes } : null;
+    /* money line and the button */
     const nextGrant = S.budgetFor(w.year + 1) * (0.8 + w.mood / 250);
-    const leftover = w.budget + cashIn - cBuy - cBuild - cM - cP;
-    $('y-money').innerHTML = `Money: unspent cash carries over, but Congress cuts next year’s grant by half of it. Next year’s grant looks like about <b>${bn(nextGrant)}</b>${leftover > 0.05 ? `; carrying ${bn(leftover)} would make it about <b>${bn(Math.max(0, nextGrant - leftover * 0.5) + leftover)}</b> in hand` : ''}.`;
-    const left = leftover; const L = $('y-left'); L.textContent = bn(Math.abs(left)) + (left < 0 ? ' short' : ''); L.style.color = left < -1e-9 ? 'var(--danger)' : 'var(--ink)';
-    $('y-go').disabled = left < -1e-9;
-    $('y-budget').textContent = bn(Math.max(0, w.budget)) + (cashIn > 0.005 ? ` + ${bn(cashIn)} from the sale` : '');
+    $('y-money').innerHTML = `Money: unspent cash carries over, but Congress cuts next year’s grant by half of it. Next year’s grant looks like about <b>${bn(nextGrant)}</b>${P.left > 0.05 ? `; carrying ${bn(P.left)} would make it about <b>${bn(Math.max(0, nextGrant - P.left * 0.5) + P.left)}</b> in hand` : ''}.`;
+    const L = $('y-left'); L.textContent = bn(Math.abs(P.left)) + (over ? ' short' : ''); L.style.color = over ? 'var(--danger)' : 'var(--ink)';
+    $('y-go').disabled = over;
+    $('y-budget').textContent = bn(Math.max(0, w.budget)) + (P.cashIn > 0.005 ? ` + ${bn(P.cashIn)} from the sale` : '');
   }
+  const clearGhosts = () => { scene.preview = null; [gFuel, gFlow, gMood].forEach(g => g.setGhost(null)); [oInv, oCap, oBudget].forEach(o => o.setDelta('')); };
   [yb, ybd, ym, yp, ys].forEach(el => el.addEventListener('input', yearOut));
 
   async function turnYear() {
-    $('y-go').disabled = true;
+    $('y-go').disabled = true; clearGhosts();
     const dec = { buy: +yb.value, build: +ybd.value, maintain: +ym.value / 100, pumps: +yp.value, sell: +ys.value };
     const before = new Map(w.domes.flatMap(d => d.cav).map(c => [c, c.oil]));
     const out = S.yearDecisions(w, dec);
@@ -128,7 +176,7 @@
         <div><b>The goal: keep the country humming.</b> The world is short; allies cover some; what is left uncovered sets the price of crude, and so the price at the pump, the queue at the station and the lights in the city. Your barrels fill the gap. Every barrel you release now is one you will not have for the next shock.</div>
       </div>
       <div class="foot"><button class="btn primary" id="m-ok">take the desk →</button></div>`);
-    $('m-ok').onclick = () => { closeModal(); S.startCrisis(w, s); lastWeek = null; scene.say(s.name, 'emergency'); crisisPanel(); hud(); renderLog(); };
+    $('m-ok').onclick = () => { closeModal(); clearGhosts(); S.startCrisis(w, s); lastWeek = null; scene.say(s.name, 'emergency'); crisisPanel(); hud(); renderLog(); };
   }
   /* ---------- the country: a filling station, a skyline, the bill ---------- */
   const country = (() => {
@@ -251,6 +299,7 @@
 
   /* ---------- test hooks: ?skip=1 skips the title; ?bot=YEAR plays sensibly to that year; ?bot=YEAR&stop=crisis stops inside the first crisis after it ---------- */
   if (params.get('skip') || params.get('bot')) { document.documentElement.style.setProperty('--t', '0s'); document.querySelectorAll('.overlay').forEach(o => o.style.transition = 'none'); start(); unDrift(); }
+  if (params.get('preview')) { setTimeout(() => { yb.value = Math.floor(+yb.max / 2); ybd.value = 3; yp.value = Math.min(1, +yp.max); ym.value = 30; ys.value = Math.min(20, +ys.max); yearOut(); }, 2500); }
   if (params.get('bot')) {
     const target = +params.get('bot'); const stopAt = params.get('stop');
     (function botStep() {
