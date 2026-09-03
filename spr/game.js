@@ -13,6 +13,13 @@
     { key: 'bc', name: 'Bayou Choctaw',  caverns: 6,  capacity: 76.0,  rate: 0.515, fill: 0.105, now: 32.0,  avail: 1 },
   ];
   const HEEL = 0.02;   // roof oil + brine allowance, Sandia: about 1 % each
+  // drawdowns left per cavern (Sandia 2021 baseline, by site): most DOE-built caverns have 5; the old brine caverns 1 or 2
+  const BUDGET = {
+    bm: [1, 2, 2, 2, 2, 2, 3, 3, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+    bh: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+    wh: [1, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+    bc: [1, 1, 1, 5, 5, 5],
+  };
   const FLOORS = [
     { mb: 300, label: 'Hochstein: nobody goes below 300' },
     { mb: 252.4, label: 'statutory floor for limited draws' },
@@ -29,11 +36,13 @@
 
   function makeState(scn) {
     const sites = SITES.map(s => {
-      const st = { ...s, cavCap: s.capacity / s.caverns, cav: [] };
+      const st = { ...s, cavCap: s.capacity / s.caverns, cav: [], left: BUDGET[s.key].slice(), used: new Array(s.caverns).fill(0), retired: new Array(s.caverns).fill(false) };
       st.avail = s.key === 'bh' ? scn.bigHill : 1;
       let inv = scn.inv == null ? s.now : scn.inv * (s.capacity / 713.5);
       // oil is held cavern by cavern: full caverns first, one partial, the rest at the heel
-      for (let i = 0; i < s.caverns; i++) { const put = clamp(inv, 0, st.cavCap); st.cav.push(put); inv -= put; }
+      st.cav = new Array(s.caverns).fill(0);
+      const order = st.left.map((v, i) => i).sort((a, b) => st.left[b] - st.left[a]);
+      for (const i of order) { const put = clamp(inv, 0, st.cavCap); st.cav[i] = put; inv -= put; }
       return st;
     });
     return { sites, week: 0, drawn: 0, delivered: 0, unmet: 0, shortfallTotal: 0, log: [], over: false, orderedAt: null, leachMb: 0,
@@ -57,34 +66,41 @@
       let take = want * (siteCap / c);
       // finish the emptiest cavern first: the reserve is drawn cavern by cavern, so wells drop out as caverns reach the heel
       const order = s.cav.map((v, i) => i).filter(i => s.cav[i] > s.cavCap * HEEL + 1e-9).sort((a, b) => s.cav[a] - s.cav[b]);
-      for (const i of order) { if (take <= 0) break; const avail = Math.max(0, s.cav[i] - s.cavCap * HEEL); const t = Math.min(avail, take); s.cav[i] -= t; take -= t; got += t; }
+      for (const i of order) {
+        if (take <= 0) break;
+        const avail = Math.max(0, s.cav[i] - s.cavCap * HEEL); const t = Math.min(avail, take);
+        s.cav[i] -= t; take -= t; got += t;
+        s.used[i] += t / (s.cavCap * (1 - HEEL));               // fraction of one drawdown: emptying a cavern to its heel = one spent
+        if (s.used[i] >= s.left[i] - 1e-9 && s.cav[i] <= s.cavCap * HEEL + 1e-9 && !s.retired[i]) { s.retired[i] = true; st.events.push([st.week, `${s.name}: a cavern has spent its last drawdown and is being retired. ${fmt1(s.cavCap)} million barrels of space are gone for good.`, 'bad']); }
+      }
     });
     st.leachMb += got * 0.15;  // Sandia: raw water dissolves salt equal to ~15 % of the oil displaced
     return got;
   }
   function step(st, rate) {
     st.week++;
-    const c = cap(st); rate = Math.min(rate, c);
+    // what happens this week, decided before the pumps run
+    const r = Math.random(); let sourCut = 1;
+    if (r < 0.06 && st.week > st.hurricaneUntil + 3) { st.hurricaneUntil = st.week + 2; st.events.push([st.week, 'A Gulf hurricane closes the marine terminals. Half the takeaway is gone for two weeks.', 'bad']); }
+    else if (r < 0.10) { const s = st.sites[Math.floor(Math.random() * 4)]; if (s.avail) { const i = s.cav.findIndex((v, k) => v > s.cavCap * HEEL && !s.retired[k]); if (i >= 0) { const lost = Math.min(0.4, s.cav[i] - s.cavCap * HEEL); s.cav[i] -= lost; st.events.push([st.week, `A well casing fails at ${s.name}. About ${fmt0(lost * 1000)} thousand barrels leak into the rock and the cavern is shut for repair.`, 'bad']); } } }
+    else if (r < 0.14 && !st.closedAgain && st.week > 6 && st.ceasefireUntil < 0) { st.ceasefireUntil = st.week + 3; st.events.push([st.week, 'A ceasefire. Tankers move through Hormuz again. The shortfall pauses.', 'good']); }
+    else if (st.week === st.ceasefireUntil + 1 && !st.closedAgain && st.ceasefireUntil > 0) { st.closedAgain = true; st.events.push([st.week, 'The strait closes again.', 'bad']); }
+    if (r > 0.94 && rate > 0.6) { sourCut = 0.8; st.events.push([st.week, 'Refiners pass on part of the sour crude offered. A fifth of this week\'s barrels find no taker.', 'bad']); }
+    const c = cap(st); rate = Math.min(rate, c) * sourCut;
     const got = draw(st, rate);
     const perDay = got / 7;
-    // the shortfall this week (hidden duration, a ceasefire may pause it)
     let sf = st.shortfall;
     if (st.week <= st.ceasefireUntil) sf = 0;
     st.shortfallTotal += sf * 7; st.delivered += got;
     const unmet = Math.max(0, sf - perDay) * 7; st.unmet += unmet;
-    // events
-    const r = Math.random();
-    if (st.week === 2 && st.orderedAt == null) st.orderedAt = st.week;
-    if (r < 0.06 && st.week > st.hurricaneUntil + 3) { st.hurricaneUntil = st.week + 2; st.events.push([st.week, 'A Gulf hurricane closes marine terminals. Takeaway halves for two weeks.', 'bad']); }
-    else if (r < 0.10) { const s = st.sites[Math.floor(Math.random() * 4)]; if (s.avail) { const i = s.cav.findIndex(v => v > s.cavCap * HEEL); if (i >= 0) { const lost = Math.min(0.4, s.cav[i] - s.cavCap * HEEL); s.cav[i] -= lost; st.events.push([st.week, `A well casing fails at ${s.name}. One cavern goes offline for repair and ${fmt1(lost * 1000)} thousand barrels leak into the annulus.`, 'bad']); } } }
-    else if (r < 0.14 && !st.closedAgain && st.week > 6 && st.ceasefireUntil < 0) { st.ceasefireUntil = st.week + 3; st.events.push([st.week, 'A ceasefire. Tankers move through Hormuz again. The shortfall pauses.', 'good']); }
-    else if (st.week === st.ceasefireUntil + 1 && !st.closedAgain && st.ceasefireUntil > 0) { st.closedAgain = true; st.events.push([st.week, 'The strait closes again.', 'bad']); }
-    if (r > 0.94 && rate > 0.6) st.events.push([st.week, 'Refiners pass on part of the sour crude offered. Some of this week\'s barrels find no taker.', 'bad']);
     if (st.week >= st.weeks) st.over = true;
-    return { rate, got, perDay, sf, unmet, cap: c };
+    return { rate, got, perDay, sf, unmet, cap: c, sourCut };
   }
+  const retiredCount = st => st.sites.reduce((a, s) => a + s.retired.filter(Boolean).length, 0);
+  const retiredMb = st => st.sites.reduce((a, s) => a + s.retired.filter(Boolean).length * s.cavCap, 0);
+  const drawdownsSpent = st => st.sites.reduce((a, s) => a + s.used.reduce((x, y) => x + y, 0), 0);
 
-  window.SPRgame = { SITES, SCENARIOS, makeState, step, cap, inv, HEEL, FLOORS };
+  window.SPRgame = { SITES, SCENARIOS, makeState, step, cap, inv, HEEL, FLOORS, BUDGET, retiredCount, retiredMb, drawdownsSpent };
   if (typeof document === 'undefined' || !document.getElementById('g-scn')) return;
 
   /* ---------- UI ---------- */
@@ -142,7 +158,7 @@
     const rate = +rateIn.value;
     const r = step(st, rate);
     let line = `released ${fmt1(r.got)} mb (${fmt1(r.perDay * 1000)} kb/d)`;
-    if (r.rate < rate - 1e-6) line += ` · asked ${fmt1(rate * 1000)}, the caverns could only give ${fmt1(r.cap * 1000)}`;
+    if (r.cap < rate - 1e-6) line += ` · asked ${fmt1(rate * 1000)}, the wells could only give ${fmt1(r.cap * 1000)}`;
     if (r.sf === 0) line += ' · ceasefire, no shortfall'; else if (r.unmet > 0) line += ` · short ${fmt1(r.unmet)} mb`; else line += ' · shortfall covered';
     log(st.week, line, r.unmet > 0 && r.sf > 0 ? 'bad' : (r.sf > 0 ? 'good' : ''));
     while (st.events.length) { const [w, t, c] = st.events.shift(); log(w, t, c); }
@@ -153,14 +169,16 @@
     weekBtn.disabled = true; runBtn.disabled = true; if (autorun) { clearInterval(autorun); autorun = null; runBtn.textContent = 'run to the end'; }
     const i = inv(st), covered = st.shortfallTotal > 0 ? 100 * (1 - st.unmet / st.shortfallTotal) : 100;
     const refillDays = Math.max(0, (scn.inv == null ? 415.4 : scn.inv) - i) / 0.44;
-    const spent = st.leachMb / (713.5 * 0.15);
+    const spent = drawdownsSpent(st), nRet = retiredCount(st), mbRet = retiredMb(st);
     let v = `The crisis ran ${st.week} weeks. You released ${fmt1(st.delivered)} million barrels and covered ${fmt0(covered)} percent of the shortfall. ${fmt1(i)} million barrels are left. `;
     if (i < 70) v += 'You went under what DOE calls the physical minimum. The last oil sits as a blanket on cavern roofs and cannot come out without leaching the roof. ';
     else if (i < 170) v += 'You are below the level Rapidan calls a soft floor. Few caverns still hold oil, so the reserve could not respond fast to a second shock. ';
     else if (i < 252.4) v += 'You are under the 252.4 million barrel line Congress set for limited draws. Only an emergency finding could authorise the next release. ';
     else if (i < 300) v += 'You stayed above the statutory line but below 300, the level a former White House energy adviser said no one believes the reserve should cross. ';
     else v += 'You kept the reserve above every floor anyone has named. ';
-    v += `Refilling to where you started would take about ${fmt0(refillDays / 30)} months at today's effective fill rate of 440 thousand barrels a day, if the money and the oil were there. The water you pumped in dissolved about ${fmt1(st.leachMb)} million barrels of salt, ${fmt1(spent * 60)} cavern-drawdowns of the five each cavern gets.`;
+    v += `Refilling to where you started would take about ${fmt0(refillDays / 30)} months at today's effective fill rate of 440 thousand barrels a day, if the money and the oil were there. `;
+    v += `The water you pumped in dissolved about ${fmt1(st.leachMb)} million barrels of salt, growing the caverns it ran through. Sandia counts that as ${fmt0(spent)} drawdowns spent, about one for each cavern you emptied, out of five for a new cavern and one or two for the old brine caverns. `;
+    v += nRet ? `${nRet} cavern${nRet > 1 ? 's' : ''} spent the last one and will be retired: ${fmt1(mbRet)} million barrels of space gone for good.` : 'No cavern spent its last one; the wear shows up decades from now, not this year.';
     verdict.textContent = v; verdict.hidden = false;
   }
   startBtn.onclick = start;
