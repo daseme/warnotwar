@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "generated_at_utc": "2026-08-28T19:41:55Z",
+  "generated_at_utc": "2026-09-03T21:16:55Z",
   "note": "Real dated checkpoints from the record, for the teaching module's real-tape mode. Selection is rule-derived from events statable without knowing the future: pre-shock anchor, first and last Hormuz threshold crossings, month-firsts snapped to observed market days, latest observation. Every value is the latest figure PUBLISHED by the checkpoint date, per field, with its own as-of date. Peak markers are hindsight and ship as reveal-time annotations only.",
   "revision_note": "Archive values: activity indices are revised after first publication, so the reading a checkpoint shows is today's archive of that date, not a screenshot of what a reader saw then.",
   "sources": {
