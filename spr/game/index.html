@@ -37,18 +37,33 @@
   <section id="left">
     <!-- year panel -->
     <div id="p-year">
-      <div class="panel-title"><span>this year’s decisions</span><span class="prices mono" id="y-prices"></span><b id="y-budget">$1.0bn</b></div>
+      <div class="panel-title"><span>this year’s decisions</span><b id="y-budget">$1.0bn</b></div>
       <p class="brief" id="y-brief">Buy oil, dig caverns, look after the wells. Whatever you do not spend mostly goes back to the Treasury.</p>
-      <div class="row"><label>buy oil</label><input type="range" id="y-buy" min="0" max="100" step="1" value="0"><output id="y-buy-o">0 mb · $0.0bn</output></div>
-      <div class="help" id="y-help-buy">Crude bought at this year’s price and poured into whatever caverns have room.</div>
-      <div class="row"><label>dig caverns</label><input type="range" id="y-build" min="0" max="8" step="1" value="0"><output id="y-build-o">0 · ready 1980</output></div>
-      <div class="help" id="y-help-build">New space. River water dissolves a hole in the salt; three years and $40m each, 10 million barrels apiece.</div>
-      <div class="row"><label>build pumps</label><input type="range" id="y-pumps" min="0" max="4" step="1" value="0"><output id="y-pumps-o">0 domes · $0.00bn</output></div>
-      <div class="help" id="y-help-pumps">A pumping plant for one dome: water intake, injection pumps, pipeline. Without it that dome’s oil cannot come out. Two years, $350m.</div>
-      <div class="row"><label>well work</label><input type="range" id="y-maint" min="0" max="100" step="5" value="0"><output id="y-maint-o">0 wells · $0.00bn</output></div>
-      <div class="help" id="y-help-maint">Repairs to the steel casings that salt slowly crushes. Skip it and wells fail, shutting caverns for a year.</div>
-      <div class="row"><label>sell oil</label><input type="range" id="y-sell" min="0" max="100" step="1" value="0"><output id="y-sell-o">0 mb · +$0.00bn</output></div>
-      <div class="help" id="y-help-sell">Sell crude on the market; the money lands in your account this year. It needs pumps, and every barrel sold is one you cannot pump in a crisis.</div>
+      <div class="lever">
+        <div class="lv-name"><b>buy oil</b><span>Crude bought now, poured into caverns with room.</span></div>
+        <div class="lv-ctl"><input type="range" id="y-buy" min="0" max="100" step="1" value="0"><div class="lv-spec" id="y-spec-buy"></div></div>
+        <output class="lv-out" id="y-buy-o">0 mb · $0.00bn</output>
+      </div>
+      <div class="lever">
+        <div class="lv-name"><b>dig caverns</b><span>New space, dissolved out of the salt.</span></div>
+        <div class="lv-ctl"><input type="range" id="y-build" min="0" max="8" step="1" value="0"><div class="lv-spec" id="y-spec-build"></div></div>
+        <output class="lv-out" id="y-build-o">0 · $0.00bn</output>
+      </div>
+      <div class="lever">
+        <div class="lv-name"><b>build pumps</b><span>Lets a dome’s oil come back out.</span></div>
+        <div class="lv-ctl"><input type="range" id="y-pumps" min="0" max="4" step="1" value="0"><div class="lv-spec" id="y-spec-pumps"></div></div>
+        <output class="lv-out" id="y-pumps-o">0 · $0.00bn</output>
+      </div>
+      <div class="lever">
+        <div class="lv-name"><b>well repairs</b><span>Keeps casings from failing and caverns open.</span></div>
+        <div class="lv-ctl"><input type="range" id="y-maint" min="0" max="100" step="5" value="0"><div class="lv-spec" id="y-spec-maint"></div></div>
+        <output class="lv-out" id="y-maint-o">0 wells · $0.00bn</output>
+      </div>
+      <div class="lever">
+        <div class="lv-name"><b>sell oil</b><span>Barrels into budget, this year.</span></div>
+        <div class="lv-ctl"><input type="range" id="y-sell" min="0" max="100" step="1" value="0"><div class="lv-spec" id="y-spec-sell"></div></div>
+        <output class="lv-out" id="y-sell-o">0 mb · +$0.00bn</output>
+      </div>
       <div class="help money" id="y-money"></div>
       <div class="actions"><span class="left">left over <b id="y-left">$1.0bn</b></span><button class="push wide" id="y-go"><span>turn the year →</span></button></div>
     </div>
@@ -81,7 +96,7 @@
     <h1>S<span>A</span>LT</h1>
     <p class="sub">It is 1977. You have four salt domes, a few old brine caverns, 7.5 million barrels of Saudi light and a Congress that just watched the embargo. Run the reserve for sixty years. Every shock that really happened is coming, and a few that have not yet.</p>
     <button class="btn primary" id="t-start">take the desk · 1977</button>
-    <div class="how">buy oil when it is cheap · leach caverns before you need them · keep the wells alive<br>when the strait shuts, decide how fast to pump and how much to keep</div>
+    <div class="how">buy oil when it is cheap · dig caverns before you need them · repair the wells<br>when the strait shuts, decide how fast to pump and how much to keep</div>
   </div>
 </div>
 
@@ -93,7 +108,7 @@
       <div><b>Buy oil.</b> Crude at this year’s price, poured into caverns that have room. Cheap years are the time to buy.</div>
       <div><b>Dig caverns.</b> New space, dissolved out of the salt with river water. Three years each. You start with fifteen old brine caverns, about 180 million barrels of room.</div>
       <div><b>Build pumps.</b> The plant that gets oil back out of a dome: water intake, injection pumps, a pipeline. You have none. Until a dome has its plant, its oil is stuck. Two years, $350 million a dome.</div>
-      <div><b>Well work.</b> Repairs to the casings the salt slowly crushes. Neglect them and wells fail.</div>
+      <div><b>Well repairs.</b> The salt slowly crushes well casings. Repair them or wells fail and caverns shut.</div>
       <div><b>Sell oil.</b> Turn barrels into budget when you need repairs or want to buy back cheaper later. Needs pumps.</div>
     </div>
     <div class="kicker" style="margin-top:6px">how the money works</div>

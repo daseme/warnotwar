@@ -55,22 +55,21 @@
     const noPlant = w.domes.filter(d => d.plant === 'none').length; yp.max = noPlant; if (pumps > noPlant) yp.value = noPlant;
     const wells = w.domes.flatMap(d => d.cav).filter(c => !c.retired).length, n = Math.round(wells * share);
     const cBuy = buy * w.price / 1000, cBuild = build * S.BUILD_COST, cM = n * S.WORKOVER, cP = +yp.value * S.PLANT_COST;
-    $('y-pumps-o').innerHTML = noPlant ? `${+yp.value} · <small>ready ${w.year + S.PLANT_YEARS}</small> · ${bn(cP)}` : 'every dome has pumps';
-    $('y-buy-o').innerHTML = `${f0(buy)} mb · ${bn(cBuy)}`; $('y-build-o').innerHTML = `${build} · <small>ready ${w.year + 3}</small> · ${bn(cBuild)}`; $('y-maint-o').innerHTML = `${n} wells · ${bn(cM)}`;
-    // unit prices and lead times, every turn
-    const p = w.price, m$ = v => `$${Math.round(v * 1000)}m`, fillKbd = Math.round(S.fillCap(w) * 1000);
-    $('y-prices').textContent = `oil $${f0(p)}/bbl, pours in at ${fillKbd} kb/d · cavern ${m$(S.BUILD_COST)}, 3 yr · pumps ${m$(S.PLANT_COST)}/dome, 2 yr · well ${m$(S.WORKOVER)}, this year`;
+    $('y-pumps-o').innerHTML = noPlant ? `${+yp.value} · ${bn(cP)}` : '—';
+    $('y-buy-o').innerHTML = `${f0(buy)} mb · ${bn(cBuy)}`; $('y-build-o').innerHTML = `${build} · ${bn(cBuild)}`; $('y-maint-o').innerHTML = `${n} wells · ${bn(cM)}`;
+    // spec line under every lever: cost · time · limit
+    const p = w.price, m$ = v => `$${Math.round(v * 1000)}m`, fillKbd = Math.round(S.fillCap(w) * 1000), sep = '<i>·</i>';
     const maxBuy = +yb.max, roomAll = S.roomFor(w);
     const months = buy > 0 ? Math.max(1, Math.round(buy / (S.fillCap(w) * 30.4))) : 0;
-    $('y-help-buy').innerHTML = `Crude is <b>$${f0(p)} a barrel</b>: 10 million barrels cost <b>${bn(10 * p / 1000)}</b>. Oil pours in at up to <b>${fillKbd} thousand barrels a day</b>, so ${buy > 0 ? `your ${f0(buy)} mb take about <b>${months} month${months > 1 ? 's' : ''}</b> to arrive` : `${f0(maxBuy)} mb is the most that fits this year`}${roomAll < maxBuy + 1 ? ' (room, not pumps, is the limit)' : ''}.`;
+    $('y-spec-buy').innerHTML = `<b>$${f0(p)}/bbl</b>${sep}pours in at ${fillKbd} kb/d${sep}${buy > 0 ? `yours arrive in <b>${months} mo</b>` : `max <b>${f0(maxBuy)} mb</b> this year`}${roomAll < maxBuy + 1 ? `${sep}<span class="warn">room is the limit</span>` : ''}`;
     const open = w.domes.reduce((a, d) => a + (d.maxCav - d.cav.length - d.building.length), 0), leaching = w.domes.reduce((a, d) => a + d.building.length, 0);
-    $('y-help-build').innerHTML = `<b>${m$(S.BUILD_COST)} each, three years</b>: ordered now, ready in <b>${w.year + S.BUILD_YEARS}</b>. 10.5 million barrels of room apiece. ${open} more can be dug${leaching ? `; ${leaching} being leached now` : ''}.`;
-    $('y-help-pumps').innerHTML = noPlant ? `<b>${m$(S.PLANT_COST)} per dome, two years</b>: ordered now, ready in <b>${w.year + S.PLANT_YEARS}</b>. ${noPlant} dome${noPlant > 1 ? 's' : ''} still ha${noPlant > 1 ? 've' : 's'} no pumps; oil there cannot come out.` : 'Every dome has its pumping plant. Nothing more to build here.';
+    $('y-spec-build').innerHTML = `<b>${m$(S.BUILD_COST)} each</b>${sep}3 yr, ready <b>${w.year + S.BUILD_YEARS}</b>${sep}10.5 mb each${sep}${open} slots left${leaching ? `${sep}<span class="good">${leaching} leaching</span>` : ''}`;
+    $('y-spec-pumps').innerHTML = noPlant ? `<b>${m$(S.PLANT_COST)}/dome</b>${sep}2 yr, ready <b>${w.year + S.PLANT_YEARS}</b>${sep}<span class="bad">${noPlant} dome${noPlant > 1 ? 's' : ''} without pumps</span>` : `<span class="good">every dome has pumps</span>`;
     const shut = w.domes.reduce((a, d) => a + d.cav.filter(c => c.offline > 0 && !c.retired).length, 0);
-    $('y-help-maint').innerHTML = `<b>${m$(S.WORKOVER)} per well, done within the year</b>. You have ${wells} wells; the salt crushes their casings a little every year. ${shut ? `<b>${shut} cavern${shut > 1 ? 's are' : ' is'} shut after a well failure</b>; work on them brings them back.` : 'A failed well shuts its cavern for a year.'}`;
+    $('y-spec-maint').innerHTML = `<b>${m$(S.WORKOVER)}/well</b>${sep}done this year${sep}${wells} wells${shut ? `${sep}<span class="bad">${shut} cavern${shut > 1 ? 's' : ''} shut, repairs reopen</span>` : ''}`;
     $('y-sell-o').innerHTML = `${f0(sell)} mb · +${bn(cashIn)}`;
     const ab = S.avgBuy(w);
-    $('y-help-sell').innerHTML = sellMax > 0 ? `Sells at <b>$${f0(w.price)} a barrel</b>; the money is in your account this year. Up to ${sellMax} mb this year (half a year of pumping, never the roof oil).${ab ? ` Your oil cost <b>$${f0(ab)}</b> a barrel on average, so this is a ${w.price >= ab ? 'gain' : 'loss'} of about $${f0(Math.abs(w.price - ab))} a barrel.` : ''} Every barrel sold is one you cannot pump in a crisis.` : 'Nothing to sell yet: it takes pumps, and oil above the roof blanket.';
+    $('y-spec-sell').innerHTML = sellMax > 0 ? `<b>$${f0(p)}/bbl</b>${sep}cash this year${sep}max <b>${sellMax} mb</b>${ab ? `${sep}your cost $${f0(ab)} → <span class="${p >= ab ? 'good' : 'bad'}">${p >= ab ? 'gain' : 'loss'} $${f0(Math.abs(p - ab))}/bbl</span>` : ''}` : `<span class="warn">needs pumps and oil above the roof blanket</span>`;
     const nextGrant = S.budgetFor(w.year + 1) * (0.8 + w.mood / 250);
     const leftover = w.budget + cashIn - cBuy - cBuild - cM - cP;
     $('y-money').innerHTML = `Money: unspent cash carries over, but Congress cuts next year’s grant by half of it. Next year’s grant looks like about <b>${bn(nextGrant)}</b>${leftover > 0.05 ? `; carrying ${bn(leftover)} would make it about <b>${bn(Math.max(0, nextGrant - leftover * 0.5) + leftover)}</b> in hand` : ''}.`;
@@ -90,8 +89,8 @@
     out.notes.forEach(n => w.log.unshift({ year: w.year, week: 0, text: n, cls: 'bad' }));
     if (out.sold > 0.05) { const as = S.avgSell(w), ab = S.avgBuy(w); w.log.unshift({ year: w.year, week: 0, text: `Sold ${f1(out.sold)} mb at $${f0(w.price)}: ${bn(out.saleCash)} into your account${ab ? ` (your oil cost $${f0(ab)} a barrel on average)` : ''}.`, cls: 'good' }); }
     if (out.bought > 0.05 && w.soldCash > 0 && w.price < S.avgSell(w)) w.log.unshift({ year: w.year, week: 0, text: `Buying back at $${f0(w.price)} what you sold at an average of $${f0(S.avgSell(w))}: the buy-low, sell-high argument both administrations made.`, cls: 'good' });
-    if (out.bought > 0.05) w.log.unshift({ year: w.year, week: 0, text: `Bought ${f1(out.bought)} mb at $${f0(w.price)} for ${bn(out.bought * w.price / 1000)}${out.built ? `; started ${out.built} cavern${out.built > 1 ? 's' : ''}` : ''}${out.maintained ? `; worked over ${out.maintained} wells` : ''}.` });
-    else if (out.built || out.maintained) w.log.unshift({ year: w.year, week: 0, text: `${out.built ? `Started ${out.built} cavern${out.built > 1 ? 's' : ''}` : ''}${out.built && out.maintained ? '; ' : ''}${out.maintained ? `worked over ${out.maintained} wells` : ''}.` });
+    if (out.bought > 0.05) w.log.unshift({ year: w.year, week: 0, text: `Bought ${f1(out.bought)} mb at $${f0(w.price)} for ${bn(out.bought * w.price / 1000)}${out.built ? `; started ${out.built} cavern${out.built > 1 ? 's' : ''}` : ''}${out.maintained ? `; repaired ${out.maintained} wells` : ''}.` });
+    else if (out.built || out.maintained) w.log.unshift({ year: w.year, week: 0, text: `${out.built ? `Started ${out.built} cavern${out.built > 1 ? 's' : ''}` : ''}${out.built && out.maintained ? '; ' : ''}${out.maintained ? `repaired ${out.maintained} wells` : ''}.` });
     if (out.plants) w.log.unshift({ year: w.year, week: 0, text: `Began building pumps at ${out.plantAt.join(' and ')}. Ready in ${S.PLANT_YEARS} years.`, cls: 'good' });
     const r = S.advanceYear(w);
     scene.say(String(w.year), r.crisis ? r.crisis.name : r.card ? r.card.name : '');
