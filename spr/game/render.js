@@ -110,10 +110,10 @@
         // surface plant: pump house, tank, wellhead row
         ctx.fillStyle = '#5b544a'; ctx.fillRect(sx(d.x - 0.03), sy(SURF - 0.02), 0.02 * W * z, 0.02 * H * z);
         ctx.fillStyle = '#3b3630'; ctx.fillRect(sx(d.x + 0.012), sy(SURF - 0.028), 0.016 * W * z, 0.028 * H * z);
-        ctx.fillStyle = w.year >= d.opYear ? C.good : C.bad; ctx.beginPath(); ctx.arc(sx(d.x + 0.02), sy(SURF - 0.034), 2 * z, 0, 7); ctx.fill();
+        ctx.fillStyle = d.plant === 'ready' ? C.good : typeof d.plant === 'number' ? C.gold : C.bad; ctx.beginPath(); ctx.arc(sx(d.x + 0.02), sy(SURF - 0.034), 2 * z, 0, 7); ctx.fill();
         // label
         ctx.fillStyle = C.text; ctx.font = `${11 * Math.min(z, 1.6)}px IBM Plex Mono, monospace`; ctx.textAlign = 'center'; ctx.fillText(d.name.toUpperCase(), sx(d.x), sy(SURF - 0.045));
-        ctx.fillStyle = C.dim; ctx.font = `${10 * Math.min(z, 1.6)}px IBM Plex Mono, monospace`; ctx.fillText(`${S.domeOil(d).toFixed(0)} / ${S.domeCap(d).toFixed(0)} mb${w.year < d.opYear ? ' · no pumps yet' : ''}`, sx(d.x), sy(SURF - 0.045) + 13 * Math.min(z, 1.6));
+        ctx.fillStyle = C.dim; ctx.font = `${10 * Math.min(z, 1.6)}px IBM Plex Mono, monospace`; ctx.fillText(`${S.domeOil(d).toFixed(0)} / ${S.domeCap(d).toFixed(0)} mb${d.plant === 'none' ? ' · no pumps' : typeof d.plant === 'number' ? ` · pumps in ${d.plant}y` : ''}`, sx(d.x), sy(SURF - 0.045) + 13 * Math.min(z, 1.6));
       });
       /* pipeline along the surface to the refineries; raw water line from the sea */
       ctx.strokeStyle = '#6a635a'; ctx.lineWidth = Math.max(1.5, 2 * z / 1.5); ctx.beginPath(); ctx.moveTo(sx(0.08), sy(SURF - 0.006)); ctx.lineTo(sx(0.96), sy(SURF - 0.006)); ctx.stroke();
@@ -128,7 +128,7 @@
       if (w.hurricane) { w.hurricane.x = (w.hurricane.x ?? -0.1) + dt / 1000 * 0.03; const hx = sx(w.hurricane.x), hy = sy(0.12), R = 0.09 * W * z; ctx.strokeStyle = 'rgba(200,210,220,0.55)'; ctx.lineWidth = 2; for (let a = 0; a < 3; a++) { ctx.beginPath(); for (let q = 0; q < 40; q++) { const ang = q / 8 + t / 900 + a * 2.1, rr = R * (0.15 + q / 40 * 0.85); q ? ctx.lineTo(hx + Math.cos(ang) * rr, hy + Math.sin(ang) * rr * 0.6) : ctx.moveTo(hx + Math.cos(ang) * rr, hy + Math.sin(ang) * rr * 0.6); } ctx.stroke(); }
         ctx.strokeStyle = 'rgba(169,211,239,0.35)'; ctx.lineWidth = 1; for (let i = 0; i < 60; i++) { const x = ((i * 0.137 + t / 3000) % 1.2) - 0.1, y = ((i * 0.071 + t / 700) % 0.34); ctx.beginPath(); ctx.moveTo(sx(x), sy(y)); ctx.lineTo(sx(x - 0.004), sy(y + 0.02)); ctx.stroke(); } }
       /* hover */
-      if (this.hover != null && this.mouse) { const d = w.domes[this.hover]; const lines = [d.name, `${S.domeOil(d).toFixed(1)} of ${S.domeCap(d).toFixed(0)} mb`, `${d.cav.filter(c => !c.retired).length} caverns${d.building.length ? `, ${d.building.length} being leached` : ''}`, w.year >= d.opYear ? `wells can flow ${Math.round(S.domeRate(w, d) * 1000)} kb/d` : `pumps ready ${d.opYear}`, this.focus === this.hover ? 'click to zoom out' : 'click to zoom in']; ctx.font = '11px IBM Plex Mono, monospace'; const bw = Math.max(...lines.map(l => ctx.measureText(l).width)) + 20, bh = lines.length * 16 + 12; const bx = clamp(this.mouse.px + 14, 0, W - bw), by = clamp(this.mouse.py - bh - 8, 0, H - bh); ctx.fillStyle = 'rgba(23,20,15,0.92)'; roundRect(ctx, bx, by, bw, bh, 6); ctx.fill(); ctx.strokeStyle = 'rgba(239,232,216,0.2)'; ctx.stroke(); ctx.textAlign = 'left'; lines.forEach((l, i) => { ctx.fillStyle = i ? C.dim : C.text; ctx.fillText(l, bx + 10, by + 18 + i * 16); }); }
+      if (this.hover != null && this.mouse) { const d = w.domes[this.hover]; const lines = [d.name, `${S.domeOil(d).toFixed(1)} of ${S.domeCap(d).toFixed(0)} mb`, `${d.cav.filter(c => !c.retired).length} caverns${d.building.length ? `, ${d.building.length} being leached` : ''}`, d.plant === 'ready' ? `wells can flow ${Math.round(S.domeRate(w, d) * 1000)} kb/d` : typeof d.plant === 'number' ? `pumps ready in ${d.plant} year${d.plant > 1 ? 's' : ''}` : 'no pumps: oil cannot come out', this.focus === this.hover ? 'click to zoom out' : 'click to zoom in']; ctx.font = '11px IBM Plex Mono, monospace'; const bw = Math.max(...lines.map(l => ctx.measureText(l).width)) + 20, bh = lines.length * 16 + 12; const bx = clamp(this.mouse.px + 14, 0, W - bw), by = clamp(this.mouse.py - bh - 8, 0, H - bh); ctx.fillStyle = 'rgba(23,20,15,0.92)'; roundRect(ctx, bx, by, bw, bh, 6); ctx.fill(); ctx.strokeStyle = 'rgba(239,232,216,0.2)'; ctx.stroke(); ctx.textAlign = 'left'; lines.forEach((l, i) => { ctx.fillStyle = i ? C.dim : C.text; ctx.fillText(l, bx + 10, by + 18 + i * 16); }); }
       /* flash */
       if (this.flash) { const age = (t - this.flash.t) / 1000; if (age > 4.2) this.flash = null; else { const a = age < 0.5 ? age * 2 : age > 3.4 ? (4.2 - age) / 0.8 : 1; ctx.globalAlpha = a; ctx.fillStyle = 'rgba(10,9,8,0.55)'; ctx.fillRect(0, H * 0.38, W, H * 0.24); ctx.fillStyle = '#efe8d8'; ctx.textAlign = 'center'; ctx.font = `500 ${Math.min(44, W / 18)}px Newsreader, Georgia, serif`; ctx.fillText(this.flash.text, W / 2, H * 0.5); if (this.flash.sub) { ctx.font = '12px IBM Plex Mono, monospace'; ctx.fillStyle = C.gold; ctx.fillText(this.flash.sub.toUpperCase(), W / 2, H * 0.5 + 26); } ctx.globalAlpha = 1; } }
     }
@@ -137,7 +137,7 @@
       const w = this.w, n = this.parts.length; if (n > 700) return;
       const outRate = this.flow.out, inRate = this.flow.in;
       w.domes.forEach(d => {
-        if (w.year < d.opYear && outRate > 0) return;
+        if (d.plant !== 'ready' && outRate > 0) return;
         const share = S.domeRate(w, d) / Math.max(1e-9, S.drawCap(w));
         if (outRate > 0 && Math.random() < dt / 1000 * 60 * outRate * share) {
           // water from the sea to the dome, down; oil up and along the pipeline to the right

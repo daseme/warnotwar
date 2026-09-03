@@ -15,6 +15,7 @@
   ];
   const CAV_MB = 10.5;                 // a new cavern
   const BUILD_YEARS = 3, BUILD_COST = 0.04;   // $bn per cavern (leaching, wells, brine line)
+  const PLANT_YEARS = 2, PLANT_COST = 0.35;   // $bn per dome: raw-water intake, injection pumps, heat exchangers, pipeline tie-in
   const WORKOVER = 0.002;              // $bn per well workover
   const US_DEMAND = 19;                // mb/d, used to price pain
   const IEA_SHARE = 0.44;              // the U.S. share of an allied release
@@ -53,7 +54,7 @@
       year: 1977, week: 0, phase: 'year',      // year | crisis | end
       budget: 1.0, spent: 0, treasury: 0, mood: 60,
       price: basePrice(1977), spike: 0,
-      domes: DOMES.map(d => ({ ...d, cav: [], building: [] })),
+      domes: DOMES.map(d => ({ ...d, cav: [], building: [], plant: 'none' })),   // plant: 'none' | years left (number) | 'ready'
       log: [], history: [], pain: 0, painAvoided: 0, releasedTotal: 0, boughtTotal: 0, spentTotal: 0,
       loans: [], mandates: [], crisis: null, done: {}, hurricane: null, flash: null,
       seen1979: false,
@@ -73,9 +74,9 @@
   const capacity = w => w.domes.reduce((a, d) => a + domeCap(d), 0);
   const cavCount = w => w.domes.reduce((a, d) => a + d.cav.filter(c => !c.retired).length, 0);
   const usable = c => !c.retired && c.offline <= 0 && c.oil > c.cap * HEEL + 1e-9;
-  function domeRate(w, d) { if (w.year < d.opYear) return 0; const n = d.cav.filter(c => !c.retired).length; if (!n) return 0; return d.rate * (d.cav.filter(usable).length / Math.max(n, d.maxCav * 0.6)); }
+  function domeRate(w, d) { if (d.plant !== 'ready') return 0; const n = d.cav.filter(c => !c.retired).length; if (!n) return 0; return d.rate * (d.cav.filter(usable).length / Math.max(n, d.maxCav * 0.6)); }
   const drawCap = w => w.domes.reduce((a, d) => a + domeRate(w, d), 0) * (w.hurricane ? 0.5 : 1);
-  const fillCap = w => w.domes.reduce((a, d) => a + (w.year >= d.opYear - 5 ? d.fill : 0.05), 0);  // mb/d
+  const fillCap = w => w.domes.reduce((a, d) => a + (d.plant === 'ready' ? d.fill : d.fill * 0.5), 0);  // mb/d: filling works with the basic plant, faster with the full one
   const roomFor = w => w.domes.reduce((a, d) => a + d.cav.filter(c => !c.retired && c.offline <= 0).reduce((x, c) => x + Math.max(0, c.cap - c.oil), 0), 0);
   function pushHistory(w) { w.history.push({ year: w.year + (w.week / 52), inv: inv(w), cap: capacity(w), price: w.price }); }
   function log(w, text, cls) { w.log.unshift({ year: w.year, week: w.week, text, cls: cls || '' }); if (w.log.length > 400) w.log.pop(); }
@@ -125,6 +126,13 @@
       if (!d) { out.notes.push('Every dome is built out.'); break; }
       d.building.push(BUILD_YEARS); out.spent += BUILD_COST; out.built++;
     }
+    const nPlant = clamp(Math.floor(dec.pumps || 0), 0, 4);
+    for (let i = 0; i < nPlant; i++) {
+      if (w.budget - out.spent < PLANT_COST) { out.notes.push('No money left to build a pumping plant.'); break; }
+      const d = w.domes.filter(x => x.plant === 'none').sort((a, b) => (b.cav.length + b.building.length) - (a.cav.length + a.building.length))[0];
+      if (!d) { out.notes.push('Every dome already has its pumps, or is building them.'); break; }
+      d.plant = PLANT_YEARS; out.spent += PLANT_COST; out.plants = (out.plants || 0) + 1; out.plantAt = (out.plantAt || []).concat(d.name);
+    }
     const share = clamp(dec.maintain || 0, 0, 1);
     const wells = w.domes.flatMap(d => d.cav).filter(c => !c.retired);
     const n = Math.round(wells.length * share); const mcost = n * WORKOVER;
@@ -137,6 +145,8 @@
     const events = [];
     // caverns under construction
     w.domes.forEach(d => { d.building = d.building.map(t => t - 1); const done = d.building.filter(t => t <= 0).length; d.building = d.building.filter(t => t > 0); for (let i = 0; i < done; i++) d.cav.push(newCavern(d, false, 5)); if (done) events.push({ text: `${done} new cavern${done > 1 ? 's' : ''} finished at ${d.name}.`, cls: 'good' }); });
+    // pumping plants under construction
+    w.domes.forEach(d => { if (typeof d.plant === 'number') { d.plant--; if (d.plant <= 0) { d.plant = 'ready'; events.push({ text: `Pumps ready at ${d.name}. Oil can come out of this dome at up to ${Math.round(d.rate * 1000)} thousand barrels a day.`, cls: 'good' }); } } });
     // ageing, creep, well failures
     w.domes.forEach(d => d.cav.forEach(c => {
       if (c.retired) return; c.age++; c.cap *= 0.997; c.health = Math.max(0, c.health - 0.02); if (c.offline > 0) c.offline--;
@@ -246,5 +256,5 @@
     return { inv: i, cap, caverns: wells.length, health, leftAvg, pain: w.pain, avoided: w.painAvoided, spent: w.spentTotal, treasury: w.treasury, bought: w.boughtTotal, released: w.releasedTotal, mood: w.mood, score, title };
   }
 
-  root.SALT = { newWorld, yearDecisions, advanceYear, resolveCard, startCrisis, crisisWeek, inv, capacity, cavCount, drawCap, fillCap, roomFor, report, basePrice, budgetFor, SCRIPT, DOMES, HEEL, CAV_MB, BUILD_COST, WORKOVER, domeOil, domeCap, domeRate, rnd };
+  root.SALT = { PLANT_COST, PLANT_YEARS, newWorld, yearDecisions, advanceYear, resolveCard, startCrisis, crisisWeek, inv, capacity, cavCount, drawCap, fillCap, roomFor, report, basePrice, budgetFor, SCRIPT, DOMES, HEEL, CAV_MB, BUILD_COST, WORKOVER, domeOil, domeCap, domeRate, rnd };
 })(typeof window !== 'undefined' ? window : globalThis);

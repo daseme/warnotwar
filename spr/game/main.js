@@ -37,31 +37,33 @@
   function renderLog() { const L = $('log'); L.innerHTML = w.log.slice(0, 120).map(e => `<div class="${e.cls}"><span>${e.year}${e.week ? ` w${e.week}` : ''}</span>${e.text}</div>`).join(''); }
 
   /* ---------- year panel ---------- */
-  const yb = $('y-buy'), ybd = $('y-build'), ym = $('y-maint');
+  const yb = $('y-buy'), ybd = $('y-build'), ym = $('y-maint'), yp = $('y-pumps');
   function yearPanel() {
     $('p-year').hidden = false; $('p-crisis').hidden = true;
     const room = S.roomFor(w), maxBuy = Math.min(room, S.fillCap(w) * 365);
     yb.max = Math.max(0, Math.floor(maxBuy)); yb.value = Math.min(+yb.value, +yb.max);
     $('y-budget').textContent = bn(Math.max(0, w.budget));
-    const era = w.year < 1986 ? 'Congress is generous while the embargo is fresh. Build.' : w.year < 1992 ? 'Money is tightening. Finish the domes and fill them.' : w.year < 2000 ? 'The nineties: no money, cheap oil, and Congress eyeing your barrels.' : w.year < 2015 ? 'Oil from federal leases trickles in. Keep the wells alive.' : w.year < 2023 ? 'Congress sells your oil to pay for other things. Hold what you can.' : 'Refill years. Every barrel you buy now is one you can pump later.';
+    const era = w.domes.every(d => d.plant === 'none') ? 'No dome has pumps. Nothing you hold can come out until you build them.' : w.year < 1986 ? 'Congress is generous while the embargo is fresh. Build.' : w.year < 1992 ? 'Money is tightening. Finish the domes and fill them.' : w.year < 2000 ? 'The nineties: no money, cheap oil, and Congress eyeing your barrels.' : w.year < 2015 ? 'Oil from federal leases trickles in. Keep the wells alive.' : w.year < 2023 ? 'Congress sells your oil to pay for other things. Hold what you can.' : 'Refill years. Every barrel you buy now is one you can pump later.';
     let realNote = '';
     if (real) { const row = real.monthly.find(r => r[0].startsWith(`${w.year}-01`)) || real.weekly.find(r => r[0].startsWith(`${w.year}-01`)); if (row) realNote = ` The real reserve held ${f0(row[1])} mb at the start of ${w.year}; you hold ${f0(S.inv(w))}.`; }
     $('y-brief').textContent = era + realNote;
     yearOut();
   }
   function yearOut() {
-    const buy = +yb.value, build = +ybd.value, share = +ym.value / 100;
+    const buy = +yb.value, build = +ybd.value, share = +ym.value / 100, pumps = +yp.value;
+    const noPlant = w.domes.filter(d => d.plant === 'none').length; yp.max = noPlant; if (pumps > noPlant) yp.value = noPlant;
     const wells = w.domes.flatMap(d => d.cav).filter(c => !c.retired).length, n = Math.round(wells * share);
-    const cBuy = buy * w.price / 1000, cBuild = build * S.BUILD_COST, cM = n * S.WORKOVER;
+    const cBuy = buy * w.price / 1000, cBuild = build * S.BUILD_COST, cM = n * S.WORKOVER, cP = +yp.value * S.PLANT_COST;
+    $('y-pumps-o').innerHTML = noPlant ? `${+yp.value} · <small>ready ${w.year + S.PLANT_YEARS}</small> · ${bn(cP)}` : 'every dome has pumps';
     $('y-buy-o').innerHTML = `${f0(buy)} mb · ${bn(cBuy)}`; $('y-build-o').innerHTML = `${build} · <small>ready ${w.year + 3}</small> · ${bn(cBuild)}`; $('y-maint-o').innerHTML = `${n} wells · ${bn(cM)}`;
-    const left = w.budget - cBuy - cBuild - cM; const L = $('y-left'); L.textContent = bn(Math.abs(left)) + (left < 0 ? ' short' : ''); L.style.color = left < -1e-9 ? 'var(--danger)' : 'var(--ink)';
+    const left = w.budget - cBuy - cBuild - cM - cP; const L = $('y-left'); L.textContent = bn(Math.abs(left)) + (left < 0 ? ' short' : ''); L.style.color = left < -1e-9 ? 'var(--danger)' : 'var(--ink)';
     $('y-go').disabled = left < -1e-9;
   }
-  [yb, ybd, ym].forEach(el => el.addEventListener('input', yearOut));
+  [yb, ybd, ym, yp].forEach(el => el.addEventListener('input', yearOut));
 
   async function turnYear() {
     $('y-go').disabled = true;
-    const dec = { buy: +yb.value, build: +ybd.value, maintain: +ym.value / 100 };
+    const dec = { buy: +yb.value, build: +ybd.value, maintain: +ym.value / 100, pumps: +yp.value };
     const before = new Map(w.domes.flatMap(d => d.cav).map(c => [c, c.oil]));
     const out = S.yearDecisions(w, dec);
     const poured = w.domes.flatMap(d => d.cav).filter(c => c.oil - (before.get(c) ?? c.oil) > 0.05).map(c => ({ cv: c, from: before.get(c), to: c.oil }));
@@ -69,9 +71,10 @@
     out.notes.forEach(n => w.log.unshift({ year: w.year, week: 0, text: n, cls: 'bad' }));
     if (out.bought > 0.05) w.log.unshift({ year: w.year, week: 0, text: `Bought ${f1(out.bought)} mb at $${f0(w.price)} for ${bn(out.bought * w.price / 1000)}${out.built ? `; started ${out.built} cavern${out.built > 1 ? 's' : ''}` : ''}${out.maintained ? `; worked over ${out.maintained} wells` : ''}.` });
     else if (out.built || out.maintained) w.log.unshift({ year: w.year, week: 0, text: `${out.built ? `Started ${out.built} cavern${out.built > 1 ? 's' : ''}` : ''}${out.built && out.maintained ? '; ' : ''}${out.maintained ? `worked over ${out.maintained} wells` : ''}.` });
+    if (out.plants) w.log.unshift({ year: w.year, week: 0, text: `Began building pumps at ${out.plantAt.join(' and ')}. Ready in ${S.PLANT_YEARS} years.`, cls: 'good' });
     const r = S.advanceYear(w);
     scene.say(String(w.year), r.crisis ? r.crisis.name : r.card ? r.card.name : '');
-    yb.value = 0; ybd.value = 0; ym.value = 0;
+    yb.value = 0; ybd.value = 0; ym.value = 0; yp.value = 0;
     hud(); renderLog(); yearPanel();
     if (r.end) return endGame();
     if (r.card) return showCard(r.card);
@@ -96,7 +99,7 @@
   /* ---------- crises ---------- */
   function crisisIntro(s) {
     pendingCrisis = s;
-    modal(`<div class="kicker">${w.year} · emergency</div><h2>${s.name}</h2><p>${s.text}</p><p class="mono" style="font-size:12px;color:var(--ink-60)">World short about ${f1(s.shortfall)} mb/d. ${s.iea ? `Allies cover their part; your share is about ${f1(s.shortfall * 0.44)} mb/d.` : `Most of this lands on you: about ${f1(s.shortfall * 0.7)} mb/d.`} Your wells can flow ${f1(S.drawCap(w))} mb/d${S.drawCap(w) <= 0 ? ' — nothing. The pumps are not built.' : ''}. You hold ${f0(S.inv(w))} mb.</p><div class="foot"><button class="btn primary" id="m-ok">take the desk →</button></div>`);
+    modal(`<div class="kicker">${w.year} · emergency</div><h2>${s.name}</h2><p>${s.text}</p><p class="mono" style="font-size:12px;color:var(--ink-60)">World short about ${f1(s.shortfall)} mb/d. ${s.iea ? `Allies cover their part; your share is about ${f1(s.shortfall * 0.44)} mb/d.` : `Most of this lands on you: about ${f1(s.shortfall * 0.7)} mb/d.`} Your wells can flow ${f1(S.drawCap(w))} mb/d${S.drawCap(w) <= 0 ? ' — nothing. No dome has a pumping plant.' : ''}. You hold ${f0(S.inv(w))} mb.</p><div class="foot"><button class="btn primary" id="m-ok">take the desk →</button></div>`);
     $('m-ok').onclick = () => { closeModal(); S.startCrisis(w, s); scene.say(s.name, 'emergency'); crisisPanel(); hud(); renderLog(); };
   }
   const cr = $('c-rate');
@@ -157,9 +160,10 @@
   }
 
   /* ---------- start ---------- */
-  function start() { $('title').classList.remove('show'); scene.say('1977', 'the first barrels'); w.log.unshift({ year: 1977, week: 0, text: 'July 21, 1977. 412,000 barrels of Saudi light go into West Hackberry. You have four domes, fifteen old brine caverns and about 180 million barrels of space. The pumps to get oil back out do not exist yet.', cls: 'head' }); hud(); renderLog(); yearPanel(); }
+  function start() { $('title').classList.remove('show'); if (!params.get('bot')) $('intro').classList.add('show'); scene.say('1977', 'the first barrels'); w.log.unshift({ year: 1977, week: 0, text: 'July 21, 1977. 412,000 barrels of Saudi light go into West Hackberry. You have four domes, fifteen old brine caverns and about 180 million barrels of space. The pumps to get oil back out do not exist yet: build them.', cls: 'head' }); hud(); renderLog(); yearPanel(); }
   $('t-start').onclick = start;
-  addEventListener('keydown', e => { if (e.code !== 'Space' || e.target.tagName === 'INPUT') return; e.preventDefault(); if ($('title').classList.contains('show')) return start(); if ($('modal').classList.contains('show')) { const ok = $('m-ok') || $('m-again'); if (ok) ok.click(); return; } if (w.phase === 'crisis') week(); else if (!$('y-go').disabled) turnYear(); });
+  $('i-ok').onclick = () => $('intro').classList.remove('show');
+  addEventListener('keydown', e => { if (e.code !== 'Space' || e.target.tagName === 'INPUT') return; e.preventDefault(); if ($('title').classList.contains('show')) return start(); if ($('intro').classList.contains('show')) return $('i-ok').click(); if ($('modal').classList.contains('show')) { const ok = $('m-ok') || $('m-again'); if (ok) ok.click(); return; } if (w.phase === 'crisis') week(); else if (!$('y-go').disabled) turnYear(); });
   const wait = ms => new Promise(r => setTimeout(r, ms));
   hud(); renderLog(); yearPanel();
   // idle camera drift under the title
@@ -175,7 +179,7 @@
       if (w.year >= target && !(stopAt === 'crisis' && w.phase !== 'crisis')) { if (w.phase === 'crisis') { for (let i = 0; i < 3; i++) week(); } return; }
       if (w.phase === 'crisis') { if (stopAt === 'crisis' && w.year >= target) return; const r = S.crisisWeek(w, Math.min(1.0, S.drawCap(w))); if (r.over) { closeModal(); yearPanel(); } hud(); renderLog(); return setTimeout(botStep, 0); }
       const buy = Math.min(S.roomFor(w), Math.max(0, (w.budget - 0.2) * 1000 / w.price));
-      S.yearDecisions(w, { buy, build: w.year < 1991 ? 4 : 0, maintain: 0.2 });
+      S.yearDecisions(w, { buy, build: w.year < 1991 ? 4 : 0, maintain: 0.2, pumps: w.year >= 1982 && w.year <= 1985 ? 1 : 0 });
       const r = S.advanceYear(w); hud(); renderLog(); yearPanel();
       if (r.end) return endGame();
       if (r.card) { S.resolveCard(w, r.card, r.card.choices[0]); }
