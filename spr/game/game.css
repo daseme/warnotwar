@@ -148,3 +148,6 @@ header .spacer { flex: 1; }
 .ctl-list div { font-size: 1rem; line-height: 1.5; color: var(--ink-80); padding: 10px 14px; background: var(--bg3); border-radius: 8px; border-left: 3px solid var(--gold); }
 .ctl-list b { color: var(--ink); font-weight: 500; }
 @media (max-width: 820px) { .help { margin-left: 0; } }
+
+.prices { color: var(--ink-45); letter-spacing: 0.04em; text-transform: none; font-size: 10px; margin: 0 12px; flex: 1; text-align: right; }
+.help b { color: var(--ink-60); font-weight: 500; }
