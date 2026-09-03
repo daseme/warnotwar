@@ -77,18 +77,20 @@
     set(on, blink) { this.host.classList.toggle('on', !!on); this.host.classList.toggle('blink', !!blink); }
   }
 
-  /* ---- rotary knob wrapping a range input: drag up/down or across, wheel, keyboard on the input ---- */
+  /* ---- rotary knob wrapping a range input: point at the angle you want, drag around the dial, scroll, or press − / +; keyboard on the input ---- */
   class Knob {
     constructor(host, input, o) {
       this.o = Object.assign({ label: '', detents: 20, fmt: v => v }, o); this.host = host; this.input = input; host.classList.add('knob-wrap');
-      host.innerHTML = `<div class="knob"><div class="knob-ticks"></div><div class="knob-cap"><i></i></div></div><div class="knob-label">${this.o.label}</div><output class="knob-out"></output>`;
+      host.innerHTML = `<div class="knob-row"><button class="knob-btn" data-d="-1" aria-label="less">−</button><div class="knob"><div class="knob-ticks"></div><div class="knob-cap"><i></i></div></div><button class="knob-btn" data-d="1" aria-label="more">+</button></div><div class="knob-label">${this.o.label}</div><output class="knob-out"></output><div class="knob-hint">turn · scroll · − +</div>`;
       this.cap = host.querySelector('.knob-cap'); this.out = host.querySelector('.knob-out'); this.knob = host.querySelector('.knob');
       const ticks = host.querySelector('.knob-ticks'); for (let i = 0; i <= this.o.detents; i++) { const t = document.createElement('b'); t.style.transform = `rotate(${-135 + 270 * i / this.o.detents}deg)`; if (i % 5 === 0) t.className = 'major'; ticks.appendChild(t); }
-      let drag = null;
-      this.knob.addEventListener('pointerdown', e => { drag = { y: e.clientY, x: e.clientX, v: +input.value }; this.knob.setPointerCapture(e.pointerId); this.knob.classList.add('grab'); });
-      this.knob.addEventListener('pointermove', e => { if (!drag) return; const range = +input.max - +input.min; const dv = ((drag.y - e.clientY) + (e.clientX - drag.x)) / 160 * range; this.setValue(drag.v + dv); });
-      const up = () => { drag = null; this.knob.classList.remove('grab'); }; this.knob.addEventListener('pointerup', up); this.knob.addEventListener('pointercancel', up);
-      this.knob.addEventListener('wheel', e => { e.preventDefault(); this.setValue(+input.value + (e.deltaY < 0 ? 1 : -1) * +input.step * 2); }, { passive: false });
+      const angleValue = e => { const r = this.knob.getBoundingClientRect(); const dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2); let a = Math.atan2(dx, -dy) * 180 / Math.PI; a = clamp(a, -135, 135); return +input.min + (a + 135) / 270 * (+input.max - +input.min); };
+      let drag = false;
+      this.knob.addEventListener('pointerdown', e => { drag = true; this.knob.setPointerCapture(e.pointerId); this.knob.classList.add('grab'); this.setValue(angleValue(e)); });
+      this.knob.addEventListener('pointermove', e => { if (drag) this.setValue(angleValue(e)); });
+      const up = () => { drag = false; this.knob.classList.remove('grab'); }; this.knob.addEventListener('pointerup', up); this.knob.addEventListener('pointercancel', up);
+      this.knob.addEventListener('wheel', e => { e.preventDefault(); this.setValue(+input.value + (e.deltaY < 0 ? 1 : -1) * +input.step); }, { passive: false });
+      host.querySelectorAll('.knob-btn').forEach(b => b.addEventListener('click', () => this.setValue(+input.value + (+b.dataset.d) * +input.step)));
       input.addEventListener('input', () => this.render());
       this.render();
     }
