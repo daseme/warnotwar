@@ -241,7 +241,7 @@
     log(w, `week ${c.week}: released ${got.toFixed(1)} mb (${Math.round(perDay * 1000)} kb/d)${want > perDay + 1e-6 ? `, wells could give ${Math.round(cap * 1000)}` : ''}. Crude $${Math.round(w.price)}${sf === 0 ? ' · no shortfall this week' : ''}.`, spike > 15 ? 'bad' : '');
     pushHistory(w);
     if (over) return endCrisis(w);
-    return { over: false, got, perDay, cap, price: w.price, spike, events };
+    return { over: false, got, perDay, cap, price: w.price, spike, events, weekPain, weekPainNo, net, netNoRel };
   }
   function endCrisis(w) {
     const c = w.crisis; w.phase = 'year'; w.hurricane = null;
@@ -251,6 +251,10 @@
     w.crisis = null; w.spike = 0; w.price = basePrice(w.year);
     return { over: true, summary };
   }
+
+  /* ---- what the country feels ---- */
+  const gasPrice = (w) => w.price / 42 + 0.30 + (w.year - 1977) * 0.03;      // $/gal: crude plus a margin that grows with the years
+  const hum = (w) => clamp(100 - w.spike * 1.8, 8, 100);                       // how much of the country runs normally
 
   /* ---- the final report ---- */
   function report(w) {
@@ -263,5 +267,5 @@
     return { inv: i, cap, caverns: wells.length, health, leftAvg, pain: w.pain, avoided: w.painAvoided, spent: w.spentTotal, treasury: w.treasury, bought: w.boughtTotal, released: w.releasedTotal, mood: w.mood, score, title };
   }
 
-  root.SALT = { PLANT_COST, PLANT_YEARS, BUILD_YEARS, maxSell, avgBuy, avgSell, newWorld, yearDecisions, advanceYear, resolveCard, startCrisis, crisisWeek, inv, capacity, cavCount, drawCap, fillCap, roomFor, report, basePrice, budgetFor, SCRIPT, DOMES, HEEL, CAV_MB, BUILD_COST, WORKOVER, domeOil, domeCap, domeRate, rnd };
+  root.SALT = { gasPrice, hum, PLANT_COST, PLANT_YEARS, BUILD_YEARS, maxSell, avgBuy, avgSell, newWorld, yearDecisions, advanceYear, resolveCard, startCrisis, crisisWeek, inv, capacity, cavCount, drawCap, fillCap, roomFor, report, basePrice, budgetFor, SCRIPT, DOMES, HEEL, CAV_MB, BUILD_COST, WORKOVER, domeOil, domeCap, domeRate, rnd };
 })(typeof window !== 'undefined' ? window : globalThis);

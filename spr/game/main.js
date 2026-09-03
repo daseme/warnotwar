@@ -13,6 +13,7 @@
   /* ---------- instruments ---------- */
   const I = window.Instruments;
   const gPrice = new I.Gauge($('g-price'), { min: 0, max: 200, ticks: 4, minor: 5, label: 'crude $/bbl', zones: [{ from: 100, to: 200, color: '#c0392b' }] });
+  const gGas = new I.Gauge($('g-gas'), { min: 0, max: 8, ticks: 4, minor: 4, label: 'pump · $/gal', zones: [{ from: 4, to: 8, color: '#c0392b' }], fmt: v => `$${v}` });
   const gFuel = new I.Gauge($('g-fuel'), { min: 0, max: 1, ticks: 4, minor: 2, label: 'reserve', labels: ['E', '¼', '½', '¾', 'F'], zones: [{ from: 0, to: 0.25, color: '#c0392b' }] });
   const gFlow = new I.Gauge($('g-flow'), { min: 0, max: 5, ticks: 5, minor: 4, label: 'wells · mb/day', zones: [{ from: 4.4, to: 5, color: '#c0392b' }, { from: 0, to: 1, color: '#7a6a2a' }] });
   const gMood = new I.Gauge($('g-mood'), { min: 0, max: 100, ticks: 4, minor: 5, label: 'congress', zones: [{ from: 0, to: 30, color: '#c0392b' }, { from: 70, to: 100, color: '#2e8b6e' }] });
@@ -23,7 +24,7 @@
   /* ---------- HUD ---------- */
   function hud() {
     oYear.set(w.year); $('h-phase').textContent = w.phase === 'crisis' ? w.crisis.name : 'the year';
-    gPrice.set(w.price, `$${f0(w.price)}`);
+    gPrice.set(w.price, `$${f0(w.price)}`); gGas.set(S.gasPrice(w), `$${S.gasPrice(w).toFixed(2)}`);
     const i = S.inv(w), cap = S.capacity(w);
     oInv.set(i); oCap.set(Math.max(0, cap - i)); gFuel.set(cap > 0 ? i / cap : 0, `${f0(i)} / ${f0(cap)}`);
     gFlow.set(S.drawCap(w), `${f1(S.drawCap(w))}`);
@@ -124,11 +125,56 @@
       <div class="desk-list">
         <div><b>The year stops.</b> Time now moves one week at a time. Press <b>next week</b> for one week, or flip the <b>clock</b> to run and watch.</div>
         <div><b>The knob sets your release</b> in millions of barrels a day. Its ceiling is what your wells can flow${S.drawCap(w) <= 0 ? ', which is nothing yet: no dome has pumps, so the knob is dead and you can only watch' : ''}.</div>
-        <div><b>Your barrels shrink the price spike.</b> The world is short; allies cover some; what is left uncovered sets the price. Every barrel you release now is one you will not have for the next shock.</div>
+        <div><b>The goal: keep the country humming.</b> The world is short; allies cover some; what is left uncovered sets the price of crude, and so the price at the pump, the queue at the station and the lights in the city. Your barrels fill the gap. Every barrel you release now is one you will not have for the next shock.</div>
       </div>
       <div class="foot"><button class="btn primary" id="m-ok">take the desk →</button></div>`);
-    $('m-ok').onclick = () => { closeModal(); S.startCrisis(w, s); scene.say(s.name, 'emergency'); crisisPanel(); hud(); renderLog(); };
+    $('m-ok').onclick = () => { closeModal(); S.startCrisis(w, s); lastWeek = null; scene.say(s.name, 'emergency'); crisisPanel(); hud(); renderLog(); };
   }
+  /* ---------- the country: a filling station, a skyline, the bill ---------- */
+  const country = (() => {
+    const host = $('country'); const W = 640, H = 96; let built = false, wins = [], cars = [], txt = {};
+    const NS = 'http://www.w3.org/2000/svg'; const el = (tag, a, p) => { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); p.appendChild(e); return e; };
+    function build() {
+      host.innerHTML = ''; const svg = el('svg', { viewBox: `0 0 ${W} ${H}` }, host);
+      // road
+      el('rect', { x: 0, y: 72, width: W, height: 24, fill: '#14130f' }, svg); el('line', { x1: 0, x2: W, y1: 84, y2: 84, stroke: 'rgba(233,226,208,0.25)', 'stroke-dasharray': '10 10' }, svg);
+      // station: canopy, pump, sign
+      el('rect', { x: 250, y: 30, width: 90, height: 6, fill: '#c9c2b4' }, svg); el('rect', { x: 256, y: 36, width: 3, height: 36, fill: '#9a958a' }, svg); el('rect', { x: 331, y: 36, width: 3, height: 36, fill: '#9a958a' }, svg);
+      el('rect', { x: 290, y: 52, width: 10, height: 20, fill: '#8a877f' }, svg);
+      el('rect', { x: 350, y: 18, width: 44, height: 26, rx: 3, fill: '#15130f', stroke: '#9a958a' }, svg); el('rect', { x: 371, y: 44, width: 2, height: 28, fill: '#9a958a' }, svg);
+      txt.gasLab = el('text', { x: 372, y: 28, 'text-anchor': 'middle', 'font-size': 6.5, fill: 'rgba(233,226,208,0.6)' }, svg); txt.gasLab.textContent = 'REGULAR';
+      txt.gas = el('text', { x: 372, y: 40, 'text-anchor': 'middle', 'font-size': 10, fill: '#f0a058' }, svg);
+      // cars in the queue, right to left
+      for (let i = 0; i < 12; i++) { const g = el('g', { class: 'car', transform: `translate(${236 - i * 20},0)` }, svg); el('rect', { x: 0, y: 60, width: 16, height: 8, rx: 2, fill: i % 3 ? '#8a877f' : '#c9c2b4' }, g); el('rect', { x: 3, y: 56, width: 9, height: 5, rx: 1, fill: '#5a5852' }, g); el('circle', { cx: 4, cy: 69, r: 2.2, fill: '#15130f' }, g); el('circle', { cx: 12, cy: 69, r: 2.2, fill: '#15130f' }, g); cars.push(g); }
+      // skyline with windows
+      const bl = [[420, 34, 22], [446, 50, 18], [468, 26, 26], [498, 42, 20], [522, 30, 24], [550, 46, 16], [570, 22, 30], [604, 38, 28]];
+      bl.forEach(([x, h, wdt]) => { el('rect', { x, y: 72 - h, width: wdt, height: h, fill: '#23211c' }, svg); for (let yy = 72 - h + 4; yy < 68; yy += 6) for (let xx = x + 3; xx < x + wdt - 3; xx += 5) wins.push(el('rect', { class: 'win', x: xx, y: yy, width: 2.4, height: 3, fill: '#ffd27a', opacity: 0.9 }, svg)); });
+      // factory
+      el('rect', { x: 20, y: 44, width: 60, height: 28, fill: '#23211c' }, svg); el('rect', { x: 28, y: 20, width: 6, height: 24, fill: '#2f2c26' }, svg); el('rect', { x: 44, y: 26, width: 6, height: 18, fill: '#2f2c26' }, svg);
+      txt.smoke = el('g', {}, svg); for (let i = 0; i < 3; i++) el('circle', { cx: 31 + i * 5, cy: 16 - i * 5, r: 3 + i, fill: 'rgba(233,226,208,0.18)' }, txt.smoke);
+      txt.fac = el('text', { x: 50, y: 66, 'text-anchor': 'middle', 'font-size': 6.5, fill: 'rgba(233,226,208,0.5)' }, svg); txt.fac.textContent = 'REFINERY';
+      // captions
+      txt.hum = el('text', { x: 636, y: 12, 'text-anchor': 'end', 'font-size': 8, fill: 'rgba(233,226,208,0.7)' }, svg);
+      txt.bill = el('text', { x: 6, y: 12, 'font-size': 8, fill: 'rgba(233,226,208,0.7)' }, svg);
+      txt.bill2 = el('text', { x: 6, y: 92, 'font-size': 7.5, fill: 'rgba(233,226,208,0.45)' }, svg);
+      built = true;
+    }
+    function set(st) {
+      if (!built) build();
+      const hum = S.hum(w), lit = Math.round(wins.length * hum / 100);
+      wins.forEach((r, i) => r.setAttribute('opacity', i < lit ? 0.9 : 0.06));
+      const q = Math.min(12, Math.round(w.spike / 3));
+      cars.forEach((g, i) => { g.setAttribute('opacity', i < q ? 1 : 0); });
+      txt.gas.textContent = `$${S.gasPrice(w).toFixed(2)}`;
+      txt.smoke.setAttribute('opacity', (hum / 100).toFixed(2));
+      txt.hum.textContent = `the country · ${f0(hum)}% humming`;
+      const c = w.crisis;
+      txt.bill.textContent = c ? `this week Americans paid ${st && st.weekPain != null ? bn(st.weekPain) : '$0.00bn'} extra · so far ${bn(c.pain)}` : '';
+      txt.bill2.textContent = c ? `without your barrels it would be ${bn(c.noRelPain)} · your releases have saved ${bn(Math.max(0, c.noRelPain - c.pain))}` : '';
+    }
+    return { set, reset: () => { built = false; } };
+  })();
+
   const cr = $('c-rate');
   const knob = new I.Knob($('k-rate'), cr, { label: 'release · mb/day', detents: 22, fmt: v => v.toFixed(2) });
   const tgRun = new I.Toggle($('tg-run'), { label: 'clock', off: 'hold', on: 'run', onchange: on => { if (on) { if (!autorun) autorun = setInterval(week, S.drawCap(w) <= 0 ? 220 : 700); } else stopRun(); } });
@@ -140,13 +186,15 @@
     cr.max = Math.max(0.05, cap).toFixed(2); if (+cr.value > cap) cr.value = cap.toFixed(2); knob.refresh();
     $('c-note').textContent = cap <= 0 ? 'no pumps: you can only watch' : c.week === 0 ? 'first barrels reach the market in about two weeks' : `${f0(S.inv(w))} mb left · crude $${f0(w.price)}`;
     $('k-rate').classList.toggle('dead', cap <= 0);
+    country.set(lastWeek);
     $('c-help').innerHTML = cap <= 0
       ? `<b>You cannot pump.</b> No dome has a pumping plant, so the knob does nothing. Flip the <b>clock</b> to run and let the weeks pass, or press <b>next week</b>. The lesson of 1979 is the one the real reserve learned: oil in the ground is not oil at the pump.`
       : `<b>Knob:</b> how much to release each day, up to the ${f1(cap)} mb/day your wells can flow. <b>Next week</b> runs one week; the <b>clock</b> keeps running them. The world is short ${f1(c.ceasefire > 0 ? 0 : c.shortfall)} mb/day and your share to cover is ${f1((c.ceasefire > 0 ? 0 : c.shortfall) * (c.allies ? 0.44 : 0.7))}; release that much and the price spike mostly goes away. Release less and Americans pay more; release more and you run dry sooner.`;
   }
+  let lastWeek = null;
   function week() {
     if (w.phase !== 'crisis') return;
-    const r = S.crisisWeek(w, +cr.value);
+    const r = S.crisisWeek(w, +cr.value); lastWeek = r;
     scene.flow.out = r.over ? 0 : Math.min(4.4, r.perDay);
     hud(); renderLog();
     if (r.over) { stopRun(); scene.flow.out = 0; return crisisEnd(r.summary); }

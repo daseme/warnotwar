@@ -180,3 +180,10 @@ header .spacer { flex: 1; }
 .desk-list { display: grid; gap: 6px; margin: 8px 0 4px; }
 .desk-list div { font-size: 0.95rem; line-height: 1.45; color: var(--ink-80); padding: 7px 12px; background: var(--bg3); border-radius: 8px; border-left: 3px solid var(--danger); }
 .desk-list b { color: var(--ink); font-weight: 500; }
+
+#country { margin: 2px 0 8px; }
+#country svg { width: 100%; height: auto; display: block; border-radius: 8px; background: linear-gradient(180deg, #0e131c, #1a1a17); border: 1px solid var(--ink-10); }
+#country .win { transition: opacity 0.6s; }
+#country .car { transition: opacity 0.4s, transform 0.4s; }
+#country text { font-family: var(--mono); }
+@media (max-width: 1100px) { #g-mood { display: none; } }
