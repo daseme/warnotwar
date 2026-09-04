@@ -41,31 +41,21 @@
       <div class="panel-title"><span>this year’s decisions</span><b id="y-budget">$1.0bn</b></div>
       <p class="brief" id="y-brief">Buy oil, dig caverns, look after the wells. Whatever you do not spend mostly goes back to the Treasury.</p>
       <div class="approp" id="approp"><div class="ap-bar" id="ap-bar"></div><div class="ap-legend" id="ap-legend"></div></div>
-      <div class="lever">
-        <div class="lv-name"><b>buy oil</b><span>Crude bought now, poured into caverns with room.</span></div>
-        <div class="lv-ctl"><input type="range" id="y-buy" min="0" max="100" step="1" value="0"><div class="lv-spec" id="y-spec-buy"></div></div>
-        <output class="lv-out" id="y-buy-o">0 mb · $0.00bn</output>
+      <div class="controls-row">
+        <div class="throttle-block">
+          <div class="tb-head"><b>oil</b><span id="th-mode">hold</span></div>
+          <div class="throttle"><span class="th-lab sell">◂ sell</span><input type="range" id="y-oil" min="-100" max="100" step="1" value="0"><span class="th-lab buy">buy ▸</span></div>
+          <div class="lv-spec" id="y-spec-oil"></div>
+          <div class="lv-out" id="y-oil-o"></div>
+        </div>
+        <div class="switch-block">
+          <div class="tb-head"><b>well repairs</b><span id="sw-pos">off</span></div>
+          <div id="k-maint"></div><input type="range" id="y-maint" min="0" max="2" step="1" value="0" class="sr-only" aria-label="repair programme">
+          <div class="lv-spec" id="y-spec-maint"></div>
+          <div class="lv-out" id="y-maint-o"></div>
+        </div>
       </div>
-      <div class="lever">
-        <div class="lv-name"><b>dig caverns</b><span>New space, dissolved out of the salt.</span></div>
-        <div class="lv-ctl"><input type="range" id="y-build" min="0" max="8" step="1" value="0"><div class="lv-spec" id="y-spec-build"></div></div>
-        <output class="lv-out" id="y-build-o">0 · $0.00bn</output>
-      </div>
-      <div class="lever">
-        <div class="lv-name"><b>build pumps</b><span>Lets a dome’s oil come back out.</span></div>
-        <div class="lv-ctl"><input type="range" id="y-pumps" min="0" max="4" step="1" value="0"><div class="lv-spec" id="y-spec-pumps"></div></div>
-        <output class="lv-out" id="y-pumps-o">0 · $0.00bn</output>
-      </div>
-      <div class="lever">
-        <div class="lv-name"><b>well repairs</b><span>Keeps casings from failing and caverns open.</span></div>
-        <div class="lv-ctl"><input type="range" id="y-maint" min="0" max="100" step="5" value="0"><div class="lv-spec" id="y-spec-maint"></div></div>
-        <output class="lv-out" id="y-maint-o">0 wells · $0.00bn</output>
-      </div>
-      <div class="lever">
-        <div class="lv-name"><b>sell oil</b><span>Barrels into budget, this year.</span></div>
-        <div class="lv-ctl"><input type="range" id="y-sell" min="0" max="100" step="1" value="0"><div class="lv-spec" id="y-spec-sell"></div></div>
-        <output class="lv-out" id="y-sell-o">0 mb · +$0.00bn</output>
-      </div>
+      <div class="sites" id="sites"></div>
       <div class="help money" id="y-money"></div>
       <div class="actions"><span class="left">left over <b id="y-left">$1.0bn</b></span><button class="push wide" id="y-go"><span>turn the year →</span></button></div>
     </div>
@@ -100,26 +90,24 @@
     <h1>S<span>A</span>LT</h1>
     <p class="sub">It is 1977. You have four salt domes, a few old brine caverns, 7.5 million barrels of Saudi light and a Congress that just watched the embargo. Run the reserve for sixty years. Every shock that really happened is coming, and a few that have not yet.</p>
     <button class="btn primary" id="t-start">take the desk · 1977</button>
-    <div class="how">buy oil when it is cheap · dig caverns before you need them · repair the wells<br>when the strait shuts, decide how fast to pump and how much to keep</div>
+    <div class="how">push the throttle when oil is cheap · build pumps and dig caverns before you need them · repair the wells<br>when the strait shuts, decide how fast to pump and how much to keep</div>
   </div>
 </div>
 
 <div class="overlay" id="intro">
   <div class="card">
     <div class="kicker">1977 · before you begin</div>
-    <h2>Five things you control</h2>
+    <h2>What you control</h2>
     <div class="ctl-list">
-      <div><b>Buy oil.</b> Crude at this year’s price, poured into caverns that have room. Cheap years are the time to buy.</div>
-      <div><b>Dig caverns.</b> New space, dissolved out of the salt with river water. Three years each. You start with fifteen old brine caverns, about 180 million barrels of room.</div>
-      <div><b>Build pumps.</b> The plant that gets oil back out of a dome: water intake, injection pumps, a pipeline. You have none. Until a dome has its plant, its oil is stuck. Two years, $350 million a dome.</div>
-      <div><b>Well repairs.</b> The salt slowly crushes well casings. Repair them or wells fail and caverns shut.</div>
-      <div><b>Sell oil.</b> Turn barrels into budget when you need repairs or want to buy back cheaper later. Needs pumps.</div>
+      <div><b>The oil throttle.</b> Push right to buy crude at this year’s price; pull left to sell for cash. Cheap years are the time to push.</div>
+      <div><b>The repairs switch.</b> Off, routine or full. The salt slowly crushes well casings; repairs keep wells from failing and reopen shut caverns first.</div>
+      <div><b>The four site cards.</b> Each dome is its own place. On its card you order pumps (two years, $350 million; until then its oil is stuck), dig caverns (three years, $40 million each, 10 million barrels of room) and fix anything shut. You start with fifteen old brine caverns, about 180 million barrels of room, and no pumps anywhere.</div>
     </div>
     <div class="kicker" style="margin-top:6px">how the money works</div>
     <div class="ctl-list money-list">
       <div><b>Congress pays.</b> Each year you get a grant. It follows the real pattern: generous after the embargo, near zero in the nineties, a trickle after 2009, more in the refill years. A happy Congress gives up to a fifth more; an angry one, a fifth less.</div>
       <div><b>Leftover money carries over, at a cost.</b> You keep it, but Congress cuts next year’s grant by half of what you are sitting on. Spend it unless oil is dear this year and you expect it cheaper next year.</div>
-      <div><b>You can sell oil for cash.</b> A fifth lever. Congress has allowed this for real, to pay for repairs in 2015 and for buybacks in 2023. The money is yours the same year. The barrels are gone until you buy them back.</div>
+      <div><b>You can sell oil for cash.</b> Pull the throttle left. Congress has allowed this for real, to pay for repairs in 2015 and for buybacks in 2023. The money is yours the same year. The barrels are gone until you buy them back.</div>
       <div><b>Emergency sales pay the Treasury, not you.</b> In a crisis you release oil for the country, and the receipts go to the general fund. Congress remembers that you helped.</div>
     </div>
     <p>When a shock comes, the year stops and you run the pumps week by week with the knob.</p>

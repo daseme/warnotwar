@@ -126,25 +126,26 @@
     let cost = buy * price / 1000;
     if (cost > w.budget - out.spent) { buy = Math.max(0, (w.budget - out.spent) * 1000 / price); cost = buy * price / 1000; out.notes.push('The budget did not stretch to the oil you asked for.'); }
     const put = putOil(w, buy); out.bought = put; out.spent += put * price / 1000; w.boughtTotal += put; w.oilSpend += put * price;
-    const nBuild = clamp(Math.floor(dec.build || 0), 0, 8);
-    for (let i = 0; i < nBuild; i++) {
-      if (w.budget - out.spent < BUILD_COST) { out.notes.push('No money left to leach another cavern.'); break; }
-      const d = w.domes.filter(x => x.cav.length + x.building.length < x.maxCav).sort((a, b) => (b.maxCav - b.cav.length - b.building.length) - (a.maxCav - a.cav.length - a.building.length))[0];
-      if (!d) { out.notes.push('Every dome is built out.'); break; }
-      d.building.push(BUILD_YEARS); out.spent += BUILD_COST; out.built++;
-    }
-    const nPlant = clamp(Math.floor(dec.pumps || 0), 0, 4);
-    for (let i = 0; i < nPlant; i++) {
-      if (w.budget - out.spent < PLANT_COST) { out.notes.push('No money left to build a pumping plant.'); break; }
-      const d = w.domes.filter(x => x.plant === 'none').sort((a, b) => (b.cav.length + b.building.length) - (a.cav.length + a.building.length))[0];
-      if (!d) { out.notes.push('Every dome already has its pumps, or is building them.'); break; }
-      d.plant = PLANT_YEARS; out.spent += PLANT_COST; out.plants = (out.plants || 0) + 1; out.plantAt = (out.plantAt || []).concat(d.name);
-    }
+    // caverns: per dome if asked (dec.buildAt = {key: n}), else the dome with most free slots takes each one
+    out.builtAt = {};
+    const digAt = d => { if (w.budget - out.spent < BUILD_COST) { out.notes.push('No money left to leach another cavern.'); return false; } if (d.cav.length + d.building.length >= d.maxCav) return false; d.building.push(BUILD_YEARS); out.spent += BUILD_COST; out.built++; out.builtAt[d.key] = (out.builtAt[d.key] || 0) + 1; return true; };
+    if (dec.buildAt) { for (const d of w.domes) { for (let i = 0; i < (dec.buildAt[d.key] || 0); i++) if (!digAt(d)) break; } }
+    else { const nBuild = clamp(Math.floor(dec.build || 0), 0, 8); for (let i = 0; i < nBuild; i++) { const d = w.domes.filter(x => x.cav.length + x.building.length < x.maxCav).sort((a, b) => (b.maxCav - b.cav.length - b.building.length) - (a.maxCav - a.cav.length - a.building.length))[0]; if (!d) { out.notes.push('Every dome is built out.'); break; } if (!digAt(d)) break; } }
+    // pumps: per dome if asked (dec.pumpsAt = [keys]), else biggest dome without a plant
+    const plantAt = d => { if (w.budget - out.spent < PLANT_COST) { out.notes.push('No money left to build a pumping plant.'); return false; } if (d.plant !== 'none') return false; d.plant = PLANT_YEARS; out.spent += PLANT_COST; out.plants = (out.plants || 0) + 1; out.plantAt = (out.plantAt || []).concat(d.name); return true; };
+    if (dec.pumpsAt) { for (const k of dec.pumpsAt) { const d = w.domes.find(x => x.key === k); if (d && !plantAt(d)) break; } }
+    else { const nPlant = clamp(Math.floor(dec.pumps || 0), 0, 4); for (let i = 0; i < nPlant; i++) { const d = w.domes.filter(x => x.plant === 'none').sort((a, b) => (b.cav.length + b.building.length) - (a.cav.length + a.building.length))[0]; if (!d) { out.notes.push('Every dome already has its pumps, or is building them.'); break; } if (!plantAt(d)) break; } }
+    // repairs: shut caverns first, then the weakest wells. dec.maintain is a share; dec.repairShut lists domes whose shut caverns get fixed regardless
     const share = clamp(dec.maintain || 0, 0, 1);
-    const wells = w.domes.flatMap(d => d.cav).filter(c => !c.retired);
-    const n = Math.round(wells.length * share); const mcost = n * WORKOVER;
-    if (mcost <= w.budget - out.spent) { wells.sort((a, b) => a.health - b.health).slice(0, n).forEach(c => { c.health = Math.min(1, c.health + 0.35); c.offline = 0; }); out.spent += mcost; out.maintained = n; }
-    else out.notes.push('Not enough left for the well work.');
+    const wells = w.domes.flatMap(d => d.cav.map(c => ({ c, d }))).filter(o => !o.c.retired);
+    const forced = new Set(dec.repairShut || []);
+    const order = wells.sort((a, b) => ((b.c.offline > 0) - (a.c.offline > 0)) || (a.c.health - b.c.health));
+    let n = Math.round(wells.length * share);
+    const picks = new Set(order.slice(0, n).map(o => o.c));
+    order.forEach(o => { if (o.c.offline > 0 && forced.has(o.d.key)) picks.add(o.c); });
+    n = picks.size; const mcost = n * WORKOVER;
+    if (mcost <= w.budget - out.spent) { picks.forEach(c => { c.health = Math.min(1, c.health + 0.35); c.offline = 0; }); out.spent += mcost; out.maintained = n; }
+    else out.notes.push('Not enough left for the well repairs.');
     w.spentTotal += out.spent; w.budget -= out.spent;
     return out;
   }
