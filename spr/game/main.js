@@ -46,8 +46,19 @@
   const resetPlan = () => { plan.build = {}; plan.pumps.clear(); plan.repairShut.clear(); yo.value = 0; ym.value = 0; kMaint.refresh(); };
   const oilVal = () => { const v = +yo.value; return Math.abs(v) < 3 ? 0 : v; };   // a detent at zero
 
+  /* the statement of the year, if the record has one */
+  function onRecord() {
+    const R = window.SALT_STATEMENTS || []; const card = $('record');
+    const s = R.find(x => x.year === w.year);
+    if (!s || (!s.quote && !s.fact)) { if (w.year > 2026) { card.hidden = false; $('rec-date').textContent = String(w.year); $('rec-quote').textContent = 'The record ends in 2026. What Washington says from here is yours to imagine.'; $('rec-quote').className = 'rec-quote fact'; $('rec-who').innerHTML = ''; $('rec-ctx').textContent = ''; } else card.hidden = true; return; }
+    card.hidden = false; $('rec-date').textContent = s.date || String(s.year);
+    $('rec-quote').textContent = s.quote ? `“${s.quote}”` : s.fact; $('rec-quote').className = 'rec-quote' + (s.quote ? '' : ' fact');
+    $('rec-who').innerHTML = s.quote ? `${s.speaker}, ${s.title}<a href="${s.source_url}" target="_blank" rel="noopener">${s.source_name} ↗</a>` : `<a href="${s.source_url}" target="_blank" rel="noopener" style="margin-left:0">${s.source_name} ↗</a>`;
+    $('rec-ctx').textContent = s.context || '';
+  }
+
   function yearPanel() {
-    $('p-year').hidden = false; $('p-crisis').hidden = true;
+    $('p-year').hidden = false; $('p-crisis').hidden = true; onRecord();
     const era = w.domes.every(d => d.plant === 'none') ? 'No dome has pumps. Nothing you hold can come out until you build them.' : w.year < 1986 ? 'Congress is generous while the embargo is fresh. Build.' : w.year < 1992 ? 'Money is tightening. Finish the domes and fill them.' : w.year < 2000 ? 'The nineties: no money, cheap oil, and Congress eyeing your barrels.' : w.year < 2015 ? 'Oil from federal leases trickles in. Keep the wells alive.' : w.year < 2023 ? 'Congress sells your oil to pay for other things. Hold what you can.' : 'Refill years. Every barrel you buy now is one you can pump later.';
     let realNote = '';
     if (real) { const row = real.monthly.find(r => r[0].startsWith(`${w.year}-01`)) || real.weekly.find(r => r[0].startsWith(`${w.year}-01`)); if (row) realNote = ` The real reserve held ${f0(row[1])} mb at the start of ${w.year}; you hold ${f0(S.inv(w))}.`; }

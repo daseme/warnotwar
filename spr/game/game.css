@@ -264,3 +264,14 @@ table.receipt .up { color: var(--teal); } table.receipt .down { color: var(--dan
 .site-card .fx { font-family: var(--mono); font-size: 9.5px; color: #ffd9a0; margin-top: 5px; line-height: 1.35; }
 @media (max-width: 1100px) { .sites { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 820px) { .controls-row { grid-template-columns: 1fr; } .sites { grid-template-columns: 1fr; } }
+
+/* on the record */
+.record { background: var(--bg3); border: 1px solid var(--ink-10); border-left: 3px solid var(--gold); border-radius: 8px; padding: 10px 14px 9px; margin-bottom: 10px; }
+.rec-head { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); }
+.rec-date { color: var(--ink-45); letter-spacing: 0.06em; }
+.rec-quote { margin: 6px 0 4px; font-size: 1.02rem; line-height: 1.45; color: var(--ink); font-style: italic; }
+.rec-quote.fact { font-style: normal; color: var(--ink-80); font-size: 0.95rem; }
+.rec-who { font-family: var(--mono); font-size: 10.5px; color: var(--ink-60); }
+.rec-who a { color: var(--ink-45); text-decoration: none; border-bottom: 1px solid var(--ink-18); margin-left: 8px; }
+.rec-who a:hover { color: var(--ink); }
+.rec-ctx { font-size: 0.85rem; color: var(--ink-45); margin-top: 4px; line-height: 1.4; }
