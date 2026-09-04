@@ -8,8 +8,13 @@
   let w = S.newWorld();
   const scene = new window.SALTScene($('scene'), w);
   scene.onFocus = i => { $('focus-note').textContent = i == null ? 'click a dome to zoom · four salt domes, sixty caverns' : `${w.domes[i].name} · click again to zoom out · numbers under each cavern: barrels, drawdowns left`; };
-  let real = null; fetch('../data/spr_stocks.json').then(r => r.json()).then(d => { real = d; }).catch(() => {});
+  let real = null; const realReady = fetch('../data/spr_stocks.json').then(r => r.json()).then(d => { real = d; }).catch(() => {});
   let autorun = null, pendingCrisis = null, holding = false;
+  /* in the blind window nothing on screen may say the year: these print "year 2" instead of "1978" */
+  const yr = y => w.blind ? `year ${y - w.blind.start + 1}` : String(y);
+  const yl = y => w.blind ? `y${y - w.blind.start + 1}` : String(y);
+  const inYr = n => w.blind ? `in ${n} yr` : `in ${w.year + n}`;
+  const atYr = n => w.blind ? `in ${n} yr` : String(w.year + n);
 
   /* ---------- instruments ---------- */
   const I = window.Instruments;
@@ -24,7 +29,7 @@
 
   /* ---------- HUD ---------- */
   function hud() {
-    oYear.set(w.year); $('h-phase').textContent = w.phase === 'crisis' ? w.crisis.name : 'the year';
+    oYear.set(w.blind ? w.year - w.blind.start + 1 : w.year); $('h-phase').textContent = w.phase === 'crisis' ? w.crisis.name : w.blind ? 'of five · when?' : 'the year';
     gPrice.set(w.price, `$${f0(w.price)}`); gGas.set(S.gasPrice(w), `$${S.gasPrice(w).toFixed(2)}`);
     const i = S.inv(w), cap = S.capacity(w);
     oInv.set(i); oCap.set(Math.max(0, cap - i)); gFuel.set(cap > 0 ? i / cap : 0, `${f0(i)} / ${f0(cap)}`);
@@ -36,7 +41,7 @@
     lStorm.set(!!w.hurricane, !!w.hurricane); lWell.set(wellDown, w.phase === 'crisis' && wellDown); lPumps.set(S.drawCap(w) > 0); lEmerg.set(w.phase === 'crisis', w.phase === 'crisis' && w.spike > 15);
     $('r-count').textContent = `${w.log.length} entries`;
   }
-  function renderLog() { const L = $('log'); L.innerHTML = w.log.slice(0, 120).map(e => `<div class="${e.cls}"><span>${e.year}${e.week ? ` w${e.week}` : ''}</span>${e.text}</div>`).join(''); }
+  function renderLog() { const L = $('log'); L.innerHTML = w.log.slice(0, 120).map(e => `<div class="${e.cls}"><span>${yl(e.year)}${e.week ? ` w${e.week}` : ''}</span>${e.text}</div>`).join(''); }
 
   /* ---------- year panel: throttle, repairs switch, site cards ---------- */
   const yo = $('y-oil'), ym = $('y-maint');
@@ -49,6 +54,7 @@
   /* the statement of the year, if the record has one */
   function onRecord() {
     const R = window.SALT_STATEMENTS || []; const card = $('record');
+    if (w.blind) { card.hidden = true; return; }
     const s = R.find(x => x.year === w.year);
     if (!s || (!s.quote && !s.fact)) { if (w.year > 2026) { card.hidden = false; $('rec-date').textContent = String(w.year); $('rec-quote').textContent = 'The record ends in 2026. What Washington says from here is yours to imagine.'; $('rec-quote').className = 'rec-quote fact'; $('rec-who').innerHTML = ''; $('rec-ctx').textContent = ''; } else card.hidden = true; return; }
     card.hidden = false; $('rec-date').textContent = s.date || String(s.year);
@@ -59,9 +65,9 @@
 
   function yearPanel() {
     $('p-year').hidden = false; $('p-crisis').hidden = true; onRecord();
-    const era = w.domes.every(d => d.plant === 'none') ? 'No dome has pumps. Nothing you hold can come out until you build them.' : w.year < 1986 ? 'Congress is generous while the embargo is fresh. Build.' : w.year < 1992 ? 'Money is tightening. Finish the domes and fill them.' : w.year < 2000 ? 'The nineties: no money, cheap oil, and Congress eyeing your barrels.' : w.year < 2015 ? 'Oil from federal leases trickles in. Keep the wells alive.' : w.year < 2023 ? 'Congress sells your oil to pay for other things. Hold what you can.' : 'Refill years. Every barrel you buy now is one you can pump later.';
+    const era = w.blind ? 'Nothing on this desk says the year. The dials, the money, the state of the caverns and the news are your clues. Run it well.' : w.domes.every(d => d.plant === 'none') ? 'No dome has pumps. Nothing you hold can come out until you build them.' : w.year < 1986 ? 'Congress is generous while the embargo is fresh. Build.' : w.year < 1992 ? 'Money is tightening. Finish the domes and fill them.' : w.year < 2000 ? 'The nineties: no money, cheap oil, and Congress eyeing your barrels.' : w.year < 2015 ? 'Oil from federal leases trickles in. Keep the wells alive.' : w.year < 2023 ? 'Congress sells your oil to pay for other things. Hold what you can.' : 'Refill years. Every barrel you buy now is one you can pump later.';
     let realNote = '';
-    if (real) { const row = real.monthly.find(r => r[0].startsWith(`${w.year}-01`)) || real.weekly.find(r => r[0].startsWith(`${w.year}-01`)); if (row) realNote = ` The real reserve held ${f0(row[1])} mb at the start of ${w.year}; you hold ${f0(S.inv(w))}.`; }
+    if (real && !w.blind) { const row = real.monthly.find(r => r[0].startsWith(`${w.year}-01`)) || real.weekly.find(r => r[0].startsWith(`${w.year}-01`)); if (row) realNote = ` The real reserve held ${f0(row[1])} mb at the start of ${w.year}; you hold ${f0(S.inv(w))}.`; }
     $('y-brief').textContent = era + realNote;
     $('y-budget').textContent = bn(Math.max(0, w.budget));
     siteCards(); yearOut();
@@ -78,7 +84,7 @@
         <div class="st">${plant} · ${live} cavern${live === 1 ? '' : 's'}${d.building.length ? `, ${d.building.length} leaching` : ''}${shut ? ` · <span class="bad">${shut} shut</span>` : ''}</div>
         <div class="ctl"></div><div class="fx"></div>`;
       const ctl = card.querySelector('.ctl');
-      if (d.plant === 'none') { const b = document.createElement('button'); b.className = 'sc-btn pumps' + (plan.pumps.has(d.key) ? ' on' : ''); b.innerHTML = `${plan.pumps.has(d.key) ? '✓ pumps ordered' : 'build pumps'}<small>$350m · ready ${w.year + S.PLANT_YEARS}</small>`; b.onclick = () => { plan.pumps.has(d.key) ? plan.pumps.delete(d.key) : plan.pumps.add(d.key); siteCards(); yearOut(); }; ctl.appendChild(b); }
+      if (d.plant === 'none') { const b = document.createElement('button'); b.className = 'sc-btn pumps' + (plan.pumps.has(d.key) ? ' on' : ''); b.innerHTML = `${plan.pumps.has(d.key) ? '✓ pumps ordered' : 'build pumps'}<small>$350m · ready ${atYr(S.PLANT_YEARS)}</small>`; b.onclick = () => { plan.pumps.has(d.key) ? plan.pumps.delete(d.key) : plan.pumps.add(d.key); siteCards(); yearOut(); }; ctl.appendChild(b); }
       if (slots > 0) { const wrap = document.createElement('div'); wrap.className = 'stepper-wrap'; const n = plan.build[d.key] || 0; wrap.innerHTML = `<div class="stepper"><button data-d="-1" ${n <= 0 ? 'disabled' : ''}>−</button><output>${n}</output><button data-d="1" ${n >= slots ? 'disabled' : ''}>+</button></div><span>dig<br>$40m · ${slots} slot${slots > 1 ? 's' : ''}</span>`; wrap.querySelectorAll('button').forEach(b => b.onclick = () => { plan.build[d.key] = clamp((plan.build[d.key] || 0) + (+b.dataset.d), 0, slots); siteCards(); yearOut(); }); ctl.appendChild(wrap); }
       if (shut) { const b = document.createElement('button'); b.className = 'sc-btn' + (plan.repairShut.has(d.key) ? ' on' : ''); b.innerHTML = `${plan.repairShut.has(d.key) ? '✓ repair ordered' : `repair ${shut} shut`}<small>$2m each · reopens this year</small>`; b.onclick = () => { plan.repairShut.has(d.key) ? plan.repairShut.delete(d.key) : plan.repairShut.add(d.key); siteCards(); yearOut(); }; ctl.appendChild(b); }
       if (!ctl.children.length) ctl.innerHTML = '<span class="st" style="margin:0">built out and pumping</span>';
@@ -128,7 +134,7 @@
     $('y-spec-maint').innerHTML = `<b>${m$(S.WORKOVER)}/well</b>${sep}${R.note}${P.shut ? `${sep}<span class="bad">${P.shut} cavern${P.shut > 1 ? 's' : ''} shut</span>` : ''}`;
     $('y-maint-o').innerHTML = P.nRep ? fx(`${P.nRep} of ${wells} wells · ${bn(P.cM)}`, `${P.nRep} wells made safer${P.reopen ? ` · ${P.reopen} shut cavern${P.reopen > 1 ? 's' : ''} reopen${P.reopen > 1 ? '' : 's'}` : ''}`) : fx(`0 of ${wells} wells · $0.00bn`, 'nothing repaired', true);
     /* site card impact lines */
-    document.querySelectorAll('.site-card').forEach(card => { const d = w.domes.find(x => x.key === card.dataset.key); const parts = []; if (P.pumpDomes.has(d.key)) parts.push(`+${f1(d.rate * Math.min(1, d.cav.filter(c => !c.retired && c.oil > c.cap * S.HEEL).length / Math.max(1, d.maxCav * 0.6)))} mb/day of flow in ${w.year + S.PLANT_YEARS} · $350m`); const n = P.newCav[d.key] || 0; if (n) parts.push(`+${f1(n * S.CAV_MB)} mb of space in ${w.year + S.BUILD_YEARS} · ${bn(n * S.BUILD_COST)}`); if (plan.repairShut.has(d.key)) { const k = d.cav.filter(c => c.offline > 0 && !c.retired).length; parts.push(`${k} cavern${k > 1 ? 's' : ''} back this year · ${bn(k * S.WORKOVER)}`); } card.querySelector('.fx').innerHTML = parts.join('<br>'); });
+    document.querySelectorAll('.site-card').forEach(card => { const d = w.domes.find(x => x.key === card.dataset.key); const parts = []; if (P.pumpDomes.has(d.key)) parts.push(`+${f1(d.rate * Math.min(1, d.cav.filter(c => !c.retired && c.oil > c.cap * S.HEEL).length / Math.max(1, d.maxCav * 0.6)))} mb/day of flow ${inYr(S.PLANT_YEARS)} · $350m`); const n = P.newCav[d.key] || 0; if (n) parts.push(`+${f1(n * S.CAV_MB)} mb of space ${inYr(S.BUILD_YEARS)} · ${bn(n * S.BUILD_COST)}`); if (plan.repairShut.has(d.key)) { const k = d.cav.filter(c => c.offline > 0 && !c.retired).length; parts.push(`${k} cavern${k > 1 ? 's' : ''} back this year · ${bn(k * S.WORKOVER)}`); } card.querySelector('.fx').innerHTML = parts.join('<br>'); });
     /* the appropriation bar */
     const total = w.budget + P.cashIn, over = P.left < 0;
     const seg = (cls, v) => `<i class="${cls}" style="width:${clamp(v / Math.max(total, 1e-9) * 100, 0, 100).toFixed(1)}%"></i>`;
@@ -138,9 +144,9 @@
     const inv1 = inv0 + P.bought - P.sold;
     gFuel.setGhost(cap0 > 0 && Math.abs(inv1 - inv0) > 0.5 ? inv1 / cap0 : null, Math.abs(inv1 - inv0) > 0.5 ? `${inv1 > inv0 ? '+' : '−'}${f0(Math.abs(inv1 - inv0))} mb` : '');
     oInv.setDelta(Math.abs(inv1 - inv0) > 0.5 ? `${inv1 > inv0 ? '+' : '−'}${f0(Math.abs(inv1 - inv0))}` : '', inv1 < inv0 ? 'neg' : '');
-    oCap.setDelta(P.dug ? `+${f0(P.dug * S.CAV_MB)} in ${w.year + S.BUILD_YEARS}` : (Math.abs(inv1 - inv0) > 0.5 ? `${inv1 > inv0 ? '−' : '+'}${f0(Math.abs(inv1 - inv0))}` : ''), inv1 > inv0 && !P.dug ? 'neg' : '');
+    oCap.setDelta(P.dug ? `+${f0(P.dug * S.CAV_MB)} ${inYr(S.BUILD_YEARS)}` : (Math.abs(inv1 - inv0) > 0.5 ? `${inv1 > inv0 ? '−' : '+'}${f0(Math.abs(inv1 - inv0))}` : ''), inv1 > inv0 && !P.dug ? 'neg' : '');
     const draw1 = draw0 + P.addRate + P.reopenRate;
-    gFlow.setGhost(draw1 - draw0 > 0.02 ? draw1 : null, P.addRate > 0.02 ? `+${f1(P.addRate)} in ${w.year + S.PLANT_YEARS}` : P.reopenRate > 0.02 ? `+${f1(P.reopenRate)} now` : '');
+    gFlow.setGhost(draw1 - draw0 > 0.02 ? draw1 : null, P.addRate > 0.02 ? `+${f1(P.addRate)} ${inYr(S.PLANT_YEARS)}` : P.reopenRate > 0.02 ? `+${f1(P.reopenRate)} now` : '');
     oBudget.setDelta(Math.abs(w.budget - Math.max(0, P.left)) > 0.005 ? `→ ${bn(Math.max(0, P.left))} left` : '', over ? 'neg' : '');
     gMood.setGhost(P.sold > 0.5 ? clamp(w.mood + P.sold / 40, 5, 100) : null, P.sold > 0.5 ? 'sale' : '');
     scene.preview = (P.fill.size || P.drain.size || P.dug || P.pumpDomes.size) ? { fill: P.fill, drain: P.drain, newCav: P.newCav, pumpDomes: P.pumpDomes } : null;
@@ -170,7 +176,7 @@
     else if (out.built || out.maintained) w.log.unshift({ year: w.year, week: 0, text: `${out.built ? `Started ${out.built} cavern${out.built > 1 ? 's' : ''}` : ''}${out.built && out.maintained ? '; ' : ''}${out.maintained ? `repaired ${out.maintained} wells` : ''}.` });
     if (out.plants) w.log.unshift({ year: w.year, week: 0, text: `Began building pumps at ${out.plantAt.join(' and ')}. Ready in ${S.PLANT_YEARS} years.`, cls: 'good' });
     const r = S.advanceYear(w);
-    scene.say(String(w.year), r.crisis ? r.crisis.name : r.card ? r.card.name : '');
+    scene.say(yr(w.year), r.crisis ? r.crisis.name : r.card ? r.card.name : '');
     resetPlan();
     hud(); renderLog(); yearPanel();
     return { snap, dec, out, r };
@@ -193,8 +199,8 @@
       agg.built += o.built || 0; Object.entries(o.builtAt || {}).forEach(([k, n]) => { agg.builtAt[k] = (agg.builtAt[k] || 0) + n; });
       agg.plants += o.plants || 0; agg.plantAt = agg.plantAt.concat(o.plantAt || []); agg.maintained += o.maintained || 0;
       (o.notes || []).forEach(n => { if (!agg.notes.includes(n)) agg.notes.push(n); });
-      (r.events || []).forEach(e => agg.events.push({ text: `${y}: ${e.text}`, cls: e.cls }));
-      if (r.end) why = 'The sixty years are up.';
+      (r.events || []).forEach(e => agg.events.push({ text: `${yr(y)}: ${e.text}`, cls: e.cls }));
+      if (r.end) why = w.blind ? 'The five years are up.' : 'The sixty years are up.';
       else if (r.crisis) why = `Stopped: there is news. ${r.crisis.name}.`;
       else if (r.card) why = `Stopped: a decision waits. ${r.card.name}.`;
       else if (!holding) why = 'Stopped: you pulled the lever.';
@@ -228,14 +234,14 @@
     const spent = [];
     if (out.sold > 0.05) spent.push(['sold oil', `${f1(out.sold)} mb`, `+${bn(out.saleCash)}`]);
     if (out.bought > 0.05) spent.push(['bought oil', `${f1(out.bought)} mb at $${f0(out.avgPrice || snap.price)}${hold && hold.years > 1 ? ' avg' : ''}`, bn(out.bought * (out.avgPrice || snap.price) / 1000)]);
-    if (out.built) spent.push(['caverns started', `${Object.entries(out.builtAt || {}).map(([k, n]) => `${n} at ${w.domes.find(d => d.key === k).name.split(' ')[0]}`).join(', ')}${hold && hold.years > 1 ? '' : ` · ready ${snap.year + S.BUILD_YEARS}`}`, bn(out.built * S.BUILD_COST)]);
-    if (out.plants) spent.push(['pumps started', `${out.plantAt.join(', ')}${hold && hold.years > 1 ? '' : ` · ready ${snap.year + S.PLANT_YEARS}`}`, bn(out.plants * S.PLANT_COST)]);
+    if (out.built) spent.push(['caverns started', `${Object.entries(out.builtAt || {}).map(([k, n]) => `${n} at ${w.domes.find(d => d.key === k).name.split(' ')[0]}`).join(', ')}${hold && hold.years > 1 ? '' : ` · ready ${w.blind ? `in ${S.BUILD_YEARS} yr` : snap.year + S.BUILD_YEARS}`}`, bn(out.built * S.BUILD_COST)]);
+    if (out.plants) spent.push(['pumps started', `${out.plantAt.join(', ')}${hold && hold.years > 1 ? '' : ` · ready ${w.blind ? `in ${S.PLANT_YEARS} yr` : snap.year + S.PLANT_YEARS}`}`, bn(out.plants * S.PLANT_COST)]);
     if (out.maintained) spent.push(['wells repaired', `${out.maintained}`, bn(out.maintained * S.WORKOVER)]);
     const spentRows = spent.length ? spent.map(([a, b, c]) => `<tr><td>${a}</td><td>${b}</td><td class="num">${c}</td></tr>`).join('') : `<tr><td colspan="3" class="flat">You spent nothing.</td></tr>`;
     const notes = (out.notes || []).map(n => `<div class="bad">${n}</div>`).join('');
     const events = (r.events || []).map(e => `<div class="${e.cls || ''}">${e.text}</div>`).join('') || '<div class="flat">A quiet year underground.</div>';
     const grant = now.budget;
-    modal(`<div class="kicker">${snap.year} → ${w.year} · ${hold ? `${hold.years} year${hold.years > 1 ? 's' : ''} on hold course` : 'the receipt'}</div><h2>${hold && hold.years > 1 ? `${snap.year}–${w.year - 1}` : snap.year} in the books</h2>${hold ? `<p class="why">${hold.why}</p>` : ''}
+    modal(`<div class="kicker">${yr(snap.year)} → ${yr(w.year)} · ${hold ? `${hold.years} year${hold.years > 1 ? 's' : ''} on hold course` : 'the receipt'}</div><h2>${hold && hold.years > 1 ? (w.blind ? `${yr(snap.year)} to ${yr(w.year - 1)}` : `${snap.year}–${w.year - 1}`) : yr(snap.year)} in the books</h2>${hold ? `<p class="why">${hold.why}</p>` : ''}
       <table class="receipt"><thead><tr><th>you did</th><th></th><th class="num">cost</th></tr></thead><tbody>${spentRows}</tbody></table>${notes}
       <div class="kicker" style="margin-top:12px">what happened</div><div class="events">${events}</div>
       <div class="kicker" style="margin-top:12px">the dials</div>
@@ -245,9 +251,9 @@
         <tr><td>wells can flow</td><td class="num">${f1(snap.draw)} → ${f1(now.draw)} mb/day</td><td class="num">${d(snap.draw, now.draw, f1, ' mb/d')}</td></tr>
         <tr><td>crude</td><td class="num">$${f0(snap.price)} → $${f0(now.price)}</td><td class="num">${d(snap.price, now.price, f0, '')}</td></tr>
         <tr><td>congress</td><td class="num">${f0(snap.mood)} → ${f0(now.mood)}</td><td class="num">${d(snap.mood, now.mood, f0, '')}</td></tr>
-        <tr><td>money for ${w.year}</td><td class="num">${bn(Math.max(0, grant))}</td><td class="num"><span class="flat">grant + what you carried</span></td></tr>
+        <tr><td>money for ${yr(w.year)}</td><td class="num">${bn(Math.max(0, grant))}</td><td class="num"><span class="flat">grant + what you carried</span></td></tr>
       </tbody></table>
-      <div class="foot"><label class="skip mono"><input type="checkbox" id="m-skip"> skip receipts</label><button class="btn primary" id="m-ok">${r.crisis ? 'there is news →' : r.card ? 'a decision waits →' : `on to ${w.year} →`}</button></div>`);
+      <div class="foot"><label class="skip mono"><input type="checkbox" id="m-skip"> skip receipts</label><button class="btn primary" id="m-ok">${r.crisis ? 'there is news →' : r.card ? 'a decision waits →' : `on to ${yr(w.year)} →`}</button></div>`);
     if ((skipReceipts && !hold) || (params.get('bot') && !params.get('receipt') && !params.get('hold'))) { closeModal(); return next(); }
     $('m-skip').onchange = e => { skipReceipts = e.target.checked; };
     $('m-ok').onclick = () => { closeModal(); next(); };
@@ -260,7 +266,7 @@
   function modal(html) { $('modal-card').innerHTML = html; $('modal').classList.add('show'); }
   function closeModal() { $('modal').classList.remove('show'); }
   function showCard(card) {
-    modal(`<div class="kicker">${w.year} · a decision</div><h2>${card.name}</h2><p>${card.text}</p><div class="choices">${card.choices.map((c, i) => `<button class="btn" data-i="${i}">${c.label}</button>`).join('')}</div><div class="result" id="m-result"></div><div class="foot" id="m-foot"></div>`);
+    modal(`<div class="kicker">${yr(w.year)} · a decision</div><h2>${card.name}</h2><p>${card.text}</p><div class="choices">${card.choices.map((c, i) => `<button class="btn" data-i="${i}">${c.label}</button>`).join('')}</div><div class="result" id="m-result"></div><div class="foot" id="m-foot"></div>`);
     $('modal-card').querySelectorAll('.choices button').forEach(b => b.onclick = () => {
       const out = S.resolveCard(w, card, card.choices[+b.dataset.i]);
       $('modal-card').querySelectorAll('.choices button').forEach(x => { x.disabled = true; if (x === b) x.classList.add('primary'); });
@@ -272,7 +278,7 @@
   /* ---------- crises ---------- */
   function crisisIntro(s) {
     pendingCrisis = s;
-    modal(`<div class="kicker">${w.year} · emergency</div><h2>${s.name}</h2><p>${s.text}</p><p class="mono" style="font-size:12px;color:var(--ink-60)">World short about ${f1(s.shortfall)} mb/d. ${s.iea ? `Allies cover their part; your share is about ${f1(s.shortfall * 0.44)} mb/d.` : `Most of this lands on you: about ${f1(s.shortfall * 0.7)} mb/d.`} Your wells can flow ${f1(S.drawCap(w))} mb/d${S.drawCap(w) <= 0 ? ' — nothing. No dome has a pumping plant.' : ''}. You hold ${f0(S.inv(w))} mb.</p>
+    modal(`<div class="kicker">${yr(w.year)} · emergency</div><h2>${s.name}</h2><p>${s.text}</p><p class="mono" style="font-size:12px;color:var(--ink-60)">World short about ${f1(s.shortfall)} mb/d. ${s.iea ? `Allies cover their part; your share is about ${f1(s.shortfall * 0.44)} mb/d.` : `Most of this lands on you: about ${f1(s.shortfall * 0.7)} mb/d.`} Your wells can flow ${f1(S.drawCap(w))} mb/d${S.drawCap(w) <= 0 ? ' — nothing. No dome has a pumping plant.' : ''}. You hold ${f0(S.inv(w))} mb.</p>
       <div class="kicker" style="margin-top:8px">how the desk works</div>
       <div class="desk-list">
         <div><b>The year stops.</b> Time now moves one week at a time. Press <b>next week</b> for one week, or flip the <b>clock</b> to run and watch.</div>
@@ -355,7 +361,7 @@
   function stopRun() { if (autorun) { clearInterval(autorun); autorun = null; } tgRun.set(false); }
   $('c-week-btn').onclick = week;
   function crisisEnd(s) {
-    modal(`<div class="kicker">${w.year} · after ${s.weeks} weeks</div><h2>${s.name} is over.</h2><div class="stats"><div class="stat2"><div class="l">released</div><div class="v">${f1(s.released)}<small>mb</small></div></div><div class="stat2"><div class="l">extra fuel cost to americans</div><div class="v">${bn(s.pain)}</div></div><div class="stat2"><div class="l">your releases saved</div><div class="v">${bn(s.avoided)}</div></div><div class="stat2"><div class="l">to the treasury</div><div class="v">${bn(s.revenue)}</div></div><div class="stat2"><div class="l">left in the ground</div><div class="v">${f0(s.inv)}<small>mb</small></div></div><div class="stat2"><div class="l">congress</div><div class="v">${f0(w.mood)}<small>/100</small></div></div></div><p>${verdictLine(s)}</p><div class="foot"><button class="btn primary" id="m-ok">back to the year →</button></div>`);
+    modal(`<div class="kicker">${yr(w.year)} · after ${s.weeks} weeks</div><h2>${s.name} is over.</h2><div class="stats"><div class="stat2"><div class="l">released</div><div class="v">${f1(s.released)}<small>mb</small></div></div><div class="stat2"><div class="l">extra fuel cost to americans</div><div class="v">${bn(s.pain)}</div></div><div class="stat2"><div class="l">your releases saved</div><div class="v">${bn(s.avoided)}</div></div><div class="stat2"><div class="l">to the treasury</div><div class="v">${bn(s.revenue)}</div></div><div class="stat2"><div class="l">left in the ground</div><div class="v">${f0(s.inv)}<small>mb</small></div></div><div class="stat2"><div class="l">congress</div><div class="v">${f0(w.mood)}<small>/100</small></div></div></div><p>${verdictLine(s)}</p><div class="foot"><button class="btn primary" id="m-ok">back to the year →</button></div>`);
     $('m-ok').onclick = () => { closeModal(); hud(); renderLog(); yearPanel(); $('y-go').disabled = false; };
   }
   function verdictLine(s) {
@@ -367,6 +373,7 @@
 
   /* ---------- the end ---------- */
   function endGame() {
+    if (w.blind) return blindGuess();
     const R = S.report(w);
     const chart = compareChart();
     modal(`<div class="kicker">2036 · the report</div><div class="grade">your title</div><div class="big">${R.title}</div>
@@ -393,6 +400,72 @@
   /* ---------- start ---------- */
   function start() { $('title').classList.remove('show'); if (!params.get('bot')) $('intro').classList.add('show'); scene.say('1977', 'the first barrels'); w.log.unshift({ year: 1977, week: 0, text: 'July 21, 1977. 412,000 barrels of Saudi light go into West Hackberry. You have four domes, fifteen old brine caverns and about 180 million barrels of space. The pumps to get oil back out do not exist yet: build them.', cls: 'head' }); hud(); renderLog(); yearPanel(); }
   $('t-start').onclick = start;
+
+  /* ---------- the blind window: five years somewhere in the record ---------- */
+  const realInvAt = y => { if (!real) return null; const row = real.monthly.find(r => r[0].startsWith(`${y}-01`)) || real.weekly.find(r => r[0].startsWith(`${y}-01`)); return row ? row[1] : null; };
+  const realLatest = () => real ? real.weekly[real.weekly.length - 1] : null;
+  async function startBlind(startYear) {
+    await realReady;
+    const start = startYear || S.WINDOWS[Math.floor(Math.random() * S.WINDOWS.length)];
+    stopRun(); w = S.seedWorld(start, realInvAt(start)); scene.w = w; scene.preview = null; scene.zoomTo(null); resetPlan(); unDrift();
+    $('title').classList.remove('show'); $('intro').classList.remove('show');
+    const pumps = w.domes.filter(d => d.plant === 'ready').map(d => d.name);
+    w.log.unshift({ year: w.year, week: 0, text: `You take the desk as the last administrator left it: ${S.cavCount(w)} caverns, ${f0(S.inv(w))} million barrels in the ground, ${pumps.length === 4 ? 'pumps at every dome' : pumps.length ? `pumps at ${pumps.join(', ')}` : 'no pumps anywhere'}, and ${bn(w.budget)} on the table. Nothing here says the year.`, cls: 'head' });
+    scene.say('year 1', 'somewhere in the record');
+    hud(); renderLog(); yearPanel(); $('y-go').disabled = true; $('y-hold').disabled = true;
+    modal(`<div class="kicker">somewhere in the record · before you begin</div><h2>You have been dropped in.</h2>
+      <p>Nothing on this desk says the year. The dials, the money on the table, the state of the caverns and the news that comes are your clues. Run the reserve for five years as well as you can.</p>
+      <p>At the end you name the year you think it was, and see what the real reserve did in the same five.</p>
+      <div class="foot"><button class="btn primary" id="m-ok">take the desk →</button></div>`);
+    $('m-ok').onclick = () => { closeModal(); const p = w.pending; w.pending = null; if (p && p.kind === 'crisis') return crisisIntro(p); if (p) return showCard(p); $('y-go').disabled = false; $('y-hold').disabled = false; };
+  }
+  function blindGuess() {
+    const lo = 1977, hi = 2022, mid = 2000;
+    modal(`<div class="kicker">five years are up</div><h2>When were you?</h2><p>Name the year you were dropped in. The window ran five years from it.</p>
+      <div class="guess"><div class="big" id="g-val">${mid}</div><input type="range" id="g-year" min="${lo}" max="${hi}" step="1" value="${mid}"><div class="ends"><span>${lo}</span><span>${hi}</span></div></div>
+      <div class="foot"><button class="btn primary" id="m-ok">name it →</button></div>`);
+    const inp = $('g-year'); inp.oninput = () => { $('g-val').textContent = inp.value; }; inp.focus();
+    $('m-ok').onclick = () => blindReveal(+inp.value);
+  }
+  function blindReveal(guess) {
+    const start = w.blind.start, off = Math.abs(guess - start);
+    const title = off === 0 ? 'Historian' : off <= 2 ? 'Near enough' : off <= 6 ? 'Right era' : 'Lost in the salt';
+    const line = off === 0 ? 'You read the desk perfectly.' : off <= 2 ? 'Close enough to have known the price of gas.' : off <= 6 ? 'Right era, wrong administration.' : 'The salt keeps its secrets.';
+    const endReal = realInvAt(start + 5) ?? (realLatest() ? realLatest()[1] : null), endMine = S.inv(w);
+    const rows = [];
+    S.SCRIPT.filter(s => s.year >= start && s.year < start + 5).forEach(s => {
+      if (s.kind !== 'crisis') { rows.push(`<tr><td><b>${s.year}</b> ${s.name}</td><td class="num" colspan="2"><span class="flat">a decision, not a drawdown</span></td></tr>`); return; }
+      const mine = w.crisisLog.find(c => c.year === s.year);
+      let realRel = s.real ? s.real.released : null, note = s.real ? s.real.note : '';
+      if (s.year === 2026 && real) { const jan = realInvAt(2026), lat = realLatest(); if (jan != null && lat) { realRel = Math.max(0, jan - lat[1]); note = `The real drawdown is still running: about ${f0(realRel)} million barrels gone from the reserve by ${lat[0]} (EIA).`; } }
+      rows.push(`<tr><td><b>${s.year}</b> ${s.name}</td><td class="num">${mine ? f1(mine.released) : '0.0'} mb</td><td class="num">${realRel == null ? '—' : `${f1(realRel)} mb`}</td></tr>${note ? `<tr class="note"><td colspan="3">${note}</td></tr>` : ''}`);
+    });
+    const quotes = (window.SALT_STATEMENTS || []).filter(x => x.year >= start && x.year < start + 5 && (x.quote || x.fact)).map(x => `<div class="rq"><span class="mono">${x.date || x.year}</span>${x.quote ? `“${x.quote}”` : x.fact}${x.quote ? ` <i>— ${x.speaker}, ${x.title}</i>` : ''}<a href="${x.source_url}" target="_blank" rel="noopener">${x.source_name} ↗</a></div>`).join('');
+    modal(`<div class="kicker">the reveal</div><div class="grade">${off === 0 ? 'exactly right' : `${off} year${off > 1 ? 's' : ''} off`} · ${title}</div><div class="big">It was ${start}–${start + 4}.</div>
+      <p>You said ${guess}. ${line}</p>
+      <div class="stats"><div class="stat2"><div class="l">in the ground at the end</div><div class="v">${f0(endMine)}<small>mb · you</small></div></div><div class="stat2"><div class="l">the real reserve</div><div class="v">${endReal == null ? '—' : f0(endReal)}<small>mb · EIA</small></div></div><div class="stat2"><div class="l">saved americans</div><div class="v">${bn(w.painAvoided)}</div></div></div>
+      ${rows.length ? `<table class="receipt"><thead><tr><th>what came</th><th class="num">you released</th><th class="num">the real reserve</th></tr></thead><tbody>${rows.join('')}</tbody></table>` : '<p class="flat">A quiet five years. Nothing came.</p>'}
+      <figure>${windowChart(start)}<div class="legend"><span><i style="background:var(--gold)"></i>your reserve</span><span><i style="background:rgba(239,232,216,0.7)"></i>what really happened (EIA)</span></div></figure>
+      ${quotes ? `<div class="kicker" style="margin-top:12px">what they were saying while you ran it</div><div class="rqs">${quotes}</div>` : ''}
+      <div class="foot"><a class="btn" href="/spr/">read how it works</a><button class="btn" id="m-camp">play the sixty years</button><button class="btn primary" id="m-again">another window →</button></div>`);
+    $('m-again').onclick = () => { closeModal(); const rest = S.WINDOWS.filter(y => y !== start); startBlind(rest[Math.floor(Math.random() * rest.length)]); };
+    $('m-camp').onclick = () => location.reload();
+  }
+  function windowChart(start) {
+    const W = 580, H = 200, L = 40, R = 12, T = 14, B = 24, x0 = start, x1 = start + 5;
+    const pts = real ? real.monthly.concat(real.weekly.filter(r => r[0] > real.monthly[real.monthly.length - 1][0])).map(r => [+r[0].slice(0, 4) + (+r[0].slice(5, 7) - 1) / 12, r[1]]).filter(p => p[0] >= x0 && p[0] <= x1) : [];
+    const top = Math.max(100, Math.ceil(Math.max(...w.history.map(h => Math.max(h.inv, h.cap)), ...pts.map(p => p[1])) * 1.1 / 100) * 100);
+    const x = y => L + (y - x0) / (x1 - x0) * (W - L - R), yv = v => H - B - v / top * (H - T - B);
+    const mono = 'fill="rgba(239,232,216,0.45)" font-size="9" font-family="IBM Plex Mono, monospace"';
+    let s = `<svg viewBox="0 0 ${W} ${H}">`;
+    for (let v = 0; v <= top; v += top / 4) s += `<line x1="${L}" x2="${W - R}" y1="${yv(v)}" y2="${yv(v)}" stroke="rgba(239,232,216,0.1)"/><text x="${L - 6}" y="${yv(v) + 3}" ${mono} text-anchor="end">${f0(v)}</text>`;
+    for (let y = x0; y <= x1; y++) s += `<text x="${x(y)}" y="${H - 8}" ${mono} text-anchor="middle">${y}</text>`;
+    if (pts.length) s += `<path d="${pts.map((p, i) => `${i ? 'L' : 'M'}${x(p[0]).toFixed(1)},${yv(p[1]).toFixed(1)}`).join('')}" fill="none" stroke="rgba(239,232,216,0.7)" stroke-width="1.4"/>`;
+    s += `<path d="${w.history.map((h, i) => `${i ? 'L' : 'M'}${x(h.year).toFixed(1)},${yv(h.inv).toFixed(1)}`).join('')}" fill="none" stroke="var(--gold)" stroke-width="2"/>`;
+    s += `<path d="${w.history.map((h, i) => `${i ? 'L' : 'M'}${x(h.year).toFixed(1)},${yv(h.cap).toFixed(1)}`).join('')}" fill="none" stroke="var(--gold)" stroke-width="1" stroke-dasharray="3 3" opacity="0.6"/>`;
+    return s + '</svg>';
+  }
+  $('t-blind').onclick = () => startBlind(null);
   $('i-ok').onclick = () => $('intro').classList.remove('show');
   addEventListener('keydown', e => { if (e.code !== 'Space' || e.target.tagName === 'INPUT') return; e.preventDefault(); if ($('title').classList.contains('show')) return start(); if ($('intro').classList.contains('show')) return $('i-ok').click(); if ($('modal').classList.contains('show')) { const ok = $('m-ok') || $('m-again'); if (ok) ok.click(); return; } if (w.phase === 'crisis') week(); else if (!$('y-go').disabled) turnYear(); });
   const wait = ms => new Promise(r => setTimeout(r, ms));
@@ -403,6 +476,16 @@
 
   /* ---------- test hooks: ?skip=1 skips the title; ?bot=YEAR plays sensibly to that year; ?bot=YEAR&stop=crisis stops inside the first crisis after it ---------- */
   if (params.get('skip') || params.get('bot')) { document.documentElement.style.setProperty('--t', '0s'); document.querySelectorAll('.overlay').forEach(o => o.style.transition = 'none'); start(); unDrift(); }
+  /* ?window=YEAR drops in blind at that year (any other value: random); &auto=1 plays the five years out to the guess; &guess=YEAR answers it */
+  if (params.get('window')) { document.documentElement.style.setProperty('--t', '0s'); document.querySelectorAll('.overlay').forEach(o => o.style.transition = 'none'); startBlind(+params.get('window') || null).then(() => {
+    if (params.get('desk')) { closeModal(); w.pending = null; $('y-go').disabled = false; $('y-hold').disabled = false; return; }
+    if (!params.get('auto')) return;
+    closeModal(); const handle = ev => { if (!ev) return; if (ev.kind === 'crisis') { S.startCrisis(w, ev); while (w.phase === 'crisis') S.crisisWeek(w, Math.min(1.0, S.drawCap(w))); } else S.resolveCard(w, ev, ev.choices[0]); };
+    const p = w.pending; w.pending = null; handle(p);
+    while (w.phase !== 'end') { const buy = Math.min(S.roomFor(w), Math.max(0, (w.budget - 0.1) * 1000 / w.price)); S.yearDecisions(w, { buy, maintain: 0.25 }); const r = S.advanceYear(w); if (r.end) break; handle(r.crisis || r.card); }
+    hud(); renderLog(); yearPanel();
+    if (params.get('guess')) blindReveal(+params.get('guess')); else blindGuess();
+  }); }
   if (params.get('receipt')) { setTimeout(() => { yo.value = Math.floor(+yo.max / 2); ym.value = 1; const d = w.domes.find(x => x.plant === 'none'); if (d) plan.pumps.add(d.key); const d2 = w.domes.find(x => x.maxCav - x.cav.length - x.building.length > 1); if (d2) plan.build[d2.key] = 2; turnYear(); }, 2500); }
   if (params.get('hold')) { setTimeout(() => { $('intro').classList.remove('show'); yo.value = Math.floor(+yo.max / 4); ym.value = 1; const d = w.domes.find(x => x.plant === 'none'); if (d) plan.pumps.add(d.key); siteCards(); yearOut(); holdCourse(); }, 2500); }
   if (params.get('preview')) { setTimeout(() => { yo.value = params.get('preview') === 'sell' ? -20 : Math.floor(+yo.max / 2); ym.value = 1; const d = w.domes.find(x => x.plant === 'none'); if (d) plan.pumps.add(d.key); const d2 = w.domes.find(x => x.maxCav - x.cav.length - x.building.length > 2); if (d2) plan.build[d2.key] = 3; siteCards(); yearOut(); }, 2500); }
