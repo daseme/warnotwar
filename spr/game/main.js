@@ -9,7 +9,7 @@
   const scene = new window.SALTScene($('scene'), w);
   scene.onFocus = i => { $('focus-note').textContent = i == null ? 'click a dome to zoom · four salt domes, sixty caverns' : `${w.domes[i].name} · click again to zoom out · numbers under each cavern: barrels, drawdowns left`; };
   let real = null; fetch('../data/spr_stocks.json').then(r => r.json()).then(d => { real = d; }).catch(() => {});
-  let autorun = null, pendingCrisis = null;
+  let autorun = null, pendingCrisis = null, holding = false;
 
   /* ---------- instruments ---------- */
   const I = window.Instruments;
@@ -148,21 +148,21 @@
     const nextGrant = S.budgetFor(w.year + 1) * (0.8 + w.mood / 250);
     $('y-money').innerHTML = `Money: unspent cash carries over, but Congress cuts next year’s grant by half of it. Next year’s grant looks like about <b>${bn(nextGrant)}</b>${P.left > 0.05 ? `; carrying ${bn(P.left)} would make it about <b>${bn(Math.max(0, nextGrant - P.left * 0.5) + P.left)}</b> in hand` : ''}.`;
     const L = $('y-left'); L.textContent = bn(Math.abs(P.left)) + (over ? ' short' : ''); L.style.color = over ? 'var(--danger)' : 'var(--ink)';
-    $('y-go').disabled = over;
+    $('y-go').disabled = over; $('y-hold').disabled = holding ? false : over;
     $('y-budget').textContent = bn(Math.max(0, w.budget)) + (P.cashIn > 0.005 ? ` + ${bn(P.cashIn)} from the sale` : '');
   }
   const clearGhosts = () => { scene.preview = null; [gFuel, gFlow, gMood].forEach(g => g.setGhost(null)); [oInv, oCap, oBudget].forEach(o => o.setDelta('')); };
   yo.addEventListener('input', yearOut); ym.addEventListener('input', yearOut);
 
-  async function turnYear() {
-    $('y-go').disabled = true; clearGhosts();
+  async function runYear(fast) {
+    $('y-go').disabled = true; if (!holding) $('y-hold').disabled = true; clearGhosts();
     const snap = { year: w.year, inv: S.inv(w), cap: S.capacity(w), draw: S.drawCap(w), budget: w.budget, mood: w.mood, price: w.price, gas: S.gasPrice(w) };
     const v = oilVal();
     const dec = { buy: Math.max(0, v), sell: Math.max(0, -v), maintain: REPAIR[Math.round(+ym.value)].share, buildAt: { ...plan.build }, pumpsAt: [...plan.pumps], repairShut: [...plan.repairShut] };
     const before = new Map(w.domes.flatMap(d => d.cav).map(c => [c, c.oil]));
     const out = S.yearDecisions(w, dec);
     const poured = w.domes.flatMap(d => d.cav).filter(c => c.oil - (before.get(c) ?? c.oil) > 0.05).map(c => ({ cv: c, from: before.get(c), to: c.oil }));
-    if (poured.length) { const dur = Math.min(4000, 700 + poured.length * 550); scene.flow.in = Math.min(0.8, out.bought / 100); scene.animateFill(poured, dur); $('y-brief').textContent = `Pouring ${f1(out.bought)} million barrels into ${poured.length} cavern${poured.length > 1 ? 's' : ''}…`; await wait(dur + 150); scene.flow.in = 0; }
+    if (poured.length) { const dur = fast ? 350 : Math.min(4000, 700 + poured.length * 550); scene.flow.in = Math.min(0.8, out.bought / 100); scene.animateFill(poured, dur); $('y-brief').textContent = `Pouring ${f1(out.bought)} million barrels into ${poured.length} cavern${poured.length > 1 ? 's' : ''}…`; await wait(dur + 150); scene.flow.in = 0; }
     out.notes.forEach(n => w.log.unshift({ year: w.year, week: 0, text: n, cls: 'bad' }));
     if (out.sold > 0.05) { const ab = S.avgBuy(w); w.log.unshift({ year: w.year, week: 0, text: `Sold ${f1(out.sold)} mb at $${f0(w.price)}: ${bn(out.saleCash)} into your account${ab ? ` (your oil cost $${f0(ab)} a barrel on average)` : ''}.`, cls: 'good' }); }
     if (out.bought > 0.05 && w.soldCash > 0 && w.price < S.avgSell(w)) w.log.unshift({ year: w.year, week: 0, text: `Buying back at $${f0(w.price)} what you sold at an average of $${f0(S.avgSell(w))}: the buy-low, sell-high argument both administrations made.`, cls: 'good' });
@@ -173,25 +173,69 @@
     scene.say(String(w.year), r.crisis ? r.crisis.name : r.card ? r.card.name : '');
     resetPlan();
     hud(); renderLog(); yearPanel();
-    const next = () => { if (r.end) return endGame(); if (r.card) return showCard(r.card); if (r.crisis) return crisisIntro(r.crisis); $('y-go').disabled = false; };
-    receipt(snap, dec, out, r, next);
+    return { snap, dec, out, r };
+  }
+  const afterYear = r => { if (r.end) return endGame(); if (r.card) return showCard(r.card); if (r.crisis) return crisisIntro(r.crisis); $('y-go').disabled = false; $('y-hold').disabled = false; };
+  async function turnYear() { const t = await runYear(false); receipt(t.snap, t.dec, t.out, t.r, () => afterYear(t.r)); }
+
+  /* ---------- hold course: the same plan every year until something needs you ---------- */
+  const holdLabel = () => { $('y-hold').querySelector('span').innerHTML = holding ? 'stop ■<small>holding course…</small>' : 'hold course ▸▸<small>same plan every year until news</small>'; $('y-hold').classList.toggle('on', holding); };
+  async function holdCourse() {
+    if (holding || $('y-hold').disabled) return;
+    const held = { oil: oilVal(), maint: +ym.value };
+    const agg = { bought: 0, cost: 0, sold: 0, saleCash: 0, built: 0, builtAt: {}, plants: 0, plantAt: [], maintained: 0, notes: [], events: [] };
+    let first = null, last = null, years = 0, why = '';
+    holding = true; holdLabel();
+    while (true) {
+      const t = await runYear(true); years++; if (!first) first = t.snap; last = t;
+      const o = t.out, r = t.r, y = t.snap.year;
+      agg.bought += o.bought || 0; agg.cost += (o.bought || 0) * t.snap.price / 1000; agg.sold += o.sold || 0; agg.saleCash += o.saleCash || 0;
+      agg.built += o.built || 0; Object.entries(o.builtAt || {}).forEach(([k, n]) => { agg.builtAt[k] = (agg.builtAt[k] || 0) + n; });
+      agg.plants += o.plants || 0; agg.plantAt = agg.plantAt.concat(o.plantAt || []); agg.maintained += o.maintained || 0;
+      (o.notes || []).forEach(n => { if (!agg.notes.includes(n)) agg.notes.push(n); });
+      (r.events || []).forEach(e => agg.events.push({ text: `${y}: ${e.text}`, cls: e.cls }));
+      if (r.end) why = 'The sixty years are up.';
+      else if (r.crisis) why = `Stopped: there is news. ${r.crisis.name}.`;
+      else if (r.card) why = `Stopped: a decision waits. ${r.card.name}.`;
+      else if (!holding) why = 'Stopped: you pulled the lever.';
+      else {
+        const shut = w.domes.filter(d => d.cav.some(c => c.offline > 0 && !c.retired));
+        yo.value = held.oil; ym.value = held.maint; kMaint.refresh(); yearOut();
+        let P = project();
+        if (P.left < 0 && held.oil > 0) { yo.value = Math.max(0, held.oil - Math.ceil(-P.left * 1000 / w.price)); yearOut(); P = project(); }
+        if (shut.length && held.maint < 0.5) why = `Stopped: a cavern is shut at ${shut.map(d => d.name).join(' and ')} and the repairs switch is off.`;
+        else if (P.left < 0) why = 'Stopped: the money does not cover the plan.';
+        else if (held.oil > 0 && +yo.max <= 0) why = 'Stopped: the caverns are full. Dig before you buy more.';
+        else if (held.oil > 0 && +yo.value <= 0) why = 'Stopped: no money left to buy oil with.';
+        else if (held.oil < 0 && +yo.min >= 0) why = 'Stopped: nothing left to sell.';
+      }
+      if (why) break;
+      await wait(250);
+      if (!holding) { why = 'Stopped: you pulled the lever.'; break; }
+    }
+    holding = false; holdLabel();
+    if (!last.r.end) { yo.value = held.oil; ym.value = held.maint; kMaint.refresh(); yearOut(); }
+    const r = last.r, hold = { years, why };
+    if (years === 1) return receipt(first, last.dec, last.out, r, () => afterYear(r), hold);
+    const out = { ...agg, avgPrice: agg.bought > 0.05 ? agg.cost * 1000 / agg.bought : first.price };
+    receipt(first, last.dec, out, { events: agg.events, crisis: r.crisis, card: r.card, end: r.end }, () => afterYear(r), hold);
   }
 
   /* ---------- the year-end receipt: what you spent, what you got, what moved ---------- */
-  function receipt(snap, dec, out, r, next) {
+  function receipt(snap, dec, out, r, next, hold) {
     const now = { inv: S.inv(w), cap: S.capacity(w), draw: S.drawCap(w), budget: w.budget, mood: w.mood, price: w.price, gas: S.gasPrice(w) };
     const d = (a, b, fmt, unit = '') => { const x = b - a; if (Math.abs(x) < (fmt === f1 ? 0.05 : 0.5)) return `<span class="flat">no change</span>`; return `<span class="${x > 0 ? 'up' : 'down'}">${x > 0 ? '+' : '−'}${fmt(Math.abs(x))}${unit}</span>`; };
     const spent = [];
     if (out.sold > 0.05) spent.push(['sold oil', `${f1(out.sold)} mb`, `+${bn(out.saleCash)}`]);
-    if (out.bought > 0.05) spent.push(['bought oil', `${f1(out.bought)} mb at $${f0(snap.price)}`, bn(out.bought * snap.price / 1000)]);
-    if (out.built) spent.push(['caverns started', `${Object.entries(out.builtAt || {}).map(([k, n]) => `${n} at ${w.domes.find(d => d.key === k).name.split(' ')[0]}`).join(', ')} · ready ${snap.year + S.BUILD_YEARS}`, bn(out.built * S.BUILD_COST)]);
-    if (out.plants) spent.push(['pumps started', `${out.plantAt.join(', ')} · ready ${snap.year + S.PLANT_YEARS}`, bn(out.plants * S.PLANT_COST)]);
+    if (out.bought > 0.05) spent.push(['bought oil', `${f1(out.bought)} mb at $${f0(out.avgPrice || snap.price)}${hold && hold.years > 1 ? ' avg' : ''}`, bn(out.bought * (out.avgPrice || snap.price) / 1000)]);
+    if (out.built) spent.push(['caverns started', `${Object.entries(out.builtAt || {}).map(([k, n]) => `${n} at ${w.domes.find(d => d.key === k).name.split(' ')[0]}`).join(', ')}${hold && hold.years > 1 ? '' : ` · ready ${snap.year + S.BUILD_YEARS}`}`, bn(out.built * S.BUILD_COST)]);
+    if (out.plants) spent.push(['pumps started', `${out.plantAt.join(', ')}${hold && hold.years > 1 ? '' : ` · ready ${snap.year + S.PLANT_YEARS}`}`, bn(out.plants * S.PLANT_COST)]);
     if (out.maintained) spent.push(['wells repaired', `${out.maintained}`, bn(out.maintained * S.WORKOVER)]);
     const spentRows = spent.length ? spent.map(([a, b, c]) => `<tr><td>${a}</td><td>${b}</td><td class="num">${c}</td></tr>`).join('') : `<tr><td colspan="3" class="flat">You spent nothing.</td></tr>`;
     const notes = (out.notes || []).map(n => `<div class="bad">${n}</div>`).join('');
     const events = (r.events || []).map(e => `<div class="${e.cls || ''}">${e.text}</div>`).join('') || '<div class="flat">A quiet year underground.</div>';
     const grant = now.budget;
-    modal(`<div class="kicker">${snap.year} → ${w.year} · the receipt</div><h2>${snap.year} in the books</h2>
+    modal(`<div class="kicker">${snap.year} → ${w.year} · ${hold ? `${hold.years} year${hold.years > 1 ? 's' : ''} on hold course` : 'the receipt'}</div><h2>${hold && hold.years > 1 ? `${snap.year}–${w.year - 1}` : snap.year} in the books</h2>${hold ? `<p class="why">${hold.why}</p>` : ''}
       <table class="receipt"><thead><tr><th>you did</th><th></th><th class="num">cost</th></tr></thead><tbody>${spentRows}</tbody></table>${notes}
       <div class="kicker" style="margin-top:12px">what happened</div><div class="events">${events}</div>
       <div class="kicker" style="margin-top:12px">the dials</div>
@@ -204,12 +248,13 @@
         <tr><td>money for ${w.year}</td><td class="num">${bn(Math.max(0, grant))}</td><td class="num"><span class="flat">grant + what you carried</span></td></tr>
       </tbody></table>
       <div class="foot"><label class="skip mono"><input type="checkbox" id="m-skip"> skip receipts</label><button class="btn primary" id="m-ok">${r.crisis ? 'there is news →' : r.card ? 'a decision waits →' : `on to ${w.year} →`}</button></div>`);
-    if (skipReceipts || (params.get('bot') && !params.get('receipt'))) { closeModal(); return next(); }
+    if ((skipReceipts && !hold) || (params.get('bot') && !params.get('receipt') && !params.get('hold'))) { closeModal(); return next(); }
     $('m-skip').onchange = e => { skipReceipts = e.target.checked; };
     $('m-ok').onclick = () => { closeModal(); next(); };
   }
   let skipReceipts = false;
   $('y-go').onclick = turnYear;
+  $('y-hold').onclick = () => { if (holding) { holding = false; holdLabel(); return; } holdCourse(); };
 
   /* ---------- cards ---------- */
   function modal(html) { $('modal-card').innerHTML = html; $('modal').classList.add('show'); }
@@ -359,6 +404,7 @@
   /* ---------- test hooks: ?skip=1 skips the title; ?bot=YEAR plays sensibly to that year; ?bot=YEAR&stop=crisis stops inside the first crisis after it ---------- */
   if (params.get('skip') || params.get('bot')) { document.documentElement.style.setProperty('--t', '0s'); document.querySelectorAll('.overlay').forEach(o => o.style.transition = 'none'); start(); unDrift(); }
   if (params.get('receipt')) { setTimeout(() => { yo.value = Math.floor(+yo.max / 2); ym.value = 1; const d = w.domes.find(x => x.plant === 'none'); if (d) plan.pumps.add(d.key); const d2 = w.domes.find(x => x.maxCav - x.cav.length - x.building.length > 1); if (d2) plan.build[d2.key] = 2; turnYear(); }, 2500); }
+  if (params.get('hold')) { setTimeout(() => { $('intro').classList.remove('show'); yo.value = Math.floor(+yo.max / 4); ym.value = 1; const d = w.domes.find(x => x.plant === 'none'); if (d) plan.pumps.add(d.key); siteCards(); yearOut(); holdCourse(); }, 2500); }
   if (params.get('preview')) { setTimeout(() => { yo.value = params.get('preview') === 'sell' ? -20 : Math.floor(+yo.max / 2); ym.value = 1; const d = w.domes.find(x => x.plant === 'none'); if (d) plan.pumps.add(d.key); const d2 = w.domes.find(x => x.maxCav - x.cav.length - x.building.length > 2); if (d2) plan.build[d2.key] = 3; siteCards(); yearOut(); }, 2500); }
   if (params.get('bot')) {
     const target = +params.get('bot'); const stopAt = params.get('stop');
