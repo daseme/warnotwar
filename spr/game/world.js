@@ -374,9 +374,11 @@
     const wells = w.domes.flatMap(d => d.cav).filter(c => !c.retired);
     const health = wells.length ? wells.reduce((a, c) => a + c.health, 0) / wells.length : 0;
     const leftAvg = wells.length ? wells.reduce((a, c) => a + Math.max(0, c.left - c.used), 0) / wells.length : 0;
-    const score = Math.round(clamp(w.painAvoided * 0.6, 0, 500) + clamp(i / 5, 0, 150) + clamp(health * 100, 0, 100) + clamp(leftAvg * 20, 0, 100) - clamp(w.spentTotal * 3, 0, 150) + clamp(w.treasury * 2, 0, 100));
-    const title = score > 700 ? 'Keeper of the Salt' : score > 550 ? 'Steward' : score > 400 ? 'Administrator' : score > 250 ? 'Caretaker' : 'Custodian of an Empty Vault';
-    return { inv: i, cap, caverns: wells.length, health, leftAvg, pain: w.pain, avoided: w.painAvoided, spent: w.spentTotal, treasury: w.treasury, bought: w.boughtTotal, released: w.releasedTotal, stuck: w.stuck, mood: w.mood, score, title };
+    // the way out: of what the wells could have given in crises, the share that actually got out (nothing released, nothing scored)
+    const wayOut = w.releasedTotal + w.stuck > 0.5 ? 100 * (1 - w.stuck / (w.releasedTotal + w.stuck)) : 0;
+    const score = Math.round(clamp(w.painAvoided * 0.6, 0, 500) + clamp(i / 5, 0, 150) + clamp(health * 100, 0, 100) + clamp(leftAvg * 20, 0, 100) - clamp(w.spentTotal * 3, 0, 150) + clamp(w.treasury * 2, 0, 100) + clamp(wayOut, 0, 100));
+    const title = score > 750 ? 'Keeper of the Salt' : score > 590 ? 'Steward' : score > 430 ? 'Administrator' : score > 270 ? 'Caretaker' : 'Custodian of an Empty Vault';
+    return { inv: i, cap, caverns: wells.length, health, leftAvg, pain: w.pain, avoided: w.painAvoided, spent: w.spentTotal, treasury: w.treasury, bought: w.boughtTotal, released: w.releasedTotal, stuck: w.stuck, wayOut, mood: w.mood, score, title };
   }
 
   root.SALT = { gasPrice, hum, seedWorld, WINDOWS, SYSTEMS, chainFlows, deliverCap, takeawayOf, pipeRate, linesCap, congestion, PIPE_COST, PIPE_YEARS, DOCK_COST, TERM_COST, TERM_YEARS, TERM_CAP, PLANT_COST, PLANT_YEARS, BUILD_YEARS, maxSell, avgBuy, avgSell, newWorld, yearDecisions, advanceYear, resolveCard, startCrisis, crisisWeek, inv, capacity, cavCount, drawCap, fillCap, roomFor, report, basePrice, budgetFor, SCRIPT, DOMES, HEEL, CAV_MB, BUILD_COST, WORKOVER, domeOil, domeCap, domeRate, rnd };

@@ -1,4 +1,4 @@
-# SALT — the chain (spec, 2026-09-04). Status: phases A and B built; phase C open.
+# SALT — the chain (spec, 2026-09-04). Status: all three phases built.
 
 The drawdown path per dome becomes three links: **pumps → pipe → takeaway**. Flow is the smallest link. The scene shows barrels moving along the chain and the binding link glows red. Site cards let you build the next link. This is the Factorio loop on the real system: the wells were never the limit; the pipes and the docks were.
 
@@ -44,4 +44,5 @@ Per dome `d.chain = { pipe, dock, terminal }`:
 ## Phasing
 - A — DONE (commit 49942c9): model + crisis line + site orders + receipt rows.
 - B — DONE: scene lines per dome, dots that pile up at the binding link, red choke glow, docks glyph, short red out-needle on the wells dial, the bottleneck card at week 0 of the first binding crisis, chain controls hidden until then (blind windows start with them shown).
-- C — open: congestion era, dedicated terminal, blind seeding, bot orders, methodology note on the SPR page.
+- C — DONE: methodology note in spr/index.html (the way out, in the game), score term `wayOut` = share of the wells' crisis surplus that got out (0–100), title thresholds raised 50/40/30/20. Congestion, terminal, blind seeding and bot orders shipped in A.
+- (was C:) congestion era, dedicated terminal, blind seeding, bot orders, methodology note on the SPR page.
