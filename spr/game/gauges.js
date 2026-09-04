@@ -39,6 +39,8 @@
       this.tag = el('text', { x: c, y: c - R * 0.36, 'text-anchor': 'middle', fill: '#ffd9a0', 'font-size': 6.5, 'font-family': 'IBM Plex Mono, monospace', opacity: 0 }, svg);
       this.needle = el('g', { transform: `rotate(-135 ${c} ${c})` }, svg);
       el('polygon', { points: `${c - 1.6},${c + 8} ${c + 1.6},${c + 8} ${c + 0.5},${c - rT + 4} ${c - 0.5},${c - rT + 4}`, fill: '#f0a058' }, this.needle);
+      this.outN = el('g', { transform: `rotate(-135 ${c} ${c})`, opacity: 0 }, svg);   // a short red needle: what actually gets out
+      el('polygon', { points: `${c - 1.8},${c + 4} ${c + 1.8},${c + 4} ${c + 0.7},${c - rT * 0.58} ${c - 0.7},${c - rT * 0.58}`, fill: '#d06a5c' }, this.outN);
       el('circle', { cx: c, cy: c, r: 4.5, fill: '#2a2621', stroke: '#9a978f', 'stroke-width': 1.2 }, svg);
       el('ellipse', { cx: c - R * 0.3, cy: c - R * 0.45, rx: R * 0.45, ry: R * 0.22, fill: 'rgba(255,255,255,0.05)' }, svg);  // glass
       this.c = c; requestAnimationFrame(t => this.tick(t));
@@ -47,6 +49,8 @@
     set(v, text) { this.v = v; if (text != null) this.read.textContent = text; }
     /* a faint second needle: where the dial will read after the year turns. tag: e.g. 'in 1991' */
     setGhost(v, tag) { if (v == null || Math.abs(v - this.v) < 1e-9) { this.ghost.setAttribute('opacity', 0); this.tag.setAttribute('opacity', 0); return; } this.ghost.setAttribute('opacity', 1); this.ghost.setAttribute('transform', `rotate(${this.ang(v).toFixed(2)} ${this.c} ${this.c})`); this.tag.textContent = tag || ''; this.tag.setAttribute('opacity', tag ? 1 : 0); }
+    /* the short red needle: what gets out, when it is less than what the wells can push */
+    setOut(v) { if (v == null) { this.outN.setAttribute('opacity', 0); return; } this.outN.setAttribute('opacity', 1); this.outN.setAttribute('transform', `rotate(${this.ang(v).toFixed(2)} ${this.c} ${this.c})`); }
     tick(t) {
       // a moving-coil needle: springy, slightly under-damped
       const dt = Math.min(0.05, (t - (this.last || t)) / 1000); this.last = t;

@@ -17,6 +17,7 @@
       this.cam = { x: 0.5, y: 0.5, z: 1, tx: 0.5, ty: 0.5, tz: 1 };
       this.parts = []; this.clouds = Array.from({ length: 7 }, (_, i) => ({ x: Math.random(), y: 0.05 + Math.random() * 0.16, s: 0.05 + Math.random() * 0.08, v: 0.004 + Math.random() * 0.006 }));
       this.flash = null; this.flow = { out: 0, in: 0 }; this.hover = null; this.focus = null; this.t0 = performance.now();
+      this.chain = null;   // in a crisis: { flows: {key: {pumps, pipe, take, flow, bind}}, cap, wells, held: {key: mb/d asked for that cannot get out} }
       this.tanker = 0.02; this.shown = new Map(); this.anim = null; this.preview = null;   // preview: { fill: Map, drain: Map, newCav: {key: n}, pumpDomes: Set }
       this.resize(); addEventListener('resize', () => this.resize());
       canvas.addEventListener('mousemove', e => this.onMove(e)); canvas.addEventListener('mouseleave', () => { this.hover = null; });
@@ -129,14 +130,32 @@
         ctx.fillStyle = C.dim; ctx.font = `${10 * Math.min(z, 1.6)}px IBM Plex Mono, monospace`; ctx.fillText(`${S.domeOil(d).toFixed(0)} / ${S.domeCap(d).toFixed(0)} mb${d.plant === 'none' ? ' · no pumps' : typeof d.plant === 'number' ? ` · pumps in ${d.plant}y` : ''}`, sx(d.x), sy(SURF - 0.045) + 13 * Math.min(z, 1.6));
       });
       /* pipeline along the surface to the refineries; raw water line from the sea */
-      ctx.strokeStyle = '#6a635a'; ctx.lineWidth = Math.max(1.5, 2 * z / 1.5); ctx.beginPath(); ctx.moveTo(sx(0.08), sy(SURF - 0.006)); ctx.lineTo(sx(0.96), sy(SURF - 0.006)); ctx.stroke();
+      ctx.strokeStyle = '#6a635a'; ctx.lineWidth = Math.max(1.5, 2 * z / 1.5); ctx.beginPath(); ctx.moveTo(sx(0.08), sy(SURF - 0.006)); ctx.lineTo(sx(0.985), sy(SURF - 0.006)); ctx.stroke();
+      // each dome's own line to the system: thin at half the design rate, full when the bigger line is in; red where it is the link that binds
+      const ch = this.chain, pulse = 0.75 + 0.25 * Math.sin(t / 220);
+      w.domes.forEach(d => {
+        const f = ch && ch.flows[d.key], y = SURF - 0.006, x0 = d.x + 0.028, x1 = d.x + 0.075;
+        const boundHere = f && f.bind === 'pipe' && f.pumps > f.flow * 1.05 + 0.02 && ch.held[d.key] > 0.02;
+        ctx.strokeStyle = boundHere ? `rgba(224,96,80,${pulse})` : d.pipe >= 1 ? '#8a8378' : '#5a544a'; ctx.lineWidth = Math.max(1, (boundHere ? 5 : d.pipe >= 1 ? 4 : 2) * z / 1.5);
+        if (boundHere) { ctx.save(); ctx.shadowColor = 'rgba(224,96,80,1)'; ctx.shadowBlur = 18 * z; }
+        ctx.beginPath(); ctx.moveTo(sx(x0), sy(y)); ctx.lineTo(sx(x1), sy(y)); ctx.stroke(); if (boundHere) ctx.restore();
+        if (d.pipeWork > 0) { ctx.setLineDash([3, 3]); ctx.strokeStyle = 'rgba(255,217,160,0.7)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(sx(x0), sy(y - 0.012)); ctx.lineTo(sx(x1), sy(y - 0.012)); ctx.stroke(); ctx.setLineDash([]); }
+      });
+      // the shared stretch to the docks and the refiners; red when they are what holds the release back
+      const takeBound = ch && w.domes.some(d => { const f = ch.flows[d.key]; return f.bind === 'takeaway' && f.pumps > f.flow * 1.05 + 0.02 && ch.held[d.key] > 0.02; });
+      if (takeBound) { ctx.save(); ctx.shadowColor = 'rgba(224,96,80,1)'; ctx.shadowBlur = 20 * z; ctx.strokeStyle = `rgba(224,96,80,${pulse})`; ctx.lineWidth = Math.max(3, 6 * z / 1.5); ctx.beginPath(); ctx.moveTo(sx(0.855), sy(SURF - 0.006)); ctx.lineTo(sx(0.985), sy(SURF - 0.006)); ctx.stroke(); ctx.restore(); }
+      // docks: a pier and a ship at the far right, one mark per system that has any dock at all
+      const nDocks = Object.keys(S.SYSTEMS).filter(k => S.takeawayOf(w, k) - S.SYSTEMS[k].refiners * (w.hurricane ? 0.5 : 1) > 0.01).length;
+      ctx.fillStyle = '#4a4238'; ctx.fillRect(sx(0.965), sy(SURF - 0.012), 0.03 * W * z, 0.006 * H * z);
+      for (let k = 0; k < 3; k++) { ctx.fillStyle = k < nDocks ? '#c9c2b4' : 'rgba(201,194,180,0.2)'; ctx.fillRect(sx(0.968 + k * 0.009), sy(SURF - 0.03), 0.005 * W * z, 0.018 * H * z); }
+      ctx.fillStyle = C.dim; ctx.font = `${10 * Math.min(z, 1.6)}px IBM Plex Mono, monospace`; ctx.textAlign = 'center'; ctx.fillText(`DOCKS ${nDocks}/3`, sx(0.982), sy(SURF - 0.045));
       // refineries
-      for (let k = 0; k < 4; k++) { const x = 0.915 + k * 0.02; ctx.fillStyle = '#4a4238'; ctx.fillRect(sx(x), sy(SURF - 0.05 - k * 0.012), 0.008 * W * z, (0.05 + k * 0.012) * H * z); ctx.fillStyle = 'rgba(224,137,74,0.8)'; ctx.beginPath(); ctx.arc(sx(x + 0.004), sy(SURF - 0.052 - k * 0.012) - Math.abs(Math.sin(t / 150 + k)) * 3, 2.5 * z, 0, 7); ctx.fill(); }
-      ctx.fillStyle = C.dim; ctx.font = `${10 * Math.min(z, 1.6)}px IBM Plex Mono, monospace`; ctx.textAlign = 'center'; ctx.fillText('REFINERIES', sx(0.945), sy(SURF - 0.085)); ctx.fillText('GULF OF MEXICO', sx(0.05), sy(SURF + 0.06));
+      for (let k = 0; k < 4; k++) { const x = 0.895 + k * 0.018; ctx.fillStyle = '#4a4238'; ctx.fillRect(sx(x), sy(SURF - 0.05 - k * 0.012), 0.008 * W * z, (0.05 + k * 0.012) * H * z); ctx.fillStyle = 'rgba(224,137,74,0.8)'; ctx.beginPath(); ctx.arc(sx(x + 0.004), sy(SURF - 0.052 - k * 0.012) - Math.abs(Math.sin(t / 150 + k)) * 3, 2.5 * z, 0, 7); ctx.fill(); }
+      ctx.fillStyle = C.dim; ctx.font = `${10 * Math.min(z, 1.6)}px IBM Plex Mono, monospace`; ctx.textAlign = 'center'; ctx.fillText('REFINERIES', sx(0.922), sy(SURF - 0.095)); ctx.fillText('GULF OF MEXICO', sx(0.05), sy(SURF + 0.06));
       if (this.anim && t - this.anim.t0 > this.anim.dur + 200) this.anim = null;
       /* particles */
       this.spawn(dt); this.parts = this.parts.filter(p => p.life > 0);
-      this.parts.forEach(p => { p.life -= dt / 1000; p.x += p.vx * dt / 1000; p.y += p.vy * dt / 1000; ctx.fillStyle = p.col; ctx.globalAlpha = clamp(p.life, 0, 1); ctx.beginPath(); ctx.arc(sx(p.x), sy(p.y), p.r * z, 0, 7); ctx.fill(); }); ctx.globalAlpha = 1;
+      this.parts.forEach(p => { p.life -= dt / 1000; if (p.stopX != null && p.x >= p.stopX) { if (!p.stopped) { p.stopped = true; p.col = '#d06a5c'; p.y += (Math.random() - 0.5) * 0.02; p.life = Math.min(p.life, 2.4); } p.vx = 0; p.vy = 0; } p.x += p.vx * dt / 1000; p.y += p.vy * dt / 1000; ctx.fillStyle = p.col; ctx.globalAlpha = clamp(p.life, 0, 1); ctx.beginPath(); ctx.arc(sx(p.x), sy(p.y), p.r * z, 0, 7); ctx.fill(); }); ctx.globalAlpha = 1;
       /* hurricane */
       if (w.hurricane) { w.hurricane.x = (w.hurricane.x ?? -0.1) + dt / 1000 * 0.03; const hx = sx(w.hurricane.x), hy = sy(0.12), R = 0.09 * W * z; ctx.strokeStyle = 'rgba(200,210,220,0.55)'; ctx.lineWidth = 2; for (let a = 0; a < 3; a++) { ctx.beginPath(); for (let q = 0; q < 40; q++) { const ang = q / 8 + t / 900 + a * 2.1, rr = R * (0.15 + q / 40 * 0.85); q ? ctx.lineTo(hx + Math.cos(ang) * rr, hy + Math.sin(ang) * rr * 0.6) : ctx.moveTo(hx + Math.cos(ang) * rr, hy + Math.sin(ang) * rr * 0.6); } ctx.stroke(); }
         ctx.strokeStyle = 'rgba(169,211,239,0.35)'; ctx.lineWidth = 1; for (let i = 0; i < 60; i++) { const x = ((i * 0.137 + t / 3000) % 1.2) - 0.1, y = ((i * 0.071 + t / 700) % 0.34); ctx.beginPath(); ctx.moveTo(sx(x), sy(y)); ctx.lineTo(sx(x - 0.004), sy(y + 0.02)); ctx.stroke(); } }
@@ -149,9 +168,13 @@
     spawn(dt) {
       const w = this.w, n = this.parts.length; if (n > 700) return;
       const outRate = this.flow.out, inRate = this.flow.in;
+      const ch = this.chain;
       w.domes.forEach(d => {
         if (d.plant !== 'ready' && outRate > 0) return;
-        const share = S.domeRate(w, d) / Math.max(1e-9, S.drawCap(w));
+        const share = ch && ch.cap > 1e-9 ? ch.flows[d.key].flow / ch.cap : S.domeRate(w, d) / Math.max(1e-9, S.drawCap(w));
+        // barrels the knob asked for that this dome cannot get out: they run to the link that binds and pile up there
+        const held = ch ? ch.held[d.key] : 0;
+        if (held > 0.02 && Math.random() < dt / 1000 * 50 * held) { const f = ch.flows[d.key]; const stopX = f.bind === 'pipe' ? d.x + 0.072 : 0.86 + Math.random() * 0.02; this.parts.push({ x: d.x, y: SURF - 0.006, vx: (0.9 - d.x) / 1.8, vy: 0, life: 1.8, r: 1.4, col: '#c9c2b4', stopX }); }
         if (outRate > 0 && Math.random() < dt / 1000 * 60 * outRate * share) {
           // water from the sea to the dome, down; oil up and along the pipeline to the right
           this.parts.push({ x: 0.09, y: SURF - 0.006, vx: (d.x - 0.09) / 1.6, vy: 0, life: 1.6, r: 1.2, col: C.water });

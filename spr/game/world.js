@@ -67,7 +67,7 @@
       price: basePrice(1977), spike: 0,
       domes: DOMES.map(d => ({ ...d, cav: [], building: [], plant: 'none', pipe: 0.5, pipeWork: 0 })),   // plant: 'none' | years left (number) | 'ready'; pipe: share of the design rate the line carries
       chain: { seaway: { docks: false, terminal: 'none' }, texoma: { docks: false, terminal: 'none' }, capline: { docks: false, terminal: 'none' } },   // terminal: 'none' | years left | 'ready'
-      stuck: 0,
+      stuck: 0, chainSeen: false,   // chainSeen: the first shock in which the way out, not the wells, set the pace has happened; the controls show from then
       log: [], history: [], pain: 0, painAvoided: 0, releasedTotal: 0, boughtTotal: 0, spentTotal: 0, oilSpend: 0, soldCash: 0, soldCashValue: 0,
       loans: [], mandates: [], crisis: null, done: {}, hurricane: null, flash: null, crisisLog: [], blind: null, pending: null,
       seen1979: false,
@@ -272,6 +272,7 @@
     if (drawCap(w) <= 0) log(w, 'You have no way to pump oil out. The reserve is a warehouse without a door.', 'bad');
     else if (deliverCap(w) < drawCap(w) * 0.7) log(w, `Your wells can flow ${drawCap(w).toFixed(1)} mb/d but the way out takes only ${deliverCap(w).toFixed(1)}: the lines and the docks, not the pumps, set the pace.`, 'bad');
     w.crisis.stuck = 0; w.crisis.bound = { pumps: 0, pipe: 0, takeaway: 0 }; w.crisis.wanted = 0;
+    if (!w.chainSeen && drawCap(w) > 0 && deliverCap(w) < drawCap(w) * 0.95) { w.chainSeen = true; w.crisis.bottleneck = true; }
   }
   function crisisWeek(w, releaseMbd) {
     const c = w.crisis; c.week++; w.week++;
@@ -293,10 +294,12 @@
     const perDay = got / 7;
     retired.forEach(n => events.push({ text: `${n}: a cavern spent its last drawdown and is retired. Its space is gone for good.`, cls: 'bad' }));
     // what the knob asked for and the wells could give, but the way out could not carry
-    const stuck = Math.max(0, Math.min(releaseMbd, pumps) - perDay) * 7; c.stuck += stuck; w.stuck += stuck; c.wanted += releaseMbd * 7;
+    // the knob's ceiling is what can get out, so 'stuck' is what the wells could have added had the way out not been the limit, counted while the knob is at the ceiling
+    const atCeiling = releaseMbd >= cap - 1e-6;
+    const stuck = atCeiling && pumps > cap + 1e-6 ? (pumps - cap) * 7 : 0; c.stuck += stuck; w.stuck += stuck; c.wanted += releaseMbd * 7;
     let bind = null;
-    if (releaseMbd > cap + 1e-6 && pumps > cap + 1e-6) { const gap = { pipe: 0, takeaway: 0 }; Object.values(flows).forEach(f => { if (f.bind !== 'pumps') gap[f.bind] += f.pumps - f.flow; }); bind = gap.pipe >= gap.takeaway ? 'pipe' : 'takeaway'; c.bound[bind]++; }
-    else if (releaseMbd > cap + 1e-6) { bind = 'pumps'; c.bound.pumps++; }
+    if (atCeiling && pumps > cap + 1e-6) { const gap = { pipe: 0, takeaway: 0 }; Object.values(flows).forEach(f => { if (f.bind !== 'pumps') gap[f.bind] += f.pumps - f.flow; }); bind = gap.pipe >= gap.takeaway ? 'pipe' : 'takeaway'; c.bound[bind]++; }
+    else if (atCeiling && pumps > 1e-6) { bind = 'pumps'; c.bound.pumps++; }
     c.released += got; w.releasedTotal += got;
     // allies cover their share; yours is what the U.S. is expected to add
     const usShare = sf * (c.allies ? IEA_SHARE : 0.7);
@@ -344,7 +347,7 @@
     });
     // the way out as the record roughly had it: commercial dock contracts held through the fill years and the 2000s, lapsed otherwise; no terminal of its own, ever
     const held = (start >= 1983 && start <= 1994) || (start >= 2001 && start <= 2011);
-    w.chain.seaway.docks = held; w.chain.texoma.docks = held;
+    w.chain.seaway.docks = held; w.chain.texoma.docks = held; w.chainSeen = true;
     // the real inventory, spread across the caverns; stretch the caverns if the record held more than the model has room for
     const target = realInv == null ? 7.5 : realInv;
     let cap = capacity(w);

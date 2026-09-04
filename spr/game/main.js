@@ -33,7 +33,7 @@
     gPrice.set(w.price, `$${f0(w.price)}`); gGas.set(S.gasPrice(w), `$${S.gasPrice(w).toFixed(2)}`);
     const i = S.inv(w), cap = S.capacity(w);
     oInv.set(i); oCap.set(Math.max(0, cap - i)); gFuel.set(cap > 0 ? i / cap : 0, `${f0(i)} / ${f0(cap)}`);
-    { const dw = S.drawCap(w), dl = S.deliverCap(w); gFlow.set(dw, dw > 0.02 && dl < dw * 0.95 - 0.02 ? `${f1(dl)}/${f1(dw)}` : `${f1(dw)}`); }
+    { const dw = S.drawCap(w), dl = S.deliverCap(w); gFlow.set(dw, dw > 0.02 && dl < dw * 0.95 - 0.02 ? `${f1(dl)}/${f1(dw)}` : `${f1(dw)}`); gFlow.setOut(dw > 0.02 && dl < dw * 0.95 - 0.02 ? dl : null); }
     oBudget.set(Math.max(0, w.budget)); oTreas.set(w.treasury);
     gMood.set(w.mood, `${f0(w.mood)}`);
     const wellDown = w.domes.some(d => d.cav.some(c => c.offline > 0));
@@ -65,7 +65,7 @@
   }
 
   function yearPanel() {
-    $('p-year').hidden = false; $('p-crisis').hidden = true; onRecord();
+    $('p-year').hidden = false; $('p-crisis').hidden = true; $('ways').hidden = !w.chainSeen; scene.chain = null; onRecord();
     const era = w.blind ? 'Nothing on this desk says the year. The dials, the money, the state of the caverns and the news are your clues. Run it well.' : w.domes.every(d => d.plant === 'none') ? 'No dome has pumps. Nothing you hold can come out until you build them.' : w.year < 1986 ? 'Congress is generous while the embargo is fresh. Build.' : w.year < 1992 ? 'Money is tightening. Finish the domes and fill them.' : w.year < 2000 ? 'The nineties: no money, cheap oil, and Congress eyeing your barrels.' : w.year < 2015 ? 'Oil from federal leases trickles in. Keep the wells alive.' : w.year < 2023 ? 'Congress sells your oil to pay for other things. Hold what you can.' : 'Refill years. Every barrel you buy now is one you can pump later.';
     let realNote = '';
     if (real && !w.blind) { const row = real.monthly.find(r => r[0].startsWith(`${w.year}-01`)) || real.weekly.find(r => r[0].startsWith(`${w.year}-01`)); if (row) realNote = ` The real reserve held ${f0(row[1])} mb at the start of ${w.year}; you hold ${f0(S.inv(w))}.`; }
@@ -82,12 +82,12 @@
       const shut = d.cav.filter(c => c.offline > 0 && !c.retired).length, slots = d.maxCav - d.cav.length - d.building.length, live = d.cav.filter(c => !c.retired).length;
       const plant = d.plant === 'ready' ? `<span class="good">pumps ready · ${Math.round(d.rate * 1000)} kb/d</span>` : typeof d.plant === 'number' ? `<span class="warn">pumps in ${d.plant} yr</span>` : `<span class="bad">no pumps</span>`;
       card.innerHTML = `<h4>${d.name}<i>${f0(S.domeOil(d))}/${f0(S.domeCap(d))} mb</i></h4>
-        <div class="st">${plant} · ${live} cavern${live === 1 ? '' : 's'}${d.building.length ? `, ${d.building.length} leaching` : ''}${shut ? ` · <span class="bad">${shut} shut</span>` : ''} · <span class="${d.pipe >= 1 ? 'good' : 'warn'}">line ${kb(S.pipeRate(w, d))} kb/d</span>${d.pipeWork ? ` <span class="warn">(bigger in ${d.pipeWork} yr)</span>` : ''}</div>
+        <div class="st">${plant} · ${live} cavern${live === 1 ? '' : 's'}${d.building.length ? `, ${d.building.length} leaching` : ''}${shut ? ` · <span class="bad">${shut} shut</span>` : ''}${w.chainSeen ? ` · <span class="${d.pipe >= 1 ? 'good' : 'warn'}">line ${kb(S.pipeRate(w, d))} kb/d</span>${d.pipeWork ? ` <span class="warn">(bigger in ${d.pipeWork} yr)</span>` : ''}` : ''}</div>
         <div class="ctl"></div><div class="fx"></div>`;
       const ctl = card.querySelector('.ctl');
       if (d.plant === 'none') { const b = document.createElement('button'); b.className = 'sc-btn pumps' + (plan.pumps.has(d.key) ? ' on' : ''); b.innerHTML = `${plan.pumps.has(d.key) ? '✓ pumps ordered' : 'build pumps'}<small>$350m · ready ${atYr(S.PLANT_YEARS)}</small>`; b.onclick = () => { plan.pumps.has(d.key) ? plan.pumps.delete(d.key) : plan.pumps.add(d.key); siteCards(); yearOut(); }; ctl.appendChild(b); }
       if (slots > 0) { const wrap = document.createElement('div'); wrap.className = 'stepper-wrap'; const n = plan.build[d.key] || 0; wrap.innerHTML = `<div class="stepper"><button data-d="-1" ${n <= 0 ? 'disabled' : ''}>−</button><output>${n}</output><button data-d="1" ${n >= slots ? 'disabled' : ''}>+</button></div><span>dig<br>$40m · ${slots} slot${slots > 1 ? 's' : ''}</span>`; wrap.querySelectorAll('button').forEach(b => b.onclick = () => { plan.build[d.key] = clamp((plan.build[d.key] || 0) + (+b.dataset.d), 0, slots); siteCards(); yearOut(); }); ctl.appendChild(wrap); }
-      if (d.pipe < 1 && !d.pipeWork) { const b = document.createElement('button'); b.className = 'sc-btn' + (plan.pipe.has(d.key) ? ' on' : ''); b.innerHTML = `${plan.pipe.has(d.key) ? '✓ line ordered' : 'lay a bigger line'}<small>$150m · ready ${atYr(S.PIPE_YEARS)} · +${kb(d.rate * 0.5)} kb/d</small>`; b.onclick = () => { plan.pipe.has(d.key) ? plan.pipe.delete(d.key) : plan.pipe.add(d.key); siteCards(); yearOut(); }; ctl.appendChild(b); }
+      if (w.chainSeen && d.pipe < 1 && !d.pipeWork) { const b = document.createElement('button'); b.className = 'sc-btn' + (plan.pipe.has(d.key) ? ' on' : ''); b.innerHTML = `${plan.pipe.has(d.key) ? '✓ line ordered' : 'lay a bigger line'}<small>$150m · ready ${atYr(S.PIPE_YEARS)} · +${kb(d.rate * 0.5)} kb/d</small>`; b.onclick = () => { plan.pipe.has(d.key) ? plan.pipe.delete(d.key) : plan.pipe.add(d.key); siteCards(); yearOut(); }; ctl.appendChild(b); }
       if (shut) { const b = document.createElement('button'); b.className = 'sc-btn' + (plan.repairShut.has(d.key) ? ' on' : ''); b.innerHTML = `${plan.repairShut.has(d.key) ? '✓ repair ordered' : `repair ${shut} shut`}<small>$2m each · reopens this year</small>`; b.onclick = () => { plan.repairShut.has(d.key) ? plan.repairShut.delete(d.key) : plan.repairShut.add(d.key); siteCards(); yearOut(); }; ctl.appendChild(b); }
       if (!ctl.children.length) ctl.innerHTML = '<span class="st" style="margin:0">built out and pumping</span>';
       host.appendChild(card);
@@ -320,7 +320,17 @@
         <div><b>The goal: keep the country humming.</b> The world is short; allies cover some; what is left uncovered sets the price of crude, and so the price at the pump, the queue at the station and the lights in the city. Your barrels fill the gap. Every barrel you release now is one you will not have for the next shock.</div>
       </div>
       <div class="foot"><button class="btn primary" id="m-ok">take the desk →</button></div>`);
-    $('m-ok').onclick = () => { closeModal(); clearGhosts(); S.startCrisis(w, s); lastWeek = null; scene.say(s.name, 'emergency'); crisisPanel(); hud(); renderLog(); };
+    $('m-ok').onclick = () => { closeModal(); clearGhosts(); S.startCrisis(w, s); lastWeek = null; scene.say(s.name, 'emergency'); crisisPanel(); hud(); renderLog(); if (w.crisis.bottleneck) bottleneckCard(); };
+  }
+  /* the first shock in which the way out, not the wells, sets the pace: say so once, then show the controls */
+  function bottleneckCard() {
+    const wells = S.drawCap(w), cap = S.deliverCap(w), lines = S.linesCap(w);
+    modal(`<div class="kicker">week 0 · the way out</div><h2>The wells are not the limit.</h2>
+      <p>Your wells can push <b>${f1(wells)}</b> million barrels a day. Between them and the buyers sit shared pipelines and docks, and they take <b>${f1(cap)}</b>.${lines < wells * 0.95 ? ' The lines from the domes carry half of what the wells can push.' : ''}${cap < lines * 0.95 ? ' The docks and the refiners at the end take less than the lines carry.' : ''}</p>
+      <p>From now on the year panel shows <b>the way out</b>: lay a bigger line at a dome, contract commercial docks, or build a terminal of your own. In the crisis panel each dome shows its three links, and the one holding it back is red. On the scene, the barrels that cannot get out pile up at that link.</p>
+      <p class="mono" style="font-size:11px;color:var(--ink-60)">None of this is invented. In 2016 the Department of Energy told Congress the reserve could no longer bring oil to market without disturbing commercial flows, and asked for terminals it never got.</p>
+      <div class="foot"><button class="btn primary" id="m-ok">understood →</button></div>`);
+    $('m-ok').onclick = () => closeModal();
   }
   /* ---------- the country: a filling station, a skyline, the bill ---------- */
   const country = (() => {
@@ -375,6 +385,7 @@
     const c = w.crisis, cap = S.deliverCap(w), wells = S.drawCap(w), lines = S.linesCap(w), F = S.chainFlows(w);
     $('c-name').textContent = c.name; $('c-week').textContent = `week ${c.week + 1}`;
     const seg = (d, name, v, on) => `<div class="seg${on ? ' bind' : ''}"><i style="width:${clamp(v / d.rate * 100, 0, 100).toFixed(0)}%"></i><span>${name} ${kb(v)}</span></div>`;
+    chainToScene(F, cap, wells);
     $('c-chain').innerHTML = `<div class="chain-row chain-head"><b></b><span>pumps</span><span>line</span><span>docks + buyers</span><em>kb/d out</em></div>` + w.domes.map(d => { const f = F[d.key]; const held = f.pumps > f.flow * 1.05 + 0.02; return `<div class="chain-row"><b>${d.name}</b>${seg(d, 'pumps', f.pumps, f.bind === 'pumps' && f.pumps <= 0.02)}${seg(d, 'line', f.pipe, held && f.bind === 'pipe')}${seg(d, 'docks', f.take, held && f.bind === 'takeaway')}<em>${kb(f.flow)}</em></div>`; }).join('');
     $('c-short').innerHTML = `${f1(c.ceasefire > 0 ? 0 : c.shortfall)}<small>mb/d</small>`; $('c-share').innerHTML = `${f1((c.ceasefire > 0 ? 0 : c.shortfall) * (c.allies ? 0.44 : 0.7))}<small>mb/d</small>`; $('c-cap').innerHTML = `${f1(cap)}<small>of ${f1(wells)} mb/d</small>`;
     cr.max = Math.max(0.05, cap).toFixed(2); if (+cr.value > cap) cr.value = cap.toFixed(2); knob.refresh();
@@ -385,6 +396,13 @@
       ? `<b>You cannot pump.</b> No dome has a pumping plant, so the knob does nothing. Flip the <b>clock</b> to run and let the weeks pass, or press <b>next week</b>. The lesson of 1979 is the one the real reserve learned: oil in the ground is not oil at the pump.`
       : `<b>Knob:</b> how much to release each day, up to the ${f1(cap)} mb/day the way out can carry${cap < wells - 0.05 ? ` (your wells could push ${f1(wells)}; the red link on each dome is what holds it back)` : ''}. Turn it by dragging around the dial, scrolling on it, or pressing − and +. <b>Next week</b> runs one week; the <b>clock</b> keeps running them. The world is short ${f1(c.ceasefire > 0 ? 0 : c.shortfall)} mb/day and your share to cover is ${f1((c.ceasefire > 0 ? 0 : c.shortfall) * (c.allies ? 0.44 : 0.7))}; release that much and the price spike mostly goes away. Release less and Americans pay more; release more and you run dry sooner.`;
   }
+  /* what the scene needs: the flows, and per dome how much of what the knob asks for cannot get out */
+  function chainToScene(F, cap, wells) {
+    const knob = +cr.value, held = {};
+    w.domes.forEach(d => { const f = F[d.key]; held[d.key] = wells > cap + 1e-6 && cap > 1e-9 ? Math.max(0, f.pumps - f.flow) * Math.min(1, knob / cap) : 0; });   // the harder you push the knob, the more piles up at the link that binds
+    scene.chain = { flows: F, cap, wells, held };
+  }
+  cr.addEventListener('input', () => { if (w.phase === 'crisis' && scene.chain) chainToScene(scene.chain.flows, scene.chain.cap, scene.chain.wells); });
   let lastWeek = null;
   function week() {
     if (w.phase !== 'crisis') return;
@@ -538,11 +556,11 @@
       if (w.year >= target && !(stopAt === 'crisis' && w.phase !== 'crisis')) { if (w.phase === 'crisis') { for (let i = 0; i < 3; i++) week(); } return; }
       if (w.phase === 'crisis') { if (stopAt === 'crisis' && w.year >= target) return; const r = S.crisisWeek(w, Math.min(1.0, S.drawCap(w))); if (r.over) { closeModal(); yearPanel(); } hud(); renderLog(); return setTimeout(botStep, 0); }
       const buy = Math.min(S.roomFor(w), Math.max(0, (w.budget - 0.2) * 1000 / w.price));
-      S.yearDecisions(w, { buy, build: w.year < 1991 ? 4 : 0, maintain: 0.2, pumps: w.year >= 1982 && w.year <= 1985 ? 1 : 0, pipeAt: w.year >= 1984 && w.year <= 1987 ? [['bm', 'wh', 'bh', 'bc'][w.year - 1984]] : [], docks: { seaway: w.budget > 0.3, texoma: w.budget > 0.3 } });
+      S.yearDecisions(w, { buy, build: w.year < 1991 ? 4 : 0, maintain: 0.2, pumps: w.year >= 1982 && w.year <= 1985 ? 1 : 0, pipeAt: !params.get('nochain') && w.year >= 1984 && w.year <= 1987 ? [['bm', 'wh', 'bh', 'bc'][w.year - 1984]] : [], docks: { seaway: !params.get('nochain') && w.budget > 0.3, texoma: !params.get('nochain') && w.budget > 0.3 } });
       const r = S.advanceYear(w); resetPlan(); hud(); renderLog(); yearPanel();
       if (r.end) return endGame();
       if (r.card) { S.resolveCard(w, r.card, r.card.choices[0]); }
-      if (r.crisis) { S.startCrisis(w, r.crisis); if (stopAt === 'crisis' && w.year >= target) { scene.say(r.crisis.name, 'emergency'); crisisPanel(); hud(); renderLog(); for (let i = 0; i < 2; i++) week(); if (r.crisis.hurricane) w.hurricane = w.hurricane || { weeks: 2, x: 0.3 }; return; } }
+      if (r.crisis) { S.startCrisis(w, r.crisis); if (stopAt === 'crisis' && w.year >= target) { scene.say(r.crisis.name, 'emergency'); crisisPanel(); hud(); renderLog(); for (let i = 0; i < 2; i++) week(); if (r.crisis.hurricane) w.hurricane = w.hurricane || { weeks: 2, x: 0.3 }; if (params.get('knob')) { cr.value = params.get('knob'); knob.refresh(); crisisPanel(); } if (w.crisis && w.crisis.bottleneck && !params.get('nocard')) bottleneckCard(); return; } }
       setTimeout(botStep, 0);
     })();
   }
