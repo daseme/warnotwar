@@ -33,7 +33,7 @@
     gPrice.set(w.price, `$${f0(w.price)}`); gGas.set(S.gasPrice(w), `$${S.gasPrice(w).toFixed(2)}`);
     const i = S.inv(w), cap = S.capacity(w);
     oInv.set(i); oCap.set(Math.max(0, cap - i)); gFuel.set(cap > 0 ? i / cap : 0, `${f0(i)} / ${f0(cap)}`);
-    gFlow.set(S.drawCap(w), `${f1(S.drawCap(w))}`);
+    { const dw = S.drawCap(w), dl = S.deliverCap(w); gFlow.set(dw, dw > 0.02 && dl < dw * 0.95 - 0.02 ? `${f1(dl)}/${f1(dw)}` : `${f1(dw)}`); }
     oBudget.set(Math.max(0, w.budget)); oTreas.set(w.treasury);
     gMood.set(w.mood, `${f0(w.mood)}`);
     const wellDown = w.domes.some(d => d.cav.some(c => c.offline > 0));
@@ -47,8 +47,9 @@
   const yo = $('y-oil'), ym = $('y-maint');
   const REPAIR = [{ name: 'off', share: 0, note: 'nothing repaired; failures likelier each year' }, { name: 'routine', share: 0.25, note: 'a quarter of wells, shut caverns first' }, { name: 'full', share: 0.6, note: 'six in ten wells; failures rare' }];
   const kMaint = new I.Knob($('k-maint'), ym, { label: '', detents: 2, fmt: v => REPAIR[Math.round(v)].name });
-  const plan = { build: {}, pumps: new Set(), repairShut: new Set() };
-  const resetPlan = () => { plan.build = {}; plan.pumps.clear(); plan.repairShut.clear(); yo.value = 0; ym.value = 0; kMaint.refresh(); };
+  const plan = { build: {}, pumps: new Set(), repairShut: new Set(), pipe: new Set(), terminal: new Set(), docks: {} };
+  const resetPlan = () => { plan.build = {}; plan.pumps.clear(); plan.repairShut.clear(); plan.pipe.clear(); plan.terminal.clear(); plan.docks = { seaway: w.chain.seaway.docks, texoma: w.chain.texoma.docks }; yo.value = 0; ym.value = 0; kMaint.refresh(); };
+  const kb = v => Math.round(v * 1000);
   const oilVal = () => { const v = +yo.value; return Math.abs(v) < 3 ? 0 : v; };   // a detent at zero
 
   /* the statement of the year, if the record has one */
@@ -70,7 +71,7 @@
     if (real && !w.blind) { const row = real.monthly.find(r => r[0].startsWith(`${w.year}-01`)) || real.weekly.find(r => r[0].startsWith(`${w.year}-01`)); if (row) realNote = ` The real reserve held ${f0(row[1])} mb at the start of ${w.year}; you hold ${f0(S.inv(w))}.`; }
     $('y-brief').textContent = era + realNote;
     $('y-budget').textContent = bn(Math.max(0, w.budget));
-    siteCards(); yearOut();
+    siteCards(); waysCards(); yearOut();
   }
 
   /* the four site cards: each dome orders its own pumps, caverns and repairs */
@@ -81,13 +82,34 @@
       const shut = d.cav.filter(c => c.offline > 0 && !c.retired).length, slots = d.maxCav - d.cav.length - d.building.length, live = d.cav.filter(c => !c.retired).length;
       const plant = d.plant === 'ready' ? `<span class="good">pumps ready · ${Math.round(d.rate * 1000)} kb/d</span>` : typeof d.plant === 'number' ? `<span class="warn">pumps in ${d.plant} yr</span>` : `<span class="bad">no pumps</span>`;
       card.innerHTML = `<h4>${d.name}<i>${f0(S.domeOil(d))}/${f0(S.domeCap(d))} mb</i></h4>
-        <div class="st">${plant} · ${live} cavern${live === 1 ? '' : 's'}${d.building.length ? `, ${d.building.length} leaching` : ''}${shut ? ` · <span class="bad">${shut} shut</span>` : ''}</div>
+        <div class="st">${plant} · ${live} cavern${live === 1 ? '' : 's'}${d.building.length ? `, ${d.building.length} leaching` : ''}${shut ? ` · <span class="bad">${shut} shut</span>` : ''} · <span class="${d.pipe >= 1 ? 'good' : 'warn'}">line ${kb(S.pipeRate(w, d))} kb/d</span>${d.pipeWork ? ` <span class="warn">(bigger in ${d.pipeWork} yr)</span>` : ''}</div>
         <div class="ctl"></div><div class="fx"></div>`;
       const ctl = card.querySelector('.ctl');
       if (d.plant === 'none') { const b = document.createElement('button'); b.className = 'sc-btn pumps' + (plan.pumps.has(d.key) ? ' on' : ''); b.innerHTML = `${plan.pumps.has(d.key) ? '✓ pumps ordered' : 'build pumps'}<small>$350m · ready ${atYr(S.PLANT_YEARS)}</small>`; b.onclick = () => { plan.pumps.has(d.key) ? plan.pumps.delete(d.key) : plan.pumps.add(d.key); siteCards(); yearOut(); }; ctl.appendChild(b); }
       if (slots > 0) { const wrap = document.createElement('div'); wrap.className = 'stepper-wrap'; const n = plan.build[d.key] || 0; wrap.innerHTML = `<div class="stepper"><button data-d="-1" ${n <= 0 ? 'disabled' : ''}>−</button><output>${n}</output><button data-d="1" ${n >= slots ? 'disabled' : ''}>+</button></div><span>dig<br>$40m · ${slots} slot${slots > 1 ? 's' : ''}</span>`; wrap.querySelectorAll('button').forEach(b => b.onclick = () => { plan.build[d.key] = clamp((plan.build[d.key] || 0) + (+b.dataset.d), 0, slots); siteCards(); yearOut(); }); ctl.appendChild(wrap); }
+      if (d.pipe < 1 && !d.pipeWork) { const b = document.createElement('button'); b.className = 'sc-btn' + (plan.pipe.has(d.key) ? ' on' : ''); b.innerHTML = `${plan.pipe.has(d.key) ? '✓ line ordered' : 'lay a bigger line'}<small>$150m · ready ${atYr(S.PIPE_YEARS)} · +${kb(d.rate * 0.5)} kb/d</small>`; b.onclick = () => { plan.pipe.has(d.key) ? plan.pipe.delete(d.key) : plan.pipe.add(d.key); siteCards(); yearOut(); }; ctl.appendChild(b); }
       if (shut) { const b = document.createElement('button'); b.className = 'sc-btn' + (plan.repairShut.has(d.key) ? ' on' : ''); b.innerHTML = `${plan.repairShut.has(d.key) ? '✓ repair ordered' : `repair ${shut} shut`}<small>$2m each · reopens this year</small>`; b.onclick = () => { plan.repairShut.has(d.key) ? plan.repairShut.delete(d.key) : plan.repairShut.add(d.key); siteCards(); yearOut(); }; ctl.appendChild(b); }
       if (!ctl.children.length) ctl.innerHTML = '<span class="st" style="margin:0">built out and pumping</span>';
+      host.appendChild(card);
+    });
+  }
+
+  /* the way out: one card per pipeline system — refiners, docks, a terminal of your own */
+  function waysCards() {
+    const host = $('ways'); host.innerHTML = ''; const F = S.chainFlows(w), c = S.congestion(w.year);
+    Object.entries(S.SYSTEMS).forEach(([k, s]) => {
+      const ch = w.chain[k], ds = w.domes.filter(d => d.sys === k);
+      const out = ds.reduce((a, d) => a + F[d.key].flow, 0), pumps = ds.reduce((a, d) => a + F[d.key].pumps, 0);
+      const card = document.createElement('div'); card.className = 'site-card way'; card.dataset.sys = k;
+      const dock = s.dockCap > 0 ? (ch.docks ? `<span class="good">docks ${kb(s.dockCap * (1 - c))} kb/d</span>` : `<span class="warn">no docks</span>`) : (w.year >= s.doeYear ? `<span class="good">St. James ${kb(s.doe)} kb/d · yours</span>` : `<span class="warn">St. James ${w.blind ? 'not yet built' : `opens ${s.doeYear}`}</span>`);
+      const term = ch.terminal === 'ready' ? ` · <span class="good">terminal ${kb(S.TERM_CAP)} kb/d</span>` : typeof ch.terminal === 'number' ? ` · <span class="warn">terminal in ${ch.terminal} yr</span>` : '';
+      card.innerHTML = `<h4>${s.name}<i>${ds.map(d => d.name.split(' ')[0]).join(' + ')}</i></h4>
+        <div class="st">refiners ${kb(s.refiners)} kb/d · ${dock}${term}${c > 0 ? ` · <span class="bad">lines ${Math.round(c * 100)}% full of commercial oil</span>` : ''}<br><b>out ${kb(out)} of ${kb(pumps)} kb/d the wells can push</b></div>
+        <div class="ctl"></div><div class="fx"></div>`;
+      const ctl = card.querySelector('.ctl');
+      if (s.dockCap > 0) { const b = document.createElement('button'); const on = !!plan.docks[k]; b.className = 'sc-btn' + (on ? ' on' : ''); b.innerHTML = `${on ? '✓ docks contracted' : 'contract docks'}<small>$20m a year · +${kb(s.dockCap * (1 - c))} kb/d · ${s.dockNames}</small>`; b.onclick = () => { plan.docks[k] = !plan.docks[k]; waysCards(); yearOut(); }; ctl.appendChild(b); }
+      if (ch.terminal === 'none') { const b = document.createElement('button'); const on = plan.terminal.has(k); b.className = 'sc-btn' + (on ? ' on' : ''); b.innerHTML = `${on ? '✓ terminal ordered' : 'build a terminal'}<small>$1.0bn · ready ${atYr(S.TERM_YEARS)} · +${kb(S.TERM_CAP)} kb/d, yours</small>`; b.onclick = () => { plan.terminal.has(k) ? plan.terminal.delete(k) : plan.terminal.add(k); waysCards(); yearOut(); }; ctl.appendChild(b); }
+      if (!ctl.children.length) ctl.innerHTML = '<span class="st" style="margin:0">built out</span>';
       host.appendChild(card);
     });
   }
@@ -111,7 +133,9 @@
     shutAll.forEach(o => { if (plan.repairShut.has(o.d.key)) picks.add(o.c); });
     const nRep = picks.size, cM = nRep * S.WORKOVER, reopen = shutAll.filter(o => picks.has(o.c)).length;
     const reopenRate = shutAll.filter(o => picks.has(o.c)).reduce((a, o) => a + (o.d.plant === 'ready' ? o.d.rate / Math.max(1, o.d.maxCav * 0.6) : 0), 0);
-    return { buy, sell, sold, cashIn, fill, drain, bought, cBuy, newCav, dug, cBuild, pumpDomes, addRate, cP, nRep, cM, shut: shutAll.length, reopen, reopenRate, room, share, left: w.budget + cashIn - cBuy - cBuild - cP - cM };
+    const cPipe = plan.pipe.size * S.PIPE_COST, cTerm = plan.terminal.size * S.TERM_COST, cDock = Object.keys(S.SYSTEMS).filter(k => S.SYSTEMS[k].dockCap > 0 && plan.docks[k]).length * S.DOCK_COST;
+    const saved = { seaway: w.chain.seaway.docks, texoma: w.chain.texoma.docks }; w.chain.seaway.docks = !!plan.docks.seaway; w.chain.texoma.docks = !!plan.docks.texoma; const deliver1 = S.deliverCap(w); w.chain.seaway.docks = saved.seaway; w.chain.texoma.docks = saved.texoma;
+    return { buy, sell, sold, cashIn, fill, drain, bought, cBuy, newCav, dug, cBuild, pumpDomes, addRate, cP, nRep, cM, shut: shutAll.length, reopen, reopenRate, room, share, cPipe, cTerm, cDock, deliver1, left: w.budget + cashIn - cBuy - cBuild - cP - cM - cPipe - cTerm - cDock };
   }
 
   function yearOut() {
@@ -134,19 +158,22 @@
     $('y-spec-maint').innerHTML = `<b>${m$(S.WORKOVER)}/well</b>${sep}${R.note}${P.shut ? `${sep}<span class="bad">${P.shut} cavern${P.shut > 1 ? 's' : ''} shut</span>` : ''}`;
     $('y-maint-o').innerHTML = P.nRep ? fx(`${P.nRep} of ${wells} wells · ${bn(P.cM)}`, `${P.nRep} wells made safer${P.reopen ? ` · ${P.reopen} shut cavern${P.reopen > 1 ? 's' : ''} reopen${P.reopen > 1 ? '' : 's'}` : ''}`) : fx(`0 of ${wells} wells · $0.00bn`, 'nothing repaired', true);
     /* site card impact lines */
-    document.querySelectorAll('.site-card').forEach(card => { const d = w.domes.find(x => x.key === card.dataset.key); const parts = []; if (P.pumpDomes.has(d.key)) parts.push(`+${f1(d.rate * Math.min(1, d.cav.filter(c => !c.retired && c.oil > c.cap * S.HEEL).length / Math.max(1, d.maxCav * 0.6)))} mb/day of flow ${inYr(S.PLANT_YEARS)} · $350m`); const n = P.newCav[d.key] || 0; if (n) parts.push(`+${f1(n * S.CAV_MB)} mb of space ${inYr(S.BUILD_YEARS)} · ${bn(n * S.BUILD_COST)}`); if (plan.repairShut.has(d.key)) { const k = d.cav.filter(c => c.offline > 0 && !c.retired).length; parts.push(`${k} cavern${k > 1 ? 's' : ''} back this year · ${bn(k * S.WORKOVER)}`); } card.querySelector('.fx').innerHTML = parts.join('<br>'); });
+    document.querySelectorAll('.site-card:not(.way)').forEach(card => { const d = w.domes.find(x => x.key === card.dataset.key); const parts = []; if (P.pumpDomes.has(d.key)) parts.push(`+${f1(d.rate * Math.min(1, d.cav.filter(c => !c.retired && c.oil > c.cap * S.HEEL).length / Math.max(1, d.maxCav * 0.6)))} mb/day of flow ${inYr(S.PLANT_YEARS)} · $350m`); const n = P.newCav[d.key] || 0; if (n) parts.push(`+${f1(n * S.CAV_MB)} mb of space ${inYr(S.BUILD_YEARS)} · ${bn(n * S.BUILD_COST)}`); if (plan.repairShut.has(d.key)) { const k = d.cav.filter(c => c.offline > 0 && !c.retired).length; parts.push(`${k} cavern${k > 1 ? 's' : ''} back this year · ${bn(k * S.WORKOVER)}`); } if (plan.pipe.has(d.key)) parts.push(`line carries ${kb(d.rate)} kb/d ${inYr(S.PIPE_YEARS)} · $150m`); card.querySelector('.fx').innerHTML = parts.join('<br>'); });
+    document.querySelectorAll('.site-card.way').forEach(card => { const k = card.dataset.sys, s = S.SYSTEMS[k], parts = []; const was = w.chain[k].docks, now = !!plan.docks[k]; if (s.dockCap > 0 && now !== was) parts.push(now ? `+${kb(s.dockCap * (1 - S.congestion(w.year)))} kb/d of dock this year · $20m a year` : `contract dropped: −${kb(s.dockCap * (1 - S.congestion(w.year)))} kb/d of dock`); if (plan.terminal.has(k)) parts.push(`+${kb(S.TERM_CAP)} kb/d of your own dock ${inYr(S.TERM_YEARS)} · $1.0bn`); card.querySelector('.fx').innerHTML = parts.join('<br>'); });
+    { const dl0 = S.deliverCap(w); if (Math.abs(P.deliver1 - dl0) > 0.02) gFlow.setGhost(P.deliver1, `out ${f1(P.deliver1)}`); }
     /* the appropriation bar */
     const total = w.budget + P.cashIn, over = P.left < 0;
     const seg = (cls, v) => `<i class="${cls}" style="width:${clamp(v / Math.max(total, 1e-9) * 100, 0, 100).toFixed(1)}%"></i>`;
-    $('ap-bar').innerHTML = seg('buy', P.cBuy) + seg('dig', P.cBuild) + seg('pumps', P.cP) + seg('rep', P.cM) + (over ? seg('over', -P.left) : seg('left', P.left));
-    $('ap-legend').innerHTML = `<span><b style="background:#6b5b3e"></b>oil ${bn(P.cBuy)}</span><span><b style="background:#8b8474"></b>caverns ${bn(P.cBuild)}</span><span><b style="background:#5f7d93"></b>pumps ${bn(P.cP)}</span><span><b style="background:#b08a3c"></b>repairs ${bn(P.cM)}</span><span><b style="background:rgba(233,226,208,0.2)"></b>${over ? `<span style="color:var(--danger)">over by ${bn(-P.left)}</span>` : `left ${bn(P.left)}`}</span>${P.cashIn > 0.005 ? `<span class="sale">+${bn(P.cashIn)} from the sale is in the total</span>` : ''}<span>of ${bn(total)}</span>`;
+    const cWay = P.cPipe + P.cTerm + P.cDock;
+    $('ap-bar').innerHTML = seg('buy', P.cBuy) + seg('dig', P.cBuild) + seg('pumps', P.cP) + seg('rep', P.cM) + seg('way', cWay) + (over ? seg('over', -P.left) : seg('left', P.left));
+    $('ap-legend').innerHTML = `<span><b style="background:#6b5b3e"></b>oil ${bn(P.cBuy)}</span><span><b style="background:#8b8474"></b>caverns ${bn(P.cBuild)}</span><span><b style="background:#5f7d93"></b>pumps ${bn(P.cP)}</span><span><b style="background:#b08a3c"></b>repairs ${bn(P.cM)}</span><span><b style="background:#6f8a5a"></b>way out ${bn(cWay)}</span><span><b style="background:rgba(233,226,208,0.2)"></b>${over ? `<span style="color:var(--danger)">over by ${bn(-P.left)}</span>` : `left ${bn(P.left)}`}</span>${P.cashIn > 0.005 ? `<span class="sale">+${bn(P.cashIn)} from the sale is in the total</span>` : ''}<span>of ${bn(total)}</span>`;
     /* ghost needles and odometer deltas */
     const inv1 = inv0 + P.bought - P.sold;
     gFuel.setGhost(cap0 > 0 && Math.abs(inv1 - inv0) > 0.5 ? inv1 / cap0 : null, Math.abs(inv1 - inv0) > 0.5 ? `${inv1 > inv0 ? '+' : '−'}${f0(Math.abs(inv1 - inv0))} mb` : '');
     oInv.setDelta(Math.abs(inv1 - inv0) > 0.5 ? `${inv1 > inv0 ? '+' : '−'}${f0(Math.abs(inv1 - inv0))}` : '', inv1 < inv0 ? 'neg' : '');
     oCap.setDelta(P.dug ? `+${f0(P.dug * S.CAV_MB)} ${inYr(S.BUILD_YEARS)}` : (Math.abs(inv1 - inv0) > 0.5 ? `${inv1 > inv0 ? '−' : '+'}${f0(Math.abs(inv1 - inv0))}` : ''), inv1 > inv0 && !P.dug ? 'neg' : '');
     const draw1 = draw0 + P.addRate + P.reopenRate;
-    gFlow.setGhost(draw1 - draw0 > 0.02 ? draw1 : null, P.addRate > 0.02 ? `+${f1(P.addRate)} ${inYr(S.PLANT_YEARS)}` : P.reopenRate > 0.02 ? `+${f1(P.reopenRate)} now` : '');
+    if (draw1 - draw0 > 0.02) gFlow.setGhost(draw1, P.addRate > 0.02 ? `+${f1(P.addRate)} ${inYr(S.PLANT_YEARS)}` : `+${f1(P.reopenRate)} now`); else if (Math.abs(P.deliver1 - S.deliverCap(w)) <= 0.02) gFlow.setGhost(null);
     oBudget.setDelta(Math.abs(w.budget - Math.max(0, P.left)) > 0.005 ? `→ ${bn(Math.max(0, P.left))} left` : '', over ? 'neg' : '');
     gMood.setGhost(P.sold > 0.5 ? clamp(w.mood + P.sold / 40, 5, 100) : null, P.sold > 0.5 ? 'sale' : '');
     scene.preview = (P.fill.size || P.drain.size || P.dug || P.pumpDomes.size) ? { fill: P.fill, drain: P.drain, newCav: P.newCav, pumpDomes: P.pumpDomes } : null;
@@ -162,9 +189,9 @@
 
   async function runYear(fast) {
     $('y-go').disabled = true; if (!holding) $('y-hold').disabled = true; clearGhosts();
-    const snap = { year: w.year, inv: S.inv(w), cap: S.capacity(w), draw: S.drawCap(w), budget: w.budget, mood: w.mood, price: w.price, gas: S.gasPrice(w) };
+    const snap = { year: w.year, inv: S.inv(w), cap: S.capacity(w), draw: S.drawCap(w), out: S.deliverCap(w), budget: w.budget, mood: w.mood, price: w.price, gas: S.gasPrice(w) };
     const v = oilVal();
-    const dec = { buy: Math.max(0, v), sell: Math.max(0, -v), maintain: REPAIR[Math.round(+ym.value)].share, buildAt: { ...plan.build }, pumpsAt: [...plan.pumps], repairShut: [...plan.repairShut] };
+    const dec = { buy: Math.max(0, v), sell: Math.max(0, -v), maintain: REPAIR[Math.round(+ym.value)].share, buildAt: { ...plan.build }, pumpsAt: [...plan.pumps], repairShut: [...plan.repairShut], pipeAt: [...plan.pipe], terminalAt: [...plan.terminal], docks: { ...plan.docks } };
     const before = new Map(w.domes.flatMap(d => d.cav).map(c => [c, c.oil]));
     const out = S.yearDecisions(w, dec);
     const poured = w.domes.flatMap(d => d.cav).filter(c => c.oil - (before.get(c) ?? c.oil) > 0.05).map(c => ({ cv: c, from: before.get(c), to: c.oil }));
@@ -175,6 +202,8 @@
     if (out.bought > 0.05) w.log.unshift({ year: w.year, week: 0, text: `Bought ${f1(out.bought)} mb at $${f0(w.price)} for ${bn(out.bought * w.price / 1000)}${out.built ? `; started ${out.built} cavern${out.built > 1 ? 's' : ''}` : ''}${out.maintained ? `; repaired ${out.maintained} wells` : ''}.` });
     else if (out.built || out.maintained) w.log.unshift({ year: w.year, week: 0, text: `${out.built ? `Started ${out.built} cavern${out.built > 1 ? 's' : ''}` : ''}${out.built && out.maintained ? '; ' : ''}${out.maintained ? `repaired ${out.maintained} wells` : ''}.` });
     if (out.plants) w.log.unshift({ year: w.year, week: 0, text: `Began building pumps at ${out.plantAt.join(' and ')}. Ready in ${S.PLANT_YEARS} years.`, cls: 'good' });
+    if (out.pipes) w.log.unshift({ year: w.year, week: 0, text: `Laying a bigger line at ${out.pipeAt.join(' and ')}. In ${S.PIPE_YEARS} years it carries the full design rate.`, cls: 'good' });
+    if (out.terminals) w.log.unshift({ year: w.year, week: 0, text: `Building a marine terminal on ${out.terminalAt.join(' and ')}: ${bn(S.TERM_COST)}, ready in ${S.TERM_YEARS} years, and nobody else's oil in it.`, cls: 'good' });
     const r = S.advanceYear(w);
     scene.say(yr(w.year), r.crisis ? r.crisis.name : r.card ? r.card.name : '');
     resetPlan();
@@ -198,6 +227,7 @@
       agg.bought += o.bought || 0; agg.cost += (o.bought || 0) * t.snap.price / 1000; agg.sold += o.sold || 0; agg.saleCash += o.saleCash || 0;
       agg.built += o.built || 0; Object.entries(o.builtAt || {}).forEach(([k, n]) => { agg.builtAt[k] = (agg.builtAt[k] || 0) + n; });
       agg.plants += o.plants || 0; agg.plantAt = agg.plantAt.concat(o.plantAt || []); agg.maintained += o.maintained || 0;
+      agg.pipes = (agg.pipes || 0) + (o.pipes || 0); agg.pipeAt = (agg.pipeAt || []).concat(o.pipeAt || []); agg.terminals = (agg.terminals || 0) + (o.terminals || 0); agg.terminalAt = (agg.terminalAt || []).concat(o.terminalAt || []); agg.docksPaid = (agg.docksPaid || []).concat(o.docksPaid || []);
       (o.notes || []).forEach(n => { if (!agg.notes.includes(n)) agg.notes.push(n); });
       (r.events || []).forEach(e => agg.events.push({ text: `${yr(y)}: ${e.text}`, cls: e.cls }));
       if (r.end) why = w.blind ? 'The five years are up.' : 'The sixty years are up.';
@@ -229,7 +259,7 @@
 
   /* ---------- the year-end receipt: what you spent, what you got, what moved ---------- */
   function receipt(snap, dec, out, r, next, hold) {
-    const now = { inv: S.inv(w), cap: S.capacity(w), draw: S.drawCap(w), budget: w.budget, mood: w.mood, price: w.price, gas: S.gasPrice(w) };
+    const now = { inv: S.inv(w), cap: S.capacity(w), draw: S.drawCap(w), out: S.deliverCap(w), budget: w.budget, mood: w.mood, price: w.price, gas: S.gasPrice(w) };
     const d = (a, b, fmt, unit = '') => { const x = b - a; if (Math.abs(x) < (fmt === f1 ? 0.05 : 0.5)) return `<span class="flat">no change</span>`; return `<span class="${x > 0 ? 'up' : 'down'}">${x > 0 ? '+' : '−'}${fmt(Math.abs(x))}${unit}</span>`; };
     const spent = [];
     if (out.sold > 0.05) spent.push(['sold oil', `${f1(out.sold)} mb`, `+${bn(out.saleCash)}`]);
@@ -237,6 +267,9 @@
     if (out.built) spent.push(['caverns started', `${Object.entries(out.builtAt || {}).map(([k, n]) => `${n} at ${w.domes.find(d => d.key === k).name.split(' ')[0]}`).join(', ')}${hold && hold.years > 1 ? '' : ` · ready ${w.blind ? `in ${S.BUILD_YEARS} yr` : snap.year + S.BUILD_YEARS}`}`, bn(out.built * S.BUILD_COST)]);
     if (out.plants) spent.push(['pumps started', `${out.plantAt.join(', ')}${hold && hold.years > 1 ? '' : ` · ready ${w.blind ? `in ${S.PLANT_YEARS} yr` : snap.year + S.PLANT_YEARS}`}`, bn(out.plants * S.PLANT_COST)]);
     if (out.maintained) spent.push(['wells repaired', `${out.maintained}`, bn(out.maintained * S.WORKOVER)]);
+    if (out.docksPaid && out.docksPaid.length) spent.push(['dock contracts', `${[...new Set(out.docksPaid)].join(', ')}${hold && hold.years > 1 ? ` · ${out.docksPaid.length} contract-years` : ''}`, bn(out.docksPaid.length * S.DOCK_COST)]);
+    if (out.pipes) spent.push(['bigger lines started', `${out.pipeAt.join(', ')}${hold && hold.years > 1 ? '' : ` · ready ${w.blind ? `in ${S.PIPE_YEARS} yr` : snap.year + S.PIPE_YEARS}`}`, bn(out.pipes * S.PIPE_COST)]);
+    if (out.terminals) spent.push(['terminal started', `${out.terminalAt.join(', ')}${hold && hold.years > 1 ? '' : ` · ready ${w.blind ? `in ${S.TERM_YEARS} yr` : snap.year + S.TERM_YEARS}`}`, bn(out.terminals * S.TERM_COST)]);
     const spentRows = spent.length ? spent.map(([a, b, c]) => `<tr><td>${a}</td><td>${b}</td><td class="num">${c}</td></tr>`).join('') : `<tr><td colspan="3" class="flat">You spent nothing.</td></tr>`;
     const notes = (out.notes || []).map(n => `<div class="bad">${n}</div>`).join('');
     const events = (r.events || []).map(e => `<div class="${e.cls || ''}">${e.text}</div>`).join('') || '<div class="flat">A quiet year underground.</div>';
@@ -249,6 +282,7 @@
         <tr><td>barrels in the ground</td><td class="num">${f0(snap.inv)} → ${f0(now.inv)} mb</td><td class="num">${d(snap.inv, now.inv, f0, ' mb')}</td></tr>
         <tr><td>room to fill</td><td class="num">${f0(snap.cap - snap.inv)} → ${f0(now.cap - now.inv)} mb</td><td class="num">${d(snap.cap - snap.inv, now.cap - now.inv, f0, ' mb')}</td></tr>
         <tr><td>wells can flow</td><td class="num">${f1(snap.draw)} → ${f1(now.draw)} mb/day</td><td class="num">${d(snap.draw, now.draw, f1, ' mb/d')}</td></tr>
+        <tr><td>the way out takes</td><td class="num">${f1(snap.out)} → ${f1(now.out)} mb/day</td><td class="num">${d(snap.out, now.out, f1, ' mb/d')}</td></tr>
         <tr><td>crude</td><td class="num">$${f0(snap.price)} → $${f0(now.price)}</td><td class="num">${d(snap.price, now.price, f0, '')}</td></tr>
         <tr><td>congress</td><td class="num">${f0(snap.mood)} → ${f0(now.mood)}</td><td class="num">${d(snap.mood, now.mood, f0, '')}</td></tr>
         <tr><td>money for ${yr(w.year)}</td><td class="num">${bn(Math.max(0, grant))}</td><td class="num"><span class="flat">grant + what you carried</span></td></tr>
@@ -338,16 +372,18 @@
   const tgRun = new I.Toggle($('tg-run'), { label: 'clock', off: 'hold', on: 'run', onchange: on => { if (on) { if (!autorun) autorun = setInterval(week, S.drawCap(w) <= 0 ? 220 : 700); } else stopRun(); } });
   function crisisPanel() {
     $('p-year').hidden = true; $('p-crisis').hidden = false;
-    const c = w.crisis, cap = S.drawCap(w);
+    const c = w.crisis, cap = S.deliverCap(w), wells = S.drawCap(w), lines = S.linesCap(w), F = S.chainFlows(w);
     $('c-name').textContent = c.name; $('c-week').textContent = `week ${c.week + 1}`;
-    $('c-short').innerHTML = `${f1(c.ceasefire > 0 ? 0 : c.shortfall)}<small>mb/d</small>`; $('c-share').innerHTML = `${f1((c.ceasefire > 0 ? 0 : c.shortfall) * (c.allies ? 0.44 : 0.7))}<small>mb/d</small>`; $('c-cap').innerHTML = `${f1(cap)}<small>mb/d</small>`;
+    const seg = (d, name, v, on) => `<div class="seg${on ? ' bind' : ''}"><i style="width:${clamp(v / d.rate * 100, 0, 100).toFixed(0)}%"></i><span>${name} ${kb(v)}</span></div>`;
+    $('c-chain').innerHTML = `<div class="chain-row chain-head"><b></b><span>pumps</span><span>line</span><span>docks + buyers</span><em>kb/d out</em></div>` + w.domes.map(d => { const f = F[d.key]; const held = f.pumps > f.flow * 1.05 + 0.02; return `<div class="chain-row"><b>${d.name}</b>${seg(d, 'pumps', f.pumps, f.bind === 'pumps' && f.pumps <= 0.02)}${seg(d, 'line', f.pipe, held && f.bind === 'pipe')}${seg(d, 'docks', f.take, held && f.bind === 'takeaway')}<em>${kb(f.flow)}</em></div>`; }).join('');
+    $('c-short').innerHTML = `${f1(c.ceasefire > 0 ? 0 : c.shortfall)}<small>mb/d</small>`; $('c-share').innerHTML = `${f1((c.ceasefire > 0 ? 0 : c.shortfall) * (c.allies ? 0.44 : 0.7))}<small>mb/d</small>`; $('c-cap').innerHTML = `${f1(cap)}<small>of ${f1(wells)} mb/d</small>`;
     cr.max = Math.max(0.05, cap).toFixed(2); if (+cr.value > cap) cr.value = cap.toFixed(2); knob.refresh();
-    $('c-note').textContent = cap <= 0 ? 'no pumps: you can only watch' : c.week === 0 ? 'first barrels reach the market in about two weeks' : `${f0(S.inv(w))} mb left · crude $${f0(w.price)}`;
+    $('c-note').textContent = wells <= 0 ? 'no pumps: you can only watch' : cap < wells - 0.05 ? `wells could give ${f1(wells)}, the lines carry ${f1(lines)}, buyers and docks take ${f1(cap)}` : c.week === 0 ? 'first barrels reach the market in about two weeks' : `${f0(S.inv(w))} mb left · crude $${f0(w.price)}`;
     $('k-rate').classList.toggle('dead', cap <= 0);
     country.set(lastWeek);
-    $('c-help').innerHTML = cap <= 0
+    $('c-help').innerHTML = wells <= 0
       ? `<b>You cannot pump.</b> No dome has a pumping plant, so the knob does nothing. Flip the <b>clock</b> to run and let the weeks pass, or press <b>next week</b>. The lesson of 1979 is the one the real reserve learned: oil in the ground is not oil at the pump.`
-      : `<b>Knob:</b> how much to release each day, up to the ${f1(cap)} mb/day your wells can flow. Turn it by dragging around the dial, scrolling on it, or pressing − and +. <b>Next week</b> runs one week; the <b>clock</b> keeps running them. The world is short ${f1(c.ceasefire > 0 ? 0 : c.shortfall)} mb/day and your share to cover is ${f1((c.ceasefire > 0 ? 0 : c.shortfall) * (c.allies ? 0.44 : 0.7))}; release that much and the price spike mostly goes away. Release less and Americans pay more; release more and you run dry sooner.`;
+      : `<b>Knob:</b> how much to release each day, up to the ${f1(cap)} mb/day the way out can carry${cap < wells - 0.05 ? ` (your wells could push ${f1(wells)}; the red link on each dome is what holds it back)` : ''}. Turn it by dragging around the dial, scrolling on it, or pressing − and +. <b>Next week</b> runs one week; the <b>clock</b> keeps running them. The world is short ${f1(c.ceasefire > 0 ? 0 : c.shortfall)} mb/day and your share to cover is ${f1((c.ceasefire > 0 ? 0 : c.shortfall) * (c.allies ? 0.44 : 0.7))}; release that much and the price spike mostly goes away. Release less and Americans pay more; release more and you run dry sooner.`;
   }
   let lastWeek = null;
   function week() {
@@ -361,8 +397,14 @@
   function stopRun() { if (autorun) { clearInterval(autorun); autorun = null; } tgRun.set(false); }
   $('c-week-btn').onclick = week;
   function crisisEnd(s) {
-    modal(`<div class="kicker">${yr(w.year)} · after ${s.weeks} weeks</div><h2>${s.name} is over.</h2><div class="stats"><div class="stat2"><div class="l">released</div><div class="v">${f1(s.released)}<small>mb</small></div></div><div class="stat2"><div class="l">extra fuel cost to americans</div><div class="v">${bn(s.pain)}</div></div><div class="stat2"><div class="l">your releases saved</div><div class="v">${bn(s.avoided)}</div></div><div class="stat2"><div class="l">to the treasury</div><div class="v">${bn(s.revenue)}</div></div><div class="stat2"><div class="l">left in the ground</div><div class="v">${f0(s.inv)}<small>mb</small></div></div><div class="stat2"><div class="l">congress</div><div class="v">${f0(w.mood)}<small>/100</small></div></div></div><p>${verdictLine(s)}</p><div class="foot"><button class="btn primary" id="m-ok">back to the year →</button></div>`);
+    modal(`<div class="kicker">${yr(w.year)} · after ${s.weeks} weeks</div><h2>${s.name} is over.</h2><div class="stats"><div class="stat2"><div class="l">released</div><div class="v">${f1(s.released)}<small>mb</small></div></div><div class="stat2"><div class="l">extra fuel cost to americans</div><div class="v">${bn(s.pain)}</div></div><div class="stat2"><div class="l">your releases saved</div><div class="v">${bn(s.avoided)}</div></div><div class="stat2"><div class="l">to the treasury</div><div class="v">${bn(s.revenue)}</div></div><div class="stat2"><div class="l">left in the ground</div><div class="v">${f0(s.inv)}<small>mb</small></div></div><div class="stat2"><div class="l">congress</div><div class="v">${f0(w.mood)}<small>/100</small></div></div>${s.stuck > 0.5 ? `<div class="stat2"><div class="l">could not get out</div><div class="v">${f1(s.stuck)}<small>mb</small></div></div>` : ''}</div><p>${verdictLine(s)}${chainLine(s)}</p><div class="foot"><button class="btn primary" id="m-ok">back to the year →</button></div>`);
     $('m-ok').onclick = () => { closeModal(); hud(); renderLog(); yearPanel(); $('y-go').disabled = false; };
+  }
+  function chainLine(s) {
+    if (!s.bound || s.stuck < 0.5) return '';
+    const link = ['pipe', 'takeaway', 'pumps'].sort((a, b) => s.bound[b] - s.bound[a])[0], n = s.bound[link]; if (!n) return '';
+    const what = link === 'pipe' ? 'the lines from the domes' : link === 'takeaway' ? 'the docks and the buyers' : 'the wells';
+    return ` For ${n} of ${s.weeks} weeks ${what} set the pace, not the knob: ${f1(s.stuck)} million barrels you asked for never got out.`;
   }
   function verdictLine(s) {
     if (s.released < 1) return 'You did not pump. Whether that was prudence or paralysis depends on what comes next.';
@@ -378,7 +420,7 @@
     const chart = compareChart();
     modal(`<div class="kicker">2036 · the report</div><div class="grade">your title</div><div class="big">${R.title}</div>
       <div class="stats"><div class="stat2"><div class="l">in the ground</div><div class="v">${f0(R.inv)}<small>of ${f0(R.cap)} mb</small></div></div><div class="stat2"><div class="l">caverns</div><div class="v">${R.caverns}<small>avg ${f1(R.leftAvg)} drawdowns left</small></div></div><div class="stat2"><div class="l">well health</div><div class="v">${f0(R.health * 100)}<small>%</small></div></div>
-      <div class="stat2"><div class="l">saved americans</div><div class="v">${bn(R.avoided)}</div></div><div class="stat2"><div class="l">they still paid extra</div><div class="v">${bn(R.pain)}</div></div><div class="stat2"><div class="l">you spent</div><div class="v">${bn(R.spent)}</div></div>
+      <div class="stat2"><div class="l">saved americans</div><div class="v">${bn(R.avoided)}</div></div><div class="stat2"><div class="l">they still paid extra</div><div class="v">${bn(R.pain)}</div></div><div class="stat2"><div class="l">you spent</div><div class="v">${bn(R.spent)}</div></div>${R.stuck > 0.5 ? `<div class="stat2"><div class="l">could not get out</div><div class="v">${f0(R.stuck)}<small>mb</small></div></div>` : ''}
       <div class="stat2"><div class="l">to the treasury</div><div class="v">${bn(R.treasury)}</div></div><div class="stat2"><div class="l">bought · released</div><div class="v">${f0(R.bought)}<small>· ${f0(R.released)} mb</small></div></div><div class="stat2"><div class="l">score</div><div class="v">${R.score}</div></div></div>
       <figure>${chart}<div class="legend"><span><i style="background:var(--gold)"></i>your reserve</span><span><i style="background:rgba(239,232,216,0.7)"></i>what really happened (EIA)</span></div></figure>
       <p style="margin-top:12px">${R.inv > 500 ? 'You leave a full vault. The real reserve never held more than 727 million barrels, and holds 287 today.' : R.inv > 280 ? 'You leave the reserve about where the real one stands in 2026.' : 'You leave less than the real reserve held at its 2026 low.'} ${R.avoided > 100 ? 'Your releases spared Americans more than the real ones did.' : ''}</p>
@@ -482,7 +524,7 @@
     if (!params.get('auto')) return;
     closeModal(); const handle = ev => { if (!ev) return; if (ev.kind === 'crisis') { S.startCrisis(w, ev); while (w.phase === 'crisis') S.crisisWeek(w, Math.min(1.0, S.drawCap(w))); } else S.resolveCard(w, ev, ev.choices[0]); };
     const p = w.pending; w.pending = null; handle(p);
-    while (w.phase !== 'end') { const buy = Math.min(S.roomFor(w), Math.max(0, (w.budget - 0.1) * 1000 / w.price)); S.yearDecisions(w, { buy, maintain: 0.25 }); const r = S.advanceYear(w); if (r.end) break; handle(r.crisis || r.card); }
+    while (w.phase !== 'end') { const buy = Math.min(S.roomFor(w), Math.max(0, (w.budget - 0.1) * 1000 / w.price)); S.yearDecisions(w, { buy, maintain: 0.25, docks: { seaway: w.budget > 0.3, texoma: w.budget > 0.3 } }); const r = S.advanceYear(w); if (r.end) break; handle(r.crisis || r.card); }
     hud(); renderLog(); yearPanel();
     if (params.get('guess')) blindReveal(+params.get('guess')); else blindGuess();
   }); }
@@ -496,8 +538,8 @@
       if (w.year >= target && !(stopAt === 'crisis' && w.phase !== 'crisis')) { if (w.phase === 'crisis') { for (let i = 0; i < 3; i++) week(); } return; }
       if (w.phase === 'crisis') { if (stopAt === 'crisis' && w.year >= target) return; const r = S.crisisWeek(w, Math.min(1.0, S.drawCap(w))); if (r.over) { closeModal(); yearPanel(); } hud(); renderLog(); return setTimeout(botStep, 0); }
       const buy = Math.min(S.roomFor(w), Math.max(0, (w.budget - 0.2) * 1000 / w.price));
-      S.yearDecisions(w, { buy, build: w.year < 1991 ? 4 : 0, maintain: 0.2, pumps: w.year >= 1982 && w.year <= 1985 ? 1 : 0 });
-      const r = S.advanceYear(w); hud(); renderLog(); yearPanel();
+      S.yearDecisions(w, { buy, build: w.year < 1991 ? 4 : 0, maintain: 0.2, pumps: w.year >= 1982 && w.year <= 1985 ? 1 : 0, pipeAt: w.year >= 1984 && w.year <= 1987 ? [['bm', 'wh', 'bh', 'bc'][w.year - 1984]] : [], docks: { seaway: w.budget > 0.3, texoma: w.budget > 0.3 } });
+      const r = S.advanceYear(w); resetPlan(); hud(); renderLog(); yearPanel();
       if (r.end) return endGame();
       if (r.card) { S.resolveCard(w, r.card, r.card.choices[0]); }
       if (r.crisis) { S.startCrisis(w, r.crisis); if (stopAt === 'crisis' && w.year >= target) { scene.say(r.crisis.name, 'emergency'); crisisPanel(); hud(); renderLog(); for (let i = 0; i < 2; i++) week(); if (r.crisis.hurricane) w.hurricane = w.hurricane || { weeks: 2, x: 0.3 }; return; } }
