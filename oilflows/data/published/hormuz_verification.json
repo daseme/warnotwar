@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at_utc": "2026-09-03T21:16:55Z",
+  "generated_at_utc": "2026-09-07T13:29:54Z",
   "current_episode": {
     "scope": "hormuz_outbound",
     "as_of": "2026-08-28",
@@ -151,6 +151,50 @@
       "status": "unverified",
       "resolution_note": null,
       "resolution_date": null
+    },
+    {
+      "claim_id": "c7",
+      "claim_date": "2026-08-31",
+      "date_precision": "day",
+      "speaker": "Chris Wright, U.S. Energy Secretary",
+      "attribution": "named",
+      "value_low": 17.0,
+      "value_high": 17.0,
+      "unit": "mbbl_single_day",
+      "scope": "hormuz_outbound",
+      "period": "single_day",
+      "commodity": "all_liquids",
+      "evidence_type": "government_estimate",
+      "quote": "More than 17 million barrels of oil transited the Strait of Hormuz on Monday.",
+      "note": "Single-day record claim (Aug 31, a Monday); Axios (2026-09-04) describes this as crude and products combined. Reported the same week CENTCOM said Tuesday Sept 1 saw ~18M barrels escorted through Hormuz (see c8).",
+      "source_name": "CNBC",
+      "source_url": "https://www.cnbc.com/2026/09/02/energy-secretary-chris-wright-tells-cnbc-that-more-than-17-million-barrels-of-oil-transited-hormuz-on-monday.html",
+      "entered_date": "2026-09-07",
+      "status": "unverified",
+      "resolution_note": null,
+      "resolution_date": null
+    },
+    {
+      "claim_id": "c8",
+      "claim_date": "2026-09-01",
+      "date_precision": "day",
+      "speaker": "U.S. Central Command (CENTCOM)",
+      "attribution": "institutional",
+      "value_low": 18.0,
+      "value_high": 18.0,
+      "unit": "mbbl_single_day",
+      "scope": "hormuz_outbound",
+      "period": "single_day",
+      "commodity": "unspecified",
+      "evidence_type": "government_estimate",
+      "quote": "The U.S. military escorted up to 40 commercial vessels carrying about 18 million barrels of oil through the Strait of Hormuz on Tuesday.",
+      "note": "Described as the highest one-day wartime peak since the war began; reported alongside continued U.S. and Iranian strikes that day (also reported by Gulf News). Commodity split not specified.",
+      "source_name": "CNN",
+      "source_url": "https://www.cnn.com/2026/09/02/politics/latest-us-strikes-against-iran-marked-a-shift-in-strategy",
+      "entered_date": "2026-09-07",
+      "status": "unverified",
+      "resolution_note": null,
+      "resolution_date": null
     }
   ],
   "estimates": [
@@ -243,6 +287,24 @@
       "as_reported_by": "Bloomberg (via Yahoo Finance syndication)",
       "source_url": "https://finance.yahoo.com/energy/articles/goldman-says-hormuz-oil-flows-012118583.html",
       "entered_date": "2026-08-31"
+    },
+    {
+      "estimate_id": "e6",
+      "estimate_date": "2026-08-31",
+      "date_precision": "day",
+      "tracker": "Vortexa",
+      "value_low": 8.0,
+      "value_high": 8.0,
+      "value_central": 8.0,
+      "unit": "mbd",
+      "scope": "hormuz_outbound",
+      "period": "unspecified",
+      "commodity": "all_liquids",
+      "evidence_type": "commercial_tracker_model",
+      "note": "28-day moving average, crude and refined products combined, per Vortexa senior analyst Rohit Rathod, as of Aug 31. Press coverage frames this as roughly matching Wright's claimed ~8 mb/d seven-day average (c6), but the windows (28-day vs 7-day) and likely commodity scopes (all_liquids vs crude/unspecified) differ, so this ledger does not treat it as corroboration of c1/c6.",
+      "as_reported_by": "Axios",
+      "source_url": "https://www.axios.com/2026/09/04/trump-strait-hormuz-oil-claims-iran",
+      "entered_date": "2026-09-07"
     }
   ],
   "scope_definitions": {
