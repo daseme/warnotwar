@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-09-10T07:30:34Z",
+ "generated_at_utc": "2026-09-10T23:24:58Z",
  "schema_version": 1,
  "window_start": "2025-06-23",
  "war_start": "2026-02-28",
@@ -15,45 +15,45 @@
  },
  "latest": {
   "brent_spot": {
-   "date": "2026-09-01",
-   "value": 96.02
+   "date": "2026-09-09",
+   "value": 109.51
   },
   "brent_yoy_pct": {
-   "date": "2026-09-01",
-   "value": 43.1
+   "date": "2026-09-09",
+   "value": 61.1
   },
   "bno": {
-   "date": "2026-09-09",
-   "value": 59.32
+   "date": "2026-09-10",
+   "value": 63.13
   },
   "ovx": {
-   "date": "2026-09-08",
-   "value": 48.59
+   "date": "2026-09-09",
+   "value": 49.85
   },
   "vix": {
-   "date": "2026-09-08",
-   "value": 15.72
+   "date": "2026-09-09",
+   "value": 16.46
   },
   "ovx_vix": {
-   "date": "2026-09-08",
-   "value": 3.09
+   "date": "2026-09-09",
+   "value": 3.03
   },
   "corr20": {
-   "date": "2026-09-09",
-   "value": -0.469
+   "date": "2026-09-10",
+   "value": -0.498
   },
   "spy_drawdown_pct": {
-   "date": "2026-09-09",
-   "value": -1.99
+   "date": "2026-09-10",
+   "value": -2.58
   },
   "us10y": {
-   "date": "2026-09-08",
-   "value": 4.8
+   "date": "2026-09-09",
+   "value": 4.83
   }
  },
- "bno_brent_ratio_60obs_median": 0.5541,
- "brent_equiv_of_bno_high": 99.3,
- "brent_equiv_of_bno_low": 88.4,
+ "bno_brent_ratio_60obs_median": 0.5591,
+ "brent_equiv_of_bno_high": 98.4,
+ "brent_equiv_of_bno_low": 87.6,
  "jump_days": [
   "2026-01-08",
   "2026-02-18",
@@ -74,7 +74,8 @@
   "2026-07-29",
   "2026-08-06",
   "2026-08-10",
-  "2026-09-01"
+  "2026-09-01",
+  "2026-09-10"
  ],
  "sources": {
   "brent_spot": "FRED DCOILBRENTEU (EIA Europe Brent Spot FOB, daily, published weekly)",
