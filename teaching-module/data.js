@@ -13,11 +13,11 @@ const SERIES = {
 };
 
 const dates = [
-  { id:'feb23', label:'Feb 23', brent:71.90, bno:32.15, hormuz:123, buffer:58, news:'Normal traffic', yanbu:105, fujairah:98 },
-  { id:'mar02', label:'Mar 2',  brent:77.24, bno:34.80, hormuz:72,  buffer:55, news:'Traffic falling', yanbu:118, fujairah:85 },
-  { id:'mar07', label:'Mar 7',  brent:95.74, bno:43.95, hormuz:2.8, buffer:42, news:'Near-total halt', yanbu:137, fujairah:62 },
-  { id:'mar12', label:'Mar 12', brent:102.38,bno:47.20, hormuz:0.9, buffer:40, news:'Still blocked',   yanbu:142, fujairah:55 },
-  { id:'apr07', label:'Apr 7',  brent:138.21,bno:62.50, hormuz:8,   buffer:38, news:'Partial reopen',  yanbu:125, fujairah:78 },
+  { id:'feb23', label:'Feb 23', brent:71.90, next:73.05,  bno:32.15, hormuz:123, buffer:58, news:'Normal traffic', yanbu:105, fujairah:98 },
+  { id:'mar02', label:'Mar 2',  brent:77.24, next:77.60,  bno:34.80, hormuz:72,  buffer:55, news:'Traffic falling', yanbu:118, fujairah:85 },
+  { id:'mar07', label:'Mar 7',  brent:95.74, next:91.90,  bno:43.95, hormuz:2.8, buffer:42, news:'Near-total halt', yanbu:137, fujairah:62 },
+  { id:'mar12', label:'Mar 12', brent:102.38,next:96.20,  bno:47.20, hormuz:0.9, buffer:40, news:'Still blocked',   yanbu:142, fujairah:55 },
+  { id:'apr07', label:'Apr 7',  brent:138.21,next:131.30, bno:62.50, hormuz:8,   buffer:38, news:'Partial reopen',  yanbu:125, fujairah:78 },
 ];
 
 const items = [

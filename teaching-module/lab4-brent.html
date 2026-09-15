@@ -40,7 +40,7 @@ function renderL4(){
   const cards=[
     {key:'spot',label:'Brent Spot',value:fmt$(d.brent),tag:'Physical oil',tagClass:'tag-neutral',desc:grade===5?'The actual price of a barrel of oil right now, if you wanted to buy it for delivery today.':'Physical Brent crude for immediate delivery. Different from futures, which are contracts for later delivery.'},
     {key:'near',label:'Near-month Future',value:fmt$(d.brent),tag:'Short-term contract',tagClass:'tag-info',desc:grade===5?'A promise to buy oil in about one month. This is what most people mean when they say "the oil price."':'An agreement today for oil delivery in ~1 month. The "headline" oil price is usually this futures contract.'},
-    {key:'next',label:'Next-month Future',value:fmt$(d.brent*1.03),tag:'Farther out',tagClass:'tag-warn',desc:grade===5?'A promise to buy oil a little further in the future. Sometimes costs more, sometimes less.':'The contract after the near-month. Set it beside the near-month price and the gap tells you the shape of the curve, contango or backwardation. The panel below shows both.'},
+    {key:'next',label:'Next-month Future',value:fmt$(d.next),tag:d.next>d.brent?'Farther out · costs more':'Farther out · costs less',tagClass:'tag-warn',desc:grade===5?'A promise to buy oil a little further in the future. Sometimes costs more, sometimes less.':'The contract after the near-month. Set it beside the near-month price and the gap tells you the shape of the curve, contango or backwardation. The panel below shows both.'},
     {key:'bno',label:'BNO',value:fmt$(d.bno),tag:'ETF share',tagClass:'tag-up',desc:grade===5?'A fund people can buy. It is designed to move with short-term Brent oil contracts. One share is NOT one barrel.':'An exchange-traded fund holding Brent futures. Its NAV — the fund\'s own tally of what one share is worth — tracks daily % changes in near-month Brent, plus collateral minus expenses.'}
   ];
   let h='<div class="card-grid">';
@@ -48,7 +48,7 @@ function renderL4(){
   h+='</div>';
   const c=cards.find(x=>x.key===l4Open);
   h+=`<div class="detail-panel"><h4>${c.label}</h4><p>${c.desc}</p></div>`;
-  h+=curvePanel(d.brent);
+  h+=curvePanel(d.brent,d.next,d.label);
   if(grade>=8){
     h+=`<div class="detail-panel" style="border-left:3px solid var(--c3);"><h4>Why isn't BNO $${d.brent.toFixed(2)}?</h4><p>A share of BNO is <strong>not one barrel of oil</strong>. BNO holds many futures contracts divided across many shares. Its price reflects:</p><ul><li>The <em>percentage change</em> in Brent futures (not the dollar price of a barrel)</li><li>How many shares exist (share count affects price per share)</li><li>Expenses deducted daily</li><li>Roll yield from contract transitions</li></ul><div class="note">This is one of the most common misconceptions about commodity ETFs. BNO tracks <em>returns</em>, not prices.</div></div>`;
   }
@@ -56,19 +56,26 @@ function renderL4(){
   $('l4-content').querySelectorAll('.card').forEach(c=>{ c.onclick=()=>{ l4Open=c.dataset.key; renderL4(); }; });
 }
 
-// The two shapes of the futures curve, anchored on the day's near-month price.
-// Illustrative: the simulated dataset keeps next-month a fixed 3% above near, so
-// this panel shows both shapes rather than claiming which one "today" is.
-function curvePanel(near){
-  const up=near*1.03, dn=near*0.97;
+// The two shapes of the futures curve. The simulated dataset carries a next-month
+// price per date (data.js) that flips from contango to backwardation when the strait
+// shuts; the matching picture uses the day's prices, the other is illustrative.
+function curvePanel(near,next,label){
+  // the picture that matches the day uses the day's prices and is marked; the other is illustrative
+  const flat=Math.abs(next-near)<0.005*near, isUp=next>near;
+  const up=isUp?next:near*1.03, dn=!isUp?next:near*0.97;
+  const today=grade===5?'the shape on '+label:'the simulated curve on '+label;
   const pair=(tagA,tagB)=>`<div class="curve-pair">
-    <div class="roll-vis"><div class="roll-barrel"><div class="rl">This month</div><div class="rp" style="color:var(--accent)">${fmt$(near)}</div></div><div class="roll-arrow">→</div><div class="roll-barrel"><div class="rl">Next month</div><div class="rp" style="color:var(--c3)">${fmt$(up)}</div><span class="roll-tag" style="background:rgba(210,153,34,0.12);color:var(--c3)">${tagA}</span></div></div>
-    <div class="roll-vis"><div class="roll-barrel"><div class="rl">This month</div><div class="rp" style="color:var(--accent)">${fmt$(near)}</div></div><div class="roll-arrow">→</div><div class="roll-barrel"><div class="rl">Next month</div><div class="rp" style="color:var(--c2)">${fmt$(dn)}</div><span class="roll-tag" style="background:rgba(63,185,80,0.12);color:var(--c2)">${tagB}</span></div></div>
+    <div class="roll-vis${isUp?' today':''}"><div class="roll-barrel"><div class="rl">This month</div><div class="rp" style="color:var(--accent)">${fmt$(near)}</div></div><div class="roll-arrow">→</div><div class="roll-barrel"><div class="rl">Next month</div><div class="rp" style="color:var(--c3)">${fmt$(up)}</div><span class="roll-tag" style="background:rgba(210,153,34,0.12);color:var(--c3)">${tagA}</span></div>${isUp?`<div class="today-cap">${today}</div>`:''}</div>
+    <div class="roll-vis${!isUp?' today':''}"><div class="roll-barrel"><div class="rl">This month</div><div class="rp" style="color:var(--accent)">${fmt$(near)}</div></div><div class="roll-arrow">→</div><div class="roll-barrel"><div class="rl">Next month</div><div class="rp" style="color:var(--c2)">${fmt$(dn)}</div><span class="roll-tag" style="background:rgba(63,185,80,0.12);color:var(--c2)">${tagB}</span></div>${!isUp?`<div class="today-cap">${today}</div>`:''}</div>
   </div>`;
+  const dayLine=grade===5
+    ?(flat?`On ${label} the two prices are almost the same. The picture is nearly flat.`:isUp?`On ${label} oil for later costs more. Things are still calm.`:`On ${label} oil for now costs more. Oil is scarce and buyers want barrels today.`)
+    :(flat?`On ${label} the curve is nearly flat: the market has not yet decided which way the shortage goes.`:isUp?`On ${label} the curve is in contango. The market still expects normal supply.`:`On ${label} the curve is in backwardation. Barrels for delivery now command the premium.`);
   if(grade===5){
     return `<div class="detail-panel"><h4>Oil now and oil later</h4>
 <p>Oil for next month usually costs a little more or a little less than oil for this month. That gives two pictures.</p>
 ${pair('Later costs more','Now costs more')}
+<p>${dayLine}</p>
 <p><strong>Later costs more.</strong> Normal when things are calm. Keeping oil in a tank costs money, so oil for later carries that cost.</p>
 <p><strong>Now costs more.</strong> Happens when oil is scarce. People pay extra to get barrels today.</p>
 <p>Grown-ups have names for these. The first is <strong>contango</strong>. The second is <strong>backwardation</strong>.</p>
@@ -77,6 +84,7 @@ ${pair('Later costs more','Now costs more')}
   return `<div class="detail-panel"><h4>Two shapes of the curve</h4>
 <p>Oil for next month almost never costs the same as oil for this month. Line the two prices up and the curve has one of two shapes.</p>
 ${pair('Contango','Backwardation')}
+<p>${dayLine}</p>
 <p><strong>Contango: later oil costs more.</strong> The normal shape in a calm market. Storing oil costs money, so the price for later carries that cost.</p>
 <p><strong>Backwardation: oil now costs more.</strong> The common shape in a shortage. Buyers pay up for barrels they can get today, and the curve flips.</p>
 <div class="note">Why it matters for BNO: the fund never takes delivery, so every month it sells the near-month contract and buys the next one. In contango it pays more for the new contract than it got for the old one, a small loss each roll. In backwardation it pays less, a small gain. Lab 5 lets you set the two prices and watch the effect.</div></div>`;

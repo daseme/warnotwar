@@ -40,7 +40,7 @@
 <script src="data.js"></script>
 <script src="shared.js"></script>
 <script>
-let l5Gear='futures', l5Brent=95.74, l5Next=98.20, l5Coll=4.5, l5Exp=0.45, l5Prem=0;
+let l5Gear='futures', l5Brent=dates[dateIdx].brent, l5Next=dates[dateIdx].next, l5Coll=4.5, l5Exp=0.45, l5Prem=0;
 let l5HolderOpen='retail';
 
 const l5Gears=[
@@ -87,8 +87,9 @@ const l5Holders=[
 ];
 
 function l5Calc(){
-  const rollYield=((l5Next-l5Brent)/l5Brent)*100;
-  const base=43.95;
+  // roll yield: what the fund keeps when it sells near and buys next. Positive in backwardation (next cheaper), negative in contango.
+  const rollYield=((l5Brent-l5Next)/l5Brent)*100;
+  const base=dates[dateIdx].bno;
   const adj=(rollYield/252+l5Coll/100/252-l5Exp/100/252+l5Prem/100/252)*100;
   return {price:base+adj,rollYield};
 }
@@ -187,6 +188,9 @@ function renderHolders(){
 
 function onDateChange() {
   renderHeader();
+  // the sliders start from the day's simulated prices; the curve flips when the strait shuts
+  l5Brent=dates[dateIdx].brent; l5Next=dates[dateIdx].next;
+  renderL5();
 }
 
 function onGradeChange() {
