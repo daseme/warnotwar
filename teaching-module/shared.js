@@ -1,10 +1,15 @@
 // state: persisted per-tab and mirrored into the URL hash so a
-// teacher can link a specific view (e.g. lab2-buffer.html#g=12&d=3)
+// teacher can link a specific view (e.g. lab2-buffer.html#g=8&d=3)
+// Two reading levels, shown as "plain" and "full". Internally they keep
+// their calibration targets as grade numbers: 5 = plain (5th-grade
+// reading), 8 = full (8th-grade reading). A former third level (12) is
+// folded into 8; old links and stored state still resolve.
 function _fromHash(key) {
   const m = location.hash.match(new RegExp('[#&]' + key + '=(\\d+)'));
   return m ? +m[1] : null;
 }
 let grade = _fromHash('g') ?? +(sessionStorage.getItem('hl.grade') || 5);
+grade = grade >= 8 ? 8 : 5;
 let dateIdx = _fromHash('d') ?? +(sessionStorage.getItem('hl.dateIdx') ?? 2);
 function persistState() {
   sessionStorage.setItem('hl.grade', grade);

@@ -12,9 +12,8 @@
   <div class="site-header-inner">
     <div class="site-title">Hormuz Lab <span>·</span> How a Strait Becomes a Price</div>
     <div class="grade-switch" id="grade-switch">
-      <button data-g="5" class="on">5th grade</button>
-      <button data-g="8">8th grade</button>
-      <button data-g="12">12th grade</button>
+      <button data-g="5" class="on">plain</button>
+      <button data-g="8">full</button>
     </div>
   </div>
 </header>
@@ -59,35 +58,30 @@ const l5Holders=[
     key:'retail', label:'Retail investors',
     desc5:'Regular people buy BNO through apps like Robinhood or Fidelity. They want oil exposure without opening a futures account.',
     desc8:'Direct retail purchase via brokerage accounts. BNO offers oil exposure without opening a futures account. Retail buying tends to follow the mood — money comes in when oil is in the headlines.',
-    desc12:'Direct retail ownership through self-directed brokerage accounts. Retail flows into BNO are often sentiment-driven and procyclical — inflows spike when oil makes headlines. This creates a "dumb money" overlay on top of the underlying futures price. Retail holders do not create/redeem directly; they trade on secondary markets.',
     color:'var(--c1)'
   },
   {
     key:'ria', label:'RIAs / Advisors',
     desc5:'Financial advisors put BNO in client portfolios. It gives clients oil exposure as part of a bigger plan.',
     desc8:'Registered Investment Advisors use BNO in client portfolios as a commodity allocation. Rebalancing flows can create predictable buying/selling pressure.',
-    desc12:'RIAs and wirehouse advisors use BNO as a satellite commodity allocation within diversified portfolios. Rebalancing mechanics (e.g., quarterly target-weight adjustments) create predictable flows independent of oil fundamentals. Advisor-sold assets tend to be stickier than pure retail but less sticky than institutional mandates.',
     color:'var(--c2)'
   },
   {
     key:'institutional', label:'Institutional mandates',
     desc5:'Big organizations like pension funds sometimes buy BNO as part of their commodity investments.',
     desc8:'Pensions, endowments, and family offices with commodity mandates. These are slow-moving, strategic allocations.',
-    desc12:'Pension funds, endowments, and sovereign wealth funds with explicit commodity beta targets. These allocations are strategic, slow-moving, and governed by investment policy statements. A university endowment might hold 3-5% in "real assets" including BNO as a Brent proxy. Outflows here are regime-dependent, not headline-dependent.',
     color:'var(--c3)'
   },
   {
     key:'aps', label:'Authorized Participants',
     desc5:'Special traders who can create or destroy BNO shares to keep the price fair. They don\'t hold BNO for long.',
     desc8:'APs (usually market makers) create and redeem shares at NAV, profiting when the market price drifts from it — which pulls the two prices back together. Their holdings are temporary and mechanical.',
-    desc12:'Authorized Participants (typically large market makers like Jane Street, Citadel Securities) create and redeem Creation Units (25,000 shares) at NAV. AP holdings are transient — they exist only during the arbitrage window. AP activity is the mechanism that keeps BNO\'s market price tethered to NAV. In stressed markets, AP capacity constraints can cause premium/discount persistence.',
     color:'var(--c5)'
   },
   {
     key:'notindex', label:'NOT: Index funds',
     desc5:'BNO is not in the S&P 500, so big index funds like VOO or SPY do not own it.',
     desc8:'BNO is not a component of major equity indices (S&P 500, Russell 2000, etc.). Passive equity index funds do not hold it.',
-    desc12:'BNO is excluded from broad equity indices (S&P 500, Russell 2000, MSCI ACWI). Therefore, passive equity index funds and their ETF wrappers (SPY, VTI, VXUS) hold zero BNO. This is structurally important: BNO does not benefit from the secular inflows into passive equity. Its demand is entirely active, tactical, or strategic-commodity driven.',
     color:'var(--c4)', notIncluded:true
   }
 ];
@@ -176,7 +170,7 @@ function renderHolders(){
   const grid=$('l5-holders');
   grid.innerHTML=l5Holders.map(h=>{
     const on=h.key===l5HolderOpen;
-    const desc=grade===5?h.desc5:(grade===8?h.desc8:h.desc12);
+    const desc=grade===5?h.desc5:h.desc8;
     return `<div class="card${on?' on':''}${h.notIncluded?' not-included':''}" data-key="${h.key}" style="padding:14px 16px;"><div class="hh-label" style="color:${h.color}">${h.notIncluded?'EXCLUDED':'HOLDER TYPE'}</div><div class="hh-title">${grade===5?l5HolderLabel5[h.key]:h.label}</div></div>`;
   }).join('');
   grid.querySelectorAll('.card').forEach(c=>{
@@ -184,7 +178,7 @@ function renderHolders(){
   });
 
   const h=l5Holders.find(x=>x.key===l5HolderOpen);
-  const desc=grade===5?h.desc5:(grade===8?h.desc8:h.desc12);
+  const desc=grade===5?h.desc5:h.desc8;
   const notNote=grade===5
     ?'Index funds never buy BNO automatically. Everyone who owns it chose it.'
     :'This is structurally important. BNO demand is driven by active allocation decisions, not passive equity inflows.';

@@ -12,9 +12,8 @@
   <div class="site-header-inner">
     <div class="site-title">Hormuz Lab <span>·</span> How a Strait Becomes a Price</div>
     <div class="grade-switch" id="grade-switch">
-      <button data-g="5" class="on">5th grade</button>
-      <button data-g="8">8th grade</button>
-      <button data-g="12">12th grade</button>
+      <button data-g="5" class="on">plain</button>
+      <button data-g="8">full</button>
     </div>
   </div>
 </header>
@@ -105,7 +104,7 @@ function renderL3() {
     return;
   }
 
-  // Grade 8 / 12 — build once, update in-place afterwards
+  // Grade 8 (full) — build once, update in-place afterwards
   const total = l3pQuick + l3pPartial + l3pFull;
   const valid = total === 100;
   const sent = total === 0 ? 0 : (l3pQuick * -1 + l3pPartial * 0 + l3pFull * 1) / total;

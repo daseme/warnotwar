@@ -12,9 +12,8 @@
   <div class="site-header-inner">
     <div class="site-title">Hormuz Lab <span>·</span> How a Strait Becomes a Price</div>
     <div class="grade-switch" id="grade-switch">
-      <button data-g="5" class="on">5th grade</button>
-      <button data-g="8">8th grade</button>
-      <button data-g="12">12th grade</button>
+      <button data-g="5" class="on">plain</button>
+      <button data-g="8">full</button>
     </div>
   </div>
 </header>
@@ -51,9 +50,6 @@ function renderL4(){
   h+=`<div class="detail-panel"><h4>${c.label}</h4><p>${c.desc}</p></div>`;
   if(grade>=8){
     h+=`<div class="detail-panel" style="border-left:3px solid var(--c3);"><h4>Why isn't BNO $${d.brent.toFixed(2)}?</h4><p>A share of BNO is <strong>not one barrel of oil</strong>. BNO holds many futures contracts divided across many shares. Its price reflects:</p><ul><li>The <em>percentage change</em> in Brent futures (not the dollar price of a barrel)</li><li>How many shares exist (share count affects price per share)</li><li>Expenses deducted daily</li><li>Roll yield from contract transitions</li></ul><div class="note">This is one of the most common misconceptions about commodity ETFs. BNO tracks <em>returns</em>, not prices.</div></div>`;
-  }
-  if(grade===12){
-    h+=`<div class="detail-panel"><h4>The futures curve on ${d.label}</h4><div class="roll-vis"><div class="roll-barrel"><div class="rl">Spot (inferred)</div><div class="rp" style="color:var(--accent)">${fmt$(d.brent)}</div></div><div class="roll-arrow">→</div><div class="roll-barrel"><div class="rl">Near-month</div><div class="rp" style="color:var(--accent)">${fmt$(d.brent)}</div></div><div class="roll-arrow">→</div><div class="roll-barrel"><div class="rl">Next-month</div><div class="rp" style="color:var(--c3)">${fmt$(d.brent*1.03)}</div><span class="roll-tag" style="background:rgba(210,153,34,0.12);color:var(--c3)">Contango</span></div></div><p>During the Hormuz crisis, the curve may shift into <strong>backwardation</strong> (near-month > next-month) as immediate scarcity is priced higher than future availability. This creates a <em>positive</em> roll yield for BNO.</p></div>`;
   }
   $('l4-content').innerHTML=h;
   $('l4-content').querySelectorAll('.card').forEach(c=>{ c.onclick=()=>{ l4Open=c.dataset.key; renderL4(); }; });
