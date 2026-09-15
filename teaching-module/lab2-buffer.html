@@ -115,7 +115,7 @@ function renderL2(){
   const result=$('l2-result');
   if(result) result.innerHTML = '<div class="r-eq">days of supply = stored oil ÷ '+(l2Denom==='runs'?'daily refinery use':'daily consumption')+'</div><div class="r-num" style="color:'+col+'">'+d+'</div><div class="r-label">days of oil supply</div><div class="r-note">'+
     (grade===5?'Think of it like padding, not a pantry: oil keeps getting pumped and delivered every day — this is the extra cushion on top of that flow.':
-     (grade===8?'If refinery use rises, "days" falls even though barrels haven\'t changed.':'Seasonal maintenance reduces runs, mechanically raising days without any inventory build. SPR releases are policy decisions.'))+
+     'If refinery use rises, "days" falls even though barrels haven\'t changed.')+
     '</div>';
 
   const scenarios=$('l2-scenarios');
