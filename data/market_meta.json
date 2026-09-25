@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-09-24T07:48:12Z",
+ "generated_at_utc": "2026-09-25T00:01:47Z",
  "schema_version": 1,
  "window_start": "2025-06-23",
  "war_start": "2026-02-28",
@@ -47,8 +47,8 @@
    "value": -1.29
   },
   "us10y": {
-   "date": "2026-09-22",
-   "value": 4.96
+   "date": "2026-09-23",
+   "value": 5.11
   }
  },
  "bno_brent_ratio_60obs_median": 0.5495,
@@ -78,7 +78,7 @@
   "2026-09-10"
  ],
  "sources": {
-  "brent_spot": "FRED DCOILBRENTEU (EIA Europe Brent Spot FOB, daily, published weekly)",
+  "brent_spot": "EIA RBRTE workbook (EIA Europe Brent Spot FOB, daily, published weekly)",
   "ovx": "FRED OVXCLS",
   "vix": "FRED VIXCLS",
   "us10y": "FRED DGS10",
