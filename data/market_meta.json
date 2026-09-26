@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-09-25T08:10:24Z",
+ "generated_at_utc": "2026-09-26T00:09:56Z",
  "schema_version": 1,
  "window_start": "2025-06-23",
  "war_start": "2026-02-28",
@@ -40,20 +40,20 @@
   },
   "corr20": {
    "date": "2026-09-24",
-   "value": -0.608
+   "value": -0.607
   },
   "spy_drawdown_pct": {
    "date": "2026-09-24",
    "value": -1.38
   },
   "us10y": {
-   "date": "2026-09-23",
-   "value": 5.11
+   "date": "2026-09-24",
+   "value": 5.18
   }
  },
- "bno_brent_ratio_60obs_median": 0.5495,
- "brent_equiv_of_bno_high": 100.1,
- "brent_equiv_of_bno_low": 89.2,
+ "bno_brent_ratio_60obs_median": 0.5486,
+ "brent_equiv_of_bno_high": 100.2,
+ "brent_equiv_of_bno_low": 89.3,
  "jump_days": [
   "2026-01-08",
   "2026-02-18",
@@ -75,7 +75,8 @@
   "2026-08-06",
   "2026-08-10",
   "2026-09-01",
-  "2026-09-10"
+  "2026-09-10",
+  "2026-09-23"
  ],
  "sources": {
   "brent_spot": "FRED DCOILBRENTEU (EIA Europe Brent Spot FOB, daily, published weekly)",
