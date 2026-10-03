@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-10-03T00:44:51Z",
+ "generated_at_utc": "2026-10-03T08:33:02Z",
  "schema_version": 1,
  "window_start": "2025-06-23",
  "war_start": "2026-02-28",
@@ -23,8 +23,8 @@
    "value": 65.2
   },
   "bno": {
-   "date": "2026-10-01",
-   "value": 62.95
+   "date": "2026-10-02",
+   "value": 63.1
   },
   "ovx": {
    "date": "2026-10-01",
@@ -39,12 +39,12 @@
    "value": 3.15
   },
   "corr20": {
-   "date": "2026-10-01",
-   "value": -0.545
+   "date": "2026-10-02",
+   "value": -0.562
   },
   "spy_drawdown_pct": {
-   "date": "2026-10-01",
-   "value": -1.79
+   "date": "2026-10-02",
+   "value": -1.06
   },
   "us10y": {
    "date": "2026-10-01",
