@@ -1,0 +1,9 @@
+{
+  // warnotwar.com — a Cloudflare Worker that serves this repo as static assets.
+  // Deploy from a clean export of the committed tree (see .assetsignore for what stays out):
+  //   git archive HEAD | tar -x -C <clean dir> && cp wrangler.jsonc .assetsignore <clean dir> && (cd <clean dir> && npx wrangler deploy)
+  "name": "warnotwar",
+  "compatibility_date": "2026-09-03",
+  "assets": { "directory": "./" },
+  "observability": { "enabled": true }
+}

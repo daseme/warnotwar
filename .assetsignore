@@ -1,0 +1,11 @@
+# never uploaded to warnotwar.com (Cloudflare Workers static assets)
+.git
+.gitignore
+.assetsignore
+wrangler.jsonc
+oilflows/.venv
+oilflows/.pytest_cache
+oilflows/data/raw
+oilflows/data/processed
+__pycache__
+*.pyc
