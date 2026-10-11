@@ -77,6 +77,19 @@ TIME_BASIS_PLAIN = {
     "some_single_nights": "some individual nights",
     "single_night_planned": "one planned night — not completed movement",
     "current": "current",
+    "recent_nightly_average": "recent nightly average, window unstated",
+    "prior_week": "the previous week",
+    "single_day_prior_week": "one day in the previous week",
+    "recent_days": "the previous few days",
+    "two_weeks": "the previous two weeks",
+    "past_12_weeks": "the previous twelve weeks",
+    "calendar_month": "one calendar month",
+    "running_average": "running average, window unstated",
+    "cumulative_recent_months": "running total over recent months",
+    "cumulative_since_jul_14": "running total since 14 July 2026",
+    "cumulative_blockade": "running total since the blockade began",
+    "cumulative_unspecified": "running total, start unstated",
+    "unspecified_current": "current, basis unstated",
 }
 
 ARCHIVE_STATUS_PLAIN = {
@@ -250,10 +263,13 @@ def load_archive_claims(path) -> pd.DataFrame:
 def comparable_hormuz_flow_claims(archive: pd.DataFrame) -> pd.DataFrame:
     """Only directly comparable outbound Hormuz oil-flow-rate claims in
     million barrels/day — the apples-to-apples series."""
+    # An open-ended figure ("at least 10", "over 9") has no upper value and
+    # is a floor, not a rate; it stays in the archive but out of this series.
     return archive.loc[
         (archive["scope"] == "hormuz_only")
         & (archive["direction"] == "outbound")
         & (archive["unit"] == "million_barrels_per_day")
+        & archive["value_max"].notna()
     ].reset_index(drop=True)
 
 

@@ -187,7 +187,8 @@ def test_publish_payload_is_strict_json():
     text = json.dumps(payload, allow_nan=False)
 
     round_trip = json.loads(text)
-    assert round_trip["current_episode"]["claim_high_mbd"] == 10.0
+    # ledger as of 2026-10-11: Bessent 15-22 mb/d (c10) tops the window
+    assert round_trip["current_episode"]["claim_high_mbd"] == 22.0
     assert round_trip["current_episode"]["independent_consensus_mbd"] == 5.0
     assert len(round_trip["claims"]) == len(claims)
     # unverified, never adjudicated language
@@ -220,7 +221,8 @@ def test_archive_ledger_loads_and_links():
     assert escort["disputed_by"] == "USOF-20260310-02"
 
     comparable = comparable_hormuz_flow_claims(archive)
-    assert set(comparable["value_min"]) == {8.0, 9.0, 10.0}
+    # ledger as of 2026-10-11; open-ended floors ("at least 10") are excluded
+    assert set(comparable["value_min"]) == {8.0, 9.0, 10.0, 13.0, 15.0, 18.0}
     # successive 7-day readings are series members, not corrections
     aug11 = archive.loc[archive["claim_id"] == "USOF-20260811-01"].iloc[0]
     assert pd.isna(aug11["superseded_by"])
@@ -279,6 +281,6 @@ def test_episode_reflects_wright_revision():
 
     ep = build_current_episode(claims, estimates)
     assert ep["claim_low_mbd"] == 8.0
-    assert ep["claim_high_mbd"] == 10.0
+    assert ep["claim_high_mbd"] == 22.0  # ledger as of 2026-10-11
     assert ep["gap_low_mbd"] == 3.0
-    assert ep["gap_high_mbd"] == 5.0
+    assert ep["gap_high_mbd"] == 17.0
