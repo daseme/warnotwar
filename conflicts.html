@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="paper">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="The wars being fought right now, who is fighting, and which countries help which side. Every line carries its evidence and its source.">
+<title>Who fights, who helps — the map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* the map — shares the paper/ink token set with market.html, oilflows.html and record.html */
+  :root, [data-theme="paper"] {
+    --bg: #f7f2e7; --bg-raise: #fcfaf3; --bg-sink: #efe8da;
+    --ink: #1a1610;
+    --ink-80: rgba(26,22,16,0.8); --ink-60: rgba(26,22,16,0.6); --ink-45: rgba(26,22,16,0.45);
+    --ink-30: rgba(26,22,16,0.3); --ink-18: rgba(26,22,16,0.18); --ink-10: rgba(26,22,16,0.1); --ink-06: rgba(26,22,16,0.06);
+    --rate: #1d4e89; --gold: #8f6d14; --danger: #a03428;
+    --chip-on-bg: #1a1610; --chip-on-ink: #f7f2e7;
+    /* backer hues — validated all-pairs on the paper surface */
+    --b1: #2a78d6; --b2: #eb6834; --b3: #1baf7a; --b4: #a0308e; --b5: #5634ac;
+    --land: rgba(26,22,16,0.07); --land-line: rgba(26,22,16,0.2); --grat: rgba(26,22,16,0.05);
+  }
+  [data-theme="ink"] {
+    --bg: #17140f; --bg-raise: #1e1a14; --bg-sink: #14110c;
+    --ink: #efe8d8;
+    --ink-80: rgba(239,232,216,0.8); --ink-60: rgba(239,232,216,0.6); --ink-45: rgba(239,232,216,0.45);
+    --ink-30: rgba(239,232,216,0.3); --ink-18: rgba(239,232,216,0.18); --ink-10: rgba(239,232,216,0.1); --ink-06: rgba(239,232,216,0.06);
+    --rate: #7aa8dd; --gold: #c9a94f; --danger: #d06a5c;
+    --chip-on-bg: #efe8d8; --chip-on-ink: #17140f;
+    /* backer hues — validated all-pairs on the ink surface */
+    --b1: #3987e5; --b2: #d95926; --b3: #199e70; --b4: #c454b0; --b5: #724aab;
+    --land: rgba(239,232,216,0.07); --land-line: rgba(239,232,216,0.2); --grat: rgba(239,232,216,0.05);
+  }
+  :root {
+    --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+    --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body {
+    margin: 0; min-height: 100%; font-family: var(--serif);
+    background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased;
+    transition: background 0.25s ease, color 0.25s ease; overflow-x: clip;
+  }
+  body { display: flex; flex-direction: column; align-items: center; padding: 52px 24px 120px; }
+  ::selection { background: var(--rate); color: var(--bg); }
+  a { color: var(--ink-80); text-underline-offset: 3px; }
+  a:hover { color: var(--ink); }
+
+  /* ---- nav ---- */
+  nav.topnav {
+    position: fixed; inset: 0 0 auto 0; z-index: 50; height: 52px;
+    display: flex; align-items: center; gap: 22px; flex-wrap: nowrap;
+    overflow: hidden; padding: 0 28px;
+    background: color-mix(in srgb, var(--bg) 94%, transparent);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--ink-10);
+    color: var(--ink); transition: background 0.25s ease, color 0.25s ease;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  nav.topnav a { position: relative; color: var(--ink); text-decoration: none; opacity: 0.62; transition: opacity 0.2s ease; white-space: nowrap; flex-shrink: 0; }
+  nav.topnav a::after { content: ''; position: absolute; left: 0; bottom: -3px; width: 0; height: 1px; background: var(--ink); transition: width 0.25s ease; }
+  nav.topnav a:hover { opacity: 1; }
+  nav.topnav a:hover::after, nav.topnav a.here::after { width: 100%; }
+  nav.topnav a.here { opacity: 1; }
+  nav.topnav .spacer { flex: 1; }
+  button.theme-toggle {
+    font: inherit; letter-spacing: inherit; text-transform: inherit;
+    background: none; border: 1px solid var(--ink-30); color: var(--ink);
+    padding: 4px 10px; cursor: pointer; border-radius: 999px; transition: background 0.2s ease;
+  }
+  button.theme-toggle:hover { background: var(--ink-06); }
+
+  /* ---- hero ---- */
+  .hero { width: 100%; max-width: 860px; text-align: center; padding-top: 56px; }
+  .hero-kicker { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.6em; }
+  h1 { font-size: clamp(2rem, 4.8vw, 3.3rem); font-weight: 500; letter-spacing: -0.015em; line-height: 1.12; margin: 0 0 0.55em; text-align: center; }
+  .subtitle { max-width: 640px; text-align: center; color: var(--ink-80); font-size: 1.08rem; line-height: 1.75; margin: 0 auto 1em; }
+
+  #load-error, #draft {
+    display: none; width: 100%; max-width: 1080px;
+    font-family: var(--mono); font-size: 11px; line-height: 1.7;
+    padding: 10px 14px; margin-top: 2em;
+  }
+  #load-error { color: var(--danger); border: 1px solid color-mix(in srgb, var(--danger) 40%, transparent); background: color-mix(in srgb, var(--danger) 6%, transparent); }
+  #draft { color: var(--ink-80); border: 1px solid color-mix(in srgb, var(--gold) 50%, transparent); background: color-mix(in srgb, var(--gold) 7%, transparent); }
+
+  /* ---- sections ---- */
+  section.panel { width: 100%; max-width: 1080px; margin-top: 96px; padding-top: 44px; border-top: 1px solid var(--ink-18); scroll-margin-top: 72px; }
+  section.panel.first { margin-top: 2.6em; padding-top: 0; border-top: 0; max-width: 1280px; }
+  h2 { font-size: 1.5rem; font-weight: 500; letter-spacing: -0.005em; margin: 0 0 0.35em; }
+  .panel-sub { font-family: var(--mono); font-size: 11.5px; color: var(--ink-60); margin: 0 0 20px; line-height: 1.75; max-width: 78em; }
+  h3 { font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-60); margin: 28px 0 10px; }
+  .prose { font-size: 1.02rem; line-height: 1.85; color: var(--ink-80); max-width: 46em; }
+  .prose strong { color: var(--ink); font-weight: 500; }
+  .note { font-size: 11.5px; color: var(--ink-60); margin-top: 18px; line-height: 1.85; font-family: var(--mono); max-width: 72em; padding-left: 16px; border-left: 1px solid var(--ink-18); }
+
+  /* ---- controls ---- */
+  .controls { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; font-family: var(--mono); font-size: 11px; margin: 6px 0 14px; }
+  .controls .k { color: var(--ink-45); text-transform: uppercase; letter-spacing: 0.14em; font-size: 10px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 7px; cursor: pointer; user-select: none;
+    border: 1px solid var(--ink-18); padding: 4px 10px; color: var(--ink-80); background: none; font: inherit; letter-spacing: 0.02em;
+    transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+  }
+  .chip:hover { border-color: var(--ink-45); color: var(--ink); }
+  .chip.on { background: var(--chip-on-bg); color: var(--chip-on-ink); border-color: var(--chip-on-bg); }
+  .chip .sw { width: 10px; height: 10px; border-radius: 50%; display: inline-block; background: var(--ink-45); }
+  .chip.on .sw { outline: 1px solid var(--chip-on-ink); outline-offset: 1px; }
+  .chip.ghost { border-style: dashed; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  /* ---- map + card ---- */
+  .stage { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 28px; align-items: start; }
+  @media (max-width: 900px) { .stage { grid-template-columns: 1fr; } }
+  .map-wrap { position: relative; width: 100%; background: var(--bg-raise); border: 1px solid var(--ink-10); }
+  svg#map { width: 100%; height: auto; display: block; }
+  svg text { font-family: var(--mono); }
+  .land { fill: var(--land); stroke: var(--land-line); stroke-width: 0.5; vector-effect: non-scaling-stroke; }
+  .grat { fill: none; stroke: var(--grat); stroke-width: 0.5; vector-effect: non-scaling-stroke; }
+  .outline { fill: none; stroke: var(--ink-18); stroke-width: 0.7; vector-effect: non-scaling-stroke; }
+
+  /* arcs: hue by backer, line by tier. The tier is in the line itself. */
+  .arc { fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; pointer-events: none; transition: opacity 0.2s ease; }
+  .arc.tier-open     { opacity: 1; }
+  .arc.tier-shown    { stroke-dasharray: 7 4; opacity: 0.9; }
+  .arc.tier-reported { stroke-dasharray: 3 4; opacity: 0.72; }
+  .arc.tier-claimed  { stroke-dasharray: 0.5 5; opacity: 0.6; }
+  .arc.stale { opacity: 0.35; }
+  .arc.ended { opacity: 0.4; stroke-dasharray: 1 3 !important; }
+  .arc-hit { fill: none; stroke: transparent; stroke-width: 9; pointer-events: stroke; vector-effect: non-scaling-stroke; cursor: default; }
+  .all .arc { stroke-width: 1.2; }
+  .all .arc.tier-open { opacity: 0.55; } .all .arc.tier-shown { opacity: 0.45; } .all .arc.tier-reported { opacity: 0.35; } .all .arc.tier-claimed { opacity: 0.3; }
+  .all .arc.stale, .all .arc.ended { opacity: 0.18; }
+  .hue-0 { stroke: var(--ink-60); } .hue-1 { stroke: var(--b1); } .hue-2 { stroke: var(--b2); } .hue-3 { stroke: var(--b3); } .hue-4 { stroke: var(--b4); } .hue-5 { stroke: var(--b5); }
+  .fhue-0 { fill: var(--ink-60); } .fhue-1 { fill: var(--b1); } .fhue-2 { fill: var(--b2); } .fhue-3 { fill: var(--b3); } .fhue-4 { fill: var(--b4); } .fhue-5 { fill: var(--b5); }
+
+  .conflict { cursor: pointer; }
+  .conflict .hit { fill: transparent; }
+  .conflict:focus { outline: none; }
+  .conflict:focus-visible .glyph { stroke: var(--ink); stroke-width: 2.5; }
+  .conflict .glyph { fill: var(--danger); stroke: var(--bg-raise); stroke-width: 1.5; vector-effect: non-scaling-stroke; transition: opacity 0.2s ease; }
+  .conflict .glyph.ring { fill: var(--bg-raise); stroke: var(--danger); stroke-width: 1.5; }
+  .conflict .lbl { font-size: 10.5px; fill: var(--ink-80); pointer-events: none; letter-spacing: 0.02em; paint-order: stroke; stroke: var(--bg-raise); stroke-width: 3px; stroke-linejoin: round; }
+  .dim .conflict:not(.on) .glyph { opacity: 0.35; }
+  .dim .conflict:not(.on) .lbl { opacity: 0.45; }
+  .conflict.on .glyph { stroke: var(--ink); }
+  .conflict.on .lbl { fill: var(--ink); font-weight: 500; }
+
+  .backer-dot { pointer-events: none; }
+  .backer-dot circle { stroke: var(--bg-raise); stroke-width: 1.2; vector-effect: non-scaling-stroke; }
+  .backer-dot text { font-size: 9.5px; fill: var(--ink-80); paint-order: stroke; stroke: var(--bg-raise); stroke-width: 3px; stroke-linejoin: round; }
+  .party { pointer-events: none; }
+  .party rect { fill: var(--bg-raise); stroke: var(--ink-45); stroke-width: 0.8; vector-effect: non-scaling-stroke; }
+  .party text { font-size: 9px; fill: var(--ink); text-anchor: middle; dominant-baseline: central; }
+
+  .tooltip {
+    position: absolute; pointer-events: none;
+    background: var(--bg-sink); border: 1px solid var(--ink-18);
+    font-family: var(--mono); font-size: 11px; line-height: 1.7; color: var(--ink-80);
+    padding: 8px 11px; white-space: nowrap; display: none; z-index: 5;
+  }
+  .tooltip b { color: var(--ink); font-weight: 500; }
+
+  /* legend under the map */
+  .legend { display: flex; gap: 18px 24px; flex-wrap: wrap; font-family: var(--mono); font-size: 11px; color: var(--ink-80); margin-top: 14px; align-items: center; }
+  .legend span { display: inline-flex; align-items: center; gap: 8px; }
+  .legend svg { width: 44px; height: 10px; overflow: visible; }
+  .legend .arc { opacity: 1 !important; }
+  .card .row .arc, table.mono .tier .arc, .tiers .arc { opacity: 1 !important; }
+  .legend .k { color: var(--ink-45); text-transform: uppercase; letter-spacing: 0.14em; font-size: 10px; }
+  .legend .g { width: 9px; height: 9px; border-radius: 50%; background: var(--danger); display: inline-block; }
+  .legend .g { width: 11px; height: 11px; } .legend .g.s2 { width: 8px; height: 8px; } .legend .g.s1 { width: 6px; height: 6px; }
+  .legend .g.ring { background: none; border: 1.5px solid var(--danger); }
+
+  /* the card */
+  .card { border: 1px solid var(--ink-18); padding: 18px 20px 16px; background: var(--bg-raise); min-height: 120px; }
+  .card .k { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; color: var(--ink-45); text-transform: uppercase; }
+  .card .t { font-size: 1.35rem; font-weight: 500; margin: 6px 0 2px; line-height: 1.2; }
+  .card .s { font-family: var(--mono); font-size: 10.5px; color: var(--ink-60); line-height: 1.7; }
+  .card p { font-size: 0.98rem; line-height: 1.65; color: var(--ink-80); margin: 12px 0 0; }
+  .card .rows { margin-top: 14px; border-top: 1px solid var(--ink-18); }
+  .card .row { display: grid; grid-template-columns: 16px 1fr; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--ink-10); font-family: var(--mono); font-size: 11px; line-height: 1.55; color: var(--ink-80); }
+  .card .row .who { color: var(--ink); font-weight: 500; }
+  .card .row .what { color: var(--ink-60); }
+  .card .row .tier { display: inline-flex; align-items: center; gap: 6px; }
+  .card .row svg { width: 26px; height: 8px; overflow: visible; vertical-align: middle; }
+  .card .row .sw { width: 10px; height: 10px; border-radius: 50%; margin-top: 3px; }
+  .card .row .src { font-size: 10px; color: var(--ink-45); margin-top: 2px; }
+  .card .row .src a { color: var(--rate); }
+  .card .row .src .n { display: block; margin-top: 2px; }
+  .card .none { font-family: var(--mono); font-size: 11px; color: var(--ink-60); margin-top: 12px; line-height: 1.6; }
+  .card .side { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-45); padding: 10px 0 2px; }
+  .card button.clear { margin-top: 14px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; background: none; border: 1px solid var(--ink-18); color: var(--ink-60); padding: 4px 10px; cursor: pointer; }
+  .card button.clear:hover { color: var(--ink); border-color: var(--ink-45); }
+  .card .empty { font-family: var(--mono); font-size: 11px; color: var(--ink-60); line-height: 1.75; }
+  .card .fights { font-family: var(--mono); font-size: 11px; color: var(--ink-80); margin-top: 10px; line-height: 1.7; }
+  #status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+  /* ---- table ---- */
+  table.mono { font-family: var(--mono); font-size: 11.5px; border-collapse: collapse; color: var(--ink-80); margin-top: 14px; width: 100%; }
+  table.mono td, table.mono th { padding: 7px 18px 7px 0; text-align: left; font-weight: normal; border-bottom: 1px solid var(--ink-10); vertical-align: top; line-height: 1.5; }
+  table.mono th { color: var(--ink-45); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; border-bottom: 1px solid var(--ink-18); }
+  table.mono a { color: var(--rate); }
+  table.mono tr.group td { padding-top: 26px; border-bottom: 1px solid var(--ink-18); color: var(--ink); font-family: var(--serif); font-size: 1.1rem; font-weight: 500; cursor: pointer; }
+  table.mono tr.group td small { font-family: var(--mono); font-size: 10.5px; color: var(--ink-60); font-weight: normal; margin-left: 12px; }
+  table.mono tr.tie { cursor: pointer; }
+  table.mono tr.tie:focus-visible td { background: var(--ink-06); outline: none; }
+  table.mono .stance { color: var(--ink-45); }
+  table.mono tr.tie:hover td { background: var(--ink-06); }
+  table.mono tr.tie.on td { background: var(--ink-06); }
+  table.mono tr.tie.stale td { color: var(--ink-45); }
+  table.mono .who { color: var(--ink); white-space: nowrap; display: inline-flex; align-items: center; gap: 7px; }
+  table.mono .who .sw { width: 9px; height: 9px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+  table.mono .tier { display: inline-flex; align-items: flex-start; gap: 7px; max-width: 20em; }
+  table.mono .tier svg { flex-shrink: 0; margin-top: 4px; }
+  table.mono td.src { min-width: 24em; }
+  table.mono td:nth-child(3) { min-width: 9em; }
+  table.mono .tier svg { width: 30px; height: 8px; overflow: visible; }
+  table.mono .src { font-size: 10.5px; color: var(--ink-60); max-width: 36em; }
+  table.mono .src a { overflow-wrap: anywhere; }
+  table.mono .src .n { display: block; color: var(--ink-45); margin-top: 2px; }
+  table.mono td.chk { white-space: nowrap; color: var(--ink-45); }
+  .table-wrap { overflow-x: auto; }
+  @media (max-width: 720px) { table.mono { font-size: 11px; min-width: 640px; } }
+
+  /* ---- rules ---- */
+  .tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0; border-top: 1px solid var(--ink-18); border-left: 1px solid var(--ink-18); margin-top: 16px; }
+  .tiers > div { border-right: 1px solid var(--ink-18); border-bottom: 1px solid var(--ink-18); padding: 16px 18px 14px; }
+  .tiers .w { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); display: flex; align-items: center; gap: 10px; }
+  .tiers .w svg { width: 40px; height: 8px; overflow: visible; }
+  .tiers .n { font-size: 0.98rem; line-height: 1.6; color: var(--ink-80); margin-top: 8px; }
+  ul.plain { list-style: none; padding: 0; margin: 10px 0 0; font-size: 0.98rem; line-height: 1.7; color: var(--ink-80); max-width: 46em; }
+  ul.plain li { padding: 6px 0; border-bottom: 1px solid var(--ink-10); }
+  ul.plain li b { color: var(--ink); font-weight: 500; }
+
+  .stamp { font-family: var(--mono); font-size: 10.5px; color: var(--ink-45); margin-top: 3em; line-height: 1.8; width: 100%; max-width: 1080px; }
+  a.back { display: inline-block; margin-top: 5em; color: var(--ink-60); font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; }
+  a.back:hover { color: var(--ink); }
+  @media (max-width: 720px) {
+    body { padding: 52px 16px 100px; }
+    nav.topnav { gap: 14px; padding: 12px 16px; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+    nav.topnav::-webkit-scrollbar { display: none; }
+    section.panel { margin-top: 72px; padding-top: 32px; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="/">warnotwar</a>
+  <a href="/heuristic.html">the heuristic</a>
+  <a href="/market.html">the market</a>
+  <a href="/oilflows.html">oilflows</a>
+  <a href="/record.html">the word</a>
+  <a href="/conflicts.html" class="here">the map</a>
+  <a href="/lab.html">the lab</a>
+  <a href="/teaching-module/index.html">hormuz lab (sim)</a>
+  <a href="/spr/">the reserve</a>
+  <a href="/methodology.html">methodology</a>
+  <span class="spacer"></span>
+  <button class="theme-toggle" id="theme-toggle" title="switch paper / ink">&#9705; ink</button>
+</nav>
+
+<header class="hero">
+  <div class="hero-kicker">warnotwar &middot; the map</div>
+  <h1>Who fights, who helps.</h1>
+  <p class="subtitle">The wars of the past year, who is fighting, and which countries help which side. A solid line is help the backer says it gives. A broken line is help it denies, or that only others say it gives.</p>
+</header>
+
+<div id="draft"></div>
+<div id="load-error"></div>
+
+<section class="panel first" id="map-panel">
+  <div class="controls">
+    <span class="k">backers</span>
+    <div class="chips" id="backer-chips"></div>
+    <span class="k" style="margin-left:6px">view</span>
+    <button class="chip ghost" id="show-all" aria-pressed="false">show every line</button>
+  </div>
+  <div class="stage">
+    <div>
+      <div class="map-wrap">
+        <svg id="map" role="group" aria-label="World map of current wars and the countries backing each side"></svg>
+        <div class="tooltip" id="tip"></div>
+      </div>
+      <div class="legend" id="legend"></div>
+    </div>
+    <aside class="card" id="card">
+      <div class="empty">Click a war to see who is fighting and who helps. Click a backer above to see everything it supports.</div>
+    </aside>
+    <div id="status" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="panel" id="table-panel">
+  <h2>Every line on the map</h2>
+  <p class="panel-sub">One row per tie. The line shape in the tier column is the same one drawn on the map.</p>
+  <div class="table-wrap">
+  <table class="mono" id="ties">
+    <thead><tr><th>backer</th><th>helps</th><th>what</th><th>tier</th><th>source</th><th>checked</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  </div>
+</section>
+
+<section class="panel" id="rules">
+  <h2>How this page is kept</h2>
+  <p class="prose" id="rule-text"></p>
+  <h3>The four tiers</h3>
+  <div class="tiers" id="tiers"></div>
+  <h3>Left off</h3>
+  <ul class="plain" id="excluded"></ul>
+  <div class="note" id="keep-note"></div>
+</section>
+
+<div class="stamp" id="stamp"></div>
+<a class="back" href="/">&larr; warnotwar</a>
+
+<script>
+const rootEl = document.documentElement, themeBtn = document.getElementById('theme-toggle');
+function applyTheme(t) { rootEl.dataset.theme = t; themeBtn.textContent = t === 'paper' ? '◑ ink' : '◐ paper'; }
+applyTheme((() => { const q = new URLSearchParams(location.search).get('theme'); if (q === 'ink' || q === 'paper') return q; try { const s = localStorage.getItem('ww-theme'); if (s) return s; } catch (e) {} return matchMedia('(prefers-color-scheme: dark)').matches ? 'ink' : 'paper'; })());
+themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 'paper'; applyTheme(t); try { localStorage.setItem('ww-theme', t); } catch (e) {} };
+</script>
+
+<script>
+(async function () {
+  const $ = (s, el = document) => el.querySelector(s);
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (tag, attrs = {}, parent) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (parent) parent.appendChild(n); return n; };
+  const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const safeUrl = u => (typeof u === 'string' && /^https?:\/\//i.test(u)) ? u : null;
+  const errBox = $('#load-error');
+  const fail = msg => { errBox.style.display = 'block'; errBox.textContent = msg; };
+
+  let world, D;
+  try {
+    const get = u => fetch(u).then(r => { if (!r.ok) throw new Error('http ' + r.status + ' ' + u); return r.json(); });
+    [world, D] = await Promise.all([get('/data/world_paths.json'), get('/data/conflicts.json')]);
+  } catch (e) { fail('The map data did not load. ' + e.message); return; }
+
+  try {
+  /* ---- validate the data once; drop what cannot be drawn and say so ---- */
+  const problems = [];
+  const backers = {}; for (const b of (D.backers || [])) { if (b && b.id && isFinite(b.lon) && isFinite(b.lat)) backers[b.id] = b; else problems.push('backer without id or position: ' + JSON.stringify(b)); }
+  D.conflicts = (D.conflicts || []).filter(c => {
+    if (!c || !c.id || !Array.isArray(c.point) || !isFinite(c.point[0]) || !isFinite(c.point[1])) { problems.push('war without id or point: ' + (c && c.id)); return false; }
+    c.parties = Array.isArray(c.parties) ? c.parties.filter(p => p && p.id && p.name) : [];
+    const ps = new Set(c.parties.map(p => p.id));
+    c.ties = (Array.isArray(c.ties) ? c.ties : []).filter(t => {
+      const bad = !t || !backers[t.backer] ? 'unknown backer' : !ps.has(t.party) ? 'unknown party' : !D.tiers[t.tier] ? 'unknown tier' : !Array.isArray(t.kinds) ? 'no kinds' : null;
+      if (bad) problems.push(c.id + ': ' + bad + ' in ' + JSON.stringify(t));
+      return !bad;
+    });
+    return true;
+  });
+  if (problems.length) fail('Some lines could not be drawn: ' + problems.join(' · '));
+  const conflicts = Object.fromEntries(D.conflicts.map(c => [c.id, c]));
+  const hueOf = b => (backers[b] && backers[b].hue) || 0;
+  const GLYPH_R = { '3': 7.5, '2': 5.5, '1': 4 };
+  const today = new Date();
+  const staleDays = t => t.checked ? Math.round((today - new Date(t.checked)) / 86400000) : null;
+  const isStale = t => { const n = staleDays(t); return n !== null && n > 90; };
+  const kindsText = t => t.kinds.map(k => D.kinds[k] || k).join(', ');
+  const partyName = (c, id) => { const p = c.parties.find(p => p.id === id); return p ? p.name : id; };
+
+  /* ---- projection: Equal Earth, same constants as scripts/build_map.py ---- */
+  const A1 = 1.340264, A2 = -0.081106, A3 = 0.000893, A4 = 0.003796, M = Math.sqrt(3) / 2;
+  function project(lon, lat) {
+    const lam = lon * Math.PI / 180, phi = lat * Math.PI / 180;
+    const th = Math.asin(M * Math.sin(phi)), t2 = th * th, t6 = t2 * t2 * t2;
+    const x = lam * Math.cos(th) / (M * (A1 + 3 * A2 * t2 + t6 * (7 * A3 + 9 * A4 * t2)));
+    const y = th * (A1 + A2 * t2 + t6 * (A3 + A4 * t2));
+    return [world.cx + world.k * x, world.cy - world.k * y];
+  }
+  /* great circle between two lon/lat points, sampled, projected, split at the map's edge, bowed sideways so neighbours separate */
+  function arcPath(a, b, bow = 0, n = 48) {
+    const toV = ([lon, lat]) => { const l = lon * Math.PI / 180, p = lat * Math.PI / 180; return [Math.cos(p) * Math.cos(l), Math.cos(p) * Math.sin(l), Math.sin(p)]; };
+    const va = toV(a), vb = toV(b);
+    const dot = Math.max(-1, Math.min(1, va[0] * vb[0] + va[1] * vb[1] + va[2] * vb[2]));
+    const om = Math.acos(dot); if (om < 1e-6) return '';
+    const pts = [];
+    for (let i = 0; i <= n; i++) {
+      const t = i / n, s0 = Math.sin((1 - t) * om) / Math.sin(om), s1 = Math.sin(t * om) / Math.sin(om);
+      const v = [s0 * va[0] + s1 * vb[0], s0 * va[1] + s1 * vb[1], s0 * va[2] + s1 * vb[2]];
+      const lon = Math.atan2(v[1], v[0]) * 180 / Math.PI, lat = Math.asin(Math.max(-1, Math.min(1, v[2]))) * 180 / Math.PI;
+      pts.push(project(lon, lat));
+    }
+    let split = false;
+    for (let i = 1; i <= n; i++) if (Math.abs(pts[i][0] - pts[i - 1][0]) > 400) split = true;
+    if (bow && !split) {
+      const [x0, y0] = pts[0], [x1, y1] = pts[n]; const L = Math.hypot(x1 - x0, y1 - y0) || 1; const nx = -(y1 - y0) / L, ny = (x1 - x0) / L;
+      bow = Math.sign(bow) * Math.min(Math.abs(bow), L / 3);
+      for (let i = 0; i <= n; i++) { const f = Math.sin(Math.PI * i / n) * bow; pts[i] = [pts[i][0] + nx * f, pts[i][1] + ny * f]; }
+    }
+    let d = '', prev = null;
+    for (const [x, y] of pts) { d += (prev === null || Math.abs(x - prev) > 400 ? 'M' : 'L') + x.toFixed(1) + ',' + y.toFixed(1); prev = x; }
+    return d;
+  }
+
+  /* ---- rules, stamp ---- */
+  if (D.status === 'draft' && D.status_note) { const b = $('#draft'); b.style.display = 'block'; b.textContent = D.status_note; }
+  $('#rule-text').textContent = D.rule + ' ' + (D.color_rule || '');
+  const tierSample = (tier, hueClass = 'hue-0', w = 40) => `<svg viewBox="0 0 ${w} 8" aria-hidden="true"><path class="arc tier-${tier} ${hueClass} legend-line" d="M1,4 L${w - 1},4"/></svg>`;
+  $('#tiers').innerHTML = Object.entries(D.tiers).map(([id, t]) => `<div><div class="w">${tierSample(id)} ${esc(t.word)}</div><div class="n">${esc(t.note)}</div></div>`).join('');
+  $('#excluded').innerHTML = (D.excluded || []).map(x => `<li><b>${esc(x.name)}.</b> ${esc(x.why)}</li>`).join('');
+  $('#keep-note').textContent = 'Every tie has a source and the date it was last checked. A tie not checked in ninety days fades on the map and says so in the table. A tie that has ended is drawn as a faint dotted line and dated. ' + (D.band_note || '') + ' Base map: Natural Earth, Equal Earth projection, so Africa is drawn at its true size.';
+  const nTies = D.conflicts.reduce((n, c) => n + c.ties.length, 0);
+  $('#stamp').innerHTML = 'Sources checked ' + esc(D.checked_on || D.as_of) + ' &middot; ' + D.conflicts.length + ' wars, ' + nTies + ' ties &middot; base map Natural Earth 1:110m, Equal Earth projection &middot; data/conflicts.json';
+
+  /* ---- base map ---- */
+  const svg = $('#map');
+  svg.setAttribute('viewBox', world.viewBox.join(' '));
+  el('path', { class: 'outline', d: world.outline }, svg);
+  el('path', { class: 'grat', d: world.graticule }, svg);
+  const gLand = el('g', {}, svg);
+  for (const c of world.countries) el('path', { class: 'land', d: c.d }, gLand);
+  const gArcs = el('g', { id: 'arcs' }, svg);
+  const gParties = el('g', {}, svg);
+  const gBackers = el('g', {}, svg);
+  const gConf = el('g', {}, svg);
+
+  /* dash lengths are in map units, so scale them to the drawn width or they turn to fuzz on a phone */
+  const dashStyle = document.createElement('style'); document.head.appendChild(dashStyle);
+  function setDashes() {
+    const u = world.viewBox[2] / Math.max(1, svg.clientWidth);
+    dashStyle.textContent = `#map .arc.tier-shown{stroke-dasharray:${(7 * u).toFixed(2)} ${(4 * u).toFixed(2)}} #map .arc.tier-reported{stroke-dasharray:${(3 * u).toFixed(2)} ${(4 * u).toFixed(2)}} #map .arc.tier-claimed{stroke-dasharray:${(0.5 * u).toFixed(2)} ${(5 * u).toFixed(2)}} #map .arc.ended{stroke-dasharray:${(1 * u).toFixed(2)} ${(3 * u).toFixed(2)} !important}`;
+    for (const h of svg.querySelectorAll('.conflict .hit')) h.setAttribute('r', Math.max(13, 22 * u / 1.3).toFixed(1));
+  }
+  addEventListener('resize', setDashes);
+
+  const confNodes = {};
+  for (const c of D.conflicts) {
+    const [x, y] = project(c.point[0], c.point[1]);
+    c.px = x; c.py = y;
+    const g = el('g', { class: 'conflict', 'data-id': c.id, tabindex: 0, role: 'button', 'aria-label': c.name }, gConf);
+    el('circle', { class: 'hit', cx: x, cy: y, r: 13 }, g);
+    const r = c.band ? GLYPH_R[c.band] || 5.5 : 5.5;
+    el('circle', { class: 'glyph' + (c.band ? '' : ' ring'), cx: x, cy: y, r }, g);
+    const [dx, dy, anchor] = Array.isArray(c.label) ? c.label : [9, 3];
+    const t = el('text', { class: 'lbl', x: x + dx, y: y + dy + 3, 'text-anchor': anchor || 'start' }, g);
+    t.textContent = c.name;
+    confNodes[c.id] = g;
+    g.addEventListener('mouseenter', ev => { if (!state.pinned) preview('conflict', c.id); showTip(ev, tipFor(c)); });
+    g.addEventListener('mousemove', ev => placeTip(ev));
+    g.addEventListener('mouseleave', () => { hideTip(); unpreview(); });
+    g.addEventListener('focus', () => { if (!state.pinned) preview('conflict', c.id); });
+    g.addEventListener('blur', () => unpreview());
+    g.addEventListener('click', ev => { ev.stopPropagation(); focus('conflict', c.id); });
+    g.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); focus('conflict', c.id); } });
+  }
+  svg.addEventListener('click', () => clear());
+  setDashes();
+
+  /* ---- legend ---- */
+  $('#legend').innerHTML =
+    `<span class="k">tier</span>` +
+    Object.entries(D.tiers).map(([id, t]) => `<span>${tierSample(id)} ${esc(t.word)}</span>`).join('') +
+    `<span>${tierSample('open', 'hue-0 ended')} ended</span>` +
+    `<span class="k" style="margin-left:8px">deaths</span>` +
+    Object.entries(D.bands).sort((a, b) => b[0].localeCompare(a[0])).map(([id, label]) => `<span><i class="g s${id}"></i> ${esc(label)}</span>`).join('') +
+    `<span><i class="g ring"></i> not entered</span>`;
+
+  /* ---- backer chips ---- */
+  const tieCount = {}; for (const c of D.conflicts) for (const t of c.ties) tieCount[t.backer] = (tieCount[t.backer] || 0) + 1;
+  const chipsEl = $('#backer-chips');
+  const hued = Object.values(backers).filter(b => b.hue).sort((a, b) => a.hue - b.hue);
+  for (const b of hued) {
+    const btn = document.createElement('button'); btn.className = 'chip'; btn.dataset.id = b.id; btn.setAttribute('aria-pressed', 'false');
+    btn.innerHTML = `<i class="sw" style="background:var(--b${b.hue})"></i>${esc(b.short)}`;
+    btn.onclick = () => state.pinned && state.kind === 'backer' && state.id === b.id ? clear() : focus('backer', b.id);
+    chipsEl.appendChild(btn);
+  }
+  const others = Object.values(backers).filter(b => !b.hue && tieCount[b.id]).sort((a, b) => a.short.localeCompare(b.short));
+  const sel = document.createElement('select'); sel.className = 'chip'; sel.setAttribute('aria-label', 'other backers');
+  sel.innerHTML = `<option value="">others (${others.length})…</option>` + others.map(b => `<option value="${esc(b.id)}">${esc(b.short)}</option>`).join('');
+  sel.onchange = () => { if (sel.value) focus('backer', sel.value); };
+  chipsEl.appendChild(sel);
+  const allBtn = $('#show-all');
+  allBtn.onclick = () => { state.all = !state.all; writeHash(); render(); };
+
+  /* ---- state ---- */
+  const state = { kind: null, id: null, pinned: false, all: false };
+  function writeHash() {
+    const parts = [];
+    if (state.pinned && state.kind) parts.push((state.kind === 'conflict' ? 'c=' : 'b=') + state.id);
+    if (state.all) parts.push('all');
+    history.replaceState(null, '', location.pathname + location.search + (parts.length ? '#' + parts.join('&') : ''));
+  }
+  function readHash() {
+    const h = location.hash.replace(/^#/, ''); const q = new URLSearchParams(h);
+    state.all = q.has('all');
+    const c = q.get('c'), b = q.get('b');
+    if (c && conflicts[c]) { state.kind = 'conflict'; state.id = c; state.pinned = true; }
+    else if (b && backers[b]) { state.kind = 'backer'; state.id = b; state.pinned = true; }
+    else { state.kind = null; state.id = null; state.pinned = false; }
+  }
+  function focus(kind, id) { state.kind = kind; state.id = id; state.pinned = true; writeHash(); render(); }
+  function preview(kind, id) { state.kind = kind; state.id = id; state.pinned = false; render(); }
+  function unpreview() { if (!state.pinned) { state.kind = null; state.id = null; render(); } }
+  function clear() { state.kind = null; state.id = null; state.pinned = false; writeHash(); render(); }
+  addEventListener('hashchange', () => { readHash(); render(); });
+
+  function tiesFor() {
+    const out = [];
+    for (const c of D.conflicts) for (const t of c.ties) {
+      if (state.kind === 'conflict' && c.id !== state.id) continue;
+      if (state.kind === 'backer' && t.backer !== state.id) continue;
+      if (!state.kind && !state.all) continue;
+      out.push({ c, t });
+    }
+    return out;
+  }
+  const fightsIn = b => D.conflicts.filter(c => c.parties.some(p => p.state === b));
+
+  function render() {
+    gArcs.innerHTML = ''; gParties.innerHTML = ''; gBackers.innerHTML = '';
+    const allView = state.all && !state.kind;
+    svg.classList.toggle('all', allView);
+    svg.classList.toggle('dim', !!state.kind);
+    allBtn.classList.toggle('on', state.all); allBtn.setAttribute('aria-pressed', String(state.all));
+    sel.value = state.kind === 'backer' && others.some(b => b.id === state.id) ? state.id : '';
+    for (const ch of chipsEl.querySelectorAll('.chip[data-id]')) { const on = state.kind === 'backer' && ch.dataset.id === state.id; ch.classList.toggle('on', on); ch.setAttribute('aria-pressed', String(on)); }
+    for (const id in confNodes) confNodes[id].classList.toggle('on', state.kind === 'conflict' && id === state.id);
+    const rows = tiesFor();
+    const touched = new Set(rows.map(r => r.c.id));
+    if (state.kind === 'backer') { for (const c of fightsIn(state.id)) touched.add(c.id); for (const id of touched) confNodes[id].classList.add('on'); }
+
+    /* party chips for the focused war */
+    const anchor = {};
+    if (state.kind === 'conflict') {
+      for (const id of touched) {
+        const c = conflicts[id], n = c.parties.length;
+        c.parties.forEach((p, i) => {
+          const off = n === 1 ? [[0, -26]] : n === 2 ? [[-62, -24], [62, -24]] : [[-62, -24], [62, -24], [0, 30]];
+          const [dx, dy] = off[i] || [0, 30 + 18 * (i - 2)];
+          const x = c.px + dx, y = c.py + dy;
+          anchor[id + '/' + p.id] = [x, y];
+          const label = p.name.length > 30 ? p.name.slice(0, 28) + '…' : p.name;
+          const w = Math.max(44, label.length * 4.6 + 12);
+          const g = el('g', { class: 'party' }, gParties);
+          el('line', { x1: c.px, y1: c.py, x2: x, y2: y, stroke: 'var(--ink-30)', 'stroke-width': 0.6, 'vector-effect': 'non-scaling-stroke' }, g);
+          el('rect', { x: x - w / 2, y: y - 7, width: w, height: 14, rx: 7 }, g);
+          const t = el('text', { x, y: y + 0.5 }, g); t.textContent = label;
+        });
+      }
+    }
+    /* arcs, bowed apart per war so parallel ones separate */
+    const perConf = {}; for (const r of rows) (perConf[r.c.id] = perConf[r.c.id] || []).push(r);
+    const originSeen = new Set();
+    for (const { c, t } of rows) {
+      const b = backers[t.backer];
+      const sib = perConf[c.id], i = sib.findIndex(r => r.t === t), bow = (i - (sib.length - 1) / 2) * 7;
+      let d = arcPath([b.lon, b.lat], c.point, bow);
+      const a = anchor[c.id + '/' + t.party];
+      if (a) d += (d ? 'L' : 'M' + project(b.lon, b.lat).map(v => v.toFixed(1)).join(',') + 'L') + a[0].toFixed(1) + ',' + a[1].toFixed(1);
+      if (!d) continue;
+      const cls = ['arc', 'tier-' + t.tier, 'hue-' + hueOf(t.backer), isStale(t) ? 'stale' : '', t.ended ? 'ended' : ''].join(' ');
+      el('path', { class: cls, d, 'data-conflict': c.id, 'data-backer': t.backer }, gArcs);
+      if (allView) {
+        const hit = el('path', { class: 'arc-hit', d }, gArcs);
+        hit.addEventListener('mouseenter', ev => showTip(ev, `<b>${esc(b.short)} → ${esc(partyName(c, t.party))}</b><br>${esc(c.name)} · ${esc(kindsText(t))}<br>${esc(D.tiers[t.tier].word)}${t.stance ? ' · ' + esc(b.short) + ' ' + esc(t.stance) : ''}${t.ended ? ' · ended ' + esc(t.ended) : ''}`));
+        hit.addEventListener('mousemove', ev => placeTip(ev));
+        hit.addEventListener('mouseleave', hideTip);
+      }
+      if ((state.kind || allView) && !originSeen.has(t.backer)) {
+        originSeen.add(t.backer);
+        const [x, y] = project(b.lon, b.lat);
+        const g = el('g', { class: 'backer-dot' }, gBackers);
+        el('circle', { class: 'fhue-' + hueOf(t.backer), cx: x, cy: y, r: 3.2 }, g);
+        if (!allView || b.hue) { const lab = el('text', { x: x + 6, y: y + 3 }, g); lab.textContent = b.short; }
+      }
+    }
+    renderCard();
+    $('#status').textContent = state.kind === 'conflict' ? 'Showing ' + conflicts[state.id].name : state.kind === 'backer' ? 'Showing ' + backers[state.id].name : allView ? 'Showing every line' : '';
+    for (const tr of document.querySelectorAll('#ties tr.tie')) {
+      tr.classList.toggle('on', !!state.kind && (state.kind === 'conflict' ? tr.dataset.conflict === state.id : tr.dataset.backer === state.id));
+    }
+  }
+
+  const swatch = b => `<i class="sw" style="background:${hueOf(b) ? 'var(--b' + hueOf(b) + ')' : 'var(--ink-45)'}"></i>`;
+  const srcHTML = t => { const u = safeUrl(t.url); return (u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(t.source)}</a>` : esc(t.source)) + (t.note ? `<span class="n">${esc(t.note)}</span>` : ''); };
+  function tierLabel(t) {
+    const b = backers[t.backer];
+    const bits = [esc(D.tiers[t.tier].word)];
+    if (t.stance) bits.push(`<span class="stance">${esc(b.short)} ${esc(t.stance)}</span>`);
+    if (t.ended) bits.push(`ended ${esc(t.ended)}`);
+    else if (isStale(t)) bits.push(`last checked ${esc(t.checked)}`);
+    return `<span class="tier">${tierSample(t.tier, 'hue-' + hueOf(t.backer) + (t.ended ? ' ended' : ''), 30)} <span>${bits.join(' · ')}</span></span>`;
+  }
+
+  function renderCard() {
+    const card = $('#card');
+    if (!state.kind) { card.innerHTML = '<div class="empty">Click a war to see who is fighting and who helps. Click a backer above to see everything it supports.</div>'; return; }
+    if (state.kind === 'conflict') {
+      const c = conflicts[state.id];
+      const byParty = c.parties.map(p => ({ p, ties: c.ties.filter(t => t.party === p.id) }));
+      card.innerHTML = `<div class="k">war &middot; since ${esc(c.since)}</div><div class="t">${esc(c.name)}</div>
+        <div class="s">${esc(c.status)}${c.band ? ' &middot; ' + esc(D.bands[c.band]) : ' &middot; deaths not entered'}</div>
+        <p>${esc(c.summary)}</p>
+        ${c.band_source ? `<div class="s" style="margin-top:8px">Deaths: ${esc(c.band_source)}</div>` : ''}
+        <div class="rows">` +
+        byParty.map(({ p, ties }) => `<div class="side">${esc(p.name)}</div>` + (ties.length ? ties.map(t => `<div class="row">${swatch(t.backer)}<div><span class="who">${esc(backers[t.backer].short)}</span> <span class="what">· ${esc(kindsText(t))}</span><div>${tierLabel(t)}</div><div class="src">${srcHTML(t)}</div></div></div>`).join('') : `<div class="row"><span></span><span class="what">no state backer on record</span></div>`)).join('') +
+        `</div>` + (c.none_note ? `<div class="none">${esc(c.none_note)}</div>` : '') +
+        `<button class="clear">clear</button>`;
+    } else {
+      const b = backers[state.id];
+      const rows = tiesFor(), fights = fightsIn(state.id);
+      card.innerHTML = `<div class="k">backer &middot; ${rows.length} ${rows.length === 1 ? 'tie' : 'ties'}</div><div class="t">${esc(b.name)}</div>` +
+        (fights.length ? `<div class="fights">Fights in: ${fights.map(c => esc(c.name)).join(', ')}.</div>` : '') +
+        `<div class="rows">` + rows.map(({ c, t }) => `<div class="row">${swatch(t.backer)}<div><span class="who">${esc(c.name)}</span> <span class="what">· ${esc(partyName(c, t.party))}</span><div class="what">${esc(kindsText(t))}</div><div>${tierLabel(t)}</div></div></div>`).join('') +
+        `</div><button class="clear">clear</button>`;
+    }
+    card.querySelector('.clear').onclick = clear;
+  }
+
+  /* ---- tooltip ---- */
+  const tip = $('#tip'), wrap = $('.map-wrap');
+  const tipFor = c => `<b>${esc(c.name)}</b><br>${esc(c.status)}<br>${c.band ? esc(D.bands[c.band]) : 'deaths not entered'} · ${c.ties.length} ${c.ties.length === 1 ? 'tie' : 'ties'}`;
+  function showTip(ev, html) { tip.innerHTML = html; tip.style.display = 'block'; placeTip(ev); }
+  function placeTip(ev) {
+    const r = wrap.getBoundingClientRect();
+    let x = ev.clientX - r.left + 14, y = ev.clientY - r.top + 14;
+    if (x + tip.offsetWidth > r.width - 8) x = ev.clientX - r.left - tip.offsetWidth - 14;
+    if (y + tip.offsetHeight > r.height - 8) y = ev.clientY - r.top - tip.offsetHeight - 14;
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+  }
+  function hideTip() { tip.style.display = 'none'; }
+
+  /* ---- table ---- */
+  const tb = $('#ties tbody');
+  let html = '';
+  for (const c of D.conflicts) {
+    html += `<tr class="group" data-conflict="${esc(c.id)}"><td colspan="6">${esc(c.name)}<small>since ${esc(c.since)} · ${esc(c.status)}</small></td></tr>`;
+    for (const t of c.ties) {
+      html += `<tr class="tie${isStale(t) ? ' stale' : ''}" data-conflict="${esc(c.id)}" data-backer="${esc(t.backer)}" tabindex="0" role="button">
+        <td><span class="who">${swatch(t.backer)}${esc(backers[t.backer].short)}</span></td>
+        <td>${esc(partyName(c, t.party))}</td>
+        <td>${esc(kindsText(t))}</td>
+        <td>${tierLabel(t)}</td>
+        <td class="src">${srcHTML(t)}</td>
+        <td class="chk">${t.checked ? esc(t.checked) : '—'}</td></tr>`;
+    }
+    if (c.none_note) html += `<tr class="tie" data-conflict="${esc(c.id)}"><td colspan="6" style="color:var(--ink-60)">${esc(c.none_note)}</td></tr>`;
+  }
+  tb.innerHTML = html;
+  const rowFocus = tr => { focus('conflict', tr.dataset.conflict); $('#map-panel').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+  tb.addEventListener('click', ev => { const tr = ev.target.closest('tr'); if (!tr || ev.target.closest('a')) return; rowFocus(tr); });
+  tb.addEventListener('keydown', ev => { if (ev.key !== 'Enter' && ev.key !== ' ') return; const tr = ev.target.closest('tr.tie'); if (!tr) return; ev.preventDefault(); rowFocus(tr); });
+
+  /* ---- deep link ---- */
+  readHash(); render();
+  } catch (e) { fail('The map could not be drawn. ' + e.message); throw e; }
+})();
+</script>
+</body>
+</html>
