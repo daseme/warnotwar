@@ -1,0 +1,143 @@
+{
+ "note": "Readings worth keeping. One entry per piece. Points are short quotes or paraphrases; a quote is marked. Tags name the site page the point bears on.",
+ "tags": {
+  "map": {
+   "label": "the map",
+   "href": "/conflicts.html"
+  },
+  "hormuz": {
+   "label": "oilflows",
+   "href": "/oilflows.html"
+  },
+  "market": {
+   "label": "the market",
+   "href": "/market.html"
+  },
+  "heuristic": {
+   "label": "the heuristic",
+   "href": "/heuristic.html"
+  },
+  "word": {
+   "label": "the word",
+   "href": "/record.html"
+  }
+ },
+ "entries": [
+  {
+   "id": "spoljaric-2026-10-10",
+   "added": "2026-10-11",
+   "date": "2026-10-10",
+   "title": "A decade of war, and the rules that are supposed to hold",
+   "source": "The New York Times Magazine, The Interview",
+   "url": "https://www.nytimes.com/2026/10/10/magazine/mirjana-spoljaric-interview.html",
+   "who": "Mirjana Spoljaric, president of the International Committee of the Red Cross since 2022. She goes to both sides of wars: Gaza, Ukraine, Myanmar, Iran, Iraq, Sudan, Mali.",
+   "why": "She counts the wars for a living, and her account of conflicts joining into systems is the thing the map is trying to draw.",
+   "points": [
+    {
+     "text": "The ICRC classifies 130 armed conflicts, international and not. That is twice as many as fifteen years ago and the most since the Second World War.",
+     "tags": [
+      "map"
+     ]
+    },
+    {
+     "text": "We live in a decade of war.",
+     "quote": true,
+     "tags": [
+      "heuristic"
+     ]
+    },
+    {
+     "text": "Today's conflicts are not limited to a given situation. They are turning into systems.",
+     "quote": true,
+     "tags": [
+      "map"
+     ]
+    },
+    {
+     "text": "What a system looks like: countries aligning across continents, shifts in military cooperation and in economic goals, and armed groups that share ideas, trade arms, and move cheap weapons and technology across thousands of kilometres. If Yemen escalates it will not stay in Yemen.",
+     "tags": [
+      "map",
+      "hormuz"
+     ]
+    },
+    {
+     "text": "You already have two very important sea straits affected.",
+     "quote": true,
+     "tags": [
+      "hormuz"
+     ]
+    },
+    {
+     "text": "War is no longer a last resort. Parties keep ready to go back to fighting at any point in a negotiation, so talks take longer and need more compromise. The Iran talks are harder than the 2013 to 2015 nuclear talks for that reason.",
+     "tags": [
+      "hormuz",
+      "word"
+     ]
+    },
+    {
+     "text": "The economic side: no growth, development gains lost fast, and countries without the fiscal room to absorb the cost of continued war. Iraq spent ten years recovering and is losing it.",
+     "tags": [
+      "market"
+     ]
+    },
+    {
+     "text": "War used to be a means to a political end. Now it looks like the end itself, because some leaders can only keep ruling while the war goes on.",
+     "tags": [
+      "heuristic"
+     ]
+    },
+    {
+     "text": "In history, there has never been total victory; there has only been death and destruction, over and above what was necessary.",
+     "quote": true
+    },
+    {
+     "text": "On whether a third world war has begun: history will judge. The ICRC did not know it was in the Second World War while it was happening.",
+     "tags": [
+      "heuristic"
+     ]
+    },
+    {
+     "text": "If you don't negotiate over 10 years, you lose the practice.",
+     "quote": true,
+     "tags": [
+      "word"
+     ]
+    },
+    {
+     "text": "An ANC official told her their adversaries had never negotiated anything and had to be trained before they could sit at the table.",
+     "tags": [
+      "word"
+     ]
+    },
+    {
+     "text": "Language at the UN has been eroding for twenty-five years. A leader who says there are no rules and no red lines is heard by everyone who carries a weapon.",
+     "tags": [
+      "word"
+     ]
+    },
+    {
+     "text": "Two standards are being applied: for some people bare survival in rubble counts as enough, for others only a return to normal does. If you allow double standards, it can happen to you.",
+     "tags": []
+    },
+    {
+     "text": "The ICRC had no access to the hostages in Gaza. Israel ended the ICRC's decades of access to its detainees after 7 October 2023. Under the Geneva Conventions access is an obligation, and torture is never allowed.",
+     "tags": [
+      "map"
+     ]
+    },
+    {
+     "text": "On neutrality: you tweak it once, you become political, and that's it. Without 160 years of it the hostage returns and the prisoner exchanges in Ukraine would not have been trusted to the ICRC.",
+     "tags": []
+    },
+    {
+     "text": "The Geneva Conventions, rewritten today, would come back with the same principles. Nobody in any culture will tell you it is correct to torture a child.",
+     "tags": []
+    },
+    {
+     "text": "What to do: retreat from the overfocus on weapons and defence technology, and rebuild a positive case for peace. Her children still imagine peace as their future.",
+     "tags": []
+    }
+   ]
+  }
+ ]
+}
