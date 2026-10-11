@@ -121,6 +121,20 @@
     nav.topnav { gap: 14px; padding: 12px 16px; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
     nav.topnav::-webkit-scrollbar { display: none; }
   }
+
+  /* ---- testing menu: the pages still being built sit under one dropdown ---- */
+  nav.topnav { overflow: visible; }
+  nav.topnav details.testing { position: relative; flex-shrink: 0; }
+  nav.topnav details.testing summary { list-style: none; cursor: pointer; color: var(--ink); opacity: 0.62; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; transition: opacity 0.2s ease; }
+  nav.topnav details.testing summary::-webkit-details-marker { display: none; }
+  nav.topnav details.testing summary::after { content: '\25BE'; font-size: 10px; }
+  nav.topnav details.testing summary:hover, nav.topnav details.testing[open] summary, nav.topnav details.testing.here summary { opacity: 1; }
+  nav.topnav details.testing .menu { position: absolute; top: calc(100% + 14px); left: -14px; min-width: 190px; display: flex; flex-direction: column; gap: 12px; padding: 14px 16px; background: var(--bg-raise, var(--bg)); border: 1px solid var(--ink-18); z-index: 60; }
+  @media (max-width: 720px) {
+    nav.topnav { overflow-x: auto; overflow-y: hidden; }
+    nav.topnav details.testing[open] { display: inline-flex; align-items: center; gap: 14px; }
+    nav.topnav details.testing .menu { position: static; flex-direction: row; gap: 14px; min-width: 0; padding: 0; border: 0; background: none; }
+  }
 </style>
 </head>
 <body>
@@ -128,18 +142,24 @@
 <nav class="topnav">
   <a href="/">warnotwar</a>
   <a href="/heuristic.html">the heuristic</a>
-  <a href="/market.html">the market</a>
-  <a href="/oilflows.html">oilflows</a>
-  <a href="/record.html">the word</a>
   <a href="/conflicts.html">the map</a>
+  <a href="/record.html">the word</a>
   <a href="/readings.html" class="here">readings</a>
-  <a href="/lab.html">the lab</a>
-  <a href="/teaching-module/index.html">hormuz lab (sim)</a>
-  <a href="/spr/">the reserve</a>
-  <a href="/methodology.html">methodology</a>
+  <details class="testing">
+    <summary>testing</summary>
+    <div class="menu">
+      <a href="/market.html">the market</a>
+      <a href="/oilflows.html">oilflows</a>
+      <a href="/lab.html">the lab</a>
+      <a href="/teaching-module/index.html">hormuz lab (sim)</a>
+      <a href="/spr/">the reserve</a>
+      <a href="/methodology.html">methodology</a>
+    </div>
+  </details>
   <span class="spacer"></span>
   <button class="theme-toggle" id="theme-toggle" title="switch paper / ink">&#9705; ink</button>
 </nav>
+<script>document.addEventListener('click', e => { for (const d of document.querySelectorAll('details.testing[open]')) if (!d.contains(e.target)) d.removeAttribute('open'); });</script>
 
 <header class="hero">
   <div class="hero-kicker">warnotwar &middot; readings</div>

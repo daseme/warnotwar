@@ -128,6 +128,14 @@
   .topnav a { color: rgba(255,255,255,0.45); text-decoration: none; }
   .topnav a:hover { color: rgba(255,255,255,0.85); }
   .topnav a.here { color: rgba(255,255,255,0.9); border-bottom: 1px solid rgba(255,255,255,0.4); }
+
+  /* ---- testing menu ---- */
+  .topnav details.testing { position: relative; display: inline-block; }
+  .topnav details.testing summary { list-style: none; cursor: pointer; color: rgba(255,255,255,0.45); }
+  .topnav details.testing summary::-webkit-details-marker { display: none; }
+  .topnav details.testing summary::after { content: ' \25BE'; font-size: 10px; }
+  .topnav details.testing summary:hover, .topnav details.testing[open] summary, .topnav details.testing.here summary { color: rgba(255,255,255,0.85); }
+  .topnav details.testing .menu { position: absolute; top: calc(100% + 10px); left: -12px; min-width: 190px; display: flex; flex-direction: column; gap: 10px; padding: 12px 14px; background: #1a1a1a; border: 1px solid rgba(255,255,255,0.2); z-index: 60; }
 </style>
 </head>
 <body>
@@ -135,14 +143,23 @@
 <nav class="topnav">
   <a href="/">warnotwar</a>
   <a href="/heuristic.html">the heuristic</a>
-  <a href="/oilflows.html">oilflows</a>
-  <a href="/record.html">the word</a>
   <a href="/conflicts.html">the map</a>
+  <a href="/record.html">the word</a>
   <a href="/readings.html">readings</a>
-  <a href="/lab.html">the lab</a>
-  <a href="/teaching-module/index.html">hormuz lab (sim)</a>
-  <a href="/methodology.html">methodology</a>
+  <details class="testing here">
+    <summary>testing</summary>
+    <div class="menu">
+      <a href="/market.html">the market</a>
+      <a href="/oilflows.html">oilflows</a>
+      <a href="/lab.html" class="here">the lab</a>
+      <a href="/teaching-module/index.html">hormuz lab (sim)</a>
+      <a href="/spr/">the reserve</a>
+      <a href="/methodology.html">methodology</a>
+    </div>
+  </details>
+  <span class="spacer"></span>
 </nav>
+<script>document.addEventListener('click', e => { for (const d of document.querySelectorAll('details.testing[open]')) if (!d.contains(e.target)) d.removeAttribute('open'); });</script>
 
 <h1>The Lab</h1>
 <p class="subtitle">
