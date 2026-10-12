@@ -176,7 +176,6 @@
 <div id="load-error"></div>
 <main id="entries"></main>
 
-<div class="stamp" id="stamp"></div>
 <a class="back" href="/">&larr; warnotwar</a>
 
 <script>
@@ -204,7 +203,6 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       ${(e.answers || []).map(a => `<div class="by">${esc(a.by)}${a.at ? ' &middot; ' + esc(a.at) : ''}</div><div class="a">${(a.paragraphs || []).map(p => `<p>${esc(p)}</p>`).join('')}</div>`).join('')}
       ${e.added ? `<div class="added">added ${esc(e.added)}</div>` : ''}
     </article>`).join('');
-  document.getElementById('stamp').textContent = (D.note || '') + ' · ' + entries.length + (entries.length === 1 ? ' entry' : ' entries') + ' · data/qa.json';
 })();
 </script>
 </body>
