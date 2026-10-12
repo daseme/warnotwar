@@ -426,6 +426,7 @@
   details.fold[open] summary .hint::after { content: ' \25B4'; }
   details.fold summary:hover .hint { color: var(--ink); }
   details.fold .panel-sub { margin-top: 14px; }
+  details.fold + .years { margin-top: 28px; }
   /* table filters and anchors */
   .tfilters { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; font-family: var(--mono); font-size: 11px; margin: 0 0 6px; }
   .tfilters input { font: inherit; font-size: 11px; background: var(--bg-raise); border: 1px solid var(--ink-18); color: var(--ink); padding: 4px 8px; min-width: 14em; }
@@ -559,7 +560,8 @@
 </section>
 
 <section class="panel" id="ucdp-panel">
-  <h2>Our counts against Uppsala</h2>
+  <details class="fold" id="ucdp-fold">
+  <summary><h2>Our counts against Uppsala</h2><span class="n" id="ucdp-fold-count"></span><span class="hint">open the table</span></summary>
   <p class="panel-sub" id="ucdp-sub"></p>
   <div class="table-wrap">
   <table class="mono" id="ucdp-table">
@@ -568,6 +570,7 @@
   </table>
   </div>
   <div class="note" id="ucdp-missing"></div>
+  </details>
   <div class="years" id="years" style="display:none">
     <h3>The level since 1989</h3>
     <p class="prose" id="years-note"></p>
@@ -768,6 +771,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     $('#ucdp-table thead').innerHTML = `<tr><th>war</th><th>our band</th><th>UCDP ${ly}, best (low to high)</th><th>January to ${esc(monthWord(U.reach))}</th><th>${esc(monthWord(U.window.from))} to ${esc(monthWord(U.window.to))}, best (low to high)</th><th>rows flagged</th><th>UCDP against the other counter</th><th>what UCDP counts</th></tr>`;
     $('#ucdp-table tbody').innerHTML = D.conflicts.filter(c => uOf(c)).map(c => { const u = uOf(c); const top = (u.conflicts || []).filter(k => k.best_window > 0).slice(0, 4); return `<tr><td>${esc(c.name)}</td><td>${esc(D.bands[c.band] || 'not entered')}</td><td>${ucdpRange(u.last_year)}</td><td>${ucdpNum(u.this_year.best)}</td><td>${ucdpRange(u.window)}</td><td>${pct(u.flagged_share_window)}</td><td>${esc((c.ucdp && c.ucdp.against) || '')}</td><td class="src">${esc((c.ucdp && c.ucdp.note) || '')}<span class="n">${esc(u.basis)}. In the window: ${top.map(k => esc(k.name) + ' ' + ucdpNum(k.best_window)).join('; ')}${(u.conflicts || []).filter(k => k.best_window > 0).length > top.length ? '; and ' + ((u.conflicts || []).filter(k => k.best_window > 0).length - top.length) + ' more' : ''}.${(u.excluded || []).map(x => ' Not in this sum: ' + esc(x.dyad) + ', ' + ucdpNum(x.best_this_year) + ' in ' + ty + '; ' + esc(x.why) + '.').join('')}</span></td></tr>`; }).join('');
     $('#ucdp-missing').textContent = D.ucdp_missing || '';
+    $('#ucdp-fold-count').textContent = `${D.conflicts.filter(c => uOf(c)).length} wars, our band beside UCDP's count`;
     if (U.secondary && U.secondary.entries) {
       $('#troops-wrap').style.display = '';
       $('#troops-rule').textContent = U.secondary.rule + ' The year is ' + U.secondary.year + ', the last UCDP has coded.';
