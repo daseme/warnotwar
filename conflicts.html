@@ -509,6 +509,15 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const WIN = D.window || { from: '2025-10', to: '2026-10' };
   const monthsIn = (() => { const out = []; let [y, mo] = WIN.from.split('-').map(Number); const [y1, m1] = WIN.to.split('-').map(Number); while (y < y1 || (y === y1 && mo <= m1)) { out.push(y + '-' + String(mo).padStart(2, '0')); mo++; if (mo > 12) { mo = 1; y++; } } return out; })();
   const partyName = (c, id) => { const p = c.parties.find(p => p.id === id); return p ? p.name : id; };
+  /* "6 ties from 5 backers, 1 ended · Israel fights here": ties are not states, so say both */
+  const listNames = a => a.length <= 1 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
+  function tieSummary(c) {
+    const ties = c.ties, who = new Set(ties.map(t => t.backer)), ended = ties.filter(t => t.ended).length;
+    let s = ties.length === 0 ? 'No ties on record' : `${ties.length} ${ties.length === 1 ? 'tie' : 'ties'} from ${who.size} ${who.size === 1 ? 'backer' : 'backers'}${ended ? `, ${ended} ended` : ''}`;
+    const fighters = c.parties.filter(p => p.state && backers[p.state]).map(p => backers[p.state].short);
+    if (fighters.length) s += ` · ${listNames(fighters)} ${fighters.length === 1 ? (c.kind === 'pressure' ? 'acts' : 'fights') : (c.kind === 'pressure' ? 'act' : 'fight')} here`;
+    return s;
+  }
 
   /* ---- projection: Equal Earth, same constants as scripts/build_map.py ---- */
   const A1 = 1.340264, A2 = -0.081106, A3 = 0.000893, A4 = 0.003796, M = Math.sqrt(3) / 2;
@@ -851,6 +860,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       const notYet = state.month && c.start > state.month ? `<div class="s" style="margin-top:8px">Not on the map until ${esc(fmtMonth(c.start))}.</div>` : '';
       card.innerHTML = `<div class="k">${c.kind === 'pressure' ? 'force short of war' : 'war'} &middot; since ${esc(c.since)}</div><div class="t">${esc(c.name)}</div>${notYet}
         <div class="s">${esc(c.status)}${c.band ? ' &middot; ' + esc(D.bands[c.band]) : c.kind === 'pressure' ? '' : ' &middot; deaths not entered'}</div>
+        <div class="s" style="margin-top:6px">${esc(tieSummary(c))}.</div>
         <p>${esc(c.summary)}</p>
         ${c.band_source ? `<div class="s" style="margin-top:8px">Deaths: ${esc(c.band_source)}</div>` : ''}
         ${c.actor_statement ? `<div class="s" style="margin-top:8px">What the acting state says: ${esc(c.actor_statement)}</div>` : ''}
@@ -873,7 +883,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
 
   /* ---- tooltip ---- */
   const tip = $('#tip'), wrap = $('.map-wrap');
-  const tipFor = c => `<b>${esc(c.name)}</b>${c.kind === 'pressure' ? ' · force short of war' : ''}<br>${esc(c.status)}<br>${c.band ? esc(D.bands[c.band]) : 'deaths not entered'} · ${c.ties.length} ${c.ties.length === 1 ? 'tie' : 'ties'}`;
+  const tipFor = c => `<b>${esc(c.name)}</b>${c.kind === 'pressure' ? ' · force short of war' : ''}<br>${esc(c.status)}<br>${c.band ? esc(D.bands[c.band]) : c.kind === 'pressure' ? '' : 'deaths not entered'}${c.band || c.kind !== 'pressure' ? ' · ' : ''}${esc(tieSummary(c))}`;
   function showTip(ev, html) { tip.innerHTML = html; tip.style.display = 'block'; placeTip(ev); }
   function placeTip(ev) {
     /* fixed to the viewport, so it never runs off a panned map or a small screen */
