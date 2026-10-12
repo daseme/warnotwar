@@ -356,11 +356,34 @@
     /* numbers panels: keep labels legible, let the panel pan sideways */
     .panel { overflow-x: auto; }
     .panel svg { min-width: 640px; }
+    /* the months table pans sideways rather than crushing its headers */
+    table.strip { min-width: 640px; }
+    table.strip tr > *:first-child { width: 150px; }
+    table.strip thead th:first-child { white-space: normal; line-height: 1.5; }
+    table.strip th, table.strip td { padding: 6px 8px; }
+    /* controls: not sticky on a phone (they would eat the screen); filters two-up, search full width */
+    .controls { position: static; padding: 10px 0 8px; }
+    .controls-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-items: stretch; }
+    .controls-row .grp { grid-column: 1 / -1; margin: 2px 0 -2px; }
+    .controls-row button.chip { padding: 9px 8px; white-space: nowrap; }
+    select.filter { width: 100%; min-width: 0; }
+    input.search { grid-column: 1 / -1; min-width: 0; width: 100%; }
+    .result-count { grid-column: 1 / -1; margin-left: 0; text-align: right; }
+    header.masthead { padding: 96px 16px 24px; }
+    main { padding: 0 16px 30px; }
   }
   @media (max-width: 860px) {
     .orient { grid-template-columns: 1fr; gap: 10px; }
-    article.entry { grid-template-columns: 1fr; gap: 6px; }
-    .e-date { padding-top: 0; }
+    /* entry: date and figure stack in a narrow left column, the text takes the rest */
+    article.entry { grid-template-columns: 82px minmax(0, 1fr); gap: 6px 14px; padding: 16px 0 14px; }
+    .e-date { grid-column: 1; grid-row: 1; padding-top: 2px; }
+    .e-fig { grid-column: 1; grid-row: 2; align-self: start; }
+    .e-body { grid-column: 2; grid-row: 1 / span 2; }
+    .e-fig .num { font-size: 22px; line-height: 1.1; }
+    .e-fig .num span { display: block; margin-top: 2px; }
+    .e-body .desc { font-size: 15.5px; }
+    article.entry.disputed { padding-left: 10px; }
+    a.anchor { display: none; }
     .voice { grid-template-columns: 1fr; gap: 2px; }
     .voice .v-meta { padding-top: 0; }
     nav.topnav { gap: 14px; padding: 12px 16px; overflow-x: auto; overflow-y: hidden; }
@@ -496,6 +519,9 @@ themeBtn.onclick = () => {
     region_including_bypass: 'the region incl. bypass routes',
     bypass_routes: 'bypass routes only',
     iran_exports_via_hormuz: 'Iranian exports via Hormuz',
+    gulf_of_oman: 'the Gulf of Oman',
+    iran_ports_blockade: 'the blockade of Iranian ports',
+    persian_gulf_and_gulf_of_oman: 'the Persian Gulf and the Gulf of Oman',
   };
   const SHIP_UNITS = { ships: 'ships', tanker: 'tanker', tankers: 'tankers', vessels: 'vessels', tankers_per_night: 'tankers per night' };
   const UNIT_SHORT = { million_barrels_per_day: 'M bbl / day', million_barrels: 'M bbl' };
