@@ -595,6 +595,7 @@
     <p class="prose" id="years-note"></p>
     <div id="years-chart"></div>
     <div class="years-key" id="years-key"></div>
+    <p class="prose" id="years-1994" style="display:none;margin-top:14px"></p>
   </div>
   <div id="troops-wrap" style="display:none">
   <h3>Troops against Uppsala</h3>
@@ -1497,6 +1498,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     s += '</svg>';
     $('#years-chart').innerHTML = s;
     const above = ys.filter(r => r.best > median).length;
+    if (D.years_1994) { $('#years-1994').textContent = D.years_1994; $('#years-1994').style.display = ''; }
     const otherAvgs = avgs.filter(a => a && a !== lastAvg).map(a => a.v), highestAvg = lastAvg.v >= Math.max(...otherAvgs);
     const avgWord = `The solid line is the average of the five years to each year; for ${ys[ys.length - 5].year} to ${lastAvg.year} it is ${Math.round(lastAvg.v).toLocaleString('en-US')}${highestAvg ? ', the highest five-year average in the series, above the five years that carry ' + peak.year : ''}.`;
     $('#years-key').textContent = `Bars are UCDP's best estimate by year, the thin line its low to high; the ${peak.year} bar runs off the top so the other years can be read. ${last.year}: ${last.best.toLocaleString('en-US')} deaths in ${last.countries_over_1000} countries over a thousand, against a median year of ${median.toLocaleString('en-US')} since ${ys[0].year}; ${above} of ${ys.length} years sit above the median. ${avgWord} UCDP version ${esc(Y.version || '')}.`;
