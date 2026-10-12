@@ -417,6 +417,15 @@
   details.changes li .d { color: var(--ink-45); margin-right: 8px; }
   details.changes li.corr .d { color: var(--gold); }
 
+  /* the ties table folds under its heading: the list is there for anyone who wants it, not in the way */
+  details.fold summary { list-style: none; cursor: pointer; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+  details.fold summary::-webkit-details-marker { display: none; }
+  details.fold summary h2 { margin: 0; }
+  details.fold summary .n, details.fold summary .hint { font-family: var(--mono); font-size: 11px; color: var(--ink-45); }
+  details.fold summary .hint::after { content: ' \25BE'; }
+  details.fold[open] summary .hint::after { content: ' \25B4'; }
+  details.fold summary:hover .hint { color: var(--ink); }
+  details.fold .panel-sub { margin-top: 14px; }
   /* table filters and anchors */
   .tfilters { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; font-family: var(--mono); font-size: 11px; margin: 0 0 6px; }
   .tfilters input { font: inherit; font-size: 11px; background: var(--bg-raise); border: 1px solid var(--ink-18); color: var(--ink); padding: 4px 8px; min-width: 14em; }
@@ -531,22 +540,6 @@
   </div>
 </section>
 
-<section class="panel" id="table-panel">
-  <h2>Every line on the map</h2>
-  <p class="panel-sub">One row per tie. The line shape in the tier column is the same one drawn on the map. Each row has a link of its own and a link to report it.</p>
-  <div class="tfilters" id="tfilters">
-    <span class="k" style="color:var(--ink-45);text-transform:uppercase;letter-spacing:0.14em;font-size:10px">show</span>
-    <div class="chips" id="tfilter-chips"></div>
-    <input type="search" id="tsearch" placeholder="a state, a war, a side, a kind of help" aria-label="filter the rows">
-    <span class="n" id="tcount"></span>
-  </div>
-  <div class="table-wrap">
-  <table class="mono" id="ties">
-    <thead><tr><th>backer</th><th>helps</th><th>what</th><th>tier</th><th>source</th><th>entered</th></tr></thead>
-    <tbody></tbody>
-  </table>
-  </div>
-</section>
 
 <section class="panel" id="grid-panel">
   <h2>The same states, war after war</h2>
@@ -592,6 +585,25 @@
   </div>
   <h3>Counts and credit</h3>
   <p class="prose" id="attribution"></p>
+</section>
+
+<section class="panel" id="table-panel">
+  <details class="fold" id="table-fold">
+  <summary><h2>Every line on the map</h2><span class="n" id="fold-count"></span><span class="hint">open the list</span></summary>
+  <p class="panel-sub">One row per tie. The line shape in the tier column is the same one drawn on the map. Each row has a link of its own and a link to report it.</p>
+  <div class="tfilters" id="tfilters">
+    <span class="k" style="color:var(--ink-45);text-transform:uppercase;letter-spacing:0.14em;font-size:10px">show</span>
+    <div class="chips" id="tfilter-chips"></div>
+    <input type="search" id="tsearch" placeholder="a state, a war, a side, a kind of help" aria-label="filter the rows">
+    <span class="n" id="tcount"></span>
+  </div>
+  <div class="table-wrap">
+  <table class="mono" id="ties">
+    <thead><tr><th>backer</th><th>helps</th><th>what</th><th>tier</th><th>source</th><th>entered</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  </div>
+  </details>
 </section>
 
 <section class="panel" id="rules">
@@ -1393,7 +1405,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   tb.addEventListener('click', ev => { const a = ev.target.closest('a.anchor'); if (!a) return; ev.preventDefault(); state.tie = a.closest('tr').dataset.tie; writeHash(); render(); });
   function showTie() {
     if (!state.tie) return; const tr = tb.querySelector(`tr.tie[data-tie="${CSS.escape(state.tie)}"]`); if (!tr) return;
-    tr.classList.remove('hide'); tr.scrollIntoView({ behavior: 'smooth', block: 'center' }); tr.focus({ preventScroll: true });
+    $('#table-fold').open = true; tr.classList.remove('hide'); tr.scrollIntoView({ behavior: 'smooth', block: 'center' }); tr.focus({ preventScroll: true });
   }
   /* table filters: show by tier, faint or ended, and a text search; the group rows follow their ties */
   const tfilter = { tiers: new Set(Object.keys(D.tiers)), faint: false, ended: false, q: '' };
@@ -1419,6 +1431,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     }
     for (const tr of tb.querySelectorAll('tr.group')) tr.classList.toggle('hide', !seen[tr.dataset.conflict] && (tfilter.q !== '' || tfilter.faint || tfilter.ended || tfilter.tiers.size < Object.keys(D.tiers).length));
     $('#tcount').textContent = shown === total ? `${total} ties` : `${shown} of ${total} ties`;
+    $('#fold-count').textContent = `${total} ties, one row each`;
   }
   applyTableFilter();
 
