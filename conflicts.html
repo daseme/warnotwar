@@ -467,7 +467,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   el('path', { class: 'grat', d: world.graticule }, svg);
   const gLand = el('g', {}, svg);
   const landByIso = {}; const ISO_NE = { SSD: 'SDS', PSE: 'PSX' };
-  for (const c of world.countries) landByIso[c.id] = el('path', { class: 'land', d: c.d }, gLand);
+  for (const c of world.countries) landByIso[c.id] = el('path', { class: 'land', d: c.d, 'data-iso': c.id }, gLand);
   const gAreas = el('g', { id: 'areas' }, svg);
   const gArcs = el('g', { id: 'arcs' }, svg);
   const gParties = el('g', {}, svg);
