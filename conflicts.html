@@ -875,7 +875,8 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   sel.onchange = () => { if (sel.value) focus('backer', sel.value); };
   chipsEl.appendChild(sel);
   const allBtn = $('#show-all'), pressureBtn = $('#show-pressure'), areasBtn = $('#show-areas'), whoBtn = $('#show-who'), eventsBtn = $('#show-events');
-  whoBtn.onclick = () => { state.who = !state.who; if (state.who) state.areas = false; writeHash(); render(); };
+  /* the shadings are drawn as of today: from a month, the chip brings the map back to today and turns the shading on */
+  whoBtn.onclick = () => { if (state.month) { state.month = null; state.who = true; } else state.who = !state.who; if (state.who) state.areas = false; writeHash(); render(); };
   /* zoom chips: named regions, marks keep their size on screen */
   const zoomEl = $('#zoom-chips');
   for (const [key, r] of Object.entries(REGIONS)) {
@@ -945,7 +946,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   allBtn.onclick = () => { state.all = !state.all; writeHash(); render(); };
   pressureBtn.onclick = () => { state.pressure = !state.pressure; buildGridLater = true; if (!state.pressure && state.kind === 'conflict' && conflicts[state.id] && conflicts[state.id].kind === 'pressure') { state.kind = null; state.id = null; state.pinned = false; } writeHash(); render(); };
   let areasData = null, areasLoading = null;
-  areasBtn.onclick = () => { state.areas = !state.areas; if (state.areas) state.who = false; writeHash(); loadAreas().then(render); };
+  areasBtn.onclick = () => { if (state.month) { state.month = null; state.areas = true; } else state.areas = !state.areas; if (state.areas) state.who = false; writeHash(); loadAreas().then(render); };
   function loadAreas() {
     if (!state.areas || areasData) return Promise.resolve();
     if (!areasLoading) areasLoading = fetch('/data/war_areas.json').then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); }).then(j => { areasData = j.areas || {}; }).catch(e => { fail('The province shapes did not load. ' + e.message); state.areas = false; });
@@ -1058,7 +1059,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       evNote.style.display = '';
       evNote.innerHTML = `${esc(D.grid_note || '')} Placed: ${cellsData.placed_total.toLocaleString('en-US')} deaths; placed only to a country and not drawn: ${cellsData.unplaced_total.toLocaleString('en-US')}, of which ${unplaced.map(([id, n]) => esc(conflicts[id].short) + ' ' + n.toLocaleString('en-US')).join(', ')}. ${esc(cellsData.versions)}, pulled ${esc(cellsData.pulled)}.`;
     } else evNote.style.display = 'none';
-    for (const btn of [areasBtn, whoBtn]) { btn.disabled = !!state.month; btn.title = state.month ? 'Drawn as of today. Back to today turns it on.' : ''; }
+    for (const btn of [areasBtn, whoBtn]) btn.title = state.month ? 'The shading has no month; this turns it on and brings the map back to today.' : '';
     const turnsNow = [];
     for (const id in confNodes) {
       const c = conflicts[id]; const g = confNodes[id];
@@ -1072,7 +1073,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     if (state.month) {
       let newLines = 0; for (const c of D.conflicts) { if (c.kind === 'pressure' || c.start > state.month) continue; for (const t of c.ties) if (t.since === state.month) newLines++; }
       mStatus.innerHTML = turnsNow.map(x => `<b>${esc(x.c.name)}:</b> ${esc(x.what)}`).join(' · ') + (newLines ? (turnsNow.length ? ' · ' : '') + newLines + (newLines === 1 ? ' line begins this month' : ' lines begin this month') : '') || 'Nothing new on the map this month.';
-      if (state.areas || state.who) mStatus.innerHTML += ' · Shading is off while you step through the year.';
+      if (state.areas || state.who) mStatus.innerHTML += ' · Shading is off while you step through the year; its chip brings you back to today.';
     } else mStatus.textContent = '';
     pressureBtn.classList.toggle('on', state.pressure); pressureBtn.setAttribute('aria-pressed', String(state.pressure));
     areasBtn.classList.toggle('on', state.areas); areasBtn.setAttribute('aria-pressed', String(state.areas));
