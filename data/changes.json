@@ -2553,6 +2553,678 @@
    "tie": "us-boats/britain/us",
    "kind": "tie",
    "what": "Britain to U.S. in Boats: removed"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "ukraine",
+   "tie": "ukraine/europe/ukr",
+   "kind": "sources",
+   "what": "Europe to Ukraine in Ukraine: 1 source added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "ukraine",
+   "tie": "ukraine/canada/ukr",
+   "kind": "sources",
+   "what": "Canada to Ukraine in Ukraine: 1 source added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "ukraine",
+   "tie": "ukraine/iran/rus",
+   "kind": "sources",
+   "what": "Iran to Russia in Ukraine: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "ukraine",
+   "tie": "ukraine/iran/rus",
+   "kind": "evidence",
+   "what": "Iran to Russia in Ukraine: evidence now to 2024-04"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "ukraine",
+   "tie": "ukraine/nkorea/rus",
+   "kind": "sources",
+   "what": "N. Korea to Russia in Ukraine: 1 source added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "ukraine",
+   "tie": "ukraine/china/rus",
+   "kind": "sources",
+   "what": "China to Russia in Ukraine: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "ukraine",
+   "tie": "ukraine/china/rus",
+   "kind": "evidence",
+   "what": "China to Russia in Ukraine: evidence now to 2026-04"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "sudan",
+   "tie": "sudan/uae/rsf",
+   "kind": "sources",
+   "what": "UAE to RSF in Sudan: 3 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "sudan",
+   "tie": "sudan/chad/rsf",
+   "kind": "sources",
+   "what": "Chad to RSF in Sudan: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "sudan",
+   "tie": "sudan/haftar/rsf",
+   "kind": "sources",
+   "what": "E. Libya to RSF in Sudan: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "sudan",
+   "tie": "sudan/haftar/rsf",
+   "kind": "evidence",
+   "what": "E. Libya to RSF in Sudan: evidence now to 2026-09"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "sudan",
+   "tie": "sudan/kenya/rsf",
+   "kind": "sources",
+   "what": "Kenya to RSF in Sudan: 1 source added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "sudan",
+   "tie": "sudan/egypt/saf",
+   "kind": "sources",
+   "what": "Egypt to army in Sudan: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "sudan",
+   "tie": "sudan/egypt/saf",
+   "kind": "evidence",
+   "what": "Egypt to army in Sudan: evidence now to 2026-02"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "sudan",
+   "tie": "sudan/iran/saf",
+   "kind": "sources",
+   "what": "Iran to army in Sudan: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "sudan",
+   "tie": "sudan/turkey/saf",
+   "kind": "sources",
+   "what": "Türkiye to army in Sudan: 3 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "gaza",
+   "tie": "gaza/usa/isr",
+   "kind": "sources",
+   "what": "U.S. to Israel in Gaza & Lebanon: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "gaza",
+   "tie": "gaza/usa/isr",
+   "kind": "evidence",
+   "what": "U.S. to Israel in Gaza & Lebanon: evidence now to 2026-03"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "gaza",
+   "tie": "gaza/germany/isr",
+   "kind": "evidence",
+   "what": "Germany to Israel in Gaza & Lebanon: evidence now to 2026-03"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "gaza",
+   "tie": "gaza/iran/hamas",
+   "kind": "sources",
+   "what": "Iran to Hamas in Gaza & Lebanon: 1 source added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "gaza",
+   "tie": "gaza/iran/hamas",
+   "kind": "evidence",
+   "what": "Iran to Hamas in Gaza & Lebanon: evidence now to 2023-10"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "yemen",
+   "tie": "yemen/china/houthi",
+   "kind": "tier",
+   "what": "China to Houthis in Yemen: alleged to reported"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "yemen",
+   "tie": "yemen/china/houthi",
+   "kind": "sources",
+   "what": "China to Houthis in Yemen: 3 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "yemen",
+   "tie": "yemen/china/houthi",
+   "kind": "evidence",
+   "what": "China to Houthis in Yemen: evidence now to 2026-09"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "myanmar",
+   "tie": "myanmar/china/junta",
+   "kind": "sources",
+   "what": "China to army in Myanmar: 3 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "congo",
+   "tie": "congo/rwanda/m23",
+   "kind": "sources",
+   "what": "Rwanda to M23 in Congo: 3 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "congo",
+   "tie": "congo/uganda/drc",
+   "kind": "sources",
+   "what": "Uganda to Congo in Congo: 3 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "congo",
+   "tie": "congo/uganda/drc",
+   "kind": "evidence",
+   "what": "Uganda to Congo in Congo: evidence now to 2026-08"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "congo",
+   "tie": "congo/burundi/drc",
+   "kind": "sources",
+   "what": "Burundi to Congo in Congo: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "congo",
+   "tie": "congo/usa/drc",
+   "kind": "sources",
+   "what": "U.S. to Congo in Congo: 1 source added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "congo",
+   "tie": "congo/usa/drc",
+   "kind": "evidence",
+   "what": "U.S. to Congo in Congo: evidence now to 2026-03"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "sahel",
+   "tie": "sahel/china/aes",
+   "kind": "sources",
+   "what": "China to juntas in Sahel: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "sahel",
+   "tie": "sahel/china/aes",
+   "kind": "evidence",
+   "what": "China to juntas in Sahel: evidence now to 2026-04"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "sahel",
+   "tie": "sahel/iran/aes",
+   "kind": "sources",
+   "what": "Iran to juntas in Sahel: 1 source added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "somalia",
+   "tie": "somalia/usa/sgov",
+   "kind": "sources",
+   "what": "U.S. to government in Somalia: 3 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "somalia",
+   "tie": "somalia/usa/sgov",
+   "kind": "evidence",
+   "what": "U.S. to government in Somalia: evidence now to 2026-09"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "somalia",
+   "tie": "somalia/uganda/sgov",
+   "kind": "sources",
+   "what": "Uganda to government in Somalia: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "somalia",
+   "tie": "somalia/kenya/sgov",
+   "kind": "sources",
+   "what": "Kenya to government in Somalia: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "somalia",
+   "tie": "somalia/kenya/sgov",
+   "kind": "evidence",
+   "what": "Kenya to government in Somalia: evidence now to 2026-08"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "somalia",
+   "tie": "somalia/djibouti/sgov",
+   "kind": "sources",
+   "what": "Djibouti to government in Somalia: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "somalia",
+   "tie": "somalia/djibouti/sgov",
+   "kind": "evidence",
+   "what": "Djibouti to government in Somalia: evidence now to 2026-08"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "somalia",
+   "tie": "somalia/egypt/sgov",
+   "kind": "sources",
+   "what": "Egypt to government in Somalia: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "somalia",
+   "tie": "somalia/saudi/sgov",
+   "kind": "sources",
+   "what": "Saudi Arabia to government in Somalia: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "syria",
+   "tie": "syria/turkey/sgov2",
+   "kind": "sources",
+   "what": "Türkiye to government in Syria: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "syria",
+   "tie": "syria/saudi/sgov2",
+   "kind": "sources",
+   "what": "Saudi Arabia to government in Syria: 1 source added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "syria",
+   "tie": "syria/usa/sgov2",
+   "kind": "sources",
+   "what": "U.S. to government in Syria: 4 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "syria",
+   "tie": "syria/israel/local",
+   "kind": "sources",
+   "what": "Israel to Druze, loyalists in Syria: 4 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "haiti",
+   "tie": "haiti/usa/hstate",
+   "kind": "sources",
+   "what": "U.S. to state in Haiti: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "haiti",
+   "tie": "haiti/canada/hstate",
+   "kind": "sources",
+   "what": "Canada to state in Haiti: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "haiti",
+   "tie": "haiti/chad/hstate",
+   "kind": "sources",
+   "what": "Chad to state in Haiti: 3 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "pakistan",
+   "tie": "pakistan/usa/pak",
+   "kind": "sources",
+   "what": "U.S. to Pakistan in Pakistan: 3 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "pakistan",
+   "tie": "pakistan/afghanistan/ttp",
+   "kind": "sources",
+   "what": "Afghanistan to TTP, Baloch in Pakistan: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "pakistan",
+   "tie": "pakistan/afghanistan/ttp",
+   "kind": "evidence",
+   "what": "Afghanistan to TTP, Baloch in Pakistan: evidence now to 2026-09"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "pakistan",
+   "tie": "pakistan/india/ttp",
+   "kind": "sources",
+   "what": "India to TTP, Baloch in Pakistan: 1 source added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "pakistan",
+   "tie": "pakistan/india/afg",
+   "kind": "sources",
+   "what": "India to Afghanistan in Pakistan: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "gulf",
+   "tie": "gulf/bahrain/us",
+   "kind": "sources",
+   "what": "Bahrain to U.S. in Gulf: 1 source added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "gulf",
+   "tie": "gulf/qatar/us",
+   "kind": "sources",
+   "what": "Qatar to U.S. in Gulf: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "gulf",
+   "tie": "gulf/kuwait/us",
+   "kind": "sources",
+   "what": "Kuwait to U.S. in Gulf: 1 source added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "gulf",
+   "tie": "gulf/uae/us",
+   "kind": "sources",
+   "what": "UAE to U.S. in Gulf: 4 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "gulf",
+   "tie": "gulf/uae/us",
+   "kind": "evidence",
+   "what": "UAE to U.S. in Gulf: evidence now to 2026-05"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "gulf",
+   "tie": "gulf/saudi/us",
+   "kind": "sources",
+   "what": "Saudi Arabia to U.S. in Gulf: 5 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "gulf",
+   "tie": "gulf/saudi/us",
+   "kind": "evidence",
+   "what": "Saudi Arabia to U.S. in Gulf: evidence now to 2026-07"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "gulf",
+   "tie": "gulf/jordan/us",
+   "kind": "sources",
+   "what": "Jordan to U.S. in Gulf: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "gulf",
+   "tie": "gulf/britain/us",
+   "kind": "sources",
+   "what": "Britain to U.S. in Gulf: 1 source added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "gulf",
+   "tie": "gulf/turkey/us",
+   "kind": "sources",
+   "what": "Türkiye to U.S. in Gulf: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "gulf",
+   "tie": "gulf/russia/irn",
+   "kind": "sources",
+   "what": "Russia to Iran in Gulf: 5 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "gulf",
+   "tie": "gulf/china/irn",
+   "kind": "sources",
+   "what": "China to Iran in Gulf: 9 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "ethiopia",
+   "tie": "ethiopia/uae/egov",
+   "kind": "sources",
+   "what": "UAE to government in Ethiopia: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "ethiopia",
+   "tie": "ethiopia/uae/egov",
+   "kind": "evidence",
+   "what": "UAE to government in Ethiopia: evidence now to 2026-10"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "ethiopia",
+   "tie": "ethiopia/eritrea/alliance",
+   "kind": "sources",
+   "what": "Eritrea to alliance in Ethiopia: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "ethiopia",
+   "tie": "ethiopia/egypt/eri",
+   "kind": "sources",
+   "what": "Egypt to Eritrea in Ethiopia: 3 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "southsudan",
+   "tie": "southsudan/uganda/ssgov",
+   "kind": "sources",
+   "what": "Uganda to government in South Sudan: 1 source added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "nigeria",
+   "tie": "nigeria/usa/ngov",
+   "kind": "sources",
+   "what": "U.S. to state in Nigeria: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "nigeria",
+   "tie": "nigeria/usa/ngov",
+   "kind": "evidence",
+   "what": "U.S. to state in Nigeria: evidence now to 2026-05"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "nigeria",
+   "tie": "nigeria/china/ngov",
+   "kind": "sources",
+   "what": "China to state in Nigeria: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "nigeria",
+   "tie": "nigeria/china/ngov",
+   "kind": "evidence",
+   "what": "China to state in Nigeria: evidence now to 2025-09"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "us-boats",
+   "tie": "us-boats/elsalvador/us",
+   "kind": "sources",
+   "what": "El Salvador to U.S. in Boats: 1 source added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "us-venezuela",
+   "tie": "us-venezuela/china/ven",
+   "kind": "sources",
+   "what": "China to Venezuela in Venezuela: 1 source added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "us-venezuela",
+   "tie": "us-venezuela/britain/us",
+   "kind": "sources",
+   "what": "Britain to U.S. in Venezuela: 1 source added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "us-cuba",
+   "tie": "us-cuba/russia/cub",
+   "kind": "sources",
+   "what": "Russia to Cuba in Cuba: 2 sources added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "us-cuba",
+   "tie": "us-cuba/china/cub",
+   "kind": "sources",
+   "what": "China to Cuba in Cuba: 1 source added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "us-cuba",
+   "tie": "us-cuba/china/cub",
+   "kind": "evidence",
+   "what": "China to Cuba in Cuba: evidence now to 2026-05"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "us-cuba",
+   "tie": "us-cuba/mexico/cub",
+   "kind": "sources",
+   "what": "Mexico to Cuba in Cuba: 1 source added"
+  },
+  {
+   "date": "2026-10-12",
+   "commit": "7845b20",
+   "entry": "us-ecuador",
+   "tie": "us-ecuador/ecuador/us",
+   "kind": "sources",
+   "what": "Ecuador to U.S. in Ecuador: 2 sources added"
   }
  ]
 }
