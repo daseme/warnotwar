@@ -162,10 +162,10 @@
   .party text { font-size: 9px; fill: var(--ink); text-anchor: middle; dominant-baseline: central; }
 
   .tooltip {
-    position: absolute; pointer-events: none;
+    position: fixed; pointer-events: none;
     background: var(--bg-sink); border: 1px solid var(--ink-18);
     font-family: var(--mono); font-size: 11px; line-height: 1.7; color: var(--ink-80);
-    padding: 8px 11px; white-space: nowrap; display: none; z-index: 5;
+    padding: 8px 11px; white-space: normal; max-width: min(320px, calc(100vw - 24px)); display: none; z-index: 70;
   }
   .tooltip b { color: var(--ink); font-weight: 500; }
 
@@ -614,6 +614,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     if (state.kind === 'conflict') {
       for (const id of touched) {
         const c = conflicts[id], n = c.parties.length;
+        if (c.kind === 'pressure') continue;
         c.parties.forEach((p, i) => {
           const off = n === 1 ? [[0, -26]] : n === 2 ? [[-62, -24], [62, -24]] : [[-62, -24], [62, -24], [0, 30]];
           const [dx, dy] = off[i] || [0, 30 + 18 * (i - 2)];
@@ -632,6 +633,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     const perConf = {}; for (const r of rows) (perConf[r.c.id] = perConf[r.c.id] || []).push(r);
     const originSeen = new Set();
     for (const { c, t } of rows) {
+      if (c.kind === 'pressure') continue;   /* the squares get no lines; their backers are on the card and in the table */
       const b = backers[t.backer];
       const sib = perConf[c.id], i = sib.findIndex(r => r.t === t), bow = (i - (sib.length - 1) / 2) * 7;
       let d = arcPath([b.lon, b.lat], c.point, bow);
@@ -710,10 +712,13 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const tipFor = c => `<b>${esc(c.name)}</b>${c.kind === 'pressure' ? ' · force short of war' : ''}<br>${esc(c.status)}<br>${c.band ? esc(D.bands[c.band]) : 'deaths not entered'} · ${c.ties.length} ${c.ties.length === 1 ? 'tie' : 'ties'}`;
   function showTip(ev, html) { tip.innerHTML = html; tip.style.display = 'block'; placeTip(ev); }
   function placeTip(ev) {
-    const r = wrap.getBoundingClientRect();
-    let x = ev.clientX - r.left + 14, y = ev.clientY - r.top + 14;
-    if (x + tip.offsetWidth > r.width - 8) x = ev.clientX - r.left - tip.offsetWidth - 14;
-    if (y + tip.offsetHeight > r.height - 8) y = ev.clientY - r.top - tip.offsetHeight - 14;
+    /* fixed to the viewport, so it never runs off a panned map or a small screen */
+    const vw = innerWidth, vh = innerHeight, tw = tip.offsetWidth, th = tip.offsetHeight;
+    let x = ev.clientX + 14, y = ev.clientY + 14;
+    if (x + tw > vw - 8) x = ev.clientX - tw - 14;
+    if (x < 8) x = Math.max(8, Math.min(vw - tw - 8, ev.clientX - tw / 2));
+    if (y + th > vh - 8) y = ev.clientY - th - 14;
+    if (y < 8) y = 8;
     tip.style.left = x + 'px'; tip.style.top = y + 'px';
   }
   function hideTip() { tip.style.display = 'none'; }
