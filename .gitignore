@@ -9,3 +9,4 @@ __pycache__/
 # UCDP raw files: pulled to a scratch directory, never committed (see scripts/build_ucdp.py)
 GEDEvent_*.csv
 *_v26_1*.csv
+MAP_STACK_BRIEF.md

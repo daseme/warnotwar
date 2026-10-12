@@ -9,3 +9,6 @@ oilflows/data/raw
 oilflows/data/processed
 __pycache__
 *.pyc
+RECHECK.md
+MAP_STACK_BRIEF.md
+_shot.html

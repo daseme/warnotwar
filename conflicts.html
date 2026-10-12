@@ -109,6 +109,10 @@
   .chip .sw { width: 10px; height: 10px; border-radius: 50%; display: inline-block; background: var(--ink-45); }
   .chip.on .sw { outline: 1px solid var(--chip-on-ink); outline-offset: 1px; }
   .chip.ghost { border-style: dashed; }
+  .chip { white-space: nowrap; }
+  /* tier chips: on is the plain chip, off is struck through */
+  #tier-chips .chip.on, #tfilter-chips .chip[data-key^="tier:"].on { background: none; color: var(--ink); border-color: var(--ink-45); }
+  #tier-chips .chip:not(.on), #tfilter-chips .chip[data-key^="tier:"]:not(.on) { opacity: 0.4; text-decoration: line-through; }
   .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 
   /* ---- map + card ---- */
@@ -346,6 +350,90 @@
   }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 
+  /* ---- at rest every line is there, faint; hover or pick to sharpen ---- */
+  .rest .arc { opacity: 0.14 !important; stroke-width: 1; }
+  .rest .arc.tier-shown, .rest .arc.tier-reported, .rest .arc.tier-claimed { opacity: 0.1 !important; }
+  .rest .arc.ended, .rest .arc.stale { opacity: 0.06 !important; }
+  /* where Uppsala counted: one-degree cells, area is deaths */
+  .ucell { fill: var(--danger); fill-opacity: 0.32; stroke: var(--danger); stroke-opacity: 0.5; stroke-width: 0.4; vector-effect: non-scaling-stroke; }
+  .ucell.off { fill: var(--ink-45); stroke: var(--ink-45); fill-opacity: 0.22; }
+  .ucell:hover { fill-opacity: 0.7; }
+  .legend .g.cell { width: 10px; height: 10px; border-radius: 0; background: color-mix(in srgb, var(--danger) 32%, transparent); border: 1px solid color-mix(in srgb, var(--danger) 50%, transparent); }
+  .legend .g.cell.off { background: color-mix(in srgb, var(--ink-45) 22%, transparent); border-color: var(--ink-45); }
+  .map-note { font-family: var(--mono); font-size: 10.5px; color: var(--ink-60); line-height: 1.7; margin-top: 8px; }
+  .map-note b { color: var(--ink); font-weight: 500; }
+
+  /* the level: a bar per month under the map, click a bar to step there */
+  .m-strip { display: flex; align-items: flex-end; gap: 3px; flex: 1; min-width: 0; height: 56px; padding: 0 2px; }
+  .m-strip button { flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: stretch; gap: 0; background: none; border: 0; padding: 0; cursor: pointer; font: inherit; position: relative; }
+  .m-strip .bar { background: color-mix(in srgb, var(--danger) 55%, var(--bg)); border-radius: 2px 2px 0 0; min-height: 1px; transition: background 0.15s ease; }
+  .m-strip .bar.prov { background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--danger) 55%, var(--bg)) 0 2px, transparent 2px 4px); }
+  .m-strip .bar.none { background: none; border-bottom: 1px dashed var(--ink-30); }
+  .m-strip button:hover .bar, .m-strip button.on .bar { background: var(--danger); }
+  .m-strip button.on .bar.prov { background: repeating-linear-gradient(135deg, var(--danger) 0 2px, color-mix(in srgb, var(--danger) 25%, var(--bg)) 2px 4px); }
+  .m-strip .ml { font-family: var(--mono); font-size: 8.5px; color: var(--ink-45); letter-spacing: 0.04em; text-align: center; margin-top: 3px; line-height: 1; height: 9px; white-space: nowrap; overflow: visible; }
+  .m-strip button.on .ml { color: var(--ink); }
+  .m-strip .tk { position: absolute; top: 0; left: 50%; width: 5px; height: 5px; margin-left: -3px; border: 1px solid var(--danger); border-radius: 50%; background: var(--bg); }
+  .m-strip .top { position: absolute; top: 0; left: 0; right: 0; font-family: var(--mono); font-size: 8.5px; color: var(--ink-60); text-align: center; white-space: nowrap; }
+  .stepper { align-items: flex-end; }
+  .stepper .k { align-self: center; }
+  .stepper button.step { align-self: center; }
+  .stepper .m-now { align-self: center; }
+  .m-label { font-family: var(--mono); font-size: 11.5px; color: var(--ink); margin-top: 8px; line-height: 1.6; }
+  .m-label span { color: var(--ink-60); }
+  .m-level-key { display: inline-flex; align-items: center; gap: 6px; margin-left: 10px; color: var(--ink-45); font-size: 10px; }
+  .m-level-key i { display: inline-block; width: 12px; height: 8px; }
+  .m-level-key i.prov { background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--danger) 55%, var(--bg)) 0 2px, transparent 2px 4px); }
+  .m-level-key i.solid { background: color-mix(in srgb, var(--danger) 55%, var(--bg)); }
+
+  /* the reading: five steps, shown in the card */
+  .reading { border-bottom: 1px solid var(--ink-18); padding-bottom: 14px; margin-bottom: 12px; }
+  .reading .k { display: flex; justify-content: space-between; align-items: center; }
+  .reading .t { font-size: 1.2rem; }
+  .reading p { margin-top: 8px; }
+  .reading .nav { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .reading .nav button, .card button.start { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; background: none; border: 1px solid var(--ink-30); color: var(--ink); padding: 5px 10px; cursor: pointer; }
+  .reading .nav button:hover, .card button.start:hover { border-color: var(--ink); }
+  .reading .nav button.leave { border-color: var(--ink-18); color: var(--ink-60); }
+  .reading .dots { display: inline-flex; gap: 4px; }
+  .reading .dots i { width: 6px; height: 6px; border-radius: 50%; border: 1px solid var(--ink-45); display: inline-block; }
+  .reading .dots i.on { background: var(--ink); border-color: var(--ink); }
+  .card button.start { margin: 10px 0 14px; display: block; }
+  .card .legend { margin-top: 10px; gap: 8px 16px; }
+  .card .legend .k { display: block; width: 100%; margin: 6px 0 -2px; }
+  .card .legend .k:first-child { margin-top: 0; }
+
+  /* what changed */
+  details.changes { margin-top: 14px; font-family: var(--mono); font-size: 11px; color: var(--ink-80); }
+  details.changes summary { cursor: pointer; color: var(--ink-60); letter-spacing: 0.1em; text-transform: uppercase; font-size: 10px; }
+  details.changes summary:hover { color: var(--ink); }
+  details.changes ul { list-style: none; padding: 0; margin: 8px 0 0; max-height: 260px; overflow-y: auto; border-top: 1px solid var(--ink-10); }
+  details.changes li { padding: 4px 0; border-bottom: 1px solid var(--ink-06); line-height: 1.5; }
+  details.changes li .d { color: var(--ink-45); margin-right: 8px; }
+  details.changes li.corr .d { color: var(--gold); }
+
+  /* table filters and anchors */
+  .tfilters { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; font-family: var(--mono); font-size: 11px; margin: 0 0 6px; }
+  .tfilters input { font: inherit; font-size: 11px; background: var(--bg-raise); border: 1px solid var(--ink-18); color: var(--ink); padding: 4px 8px; min-width: 14em; }
+  .tfilters .n { color: var(--ink-45); }
+  table.mono tr.tie.hit td { background: color-mix(in srgb, var(--gold) 14%, transparent); }
+  table.mono td.chk a { color: var(--ink-45); text-decoration: none; margin-left: 6px; }
+  table.mono td.chk a:hover { color: var(--ink); }
+  table.mono td.chk .rep { display: block; margin-top: 4px; font-size: 10px; }
+  table.mono tr.tie.hide, table.mono tr.group.hide { display: none; }
+
+  /* the level since 1989 */
+  .years { margin-top: 18px; }
+  .years svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .years .bar { fill: var(--danger); fill-opacity: 0.55; }
+  .years .bar:hover, .years .bar.on { fill-opacity: 1; }
+  .years .range { stroke: var(--ink-45); stroke-width: 1; }
+  .years .axis { stroke: var(--ink-18); stroke-width: 1; }
+  .years text { font-family: var(--mono); font-size: 9px; fill: var(--ink-60); }
+  .years text.v { fill: var(--ink-45); }
+  .years .ref { stroke: var(--ink-60); stroke-width: 1; stroke-dasharray: 3 3; }
+  .years-key { font-family: var(--mono); font-size: 10.5px; color: var(--ink-60); margin-top: 6px; line-height: 1.7; }
+
   /* ---- testing menu: the pages still being built sit under one dropdown ---- */
   nav.topnav { overflow: visible; }
   nav.topnav details.testing { position: relative; flex-shrink: 0; }
@@ -404,6 +492,13 @@
     <button class="chip ghost" id="show-pressure" aria-pressed="true">force short of war</button>
     <button class="chip ghost" id="show-areas" aria-pressed="false">color the areas</button>
     <button class="chip ghost" id="show-who" aria-pressed="false">shade the participants</button>
+    <button class="chip ghost" id="show-events" aria-pressed="false">where Uppsala counted</button>
+  </div>
+  <div class="controls" style="margin-top:-6px">
+    <span class="k">zoom</span>
+    <div class="chips" id="zoom-chips"></div>
+    <span class="k" style="margin-left:6px">lines</span>
+    <div class="chips" id="tier-chips"></div>
   </div>
   <div class="stage">
     <div>
@@ -412,15 +507,18 @@
         <div class="tooltip" id="tip"></div>
       </div>
       <div class="map-hint">drag the map sideways to see all of it</div>
+      <div class="map-note" id="events-note" style="display:none"></div>
       <div class="stepper" id="stepper">
         <span class="k">the year</span>
         <button class="step" id="m-prev" aria-label="earlier month">&lsaquo;</button>
-        <div class="m-label" id="m-label">now</div>
+        <div class="m-strip" id="m-strip" role="group" aria-label="deaths by month, click a month to step there"></div>
         <button class="step" id="m-next" aria-label="later month">&rsaquo;</button>
-        <button class="chip ghost" id="m-now">back to today</button>
+        <button class="chip ghost m-now" id="m-now">back to today</button>
       </div>
+      <div class="m-label" id="m-label">today</div>
       <div class="m-status" id="m-status"></div>
       <div class="legend" id="legend"></div>
+      <details class="changes" id="changes" style="display:none"><summary>what changed on this map</summary><ul id="changes-list"></ul></details>
     </div>
     <aside class="card" id="card">
       <div class="empty">Click a war to see who is fighting and who helps. Click a backer above to see everything it supports.</div>
@@ -431,7 +529,13 @@
 
 <section class="panel" id="table-panel">
   <h2>Every line on the map</h2>
-  <p class="panel-sub">One row per tie. The line shape in the tier column is the same one drawn on the map.</p>
+  <p class="panel-sub">One row per tie. The line shape in the tier column is the same one drawn on the map. Each row has a link of its own and a link to report it.</p>
+  <div class="tfilters" id="tfilters">
+    <span class="k" style="color:var(--ink-45);text-transform:uppercase;letter-spacing:0.14em;font-size:10px">show</span>
+    <div class="chips" id="tfilter-chips"></div>
+    <input type="search" id="tsearch" placeholder="a state, a war, a side, a kind of help" aria-label="filter the rows">
+    <span class="n" id="tcount"></span>
+  </div>
   <div class="table-wrap">
   <table class="mono" id="ties">
     <thead><tr><th>backer</th><th>helps</th><th>what</th><th>tier</th><th>source</th><th>entered</th></tr></thead>
@@ -467,6 +571,12 @@
   </table>
   </div>
   <div class="note" id="ucdp-missing"></div>
+  <div class="years" id="years" style="display:none">
+    <h3>The level since 1989</h3>
+    <p class="prose" id="years-note"></p>
+    <div id="years-chart"></div>
+    <div class="years-key" id="years-key"></div>
+  </div>
   <div id="troops-wrap" style="display:none">
   <h3>Troops against Uppsala</h3>
   <p class="prose" id="troops-rule"></p>
@@ -527,10 +637,10 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const errBox = $('#load-error');
   const fail = msg => { errBox.style.display = 'block'; errBox.textContent = msg; };
 
-  let world, D, U = null;
+  let world, D, U = null, Y = null, CH = null;
+  const get = u => fetch(u).then(r => { if (!r.ok) throw new Error('http ' + r.status + ' ' + u); return r.json(); });
   try {
-    const get = u => fetch(u).then(r => { if (!r.ok) throw new Error('http ' + r.status + ' ' + u); return r.json(); });
-    [world, D, U] = await Promise.all([get('/data/world_paths.json'), get('/data/conflicts.json'), get('/data/ucdp.json').catch(() => null)]);
+    [world, D, U, Y, CH] = await Promise.all([get('/data/world_paths.json'), get('/data/conflicts.json'), get('/data/ucdp.json').catch(() => null), get('/data/ucdp_years.json').catch(() => null), get('/data/changes.json').catch(() => null)]);
   } catch (e) { fail('The map data did not load. ' + e.message); return; }
 
   try {
@@ -550,6 +660,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   });
   if (problems.length) fail('Some lines could not be drawn: ' + problems.join(' · '));
   const conflicts = Object.fromEntries(D.conflicts.map(c => [c.id, c]));
+  const state = { kind: null, id: null, pinned: false, all: false, pressure: true, areas: false, who: false, events: false, zoom: null, tiers: new Set(Object.keys(D.tiers)), month: null, gridAll: false, step: null, tie: null };
   const hueOf = b => (backers[b] && backers[b].hue) || 0;
   const GLYPH_R = { '3': 7.5, '2': 5.5, '1': 4 };
   const today = new Date();
@@ -619,7 +730,10 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const tierSample = (tier, hueClass = 'hue-0', w = 40) => `<svg viewBox="0 0 ${w} 8" aria-hidden="true"><path class="arc tier-${tier} ${hueClass} legend-line" d="M1,4 L${w - 1},4"/></svg>`;
   $('#tier-note').textContent = D.tier_note || '';
   $('#finding-rule').textContent = D.finding_rule || '';
-  $('#source-rule').textContent = D.source_rule || '';
+  /* the counts are computed by scripts/check_conflicts.py into source_counts; the page only reads them */
+  const SC = D.source_counts || null;
+  const plural = (n, one, many) => n + ' ' + (n === 1 ? one : (many || one + 's'));
+  $('#source-rule').textContent = (D.source_rule || '') + (SC ? ` As of ${D.as_of}: ${plural(SC.ties, 'tie')} with ${plural(SC.sources, 'source')}, ${SC.sources_unlinked} of them without a link and ${SC.sources_undated} without a date. ${plural(SC.reference_only, 'tie links', 'ties link')} only a reference page. ${plural(SC.open_on_tracker, 'on-the-record tie rests', 'on-the-record ties rest')} on a tracker without the backer's own words. ${plural(SC.no_outlet, 'press source names', 'press sources name')} no outlet. ${plural(SC.document_unlinked, 'documented source names', 'documented sources name')} a document without a link. ${plural(SC.single_publisher, 'reported tie has one publisher behind it', 'reported ties have one publisher behind them')}. ${plural(SC.prewindow, 'live tie stands', 'live ties stand')} on evidence from before the window and ${SC.undated} on no dated source. ${SC.weapons_sipri} of the ${SC.weapons} live ties that carry weapons cite SIPRI. ${plural(SC.sources_unopened, 'source was', 'sources were')} seen in a search listing and not opened. ${SC.checked} of ${SC.ties} ties have been re-checked by a person.` : '');
   $('#classes').innerHTML = Object.entries(D.source_classes || {}).map(([k, v]) => `<div><b>${esc(k)}</b>${esc(v)}</div>`).join('');
   $('#evidence-rule').textContent = D.evidence_rule || '';
   $('#tie-form').textContent = D.tie_form || '';
@@ -665,6 +779,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const gLand = el('g', {}, svg);
   const landByIso = {}; const ISO_NE = { SSD: 'SDS', PSE: 'PSX' };
   for (const c of world.countries) landByIso[c.id] = el('path', { class: 'land', d: c.d, 'data-iso': c.id }, gLand);
+  const gCells = el('g', { id: 'cells' }, svg);   /* where Uppsala counted, under the shaded provinces */
   const gAreas = el('g', { id: 'areas' }, svg);
   const gArcs = el('g', { id: 'arcs' }, svg);
   const gParties = el('g', {}, svg);
@@ -673,33 +788,48 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
 
   /* dash lengths are in map units, so scale them to the drawn width or they turn to fuzz on a phone */
   const dashStyle = document.createElement('style'); document.head.appendChild(dashStyle);
+  /* U = map units per screen pixel. Every mark sits in a group scaled by U, so text and glyphs keep their size on screen at any zoom. */
+  let U_ = 1;
+  const unitsPerPx = () => svg.viewBox.baseVal.width / Math.max(1, svg.clientWidth);
   function setDashes() {
-    const u = svg.viewBox.baseVal.width / Math.max(1, svg.clientWidth);
+    const u = unitsPerPx(); U_ = u;
     dashStyle.textContent = `#map .arc.tier-shown{stroke-dasharray:${(7 * u).toFixed(2)} ${(4 * u).toFixed(2)}} #map .arc.tier-reported{stroke-dasharray:${(3 * u).toFixed(2)} ${(4 * u).toFixed(2)}} #map .arc.tier-claimed{stroke-dasharray:${(0.5 * u).toFixed(2)} ${(5 * u).toFixed(2)}} #map .arc.ended{stroke-dasharray:${(1 * u).toFixed(2)} ${(3 * u).toFixed(2)} !important}`;
-    for (const h of svg.querySelectorAll('.conflict .hit')) h.setAttribute('r', Math.max(13, 22 * u / 1.3).toFixed(1));
+    for (const g of svg.querySelectorAll('g[data-scale]')) g.setAttribute('transform', `translate(${g.dataset.x},${g.dataset.y}) scale(${u.toFixed(4)})`);
   }
   const FULL_VIEW = world.viewBox.join(' ');
+  /* named regions to zoom to: lon/lat boxes, projected along their edges so the curve of the projection is inside the view */
+  const REGIONS = { world: null, mideast: { name: 'the Middle East', box: [24, 9, 66, 44] }, africa: { name: 'Africa', box: [-20, -14, 55, 26] }, americas: { name: 'the Americas', box: [-100, -8, -55, 32] } };
+  function regionView(key) {
+    const r = REGIONS[key]; if (!r) return FULL_VIEW;
+    const [a, b, c, d] = r.box; const pts = [];
+    for (let i = 0; i <= 20; i++) { const f = i / 20; pts.push(project(a + (c - a) * f, b), project(a + (c - a) * f, d), project(a, b + (d - b) * f), project(c, b + (d - b) * f)); }
+    const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]); const pad = 6;
+    const x0 = Math.min(...xs) - pad, x1 = Math.max(...xs) + pad, y0 = Math.min(...ys) - pad, y1 = Math.max(...ys) + pad;
+    return `${x0.toFixed(0)} ${y0.toFixed(0)} ${(x1 - x0).toFixed(0)} ${(y1 - y0).toFixed(0)}`;
+  }
   function fitViewBox() {
+    if (state.zoom && REGIONS[state.zoom]) { svg.setAttribute('viewBox', regionView(state.zoom)); return; }
     if (innerWidth > 640 || !D.conflicts.length) { svg.setAttribute('viewBox', FULL_VIEW); return; }
     const xs = D.conflicts.map(c => c.px), ys = D.conflicts.map(c => c.py), pad = 70;
     const x0 = Math.max(0, Math.min(...xs) - pad), x1 = Math.min(world.viewBox[2], Math.max(...xs) + pad);
     const y0 = Math.max(0, Math.min(...ys) - pad), y1 = Math.min(world.viewBox[3], Math.max(...ys) + pad);
     svg.setAttribute('viewBox', `${x0.toFixed(0)} ${y0.toFixed(0)} ${(x1 - x0).toFixed(0)} ${(y1 - y0).toFixed(0)}`);
   }
-  addEventListener('resize', () => { fitViewBox(); setDashes(); });
+  addEventListener('resize', () => { fitViewBox(); setDashes(); render(); });
+  const scaled = (x, y, parent, attrs = {}) => { const g = el('g', { ...attrs, 'data-scale': 1, 'data-x': x.toFixed(1), 'data-y': y.toFixed(1), transform: `translate(${x.toFixed(1)},${y.toFixed(1)}) scale(${U_.toFixed(4)})` }, parent); return g; };
 
   const confNodes = {};
   for (const c of D.conflicts) {
     const [x, y] = project(c.point[0], c.point[1]);
     c.px = x; c.py = y;
     const pressure = c.kind === 'pressure';
-    const g = el('g', { class: 'conflict' + (pressure ? ' pressure' : ''), 'data-id': c.id, tabindex: 0, role: 'button', 'aria-label': c.name }, gConf);
-    el('circle', { class: 'hit', cx: x, cy: y, r: 13 }, g);
+    const g = scaled(x, y, gConf, { class: 'conflict' + (pressure ? ' pressure' : ''), 'data-id': c.id, tabindex: 0, role: 'button', 'aria-label': c.name });
+    el('circle', { class: 'hit', cx: 0, cy: 0, r: 14 }, g);
     const r = c.band ? GLYPH_R[c.band] || 5.5 : 5.5;
-    if (pressure) el('rect', { class: 'glyph', x: x - 5, y: y - 5, width: 10, height: 10 }, g);
-    else el('circle', { class: 'glyph' + (c.band ? '' : ' ring'), cx: x, cy: y, r }, g);
+    if (pressure) el('rect', { class: 'glyph', x: -5, y: -5, width: 10, height: 10 }, g);
+    else el('circle', { class: 'glyph' + (c.band ? '' : ' ring'), cx: 0, cy: 0, r }, g);
     const [dx, dy, anchor] = Array.isArray(c.label) ? c.label : [9, 3];
-    const t = el('text', { class: 'lbl', x: x + dx, y: y + dy + 3, 'text-anchor': anchor || 'start' }, g);
+    const t = el('text', { class: 'lbl', x: dx, y: dy + 3, 'text-anchor': anchor || 'start' }, g);
     t.textContent = c.name;
     confNodes[c.id] = g;
     g.addEventListener('mouseenter', ev => { if (!state.pinned) preview('conflict', c.id); showTip(ev, tipFor(c)); });
@@ -722,6 +852,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     Object.entries(D.bands).sort((a, b) => b[0].localeCompare(a[0])).map(([id, label]) => `<span><i class="g s${id}"></i> ${esc(label)}</span>`).join('') +
     `<span><i class="g ring"></i> not entered</span>` +
     `<span class="k" style="margin-left:8px">also</span><span><i class="g sq"></i> force short of war</span><span id="legend-areas" style="display:none"><i class="g fill"></i> provinces with fighting this year</span>` +
+    `<span id="legend-cells" style="display:none"><i class="g cell"></i> where Uppsala counted, area is deaths <i class="g cell off" style="margin-left:10px"></i> counted, not on this map</span>` +
     `<span id="legend-motion" style="display:none"><i class="g ring" style="border-color:var(--danger);width:11px;height:11px"></i> something new this month <svg viewBox="0 0 40 8" style="margin-left:8px"><path class="arc tier-open hue-0" d="M1,4 L39,4" style="stroke-width:2.6"/></svg> line begins this month <svg viewBox="0 0 40 8" style="margin-left:8px"><path class="arc tier-open hue-0" d="M1,4 L39,4" style="stroke-width:1.6;opacity:0.85"/></svg> began earlier this year <svg viewBox="0 0 40 8" style="margin-left:8px"><path class="arc tier-open hue-0" d="M1,4 L39,4" style="stroke-width:1.2;opacity:0.4"/></svg> older than this year</span>` +
     `<span id="legend-who" style="display:none"><i class="g pf" style="background:color-mix(in srgb, var(--danger) 52%, var(--land))"></i> fighting on its soil <i class="g pf" style="background:color-mix(in srgb, var(--danger) 30%, var(--land));margin-left:10px"></i> in it from outside <i class="g pf" style="background:color-mix(in srgb, var(--danger) 14%, var(--land));margin-left:10px"></i> backs a side <span id="legend-self" style="display:none"><i class="g self" style="margin-left:10px"></i> the one you picked</span></span>`;
 
@@ -743,14 +874,73 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   sel.innerHTML = `<option value="">others (${others.length})…</option>` + others.map(b => `<option value="${esc(b.id)}">${esc(b.short)}</option>`).join('');
   sel.onchange = () => { if (sel.value) focus('backer', sel.value); };
   chipsEl.appendChild(sel);
-  const allBtn = $('#show-all'), pressureBtn = $('#show-pressure'), areasBtn = $('#show-areas'), whoBtn = $('#show-who');
+  const allBtn = $('#show-all'), pressureBtn = $('#show-pressure'), areasBtn = $('#show-areas'), whoBtn = $('#show-who'), eventsBtn = $('#show-events');
   whoBtn.onclick = () => { state.who = !state.who; if (state.who) state.areas = false; writeHash(); render(); };
-  const mPrev = $('#m-prev'), mNext = $('#m-next'), mNow = $('#m-now'), mLabel = $('#m-label'), mStatus = $('#m-status');
+  /* zoom chips: named regions, marks keep their size on screen */
+  const zoomEl = $('#zoom-chips');
+  for (const [key, r] of Object.entries(REGIONS)) {
+    const b = document.createElement('button'); b.className = 'chip'; b.dataset.zoom = key; b.textContent = r ? r.name : 'the world'; b.setAttribute('aria-pressed', 'false');
+    b.onclick = () => { state.zoom = key === 'world' ? null : key; writeHash(); fitViewBox(); setDashes(); render(); };
+    zoomEl.appendChild(b);
+  }
+  /* tier chips: which lines are drawn; the card and the table always show every tie */
+  const tierEl = $('#tier-chips');
+  for (const [id, t] of Object.entries(D.tiers)) {
+    const b = document.createElement('button'); b.className = 'chip'; b.dataset.tier = id; b.innerHTML = tierSample(id, 'hue-0', 26) + ' ' + esc(t.word); b.setAttribute('aria-pressed', 'true');
+    b.onclick = () => { if (state.tiers.has(id)) { if (state.tiers.size > 1) state.tiers.delete(id); } else state.tiers.add(id); writeHash(); render(); };
+    tierEl.appendChild(b);
+  }
+  /* where Uppsala counted: the cells load on first use */
+  let cellsData = null, cellsLoading = null;
+  function loadCells() {
+    if (!state.events || cellsData) return Promise.resolve();
+    if (!cellsLoading) cellsLoading = get('/data/ucdp_grid.json').then(j => { cellsData = j; for (const c of cellsData.cells) { const [x, y] = project(c.lon, c.lat); c.px = x; c.py = y; } }).catch(e => { fail('The UCDP cells did not load. ' + e.message); state.events = false; cellsLoading = null; writeHash(); });
+    return cellsLoading;
+  }
+  eventsBtn.onclick = () => { state.events = !state.events; loadCells().then(() => { writeHash(); render(); }); };
+  const mPrev = $('#m-prev'), mNext = $('#m-next'), mNow = $('#m-now'), mLabel = $('#m-label'), mStatus = $('#m-status'), mStrip = $('#m-strip');
   const monthIndex = () => state.month ? monthsIn.indexOf(state.month) : monthsIn.length;   /* one past the last month = now */
-  const setMonth = i => { i = Math.max(0, Math.min(monthsIn.length, i)); state.month = i === monthsIn.length ? null : monthsIn[i]; writeHash(); loadAreas().then(render); };
+  const setMonth = i => { i = Math.max(0, Math.min(monthsIn.length, i)); state.month = i === monthsIn.length ? null : monthsIn[i]; writeHash(); Promise.all([loadAreas(), loadCells()]).then(render); };
   mPrev.onclick = () => setMonth(monthIndex() - 1);
   mNext.onclick = () => setMonth(monthIndex() + 1);
   mNow.onclick = () => setMonth(monthsIn.length);
+  /* the level: UCDP's deaths by month as bars under the map; a war picked shows its own months */
+  const LV = (U && U.months) || null;
+  const levelFor = () => { if (!LV) return null; const c = state.kind === 'conflict' && conflicts[state.id]; const e = c && uOf(c); const m = e && e.months ? e.months : LV.map; return { keys: LV.keys, best: m.best, low: m.low || [], high: m.high || [], scope: c ? c.name : 'the wars on this map' }; };
+  const turnsByMonth = {}; for (const c of D.conflicts) { if (c.start && monthsIn.includes(c.start)) (turnsByMonth[c.start] = turnsByMonth[c.start] || []).push(c.short + ': begins'); for (const t of (c.turns || [])) (turnsByMonth[t.month] = turnsByMonth[t.month] || []).push(c.short + ': ' + t.what); }
+  const MSHORT = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
+  let stripKey = null;
+  function buildStrip() {
+    const lv = levelFor();
+    const key = (lv ? lv.scope : '-') + '|' + (state.month || '');
+    if (key === stripKey) return; stripKey = key;
+    const max = lv ? Math.max(1, ...lv.best) : 1;
+    const slots = monthsIn.map((m, i) => ({ m, i })).concat([{ m: null, i: monthsIn.length }]);
+    mStrip.innerHTML = slots.map(({ m, i }) => {
+      const k = lv ? lv.keys.indexOf(m) : -1;
+      const v = k >= 0 ? lv.best[k] : null;
+      const prov = lv && LV.candidate_from && m && m >= LV.candidate_from;
+      const h = v == null ? 0 : Math.max(1.5, 100 * v / max);
+      const on = (m === state.month) || (!m && !state.month);
+      const turns = m ? (turnsByMonth[m] || []) : [];
+      const lh = k >= 0 && lv.low[k] != null ? ' (low ' + lv.low[k].toLocaleString('en-US') + ', high ' + lv.high[k].toLocaleString('en-US') + ')' : '';
+      const title = !m ? 'today' : fmtMonth(m) + (v != null ? ' · ' + v.toLocaleString('en-US') + ' deaths, UCDP best' + lh + (prov ? ', provisional' : '') : ' · not yet counted by UCDP') + (turns.length ? ' · ' + turns.join('; ') : '');
+      const bar = !m ? '' : v == null ? `<div class="bar none" style="height:1px"></div>` : `<div class="bar${prov ? ' prov' : ''}" style="height:${h.toFixed(1)}%"></div>`;
+      const top = (m && v != null && v === max && lv.best.filter(x => x > 0).length > 1) ? `<span class="top">${v < 1000 ? v : (v / 1000).toFixed(v < 10000 ? 1 : 0) + 'k'}</span>` : '';
+      return `<button data-m="${m || ''}" class="${on ? 'on' : ''}" title="${esc(title)}" aria-label="${esc(title)}" aria-pressed="${on}">${turns.length ? '<i class="tk"></i>' : ''}${top}${bar}<span class="ml">${!m ? 'now' : (m.endsWith('-01') || i === 0 ? MSHORT[+m.slice(5) - 1] + '<br>' + m.slice(2, 4) : MSHORT[+m.slice(5) - 1])}</span></button>`;
+    }).join('');
+    mStrip.querySelectorAll('button').forEach(b => { b.onclick = () => setMonth(b.dataset.m ? monthsIn.indexOf(b.dataset.m) : monthsIn.length); });
+  }
+  function stripLabel() {
+    const lv = levelFor(); const m = state.month;
+    if (!lv) { mLabel.textContent = m ? fmtMonth(m) : 'today'; return; }
+    const k = m ? lv.keys.indexOf(m) : -1; const v = k >= 0 ? lv.best[k] : null;
+    const prov = m && LV.candidate_from && m >= LV.candidate_from;
+    const key = `<span class="m-level-key"><i class="solid"></i> UCDP's count <i class="prov"></i> provisional</span>`;
+    if (!m) mLabel.innerHTML = `today <span>· the bars are UCDP's best estimate of deaths by month in ${esc(lv.scope)}; hover a bar for its low and high; UCDP's data reaches ${esc(fmtMonth(U.reach))}</span>${key}`;
+    else if (v == null) mLabel.innerHTML = `${esc(fmtMonth(m))} <span>· not yet counted by UCDP</span>${key}`;
+    else mLabel.innerHTML = `${esc(fmtMonth(m))} <span>· ${v.toLocaleString('en-US')} deaths counted by UCDP in ${esc(lv.scope)}, its best; low ${(lv.low[k] || 0).toLocaleString('en-US')}, high ${(lv.high[k] || 0).toLocaleString('en-US')}${prov ? '; provisional' : ''}${k > 0 ? (v > lv.best[k - 1] ? ', up from ' : v < lv.best[k - 1] ? ', down from ' : ', the same as ') + lv.best[k - 1].toLocaleString('en-US') + ' the month before' : ''}</span>${key}`;
+  }
   $('#grid-all').onclick = () => { state.gridAll = !state.gridAll; writeHash(); buildGrid(); syncGrid(); };
   allBtn.onclick = () => { state.all = !state.all; writeHash(); render(); };
   pressureBtn.onclick = () => { state.pressure = !state.pressure; buildGridLater = true; if (!state.pressure && state.kind === 'conflict' && conflicts[state.id] && conflicts[state.id].kind === 'pressure') { state.kind = null; state.id = null; state.pinned = false; } writeHash(); render(); };
@@ -762,27 +952,36 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     return areasLoading;
   }
 
-  /* ---- state ---- */
-  const state = { kind: null, id: null, pinned: false, all: false, pressure: true, areas: false, who: false, month: null, gridAll: false };
-  function writeHash() {
+  /* ---- state (declared near the top of the script; see "const state") ---- */
+  function writeHash(h) {
     const parts = [];
     if (state.pinned && state.kind) parts.push((state.kind === 'conflict' ? 'c=' : 'b=') + state.id);
     if (state.all) parts.push('all');
     if (!state.pressure) parts.push('pressure=0');
     if (state.areas) parts.push('areas');
     if (state.who) parts.push('who');
+    if (state.events) parts.push('events');
+    if (state.zoom) parts.push('z=' + state.zoom);
+    if (state.tiers.size < Object.keys(D.tiers).length) parts.push('t=' + [...state.tiers].join(','));
     if (state.month) parts.push('m=' + state.month);
     if (state.gridAll) parts.push('grid=all');
+    if (state.step !== null) parts.push('r=' + (state.step + 1));
+    if (state.tie) parts.push('tie=' + state.tie);
     history.replaceState(null, '', location.pathname + location.search + (parts.length ? '#' + parts.join('&') : ''));
   }
-  function readHash() {
-    const h = location.hash.replace(/^#/, ''); const q = new URLSearchParams(h);
+  function readHash(h) {
+    h = h !== undefined ? h : location.hash.replace(/^#/, ''); const q = new URLSearchParams(h);
     state.all = q.has('all');
     state.pressure = q.get('pressure') !== '0';
     state.areas = q.has('areas');
     state.who = q.has('who') && !state.areas;
+    state.events = q.has('events');
+    const z = q.get('z'); state.zoom = (z && REGIONS[z]) ? z : null;
+    const t = q.get('t'); const tiers = t ? t.split(',').filter(x => D.tiers[x]) : []; state.tiers = new Set(tiers.length ? tiers : Object.keys(D.tiers));
     const m = q.get('m'); state.month = (m && monthsIn.includes(m)) ? m : null;
     state.gridAll = q.get('grid') === 'all';
+    const r = parseInt(q.get('r'), 10); state.step = (r >= 1 && r <= READING.length) ? r - 1 : null;
+    state.tie = q.get('tie') || null;
     buildGridLater = true;
     const c = q.get('c'), b = q.get('b');
     if (c && conflicts[c]) { state.kind = 'conflict'; state.id = c; state.pinned = true; }
@@ -790,12 +989,25 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     else { state.kind = null; state.id = null; state.pinned = false; }
     if (!state.pressure && state.kind === 'conflict' && conflicts[state.id] && conflicts[state.id].kind === 'pressure') { state.kind = null; state.id = null; state.pinned = false; }
   }
-  function focus(kind, id) { state.kind = kind; state.id = id; state.pinned = true; writeHash(); render(); }
+  function focus(kind, id) { state.kind = kind; state.id = id; state.pinned = true; state.tie = null; writeHash(); render(); }
   function preview(kind, id) { state.kind = kind; state.id = id; state.pinned = false; render(); }
   function unpreview() { if (!state.pinned) { state.kind = null; state.id = null; render(); } }
-  function clear() { state.kind = null; state.id = null; state.pinned = false; writeHash(); render(); }
-  addEventListener('hashchange', () => { readHash(); render(); });
+  function clear() { state.kind = null; state.id = null; state.pinned = false; state.tie = null; writeHash(); render(); }
+  addEventListener('hashchange', () => { readHash(); fitViewBox(); setDashes(); Promise.all([loadAreas(), loadCells()]).then(render); });
 
+  /* the reading: a step sets the map from its hash and keeps the reader's own month and shading off */
+  const READING = (D.reading && Array.isArray(D.reading.steps)) ? D.reading.steps : [];
+  const fillCopy = s => { const n = { wars: D.conflicts.filter(c => c.kind !== 'pressure').length, squares: D.conflicts.filter(c => c.kind === 'pressure').length, entries: D.conflicts.length, ties: D.conflicts.reduce((a, c) => a + c.ties.length, 0), backers: new Set(D.conflicts.flatMap(c => c.ties.map(t => t.backer))).size, usa_n: involvedIn('usa').length, africa_wars: D.conflicts.filter(c => c.kind !== 'pressure' && c.region === 'africa').length, years: Y && Y.years ? Y.years.length : '',
+    gulf_hosts: conflicts.gulf ? new Set(conflicts.gulf.ties.filter(t => t.tier === 'open' && t.kinds.includes('bases') && t.kinds.includes('shield') && backers[t.backer].region !== 'europe' && !t.ended).map(t => t.backer)).size : '', gulf_air: conflicts.gulf ? new Set(conflicts.gulf.ties.filter(t => t.kinds.includes('air') && !t.ended).map(t => t.backer)).size : '' }; return String(s).replace(/\{(\w+)\}/g, (m, k) => (k in n ? n[k] : m)); };
+  function goStep(i) {
+    if (i === null || i < 0 || i >= READING.length) { state.step = null; writeHash(); render(); return; }
+    const keepPressure = state.pressure;
+    readHash(READING[i].hash); state.step = i; state.pressure = keepPressure;
+    writeHash(); fitViewBox(); setDashes(); Promise.all([loadAreas(), loadCells()]).then(render);
+  }
+
+  /* at rest every line is drawn faint; a pick, every-line or a month draws them in full */
+  const restView = () => !state.kind && !state.all && !state.month;
   function tiesFor() {
     const out = [];
     for (const c of D.conflicts) for (const t of c.ties) {
@@ -803,7 +1015,6 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       if (state.month && (c.start > state.month || (t.since && t.since > state.month))) continue;   /* not yet, in this month */
       if (state.kind === 'conflict' && c.id !== state.id) continue;
       if (state.kind === 'backer' && t.backer !== state.id) continue;
-      if (!state.kind && !state.all && !state.month) continue;
       out.push({ c, t });
     }
     return out;
@@ -819,11 +1030,34 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   function render() {
     gArcs.innerHTML = ''; gParties.innerHTML = ''; gBackers.innerHTML = ''; gAreas.innerHTML = '';
     const allView = (state.all || !!state.month) && !state.kind;
+    const rest = restView();
     svg.classList.toggle('motion', !!state.month);
+    svg.classList.toggle('rest', rest);
     /* the year in motion: what is on the map this month */
     const mi = monthIndex();
-    mLabel.textContent = state.month ? fmtMonth(state.month) : 'today';
+    buildStrip(); stripLabel();
     mPrev.disabled = mi === 0; mNext.disabled = !state.month; mNow.style.display = state.month ? '' : 'none';
+    for (const b of zoomEl.querySelectorAll('.chip')) { const on = (state.zoom || 'world') === b.dataset.zoom; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); }
+    for (const b of tierEl.querySelectorAll('.chip')) { const on = state.tiers.has(b.dataset.tier); b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); }
+    eventsBtn.classList.toggle('on', state.events); eventsBtn.setAttribute('aria-pressed', String(state.events));
+    $('#legend-cells').style.display = state.events && cellsData ? '' : 'none';
+    /* where Uppsala counted: a square per one-degree cell, area is deaths; in a month, that month's deaths */
+    gCells.innerHTML = '';
+    const evNote = $('#events-note');
+    if (state.events && cellsData) {
+      const k = state.month ? cellsData.months.indexOf(state.month) : -1;
+      const K = 0.34;
+      for (const c of cellsData.cells) {
+        const v = state.month ? (k >= 0 ? c.months[k] : 0) : c.best; if (!v) continue;
+        const s = K * Math.sqrt(v) * U_;   /* no cap: area is deaths, el-Fasher included */
+        const r = el('rect', { class: 'ucell' + (c.entry ? '' : ' off'), x: (c.px - s / 2).toFixed(1), y: (c.py - s / 2).toFixed(1), width: s.toFixed(1), height: s.toFixed(1) }, gCells);
+        r.addEventListener('mouseenter', ev => showTip(ev, `<b>${v.toLocaleString('en-US')} deaths</b> in ${c.n} UCDP ${c.n === 1 ? 'event' : 'events'}${state.month ? ', ' + esc(fmtMonth(state.month)) : ', ' + esc(fmtMonth(cellsData.window.from)) + ' to ' + esc(fmtMonth(cellsData.window.to))}<br>${c.entry && conflicts[c.entry] ? esc(conflicts[c.entry].name) : 'not on this map'} · one-degree cell at ${c.lat}°, ${c.lon}°`));
+        r.addEventListener('mousemove', ev => placeTip(ev)); r.addEventListener('mouseleave', hideTip);
+      }
+      const unplaced = Object.entries(cellsData.unplaced || {}).filter(([id, n]) => n > 0 && conflicts[id]).sort((a, b) => b[1] - a[1]).slice(0, 4);
+      evNote.style.display = '';
+      evNote.innerHTML = `${esc(D.grid_note || '')} Placed: ${cellsData.placed_total.toLocaleString('en-US')} deaths; placed only to a country and not drawn: ${cellsData.unplaced_total.toLocaleString('en-US')}, of which ${unplaced.map(([id, n]) => esc(conflicts[id].short) + ' ' + n.toLocaleString('en-US')).join(', ')}. ${esc(cellsData.versions)}, pulled ${esc(cellsData.pulled)}.`;
+    } else evNote.style.display = 'none';
     for (const btn of [areasBtn, whoBtn]) { btn.disabled = !!state.month; btn.title = state.month ? 'Drawn as of today. Back to today turns it on.' : ''; }
     const turnsNow = [];
     for (const id in confNodes) {
@@ -895,21 +1129,22 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
         c.parties.forEach((p, i) => {
           const off = n === 1 ? [[0, -26]] : n === 2 ? [[-62, -24], [62, -24]] : [[-62, -24], [62, -24], [0, 30]];
           const [dx, dy] = off[i] || [0, 30 + 18 * (i - 2)];
-          const x = c.px + dx, y = c.py + dy;
+          const x = c.px + dx * U_, y = c.py + dy * U_;   /* chip offsets are screen-sized, so they hold at any zoom */
           anchor[id + '/' + p.id] = [x, y];
           const label = p.name.length > 30 ? p.name.slice(0, 28) + '…' : p.name;
           const w = Math.max(44, label.length * 4.6 + 12);
-          const g = el('g', { class: 'party' }, gParties);
-          el('line', { x1: c.px, y1: c.py, x2: x, y2: y, stroke: 'var(--ink-30)', 'stroke-width': 0.6, 'vector-effect': 'non-scaling-stroke' }, g);
-          el('rect', { x: x - w / 2, y: y - 7, width: w, height: 14, rx: 7 }, g);
-          const t = el('text', { x, y: y + 0.5 }, g); t.textContent = label;
+          const g = scaled(x, y, gParties, { class: 'party' });
+          el('line', { x1: (c.px - x) / U_, y1: (c.py - y) / U_, x2: 0, y2: 0, stroke: 'var(--ink-30)', 'stroke-width': 0.6, 'vector-effect': 'non-scaling-stroke' }, g);
+          el('rect', { x: -w / 2, y: -7, width: w, height: 14, rx: 7 }, g);
+          const t = el('text', { x: 0, y: 0.5 }, g); t.textContent = label;
         });
       }
     }
     /* arcs, bowed apart per war so parallel ones separate */
-    const perConf = {}; for (const r of rows) (perConf[r.c.id] = perConf[r.c.id] || []).push(r);
+    const drawn = rows.filter(r => state.tiers.has(r.t.tier));   /* the tier chips hide lines, never ties: the card and the table keep every tie */
+    const perConf = {}; for (const r of drawn) (perConf[r.c.id] = perConf[r.c.id] || []).push(r);
     const originSeen = new Set();
-    for (const { c, t } of rows) {
+    for (const { c, t } of drawn) {
       if (c.kind === 'pressure') continue;   /* the squares get no lines; their backers are on the card and in the table */
       const b = backers[t.backer];
       const sib = perConf[c.id], i = sib.findIndex(r => r.t === t), bow = (i - (sib.length - 1) / 2) * 7;
@@ -920,7 +1155,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       const endedNow = t.ended && (!state.month || monthKey(t.ended) <= state.month);
       const cls = ['arc', 'tier-' + t.tier, 'hue-' + hueOf(t.backer), isFaint(t) ? 'stale' : '', endedNow ? 'ended' : '', (state.month && t.since === state.month) ? 'new' : (state.month && t.since && t.since < state.month) ? 'recent' : ''].join(' ');
       el('path', { class: cls, d, 'data-conflict': c.id, 'data-backer': t.backer }, gArcs);
-      if (allView) {
+      if (allView || rest) {
         const hit = el('path', { class: 'arc-hit', d }, gArcs);
         hit.addEventListener('mouseenter', ev => showTip(ev, `<b>${esc(b.short)} → ${esc(partyName(c, t.party))}</b><br>${esc(c.name)} · ${esc(kindsText(t))}<br>${esc(D.tiers[t.tier].word)}${t.stance ? ' · ' + esc(b.short) + ' ' + esc(t.stance) : ''}${t.since ? ' · since ' + esc(fmtSince(t)) : ''}${endedNow ? ' · ended ' + esc(fmtMonth(t.ended)) : ''}`));
         hit.addEventListener('mousemove', ev => placeTip(ev));
@@ -929,14 +1164,17 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       if ((state.kind || allView) && !originSeen.has(t.backer)) {
         originSeen.add(t.backer);
         const [x, y] = project(b.lon, b.lat);
-        const g = el('g', { class: 'backer-dot' }, gBackers);
-        el('circle', { class: 'fhue-' + hueOf(t.backer), cx: x, cy: y, r: 3.2 }, g);
-        if (!allView || b.hue) { const lab = el('text', { x: x + 6, y: y + 3 }, g); lab.textContent = b.short; }
+        const g = scaled(x, y, gBackers, { class: 'backer-dot' });
+        el('circle', { class: 'fhue-' + hueOf(t.backer), cx: 0, cy: 0, r: 3.2 }, g);
+        if (!allView || b.hue) { const lab = el('text', { x: 6, y: 3 }, g); lab.textContent = b.short; }
       }
     }
     $('#legend-self').style.display = outlined ? '' : 'none';
     outlinedNow = outlined;
-    renderCard();
+    /* the legend sits in the card while nothing is picked, under the map once something is */
+    const legendEl = $('#legend');
+    if (!state.kind && state.step === null) { renderCard(); $('#card').appendChild(legendEl); }
+    else { legendHome.insertBefore(legendEl, $('#changes')); renderCard(); }
     /* on a pannable (phone) map, bring the chosen war into view */
     if (wrap.scrollWidth > wrap.clientWidth + 4 && state.kind === 'conflict' && state.pinned && confNodes[state.id] && confNodes[state.id].style.display !== 'none') {
       const g = confNodes[state.id].querySelector('.glyph').getBoundingClientRect(), w = wrap.getBoundingClientRect();
@@ -946,11 +1184,13 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     syncGrid();
     for (const tr of document.querySelectorAll('#ties tr.tie')) {
       tr.classList.toggle('on', !!state.kind && (state.kind === 'conflict' ? tr.dataset.conflict === state.id : tr.dataset.backer === state.id));
+      tr.classList.toggle('hit', !!state.tie && tr.dataset.tie === state.tie);
     }
   }
+  const legendHome = $('#legend').parentNode;
 
   const swatch = b => `<i class="sw" style="background:${hueOf(b) ? 'var(--b' + hueOf(b) + ')' : 'var(--ink-45)'}"></i>`;
-  const srcOne = e => { const u = safeUrl(e.url); const cls = (D.source_classes && D.source_classes[e.class]) ? e.class : 'other'; return `<span class="so"><span class="sc ${esc(cls)}" title="${esc((D.source_classes || {})[e.class] || '')}">${esc(e.class)}</span>${u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(e.text)}</a>` : esc(e.text) + ' <span class="nl">(no link)</span>'}${e.date ? ` <span class="nl">· ${esc(fmtMonth(e.date))}</span>` : ''}${e.counts === false ? ' <span class="nl">· shows the help ending or something beside it; does not date the tie</span>' : ''}</span>`; };
+  const srcOne = e => { const u = safeUrl(e.url); const cls = (D.source_classes && D.source_classes[e.class]) ? e.class : 'other'; return `<span class="so"><span class="sc ${esc(cls)}" title="${esc((D.source_classes || {})[e.class] || '')}">${esc(e.class)}</span>${u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(e.text)}</a>` : esc(e.text) + ' <span class="nl">(no link)</span>'}${e.date ? ` <span class="nl">· ${esc(fmtMonth(e.date))}</span>` : ''}${e.counts === false ? ' <span class="nl">· shows the help ending or something beside it; does not date the tie</span>' : ''}${e.seen ? ` <span class="nl">· ${esc(e.seen)}</span>` : ''}</span>`; };
   const evidenceText = t => t.evidence_to ? (isOld(t) ? 'evidence to ' + fmtMonth(t.evidence_to) + ', before the window' : 'evidence to ' + fmtMonth(t.evidence_to)) : 'no dated source';
   const srcHTML = t => (Array.isArray(t.sources) ? t.sources.map(srcOne).join('') : '') + `<span class="ev">${esc(evidenceText(t))}</span>` + (t.note ? `<span class="n">${esc(t.note)}</span>` : '');
   function tierLabel(t) {
@@ -966,15 +1206,34 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   }
 
   let outlinedNow = false;
+  function stepHTML() {
+    if (state.step === null || !READING[state.step]) return '';
+    const i = state.step, s = READING[i];
+    return `<div class="reading"><div class="k"><span>a reading · ${i + 1} of ${READING.length}</span><span class="dots">${READING.map((_, j) => `<i class="${j === i ? 'on' : ''}"></i>`).join('')}</span></div><div class="t">${esc(s.title)}</div><p>${esc(fillCopy(s.text))}${i === READING.length - 1 ? ' <button class="to-grid" style="font:inherit;background:none;border:0;padding:0;color:var(--rate);cursor:pointer;text-decoration:underline">The grid is below.</button>' : ''}</p><div class="nav">${i > 0 ? '<button class="r-prev">&lsaquo; back</button>' : ''}${i < READING.length - 1 ? '<button class="r-next">next &rsaquo;</button>' : ''}<button class="leave">leave the reading</button></div></div>`;
+  }
+  function wireStep(card) {
+    const p = card.querySelector('.r-prev'), n = card.querySelector('.r-next'), l = card.querySelector('.leave');
+    if (p) p.onclick = () => goStep(state.step - 1);
+    if (n) n.onclick = () => goStep(state.step + 1);
+    if (l) l.onclick = () => goStep(null);
+    const g = card.querySelector('.to-grid'); if (g) g.onclick = () => $('#grid-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
   function renderCard() {
     const card = $('#card');
-    if (!state.kind) { card.innerHTML = '<div class="empty">Click a war to see who is fighting and who helps. Click a backer above to see everything it supports.</div>'; return; }
+    if (!state.kind) {
+      card.innerHTML = stepHTML() + (state.step === null
+        ? `<div class="empty">Every line is drawn faint. Hover a war to see its lines, click to keep them. Click a backer above to see everything it supports.</div>` + (READING.length ? `<button class="start">start the reading &rsaquo;</button>` : '')
+        : `<div class="empty">Click a war or a backer to look closer; the reading stays.</div>`);
+      wireStep(card);
+      const st = card.querySelector('.start'); if (st) st.onclick = () => goStep(0);
+      return;
+    }
     if (state.kind === 'conflict') {
       const c = conflicts[state.id];
       const inMonth = t => !state.month || !t.since || t.since <= state.month;
       const byParty = c.parties.map(p => ({ p, ties: c.ties.filter(t => t.party === p.id && inMonth(t)) }));
       const notYet = state.month && c.start > state.month ? `<div class="s" style="margin-top:8px">Not on the map until ${esc(fmtMonth(c.start))}.</div>` : '';
-      card.innerHTML = `<div class="k">${c.kind === 'pressure' ? 'force short of war' : 'war'} &middot; since ${esc(c.since)}</div><div class="t">${esc(c.name)}</div>${notYet}
+      card.innerHTML = stepHTML() + `<div class="k">${c.kind === 'pressure' ? 'force short of war' : 'war'} &middot; since ${esc(c.since)}</div><div class="t">${esc(c.name)}</div>${notYet}
         <div class="s">${esc(c.status)}${c.band ? ' &middot; ' + esc(D.bands[c.band]) : c.kind === 'pressure' ? '' : ' &middot; deaths not entered'}</div>
         <div class="s" style="margin-top:6px">${esc(tieSummary(c))}.</div>
         <p>${esc(c.summary)}</p>
@@ -991,7 +1250,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       const b = backers[state.id];
       const rows = tiesFor(), fights = fightsIn(state.id).filter(c => !state.month || c.start <= state.month);
       const endedN = rows.filter(r => r.t.ended).length;
-      card.innerHTML = `<div class="k">backer &middot; ${rows.length} ${rows.length === 1 ? 'tie' : 'ties'}${endedN ? ', ' + endedN + ' ended' : ''}</div><div class="t">${esc(b.name)}</div>` +
+      card.innerHTML = stepHTML() + `<div class="k">backer &middot; ${rows.length} ${rows.length === 1 ? 'tie' : 'ties'}${endedN ? ', ' + endedN + ' ended' : ''}</div><div class="t">${esc(b.name)}</div>` +
         (outlinedNow ? `<div class="s">Outlined on the map.</div>` : '') +
         (!rows.length && !fights.length && !state.pressure ? `<div class="s">Nothing to show with force short of war hidden.</div>` : '') +
         (fights.length ? `<div class="fights">Fights in: ${fights.map(c => esc(c.name)).join(', ')}.</div>` : '') +
@@ -999,6 +1258,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
         `</div><button class="clear">clear</button>`;
     }
     card.querySelector('.clear').onclick = clear;
+    wireStep(card);
   }
 
   /* ---- tooltip ---- */
@@ -1075,24 +1335,100 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   let html = '';
   for (const c of D.conflicts) {
     html += `<tr class="group" data-conflict="${esc(c.id)}"><td colspan="6">${esc(c.name)}<small>${c.kind === 'pressure' ? 'force short of war · ' : ''}since ${esc(c.since)} · ${esc(c.status)}</small></td></tr>`;
+    const seenPair = {};
     for (const t of c.ties) {
-      html += `<tr class="tie${isFaint(t) ? ' stale' : ''}" data-conflict="${esc(c.id)}" data-backer="${esc(t.backer)}" tabindex="0" role="button">
+      const pair = `${c.id}/${t.backer}/${t.party}`; seenPair[pair] = (seenPair[pair] || 0) + 1;
+      const tid = pair + (seenPair[pair] > 1 ? '/' + seenPair[pair] : '');
+      const issue = 'https://github.com/daseme/warnotwar/issues/new?' + new URLSearchParams({ title: `the map: ${backers[t.backer].short} to ${partyName(c, t.party)} in ${c.short || c.name}`, body: `Tie: ${tid}\nLink: https://warnotwar.com/conflicts.html#tie=${tid}\n\nWhat is wrong:\n\nWhere the better evidence is:\n` }).toString();
+      html += `<tr class="tie${isFaint(t) ? ' stale' : ''}" id="tie-${esc(tid.replace(/\//g, '-'))}" data-tie="${esc(tid)}" data-conflict="${esc(c.id)}" data-backer="${esc(t.backer)}" data-tier="${esc(t.tier)}" data-faint="${isFaint(t) ? 1 : 0}" data-ended="${t.ended ? 1 : 0}" data-text="${esc([backers[t.backer].short, backers[t.backer].name, c.name, c.short, partyName(c, t.party), kindsText(t), D.tiers[t.tier].word].join(' ').toLowerCase())}" tabindex="0" role="button">
         <td><span class="who">${swatch(t.backer)}${esc(backers[t.backer].short)}</span></td>
         <td>${esc(partyName(c, t.party))}</td>
         <td>${esc(kindsText(t))}</td>
         <td>${tierLabel(t)}</td>
         <td class="src">${srcHTML(t)}</td>
-        <td class="chk">entered ${esc(t.entered || '—')}${t.checked ? ' · checked ' + esc(t.checked) : ''}</td></tr>`;
+        <td class="chk">entered ${esc(t.entered || '—')}${t.checked ? ' · checked ' + esc(t.checked) : ''}<a href="#tie=${esc(tid)}" class="anchor" title="a link to this row">§</a><a class="rep" href="${esc(issue)}" target="_blank" rel="noopener">report this row</a></td></tr>`;
     }
-    if (c.none_note) html += `<tr class="tie" data-conflict="${esc(c.id)}"><td colspan="6" style="color:var(--ink-60)">${esc(c.none_note)}</td></tr>`;
+    if (c.none_note) html += `<tr class="tie" data-conflict="${esc(c.id)}" data-text="${esc(c.name.toLowerCase())}"><td colspan="6" style="color:var(--ink-60)">${esc(c.none_note)}</td></tr>`;
   }
   tb.innerHTML = html;
   const rowFocus = tr => { focus('conflict', tr.dataset.conflict); $('#map-panel').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
   tb.addEventListener('click', ev => { const tr = ev.target.closest('tr'); if (!tr || ev.target.closest('a')) return; rowFocus(tr); });
   tb.addEventListener('keydown', ev => { if (ev.key !== 'Enter' && ev.key !== ' ') return; const tr = ev.target.closest('tr.tie'); if (!tr) return; ev.preventDefault(); rowFocus(tr); });
+  /* a row's own link: #tie=war/backer/party scrolls to it and marks it */
+  tb.addEventListener('click', ev => { const a = ev.target.closest('a.anchor'); if (!a) return; ev.preventDefault(); state.tie = a.closest('tr').dataset.tie; writeHash(); render(); });
+  function showTie() {
+    if (!state.tie) return; const tr = tb.querySelector(`tr.tie[data-tie="${CSS.escape(state.tie)}"]`); if (!tr) return;
+    tr.classList.remove('hide'); tr.scrollIntoView({ behavior: 'smooth', block: 'center' }); tr.focus({ preventScroll: true });
+  }
+  /* table filters: show by tier, faint or ended, and a text search; the group rows follow their ties */
+  const tfilter = { tiers: new Set(Object.keys(D.tiers)), faint: false, ended: false, q: '' };
+  const tfEl = $('#tfilter-chips');
+  const tfChip = (key, label, on) => { const b = document.createElement('button'); b.className = 'chip' + (on ? ' on' : ''); b.dataset.key = key; b.innerHTML = label; b.setAttribute('aria-pressed', String(on)); tfEl.appendChild(b); return b; };
+  for (const [id, t] of Object.entries(D.tiers)) tfChip('tier:' + id, tierSample(id, 'hue-0', 26) + ' ' + esc(t.word), true);
+  tfChip('faint', 'only faint: old evidence, unchecked', false); tfChip('ended', 'only ended', false);
+  tfEl.addEventListener('click', ev => {
+    const b = ev.target.closest('.chip'); if (!b) return; const k = b.dataset.key;
+    if (k.startsWith('tier:')) { const id = k.slice(5); if (tfilter.tiers.has(id)) { if (tfilter.tiers.size > 1) tfilter.tiers.delete(id); } else tfilter.tiers.add(id); }
+    else tfilter[k] = !tfilter[k];
+    for (const c of tfEl.querySelectorAll('.chip')) { const on = c.dataset.key.startsWith('tier:') ? tfilter.tiers.has(c.dataset.key.slice(5)) : tfilter[c.dataset.key]; c.classList.toggle('on', on); c.setAttribute('aria-pressed', String(on)); }
+    applyTableFilter();
+  });
+  $('#tsearch').addEventListener('input', ev => { tfilter.q = ev.target.value.trim().toLowerCase(); applyTableFilter(); });
+  function applyTableFilter() {
+    let shown = 0, total = 0; const seen = {};
+    for (const tr of tb.querySelectorAll('tr.tie')) {
+      const isTie = !!tr.dataset.tie; if (isTie) total++;
+      const anyFilter = tfilter.q !== '' || tfilter.faint || tfilter.ended || tfilter.tiers.size < Object.keys(D.tiers).length;
+      const ok = (!isTie && !anyFilter) || (isTie && tfilter.tiers.has(tr.dataset.tier) && (!tfilter.faint || tr.dataset.faint === '1') && (!tfilter.ended || tr.dataset.ended === '1') && (!tfilter.q || tr.dataset.text.includes(tfilter.q)));
+      tr.classList.toggle('hide', !ok); if (ok && isTie) { shown++; seen[tr.dataset.conflict] = true; }
+    }
+    for (const tr of tb.querySelectorAll('tr.group')) tr.classList.toggle('hide', !seen[tr.dataset.conflict] && (tfilter.q !== '' || tfilter.faint || tfilter.ended || tfilter.tiers.size < Object.keys(D.tiers).length));
+    $('#tcount').textContent = shown === total ? `${total} ties` : `${shown} of ${total} ties`;
+  }
+  applyTableFilter();
+
+  /* ---- the level since 1989 ---- */
+  if (Y && Array.isArray(Y.years) && Y.years.length) {
+    $('#years').style.display = '';
+    $('#years-note').textContent = fillCopy(D.years_note || '') + ' ' + (Y.rule || '');
+    const ys = Y.years, W = 760, H = 150, L = 44, R = 10, T = 14, B = 22;
+    /* one year (1994, Rwanda) is several times every other; it runs off the top and says so, rather than flattening the rest */
+    const peak = ys.reduce((a, r) => r.best > a.best ? r : a, ys[0]);
+    const max = Math.max(...ys.filter(r => r !== peak).map(r => r.high)) * 1.08;
+    const x = i => L + (W - L - R) * (i / ys.length), bw = (W - L - R) / ys.length - 2;
+    const y = v => T + (H - T - B) * (1 - Math.min(v, max) / max);
+    const last = ys[ys.length - 1];
+    const sorted = ys.map(r => r.best).sort((a, b) => a - b), median = sorted[Math.floor(sorted.length / 2)];
+    const step = max > 400000 ? 200000 : 100000;
+    const ticks = []; for (let v = 0; v <= max; v += step) ticks.push(v);
+    let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="UCDP deaths in organized violence by year, ${ys[0].year} to ${last.year}">`;
+    for (const v of ticks) s += `<line class="axis" x1="${L}" x2="${W - R}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}"/><text class="v" x="${L - 6}" y="${(y(v) + 3).toFixed(1)}" text-anchor="end">${v ? (v / 1000) + 'k' : '0'}</text>`;
+    s += `<line class="ref" x1="${L}" x2="${W - R}" y1="${y(median).toFixed(1)}" y2="${y(median).toFixed(1)}"/><text class="v" x="${(L + (W - L - R) * 0.45).toFixed(1)}" y="${(y(median) - 5).toFixed(1)}" text-anchor="middle">median year ${Math.round(median / 1000)}k</text>`;
+    ys.forEach((r, i) => {
+      const title = `${r.year}: ${r.best.toLocaleString('en-US')} deaths, UCDP best (${r.low.toLocaleString('en-US')} to ${r.high.toLocaleString('en-US')}); in fighting ${r.state.toLocaleString('en-US')}, between armed groups ${r.nonstate.toLocaleString('en-US')}, civilians killed on purpose ${r.onesided.toLocaleString('en-US')}; ${r.countries_over_1000} countries over a thousand`;
+      const off = r === peak && r.best > max;
+      s += `<g><title>${esc(title)}</title><rect class="bar${r === last ? ' on' : ''}" x="${x(i).toFixed(1)}" y="${y(r.best).toFixed(1)}" width="${bw.toFixed(1)}" height="${(y(0) - y(r.best)).toFixed(1)}" rx="1"/>${off ? '' : `<line class="range" x1="${(x(i) + bw / 2).toFixed(1)}" x2="${(x(i) + bw / 2).toFixed(1)}" y1="${y(r.low).toFixed(1)}" y2="${y(r.high).toFixed(1)}"/>`}</g>`;
+      if (off) s += `<text x="${(x(i) + bw + 4).toFixed(1)}" y="${T + 8}">${r.year}: ${r.best.toLocaleString('en-US')}, off the chart</text>`;
+      if (r.year % 5 === 0 || r === last) s += `<text x="${(x(i) + bw / 2).toFixed(1)}" y="${H - 6}" text-anchor="middle">${r.year}</text>`;
+    });
+    s += '</svg>';
+    $('#years-chart').innerHTML = s;
+    const above = ys.filter(r => r.best > median).length;
+    $('#years-key').textContent = `Bars are UCDP's best estimate by year, the thin line its low to high; the ${peak.year} bar runs off the top so the other years can be read. ${last.year}: ${last.best.toLocaleString('en-US')} deaths in ${last.countries_over_1000} countries over a thousand, against a median year of ${median.toLocaleString('en-US')} since ${ys[0].year}; ${above} of ${ys.length} years sit above the median. UCDP version ${esc(Y.version || '')}.`;
+  }
+
+  /* ---- what changed: computed from the data file's history, with the hand-written corrections beside ---- */
+  if ((CH && Array.isArray(CH.changes) && CH.changes.length) || (D.corrections || []).length) {
+    const items = (CH ? CH.changes : []).map(x => ({ date: x.date, what: x.what, kind: x.kind, corr: false })).concat((D.corrections || []).map(x => ({ date: x.date, what: (x.entry === 'all' ? 'All entries: ' : (conflicts[x.entry] ? conflicts[x.entry].name + ': ' : '')) + x.what, corr: true })));
+    items.sort((a, b) => (b.date > a.date) - (b.date < a.date));
+    const byDay = {}; for (const it of items) (byDay[it.date] = byDay[it.date] || []).push(it);
+    const el2 = $('#changes'); el2.style.display = '';
+    el2.querySelector('summary').textContent = `what changed on this map · ${items.length} changes since ${CH && CH.first ? CH.first : (items[items.length - 1] || {}).date}`;
+    $('#changes-list').innerHTML = Object.entries(byDay).map(([d, list]) => { const corr = list.filter(x => x.corr), plain = list.filter(x => !x.corr); const KW = { entry: 'wars or squares entered', tie: 'ties entered or removed', tier: 'tiers moved', ended: 'ties ended', band: 'bands moved', sources: 'ties with sources added', evidence: 'ties with newer evidence', checked: 'ties checked' }; const kinds = {}; for (const x of plain) { const k = KW[x.kind] || x.kind; kinds[k] = (kinds[k] || 0) + 1; } return corr.map(x => `<li class="corr"><span class="d">${esc(d)}</span>${esc(x.what)}</li>`).join('') + (plain.length ? `<li><span class="d">${esc(d)}</span>${plain.length} ${plain.length === 1 ? 'change' : 'changes'} to the file: ${Object.entries(kinds).map(([k, n]) => n + ' ' + k).join(', ')}.<details style="margin-top:4px"><summary style="font-size:10px">each one</summary><ul style="max-height:none;border:0">${plain.map(x => `<li>${esc(x.what)}</li>`).join('')}</ul></details></li>` : ''); }).join('') + `<li><span class="d">rule</span>${esc((CH && CH.rule) || '')} Gold lines are the corrections log, written by hand.</li>`;
+  }
 
   /* ---- deep link ---- */
-  readHash(); loadAreas().then(render);
+  readHash(); fitViewBox(); setDashes(); Promise.all([loadAreas(), loadCells()]).then(() => { render(); showTie(); });
   if (wrap.scrollWidth > wrap.clientWidth + 4 && !state.pinned) wrap.scrollLeft = (wrap.scrollWidth - wrap.clientWidth) * 0.55;
   } catch (e) { fail('The map could not be drawn. ' + e.message); throw e; }
 })();

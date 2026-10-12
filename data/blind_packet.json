@@ -1,0 +1,5081 @@
+{
+ "rules": {
+  "tiers": {
+   "open": "on the record: The backer says so itself, or the side it helps shows the help in public and the backer does not deny it. A backer's words count as a source only when entered as one. Where the backer denies one kind of help and admits another, the tie is graded on what it admits and the table shows the denial. A tracker that compiles governments' own announcements, such as the Kiel Institute's, counts as their record. Where the backer says something else about what it is doing, the table carries its words beside ours.",
+   "shown": "documented: The evidence is in a public document by a body outside the fight: a UN panel report, a sanctions finding by a state that is not in the war, a weapon recovered and traced. The backer denies it or says nothing.",
+   "reported": "reported: A government outside the fight, named press, a research body or a tracker says so. Nothing has been shown in public. Where one publisher alone carries it, the table says one publisher.",
+   "claimed": "alleged: Only a side in the fight says so. No one outside the fight has said so."
+  },
+  "finding_rule": "A finding by a state that fights in the war, or backs the other side in it, counts as alleged unless the thing found is public: a weapon recovered and traced, a cargo photographed, a document released. A sanctions notice names firms; it does not show the evidence. Press that only relays a party's officials counts as that party. A press item names whom it cites; where it only relays one side's officials, it is that side.",
+  "source_classes": {
+   "backer": "the backer itself: its government, armed forces, state media or arms makers",
+   "recipient": "the side the backer helps, speaking for itself",
+   "opponent": "the other side in the fight, or a state that fights there or backs the other side with troops, strikes, bases or air defence; what it finds is a claim",
+   "document": "a public record by a body outside the fight: a UN panel or mission report, a weapon traced, a cargo photographed",
+   "government": "a government outside the fight",
+   "press": "named press",
+   "research": "a tracker, institute or rights group",
+   "reference": "an encyclopedia page; it points at the sources but is not one"
+  },
+  "kinds": {
+   "arms": "weapons",
+   "drones": "drones",
+   "parts": "parts for weapons",
+   "money": "money",
+   "troops": "troops",
+   "police": "police",
+   "training": "training",
+   "intel": "intelligence",
+   "air": "air strikes on its enemy",
+   "shield": "shoots down missiles and drones aimed at it",
+   "bases": "lets its bases be used",
+   "cover": "backs it in public and at the UN",
+   "hosts": "hosts its leaders",
+   "harbor": "lets its fighters shelter inside its borders",
+   "transit": "lets supplies cross",
+   "oil": "oil and fuel",
+   "seize": "seizes its ships"
+  },
+  "how": "Grade each tie from its sources and the rules alone. Write one line per tie: key, tier, why. Do not look anything up."
+ },
+ "ties": [
+  {
+   "key": "ba811489",
+   "war": "Eastern Congo",
+   "backer": "United States",
+   "helps": "Congolese government and allied militias",
+   "kinds": [
+    "training",
+    "intelligence"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "U.S. State Department",
+     "via": null,
+     "text": "U.S.-DRC security memorandum of December 2025 under the Washington Accords",
+     "date": "2025-12",
+     "url": "https://www.state.gov/strategic-partnership-agreement-between-the-government-of-the-united-states-of-america-and-the-government-of-the-democratic-republic-of-the-congo",
+     "counts": null
+    },
+    {
+     "class": "research",
+     "publisher": "Critical Threats Congo War Security Review",
+     "via": null,
+     "text": "Critical Threats Congo War Security Review, 27 February 2026",
+     "date": "2026-02",
+     "url": "https://www.criticalthreats.org/briefs/congo-war-security-review/february-27-2026",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "U.S. Treasury",
+     "via": null,
+     "text": "U.S. Treasury, sanctions on the Rwanda Defence Force and four senior officers for backing M23 after the capture of Uvira, 2 March 2026",
+     "date": "2026-03",
+     "url": "https://home.treasury.gov/news/press-releases/sb0411",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "61262ff4",
+   "war": "The Gulf and Hormuz",
+   "backer": "Britain",
+   "helps": "United States",
+   "kinds": [
+    "lets its bases be used",
+    "shoots down missiles and drones aimed at it"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "U.K. Prime Minister's Office",
+     "via": null,
+     "text": "U.K. Prime Minister Keir Starmer, 1 March 2026",
+     "date": "2026-03",
+     "url": "https://www.gov.uk/government/speeches/prime-ministers-oral-statement-on-iran-2-march-2026",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Stars and Stripes",
+     "via": null,
+     "text": "Stars and Stripes, the page linked here",
+     "date": null,
+     "url": "https://www.stripes.com/theaters/europe/2026-03-02/uk-us-bases-iran-20928006.html",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "ITV News",
+     "via": null,
+     "text": "ITV News, the UK will allow the US to use its bases to attack missile sites in Iran, the Prime Minister says, 1 March 2026",
+     "date": "2026-03",
+     "url": "https://www.itv.com/news/2026-03-01/uk-will-allow-us-to-use-bases-to-attack-missile-sites-in-iran-pm-says",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "fe065913",
+   "war": "Ukraine",
+   "backer": "Britain",
+   "helps": "Ukraine",
+   "kinds": [
+    "weapons",
+    "money",
+    "training"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "research",
+     "publisher": "Kiel Institute",
+     "via": null,
+     "text": "Kiel Institute, Ukraine Support Tracker, update of 8 October 2026, aid announced through August 2026",
+     "date": "2026-10",
+     "url": "https://www.kielinstitut.de/topics/war-against-ukraine/ukraine-support-tracker/",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "U.K. Ministry of Defence",
+     "via": null,
+     "text": "U.K. Ministry of Defence statements",
+     "date": "2026-06",
+     "url": "https://gov.uk/government/news/750-million-package-to-provide-ukraine-with-150000-drones-and-boost-air-defence",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "d0ac3215",
+   "war": "Pakistan and Afghanistan",
+   "backer": "Afghanistan (Taliban government)",
+   "helps": "Pakistani Taliban (TTP) and Baloch insurgents",
+   "kinds": [
+    "lets its fighters shelter inside its borders"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "document",
+     "publisher": "UN Security Council Monitoring Team",
+     "via": null,
+     "text": "UN Security Council Monitoring Team, 38th report, released 10 August 2026",
+     "date": "2026-08",
+     "url": "https://docs.un.org/en/S/2026/651",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Arab News",
+     "via": null,
+     "text": "Arab News, the page linked here",
+     "date": null,
+     "url": "https://www.arabnews.pk/node/2654474/pakistan",
+     "counts": null
+    },
+    {
+     "class": "research",
+     "publisher": "Hong Kong Chu Hai College OBOR centre",
+     "via": null,
+     "text": "OBOR research centre repost of the Monitoring Team's 38th report (S/2026/651): the Taliban continued to support the TTP while publicly denying harbouring terrorist groups and relocated 2,000 TTP fighters and families inland, posted 18 August 2026",
+     "date": "2026-08",
+     "url": "https://obor.chuhai.edu.hk/?p=5366",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "The Express Tribune",
+     "via": null,
+     "text": "The Express Tribune, UN report flags the TTP's cross-border terrorist threat, September 2026",
+     "date": "2026-09",
+     "url": "https://tribune.com.pk/story/2624114/un-report-flags-ttps-cross-border-terrorist-threat",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "24227301",
+   "war": "The Gulf and Hormuz",
+   "backer": "Kuwait",
+   "helps": "United States",
+   "kinds": [
+    "lets its bases be used",
+    "shoots down missiles and drones aimed at it"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Kuwaiti government",
+     "via": null,
+     "text": "Kuwaiti government statements, March 2026",
+     "date": "2026-03",
+     "url": "https://sharjah24.ae/en/Articles/2026/03/07/Kuwait-intercepts-12-drones-14-Iranian-missiles",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "LBCI",
+     "via": null,
+     "text": "LBCI, 9 March 2026, Kuwait's emir: we did not allow the use of our land, airspace or waters for any military action against Iran",
+     "date": "2026-03",
+     "url": "https://www.lbcgroup.tv/news/middleeastnews/912635/lbci-lebanon-articles/en",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, 10 March 2026, Kuwait shot down six drones as Gulf states intercept more Iranian missiles",
+     "date": "2026-03",
+     "url": "https://www.aljazeera.com/news/2026/3/10/woman-killed-in-bahrain-as-other-gulf-states-intercept-iranian-missiles",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "WAM",
+     "via": null,
+     "text": "WAM, Kuwait thwarts a missile barrage and Iranian drone strikes, per the army spokesman via KUNA, March 2026",
+     "date": "2026-03",
+     "url": "https://www.wam.ae/en/article/173wizk-kuwait-thwarts-missile-barrage-iranian-drone",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "9adfc67c",
+   "war": "Syria",
+   "backer": "Türkiye",
+   "helps": "Transitional government",
+   "kinds": [
+    "training",
+    "weapons",
+    "backs it in public and at the UN"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Turkish Ministry of National Defence",
+     "via": null,
+     "text": "Türkiye-Syria military training memorandum, 13 August 2025",
+     "date": "2025-08",
+     "url": "https://www.dailysabah.com/politics/turkiye-syria-sign-military-cooperation-training-deal/news",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "Turkish Ministry of National Defence",
+     "via": null,
+     "text": "Turkish armoured vehicle deliveries",
+     "date": "2025-07",
+     "url": "https://militarnyi.com/en/news/turkey-supplies-cobra-and-cadillac-gage-commando-armored-vehicles-to-syrian-military/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Long War Journal",
+     "via": null,
+     "text": "Long War Journal, the page linked here",
+     "date": null,
+     "url": "https://www.longwarjournal.org/archives/2025/08/turkey-ramps-up-military-support-for-syria.php",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "Anadolu Agency",
+     "via": null,
+     "text": "Anadolu Agency, 23 July 2025, Turkish defence ministry says it will give Syria training, consultancy and technical support",
+     "date": "2025-07",
+     "url": "https://www.aa.com.tr/en/politics/syrian-government-officially-requests-turkiye-to-help-strengthen-defense-combat-terrorism/3639472",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Sky News Arabia",
+     "via": null,
+     "text": "Sky News Arabia, 13 August 2025, Turkish defence ministry: Güler and his Syrian counterpart sign a training and consultancy memorandum",
+     "date": "2025-08",
+     "url": "https://www.skynewsarabia.com/middle-east/1813650",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "Turkish foreign ministry",
+     "via": null,
+     "text": "Turkish deputy foreign minister, via SANA, 26 January 2026: full support for the Syrian government against security challenges",
+     "date": "2026-01",
+     "url": "https://sana.sy/en/politics/2292514/",
+     "counts": null
+    },
+    {
+     "class": "recipient",
+     "publisher": "Syrian Ministry of Foreign Affairs",
+     "via": null,
+     "text": "Syrian foreign ministry, Foreign Minister al-Shaibani and Defence Minister Abu Qasra in Ankara as a memorandum on military training and consultation is signed with Türkiye's defence minister, 13 August 2025",
+     "date": "2025-08",
+     "url": "https://mofaex.gov.sy/en/news/وزير-الخارجية-والمغتربين-السيد-أسعد-حسن-الشيباني-برفقة-وزير-الدفاع-اللواء-المهندس-مرهف-أبو-قصرة",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al-Monitor",
+     "via": null,
+     "text": "Al-Monitor, a Turkish defence ministry source says Türkiye will give Syria weapon systems and logistical tools under the new accord and train the army on them, 14 August 2025",
+     "date": "2025-08",
+     "url": "https://www.al-monitor.com/originals/2025/08/turkey-help-syria-weapon-systems-equipment-under-new-accord-source-says",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "02f030e8",
+   "war": "Nigeria",
+   "backer": "United States",
+   "helps": "Nigerian government",
+   "kinds": [
+    "weapons",
+    "training",
+    "air strikes on its enemy"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "U.S. Defense Security Cooperation Agency notification",
+     "via": null,
+     "text": "U.S. Defense Security Cooperation Agency notification, 13 August 2025",
+     "date": "2025-08",
+     "url": "https://www.dsca.mil/Press-Media/Major-Arms-Sales/Article-Display/Article/4273754/nigeria-munitions-precision-bombs-and-precision-rockets",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "U.S. Africa Command",
+     "via": null,
+     "text": "U.S. Africa Command strikes in Sokoto, 25 December 2025",
+     "date": "2025-12",
+     "url": "https://www.africom.mil/pressrelease/36158/us-africa-command-conducts-strike-against-isis-in-nigeria",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "U.S. Africa Command",
+     "via": null,
+     "text": "U.S. Africa Command, ISIS number two killed in Nigeria: a 16 May 2026 operation in north-eastern Nigeria killed Abu-Bilal al-Minuki, ISIS director of global operations, May 2026",
+     "date": "2026-05",
+     "url": "https://www.africom.mil/pressrelease/36568",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Premium Times",
+     "via": "AllAfrica",
+     "text": "Premium Times, AFRICOM says many terrorists killed in the Sokoto bombing; Nigeria's foreign ministry confirms the joint operation, 26 December 2025",
+     "date": "2025-12",
+     "url": "https://allafrica.com/stories/202512270021.html",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "243c80d7",
+   "war": "Sudan",
+   "backer": "Russia",
+   "helps": "Rapid Support Forces",
+   "kinds": [
+    "weapons",
+    "money"
+   ],
+   "ended": "2024-04",
+   "sources": [
+    {
+     "class": "government",
+     "publisher": "U.S. Treasury",
+     "via": null,
+     "text": "U.S. Treasury sanctions on Wagner-linked gold firms, 2023",
+     "date": "2023",
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "research",
+     "publisher": "Jamestown Foundation",
+     "via": null,
+     "text": "Jamestown Foundation, Russia Switches Sides in Sudan War",
+     "date": null,
+     "url": "https://jamestown.org/russia-switches-sides-in-sudan-war/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "f9d2f2f5",
+   "war": "Ethiopia",
+   "backer": "Eritrea",
+   "helps": "Alliance for Survival (TPLF, Fano, Oromo Liberation Army and others)",
+   "kinds": [
+    "troops",
+    "weapons"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "press",
+     "publisher": "Reuters",
+     "via": "Internazionale",
+     "text": "Reuters and Guardian eyewitness reports from Adigrat, 7 and 8 October 2026",
+     "date": "2026-10",
+     "url": "https://www.internazionale.it/ultime-notizie-reuters/2026/10/07/eritrean-troops-drive-through-northern-ethiopian-town-witnesses-say",
+     "counts": null
+    },
+    {
+     "class": "opponent",
+     "publisher": "Ethiopian Federal Police",
+     "via": "AllAfrica",
+     "text": "Ethiopian federal police statement, 14 January 2026, on seized ammunition",
+     "date": "2026-01",
+     "url": "https://allafrica.com/stories/202601230022.html",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, the page linked here",
+     "date": null,
+     "url": "https://www.aljazeera.com/news/2026/10/7/witnesses-spot-eritrean-troops-inside-northern-ethiopia-as-tensions-flare",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Associated Press",
+     "via": "ABC News",
+     "text": "Associated Press, a Tigray Peace Force commander allied to the government says Eritrean personnel entered Adigrat and Idaga Hamus; ACLED says Eritrean troops crossed at Zelambesa and Ethiopian drones hit them at Guada; Eritrea calls it fabrication, 8 October 2026",
+     "date": "2026-10",
+     "url": "https://abcnews.com/International/wireStory/eritrean-soldiers-entered-northern-ethiopian-towns-government-allied-137086855",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Euronews with AFP",
+     "via": null,
+     "text": "Euronews with AFP, Ethiopian drone strikes hit Eritrean troops and lorries around Adigrat overnight 7 to 8 October, per ACLED and three witnesses, 8 October 2026",
+     "date": "2026-10",
+     "url": "https://euronews.com/2026/10/08/ethiopian-drones-hit-eritrean-forces-accused-of-backing-rebels-in-tigray",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "c11449a8",
+   "war": "Ethiopia",
+   "backer": "Türkiye",
+   "helps": "Federal government",
+   "kinds": [
+    "drones"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Turkish Ministry of National Defence",
+     "via": null,
+     "text": "Ethiopia-Türkiye defence agreement, August 2021",
+     "date": "2021-08",
+     "url": "https://www.fanamc.com/english/?p=23234",
+     "counts": null
+    },
+    {
+     "class": "recipient",
+     "publisher": "Ethiopian National Defense Force",
+     "via": null,
+     "text": "Ethiopian military statements on drone use",
+     "date": null,
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "research",
+     "publisher": "ECFR",
+     "via": null,
+     "text": "ECFR, Deadly Skies, February 2025",
+     "date": "2025-02",
+     "url": "https://ecfr.eu/publication/deadly-skies-drone-warfare-in-ethiopia-and-the-future-of-conflict-in-africa/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "defenceWeb",
+     "via": null,
+     "text": "defenceWeb, Ethiopia acquires Yak-130s and Orion-E UAVs; its Bayraktar TB2 and Akinci drones used against Tigray forces, 30 January 2026",
+     "date": "2026-01",
+     "url": "https://defenceweb.co.za/aerospace/aerospace-aerospace/ethiopia-acquires-yak-130-trainers-orion-e-uavs-from-russia/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "741bf659",
+   "war": "The Gulf and Hormuz",
+   "backer": "Saudi Arabia",
+   "helps": "United States",
+   "kinds": [
+    "lets its bases be used",
+    "shoots down missiles and drones aimed at it"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Saudi Ministry of Defense",
+     "via": null,
+     "text": "Saudi Ministry of Defense interception statements; Prince Sultan Air Base hit on 1, 14 and 27 March 2026",
+     "date": "2026-03",
+     "url": "https://qna.org.qa/en/News-Area/News/2026-3/6/saudi-defense-ministry-three-ballistic-missiles-intercepted-destroyed-near-prince-sultan-air-base",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Saudi Ministry of Defense",
+     "via": null,
+     "text": "Times of Israel, 1 March 2026, Saudi air defences intercept Iranian missiles aimed at Riyadh airport and Prince Sultan Air Base",
+     "date": "2026-03",
+     "url": "https://www.timesofisrael.com/liveblog_entry/saudi-arabia-intercepts-missile-attacks-on-airport-base-report/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Iran International",
+     "via": null,
+     "text": "Iran International, 15 March 2026, Saudi defence ministry spokesman says seven drones intercepted over Riyadh and the Eastern Province",
+     "date": "2026-03",
+     "url": "https://www.iranintl.com/en/202603154039",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Argaam",
+     "via": null,
+     "text": "Argaam, Saudi defence ministry spokesman says 24 drones and seven ballistic missiles were intercepted, six of the missiles fired at Prince Sultan Air Base, 11 March 2026",
+     "date": "2026-03",
+     "url": "https://www.argaam.com/en/article/articledetail/id/1887040",
+     "counts": null
+    },
+    {
+     "class": "recipient",
+     "publisher": "U.S. Central Command",
+     "via": null,
+     "text": "CENTCOM, U.S. and Saudi forces strike Iran-backed terrorist sites in Iraq: U.S. Central Command and the Saudi Arabian Armed Forces conducted precision strikes on logistics and weapons sites in eastern Iraq after more than 30 IRGC-directed drone attacks in 72 hours, 28 July 2026",
+     "date": "2026-07",
+     "url": "https://www.centcom.mil/MEDIA/PUBLIC-RELEASES/Article/4558191/us-saudi-forces-strike-iran-backed-terrorist-sites-in-iraq/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, Saudi Arabia and the U.S. carry out strikes on Iran-backed groups in Iraq; the Saudi defence ministry says it acted in response to drone attacks on petroleum facilities launched from Iraq and does not seek escalation, 29 July 2026",
+     "date": "2026-07",
+     "url": "https://www.aljazeera.com/news/2026/7/29/saudi-arabia-us-carry-out-strikes-on-iran-backed-groups-in-iraq",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "FDD's Long War Journal",
+     "via": null,
+     "text": "Long War Journal, CENTCOM says U.S. and Saudi fighter aircraft struck multiple terrorist logistics and weapons sites across eastern Iraq, linking CENTCOM's X post, 29 July 2026",
+     "date": "2026-07",
+     "url": "https://www.longwarjournal.org/archives/2026/07/us-saudi-arabia-strike-iranian-backed-militias-in-iraq-after-militia-attacks.php",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Babel (Ukraine) relaying Reuters",
+     "via": null,
+     "text": "Babel, Reuters reports Saudi Arabia secretly attacked Iran in late March 2026 in response to strikes on its territory, citing officials; Riyadh did not confirm, 2026",
+     "date": "2026",
+     "url": "https://babel.ua/en/news/126930-reuters-saudi-arabia-secretly-attacked-iran-in-response-to-strikes-on-its-territory",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "fbc266ca",
+   "war": "Ethiopia",
+   "backer": "United Arab Emirates",
+   "helps": "Federal government",
+   "kinds": [
+    "drones",
+    "weapons"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "research",
+     "publisher": "ECFR",
+     "via": null,
+     "text": "ECFR, Deadly Skies, February 2025, on open-source tracking of more than 90 UAE cargo flights to Ethiopia, September to November 2021",
+     "date": "2025-02",
+     "url": "https://ecfr.eu/publication/deadly-skies-drone-warfare-in-ethiopia-and-the-future-of-conflict-in-africa/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Il Foglio",
+     "via": null,
+     "text": "Il Foglio, the UAE has stepped up arms deliveries by cargo flight to Ethiopia, some reaching Ethiopian forces preparing an offensive in Amhara, citing open-source analyst Rich Tedd's count of 48 flights in a month between the Emirates and Addis Ababa, 3 October 2026",
+     "date": "2026-10",
+     "url": "https://www.ilfoglio.it/en/world/2026/10/03/news/drones-from-tigray-are-flying-into-addis-ababa-but-the-flow-of-dollars-continues--409481",
+     "counts": null
+    },
+    {
+     "class": "opponent",
+     "publisher": "Al Jazeera, relaying Sudan's army",
+     "via": null,
+     "text": "Al Jazeera, Sudan's army says UAE-made drones launched from Bahir Dar airport in Ethiopia struck its positions, citing data from a drone shot down over el-Obeid; Ethiopia and the UAE call it fabrication, 6 May 2026",
+     "date": "2026-05",
+     "url": "https://www.aljazeera.com/news/2026/5/6/sudan-blames-ethiopia-uae-for-recent-drone-attacks-what-we-know",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "1276951b",
+   "war": "U.S. raid on Venezuela",
+   "backer": "Britain",
+   "helps": "United States",
+   "kinds": [
+    "intelligence"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "press",
+     "publisher": "ITV News",
+     "via": "Yahoo",
+     "text": "Press reporting on RAF surveillance aircraft and RFA Tideforce supporting the blockade",
+     "date": "2026-01",
+     "url": "https://www.yahoo.com/news/articles/us-says-seized-russia-linked-141234315.html",
+     "counts": null
+    },
+    {
+     "class": "reference",
+     "publisher": "Wikipedia",
+     "via": null,
+     "text": "Wikipedia, the page linked here",
+     "date": null,
+     "url": "https://en.wikipedia.org/wiki/2025%E2%80%932026_United_States_oil_blockade_of_Venezuela",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "U.K. Ministry of Defence",
+     "via": "Baird Maritime",
+     "text": "U.K. Ministry of Defence, via Reuters, 7 January 2026: Britain supported the U.S. mission to seize the tanker Marinera",
+     "date": "2026-01",
+     "url": "https://www.bairdmaritime.com/security/naval/britain-confirms-role-in-us-led-seizure-of-russian-flagged-tanker",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "ITV News",
+     "via": null,
+     "text": "ITV News, UK forces were involved in the U.S. seizure of a Russian-flagged tanker, the MoD says, naming RFA Tideforce and RAF surveillance; Healey tells MPs it was part of efforts against sanctions busting, 7 January 2026",
+     "date": "2026-01",
+     "url": "https://www.itv.com/news/2026-01-07/us-says-it-has-seized-russia-linked-oil-tanker-in-atlantic",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "4137067a",
+   "war": "Myanmar",
+   "backer": "China",
+   "helps": "Military-led government",
+   "kinds": [
+    "backs it in public and at the UN"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Chinese foreign ministry",
+     "via": null,
+     "text": "Chinese government statements backing the 2025 to 2026 election",
+     "date": "2026",
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "The Diplomat",
+     "via": null,
+     "text": "The Diplomat, June 2025, on Chinese pressure on the MNDAA and TNLA",
+     "date": "2025-06",
+     "url": "https://thediplomat.com/2025/06/china-pressuring-two-major-myanmar-armed-groups-to-halt-offensives/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "e706e3fa",
+   "war": "Haiti",
+   "backer": "United States",
+   "helps": "Haitian government and the foreign force",
+   "kinds": [
+    "money",
+    "weapons",
+    "backs it in public and at the UN"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "U.S. State Department",
+     "via": null,
+     "text": "U.S. State Department report to Congress on the security situation in Haiti, September 2026",
+     "date": "2026-09",
+     "url": "https://www.state.gov/wp-content/uploads/2026/09/Report-to-Congress-on-The-Security-Situation-in-Haiti-2026-HRC1519287-Accessible-9.11.2026.pdf",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Associated Press",
+     "via": null,
+     "text": "Associated Press, Haiti's new UN-backed force exceeds pledges, with more than $200 million promised by 13 Security Council states and $59 million disbursed, per a BINUH report; the U.S. and Panama proposed the force, 23 April 2026",
+     "date": "2026-04",
+     "url": "https://wtop.com/world/2026/04/haitis-new-un-backed-gang-fighting-force-exceeds-funding-expectations/",
+     "counts": null
+    },
+    {
+     "class": "research",
+     "publisher": "Carnegie Endowment for International Peace",
+     "via": null,
+     "text": "Carnegie Endowment, Christopher Shell: the Gang Suppression Force has received significant financial and material support from the United States; the U.S. and Canada provided the bulk of the earlier MSS mission's financial and logistical support, 9 July 2026",
+     "date": "2026-07",
+     "url": "https://carnegieendowment.org/research/2026/07/recalibrating-us-policy-toward-haiti",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "a4b60074",
+   "war": "Gaza and Lebanon",
+   "backer": "Qatar",
+   "helps": "Hamas",
+   "kinds": [
+    "hosts its leaders"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Qatari government",
+     "via": null,
+     "text": "Qatari government statements",
+     "date": null,
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "recipient",
+     "publisher": "Hamas",
+     "via": null,
+     "text": "Hamas political office in Doha",
+     "date": null,
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "research",
+     "publisher": "FDD",
+     "via": null,
+     "text": "FDD, September 2026",
+     "date": "2026-09",
+     "url": "https://www.fdd.org/analysis/analysis-analysis/2026/09/09/qatar-still-hosts-hamass-top-brass-one-year-after-they-were-targeted/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "4f757020",
+   "war": "Pakistan and Afghanistan",
+   "backer": "India",
+   "helps": "Afghan Taliban government",
+   "kinds": [
+    "money",
+    "backs it in public and at the UN"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Indian Council of World Affairs",
+     "via": null,
+     "text": "Indian Council of World Affairs on India's aid to Afghanistan; embassy in Kabul reopened October 2025",
+     "date": "2025-10",
+     "url": "https://www.icwa.in/show_content.php?lang=1&level=3&ls_id=14213&lid=8638",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Dawn",
+     "via": null,
+     "text": "Dawn, India restores its Kabul mission to full embassy status, quoting the Ministry of External Affairs that it will further augment India's contribution to Afghanistan's development, humanitarian assistance and capacity building, 21 October 2025",
+     "date": "2025-10",
+     "url": "https://www.dawn.com/news/1950392/india-restores-embassy-in-afghanistan-as-ties-improve",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "IANS",
+     "via": null,
+     "text": "IANS, India delivers food supplies to Afghanistan during Muttaqi's visit, as part of ongoing earthquake relief, 10 October 2025",
+     "date": "2025-10",
+     "url": "https://ianslive.in/india-delivers-food-supplies-to-afghanistan-amid-muttaqis-visit--20251010222536",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "d44b9509",
+   "war": "The Gulf and Hormuz",
+   "backer": "Russia",
+   "helps": "Iran and allied groups (Hezbollah, Houthis, Iraqi militias)",
+   "kinds": [
+    "backs it in public and at the UN"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Russian mission to the UN",
+     "via": null,
+     "text": "Russian and Chinese veto of the UN Security Council resolution on the Strait of Hormuz, 7 April 2026",
+     "date": "2026-04",
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "U.S. officials, unnamed",
+     "via": null,
+     "text": "UN News, 7 April 2026, Russia and China veto the Security Council resolution on the Strait of Hormuz; 11 in favour, 2 abstentions",
+     "date": "2026-04",
+     "url": "https://news.un.org/en/story/2026/04/1167261",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "c8a788b6",
+   "war": "Syria",
+   "backer": "United States",
+   "helps": "Syrian Democratic Forces (Kurdish-led, dissolved August 2026)",
+   "kinds": [
+    "troops",
+    "weapons",
+    "training"
+   ],
+   "ended": "2026-04",
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "U.S. Department of Defense",
+     "via": null,
+     "text": "U.S. withdrawal order, February 2026; last troops left the Qasrak base on 16 April 2026",
+     "date": "2026-04",
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "recipient",
+     "publisher": "SDF",
+     "via": null,
+     "text": "SDF dissolved 25 August 2026",
+     "date": "2026-08",
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, the page linked here",
+     "date": null,
+     "url": "https://www.aljazeera.com/news/2026/2/18/us-is-withdrawing-all-1000-troops-from-syria-wsj-report",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "3e715be6",
+   "war": "The Sahel",
+   "backer": "Algeria",
+   "helps": "Azawad Liberation Front (Tuareg)",
+   "kinds": [
+    "lets its fighters shelter inside its borders"
+   ],
+   "ended": "2026-07",
+   "sources": [
+    {
+     "class": "opponent",
+     "publisher": "Malian government",
+     "via": null,
+     "text": "Malian government statements, 2024 to 2025",
+     "date": "2025",
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, 7 April 2025",
+     "date": "2025-04",
+     "url": "https://www.aljazeera.com/news/2025/4/7/alliance-of-sahel-states-recall-ambassadors-as-tension-with-algeria-rises",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, Algeria and Mali restore diplomatic ties following yearlong rift, 11 July 2026",
+     "date": "2026-07",
+     "url": "https://www.aljazeera.com/news/2026/7/11/algeria-and-mali-restore-diplomatic-ties-following-yearlong-rift",
+     "counts": false
+    }
+   ]
+  },
+  {
+   "key": "154e5011",
+   "war": "Sudan",
+   "backer": "Eritrea",
+   "helps": "Sudanese Armed Forces",
+   "kinds": [
+    "training"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "press",
+     "publisher": "Horn Review",
+     "via": null,
+     "text": "Horn Review, August 2026",
+     "date": "2026-08",
+     "url": "https://hornreview.org/2026/08/18/making-sense-of-the-alignment-between-eritrea-and-the-sudanese-armed-forces/",
+     "counts": null
+    },
+    {
+     "class": "recipient",
+     "publisher": "Sudanese Armed Forces",
+     "via": null,
+     "text": "Burhan called Eritrean support substantial, in a video of 10 April 2025",
+     "date": "2025-03",
+     "url": "https://www.youtube.com/watch?v=jgq0DoXmDh8",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "20cedf58",
+   "war": "Syria",
+   "backer": "Saudi Arabia",
+   "helps": "Transitional government",
+   "kinds": [
+    "money",
+    "backs it in public and at the UN"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Saudi government",
+     "via": null,
+     "text": "Saudi and Qatari payment of Syria's World Bank arrears, April 2025; joint salary funding, May and September 2025",
+     "date": "2025-09",
+     "url": "https://gulftoday.ae/news/2025/04/27/saudi-arabia-qatar-to-clear-syrias-15-million-world-bank-debt",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, the page linked here",
+     "date": null,
+     "url": "https://www.aljazeera.com/news/2025/4/27/saudi-arabia-qatar-to-settle-syrias-outstanding-debt-to-world-bank",
+     "counts": null
+    },
+    {
+     "class": "recipient",
+     "publisher": "SANA",
+     "via": null,
+     "text": "SANA, 28 October 2025, Syria signs a $28m-a-month Qatar-Saudi grant deal for public sector salaries, three months renewable",
+     "date": "2025-10",
+     "url": "https://sana.sy/en/economic/2274550/",
+     "counts": null
+    },
+    {
+     "class": "recipient",
+     "publisher": "SANA",
+     "via": null,
+     "text": "SANA, 7 February 2026, Saudi delegation led by the investment minister arrives in Damascus to sign economic agreements",
+     "date": "2026-02",
+     "url": "https://www.sana.sy/en/economic/2294929/",
+     "counts": false
+    },
+    {
+     "class": "recipient",
+     "publisher": "SANA",
+     "via": null,
+     "text": "SANA, 25 March 2026, finance minister says salaries are now fully funded from state resources; Saudi-Qatari grants totalled $86m",
+     "date": "2026-03",
+     "url": "https://sana.sy/en/economic/2305175/",
+     "counts": false
+    },
+    {
+     "class": "press",
+     "publisher": "Rudaw",
+     "via": null,
+     "text": "Rudaw, the World Bank says Syria's arrears of about $15.5 million were cleared effective 12 May 2025 by Saudi Arabia and Qatar, 16 May 2025",
+     "date": "2025-05",
+     "url": "https://www.rudaw.net/english/business/16052025",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "ef40d5f5",
+   "war": "Gaza and Lebanon",
+   "backer": "Germany",
+   "helps": "Israel",
+   "kinds": [
+    "weapons"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "research",
+     "publisher": "SIPRI Arms Transfers Database",
+     "via": null,
+     "text": "SIPRI Arms Transfers Database",
+     "date": "2026-03",
+     "url": "https://www.sipri.org/databases/armstransfers",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "German Federal Ministry for Economic Affairs",
+     "via": null,
+     "text": "German government export figures, 2026",
+     "date": "2026",
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, the page linked here",
+     "date": null,
+     "url": "https://www.aljazeera.com/news/2026/7/27/german-arms-export-licences-for-israel-surge-with-focus-on-sub-project",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "59469c16",
+   "war": "Nigeria",
+   "backer": "Türkiye",
+   "helps": "Nigerian government",
+   "kinds": [
+    "drones",
+    "weapons"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "recipient",
+     "publisher": "Nigerian Army",
+     "via": null,
+     "text": "Nigerian Army announcement of 43 Bayraktar TB2 drones, 19 December 2024; Nigerian Air Force TB2 deliveries, 2023",
+     "date": "2024-12",
+     "url": "https://defensemirror.com/news/38434/Nigeria_Procures_43_Bayraktar_TB2_Drones_to_Boost_North_West_Security",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Channels TV",
+     "via": null,
+     "text": "Channels TV, the page linked here",
+     "date": null,
+     "url": "https://www.channelstv.com/2024/12/19/army-acquires-43-drones-wings-46-turkey-trained-personnel/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "defenceWeb",
+     "via": null,
+     "text": "defenceWeb, Nigeria profile: army's 43 Bayraktar TB2s listed as ordered, status unknown; 2 T-129s, 4 more ordered, 28 May 2026",
+     "date": "2026-05",
+     "url": "https://defenceweb.co.za/security/african-militaries/nigeria/",
+     "counts": false
+    }
+   ]
+  },
+  {
+   "key": "e921150e",
+   "war": "Gaza and Lebanon",
+   "backer": "Iran",
+   "helps": "Hezbollah",
+   "kinds": [
+    "weapons",
+    "money",
+    "training"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Iranian government",
+     "via": null,
+     "text": "Statements by Iranian and Hezbollah leaders",
+     "date": null,
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "opponent",
+     "publisher": "U.S. Treasury",
+     "via": null,
+     "text": "U.S. Treasury designation of Hezbollah as an Iranian proxy, August 2026",
+     "date": "2026-08",
+     "url": "https://home.treasury.gov/news/press-releases/sb0611",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, the page linked here",
+     "date": null,
+     "url": "https://www.aljazeera.com/news/2026/8/21/us-designates-hezbollah-an-iranian-proxy-sanctions-funding-network",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "966b058b",
+   "war": "Gaza and Lebanon",
+   "backer": "United States",
+   "helps": "Israel",
+   "kinds": [
+    "weapons",
+    "money",
+    "troops"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Congressional Research Service",
+     "via": null,
+     "text": "Congressional Research Service, U.S. Foreign Aid to Israel (RL33222)",
+     "date": null,
+     "url": "https://www.congress.gov/crs-product/RL33222",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "Congressional Research Service",
+     "via": "EveryCRSReport",
+     "text": "Congressional Research Service on the THAAD system (IF12645) (the brief's revision date is not a date the help was shown, so it carries none)",
+     "date": null,
+     "url": "https://www.everycrsreport.com/reports/IF12645.html",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "The War Zone",
+     "via": null,
+     "text": "The War Zone, 27 December 2024, first combat use of the US THAAD battery in Israel, deployed in October with about 100 soldiers (the brief's revision date is not a date the help was shown, so it carries none)",
+     "date": null,
+     "url": "https://www.twz.com/land/u-s-armys-first-combat-use-of-thaad-missile-defense-system-just-occurred-in-israel",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "Defense Security Cooperation Agency",
+     "via": null,
+     "text": "Defense Security Cooperation Agency notice to Congress, transmittal 25-94, published in the Federal Register 17 March 2026: Israel asks to buy thirty AH-64E Apache attack helicopters, 3.8 billion dollars; the report reached Congress on 30 January 2026",
+     "date": "2026-03",
+     "url": "https://www.govinfo.gov/content/pkg/FR-2026-03-17/html/2026-05142.htm",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "f5741b23",
+   "war": "Somalia",
+   "backer": "Djibouti",
+   "helps": "Federal government and AU mission",
+   "kinds": [
+    "troops"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "recipient",
+     "publisher": "ISS Africa",
+     "via": null,
+     "text": "AU mission contributor figures, as reported by ISS Africa, 29 July 2026",
+     "date": "2026-07",
+     "url": "https://issafrica.org/iss-today/rethinking-the-au-s-somalia-peace-mission-after-us-funding-cuts",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Rio Times",
+     "via": null,
+     "text": "Rio Times, AUSSOM allocations: Djibouti 1,520, 17 August 2026",
+     "date": "2026-08",
+     "url": "https://riotimesonline.com/uganda-troops-stay-somalia-2026",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "The Reporter (Ethiopia)",
+     "via": null,
+     "text": "The Reporter, AUSSOM troop composition confirmed by the Somalia Operations Coordination Committee, 5 April 2025",
+     "date": "2025-04",
+     "url": "https://www.thereporterethiopia.com/44556/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "debe1c5f",
+   "war": "U.S. strikes on boats",
+   "backer": "El Salvador",
+   "helps": "United States",
+   "kinds": [
+    "lets its bases be used"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "press",
+     "publisher": "El Mundo (El Salvador), relaying the New York Times",
+     "via": null,
+     "text": "Press reporting on U.S. AC-130J, P-8 and C-40 aircraft operating from Salvadoran bases from mid-October 2025",
+     "date": "2025-10",
+     "url": "https://diario.elmundo.sv/nacionales/aviones-militares-de-ee-uu-estarian-operando-desde-el-aeropuerto-de-el-salvador",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "The War Zone",
+     "via": "New York Times",
+     "text": "The War Zone, 7 November 2025, citing NYT: AC-130J, P-8A and an unmarked C-40 operating from Comalapa, El Salvador, since mid-October",
+     "date": "2025-11",
+     "url": "https://www.twz.com/news-features/u-s-examining-sites-to-send-additional-military-assets-to-caribbean",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "New York Times",
+     "via": null,
+     "text": "New York Times, 6 November 2025, US sends attack aircraft to El Salvador amid regional troop build-up (visual investigation)",
+     "date": "2025-11",
+     "url": "https://diario.elmundo.sv/nacionales/aviones-militares-de-ee-uu-estarian-operando-desde-el-aeropuerto-de-el-salvador",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Prensa Latina",
+     "via": null,
+     "text": "Prensa Latina, U.S. military aircraft activity rises at Comalapa in El Salvador: an AC-130J, a P-8A and an unmarked C-40, citing the New York Times and El Mundo, 7 November 2025",
+     "date": "2025-11",
+     "url": "https://www.prensa-latina.cu/2025/11/07/aumenta-actividad-de-aviones-militares-de-eeuu-en-el-salvador/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "3c085f4f",
+   "war": "U.S. raid on Venezuela",
+   "backer": "Iran",
+   "helps": "Venezuela (Maduro's government)",
+   "kinds": [
+    "backs it in public and at the UN"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Iranian foreign ministry",
+     "via": null,
+     "text": "Iranian foreign ministry statements, December 2025 and January 2026",
+     "date": "2026-01",
+     "url": "https://www.tasnimnews.ir/en/news/2025/12/12/3469404/iran-condemns-us-naval-piracy-against-venezuelan-oil-tanker/amp",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Iran International",
+     "via": null,
+     "text": "Iran International, 3 January 2026, Iran's foreign ministry condemns the US attack on Venezuela as a blatant violation of sovereignty",
+     "date": "2026-01",
+     "url": "https://www.iranintl.com/en/202601037844",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Jerusalem Post",
+     "via": null,
+     "text": "Jerusalem Post, 3 January 2026, Iran and Hezbollah condemn the US operation on Venezuela; Russia offers mediation",
+     "date": "2026-01",
+     "url": "https://www.jpost.com/international/article-882159",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "c7672144",
+   "war": "U.S. strikes in Ecuador",
+   "backer": "Ecuador",
+   "helps": "United States",
+   "kinds": [
+    "troops",
+    "lets its bases be used"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Ecuadorian government",
+     "via": "Chronicle.lu",
+     "text": "Joint operation announced by both governments, 4 March 2026",
+     "date": "2026-03",
+     "url": "https://chronicle.lu/category/international-news/59887-us-ecuadorean-forces-take-action-in-ecuador-to-combat-drug-trafficking",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "BBC",
+     "via": null,
+     "text": "BBC, the page linked here",
+     "date": null,
+     "url": "https://www.bbc.com/news/articles/cgjzz4gn64zo",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "ABC News",
+     "via": "ABC7",
+     "text": "ABC News, U.S. military carries out its first land operation against cartels in Ecuador, per SOUTHCOM, 4 March 2026",
+     "date": "2026-03",
+     "url": "https://abc7.com/18673989/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Malay Mail",
+     "via": null,
+     "text": "Malay Mail, joint U.S.-Ecuador strikes target narcoterrorist groups in Sucumbíos on 6 March as Quito deepens security ties with Washington, 7 March 2026",
+     "date": "2026-03",
+     "url": "https://www.malaymail.com/news/world/2026/03/07/joint-usecuador-strikes-target-narcoterrorist-groups-as-quito-deepens-security-ties-with-washington/211714",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "96fbc671",
+   "war": "Ukraine",
+   "backer": "Türkiye",
+   "helps": "Ukraine",
+   "kinds": [
+    "drones",
+    "weapons"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "research",
+     "publisher": "SIPRI Arms Transfers Database",
+     "via": null,
+     "text": "SIPRI Arms Transfers Database, March 2026 release, deliveries to 2025",
+     "date": "2026-03",
+     "url": "https://www.sipri.org/databases/armstransfers",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "Baykar",
+     "via": null,
+     "text": "Baykar press statements on its drone plant near Kyiv",
+     "date": "2022-10",
+     "url": "https://baykartech.com/en/press/turkeys-baykar-to-complete-plant-in-ukraine-in-two-years-ceo/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "92726bad",
+   "war": "Eastern Congo",
+   "backer": "South Africa (for SADC)",
+   "helps": "Congolese government and allied militias",
+   "kinds": [
+    "troops"
+   ],
+   "ended": "2025-06",
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "SADC",
+     "via": null,
+     "text": "SADC press release on the phased withdrawal of SAMIDRC from Goma and Sake, June 2025",
+     "date": "2025-06",
+     "url": "https://www.sadc.int/document/sadc-continues-phased-withdrawal-samidrc-forces-goma-and-sake-eastern-drc",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "fba3cc45",
+   "war": "Somalia",
+   "backer": "Uganda",
+   "helps": "Federal government and AU mission",
+   "kinds": [
+    "troops"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Ugandan Ministry of Defence",
+     "via": null,
+     "text": "Uganda defence minister statement, 15 August 2026",
+     "date": "2026-08",
+     "url": "https://www.military.africa/2026/08/uganda-signals-continued-military-commitment-to-somalia/",
+     "counts": null
+    },
+    {
+     "class": "recipient",
+     "publisher": "African Union",
+     "via": null,
+     "text": "AU mission troop list",
+     "date": "2025-04",
+     "url": "https://www.thereporterethiopia.com/44556/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Military Africa",
+     "via": null,
+     "text": "Military Africa, the page linked here",
+     "date": null,
+     "url": "https://www.military.africa/2026/08/uganda-signals-continued-military-commitment-to-somalia/",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "Uganda People's Defence Forces",
+     "via": null,
+     "text": "UPDF, Defence Minister Kiryowa Kiwanuka tells AUSSOM troop-contributing countries that military action alone cannot bring stability to Somalia, 30 July 2026",
+     "date": "2026-07",
+     "url": "https://www.updf.go.ug/missions/hon-kiryowa-kiwanuka-rallies-aussom-to-pursue-comprehensive-approach-for-peace-in-somalia/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "People Daily",
+     "via": null,
+     "text": "People Daily, Uganda signals full troop withdrawal from Somalia after 19 years, army chief's post of January 2026",
+     "date": "2026-01",
+     "url": "https://peopledaily.digital/news/uganda-signals-full-troop-withdrawal-from-somalia-after-19-years/amp",
+     "counts": false
+    }
+   ]
+  },
+  {
+   "key": "9bf5b1ba",
+   "war": "Ukraine",
+   "backer": "North Korea",
+   "helps": "Russia",
+   "kinds": [
+    "troops",
+    "weapons"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "recipient",
+     "publisher": "Russian General Staff",
+     "via": null,
+     "text": "Russian General Staff statement, 26 April 2025",
+     "date": "2025-04",
+     "url": "http://www.kremlin.ru/events/president/news/76800",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "KCNA",
+     "via": null,
+     "text": "KCNA statement, 28 April 2025",
+     "date": "2025-04",
+     "url": "https://tass.com/world/1950153",
+     "counts": null
+    },
+    {
+     "class": "government",
+     "publisher": "South Korean National Intelligence Service",
+     "via": null,
+     "text": "South Korean intelligence briefings, 2026",
+     "date": "2026",
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Kyiv Independent",
+     "via": null,
+     "text": "Kyiv Independent, 13 February 2026, on North Korean troops in Kursk at the start of 2026",
+     "date": "2026-02",
+     "url": "https://kyivindependent.com/nearly-11-000-north-korean-troops-stationed-in-russias-kursk-oblast-at-start-of-2026-media-reports/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "The Korea Times",
+     "via": null,
+     "text": "The Korea Times, KCNA reports Kim Jong-un welcoming home about 1,000 military engineers of the 528th Regiment after about 120 days clearing mines in Kursk, nine killed, 13 December 2025",
+     "date": "2025-12",
+     "url": "https://www.koreatimes.co.kr/foreignaffairs/northkorea/20251213/n-korea-welcomes-engineer-troops-return-from-russias-kursk-region",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "a6c1c3f6",
+   "war": "U.S. fuel blockade on Cuba",
+   "backer": "Russia",
+   "helps": "Cuba",
+   "kinds": [
+    "oil and fuel"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "press",
+     "publisher": "The Guardian",
+     "via": null,
+     "text": "The Guardian on the delivery of 100,000 tonnes of crude by the tanker Anatoly Kolodkin, 30 March 2026",
+     "date": "2026-03",
+     "url": "https://www.theguardian.com/us-news/2026/mar/29/us-russian-oil-tanker-cuba-blockade",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Associated Press",
+     "via": "PBS NewsHour",
+     "text": "Associated Press, sanctioned Russian tanker Anatoly Kolodkin docks at Matanzas with about 730,000 barrels after the U.S. allowed passage; Cuba's energy minister thanks Russia, 31 March 2026",
+     "date": "2026-03",
+     "url": "https://www.pbs.org/newshour/world/sanctioned-russian-tanker-docks-in-cuba-after-u-s-allows-passage",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Reuters",
+     "via": "Baird Maritime",
+     "text": "Reuters, Russian tanker begins discharging about 700,000 barrels of Urals crude at Matanzas; Peskov says Moscow will keep working on further shipments, 31 March 2026",
+     "date": "2026-03",
+     "url": "https://www.bairdmaritime.com/shipping/tankers/russian-tanker-begins-discharging-oil-cargo-in-cuba",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "a5840aed",
+   "war": "U.S. fuel blockade on Cuba",
+   "backer": "Mexico",
+   "helps": "Cuba",
+   "kinds": [
+    "money"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Mexican government",
+     "via": null,
+     "text": "Mexican humanitarian aid ships, February 2026; oil shipments halted 27 January 2026 under tariff threat",
+     "date": "2026-02",
+     "url": "https://static.poder360.com.br/2026/02/comunicado-mexico-ajuda-cuba-8fev2026.pdf",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Reuters",
+     "via": null,
+     "text": "Reuters, the page linked here",
+     "date": null,
+     "url": "https://www.reuters.com/business/energy/sheinbaum-does-not-deny-report-mexico-halted-oil-shipment-cuba-2026-01-27/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, two Mexican ships including the Papaloapan dock in Havana with humanitarian aid; Sheinbaum says more will follow and calls the U.S. oil blockade unfair, 12 February 2026",
+     "date": "2026-02",
+     "url": "https://www.aljazeera.com/news/2026/2/12/mexican-ships-arrive-in-cuba-with-humanitarian-cargo-amid-us-oil-blockade",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "622f8120",
+   "war": "Ukraine",
+   "backer": "Belarus",
+   "helps": "Russia",
+   "kinds": [
+    "lets its bases be used",
+    "training"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Belarusian Ministry of Defence",
+     "via": "WTOP",
+     "text": "Belarus and Russia joint military statements since 2022; joint nuclear drills, May 2026",
+     "date": "2026-05",
+     "url": "https://wtop.com/russia-ukraine-war-news/2026/05/belarus-launches-joint-drills-with-russia-to-practice-nuclear-weapons-use/",
+     "counts": null
+    },
+    {
+     "class": "research",
+     "publisher": "Carnegie Endowment",
+     "via": null,
+     "text": "Carnegie Endowment, the page linked here",
+     "date": null,
+     "url": "https://carnegieendowment.org/russia-eurasia/politika/2026/05/belarus-ukraine-new-war",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "b17bf29c",
+   "war": "The Gulf and Hormuz",
+   "backer": "China",
+   "helps": "Iran and allied groups (Hezbollah, Houthis, Iraqi militias)",
+   "kinds": [
+    "backs it in public and at the UN",
+    "money"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Chinese mission to the UN",
+     "via": null,
+     "text": "Chinese vetoes at the UN Security Council, 7 April and September 2026; China buys more than 80 percent of Iran's shipped oil",
+     "date": "2026-09",
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "reference",
+     "publisher": "U.S. Department of Justice",
+     "via": null,
+     "text": "Wikipedia, the page linked here",
+     "date": null,
+     "url": "https://en.wikipedia.org/wiki/China_in_the_2026_Iran_war",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "UN News",
+     "via": null,
+     "text": "UN News, 7 April 2026, Russia and China veto the Security Council resolution on the Strait of Hormuz; Fu Cong says it misses the root causes",
+     "date": "2026-04",
+     "url": "https://news.un.org/en/story/2026/04/1167261",
+     "counts": null
+    },
+    {
+     "class": "opponent",
+     "publisher": "Anadolu Agency",
+     "via": null,
+     "text": "Anadolu Agency, 7 April 2026, US envoy Waltz says China imports most of Iran's illicit oil after the Hormuz veto",
+     "date": "2026-04",
+     "url": "https://www.aa.com.tr/en/middle-east/us-warns-irans-hormuz-blockade-may-be-its-last-act-after-russia-china-veto-un-resolution/3896533",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "New York Times",
+     "via": null,
+     "text": "New York Times, 17 September 2026, Russia and China veto US bid to renew UN monitoring of Iran's nuclear programme",
+     "date": "2026-09",
+     "url": null,
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "56c61b7f",
+   "war": "U.S. strikes on boats",
+   "backer": "Trinidad and Tobago",
+   "helps": "United States",
+   "kinds": [
+    "lets its bases be used"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Trinidad and Tobago government",
+     "via": null,
+     "text": "Trinidad and Tobago approval of U.S. radar and aircraft use, late 2025",
+     "date": "2025",
+     "url": "https://thedefensepost.com/2025/12/04/trinidad-tobago-us-radar-venezuela/",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "Trinidad and Tobago foreign ministry",
+     "via": null,
+     "text": "Trinidad and Tobago foreign ministry, 15 December 2025, approves US military aircraft transits and notes a US-installed radar system",
+     "date": "2025-12",
+     "url": "https://foreign.gov.tt/resources/news/trinidad-and-tobago-reaffirms-sustained-security-cooperation-with-united-states/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "f84ecef3",
+   "war": "The Gulf and Hormuz",
+   "backer": "Türkiye",
+   "helps": "United States",
+   "kinds": [
+    "shoots down missiles and drones aimed at it"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Turkish Ministry of National Defence",
+     "via": null,
+     "text": "Turkish Ministry of National Defense statements on NATO Patriot batteries at Incirlik, March 2026",
+     "date": "2026-03",
+     "url": "https://www.milliyet.com.tr/7556700",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Defense News",
+     "via": null,
+     "text": "Defense News, the page linked here",
+     "date": null,
+     "url": "https://www.defensenews.com/global/europe/2026/03/18/turkey-deploys-third-nato-patriot-system-to-repel-iranian-missiles/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, Türkiye says NATO is bringing in another Patriot battery for Incirlik after Iranian missile interceptions, 18 March 2026",
+     "date": "2026-03",
+     "url": "https://www.aljazeera.com/news/2026/3/18/turkiye-says-nato-bringing-in-more-defences-after-missile-interceptions",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al-Monitor",
+     "via": null,
+     "text": "Al-Monitor, Türkiye's defence ministry says a ballistic munition launched from Iran and entering Turkish airspace was neutralised by NATO air and missile defence assets, the third such interception, 13 March 2026",
+     "date": "2026-03",
+     "url": "https://www.al-monitor.com/originals/2026/03/turkey-confirms-third-ballistic-missile-iran-shot-down",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "028af652",
+   "war": "The Sahel",
+   "backer": "Iran",
+   "helps": "Mali, Burkina Faso and Niger (military governments)",
+   "kinds": [
+    "drones",
+    "training"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "research",
+     "publisher": "Arab Gulf States Institute",
+     "via": null,
+     "text": "Arab Gulf States Institute, Iran Ups Its Engagement With the Sahel, January 2026",
+     "date": "2026-01",
+     "url": "https://agsi.org/analysis/iran-ups-its-engagement-with-the-sahel/",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "Iranian government",
+     "via": null,
+     "text": "Iranian government statement on the defence ministers' meeting, 23 February 2026",
+     "date": "2026-02",
+     "url": "https://x.com/Iran_GOV/status/2025846263539699877",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Xinhua",
+     "via": null,
+     "text": "Xinhua, Iran seeks stronger ties with Burkina Faso: Pezeshkian meets Burkina Faso's defence minister in Tehran and offers to share expertise in science, industry and defence, 24 February 2026",
+     "date": "2026-02",
+     "url": "https://english.news.cn/20260224/16d9871ba0814e2f9a1c8060a72595b9/c.html",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "ec0e5d01",
+   "war": "Somalia",
+   "backer": "Türkiye",
+   "helps": "Federal government and AU mission",
+   "kinds": [
+    "training",
+    "drones",
+    "lets its bases be used"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Turkish Ministry of National Defence",
+     "via": null,
+     "text": "Turkish delivery of two Akinci armed drones, March 2025; TURKSOM training base in Mogadishu",
+     "date": "2025-03",
+     "url": "https://www.military.africa/2026/04/flyover-of-turkish-f-16s-during-somali-anniversary/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Turkish Minute",
+     "via": null,
+     "text": "Turkish Minute, the page linked here",
+     "date": null,
+     "url": "https://turkishminute.com/2025/03/19/turkey-delivers-2-akinci-armed-drones-to-somalia-amid-tensions-with-us-report/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, Turkiye and Somali forces free a hijacked cargo vessel under their defence cooperation agreement, 30 August 2026",
+     "date": "2026-08",
+     "url": "https://www.aljazeera.com/news/2026/8/30/turkiye-somalia-forces-frees-cargo-vessel-hijacked-by-pirates",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "defenceWeb",
+     "via": null,
+     "text": "defenceWeb, Turkiye builds ties through training: Camp TurkSom in Mogadishu trains Somali junior officers, 7 September 2026",
+     "date": "2026-09",
+     "url": "https://defenceweb.co.za/land/land-land/turkiye-builds-ties-through-training/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "24da94a3",
+   "war": "Ethiopia",
+   "backer": "Egypt",
+   "helps": "Eritrea",
+   "kinds": [
+    "backs it in public and at the UN"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Egyptian foreign ministry",
+     "via": "AllAfrica",
+     "text": "Joint declaration of Egypt, Eritrea, Somalia and Sudan, 4 October 2026",
+     "date": "2026-10",
+     "url": "https://allafrica.com/stories/202610050188.html",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "Egyptian government",
+     "via": null,
+     "text": "Egypt-Eritrea port agreements, December 2025 to July 2026",
+     "date": "2026-07",
+     "url": "https://meobserver.news/trade/2026/05/17/egypt-and-eritrea-sign-maritime-cooperation/",
+     "counts": null
+    },
+    {
+     "class": "research",
+     "publisher": "Critical Threats",
+     "via": null,
+     "text": "Critical Threats, the page linked here",
+     "date": null,
+     "url": "https://www.criticalthreats.org/analysis/Ethiopia-eritrea-tigray-tplf-egypt-somalia-sudan-saf-mali-fla-jnim",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Egypt Independent",
+     "via": null,
+     "text": "Egypt Independent, text of the El Alamein Joint Declaration after the summit called by President Sisi with Eritrea, Somalia and Sudan, 5 October 2026",
+     "date": "2026-10",
+     "url": "https://www.egyptindependent.com/?p=2835417",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Logistics Business Africa",
+     "via": null,
+     "text": "Logistics Business Africa, Egypt and Eritrea sign a maritime transport agreement in Asmara setting up a direct shipping line between their ports, 18 May 2026",
+     "date": "2026-05",
+     "url": "https://www.logisticsbusinessafrica.co.za/egypt-and-eritrea-forge-new-maritime-trade-routes-amid-global-disruptions/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Capital Ethiopia, citing The National",
+     "via": "The National",
+     "text": "Capital Ethiopia, citing The National: Egypt agreed to upgrade Eritrea's Assab port and Djibouti's Doraleh under discreet agreements, on unnamed Cairo sources, 28 December 2025",
+     "date": "2025-12",
+     "url": "https://capitalethiopia.com/2025/12/28/egypt-has-agreed-to-develop-assab-and-doraleh-considered-as-pressure-on-ethiopia",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "972e1404",
+   "war": "U.S. strikes on boats",
+   "backer": "Dominican Republic",
+   "helps": "United States",
+   "kinds": [
+    "lets its bases be used"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Dominican government",
+     "via": null,
+     "text": "Dominican government grant of San Isidro air base and Las Americas airport to U.S. forces, 26 November 2025",
+     "date": "2025-11",
+     "url": "https://deultimominuto.com/nacionales/gobierno-permite-a-eeuu/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "PBS NewsHour (AP)",
+     "via": null,
+     "text": "PBS NewsHour (AP), 26 November 2025, Abinader grants US access to San Isidro Air Base and Las Américas airport for refuelling and equipment",
+     "date": "2025-11",
+     "url": "https://www.pbs.org/newshour/politics/dominican-republic-grants-u-s-access-to-restricted-areas-for-its-fight-against-drug-trafficking",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "dc567ce5",
+   "war": "The Gulf and Hormuz",
+   "backer": "Saudi Arabia",
+   "helps": "United States",
+   "kinds": [
+    "air strikes on its enemy"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "press",
+     "publisher": "Saudi Ministry of Defense",
+     "via": null,
+     "text": "Wall Street Journal, 16 May 2026, on secret Saudi and UAE strikes on Iran",
+     "date": "2026-05",
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "Saudi Ministry of Defense",
+     "via": null,
+     "text": "U.S. and Saudi strikes on militias in Iraq, 29 July 2026",
+     "date": "2026-07",
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Washington Times",
+     "via": null,
+     "text": "Washington Times, the page linked here",
+     "date": null,
+     "url": "https://www.washingtontimes.com/news/2026/jul/29/jordan-intercepts-iranian-missiles-saudi-arabia-us-launch-strikes/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "0d8f1f60",
+   "war": "Sudan",
+   "backer": "Türkiye",
+   "helps": "Sudanese Armed Forces",
+   "kinds": [
+    "drones"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "press",
+     "publisher": null,
+     "via": null,
+     "text": "Press reports on Baykar's $120 million deal for Bayraktar TB2 and Akinci drones, 2023 to 2025",
+     "date": "2025",
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Middle East Eye",
+     "via": null,
+     "text": "Middle East Eye, November 2025",
+     "date": "2025-11",
+     "url": "https://www.middleeasteye.net/news/egypt-and-turkey-move-support-saf-following-fall-el-fasher",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Washington Post",
+     "via": null,
+     "text": "Washington Post, A Turkish arms firm helped fuel Sudan's brutal civil war, records show, 7 March 2025",
+     "date": "2025-03",
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "defenceWeb",
+     "via": null,
+     "text": "defenceWeb, Regional powers feed Sudan's fight: Turkey supplies TB2 and Akinci drones to the army, 19 February 2026",
+     "date": "2026-02",
+     "url": "https://defenceweb.co.za/land/land-land/regional-powers-feed-sudans-fight/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Euronews",
+     "via": null,
+     "text": "Euronews, on the Washington Post report: Baykar shipped drones, warheads and ammunition to Sudan's army between August and November 2024 under a 110.7 million euro contract dated 16 November 2023 with the army's Defense Industries System, 9 March 2025",
+     "date": "2025-03",
+     "url": "https://www.euronews.com/2025/03/09/turkish-defence-firm-linked-to-sudans-devastating-civil-war-after-alleged-secret-arms-ship",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, drone warfare in Sudan: Turkey provided Bayraktar drones to the army via Egypt, citing Critical Threats, 3 February 2026",
+     "date": "2026-02",
+     "url": "https://www.aljazeera.com/news/longform/2026/2/3/drone-warfare-in-sudan-tracking-1000-aerial-attacks-since-april-2023",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Reuters",
+     "via": "Cyprus Mail",
+     "text": "Reuters, an Akinci-type drone photographed at Egypt's East Oweinat base used for strikes in Sudan; five of six tracked flights into the base since September came from Turkey, 2 February 2026",
+     "date": "2026-02",
+     "url": "https://cyprus-mail.com/2026/02/02/egypts-drone-deployment-to-border-raises-stakes-in-sudans-civil-war",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "1b7e6c7e",
+   "war": "Myanmar",
+   "backer": "China",
+   "helps": "Military-led government",
+   "kinds": [
+    "weapons"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "document",
+     "publisher": "Chinese foreign ministry",
+     "via": null,
+     "text": "UN Special Rapporteur on Myanmar, The Billion Dollar Death Trade, May 2023",
+     "date": "2023-05",
+     "url": "https://www.ohchr.org/en/documents/thematic-reports/ahrc53crp2-billion-dollar-death-trade-international-arms-networks-enable",
+     "counts": null
+    },
+    {
+     "class": "research",
+     "publisher": "Human Rights Watch",
+     "via": null,
+     "text": "Human Rights Watch, World Report 2026, Myanmar chapter: China and Russia continue to provide arms and military equipment, 8 January 2026",
+     "date": "2026-01",
+     "url": "https://www.hrw.org/world-report/2026/country-chapters/myanmar",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, Air raids, conscripts and China: how Myanmar's military is regaining ground, 30 August 2026",
+     "date": "2026-08",
+     "url": "https://www.aljazeera.com/news/2026/8/30/air-raids-conscripts-and-china-how-myanmars-military-is-regaining-ground",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "Chinese Ministry of Foreign Affairs (Chinese Embassy in Myanmar item)",
+     "via": null,
+     "text": "Chinese Ministry of Foreign Affairs, Ambassador Ma Jia congratulates president-elect Min Aung Hlaing on his election, 6 April 2026",
+     "date": "2026-04",
+     "url": "https://www.mfa.gov.cn/eng/xw/zwbd/202604/t20260414_11891306.html",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "Chinese Ministry of Foreign Affairs",
+     "via": null,
+     "text": "Chinese Ministry of Foreign Affairs, Wang Yi meets Myanmar's new foreign minister in Nay Pyi Taw and says China firmly supports Myanmar in safeguarding its sovereignty, security and development interests, 25 April 2026",
+     "date": "2026-04",
+     "url": "https://www.mfa.gov.cn/eng/wjbzhd/202604/t20260427_11900282.html",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Thairath",
+     "via": null,
+     "text": "Thairath, China is the first country to praise Myanmar's election; Guo Jiakun's remarks at a Beijing press conference, 28 January 2026",
+     "date": "2026-01",
+     "url": "https://en.thairath.co.th/news/foreign/2910560",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "01a78daf",
+   "war": "Haiti",
+   "backer": "Canada",
+   "helps": "Haitian government and the foreign force",
+   "kinds": [
+    "money"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Government of Canada",
+     "via": null,
+     "text": "Government of Canada, Canada-Haiti relations, page dated 14 September 2026",
+     "date": "2026-09",
+     "url": "https://www.international.gc.ca/country-pays/haiti/relations.aspx?lang=eng",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Le Nouvelliste",
+     "via": null,
+     "text": "Le Nouvelliste, Canada announces CAD 26.3 million for Haiti security, mainly to strengthen the Gang Suppression Force, after the OAS General Assembly, 29 June 2026",
+     "date": "2026-06",
+     "url": "https://lenouvelliste.com/en/article/269080/securite-le-canada-annonce-263-millions-de-dollars-pour-haiti",
+     "counts": null
+    },
+    {
+     "class": "research",
+     "publisher": "Carnegie Endowment for International Peace",
+     "via": null,
+     "text": "Carnegie Endowment, the United States and Canada provided the bulk of the MSS mission's financial and logistical support, 9 July 2026",
+     "date": "2026-07",
+     "url": "https://carnegieendowment.org/research/2026/07/recalibrating-us-policy-toward-haiti",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "d7f656be",
+   "war": "Somalia",
+   "backer": "Kenya",
+   "helps": "Federal government and AU mission",
+   "kinds": [
+    "troops"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "recipient",
+     "publisher": "ISS Africa",
+     "via": null,
+     "text": "AU mission contributor figures, as reported by ISS Africa, 29 July 2026",
+     "date": "2026-07",
+     "url": "https://issafrica.org/iss-today/rethinking-the-au-s-somalia-peace-mission-after-us-funding-cuts",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Rio Times",
+     "via": null,
+     "text": "Rio Times, AUSSOM allocations: Uganda 4,500, Ethiopia 2,500, Djibouti 1,520, Kenya 1,410, Egypt 1,091, 17 August 2026",
+     "date": "2026-08",
+     "url": "https://riotimesonline.com/uganda-troops-stay-somalia-2026",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "The Reporter (Ethiopia)",
+     "via": null,
+     "text": "The Reporter, AUSSOM troop composition confirmed by the Somalia Operations Coordination Committee, 5 April 2025",
+     "date": "2025-04",
+     "url": "https://www.thereporterethiopia.com/44556/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "5ce91ec9",
+   "war": "Eastern Congo",
+   "backer": "Uganda",
+   "helps": "M23 (AFC)",
+   "kinds": [
+    "lets its fighters shelter inside its borders",
+    "lets supplies cross"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "document",
+     "publisher": "UN Security Council Group of Experts",
+     "via": null,
+     "text": "UN Security Council Group of Experts on the DRC, July 2024 and July 2025 reports",
+     "date": "2025-07",
+     "url": "https://documents.un.org/doc/undoc/gen/n24/118/81/pdf/n2411881.pdf",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, the page linked here",
+     "date": null,
+     "url": "https://www.aljazeera.com/news/2024/7/9/uganda-backed-m23-in-drc-rwandas-de-facto-control-on-group-un-experts",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "14a0a20a",
+   "war": "U.S. raid on Venezuela",
+   "backer": "China",
+   "helps": "Venezuela (Maduro's government)",
+   "kinds": [
+    "backs it in public and at the UN"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Chinese foreign ministry",
+     "via": "Capital FM",
+     "text": "Chinese foreign ministry statement, 3 January 2026, and at the UN Security Council",
+     "date": "2026-01",
+     "url": "https://capitalfm.africa/china-condemns-u-s-military-action-against-venezuela-at-un-security-council/",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "Chinese foreign ministry",
+     "via": null,
+     "text": "China foreign ministry, 3 January 2026, deeply shocked by and strongly condemns the US's blatant use of force against a sovereign state",
+     "date": "2026-01",
+     "url": "https://www.fmprc.gov.cn/mfa_eng/xw/fyrbt/202601/t20260103_11797170.html",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "CNN Brasil",
+     "via": null,
+     "text": "CNN Brasil, at the UN China says it is deeply shocked and strongly condemns the illegal and bullying acts of the United States and asks for Maduro's release, 5 January 2026",
+     "date": "2026-01",
+     "url": "https://www.cnnbrasil.com.br/internacional/na-onu-china-diz-estar-chocada-e-pede-que-eua-libertem-maduro/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "28defe6f",
+   "war": "U.S. raid on Venezuela",
+   "backer": "Russia",
+   "helps": "Venezuela (Maduro's government)",
+   "kinds": [
+    "backs it in public and at the UN"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Russian mission to the UN",
+     "via": null,
+     "text": "Russian statements at the UN Security Council, January 2026",
+     "date": "2026-01",
+     "url": "https://press.un.org/en/2026/sc16271.doc.htm",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "UN News",
+     "via": null,
+     "text": "UN News, 5 January 2026, Security Council divided after Maduro's seizure; Russia and China call the US action armed aggression",
+     "date": "2026-01",
+     "url": "https://news.un.org/en/story/2026/01/1166706",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Moscow Times",
+     "via": null,
+     "text": "Moscow Times, 3 January 2026, Russia's foreign ministry calls the capture an encroachment on sovereignty, demands Maduro's release",
+     "date": "2026-01",
+     "url": "https://www.themoscowtimes.com/2026/01/03/russia-condemns-us-military-strikes-against-venezuela-a91602",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "eabd3c44",
+   "war": "Syria",
+   "backer": "Qatar",
+   "helps": "Transitional government",
+   "kinds": [
+    "money"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Qatari government",
+     "via": null,
+     "text": "Qatari grant of $29 million a month for state salaries from May 2025; gas deliveries via Jordan and Türkiye",
+     "date": "2025-05",
+     "url": "https://npasyria.com/en/125530/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, the page linked here",
+     "date": null,
+     "url": "https://www.aljazeera.com/news/2025/5/31/saudi-arabia-says-it-will-jointly-fund-syria-state-salaries-with-qatar",
+     "counts": null
+    },
+    {
+     "class": "recipient",
+     "publisher": "SANA",
+     "via": null,
+     "text": "SANA, 1 August 2025, Barrack thanks Qatar for funding gas supplies to Syria via Türkiye from 2 August",
+     "date": "2025-08",
+     "url": "https://sana.sy/en/syria/2261033/",
+     "counts": null
+    },
+    {
+     "class": "recipient",
+     "publisher": "SANA",
+     "via": null,
+     "text": "SANA, 28 October 2025, Syria signs a $28m-a-month Qatar-Saudi grant deal for public sector salaries, three months renewable",
+     "date": "2025-10",
+     "url": "https://sana.sy/en/economic/2274550/",
+     "counts": null
+    },
+    {
+     "class": "recipient",
+     "publisher": "SANA",
+     "via": null,
+     "text": "SANA, 25 March 2026, finance minister says salaries are now fully funded from state resources; Saudi-Qatari grants totalled $86m",
+     "date": "2026-03",
+     "url": "https://sana.sy/en/economic/2305175/",
+     "counts": false
+    }
+   ]
+  },
+  {
+   "key": "12d053cb",
+   "war": "Ukraine",
+   "backer": "China",
+   "helps": "Russia",
+   "kinds": [
+    "parts for weapons",
+    "money"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "opponent",
+     "publisher": "U.S. Treasury",
+     "via": null,
+     "text": "U.S. Treasury, 17 October 2024: sanctions on Chinese firms making engines and parts for Russia's Garpiya attack drones",
+     "date": "2024-10",
+     "url": "https://home.treasury.gov/news/press-releases/jy2651",
+     "counts": null
+    },
+    {
+     "class": "opponent",
+     "publisher": "European Union",
+     "via": null,
+     "text": "EU sanctions packages",
+     "date": "2026-04",
+     "url": "https://www.consilium.europa.eu/en/press/press-releases/2026/04/23/russia-s-war-of-aggression-against-ukraine-20th-round-of-stern-eu-sanctions-hits-energy-military-industrial-complex-trade-and-financial-services-including-crypto/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Reuters",
+     "via": "Yahoo News",
+     "text": "Reuters, 13 September 2024, on the Garpiya drone built in Russia with Chinese engines",
+     "date": "2024-09",
+     "url": "https://www.yahoo.com/news/exclusive-russia-produces-kamikaze-drone-101314697.html",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Kyiv Independent",
+     "via": null,
+     "text": "Kyiv Independent, 8 July 2025, Ukraine sanctions five Chinese firms over parts found in Russian Shahed-type drones",
+     "date": "2025-07",
+     "url": "https://kyivindependent.com/ukraine-sanctions-5-chinese-firms-for-supplying-components-used-in-russian-drones-06-2025/",
+     "counts": null
+    },
+    {
+     "class": "research",
+     "publisher": "Council",
+     "via": null,
+     "text": "Council on Foreign Relations, 7 January 2026, China in Russia and Ukraine: Chinese drone-part exports to Russia surged in late 2025",
+     "date": "2026-01",
+     "url": "https://www.cfr.org/articles/china-russia-and-ukraine-october-2025",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Hvylya",
+     "via": null,
+     "text": "Hvylya, the European Commission's proposed 20th sanctions list names 21 Chinese companies, among them drone-engine maker Jiangxi Xintuo (T-Motor), servo maker KingMax Hobby and Beijing Timingtron, for parts used in Russian drones, 10 February 2026",
+     "date": "2026-02",
+     "url": "https://en.hvylya.net/news/496-eu-targets-chinese-turkish-firms-in-milestone-20th-russia-sanctions-package",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "38ae97f1",
+   "war": "Yemen",
+   "backer": "United States",
+   "helps": "Yemeni government and allied forces",
+   "kinds": [
+    "air strikes on its enemy"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "U.S. Central Command",
+     "via": null,
+     "text": "U.S. Central Command, joint strikes in Yemen, 24 February 2026",
+     "date": "2026-02",
+     "url": "https://www.centcom.mil/MEDIA/igphoto/2003399524/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "ffbf2de3",
+   "war": "Myanmar",
+   "backer": "India",
+   "helps": "Military-led government",
+   "kinds": [
+    "weapons"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "document",
+     "publisher": "UN Special Rapporteur",
+     "via": null,
+     "text": "UN Special Rapporteur on Myanmar, The Billion Dollar Death Trade, May 2023",
+     "date": "2023-05",
+     "url": "https://www.ohchr.org/en/documents/thematic-reports/ahrc53crp2-billion-dollar-death-trade-international-arms-networks-enable",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "8a5b7644",
+   "war": "Haiti",
+   "backer": "Kenya",
+   "helps": "Haitian government and the foreign force",
+   "kinds": [
+    "police"
+   ],
+   "ended": "2026-04",
+   "sources": [
+    {
+     "class": "press",
+     "publisher": "Haitian Times",
+     "via": null,
+     "text": "Haitian Times on the last Kenyan police leaving on 27 April 2026 as the Multinational Security Support mission closed",
+     "date": "2026-04",
+     "url": "https://haitiantimes.com/2026/04/28/kenyan-officers-leave-haiti-mission-end-mandate/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "20aece06",
+   "war": "The Gulf and Hormuz",
+   "backer": "Russia",
+   "helps": "Iran and allied groups (Hezbollah, Houthis, Iraqi militias)",
+   "kinds": [
+    "intelligence",
+    "weapons",
+    "drones"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "press",
+     "publisher": "Russian mission to the UN",
+     "via": null,
+     "text": "CNN and Washington Post, 6 March 2026, citing U.S. officials",
+     "date": "2026-03",
+     "url": "https://www.cnn.com/2026/03/06/politics/russia-aiding-iran-targeting",
+     "counts": null
+    },
+    {
+     "class": "opponent",
+     "publisher": "U.S. officials, unnamed",
+     "via": "AP",
+     "text": "U.S. officials on drone deliveries, 27 March 2026",
+     "date": "2026-03",
+     "url": "https://wtop.com/russia-ukraine-war-news/2026/03/russia-is-sending-upgraded-drones-used-in-the-ukraine-war-to-iran-officials-say/",
+     "counts": null
+    },
+    {
+     "class": "government",
+     "publisher": "European officials, unnamed",
+     "via": "AP",
+     "text": "European officials on drone deliveries, 27 March 2026",
+     "date": "2026-03",
+     "url": "https://wtop.com/russia-ukraine-war-news/2026/03/russia-is-sending-upgraded-drones-used-in-the-ukraine-war-to-iran-officials-say/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Bloomberg",
+     "via": null,
+     "text": "Bloomberg, October 2026, on missile resupply",
+     "date": "2026-10",
+     "url": "https://www.haaretz.com/middle-east-news/iran/2026-10-10/ty-article/russia-supplying-iran-with-missiles-as-tehran-rebuilds-arsenal-report-says/000001a1-259c-d0ca-a7b7-bfbeebee0000",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "NBC News",
+     "via": null,
+     "text": "NBC News, Russia is shipping TNT, ammunition and drone parts to Iran across the Caspian Sea to Amirabad port, citing a European government document confirmed by a Western official, 17 August 2026",
+     "date": "2026-08",
+     "url": "https://www.nbcnews.com/politics/national-security/russia-shipping-explosives-iran-bolster-missile-drone-arsenal-us-war-rcna592892",
+     "counts": null
+    },
+    {
+     "class": "research",
+     "publisher": "FDD's Long War Journal",
+     "via": null,
+     "text": "FDD's Long War Journal, Russia helps Iran sharpen its sword: Russian explosives, ammunition and drone parts move to Iran by Caspian vessels of the sanctioned firm MG-FLOT, 19 August 2026",
+     "date": "2026-08",
+     "url": "https://www.longwarjournal.org/archives/2026/08/russia-helps-iran-sharpen-its-sword.php",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Bloomberg",
+     "via": null,
+     "text": "Bloomberg, Iran likely added Russian-made missiles as it rebuilt its arsenal during the ceasefire, citing Western intelligence assessments, 12 June 2026",
+     "date": "2026-06",
+     "url": "https://www.bloomberg.com/news/articles/2026-06-12/iran-likely-added-russian-made-missiles-as-it-rebuilt-arsenal",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Ukrainska Pravda",
+     "via": null,
+     "text": "Ukrainska Pravda, relaying Bloomberg: Western intelligence believes Iran restocked with new Russian missiles during the eight-week ceasefire, 13 June 2026",
+     "date": "2026-06",
+     "url": "https://www.pravda.com.ua/eng/news/2026/06/13/8039171/",
+     "counts": null
+    },
+    {
+     "class": "document",
+     "publisher": "UN Meetings Coverage",
+     "via": null,
+     "text": "UN Meetings Coverage, General Assembly debates the Strait of Hormuz closure after China and Russia veto the Gulf states' draft; both explain their vetoes, April 2026",
+     "date": "2026-04",
+     "url": "https://press.un.org/en/2026/ga12758.doc.htm",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "bc9dd1dc",
+   "war": "Gaza and Lebanon",
+   "backer": "Türkiye",
+   "helps": "Hamas",
+   "kinds": [
+    "backs it in public and at the UN",
+    "hosts its leaders"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Turkish government",
+     "via": null,
+     "text": "Turkish government statements",
+     "date": null,
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "Turkish presidency",
+     "via": null,
+     "text": "Erdogan received Hamas leaders in Istanbul, April 2026",
+     "date": "2026-04",
+     "url": "https://www.aa.com.tr/en/middle-east/turkish-president-erdogan-receives-hamas-delegation-in-istanbul/3892068",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Anadolu Agency",
+     "via": null,
+     "text": "Anadolu Agency, the page linked here",
+     "date": null,
+     "url": "https://www.aa.com.tr/en/middle-east/turkish-president-erdogan-receives-hamas-delegation-in-istanbul/3892068",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "d08105f1",
+   "war": "Ukraine",
+   "backer": "Iran",
+   "helps": "Russia",
+   "kinds": [
+    "drones",
+    "parts for weapons"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "document",
+     "publisher": "Conflict Armament Research field dispatches",
+     "via": null,
+     "text": "Conflict Armament Research field dispatches on Shahed drones recovered in Ukraine, November 2022 to August 2023",
+     "date": "2023-08",
+     "url": "https://www.conflictarm.com/field-dispatches/",
+     "counts": null
+    },
+    {
+     "class": "opponent",
+     "publisher": "U.S. Treasury",
+     "via": null,
+     "text": "U.S., U.K. and EU sanctions",
+     "date": "2024-04",
+     "url": "https://home.treasury.gov/news/press-releases/jy2295",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Jordan News",
+     "via": "Bloomberg",
+     "text": "Jordan News, 13 January 2026, citing Bloomberg: Iran supplied Russia over $4bn in missiles, Shahed drones and shells since 2021",
+     "date": "2026-01",
+     "url": "https://www.jordannews.jo/Section-111/All/Iran-Supplied-Russia-with-Missiles-and-Weapons-Worth-Over-4-Billion-Since-2021-48062",
+     "counts": false
+    },
+    {
+     "class": "press",
+     "publisher": "Iran International",
+     "via": "AP",
+     "text": "Iran International, 27 March 2026, citing AP: Russia is sending upgraded drones to Iran, US and European officials say",
+     "date": "2026-03",
+     "url": "https://www.iranintl.com/en/202603279334",
+     "counts": false
+    },
+    {
+     "class": "opponent",
+     "publisher": "LIGA.net",
+     "via": null,
+     "text": "LIGA.net, Ukraine's military intelligence (HUR) says Iran has stopped supplying complete Shahed drones to Russia and still sends some avionics and drone parts, 3 July 2025",
+     "date": "2025-07",
+     "url": "https://news.liga.net/en/politics/news/iran-has-stopped-supplying-shahids-to-russia-intelligence-reports-what-kind-of-assistance-continues-to-be-provided",
+     "counts": false
+    },
+    {
+     "class": "opponent",
+     "publisher": "Kyiv Independent",
+     "via": null,
+     "text": "Kyiv Independent, citing HUR spokesman Yusov: Iran delivered more than 350 Fath-360 missiles to Russia but Ukraine has not confirmed a single launch; HUR says the Kremlin keeps close ties with Iran, 26 January 2026",
+     "date": "2026-01",
+     "url": "https://kyivindependent.com/exclusive-iran-gave-russia-over-350-fath-missiles/",
+     "counts": false
+    }
+   ]
+  },
+  {
+   "key": "31a718d7",
+   "war": "Yemen",
+   "backer": "Russia",
+   "helps": "Houthis (Ansar Allah)",
+   "kinds": [
+    "weapons",
+    "money"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "opponent",
+     "publisher": "U.S. Treasury",
+     "via": null,
+     "text": "U.S. Treasury sanctions, 5 March and 2 April 2025",
+     "date": "2025-04",
+     "url": "https://content.govdelivery.com/accounts/USTREAS/bulletins/3d5616e",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Reuters",
+     "via": null,
+     "text": "Reuters, September 2024, on anti-ship missile talks",
+     "date": "2024-09",
+     "url": "https://newarab.com/news/iran-talks-send-advanced-russian-missiles-houthis",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "b458def0",
+   "war": "Yemen",
+   "backer": "Saudi Arabia",
+   "helps": "Yemeni government and allied forces",
+   "kinds": [
+    "weapons",
+    "troops",
+    "money",
+    "air strikes on its enemy"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Saudi-led coalition",
+     "via": null,
+     "text": "Saudi-led coalition statements",
+     "date": "2026-10",
+     "url": "https://en.apa.az/asia/saudi-led-coalition-to-continue-supporting-yemeni-forces-against-houthis-528113",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, 5 October 2026, on the battlefield",
+     "date": "2026-10",
+     "url": "https://www.aljazeera.com/news/2026/10/5/yemen-war-escalates-whats-the-latest-on-the-battlefield",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "031e033b",
+   "war": "Gaza and Lebanon",
+   "backer": "Iran",
+   "helps": "Hamas",
+   "kinds": [
+    "weapons",
+    "money",
+    "training"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "IRGC",
+     "via": null,
+     "text": "IRGC commander Hajizadeh, January 2021, on Gaza's missiles being built with Iran's support",
+     "date": "2021-01",
+     "url": "https://www.washingtoninstitute.org/policy-analysis/how-iran-fuels-hamas-terrorism",
+     "counts": null
+    },
+    {
+     "class": "opponent",
+     "publisher": "U.S. Treasury",
+     "via": null,
+     "text": "U.S. Treasury designations",
+     "date": "2023-10",
+     "url": "https://home.treasury.gov/news/press-releases/jy1816",
+     "counts": null
+    },
+    {
+     "class": "opponent",
+     "publisher": "U.S. Treasury",
+     "via": null,
+     "text": "U.S. Treasury, dismantles a Hamas financing network of sham charities, crypto and money services businesses; the release does not name Iran, 2 October 2026",
+     "date": "2026-10",
+     "url": "https://home.treasury.gov/news/press-releases/sb0647",
+     "counts": false
+    }
+   ]
+  },
+  {
+   "key": "342311ed",
+   "war": "The Sahel",
+   "backer": "United States",
+   "helps": "Mali, Burkina Faso and Niger (military governments)",
+   "kinds": [
+    "training",
+    "intelligence"
+   ],
+   "ended": "2024-08",
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "U.S. Air Force",
+     "via": null,
+     "text": "U.S. Air Force, US completes withdrawal from AB 201, August 2024",
+     "date": "2024-08",
+     "url": "https://www.af.mil/News/Article-Display/Article/3863464/us-completes-withdrawal-from-ab-201/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "6b8692ca",
+   "war": "Ukraine",
+   "backer": "Canada",
+   "helps": "Ukraine",
+   "kinds": [
+    "weapons",
+    "money",
+    "training"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Government of Canada",
+     "via": null,
+     "text": "Government of Canada, Department of National Defence, 24 February 2026",
+     "date": "2026-02",
+     "url": "https://www.canada.ca/en/department-national-defence/news/2026/02/government-of-canada-reaffirms-unwavering-support-for-ukraine-four-years-into-russias-full-scale-invasion.html",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "LIGA.net",
+     "via": null,
+     "text": "LIGA.net, Canada extends Operation Unifier to 2029, sets aside 2 billion Canadian dollars for 2026-27 and sends more than 400 armoured vehicles, citing defence minister McGuinty and foreign minister Anand, 24 February 2026",
+     "date": "2026-02",
+     "url": "https://news.liga.net/en/politics/news/hundreds-of-armored-vehicles-financing-and-sanctions-against-the-shadow-fleet-canada-announces-assistance-to-ukraine",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "af77b724",
+   "war": "Eastern Congo",
+   "backer": "Uganda",
+   "helps": "Congolese government and allied militias",
+   "kinds": [
+    "troops"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "document",
+     "publisher": "UN Group of Experts",
+     "via": null,
+     "text": "UN Group of Experts on the DRC, final report S/2026/466, 11 June 2026",
+     "date": "2025-07",
+     "url": "https://documents.un.org/doc/undoc/gen/n25/124/40/pdf/n2512440.pdf",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, 18 July 2025",
+     "date": "2025-07",
+     "url": "https://www.aljazeera.com/news/2025/7/18/un-experts-cast-blame-on-rwanda-and-uganda-what-are-they-doing-in-drc",
+     "counts": null
+    },
+    {
+     "class": "research",
+     "publisher": "Human Rights Watch",
+     "via": null,
+     "text": "Human Rights Watch, World Report 2026, DR Congo: ongoing joint Ugandan-Congolese operations against the ADF in Ituri, 12 January 2026",
+     "date": "2026-01",
+     "url": "https://www.hrw.org/world-report/2026/country-chapters/democratic-republic-of-congo",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "Deutsche Welle with Reuters, via AllAfrica (quoting a UPDF statement)",
+     "via": null,
+     "text": "Deutsche Welle, Ugandan military says a joint UPDF-FARDC raid freed more than 200 ADF hostages and that Operation Shujaa has intensified since January, 20 April 2026",
+     "date": "2026-04",
+     "url": "https://allafrica.com/stories/202604210077.html",
+     "counts": null
+    },
+    {
+     "class": "recipient",
+     "publisher": "AllAfrica",
+     "via": null,
+     "text": "AllAfrica, President Tshisekedi donates ten Toyota Land Cruisers to the UPDF serving under Operation Shujaa, handed over in Beni, August 2026",
+     "date": "2026-08",
+     "url": "https://allafrica.com/stories/202608030417.html",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "43eac3ea",
+   "war": "Sudan",
+   "backer": "Russia",
+   "helps": "Sudanese Armed Forces",
+   "kinds": [
+    "backs it in public and at the UN"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Russian mission to the UN",
+     "via": null,
+     "text": "Russian veto of the U.K. ceasefire resolution at the UN Security Council, 18 November 2024; Port Sudan naval base talks",
+     "date": "2024-11",
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, the page linked here",
+     "date": null,
+     "url": "https://www.aljazeera.com/news/2024/11/18/russia-vetoes-sudan-ceasefire-resolution-at-un-security-council",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, UN extends Darfur arms embargo; Russia will not allow restrictions on Sudan to be broadened, 9 October 2026",
+     "date": "2026-10",
+     "url": "https://www.aljazeera.com/news/2026/10/9/un-extends-darfur-arms-embargo-blocks-broader-sudan-sanctions-proposal",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "The Maritime Executive",
+     "via": null,
+     "text": "The Maritime Executive, Russia suspends Red Sea base plans as Sudan war rages, 13 November 2025",
+     "date": "2025-11",
+     "url": "https://www.maritime-executive.com/article/russia-suspends-red-sea-base-plans-as-sudan-war-rages",
+     "counts": false
+    }
+   ]
+  },
+  {
+   "key": "75635476",
+   "war": "Somalia",
+   "backer": "United Arab Emirates",
+   "helps": "Federal government and AU mission",
+   "kinds": [
+    "training",
+    "money"
+   ],
+   "ended": "2026-01",
+   "sources": [
+    {
+     "class": "recipient",
+     "publisher": "Somali government",
+     "via": null,
+     "text": "Somali government cancellation of all UAE security and defence agreements, 12 January 2026",
+     "date": "2026-01",
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, the page linked here",
+     "date": null,
+     "url": "https://www.aljazeera.com/news/2026/1/12/somalia-cancels-all-agreements-with-uae-over-alleged-sovereignty-violations",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "ff1ca80d",
+   "war": "The Gulf and Hormuz",
+   "backer": "China",
+   "helps": "Iran and allied groups (Hezbollah, Houthis, Iraqi militias)",
+   "kinds": [
+    "parts for weapons",
+    "intelligence"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "opponent",
+     "publisher": "U.S. State Department",
+     "via": null,
+     "text": "U.S. State Department designations of three Chinese satellite firms, 8 May 2026",
+     "date": "2026-05",
+     "url": "https://www.state.gov/releases/office-of-the-spokesperson/2026/05/disrupting-irans-overseas-military-procurement-networks",
+     "counts": null
+    },
+    {
+     "class": "opponent",
+     "publisher": "U.S. Department of Justice",
+     "via": null,
+     "text": "U.S. seizure of the MV Touska, 19 April 2026",
+     "date": "2026-04",
+     "url": "https://theaviationist.com/2026/04/20/us-seizes-iranian-mv-touska/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Wall Street Journal",
+     "via": null,
+     "text": "Wall Street Journal, September 2026, on 1,300 shipments of drone and missile parts",
+     "date": "2026-09",
+     "url": "https://www.wsj.com/politics/china-iran-aid-xi-trump-summit-e6541ae8",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "CNN",
+     "via": null,
+     "text": "CNN, the page linked here",
+     "date": null,
+     "url": "https://www.cnn.com/2026/04/11/politics/us-intelligence-iran-china-weapons",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Reuters",
+     "via": "KSL",
+     "text": "Reuters, seized Iranian ship Touska likely carrying dual-use items after loading at Taicang and Gaolan in China and Port Klang, citing maritime security sources and SynMax satellite analysis, 20 April 2026",
+     "date": "2026-04",
+     "url": "https://www.ksl.com/article/51485927/seized-iranian-ship-likely-carrying-equipment-deemed-dual-use-us-sources-say",
+     "counts": null
+    },
+    {
+     "class": "opponent",
+     "publisher": "U.S. Department of State",
+     "via": null,
+     "text": "U.S. State Department fact sheet, Operation Economic Outcast: DADENEGAR Startup Studio used commercial Chinese satellite imagery to support Iranian targeting of U.S. and partner facilities, 24 August 2026",
+     "date": "2026-08",
+     "url": "https://www.state.gov/releases/office-of-the-spokesperson/2026/08/united-states-implements-operation-economic-outcast-with-sanctions-targeting-irans-military-activities-and-procurements-and-petroleum-and-petrochemical-product-traders-fact-sheet",
+     "counts": null
+    },
+    {
+     "class": "opponent",
+     "publisher": "U.S. Treasury",
+     "via": null,
+     "text": "U.S. Treasury, Economic Fury sanctions on a China- and Hong Kong-based network (Mustad, Solos, Domus, Shangshun) buying weapons for the IRGC and MODAFL, 10 June 2026",
+     "date": "2026-06",
+     "url": "https://home.treasury.gov/news/press-releases/sb0528",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "International Business Times",
+     "via": null,
+     "text": "International Business Times, relaying the Wall Street Journal: about 1,300 air shipments of drone and missile parts from China to Iran, one landing on 17 June, 24 September 2026",
+     "date": "2026-09",
+     "url": "https://www.ibtimes.com/china-has-been-sending-components-drones-missiles-iran-during-war-us-report-3807842",
+     "counts": null
+    },
+    {
+     "class": "document",
+     "publisher": "UN Web TV",
+     "via": null,
+     "text": "UN Web TV, 10130th Security Council meeting: draft S/2026/273 on the Strait of Hormuz fails 11 to 2 with China and Russia against, 7 April 2026",
+     "date": "2026-04",
+     "url": "https://media.un.org/avlibrary/en/asset/d355/d3553208",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "The National",
+     "via": null,
+     "text": "The National, Russia and China veto the U.S. draft to extend UN monitoring of Iran sanctions; 11 in favour, 2 against, 2 abstentions, 17 September 2026",
+     "date": "2026-09",
+     "url": "https://www.thenationalnews.com/news/us/2026/09/17/russia-and-china-veto-us-draft-to-extend-un-monitoring-of-iran-sanctions/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Anadolu Agency",
+     "via": null,
+     "text": "Anadolu Agency, Russia and China veto the Iran sanctions panel in a contentious session; China urges members to avoid political confrontation and pressurization, 17 September 2026",
+     "date": "2026-09",
+     "url": "https://aa.com.tr/en/world/russia-china-veto-un-security-council-iran-sanctions-panel-in-contentious-session/4060374",
+     "counts": null
+    },
+    {
+     "class": "document",
+     "publisher": "UN Meetings Coverage",
+     "via": null,
+     "text": "UN Meetings Coverage, General Assembly speakers diverge over the veto blocking renewal of the Iran sanctions panel, with China and Russia explaining their votes, 2026",
+     "date": "2026-09",
+     "url": "https://press.un.org/en/2026/ga12792.doc.htm",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "c334e862",
+   "war": "Eastern Congo",
+   "backer": "Rwanda",
+   "helps": "M23 (AFC)",
+   "kinds": [
+    "troops",
+    "weapons",
+    "drones"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "document",
+     "publisher": "UN Security Council Group of Experts",
+     "via": null,
+     "text": "UN Security Council Group of Experts on the DRC, report S/2026/466, July 2026",
+     "date": "2026-07",
+     "url": "https://main.un.org/securitycouncil/sanctions/1533/work-and-mandate/expert-reports",
+     "counts": null
+    },
+    {
+     "class": "research",
+     "publisher": "Human Rights Watch",
+     "via": null,
+     "text": "Human Rights Watch, World Report 2026, DR Congo chapter: M23 re-emerged in late 2021 with Rwandan government support; a UN fact-finding mission found most guards and instructors at M23 camps were Rwandan nationals, some Rwandan soldiers in uniform, January 2026",
+     "date": "2026-01",
+     "url": "https://www.hrw.org/world-report/2026/country-chapters/democratic-republic-of-congo",
+     "counts": null
+    },
+    {
+     "class": "opponent",
+     "publisher": "U.S. Treasury",
+     "via": null,
+     "text": "U.S. Treasury, sanctions on the Rwanda Defence Force and four senior officers: thousands of RDF troops deployed in eastern Congo in combat, RDF trains M23 fighters and brought in jamming systems, air defence and drones, 2 March 2026",
+     "date": "2026-03",
+     "url": "https://home.treasury.gov/news/press-releases/sb0411",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "XtrAfrica",
+     "via": null,
+     "text": "XtrAfrica, summary of UN report S/2026/466: 14,000 to 18,000 RDF troops in eastern Congo, RDF held forward positions and supervised M23 combat units, 2 July 2026",
+     "date": "2026-07",
+     "url": "https://www.xtrafrica.com/news/rwanda-m23-un-report-s-2026-466-eastern-drc",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "decb7780",
+   "war": "Haiti",
+   "backer": "Chad",
+   "helps": "Haitian government and the foreign force",
+   "kinds": [
+    "police"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "press",
+     "publisher": "PassBlue",
+     "via": null,
+     "text": "PassBlue on the first Chadian contingent, arrived 1 April 2026, and the 1,500 pledged for the Gang Suppression Force",
+     "date": "2026-04",
+     "url": "https://passblue.com/2026/05/21/the-new-un-backed-anti-gang-force-is-finally-arriving-in-haiti-as-violence-surges/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Le Nouvelliste",
+     "via": null,
+     "text": "Le Nouvelliste, about fifty Chadian police officers reach Port-au-Prince as a pre-deployment of the 1,500 Chad will send to the Gang Suppression Force, citing a government source, 1 April 2026",
+     "date": "2026-04",
+     "url": "https://lenouvelliste.com/en/article/265885/chadian-troops-begin-deployment-in-gang-suppression-force",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Associated Press",
+     "via": null,
+     "text": "Associated Press, Chadian troops are already deployed in Port-au-Prince and staggered deployments from Chad and others will bring the force to 5,500 by year end, 23 April 2026",
+     "date": "2026-04",
+     "url": "https://www.audacy.com/wwl/news/world/un-haiti-gangs-force-deployment-chad-elections-018012db35203b8f4e26e0383f9cbbc4",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Africanews",
+     "via": null,
+     "text": "Africanews, Chad to deploy 800 troops to Haiti's Gang Suppression Force as Kenya steps back, 21 March 2026",
+     "date": "2026-03",
+     "url": "https://www.africanews.com/amp/2026/03/21/chad-to-deploy-800-troops-to-haitis-gang-suppression-force-as-kenya-steps-back/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "d7172428",
+   "war": "U.S. raid on Venezuela",
+   "backer": "Cuba",
+   "helps": "Venezuela (Maduro's government)",
+   "kinds": [
+    "troops"
+   ],
+   "ended": "2026-01",
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Cuban government",
+     "via": null,
+     "text": "Cuban government statement, 5 January 2026, on 32 Cubans killed in the raid",
+     "date": "2026-01",
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, the page linked here",
+     "date": null,
+     "url": "https://www.aljazeera.com/news/2026/1/5/cuba-says-32-cubans-killed-during-us-raids-on-venezuela",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "b7f90efd",
+   "war": "Sudan",
+   "backer": "Eastern Libya (Haftar's forces)",
+   "helps": "Rapid Support Forces",
+   "kinds": [
+    "lets supplies cross",
+    "weapons",
+    "troops"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "document",
+     "publisher": "UN Panel of Experts",
+     "via": null,
+     "text": "UN Panel of Experts on Libya, final report S/2026/224, April 2026",
+     "date": "2026-04",
+     "url": "https://docs.un.org/S/2026/224",
+     "counts": null
+    },
+    {
+     "class": "document",
+     "publisher": "UN fact-finding mission",
+     "via": null,
+     "text": "UN fact-finding mission on Sudan, A/HRC/63/23",
+     "date": "2026-09",
+     "url": "https://www.ohchr.org/sites/default/files/documents/hrbodies/hrcouncil/sessions-regular/session63/advance-versions/a-hrc-63-23-auv.pdf",
+     "counts": null
+    },
+    {
+     "class": "research",
+     "publisher": "ICTJ",
+     "via": null,
+     "text": "ICTJ, the page linked here",
+     "date": null,
+     "url": "https://www.ictj.org/latest-news/libya-fueled-war-sudan-colombian-mercenaries-and-equipment-un-report-finds",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Associated Press",
+     "via": "Africanews",
+     "text": "Associated Press, UN Panel of Experts on Libya finds the Subul al-Salam battalion of Haftar's Libyan National Army moved Colombian recruits, weapons and fuel across the border to the RSF through Kufra, escorting fighters and supplying fuel and vehicle parts in June 2025, 22 April 2026",
+     "date": "2026-04",
+     "url": "https://www.africanews.com/2026/04/22/libya-uae-fuelled-sudan-war-with-colombian-mercenaries-reports-find/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Middle East Eye",
+     "via": null,
+     "text": "Middle East Eye, on the UN fact-finding mission report: weapons and personnel for the RSF moved by air, sea and land routes including southeastern Libya and Bosaso, 4 September 2026",
+     "date": "2026-09",
+     "url": "https://www.middleeasteye.net/news/foreign-weapons-and-mercenaries-fuelling-atrocities-sudans-darfur-un-finds",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "80dc3d34",
+   "war": "The Sahel",
+   "backer": "Russia",
+   "helps": "Mali, Burkina Faso and Niger (military governments)",
+   "kinds": [
+    "troops",
+    "weapons",
+    "air strikes on its enemy"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "government",
+     "publisher": "Congressional Research Service",
+     "via": null,
+     "text": "Congressional Research Service, Russia's Security Operations in Africa (IF12389)",
+     "date": null,
+     "url": "https://www.congress.gov/crs-product/IF12389",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "Russian Defence Ministry",
+     "via": null,
+     "text": "Russian Defence Ministry statements on the Africa Corps",
+     "date": "2026-04",
+     "url": "https://www.aljazeera.com/news/2026/4/29/what-role-has-russia-played-in-malis-security-and-the-sahel-region",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, Mali's army says it has taken Kidal from Tuareg rebels, with Russia's help, 6 October 2026",
+     "date": "2026-10",
+     "url": "https://www.aljazeera.com/news/2026/10/6/tuareg-rebels-withdraw-from-strategic-town-of-kidal-in-northern-mali",
+     "counts": null
+    },
+    {
+     "class": "research",
+     "publisher": "Human Rights Watch",
+     "via": null,
+     "text": "Human Rights Watch, Mali: Russia's Africa Corps airstrikes kill civilians; Su-24s in Mali since April 2025, 31 July 2026",
+     "date": "2026-07",
+     "url": "https://www.hrw.org/news/2026/07/31/mali-russias-africa-corps-airstrikes-kill-civilians",
+     "counts": null
+    },
+    {
+     "class": "research",
+     "publisher": "Human Rights Watch",
+     "via": null,
+     "text": "Human Rights Watch, Mali: Russia's 'Africa Corps' massacres villagers alongside Malian soldiers, 20 August 2026",
+     "date": "2026-08",
+     "url": "https://www.hrw.org/news/2026/08/20/mali-russias-africa-corps-massacres-villagers",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, Niger mutiny exposes reliance on Russia: about 200 Africa Corps soldiers helped retake the airbase, 14 September 2026",
+     "date": "2026-09",
+     "url": "https://www.aljazeera.com/news/2026/9/14/niger-mutiny-exposes-growing-reliance-on-russia",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "c8847064",
+   "war": "Sudan",
+   "backer": "United Arab Emirates",
+   "helps": "Rapid Support Forces",
+   "kinds": [
+    "weapons",
+    "money",
+    "troops"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "document",
+     "publisher": "UN Independent International Fact-Finding Mission for the Sudan",
+     "via": null,
+     "text": "UN Independent International Fact-Finding Mission for the Sudan, Fuelling Sudan's conflict, A/HRC/63/23, September 2026",
+     "date": "2026-09",
+     "url": "https://www.ohchr.org/sites/default/files/documents/hrbodies/hrcouncil/sessions-regular/session63/advance-versions/a-hrc-63-23-auv.pdf",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Middle East Eye",
+     "via": null,
+     "text": "Middle East Eye, the UN fact-finding mission finds reasonable grounds to believe a network of people and firms operating from or linked to the UAE supplied the RSF with weapons, logistics, training and up to 2,000 former Colombian soldiers, through Chad, southeastern Libya and Bosaso; the UAE denies it, 4 September 2026",
+     "date": "2026-09",
+     "url": "https://www.middleeasteye.net/news/foreign-weapons-and-mercenaries-fuelling-atrocities-sudans-darfur-un-finds",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, drone warfare in Sudan: the RSF gets drones and support from the UAE through eastern Chad, South Sudan, southeastern Libya, northeastern Somalia and the Central African Republic; Reuters counted at least 86 suspected arms flights into Chad's Amdjarass airstrip; the UAE denies it, 3 February 2026",
+     "date": "2026-02",
+     "url": "https://www.aljazeera.com/news/longform/2026/2/3/drone-warfare-in-sudan-tracking-1000-aerial-attacks-since-april-2023",
+     "counts": null
+    },
+    {
+     "class": "government",
+     "publisher": "U.S. Africa Command (Africa Defense Forum)",
+     "via": null,
+     "text": "Africa Defense Forum, summarising Le Monde: Burkina Faso-registered Batot Air flew at least 36 trips in four months between the UAE and Ethiopia, where the RSF is reported to run a training camp; the UAE denies supporting the RSF, 24 March 2026",
+     "date": "2026-03",
+     "url": "https://adf-magazine.com/2026/03/report-cargo-flights-arm-sudanese-paramilitary-group/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "3f041d9b",
+   "war": "U.S. fuel blockade on Cuba",
+   "backer": "China",
+   "helps": "Cuba",
+   "kinds": [
+    "money"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Chinese government",
+     "via": "Diário de Notícias",
+     "text": "Chinese donation of 15,000 tons of rice; $80 million in aid approved in January 2026",
+     "date": "2026-01",
+     "url": "https://www.dn.pt/sociedade/china-doa-mais-15-mil-toneladas-de-arroz-a-cuba",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "DW",
+     "via": null,
+     "text": "DW, the page linked here",
+     "date": null,
+     "url": "https://www.dw.com/en/cuba-receives-china-rice-shipment-amid-us-threats-blackouts/a-77281770",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "AFP",
+     "via": "The Standard, Hong Kong",
+     "text": "AFP, first 15,000 tons of a promised 60,000 tons of Chinese rice reach Havana; ambassador Hua Xin calls it the largest food aid from China to Cuba in recent years, 25 May 2026",
+     "date": "2026-05",
+     "url": "https://www.thestandard.com.hk/china/article/332856/Cuba-receives-shipment-of-rice-donated-by-China",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "cd917adc",
+   "war": "The Sahel",
+   "backer": "Ukraine",
+   "helps": "Azawad Liberation Front (Tuareg)",
+   "kinds": [
+    "intelligence",
+    "training",
+    "drones"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "press",
+     "publisher": "CNN",
+     "via": null,
+     "text": "CNN, 12 September 2026, Ukraine is fighting Russia anywhere it can",
+     "date": "2026-09",
+     "url": "https://keyt.com/news/national-world/cnn-world/2026/09/11/ukraine-is-fighting-russia-anywhere-it-can-even-in-the-deserts-of-africa",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "African Arguments",
+     "via": null,
+     "text": "African Arguments, October 2026",
+     "date": "2026-10",
+     "url": "https://africanarguments.org/2026/10/who-wins-from-ukraines-drones-in-mali/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "6d05ea19",
+   "war": "The Sahel",
+   "backer": "China",
+   "helps": "Mali, Burkina Faso and Niger (military governments)",
+   "kinds": [
+    "weapons"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "research",
+     "publisher": "SIPRI Arms Transfers Database",
+     "via": null,
+     "text": "SIPRI Arms Transfers Database, March 2026 release, deliveries to 2025",
+     "date": "2026-03",
+     "url": "https://www.sipri.org/databases/armstransfers",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Military Africa",
+     "via": null,
+     "text": "Military Africa, Mali receives Yitian-L air defence and armoured vehicles from China; latest batch verified 12 March 2026, delivered through Guinea under a September 2024 Norinco contract, 30 April 2026",
+     "date": "2026-04",
+     "url": "https://www.military.africa/2026/04/mali-receives-yitian-l-air-defence-armoured-vehicles-from-china/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Military Africa",
+     "via": null,
+     "text": "Military Africa, Burkina Faso receives more Chinese armoured vehicles (Norinco CS/VP14 and VN22), January 2025",
+     "date": "2025-01",
+     "url": "https://military.africa/2025/01/burkina-faso-receives-more-chinese-armoured-vehicles",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "fd7f73eb",
+   "war": "The Sahel",
+   "backer": "Türkiye",
+   "helps": "Mali, Burkina Faso and Niger (military governments)",
+   "kinds": [
+    "drones",
+    "training"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "recipient",
+     "publisher": "Malian presidency",
+     "via": null,
+     "text": "Malian presidency delivery ceremonies, reported by defenceWeb",
+     "date": null,
+     "url": "https://defenceweb.co.za/aerospace/aerospace-aerospace/mali-receives-more-bayraktar-tb2-uavs/",
+     "counts": null
+    },
+    {
+     "class": "recipient",
+     "publisher": "Burkinabe and Nigerien governments",
+     "via": null,
+     "text": "Burkinabe and Nigerien announcements",
+     "date": null,
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "recipient",
+     "publisher": "AIB",
+     "via": null,
+     "text": "AIB (Burkina Faso state news agency), President Traore receives twelve Bayraktar TB2 and Akinci drones from Turkey, 8 April 2024",
+     "date": "2024-04",
+     "url": "https://www.aib.media/?p=80773",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "The Defense Post",
+     "via": null,
+     "text": "The Defense Post, Turkey delivers six Bayraktar TB2 drones to Niger under a November 2021 deal, 1 June 2022",
+     "date": "2022-06",
+     "url": "https://thedefensepost.com/2022/06/01/turkey-bayraktar-drones-niger/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "defenceWeb",
+     "via": null,
+     "text": "defenceWeb, Turkiye builds ties through training: Malian and Nigerien soldiers finish special forces training in Isparta, 7 September 2026",
+     "date": "2026-09",
+     "url": "https://defenceweb.co.za/land/land-land/turkiye-builds-ties-through-training/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "12043083",
+   "war": "Myanmar",
+   "backer": "Russia",
+   "helps": "Military-led government",
+   "kinds": [
+    "weapons",
+    "training"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "document",
+     "publisher": "UN Special Rapporteur",
+     "via": null,
+     "text": "UN Special Rapporteur on Myanmar, The Billion Dollar Death Trade, May 2023",
+     "date": "2023-05",
+     "url": "https://www.ohchr.org/en/documents/thematic-reports/ahrc53crp2-billion-dollar-death-trade-international-arms-networks-enable",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "TASS",
+     "via": null,
+     "text": "TASS on Su-30 deliveries and the joint exercise, July 2026",
+     "date": "2026-07",
+     "url": "https://tass.com/defense/986222",
+     "counts": null
+    },
+    {
+     "class": "research",
+     "publisher": "Human Rights Watch",
+     "via": null,
+     "text": "Human Rights Watch, World Report 2026, Myanmar chapter: China and Russia continue to provide arms and military equipment, 8 January 2026",
+     "date": "2026-01",
+     "url": "https://www.hrw.org/world-report/2026/country-chapters/myanmar",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "1c6feed1",
+   "war": "Somalia",
+   "backer": "United States",
+   "helps": "Federal government and AU mission",
+   "kinds": [
+    "air strikes on its enemy",
+    "training",
+    "weapons"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "U.S. Africa Command",
+     "via": null,
+     "text": "U.S. Africa Command press releases, 2026",
+     "date": "2026",
+     "url": "https://www.africom.mil/media-gallery/press-releases",
+     "counts": null
+    },
+    {
+     "class": "research",
+     "publisher": "New America",
+     "via": null,
+     "text": "New America, AFRICOM confirms 63 strikes in Somalia in 2026 to date, with a slowdown after May, 29 May 2026",
+     "date": "2026-05",
+     "url": "https://www.newamerica.org/insights/africom-confirms-63-strikes-in-somalia-in-2026/",
+     "counts": null
+    },
+    {
+     "class": "recipient",
+     "publisher": "Shabelle Media Network, via AllAfrica (quoting Somalia's defence ministry)",
+     "via": null,
+     "text": "Shabelle Media Network, Somali defence ministry says army airstrikes backed by international partners killed 26 al-Shabaab fighters in Middle Shabelle and thanks partners for continued support, 13 July 2026",
+     "date": "2026-07",
+     "url": "https://allafrica.com/stories/202607130504.html",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "DEFCON Level",
+     "via": "an AFRICOM statement",
+     "text": "DEFCON Level, AFRICOM says it struck al-Shabaab near Qumbi on 24 September 2026 in coordination with the Federal Government of Somalia, statement of 28 September 2026",
+     "date": "2026-09",
+     "url": "https://defconlevel.com/alert/2026-09-29-africom-struck-al-shabaab-near-qumbi-somalia",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "7541f019",
+   "war": "Yemen",
+   "backer": "Iran",
+   "helps": "Houthis (Ansar Allah)",
+   "kinds": [
+    "weapons",
+    "training"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "document",
+     "publisher": "UN Security Council Panel of Experts",
+     "via": null,
+     "text": "UN Security Council Panel of Experts on Yemen reports",
+     "date": null,
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "opponent",
+     "publisher": "U.S. Defense Intelligence Agency",
+     "via": null,
+     "text": "U.S. Defense Intelligence Agency, Seized at Sea, 2024",
+     "date": "2024",
+     "url": "https://www.dia.mil/News-Features/Articles/Article-View/Article/3834111/dia-report-showcases-iranian-origin-of-houthi-weapons-interdicted-at-sea/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "bdff0f35",
+   "war": "U.S. fuel blockade on Cuba",
+   "backer": "Venezuela",
+   "helps": "Cuba",
+   "kinds": [
+    "oil and fuel"
+   ],
+   "ended": "2026-01",
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Venezuelan government",
+     "via": null,
+     "text": "Venezuelan oil to Cuba ended with the January 2026 raid",
+     "date": "2026-01",
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "opponent",
+     "publisher": "U.S. Treasury",
+     "via": null,
+     "text": "A U.S. licence from 25 February 2026 allows private resale only",
+     "date": "2026-02",
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "reference",
+     "publisher": "Wikipedia",
+     "via": null,
+     "text": "Wikipedia, the page linked here",
+     "date": null,
+     "url": "https://en.wikipedia.org/wiki/2026_United_States_fuel_blockade_on_Cuba",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, 8 February 2026, after the US seized Maduro, Washington blocked any Venezuelan oil from going to Cuba",
+     "date": "2026-02",
+     "url": "https://www.aljazeera.com/economy/2026/2/8/from-blackouts-to-food-shortages-how-us-blockade-is-crippling-life-in-cuba",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Reuters",
+     "via": null,
+     "text": "Reuters, 25 February 2026, US to allow resale of Venezuelan oil to Cuba's private sector, Treasury says",
+     "date": "2026-02",
+     "url": null,
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "01bb9881",
+   "war": "Nigeria",
+   "backer": "China",
+   "helps": "Nigerian government",
+   "kinds": [
+    "weapons",
+    "drones"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "recipient",
+     "publisher": "Nigerian Air Force",
+     "via": null,
+     "text": "Nigerian Air Force announcement of Wing Loong II deliveries, November 2020; further deliveries 2023",
+     "date": "2023",
+     "url": "https://www.military.africa/2020/11/four-chinese-combat-drones-arrives-nigeria/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Defense Post",
+     "via": null,
+     "text": "Defense Post, the page linked here",
+     "date": null,
+     "url": "https://thedefensepost.com/2020/11/10/nigeria-wing-loong-drones/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "defenceWeb",
+     "via": null,
+     "text": "defenceWeb, Nigeria (African Militaries profile): air force operates Wing Loong II, CH-3 and CH-4 drones, updated 28 May 2026",
+     "date": "2026-05",
+     "url": "https://defenceweb.co.za/security/african-militaries/nigeria/",
+     "counts": false
+    },
+    {
+     "class": "press",
+     "publisher": "Army Recognition, citing Military Africa",
+     "via": "Military Africa",
+     "text": "Army Recognition, Nigerian Air Force quietly takes delivery of at least five Chinese Wing Loong II drones, serials NAF 141 to 145, 4 May 2023",
+     "date": "2023-05",
+     "url": "https://armyrecognition.com/archives/archives-aerospace-defense/aerospace-defense-2023/nigerian-air-force-discreetly-receives-5-chinese-made-wing-loong-ii-drones",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "HumAngle",
+     "via": null,
+     "text": "HumAngle, Nigeria buys Sky Whale Max hybrid drones from Shenzhen Yangda Security of China with training, alongside its CH-4, Wing Loong II and CH-3B fleet, September 2025",
+     "date": "2025-09",
+     "url": "https://humanglemedia.com/armed-drones-making-a-strong-entrance-in-nigerias-anti-terror-campaign",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "31170f60",
+   "war": "Ukraine",
+   "backer": "Europe (EU states)",
+   "helps": "Ukraine",
+   "kinds": [
+    "weapons",
+    "money",
+    "training"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "research",
+     "publisher": "Kiel Institute",
+     "via": null,
+     "text": "Kiel Institute, Ukraine Support Tracker, update of 8 October 2026, aid announced through August 2026",
+     "date": "2026-10",
+     "url": "https://www.kielinstitut.de/topics/war-against-ukraine/ukraine-support-tracker/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "European Pravda",
+     "via": null,
+     "text": "European Pravda, EU states agree the conditions for 6.6 billion euros of military aid to Ukraine from the European Peace Facility (900 million for the EU training mission, 1 billion for joint purchases, 4.7 billion to repay member states), Kallas quoted, 25 September 2026",
+     "date": "2026-09",
+     "url": "https://www.eurointegration.com.ua/eng/news/2026/09/25/7246294/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "35c64127",
+   "war": "Somalia",
+   "backer": "Saudi Arabia",
+   "helps": "Federal government and AU mission",
+   "kinds": [
+    "backs it in public and at the UN"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Saudi Ministry of Defense",
+     "via": null,
+     "text": "Somalia-Saudi defence and military cooperation memorandum, Riyadh, 10 February 2026",
+     "date": "2026-02",
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, the page linked here",
+     "date": null,
+     "url": "https://www.aljazeera.com/news/2026/2/10/somalia-saudi-arabia-sign-agreement-on-military-cooperation",
+     "counts": null
+    },
+    {
+     "class": "recipient",
+     "publisher": "Somali Guardian",
+     "via": null,
+     "text": "Somali Guardian, Somalia and Saudi Arabia sign a defence cooperation memorandum in Riyadh; the Somali defence ministry says it will strengthen defence and military cooperation, 9 February 2026",
+     "date": "2026-02",
+     "url": "https://www.somaliguardian.com/news/somalia-news/somalia-saudi-arabia-sign-defence-cooperation-pact/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Shabelle Media via allAfrica",
+     "via": null,
+     "text": "Shabelle Media Network, Somalia and Saudi Arabia sign a military cooperation agreement that officials say will improve the readiness of the Somali army, 9 February 2026",
+     "date": "2026-02",
+     "url": "https://allafrica.com/stories/202602090233.html",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "230258f2",
+   "war": "Sudan",
+   "backer": "Kenya",
+   "helps": "Rapid Support Forces",
+   "kinds": [
+    "hosts its leaders",
+    "backs it in public and at the UN"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Kenyan government",
+     "via": null,
+     "text": "Kenyan government hosting of the RSF charter conference, Nairobi, February 2025",
+     "date": "2025-02",
+     "url": "https://www.theeastafrican.co.ke/tea/news/east-africa/nairobi-tells-off-sudan-over-claims-of-kenya-fuelling-conflict--5022658",
+     "counts": null
+    },
+    {
+     "class": "research",
+     "publisher": "ICJ Kenya",
+     "via": null,
+     "text": "ICJ Kenya, the page linked here",
+     "date": null,
+     "url": "https://icj-kenya.org/news/joint-statement-kenyas-rsf-ties-undermine-sudan-peace-efforts/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "The Standard (Kenya)",
+     "via": null,
+     "text": "The Standard (Kenya), Ruto denies RSF links, says Sudan needs help, 15 May 2026",
+     "date": "2026-05",
+     "url": "https://www.standardmedia.co.ke/national/article/2001547868/ruto-denies-rsf-links-says-sudan-needs-help",
+     "counts": false
+    },
+    {
+     "class": "press",
+     "publisher": "The Star (Kenya)",
+     "via": null,
+     "text": "The Star (Kenya), Ruto under pressure over foreign policy stances, alleged support for Sudan's RSF, 8 March 2026",
+     "date": "2026-03",
+     "url": "https://www.the-star.co.ke/news/2026-03-08-ruto-under-pressure-over-foreign-policy-stances-alleged-support-for-sudans-rsf",
+     "counts": false
+    },
+    {
+     "class": "press",
+     "publisher": "The Star (Kenya)",
+     "via": null,
+     "text": "The Star, Ruto says the RSF and the army are cut from the same cloth, denies Kenya supplied arms to the RSF and says the recent Nairobi meeting was a civil society dialogue, not RSF members, 10 November 2025",
+     "date": "2025-11",
+     "url": "https://www.the-star.co.ke/news/2025-11-10-ruto-rsf-and-saf-generals-have-no-solution-for-sudan",
+     "counts": false
+    }
+   ]
+  },
+  {
+   "key": "89fc4b85",
+   "war": "Myanmar",
+   "backer": "China",
+   "helps": "Resistance forces and ethnic armies",
+   "kinds": [
+    "weapons"
+   ],
+   "ended": "2026-08",
+   "sources": [
+    {
+     "class": "press",
+     "publisher": null,
+     "via": null,
+     "text": "Press and think-tank reporting on supply through the United Wa State Army",
+     "date": null,
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "The Diplomat",
+     "via": null,
+     "text": "The Diplomat, June 2025",
+     "date": "2025-06",
+     "url": "https://thediplomat.com/2025/06/china-pressuring-two-major-myanmar-armed-groups-to-halt-offensives/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, Air raids, conscripts and China: Beijing pressed the Wa to stop selling weapons to opposition groups, 30 August 2026",
+     "date": "2026-08",
+     "url": "https://www.aljazeera.com/news/2026/8/30/air-raids-conscripts-and-china-how-myanmars-military-is-regaining-ground",
+     "counts": false
+    }
+   ]
+  },
+  {
+   "key": "27af50a8",
+   "war": "Sudan",
+   "backer": "Egypt",
+   "helps": "Sudanese Armed Forces",
+   "kinds": [
+    "drones",
+    "lets its bases be used"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "press",
+     "publisher": "Egyptian presidency",
+     "via": null,
+     "text": "New York Times investigation of the East Oweinat drone base, early 2026",
+     "date": "2026",
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Sudanese government",
+     "via": null,
+     "text": "Middle East Eye, 6 November 2025",
+     "date": "2025-11",
+     "url": "https://www.middleeasteye.net/news/egypt-and-turkey-move-support-saf-following-fall-el-fasher",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "485ea1b1",
+   "war": "Sudan",
+   "backer": "Chad",
+   "helps": "Rapid Support Forces",
+   "kinds": [
+    "lets supplies cross"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "document",
+     "publisher": "UN Independent International Fact-Finding Mission for the Sudan",
+     "via": null,
+     "text": "UN Independent International Fact-Finding Mission for the Sudan, A/HRC/63/23, September 2026",
+     "date": "2026-09",
+     "url": "https://www.ohchr.org/sites/default/files/documents/hrbodies/hrcouncil/sessions-regular/session63/advance-versions/a-hrc-63-23-auv.pdf",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, drone warfare in Sudan: arms for the RSF land in eastern Chad (at least 86 suspected flights into Amdjarass, per Reuters) and are trucked into Darfur or moved through Haftar-held Libya, 3 February 2026",
+     "date": "2026-02",
+     "url": "https://www.aljazeera.com/news/longform/2026/2/3/drone-warfare-in-sudan-tracking-1000-aerial-attacks-since-april-2023",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Middle East Eye",
+     "via": null,
+     "text": "Middle East Eye, on the UN fact-finding mission report: witnesses described recurring cargo flights from the UAE through Chad, after which supplies and foreign contractors moved into RSF-controlled territory, 4 September 2026",
+     "date": "2026-09",
+     "url": "https://www.middleeasteye.net/news/foreign-weapons-and-mercenaries-fuelling-atrocities-sudans-darfur-un-finds",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "c82fddf4",
+   "war": "The Gulf and Hormuz",
+   "backer": "United Arab Emirates",
+   "helps": "United States",
+   "kinds": [
+    "lets its bases be used",
+    "shoots down missiles and drones aimed at it"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "UAE Ministry of Defence",
+     "via": null,
+     "text": "UAE confirmation that Iranian drones hit Al Dhafra Air Base, March 2026",
+     "date": "2026-03",
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "reference",
+     "publisher": "Wikipedia",
+     "via": null,
+     "text": "Wikipedia, the page linked here",
+     "date": null,
+     "url": "https://en.wikipedia.org/wiki/2026_Iran_war",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "France 24",
+     "via": null,
+     "text": "France 24, 3 March 2026, France deploys jets over the UAE after Iranian drones hit a French base hangar and an Abu Dhabi fuel terminal",
+     "date": "2026-03",
+     "url": "https://www.france24.com/en/middle-east/20260303-france-deploys-fighter-jets-over-uae-to-protect-its-military-bases",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, 10 March 2026, missile sirens in Dubai and a drone fire at Ruwais as Gulf states intercept Iranian missiles",
+     "date": "2026-03",
+     "url": "https://www.aljazeera.com/news/2026/3/10/woman-killed-in-bahrain-as-other-gulf-states-intercept-iranian-missiles",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Gulf News",
+     "via": null,
+     "text": "Gulf News, the UAE Ministry of Defence says air defences intercepted nine ballistic missiles and 33 drones from Iran on 14 March, and 294 ballistic missiles, 15 cruise missiles and 1,600 drones since the attacks began, 14 March 2026",
+     "date": "2026-03",
+     "url": "https://gulfnews.com/uae/uae-downs-9-ballistic-missiles-33-drones-on-march-14-1.500474391",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Gulf News",
+     "via": null,
+     "text": "Gulf News, the UAE Ministry of Defence says four Iranian ballistic missiles and six drones were intercepted and that it is fully prepared to deal with any threats, 15 March 2026",
+     "date": "2026-03",
+     "url": "https://gulfnews.com/uae/government/uae-air-defences-intercept-4-iranian-ballistic-missiles-and-6-drones-today-1.500475234",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "The Tribune (India) / ANI",
+     "via": null,
+     "text": "The Tribune via ANI, the Wall Street Journal reports the UAE carried out covert strikes on Iran including the Lavan Island refinery in early April, citing people familiar and imagery of UAE Mirage jets and Wing Loong drones; the UAE has not acknowledged it, 12 May 2026",
+     "date": "2026-05",
+     "url": "https://www.tribuneindia.com/news/world/uae-carried-out-covert-strikes-on-iran-during-west-asia-conflict-reports-wsj/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "The Statesman",
+     "via": null,
+     "text": "The Statesman, UAE secretly struck Iran during the war despite public neutrality, per the Wall Street Journal, May 2026",
+     "date": "2026-05",
+     "url": "https://www.thestatesman.com/world/uae-secretly-struck-iran-during-west-asia-war-despite-public-neutrality-report-1503592949.html",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "7bbd2207",
+   "war": "Ukraine",
+   "backer": "United States",
+   "helps": "Ukraine",
+   "kinds": [
+    "weapons",
+    "money",
+    "intelligence"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Congressional Research Service",
+     "via": null,
+     "text": "Congressional Research Service, U.S. Security Assistance to Ukraine Since 2022 (IF12040)",
+     "date": null,
+     "url": "https://www.congress.gov/crs-product/IF12040",
+     "counts": null
+    },
+    {
+     "class": "research",
+     "publisher": "Kiel Institute",
+     "via": null,
+     "text": "Kiel Institute, Ukraine Support Tracker, update of 8 October 2026, aid announced through August 2026",
+     "date": "2026-10",
+     "url": "https://www.kielinstitut.de/topics/war-against-ukraine/ukraine-support-tracker/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "f5177f70",
+   "war": "Yemen",
+   "backer": "United Arab Emirates",
+   "helps": "Yemeni government and allied forces",
+   "kinds": [
+    "weapons",
+    "troops",
+    "money"
+   ],
+   "ended": "2025-12",
+   "sources": [
+    {
+     "class": "research",
+     "publisher": "House of Commons Library",
+     "via": null,
+     "text": "House of Commons Library, Yemen 2026: Southern Transitional Council's fall and renewed Houthi-Saudi conflict",
+     "date": "2026",
+     "url": "https://commonslibrary.parliament.uk/research-briefings/cbp-10427/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "e5b3f0ca",
+   "war": "Somalia",
+   "backer": "Egypt",
+   "helps": "Federal government and AU mission",
+   "kinds": [
+    "weapons",
+    "troops"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Egyptian government",
+     "via": null,
+     "text": "Egypt-Somalia defence pact, August 2024; deployment ceremony in Mogadishu, February 2026",
+     "date": "2026-02",
+     "url": "https://villasomalia.gov.so/president-hassan-sheikh-mohamud-and-president-el-sisi-preside-over-landmark-defense-agreement-to-enhance-security-cooperation-between-somalia-and-egypt/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "The New Arab",
+     "via": null,
+     "text": "The New Arab, the page linked here",
+     "date": null,
+     "url": "https://www.newarab.com/news/egypt-sends-troops-somalia-amid-israel-tensions",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Egyptian Streets",
+     "via": null,
+     "text": "Egyptian Streets, Egypt and Somalia sign a defence pact in Cairo on 14 August 2024 amid tensions with Ethiopia, 28 August 2024",
+     "date": "2024-08",
+     "url": "https://egyptianstreets.com/2024/08/28/egypt-and-somalia-sign-defense-pact-amid-tensions-with-ethiopia/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "b34037eb",
+   "war": "The Gulf and Hormuz",
+   "backer": "Bahrain",
+   "helps": "United States",
+   "kinds": [
+    "lets its bases be used",
+    "shoots down missiles and drones aimed at it"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Bahraini government",
+     "via": null,
+     "text": "Bahraini interception statements, 2026; U.S. Fifth Fleet headquarters at Manama",
+     "date": "2026",
+     "url": "https://bernama.com/en/news.php?id=2534494",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Gulf Daily News",
+     "via": null,
+     "text": "Gulf Daily News, 12 March 2026, Bahrain Defence Force: 112 ballistic missiles and 186 drones destroyed since the war began",
+     "date": "2026-03",
+     "url": "https://www.gdnonline.com/Details/1378386",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, 10 March 2026, woman killed in Bahrain as Gulf states intercept more Iranian missiles and drones",
+     "date": "2026-03",
+     "url": "https://www.aljazeera.com/news/2026/3/10/woman-killed-in-bahrain-as-other-gulf-states-intercept-iranian-missiles",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "WAM",
+     "via": null,
+     "text": "WAM, Bahrain intercepts 129 missiles and 215 drones since the onset of Iranian attacks, per the Bahrain Defence Force General Command, 16 March 2026",
+     "date": "2026-03",
+     "url": "https://www.wam.ae/en/article/bz8e77q-bahrain-intercepts-129-missiles-215-drones-since",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "1e8d49a4",
+   "war": "Syria",
+   "backer": "United States",
+   "helps": "Transitional government",
+   "kinds": [
+    "backs it in public and at the UN"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "U.S. State Department",
+     "via": null,
+     "text": "Syria joined the U.S.-led anti-ISIS coalition, 10 November 2025; sanctions suspended; U.S. brokered the January 2026 SDF deal",
+     "date": "2026-01",
+     "url": "https://www.al-monitor.com/originals/2025/11/syria-joins-alliance-against-islamic-state-after-white-house-talks",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, the page linked here",
+     "date": null,
+     "url": "https://www.aljazeera.com/news/2025/11/11/syria-signs-up-to-us-led-coalition-against-isil",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "U.S. Embassy in Syria via North Press",
+     "via": null,
+     "text": "North Press, U.S. embassy diplomats in a recorded statement on the embassy's Facebook page call Syria's coalition accession a defining moment in its history and in the global war on terrorism, 11 November 2025",
+     "date": "2025-11",
+     "url": "https://npasyria.com/en/132028/",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "U.S. Department of State",
+     "via": null,
+     "text": "State Department, determination suspending Caesar Act sanctions on Syria for 180 days, excluding dealings with Russia and Iran, November 2025",
+     "date": "2025-11",
+     "url": "https://www.state.gov/releases/2025/11/determination-to-suspend-the-imposition-of-sanctions-pursuant-to-the-caesar-syria-civilian-protection-act-of-2019/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "The Algemeiner",
+     "via": null,
+     "text": "The Algemeiner, U.S. envoy Tom Barrack calls the Syrian government-SDF integration accord a profound and historic milestone, 30 January 2026",
+     "date": "2026-01",
+     "url": "https://www.algemeiner.com/2026/01/30/syrian-government-kurds-agree-integration-deal-us-hails-historic-milestone/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "5a92dee7",
+   "war": "South Sudan",
+   "backer": "Uganda",
+   "helps": "Government forces (SSPDF)",
+   "kinds": [
+    "troops",
+    "air strikes on its enemy"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Ugandan government",
+     "via": null,
+     "text": "Ugandan deployment at Juba's request, March 2025",
+     "date": "2025-03",
+     "url": "https://www.monitor.co.ug/uganda/news/national/uganda-deploys-special-forces-in-juba-amid-tensions-muhoozi-4959864",
+     "counts": null
+    },
+    {
+     "class": "research",
+     "publisher": "Human Rights Watch",
+     "via": null,
+     "text": "Human Rights Watch on air strikes and the breach of the UN arms embargo",
+     "date": null,
+     "url": "https://www.hrw.org/world-report/2026/country-chapters/south-sudan",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "UPDF",
+     "via": null,
+     "text": "UPDF, UPDF commissions new medical facilities at its Operation Mlinzi wa Kimya headquarters in Bilnyang, South Sudan, 11 October 2026",
+     "date": "2026-10",
+     "url": "https://www.updf.go.ug/commissions/updf-commissions-new-medical-facilities-in-south-sudan/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Reuters",
+     "via": "Chronicle.lu",
+     "text": "Reuters, Uganda says special forces deployed in Juba to secure it, quoting Muhoozi's posts; South Sudan did not comment, 11 March 2025",
+     "date": "2025-03",
+     "url": "https://www.chronicle.lu/category/international-news/53838-uganda-says-special-forces-deploy-in-south-sudan-capital-amid-tensions",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "62baef69",
+   "war": "Pakistan and Afghanistan",
+   "backer": "China",
+   "helps": "Pakistan",
+   "kinds": [
+    "weapons"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "research",
+     "publisher": "SIPRI Arms Transfers Database",
+     "via": null,
+     "text": "SIPRI Arms Transfers Database, March 2026 release, deliveries to 2025",
+     "date": "2026-03",
+     "url": "https://www.sipri.org/databases/armstransfers",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "NPR",
+     "via": null,
+     "text": "NPR, 3 April 2026, on China hosting Pakistan-Afghanistan talks",
+     "date": "2026-04",
+     "url": "https://www.npr.org/2026/04/03/g-s1-116299/pakistan-says-a-new-round-of-peace-talks-with-afghanistan-is-underway-in-china",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "7707899b",
+   "war": "Pakistan and Afghanistan",
+   "backer": "India",
+   "helps": "Pakistani Taliban (TTP) and Baloch insurgents",
+   "kinds": [
+    "money",
+    "weapons"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "opponent",
+     "publisher": "Pakistani mission to the UN",
+     "via": null,
+     "text": "Pakistani statements at the UN General Assembly, 7 and 8 October 2026",
+     "date": "2026-10",
+     "url": "https://www.radio.gov.pk/08-10-2026/pakistan-calls-for-collective-response-to-contemporary-terrorist-threat",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Express Tribune",
+     "via": null,
+     "text": "Express Tribune, the page linked here",
+     "date": null,
+     "url": "https://tribune.com.pk/story/2633668/at-un-pakistan-says-india-provides-active-support-to-taliban-backs-terrorist-groups",
+     "counts": null
+    },
+    {
+     "class": "opponent",
+     "publisher": "Associated Press of Pakistan",
+     "via": null,
+     "text": "APP, Pakistan warns at the Sixth Committee that India-backed terror proxies will face the same fate as the jets downed in May 2025; Jadoon says the TTP and BLA operate from Afghan soil with India's active support, 8 October 2026",
+     "date": "2026-10",
+     "url": "https://www.app.com.pk/?p=1288122",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "f25e7d94",
+   "war": "Somalia",
+   "backer": "Ethiopia",
+   "helps": "Federal government and AU mission",
+   "kinds": [
+    "troops"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "recipient",
+     "publisher": "African Union",
+     "via": null,
+     "text": "AU mission troop list, 2,500 Ethiopian troops",
+     "date": "2025-04",
+     "url": "https://www.thereporterethiopia.com/44556/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Bloomberg",
+     "via": "Bloomberg",
+     "text": "Bloomberg, 30 September 2026, on a planned pullout",
+     "date": "2026-09",
+     "url": "https://theeastafrican.co.ke/tea/news/eastern-africa/ethiopia-troop-pullout-plan-puts-somalia-security-under-strain-5617952",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "The Reporter",
+     "via": null,
+     "text": "The Reporter, the page linked here",
+     "date": null,
+     "url": "https://www.thereporterethiopia.com/44556/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "a21fe721",
+   "war": "Pakistan and Afghanistan",
+   "backer": "United States",
+   "helps": "Pakistan",
+   "kinds": [
+    "weapons"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "U.S. Defense Security Cooperation Agency",
+     "via": null,
+     "text": "U.S. Defense Security Cooperation Agency notification to Congress, 8 December 2025, $686 million F-16 package",
+     "date": "2025-12",
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al Jazeera",
+     "via": null,
+     "text": "Al Jazeera, the page linked here",
+     "date": null,
+     "url": "https://www.aljazeera.com/news/2025/12/11/is-trumps-686m-f-16-upgrade-for-pakistan-a-message-to-india",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Dawn",
+     "via": null,
+     "text": "Dawn, the U.S. approves a $686 million F-16 upgrade and sustainment package for Pakistan, according to a DSCA letter to Congress, 11 December 2025",
+     "date": "2025-12",
+     "url": "https://www.dawn.com/news/1960448",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "The Statesman",
+     "via": null,
+     "text": "The Statesman, Trump administration notifies Congress of a $686 million F-16 upgrade for Pakistan; the deal enters a 30-day review; letter dated 8 December, December 2025",
+     "date": "2025-12",
+     "url": "https://www.thestatesman.com/world/trump-administration-notifies-686-million-f16-upgrade-pakistan-1503523755.html",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "919e04cf",
+   "war": "The Gulf and Hormuz",
+   "backer": "United Arab Emirates",
+   "helps": "United States",
+   "kinds": [
+    "air strikes on its enemy"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "press",
+     "publisher": "UAE Ministry of Defence",
+     "via": null,
+     "text": "Wall Street Journal, 16 May 2026, on secret Saudi and UAE strikes on Iran",
+     "date": "2026-05",
+     "url": null,
+     "counts": null
+    },
+    {
+     "class": "reference",
+     "publisher": "Wikipedia",
+     "via": null,
+     "text": "Wikipedia, the page linked here",
+     "date": null,
+     "url": "https://en.wikipedia.org/wiki/Saudi_Arabia_in_the_2026_Iran_war",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Türkiye Today",
+     "via": null,
+     "text": "Türkiye Today, 8 April 2026, UAE Mirage jets suspected in post-ceasefire strike on Iran's Lavan refinery; UAE neither confirms nor denies",
+     "date": "2026-04",
+     "url": "https://www.turkiyetoday.com/region/uae-mirage-jets-suspected-in-post-ceasefire-strike-on-iranian-refinery-3217720",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Iran International",
+     "via": null,
+     "text": "Iran International, 8 April 2026, Iran's oil refining company says the Lavan refinery was struck; no attacker named",
+     "date": "2026-04",
+     "url": "https://www.iranintl.com/en/202604082020",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "04342ccf",
+   "war": "The Gulf and Hormuz",
+   "backer": "Qatar",
+   "helps": "United States",
+   "kinds": [
+    "lets its bases be used",
+    "shoots down missiles and drones aimed at it"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Qatar Ministry of Foreign Affairs",
+     "via": null,
+     "text": "Qatar Ministry of Foreign Affairs statement, 1 March 2026, on intercepting waves of Iranian missiles; Al Udeid Air Base",
+     "date": "2026-03",
+     "url": "https://mofa.gov.qa/en/qatar/latest-articles/latest-news/details/2026/03/01/ministries-of-defense--interior--foreign-affairs--armed-forces-interrupted-waves-of-iranian-missiles--no-casualties",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "AFP via Times of Israel",
+     "via": null,
+     "text": "AFP via Times of Israel, Qatar's defence ministry says two missiles were fired at Qatar, one intercepted and one striking the Al Udeid base with no casualties, 3 March 2026",
+     "date": "2026-03",
+     "url": "https://www.timesofisrael.com/liveblog_entry/iranian-missile-hits-us-base-at-al-udeid-no-casualties-qatari-defense-ministry/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Sharjah24",
+     "via": null,
+     "text": "Sharjah24, Qatar announces the interception of 63 Iranian missiles and 11 drones and affirms its right to respond, 1 March 2026",
+     "date": "2026-03",
+     "url": "https://sharjah24.ae/en/Articles/2026/03/01/Qatar-announces-interception-of-63-Iranian-missiles-11-drones",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "c42c8d9c",
+   "war": "Yemen",
+   "backer": "China",
+   "helps": "Houthis (Ansar Allah)",
+   "kinds": [
+    "intelligence",
+    "parts for weapons"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "opponent",
+     "publisher": "U.S. State Department",
+     "via": null,
+     "text": "U.S. State Department, 17 April 2025, on Chang Guang satellite imagery",
+     "date": "2025-04",
+     "url": "https://www.thenationalnews.com/news/us/2025/04/17/china-houthis-yemen-satellite-images/",
+     "counts": null
+    },
+    {
+     "class": "opponent",
+     "publisher": "U.S. Treasury",
+     "via": null,
+     "text": "U.S. Treasury, 11 September 2025, sanctions on China-based suppliers of missile and drone parts",
+     "date": "2025-09",
+     "url": "https://home.treasury.gov/news/press-releases/sb0243",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Reuters",
+     "via": null,
+     "text": "Reuters, 18 April 2025, US says Chinese satellite firm is supporting Houthi attacks on US interests",
+     "date": "2025-04",
+     "url": "https://www.algemeiner.com/2025/04/17/us-says-chinese-satellite-firm-supporting-houthi-attacks-american-interests/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Business Today",
+     "via": "Bloomberg",
+     "text": "Business Today, How Chinese parts are helping Houthis build weapons inside Yemen: Bloomberg found four containers seized at Aden, bound for Hodeidah, held missile parts, drone parts and machine tools linked to Chinese exporters; inspected in July 2026 at the request of the UN Panel of Experts, 24 September 2026",
+     "date": "2026-09",
+     "url": "https://www.businesstoday.in/world/story/how-chinese-parts-are-helping-houthis-build-weapons-inside-yemen-557694-2026-09-24",
+     "counts": null
+    },
+    {
+     "class": "opponent",
+     "publisher": "DefenseScoop (reporting the U.S. Commerce Department's Entity List notice)",
+     "via": null,
+     "text": "DefenseScoop, ten China-based companies added to the Entity List for helping buy electronic parts found in drones flown by Houthi militants, 9 October 2025",
+     "date": "2025-10",
+     "url": "https://defensescoop.com/2025/10/09/us-government-entity-list-chinese-companies-drone-parts-iran-proxies/",
+     "counts": null
+    },
+    {
+     "class": "research",
+     "publisher": "Security Council Report",
+     "via": null,
+     "text": "Security Council Report, Yemen October 2026 forecast: the Panel of Experts told the Council more arms are being made inside Yemen and supply chains have grown more sophisticated; final report due 15 October 2026, 1 October 2026",
+     "date": "2026-10",
+     "url": "https://www.securitycouncilreport.org/monthly-forecast/2026-10/yemen-91.php",
+     "counts": false
+    }
+   ]
+  },
+  {
+   "key": "66e43add",
+   "war": "Sudan",
+   "backer": "Egypt",
+   "helps": "Sudanese Armed Forces",
+   "kinds": [
+    "backs it in public and at the UN"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Egyptian presidency",
+     "via": null,
+     "text": "Egyptian government statements; Sisi's call with Burhan to activate the 1976 joint defence pact, December 2025",
+     "date": "2025-12",
+     "url": "https://thepeninsulaqatar.com/article/14/01/2026/egypt-says-wont-hesitate-to-take-necessary-measures-to-preserve-sudan-unity",
+     "counts": null
+    },
+    {
+     "class": "recipient",
+     "publisher": "Sudanese government",
+     "via": "A News",
+     "text": "Sudanese government statements",
+     "date": "2025-12",
+     "url": "https://www.anews.com.tr/middle-east/2025/12/19/egypts-sisi-sudans-burhan-call-for-activating-joint-defense-pact",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "TRT World",
+     "via": null,
+     "text": "TRT World, the page linked here",
+     "date": null,
+     "url": "https://www.trtworld.com/article/ea6337cb61c0",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Reuters",
+     "via": "Cyprus Mail",
+     "text": "Reuters, satellite images show a large drone identified by two experts as a Bayraktar Akinci at Egypt's East Oweinat airstrip on 29 September, 28 December and 9 January; five of six tracked flights came from Turkey; Egyptian security officials privately acknowledge logistical and technical support to Sudan's army, 2 February 2026",
+     "date": "2026-02",
+     "url": "https://cyprus-mail.com/2026/02/02/egypts-drone-deployment-to-border-raises-stakes-in-sudans-civil-war",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Geeska",
+     "via": null,
+     "text": "Geeska, summarising the New York Times: Akinci drones flew for at least six months from East Oweinat and struck RSF targets more than 800 miles inside Sudan; links the NYT article, 2 February 2026",
+     "date": "2026-02",
+     "url": "https://www.geeska.com/en/egypt-emerges-covert-drone-hub-sudan-war-new-york-times-reports",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "f8f1dd72",
+   "war": "The Gulf and Hormuz",
+   "backer": "Jordan",
+   "helps": "United States",
+   "kinds": [
+    "lets its bases be used",
+    "shoots down missiles and drones aimed at it"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Jordanian Armed Forces",
+     "via": null,
+     "text": "Jordanian armed forces interception statements, June and July 2026; Muwaffaq Salti Air Base",
+     "date": "2026-07",
+     "url": "https://qna.org.qa/en/News-Area/News/2026-7/24/jordans-army-intercepts-7-iranian-missiles-6-drones",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Al-Monitor",
+     "via": null,
+     "text": "Al-Monitor, the page linked here",
+     "date": null,
+     "url": "https://www.al-monitor.com/originals/2026/07/jordan-intercepts-7-missiles-6-drones-iran-warns-civilians-near-us-bases",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "Jordan News Agency (Petra)",
+     "via": null,
+     "text": "Petra, the Jordanian Armed Forces intercepted a barrage of 49 drones and ballistic missiles targeting the Kingdom; air defences neutralised 13 ballistic missiles, with material damage and no casualties, 28 February 2026",
+     "date": "2026-02",
+     "url": "https://petra.gov.jo/en/news/jaf-intercepts-49-drones-and-missiles-1",
+     "counts": null
+    },
+    {
+     "class": "backer",
+     "publisher": "Jordan News Agency (Petra)",
+     "via": null,
+     "text": "Petra, the army intercepts one Iranian missile and two drones targeting the Kingdom in the past 24 hours; the Royal Jordanian Air Force dealt with them with high efficiency, 1 April 2026",
+     "date": "2026-04",
+     "url": "https://petra.gov.jo/en/news/army-intercepts-1-iranian-missile-2-drones-targeting-kingdom-in-past-24-hours",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "e9ce87c8",
+   "war": "Syria",
+   "backer": "Israel",
+   "helps": "Druze militias in Sweida and Assad loyalists on the coast",
+   "kinds": [
+    "weapons",
+    "money"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "press",
+     "publisher": "Israel Defense Forces",
+     "via": null,
+     "text": "Reuters, 17 September 2025, citing two senior Druze officials and a Western intelligence source",
+     "date": "2025-09",
+     "url": "https://www.haaretz.com/israel-news/2025-09-17/ty-article/.premium/israel-reportedly-supplying-weapons-and-salaries-to-druze-in-southern-syria/00000199-53d6-dc75-a1d9-57deec260000",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Times of Israel",
+     "via": "Reuters",
+     "text": "Times of Israel, 16 September 2025, citing Reuters: Israel arming and paying salaries of about 3,000 Druze fighters in Sweida",
+     "date": "2025-09",
+     "url": "https://www.timesofisrael.com/israel-said-arming-paying-salaries-of-druze-militia-in-syrias-sweida-area/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "33701ebc",
+   "war": "Syria",
+   "backer": "Israel",
+   "helps": "Druze militias in Sweida and Assad loyalists on the coast",
+   "kinds": [
+    "air strikes on its enemy"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Israel Defense Forces",
+     "via": null,
+     "text": "Israeli military statements on strikes against Syrian army sites to protect the Druze, July 2025 and 20 March 2026",
+     "date": "2026-03",
+     "url": "https://www.aljazeera.com/news/2026/3/20/israel-says-it-hit-syrian-army-camps-in-the-south-after-druze-attacked",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Washington Times",
+     "via": null,
+     "text": "Washington Times, the page linked here",
+     "date": null,
+     "url": "https://www.washingtontimes.com/news/2026/mar/20/israel-launches-strikes-syria-alleged-attacks-druze-minority-members/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Ynet",
+     "via": null,
+     "text": "Ynet, an IDF spokesperson says Israel will not allow harm to the Druze in Syria and will continue to act for their protection, March 2026",
+     "date": "2026-03",
+     "url": "https://www.ynetnews.com/article/pnwiqs6c5",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "The New Arab",
+     "via": null,
+     "text": "The New Arab, relaying the Washington Post: Israel channelled money to the Sweida Military Council through the SDF and, with the SDF, provided weapons including anti-tank missiles, citing Israeli officials, 24 December 2025",
+     "date": "2025-12",
+     "url": "https://www.newarab.com/news/israel-and-sdf-financially-backing-syrian-druze-militias-report",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Ynet",
+     "via": null,
+     "text": "Ynet, relaying the Washington Post: Israel airdropped 500 rifles, ammunition and vests to the Druze Military Council, pays about 3,000 fighters $100 to $200 a month, and continues airdrops of vests and medical supplies; weapons flow stopped in May and aid tapered in August 2025, December 2025",
+     "date": "2025-12",
+     "url": "https://ynetnews.com/article/sjzeqwo7zg",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Middle East Monitor",
+     "via": null,
+     "text": "Middle East Monitor, U.S. report says Israel secretly armed Druze factions in southern Syria, 24 December 2025",
+     "date": "2025-12",
+     "url": "https://www.middleeastmonitor.com/20251224-us-report-says-israel-secretly-armed-druze-factions-in-southern-syria/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "45fa2257",
+   "war": "Eastern Congo",
+   "backer": "Burundi",
+   "helps": "Congolese government and allied militias",
+   "kinds": [
+    "troops"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "backer",
+     "publisher": "Burundian government",
+     "via": null,
+     "text": "Burundian government statements",
+     "date": "2026-01",
+     "url": "https://okapinews.net/politique/refugies-reconciliation-et-securite-le-message-de-ndayishimiye-sur-la-crise-congolaise/",
+     "counts": null
+    },
+    {
+     "class": "research",
+     "publisher": "Security Council Report",
+     "via": null,
+     "text": "Security Council Report, October 2026 forecast",
+     "date": "2026-10",
+     "url": "https://www.securitycouncilreport.org/monthly-forecast/2026-10/great-lakes-region-drc-10.php",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Actualite.cd",
+     "via": null,
+     "text": "Actualite.cd, DRC and Burundi defence ministers meet in Bujumbura and put joint operations first; Bujumbura has deployed thousands of soldiers beside the Congolese army, mainly in South Kivu, 28 May 2026",
+     "date": "2026-05",
+     "url": "https://actualite.cd/2026/05/28/rdc-burundi-les-ministres-de-la-defense-insistent-sur-le-renforcement-des-operations",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "SOS Medias Burundi",
+     "via": null,
+     "text": "SOS Medias Burundi, Burundian army reinforcements in Fizi, South Kivu, since February 2026; a Congolese interior ministry document counts over 29,000 Burundian soldiers sent between August 2022 and December 2025, 9 July 2026",
+     "date": "2026-07",
+     "url": "https://www.sosmediasburundi.org/2026/07/09/sud-kivu-de-nouvelles-pertes-presumees-de-larmee-burundaise-relancent-les-interrogations-sur-son-engagement-en-rdc/",
+     "counts": null
+    }
+   ]
+  },
+  {
+   "key": "fea29b22",
+   "war": "Sudan",
+   "backer": "Iran",
+   "helps": "Sudanese Armed Forces",
+   "kinds": [
+    "drones"
+   ],
+   "ended": null,
+   "sources": [
+    {
+     "class": "press",
+     "publisher": "Bloomberg",
+     "via": null,
+     "text": "Bloomberg, 24 January 2024, on Mohajer-6 drones; Iran and Sudan restored relations in October 2023",
+     "date": "2024-01",
+     "url": "https://www.bloomberg.com/news/articles/2024-01-24/iran-supplies-sudan-army-with-drones-as-civil-war-continues",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "defenceWeb",
+     "via": null,
+     "text": "defenceWeb, UAVs supplied by Iran and the UAE threaten to prolong Sudan conflict; Mohajer-6 after Iranian flights, 3 December 2024",
+     "date": "2024-12",
+     "url": "https://defenceweb.co.za/aerospace/aerospace-aerospace/uavs-supplied-by-iran-and-the-uae-threaten-to-prolong-sudan-conflict/",
+     "counts": null
+    },
+    {
+     "class": "press",
+     "publisher": "Bloomberg",
+     "via": null,
+     "text": "Bloomberg, Sudan ditches Iran weapons, courting US support for ending war, 16 June 2026",
+     "date": "2026-06",
+     "url": null,
+     "counts": false
+    },
+    {
+     "class": "research",
+     "publisher": "RANE",
+     "via": null,
+     "text": "RANE, situational report: Bloomberg, citing a senior Sudanese Armed Forces source, says the army has dropped its effort to buy Iranian weapons and seeks closer ties with the United States and Saudi Arabia, 16 June 2026",
+     "date": "2026-06",
+     "url": "https://worldview.ranenetwork.com/content/situational-report/2026-06-16/sudan-saf-official-claims-halt-to-purchases-of-iranian-weapons-in-push-to-woo-trump-administration",
+     "counts": false
+    },
+    {
+     "class": "research",
+     "publisher": "Foundation for Defense of Democracies",
+     "via": null,
+     "text": "FDD, Sudan turns away from Iranian weapons in hopes of courting Washington: a State Department spokesperson says Islamists within the army coalition still receive technical support from Iran's government including the IRGC, 22 June 2026 (seen in a listing only; it speaks of IRGC technical support to Islamist units, not drones, so it does not date the tie)",
+     "date": "2026-06",
+     "url": "https://www.fdd.org/analysis/2026/06/22/sudan-turns-away-from-iranian-weapons-in-hopes-of-courting-washington/",
+     "counts": false
+    }
+   ]
+  }
+ ]
+}

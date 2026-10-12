@@ -23,7 +23,7 @@ from datetime import date
 import pandas as pd
 
 COLS = ['id', 'year', 'type_of_violence', 'conflict_new_id', 'conflict_name', 'dyad_new_id', 'dyad_name',
-        'side_a', 'side_b', 'country', 'best', 'low', 'high', 'date_start', 'code_status']
+        'side_a', 'side_b', 'country', 'best', 'low', 'high', 'date_start', 'code_status', 'where_prec', 'latitude', 'longitude']
 
 # map entry id -> UCDP country names (as spelled in the country column)
 BY_COUNTRY = {
@@ -57,6 +57,8 @@ DYAD_COUNTRIES = {'gulf': ['Iran']}
 NOT_ON_MAP = ['Mexico', 'Colombia', 'Tanzania']
 
 TYPES = {1: 'state-based', 2: 'non-state', 3: 'one-sided'}
+MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+month_word = lambda m: MONTHS[int(m[5:7]) - 1] + ' ' + m[:4]
 
 # UCDP's "Government of X" names -> our backer ids, where the spelling differs
 GOV_TO_BACKER = {'United States of America': 'usa', 'Russia (Soviet Union)': 'russia', 'Turkey': 'turkey', 'United Arab Emirates': 'uae',
@@ -167,6 +169,7 @@ def main():
         'entries': {},
         'not_on_map': [],
     }
+    win_by_entry = {}
     for cid in [c['id'] for c in conf['conflicts']]:
         if cid in BY_COUNTRY:
             x = df[df.country.isin(BY_COUNTRY[cid])]
@@ -183,6 +186,7 @@ def main():
                 excluded.append({'dyad': dyad, 'best_this_year': int(y[y.year == this_year].best.sum()), 'why': why})
             x = x[x.dyad_name != dyad]
         w = x[(x.month >= win_from) & (x.month <= win_to)]
+        win_by_entry[cid] = w
         confs = (x[x.year >= last_year].groupby(['conflict_new_id', 'conflict_name', 'type_of_violence'])
                  .agg(best=('best', 'sum')).reset_index().sort_values('best', ascending=False))
         conflicts = [{'id': int(r.conflict_new_id), 'name': re.sub(r'XXX\d+', 'unnamed groups', r.conflict_name), 'type': TYPES.get(int(r.type_of_violence)),
@@ -211,7 +215,72 @@ def main():
         out['not_on_map'].append({'country': country, 'last_year': {'year': last_year, **sums(x[x.year == last_year])},
                                   'this_year': {'year': this_year, **sums(x[x.year == this_year])}, 'window': sums(w),
                                   'by_type': {TYPES[k]: int(v) for k, v in w.groupby('type_of_violence').best.sum().items()}})
-    json.dump(out, open(os.path.join(root, 'data', 'ucdp.json'), 'w'), indent=1, ensure_ascii=False)
+    # the level: UCDP's best by month for every entry and for the map as a whole, over the window months UCDP has reached
+    months = []
+    y, m = map(int, win_from.split('-'))
+    while f'{y}-{m:02d}' <= min(win_to, reach):
+        months.append(f'{y}-{m:02d}'); m += 1
+        if m > 12: m, y = 1, y + 1
+    def by_month(x):
+        g = x.groupby('month').agg(best=('best', 'sum'), low=('low', 'sum'), high=('high', 'sum'))
+        return {'best': [int(g.best.get(k, 0)) for k in months], 'low': [int(g.low.get(k, 0)) for k in months], 'high': [int(g.high.get(k, 0)) for k in months]}
+    for cid, w in win_by_entry.items():
+        out['entries'][cid]['months'] = by_month(w)
+    on_map = pd.concat(list(win_by_entry.values())).drop_duplicates('id')
+    world = df[(df.month >= win_from) & (df.month <= win_to)]
+    # the dyads the page says it leaves out are left out of the world sums and the cells too
+    for cid, dyads in EXCLUDE_DYAD.items():
+        for dyad in dyads:
+            world = world[~((world.dyad_name == dyad) & world.country.isin(BY_COUNTRY.get(cid, DYAD_COUNTRIES.get(cid, []))))]
+    cand_months = sorted(set(df[df['_cand'] == True].month))
+    out['months'] = {'keys': months, 'map': by_month(on_map), 'world': by_month(world), 'candidate_from': cand_months[0] if cand_months else None,
+                     'rule': 'UCDP\'s best, low and high estimates of deaths by the month the event began, summed over the wars on this map (by each entry\'s basis) and over the whole dataset, less the rows the page says it leaves out. Months from the candidate files are provisional: about six weeks behind, and a share of their rows still carry a check flag.'}
+    # where Uppsala counted: one-degree cells over the window, from events placed to a province or better (where_prec 1 to 4);
+    # events placed only to a country are not drawn, and their deaths are given per entry so the reader knows what is missing
+    placed = world[world.where_prec <= 4].copy()
+    placed['cx'] = (placed.longitude // 1).astype(int); placed['cy'] = (placed.latitude // 1).astype(int)
+    entry_of = {}
+    for cid in out['entries']:
+        if cid in BY_COUNTRY:
+            for cn in BY_COUNTRY[cid]: entry_of[('country', cn)] = cid
+        else:
+            for k in BY_CONFLICT[cid]: entry_of[('conflict', k)] = cid
+    def tag(r):
+        return entry_of.get(('conflict', int(r.conflict_new_id))) or entry_of.get(('country', r.country))
+    placed['entry'] = [tag(r) for r in placed.itertuples()]
+    cells = []
+    for (cx, cy), g in placed.groupby(['cx', 'cy']):
+        per = g.groupby('month').best.sum()
+        ent = g.groupby('entry').best.sum()
+        cells.append({'lon': int(cx) + 0.5, 'lat': int(cy) + 0.5, 'best': int(g.best.sum()), 'n': int(len(g)),
+                      'months': [int(per.get(k, 0)) for k in months], 'entry': (ent.idxmax() if len(ent) and ent.max() > 0 else None)})
+    cells = [c for c in cells if c['best'] > 0]
+    unplaced = {cid: int(w[w.where_prec > 4].best.sum()) for cid, w in win_by_entry.items()}
+    json.dump({'rule': 'UCDP events of the window, ' + month_word(win_from) + ' to the last month reached, summed in one-degree cells by the month the event began. Only events placed to a province or better are drawn; deaths UCDP could place only to a country are listed by war and not drawn. Cell size is the square root of deaths, so area is deaths.',
+               'window': out['window'], 'months': months, 'versions': out['versions'], 'pulled': pulled, 'cells': cells, 'unplaced': unplaced,
+               'unplaced_total': int(world[world.where_prec > 4].best.sum()), 'placed_total': int(placed.best.sum())},
+              open(os.path.join(root, 'data', 'ucdp_grid.json'), 'w'), separators=(',', ':'), ensure_ascii=False)
+    print('wrote data/ucdp_grid.json:', len(cells), 'cells, placed', int(placed.best.sum()), 'unplaced', int(world[world.where_prec > 4].best.sum()))
+    # the level since 1989, from UCDP's country-year file, if it is in the directory
+    cy = glob.glob(os.path.join(d, 'OrganizedViolenceCYDataSet*.csv'))
+    if cy:
+        c = pd.read_csv(sorted(cy)[-1], low_memory=False)
+        g = c.groupby('year').agg(best=('cumulative_total_deaths_in_orgvio_best', 'sum'), low=('cumulative_total_deaths_in_orgvio_low', 'sum'), high=('cumulative_total_deaths_in_orgvio_high', 'sum'),
+                                  sb=('sb_total_deaths_best', 'sum'), ns=('ns_total_deaths_best', 'sum'), os=('os_total_deaths_best', 'sum'))
+        wars = c[c.cumulative_total_deaths_in_orgvio_best >= 1000].groupby('year').country.nunique()
+        years = [{'year': int(yr), 'best': int(r.best), 'low': int(r.low), 'high': int(r.high), 'state': int(r.sb), 'nonstate': int(r.ns), 'onesided': int(r.os), 'countries_over_1000': int(wars.get(yr, 0))} for yr, r in g.iterrows()]
+        json.dump({'rule': 'UCDP\'s best, low and high estimates of deaths in organized violence by year, summed over every country, from the UCDP Organized Violence Country-Year Dataset; deaths in fighting, deaths in fighting between armed groups, and civilians killed on purpose, shown apart. Countries over 1,000 is the number of countries with a thousand or more deaths that year.',
+                   'version': str(c.Version.iloc[0]), 'years': years}, open(os.path.join(root, 'data', 'ucdp_years.json'), 'w'), indent=1)
+        print('wrote data/ucdp_years.json:', len(years), 'years')
+    json.dump(out, open(os.path.join(root, 'data', 'ucdp.json'), 'w'), indent=1, ensure_ascii=False)   # again, now with the months
+    # keep every pull, so a version change shows as a change: data/ucdp_history.json, one row per pull per entry
+    hpath = os.path.join(root, 'data', 'ucdp_history.json')
+    hist = json.load(open(hpath)) if os.path.exists(hpath) else {'rule': 'One row per pull: the versions pulled, the month reached, and each entry\'s window sum as it stood. A later pull that moves a number is a revision by UCDP or a change in our basis, and the page shows the move.', 'pulls': []}
+    hist['pulls'] = [h for h in hist['pulls'] if h['pulled'] != pulled]
+    hist['pulls'].append({'pulled': pulled, 'versions': out['versions'], 'reach': reach, 'window': out['window'], 'flagged_share': flagged,
+                          'entries': {cid: {'window': e['window'], 'last_year': e['last_year'], 'this_year': e['this_year'], 'basis': e['basis']} for cid, e in out['entries'].items()}})
+    hist['pulls'].sort(key=lambda h: h['pulled'])
+    json.dump(hist, open(hpath, 'w'), indent=1, ensure_ascii=False)
     print('wrote data/ucdp.json:', len(out['entries']), 'entries, versions', out['versions'], 'reach', reach, 'flagged', flagged)
 
 

@@ -1,0 +1,362 @@
+{
+ "rule": "One row per pull: the versions pulled, the month reached, and each entry's window sum as it stood. A later pull that moves a number is a revision by UCDP or a change in our basis, and the page shows the move.",
+ "pulls": [
+  {
+   "pulled": "2026-10-11",
+   "versions": "GED 26.1, Candidate 26.01 to 26.06, Candidate 26.0.7, Candidate 26.0.8",
+   "reach": "2026-08",
+   "window": {
+    "from": "2025-10",
+    "to": "2026-08"
+   },
+   "flagged_share": 0.374,
+   "entries": {
+    "ukraine": {
+     "window": {
+      "from": "2025-10",
+      "to": "2026-08",
+      "low": 81305,
+      "best": 83936,
+      "high": 89367
+     },
+     "last_year": {
+      "year": 2025,
+      "low": 87336,
+      "best": 94778,
+      "high": 140931
+     },
+     "this_year": {
+      "year": 2026,
+      "to": "2026-08",
+      "low": 56542,
+      "best": 57906,
+      "high": 60898
+     },
+     "basis": "countries: Ukraine, Russia (Soviet Union)"
+    },
+    "sudan": {
+     "window": {
+      "from": "2025-10",
+      "to": "2026-08",
+      "low": 12970,
+      "best": 66737,
+      "high": 82062
+     },
+     "last_year": {
+      "year": 2025,
+      "low": 20890,
+      "best": 75174,
+      "high": 90837
+     },
+     "this_year": {
+      "year": 2026,
+      "to": "2026-08",
+      "low": 3889,
+      "best": 3987,
+      "high": 4278
+     },
+     "basis": "countries: Sudan"
+    },
+    "gaza": {
+     "window": {
+      "from": "2025-10",
+      "to": "2026-08",
+      "low": 6441,
+      "best": 6495,
+      "high": 6319
+     },
+     "last_year": {
+      "year": 2025,
+      "low": 14294,
+      "best": 14910,
+      "high": 15593
+     },
+     "this_year": {
+      "year": 2026,
+      "to": "2026-08",
+      "low": 5529,
+      "best": 5548,
+      "high": 5318
+     },
+     "basis": "countries: Israel, Lebanon, Palestine"
+    },
+    "yemen": {
+     "window": {
+      "from": "2025-10",
+      "to": "2026-08",
+      "low": 1490,
+      "best": 2378,
+      "high": 2977
+     },
+     "last_year": {
+      "year": 2025,
+      "low": 1048,
+      "best": 1718,
+      "high": 2056
+     },
+     "this_year": {
+      "year": 2026,
+      "to": "2026-08",
+      "low": 1231,
+      "best": 2038,
+      "high": 2631
+     },
+     "basis": "countries: Yemen (North Yemen)"
+    },
+    "myanmar": {
+     "window": {
+      "from": "2025-10",
+      "to": "2026-08",
+      "low": 1706,
+      "best": 1741,
+      "high": 2352
+     },
+     "last_year": {
+      "year": 2025,
+      "low": 2280,
+      "best": 2317,
+      "high": 3322
+     },
+     "this_year": {
+      "year": 2026,
+      "to": "2026-08",
+      "low": 1248,
+      "best": 1252,
+      "high": 1588
+     },
+     "basis": "countries: Myanmar (Burma)"
+    },
+    "congo": {
+     "window": {
+      "from": "2025-10",
+      "to": "2026-08",
+      "low": 2827,
+      "best": 3617,
+      "high": 10394
+     },
+     "last_year": {
+      "year": 2025,
+      "low": 8305,
+      "best": 9172,
+      "high": 29659
+     },
+     "this_year": {
+      "year": 2026,
+      "to": "2026-08",
+      "low": 1832,
+      "best": 2412,
+      "high": 6284
+     },
+     "basis": "countries: DR Congo (Zaire)"
+    },
+    "sahel": {
+     "window": {
+      "from": "2025-10",
+      "to": "2026-08",
+      "low": 5114,
+      "best": 5437,
+      "high": 8401
+     },
+     "last_year": {
+      "year": 2025,
+      "low": 7514,
+      "best": 7715,
+      "high": 10346
+     },
+     "this_year": {
+      "year": 2026,
+      "to": "2026-08",
+      "low": 3937,
+      "best": 4217,
+      "high": 6719
+     },
+     "basis": "countries: Burkina Faso, Mali, Niger"
+    },
+    "somalia": {
+     "window": {
+      "from": "2025-10",
+      "to": "2026-08",
+      "low": 3548,
+      "best": 3567,
+      "high": 4112
+     },
+     "last_year": {
+      "year": 2025,
+      "low": 3808,
+      "best": 3872,
+      "high": 4535
+     },
+     "this_year": {
+      "year": 2026,
+      "to": "2026-08",
+      "low": 2881,
+      "best": 2890,
+      "high": 3279
+     },
+     "basis": "countries: Somalia"
+    },
+    "syria": {
+     "window": {
+      "from": "2025-10",
+      "to": "2026-08",
+      "low": 636,
+      "best": 637,
+      "high": 639
+     },
+     "last_year": {
+      "year": 2025,
+      "low": 3141,
+      "best": 3449,
+      "high": 3753
+     },
+     "this_year": {
+      "year": 2026,
+      "to": "2026-08",
+      "low": 563,
+      "best": 564,
+      "high": 565
+     },
+     "basis": "countries: Syria"
+    },
+    "haiti": {
+     "window": {
+      "from": "2025-10",
+      "to": "2026-08",
+      "low": 762,
+      "best": 832,
+      "high": 880
+     },
+     "last_year": {
+      "year": 2025,
+      "low": 2311,
+      "best": 2448,
+      "high": 2587
+     },
+     "this_year": {
+      "year": 2026,
+      "to": "2026-08",
+      "low": 432,
+      "best": 492,
+      "high": 514
+     },
+     "basis": "countries: Haiti"
+    },
+    "pakistan": {
+     "window": {
+      "from": "2025-10",
+      "to": "2026-08",
+      "low": 4585,
+      "best": 5238,
+      "high": 9132
+     },
+     "last_year": {
+      "year": 2025,
+      "low": 3270,
+      "best": 3663,
+      "high": 5888
+     },
+     "this_year": {
+      "year": 2026,
+      "to": "2026-08",
+      "low": 3558,
+      "best": 4052,
+      "high": 7234
+     },
+     "basis": "countries: Pakistan, Afghanistan"
+    },
+    "gulf": {
+     "window": {
+      "from": "2025-10",
+      "to": "2026-08",
+      "low": 3831,
+      "best": 3831,
+      "high": 3839
+     },
+     "last_year": {
+      "year": 2025,
+      "low": 1094,
+      "best": 1222,
+      "high": 1224
+     },
+     "this_year": {
+      "year": 2026,
+      "to": "2026-08",
+      "low": 3829,
+      "best": 3829,
+      "high": 3837
+     },
+     "basis": "conflicts: Iran - Israel, Iran - Israel, United States of America"
+    },
+    "ethiopia": {
+     "window": {
+      "from": "2025-10",
+      "to": "2026-08",
+      "low": 3322,
+      "best": 4609,
+      "high": 13184
+     },
+     "last_year": {
+      "year": 2025,
+      "low": 3319,
+      "best": 5458,
+      "high": 17924
+     },
+     "this_year": {
+      "year": 2026,
+      "to": "2026-08",
+      "low": 2284,
+      "best": 2826,
+      "high": 10132
+     },
+     "basis": "countries: Ethiopia, Eritrea"
+    },
+    "southsudan": {
+     "window": {
+      "from": "2025-10",
+      "to": "2026-08",
+      "low": 678,
+      "best": 707,
+      "high": 900
+     },
+     "last_year": {
+      "year": 2025,
+      "low": 621,
+      "best": 661,
+      "high": 825
+     },
+     "this_year": {
+      "year": 2026,
+      "to": "2026-08",
+      "low": 601,
+      "best": 613,
+      "high": 699
+     },
+     "basis": "countries: South Sudan"
+    },
+    "nigeria": {
+     "window": {
+      "from": "2025-10",
+      "to": "2026-08",
+      "low": 6678,
+      "best": 7441,
+      "high": 10272
+     },
+     "last_year": {
+      "year": 2025,
+      "low": 3548,
+      "best": 4158,
+      "high": 4774
+     },
+     "this_year": {
+      "year": 2026,
+      "to": "2026-08",
+      "low": 5849,
+      "best": 6488,
+      "high": 9170
+     },
+     "basis": "countries: Nigeria"
+    }
+   }
+  }
+ ]
+}

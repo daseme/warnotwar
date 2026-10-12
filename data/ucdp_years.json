@@ -1,0 +1,376 @@
+{
+ "rule": "UCDP's best, low and high estimates of deaths in organized violence by year, summed over every country, from the UCDP Organized Violence Country-Year Dataset; deaths in fighting, deaths in fighting between armed groups, and civilians killed on purpose, shown apart. Countries over 1,000 is the number of countries with a thousand or more deaths that year.",
+ "version": "26.1",
+ "years": [
+  {
+   "year": 1989,
+   "best": 68311,
+   "low": 61537,
+   "high": 109031,
+   "state": 55777,
+   "nonstate": 4225,
+   "onesided": 8309,
+   "countries_over_1000": 14
+  },
+  {
+   "year": 1990,
+   "best": 95752,
+   "low": 91417,
+   "high": 120347,
+   "state": 80395,
+   "nonstate": 5287,
+   "onesided": 10070,
+   "countries_over_1000": 15
+  },
+  {
+   "year": 1991,
+   "best": 84408,
+   "low": 81492,
+   "high": 111829,
+   "state": 70442,
+   "nonstate": 3999,
+   "onesided": 9967,
+   "countries_over_1000": 15
+  },
+  {
+   "year": 1992,
+   "best": 76121,
+   "low": 71709,
+   "high": 110562,
+   "state": 53648,
+   "nonstate": 10553,
+   "onesided": 11920,
+   "countries_over_1000": 16
+  },
+  {
+   "year": 1993,
+   "best": 74232,
+   "low": 69627,
+   "high": 134324,
+   "state": 45158,
+   "nonstate": 14825,
+   "onesided": 14249,
+   "countries_over_1000": 14
+  },
+  {
+   "year": 1994,
+   "best": 824177,
+   "low": 396477,
+   "high": 1703403,
+   "state": 38752,
+   "nonstate": 5416,
+   "onesided": 780009,
+   "countries_over_1000": 14
+  },
+  {
+   "year": 1995,
+   "best": 62876,
+   "low": 59333,
+   "high": 90637,
+   "state": 37033,
+   "nonstate": 4537,
+   "onesided": 21306,
+   "countries_over_1000": 15
+  },
+  {
+   "year": 1996,
+   "best": 88030,
+   "low": 74645,
+   "high": 113921,
+   "state": 29091,
+   "nonstate": 4357,
+   "onesided": 54582,
+   "countries_over_1000": 13
+  },
+  {
+   "year": 1997,
+   "best": 66484,
+   "low": 62388,
+   "high": 123236,
+   "state": 40541,
+   "nonstate": 4449,
+   "onesided": 21494,
+   "countries_over_1000": 13
+  },
+  {
+   "year": 1998,
+   "best": 61638,
+   "low": 55924,
+   "high": 86731,
+   "state": 40440,
+   "nonstate": 3673,
+   "onesided": 17525,
+   "countries_over_1000": 16
+  },
+  {
+   "year": 1999,
+   "best": 102686,
+   "low": 100073,
+   "high": 140826,
+   "state": 81636,
+   "nonstate": 6300,
+   "onesided": 14750,
+   "countries_over_1000": 18
+  },
+  {
+   "year": 2000,
+   "best": 95168,
+   "low": 91998,
+   "high": 115544,
+   "state": 78805,
+   "nonstate": 7643,
+   "onesided": 8720,
+   "countries_over_1000": 16
+  },
+  {
+   "year": 2001,
+   "best": 38409,
+   "low": 35814,
+   "high": 60301,
+   "state": 23840,
+   "nonstate": 5335,
+   "onesided": 9234,
+   "countries_over_1000": 12
+  },
+  {
+   "year": 2002,
+   "best": 42146,
+   "low": 39279,
+   "high": 56763,
+   "state": 21333,
+   "nonstate": 6639,
+   "onesided": 14174,
+   "countries_over_1000": 12
+  },
+  {
+   "year": 2003,
+   "best": 41077,
+   "low": 39805,
+   "high": 77567,
+   "state": 23431,
+   "nonstate": 3804,
+   "onesided": 13842,
+   "countries_over_1000": 12
+  },
+  {
+   "year": 2004,
+   "best": 36924,
+   "low": 35163,
+   "high": 72221,
+   "state": 19963,
+   "nonstate": 4360,
+   "onesided": 12601,
+   "countries_over_1000": 9
+  },
+  {
+   "year": 2005,
+   "best": 21190,
+   "low": 20408,
+   "high": 26288,
+   "state": 12648,
+   "nonstate": 2381,
+   "onesided": 6161,
+   "countries_over_1000": 6
+  },
+  {
+   "year": 2006,
+   "best": 28510,
+   "low": 27093,
+   "high": 39396,
+   "state": 20497,
+   "nonstate": 3277,
+   "onesided": 4736,
+   "countries_over_1000": 8
+  },
+  {
+   "year": 2007,
+   "best": 29433,
+   "low": 27680,
+   "high": 37495,
+   "state": 19637,
+   "nonstate": 4443,
+   "onesided": 5353,
+   "countries_over_1000": 8
+  },
+  {
+   "year": 2008,
+   "best": 40245,
+   "low": 39147,
+   "high": 50719,
+   "state": 29048,
+   "nonstate": 6458,
+   "onesided": 4739,
+   "countries_over_1000": 9
+  },
+  {
+   "year": 2009,
+   "best": 52253,
+   "low": 48284,
+   "high": 62977,
+   "state": 36185,
+   "nonstate": 9671,
+   "onesided": 6397,
+   "countries_over_1000": 11
+  },
+  {
+   "year": 2010,
+   "best": 34898,
+   "low": 33390,
+   "high": 44361,
+   "state": 21887,
+   "nonstate": 9039,
+   "onesided": 3972,
+   "countries_over_1000": 8
+  },
+  {
+   "year": 2011,
+   "best": 42485,
+   "low": 40443,
+   "high": 54059,
+   "state": 25843,
+   "nonstate": 9471,
+   "onesided": 7171,
+   "countries_over_1000": 12
+  },
+  {
+   "year": 2012,
+   "best": 91463,
+   "low": 87959,
+   "high": 105327,
+   "state": 74379,
+   "nonstate": 10349,
+   "onesided": 6735,
+   "countries_over_1000": 10
+  },
+  {
+   "year": 2013,
+   "best": 115556,
+   "low": 109280,
+   "high": 134544,
+   "state": 93725,
+   "nonstate": 9910,
+   "onesided": 11921,
+   "countries_over_1000": 11
+  },
+  {
+   "year": 2014,
+   "best": 151743,
+   "low": 144834,
+   "high": 172958,
+   "state": 116273,
+   "nonstate": 19901,
+   "onesided": 15569,
+   "countries_over_1000": 16
+  },
+  {
+   "year": 2015,
+   "best": 132027,
+   "low": 125997,
+   "high": 150606,
+   "state": 104785,
+   "nonstate": 16115,
+   "onesided": 11127,
+   "countries_over_1000": 14
+  },
+  {
+   "year": 2016,
+   "best": 116723,
+   "low": 110971,
+   "high": 136165,
+   "state": 91070,
+   "nonstate": 17438,
+   "onesided": 8215,
+   "countries_over_1000": 13
+  },
+  {
+   "year": 2017,
+   "best": 113678,
+   "low": 109098,
+   "high": 129469,
+   "state": 72559,
+   "nonstate": 31469,
+   "onesided": 9650,
+   "countries_over_1000": 14
+  },
+  {
+   "year": 2018,
+   "best": 89494,
+   "low": 83775,
+   "high": 103907,
+   "state": 55535,
+   "nonstate": 28443,
+   "onesided": 5516,
+   "countries_over_1000": 12
+  },
+  {
+   "year": 2019,
+   "best": 78507,
+   "low": 72671,
+   "high": 92222,
+   "state": 52967,
+   "nonstate": 19569,
+   "onesided": 5971,
+   "countries_over_1000": 11
+  },
+  {
+   "year": 2020,
+   "best": 104199,
+   "low": 87029,
+   "high": 124477,
+   "state": 73415,
+   "nonstate": 21370,
+   "onesided": 9414,
+   "countries_over_1000": 13
+  },
+  {
+   "year": 2021,
+   "best": 235007,
+   "low": 218372,
+   "high": 266069,
+   "state": 200226,
+   "nonstate": 22331,
+   "onesided": 12450,
+   "countries_over_1000": 16
+  },
+  {
+   "year": 2022,
+   "best": 317936,
+   "low": 277322,
+   "high": 417720,
+   "state": 285324,
+   "nonstate": 20093,
+   "onesided": 12519,
+   "countries_over_1000": 15
+  },
+  {
+   "year": 2023,
+   "best": 170432,
+   "low": 154933,
+   "high": 261732,
+   "state": 139149,
+   "nonstate": 19578,
+   "onesided": 11705,
+   "countries_over_1000": 14
+  },
+  {
+   "year": 2024,
+   "best": 188209,
+   "low": 152929,
+   "high": 232520,
+   "state": 155255,
+   "nonstate": 18234,
+   "onesided": 14720,
+   "countries_over_1000": 19
+  },
+  {
+   "year": 2025,
+   "best": 245464,
+   "low": 170801,
+   "high": 351950,
+   "state": 153782,
+   "nonstate": 14936,
+   "onesided": 76746,
+   "countries_over_1000": 19
+  }
+ ]
+}
