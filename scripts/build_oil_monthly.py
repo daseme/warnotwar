@@ -28,7 +28,7 @@ def pull(sid):
 
 def main():
     out = {
-        'rule': 'Monthly average spot prices as FRED publishes them, dollars per barrel, not adjusted for inflation: Brent (Europe) from May 1987, WTI (Cushing) from January 1986. Drawn beside the deaths because they share the years, nothing more.',
+        'rule': 'Monthly averages of daily spot prices as FRED publishes them, in dollars a barrel, not adjusted for inflation: Brent from May 1987, WTI from January 1986. The price is drawn beside the deaths because the two share the years; no more is claimed.',
         'source': {k: f'FRED series {v}' for k, v in SERIES.items()},
         'pulled': date.today().isoformat(),
     }
