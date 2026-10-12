@@ -119,7 +119,8 @@
   .stage { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 28px; align-items: start; }
   @media (max-width: 900px) { .stage { grid-template-columns: minmax(0, 1fr); } .stage > div { min-width: 0; } }
   .map-wrap { position: relative; width: 100%; background: var(--bg-raise); border: 1px solid var(--ink-10); }
-  svg#map { width: 100%; height: auto; display: block; }
+  svg#map { width: 100%; height: auto; display: block; touch-action: pan-y; cursor: grab; }
+  svg#map:active { cursor: grabbing; }
   svg text { font-family: var(--mono); }
   .land { fill: var(--land); stroke: var(--land-line); stroke-width: 0.5; vector-effect: non-scaling-stroke; transition: fill 0.2s ease; }
   .grat { fill: none; stroke: var(--grat); stroke-width: 0.5; vector-effect: non-scaling-stroke; }
@@ -336,12 +337,10 @@
   a.back:hover { color: var(--ink); }
   @media (max-width: 640px) {
     /* phones: the map crops to the band where the entries sit and pans sideways */
-    .map-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    svg#map { min-width: 680px; }
-    .map-hint { font-family: var(--mono); font-size: 10px; color: var(--ink-45); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 6px; }
+    svg#map { min-height: 300px; }
   }
-  .map-hint { display: none; }
-  @media (max-width: 640px) { .map-hint { display: block; } }
+  .map-hint { display: block; font-family: var(--mono); font-size: 10px; color: var(--ink-45); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 6px; }
+  .map-hint .ph { display: none; } @media (max-width: 640px) { .map-hint .dk { display: none; } .map-hint .ph { display: inline; } }
   @media (max-width: 720px) {
     body { padding: 52px 16px 100px; }
     nav.topnav { gap: 14px; padding: 12px 16px; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
@@ -506,7 +505,7 @@
         <svg id="map" role="group" aria-label="World map of current wars and the countries backing each side"></svg>
         <div class="tooltip" id="tip"></div>
       </div>
-      <div class="map-hint">drag the map sideways to see all of it</div>
+      <div class="map-hint"><span class="dk">drag to move · ctrl + scroll or pinch to zoom · double-click to zoom in</span><span class="ph">two fingers to zoom and move the map</span></div>
       <div class="map-note" id="events-note" style="display:none"></div>
       <div class="stepper" id="stepper">
         <span class="k">the year</span>
@@ -627,6 +626,8 @@ applyTheme((() => { const q = new URLSearchParams(location.search).get('theme');
 themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 'paper'; applyTheme(t); try { localStorage.setItem('ww-theme', t); } catch (e) {} };
 </script>
 
+<script src="/vendor/d3.v7.min.js"></script>
+<script src="/vendor/topojson-client.v3.min.js"></script>
 <script>
 (async function () {
   const $ = (s, el = document) => el.querySelector(s);
@@ -640,7 +641,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   let world, D, U = null, Y = null, CH = null;
   const get = u => fetch(u).then(r => { if (!r.ok) throw new Error('http ' + r.status + ' ' + u); return r.json(); });
   try {
-    [world, D, U, Y, CH] = await Promise.all([get('/data/world_paths.json'), get('/data/conflicts.json'), get('/data/ucdp.json').catch(() => null), get('/data/ucdp_years.json').catch(() => null), get('/data/changes.json').catch(() => null)]);
+    [world, D, U, Y, CH] = await Promise.all([get('/data/world_110m.json'), get('/data/conflicts.json'), get('/data/ucdp.json').catch(() => null), get('/data/ucdp_years.json').catch(() => null), get('/data/changes.json').catch(() => null)]);
   } catch (e) { fail('The map data did not load. ' + e.message); return; }
 
   try {
@@ -660,7 +661,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   });
   if (problems.length) fail('Some lines could not be drawn: ' + problems.join(' · '));
   const conflicts = Object.fromEntries(D.conflicts.map(c => [c.id, c]));
-  const state = { kind: null, id: null, pinned: false, all: false, pressure: true, areas: false, who: false, events: false, zoom: null, tiers: new Set(Object.keys(D.tiers)), month: null, gridAll: false, step: null, tie: null };
+  const state = { kind: null, id: null, pinned: false, all: false, pressure: true, areas: false, who: false, events: false, zoom: null, view: null, tiers: new Set(Object.keys(D.tiers)), month: null, gridAll: false, step: null, tie: null };
   const hueOf = b => (backers[b] && backers[b].hue) || 0;
   const GLYPH_R = { '3': 7.5, '2': 5.5, '1': 4 };
   const today = new Date();
@@ -687,38 +688,30 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     return s;
   }
 
-  /* ---- projection: Equal Earth, same constants as scripts/build_map.py ---- */
-  const A1 = 1.340264, A2 = -0.081106, A3 = 0.000893, A4 = 0.003796, M = Math.sqrt(3) / 2;
-  function project(lon, lat) {
-    const lam = lon * Math.PI / 180, phi = lat * Math.PI / 180;
-    const th = Math.asin(M * Math.sin(phi)), t2 = th * th, t6 = t2 * t2 * t2;
-    const x = lam * Math.cos(th) / (M * (A1 + 3 * A2 * t2 + t6 * (7 * A3 + 9 * A4 * t2)));
-    const y = th * (A1 + A2 * t2 + t6 * (A3 + A4 * t2));
-    return [world.cx + world.k * x, world.cy - world.k * y];
-  }
-  /* great circle between two lon/lat points, sampled, projected, split at the map's edge, bowed sideways so neighbours separate */
+  /* ---- projection: Equal Earth on d3-geo, with the constants scripts/build_map.py used, so the province shapes still fit ---- */
+  const MAPC = world.map;
+  const W = MAPC.viewBox[2], H = MAPC.viewBox[3];
+  const projection = d3.geoEqualEarth().scale(MAPC.k).translate([MAPC.cx, MAPC.cy]).precision(0.3);
+  const geoPath = d3.geoPath(projection);
+  const project = (lon, lat) => projection([lon, lat]);
+  /* great circle between two points, bowed sideways on the sphere so neighbours separate; d3 clips it at the map's edge */
   function arcPath(a, b, bow = 0, n = 48) {
+    const dist = d3.geoDistance(a, b); if (dist < 1e-6) return '';
+    const interp = d3.geoInterpolate(a, b);
     const toV = ([lon, lat]) => { const l = lon * Math.PI / 180, p = lat * Math.PI / 180; return [Math.cos(p) * Math.cos(l), Math.cos(p) * Math.sin(l), Math.sin(p)]; };
     const va = toV(a), vb = toV(b);
-    const dot = Math.max(-1, Math.min(1, va[0] * vb[0] + va[1] * vb[1] + va[2] * vb[2]));
-    const om = Math.acos(dot); if (om < 1e-6) return '';
-    const pts = [];
+    let nrm = [va[1] * vb[2] - va[2] * vb[1], va[2] * vb[0] - va[0] * vb[2], va[0] * vb[1] - va[1] * vb[0]];
+    const nl = Math.hypot(...nrm) || 1; nrm = nrm.map(v => v / nl);
+    const bowRad = Math.sign(bow) * Math.min(Math.abs(bow) / MAPC.k, dist / 3);   /* a map unit is 1/k radians; 7 units was about 2.2 degrees */
+    const coords = [];
     for (let i = 0; i <= n; i++) {
-      const t = i / n, s0 = Math.sin((1 - t) * om) / Math.sin(om), s1 = Math.sin(t * om) / Math.sin(om);
-      const v = [s0 * va[0] + s1 * vb[0], s0 * va[1] + s1 * vb[1], s0 * va[2] + s1 * vb[2]];
-      const lon = Math.atan2(v[1], v[0]) * 180 / Math.PI, lat = Math.asin(Math.max(-1, Math.min(1, v[2]))) * 180 / Math.PI;
-      pts.push(project(lon, lat));
+      const t = i / n, [lon, lat] = interp(t);
+      if (!bowRad) { coords.push([lon, lat]); continue; }
+      const f = Math.sin(Math.PI * t) * bowRad, pv = toV([lon, lat]);
+      const q = [pv[0] * Math.cos(f) + nrm[0] * Math.sin(f), pv[1] * Math.cos(f) + nrm[1] * Math.sin(f), pv[2] * Math.cos(f) + nrm[2] * Math.sin(f)];
+      coords.push([Math.atan2(q[1], q[0]) * 180 / Math.PI, Math.asin(Math.max(-1, Math.min(1, q[2]))) * 180 / Math.PI]);
     }
-    let split = false;
-    for (let i = 1; i <= n; i++) if (Math.abs(pts[i][0] - pts[i - 1][0]) > 400) split = true;
-    if (bow && !split) {
-      const [x0, y0] = pts[0], [x1, y1] = pts[n]; const L = Math.hypot(x1 - x0, y1 - y0) || 1; const nx = -(y1 - y0) / L, ny = (x1 - x0) / L;
-      bow = Math.sign(bow) * Math.min(Math.abs(bow), L / 3);
-      for (let i = 0; i <= n; i++) { const f = Math.sin(Math.PI * i / n) * bow; pts[i] = [pts[i][0] + nx * f, pts[i][1] + ny * f]; }
-    }
-    let d = '', prev = null;
-    for (const [x, y] of pts) { d += (prev === null || Math.abs(x - prev) > 400 ? 'M' : 'L') + x.toFixed(1) + ',' + y.toFixed(1); prev = x; }
-    return d;
+    return geoPath({ type: 'LineString', coordinates: coords }) || '';
   }
 
   /* ---- rules, stamp ---- */
@@ -769,53 +762,95 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   $('#attribution').innerHTML = 'Figures credited to ACLED (Armed Conflict Location &amp; Event Data), <a href="https://acleddata.com" target="_blank" rel="noopener">acleddata.com</a>, are taken from ACLED\'s published reports or from others\' reports of them; each entry says which. We did not download ACLED data. UCDP figures are from the Uppsala Conflict Data Program, <a href="https://ucdp.uu.se" target="_blank" rel="noopener">ucdp.uu.se</a>, ' + esc((U && U.versions) || '') + ', used under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>: Davies, Pettersson and Öberg, Organized violence 1989–2025, and violent political protests, Journal of Peace Research, 2026, doi 10.1093/jopres/xjag046; Sundberg and Melander, Introducing the UCDP Georeferenced Event Dataset, Journal of Peace Research 50(4), 2013; Hegre, Croicu, Eck and Högbladh, Introducing the UCDP Candidate Events Dataset, Research &amp; Politics 7(3), 2020. UCDP is part of and funded by DEMSCORE, national research infrastructure grant 2021-00162 from the Swedish Research Council. UN counts name their mission or agency in each entry. A party\'s own figure is shown as its claim. The troops audit uses the UCDP/PRIO Armed Conflict Dataset, version 26.1: Davies, Pettersson and Öberg, 2026, and Gleditsch, Wallensteen, Eriksson, Sollenberg and Strand, Armed Conflict 1946–2001: A New Dataset, Journal of Peace Research 39(5), 2002. The shape of the ties table follows the UCDP External Support Dataset: Meier, Karlén, Pettersson and Croicu, External Support in Armed Conflicts: Introducing the UCDP External Support Dataset (ESD), 1975–2017, Journal of Peace Research 60(3), 2023. Arms ties cite the SIPRI Arms Transfers Database, <a href="https://www.sipri.org/databases/armstransfers" target="_blank" rel="noopener">sipri.org</a>, March 2026 release, and the Kiel Institute\'s Ukraine Support Tracker.';
   $('#keep-note').textContent = 'Every tie has a source and the date it was entered. A check is a person reopening the source and finding it still says what the row says. ' + (nChecked ? '' : 'No tie has been checked yet. ') + 'A tie fades on the map ninety days after it was entered or last checked, or when its sources are all from before the window or carry no date, and the table says which. ' + (D.kept_by || '') + ' A tie that has ended is drawn as a faint dotted line and dated. ' + (D.band_note || '') + ' Base map: Natural Earth, Equal Earth projection, so Africa is drawn at its true size.';
   const nTies = D.conflicts.reduce((n, c) => n + c.ties.length, 0);
-  $('#stamp').innerHTML = 'Entered ' + esc(D.entered_on || D.as_of) + ' &middot; ' + (nChecked ? nChecked + ' ties checked' : 'no tie checked yet') + ' &middot; ' + nOld + ' on old evidence &middot; ' + (nUndated ? nUndated + ' with no dated source &middot; ' : '') + D.conflicts.filter(c => c.kind !== 'pressure').length + ' wars, ' + D.conflicts.filter(c => c.kind === 'pressure').length + ' squares, ' + nTies + ' ties &middot; base map Natural Earth 1:110m, Equal Earth projection &middot; data/conflicts.json';
+  $('#stamp').innerHTML = 'Entered ' + esc(D.entered_on || D.as_of) + ' &middot; ' + (nChecked ? nChecked + ' ties checked' : 'no tie checked yet') + ' &middot; ' + nOld + ' on old evidence &middot; ' + (nUndated ? nUndated + ' with no dated source &middot; ' : '') + D.conflicts.filter(c => c.kind !== 'pressure').length + ' wars, ' + D.conflicts.filter(c => c.kind === 'pressure').length + ' squares, ' + nTies + ' ties &middot; base map Natural Earth 1:110m, 1:50m up close, Equal Earth projection, drawn with d3-geo &middot; data/conflicts.json';
 
-  /* ---- base map ---- */
+  /* ---- base map: TopoJSON through d3-geo, everything inside one group that d3-zoom transforms ---- */
   const svg = $('#map');
-  svg.setAttribute('viewBox', world.viewBox.join(' '));
-  el('path', { class: 'outline', d: world.outline }, svg);
-  el('path', { class: 'grat', d: world.graticule }, svg);
-  const gLand = el('g', {}, svg);
+  svg.setAttribute('viewBox', MAPC.viewBox.join(' '));
+  const gRoot = el('g', { id: 'root' }, svg);
+  el('path', { class: 'outline', d: geoPath({ type: 'Sphere' }) }, gRoot);
+  el('path', { class: 'grat', d: geoPath(d3.geoGraticule().step([30, 30]).extentMajor([[-180, -60], [180, 90]]).extentMinor([[-180, -60], [180, 90]])()) }, gRoot);
+  const gLand = el('g', {}, gRoot);
   const landByIso = {}; const ISO_NE = { SSD: 'SDS', PSE: 'PSX' };
-  for (const c of world.countries) landByIso[c.id] = el('path', { class: 'land', d: c.d, 'data-iso': c.id }, gLand);
-  const gCells = el('g', { id: 'cells' }, svg);   /* where Uppsala counted, under the shaded provinces */
-  const gAreas = el('g', { id: 'areas' }, svg);
-  const gArcs = el('g', { id: 'arcs' }, svg);
-  const gParties = el('g', {}, svg);
-  const gBackers = el('g', {}, svg);
-  const gConf = el('g', {}, svg);
+  function drawLand(topo) {
+    gLand.innerHTML = ''; for (const k in landByIso) delete landByIso[k];
+    for (const f of topojson.feature(topo, topo.objects.countries).features) landByIso[f.id] = el('path', { class: 'land', d: geoPath(f), 'data-iso': f.id }, gLand);
+  }
+  drawLand(world);
+  const gCells = el('g', { id: 'cells' }, gRoot);   /* where Uppsala counted, under the shaded provinces */
+  const gAreas = el('g', { id: 'areas' }, gRoot);
+  const gArcs = el('g', { id: 'arcs' }, gRoot);
+  const gParties = el('g', {}, gRoot);
+  const gBackers = el('g', {}, gRoot);
+  const gConf = el('g', {}, gRoot);
 
   /* dash lengths are in map units, so scale them to the drawn width or they turn to fuzz on a phone */
   const dashStyle = document.createElement('style'); document.head.appendChild(dashStyle);
-  /* U = map units per screen pixel. Every mark sits in a group scaled by U, so text and glyphs keep their size on screen at any zoom. */
-  let U_ = 1;
-  const unitsPerPx = () => svg.viewBox.baseVal.width / Math.max(1, svg.clientWidth);
+  /* U = map units per screen pixel, zoom included. Every mark sits in a group scaled by U, so text and glyphs keep their size on screen at any zoom. */
+  let U_ = 1, zoomK = 1;
+  const unitsPerPx = () => (W / Math.max(1, svg.clientWidth)) / zoomK;
   function setDashes() {
     const u = unitsPerPx(); U_ = u;
     dashStyle.textContent = `#map .arc.tier-shown{stroke-dasharray:${(7 * u).toFixed(2)} ${(4 * u).toFixed(2)}} #map .arc.tier-reported{stroke-dasharray:${(3 * u).toFixed(2)} ${(4 * u).toFixed(2)}} #map .arc.tier-claimed{stroke-dasharray:${(0.5 * u).toFixed(2)} ${(5 * u).toFixed(2)}} #map .arc.ended{stroke-dasharray:${(1 * u).toFixed(2)} ${(3 * u).toFixed(2)} !important}`;
     for (const g of svg.querySelectorAll('g[data-scale]')) g.setAttribute('transform', `translate(${g.dataset.x},${g.dataset.y}) scale(${u.toFixed(4)})`);
   }
-  const FULL_VIEW = world.viewBox.join(' ');
-  /* named regions to zoom to: lon/lat boxes, projected along their edges so the curve of the projection is inside the view */
+  /* named regions: lon/lat boxes, projected along their edges so the curve of the projection is inside the view */
   const REGIONS = { world: null, mideast: { name: 'the Middle East', box: [24, 9, 66, 44] }, africa: { name: 'Africa', box: [-20, -14, 55, 26] }, americas: { name: 'the Americas', box: [-100, -8, -55, 32] } };
-  function regionView(key) {
-    const r = REGIONS[key]; if (!r) return FULL_VIEW;
+  const MAX_K = 8;
+  function boxTransform(x0, y0, x1, y1, pad = 6) {
+    x0 -= pad; y0 -= pad; x1 += pad; y1 += pad;
+    const k = Math.max(1, Math.min(MAX_K, W / (x1 - x0), H / (y1 - y0)));
+    return d3.zoomIdentity.translate(W / 2 - k * (x0 + x1) / 2, H / 2 - k * (y0 + y1) / 2).scale(k);
+  }
+  function regionTransform(key) {
+    const r = REGIONS[key]; if (!r) return d3.zoomIdentity;
     const [a, b, c, d] = r.box; const pts = [];
     for (let i = 0; i <= 20; i++) { const f = i / 20; pts.push(project(a + (c - a) * f, b), project(a + (c - a) * f, d), project(a, b + (d - b) * f), project(c, b + (d - b) * f)); }
-    const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]); const pad = 6;
-    const x0 = Math.min(...xs) - pad, x1 = Math.max(...xs) + pad, y0 = Math.min(...ys) - pad, y1 = Math.max(...ys) + pad;
-    return `${x0.toFixed(0)} ${y0.toFixed(0)} ${(x1 - x0).toFixed(0)} ${(y1 - y0).toFixed(0)}`;
+    const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
+    return boxTransform(Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys));
   }
-  function fitViewBox() {
-    if (state.zoom && REGIONS[state.zoom]) { svg.setAttribute('viewBox', regionView(state.zoom)); return; }
-    if (innerWidth > 640 || !D.conflicts.length) { svg.setAttribute('viewBox', FULL_VIEW); return; }
-    const xs = D.conflicts.map(c => c.px), ys = D.conflicts.map(c => c.py), pad = 70;
-    const x0 = Math.max(0, Math.min(...xs) - pad), x1 = Math.min(world.viewBox[2], Math.max(...xs) + pad);
-    const y0 = Math.max(0, Math.min(...ys) - pad), y1 = Math.min(world.viewBox[3], Math.max(...ys) + pad);
-    svg.setAttribute('viewBox', `${x0.toFixed(0)} ${y0.toFixed(0)} ${(x1 - x0).toFixed(0)} ${(y1 - y0).toFixed(0)}`);
+  /* on a phone the first view is the band where the entries sit; a pinch or two fingers move it from there */
+  const phoneTransform = () => { if (innerWidth > 640 || !D.conflicts.length) return d3.zoomIdentity; const xs = D.conflicts.map(c => c.px), ys = D.conflicts.map(c => c.py); return boxTransform(Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys), 70); };
+  /* the zoom: wheel, drag and pinch; one finger scrolls the page, two move the map */
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let hiresLoading = null;
+  /* a transform set by code is clamped the way a gesture would be: k within the extent, the map never off its frame */
+  const clampT = t => { const k = Math.max(1, Math.min(MAX_K, t.k)); return d3.zoomIdentity.translate(Math.max(W - k * W, Math.min(0, t.x)), Math.max(H - k * H, Math.min(0, t.y))).scale(k); };
+  let frameDue = false, settled = d3.zoomIdentity, pendingTarget = null;
+  const sameT = (a, b) => Math.abs(a.k - b.k) < 1e-3 && Math.abs(a.x - b.x) < 0.5 && Math.abs(a.y - b.y) < 0.5;
+  /* a plain wheel scrolls the page; ctrl (or a trackpad pinch, which arrives as ctrl+wheel) zooms the map; drag moves it; double-click zooms in; two fingers on a phone */
+  const zoom = d3.zoom().scaleExtent([1, MAX_K]).translateExtent([[0, 0], [W, H]]).extent([[0, 0], [W, H]])
+    .filter(ev => ev.type === 'wheel' ? (ev.ctrlKey || ev.metaKey) : ev.type.startsWith('touch') ? (ev.touches ? ev.touches.length >= 2 : true) : (!ev.ctrlKey && !ev.button))
+    .on('zoom', ev => {
+      gRoot.setAttribute('transform', ev.transform.toString());
+      zoomK = ev.transform.k;
+      if (!frameDue) { frameDue = true; requestAnimationFrame(() => { frameDue = false; setDashes(); }); }
+      if (zoomK >= 2.2 && !hiresLoading) hiresLoading = get('/data/world_50m.json').then(t => { drawLand(t); render(); }).catch(() => {});
+    })
+    .on('end', ev => {
+      const t = ev.transform;
+      if (!ev.sourceEvent || sameT(t, settled)) { settled = t; return; }   /* a programmatic move already wrote the hash; a click that moved nothing is not a zoom */
+      settled = t; pendingTarget = null;
+      state.zoom = null; state.view = t.k > 1.001 ? [t.k, t.x, t.y] : null; writeHash(); render();
+    });
+  const sel3 = d3.select(svg).call(zoom);
+  function applyTransform(t, animate = true) {
+    t = clampT(t); settled = t;
+    if (animate && !reduced) {
+      pendingTarget = t;
+      sel3.transition().duration(650).call(zoom.transform, t);
+      /* if the animation never ran, land on the target anyway; a gesture in between cancels this */
+      setTimeout(() => { if (pendingTarget === t && !sameT(d3.zoomTransform(svg), t)) sel3.interrupt().call(zoom.transform, t); pendingTarget = null; }, 800);
+    } else sel3.call(zoom.transform, t);
   }
-  addEventListener('resize', () => { fitViewBox(); setDashes(); render(); });
+  /* the view the hash asks for: a named region, a free zoom, or the whole map (the entries' band on a phone) */
+  function fitView(animate = false) {
+    if (state.zoom && REGIONS[state.zoom]) applyTransform(regionTransform(state.zoom), animate);
+    else if (state.view) applyTransform(clampT(d3.zoomIdentity.translate(state.view[1], state.view[2]).scale(state.view[0])), animate);
+    else applyTransform(phoneTransform(), animate);
+  }
+  let resizeTimer = null;
+  addEventListener('resize', () => { setDashes(); clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { if (!state.zoom && !state.view) fitView(false); render(); }, 150); });
   const scaled = (x, y, parent, attrs = {}) => { const g = el('g', { ...attrs, 'data-scale': 1, 'data-x': x.toFixed(1), 'data-y': y.toFixed(1), transform: `translate(${x.toFixed(1)},${y.toFixed(1)}) scale(${U_.toFixed(4)})` }, parent); return g; };
 
   const confNodes = {};
@@ -840,8 +875,8 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     g.addEventListener('click', ev => { ev.stopPropagation(); focus('conflict', c.id); });
     g.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); focus('conflict', c.id); } });
   }
-  svg.addEventListener('click', () => clear());
-  fitViewBox(); setDashes();
+  svg.addEventListener('click', () => clear());   /* d3-zoom swallows the click that ends a drag */
+  setDashes();
 
   /* ---- legend ---- */
   $('#legend').innerHTML =
@@ -881,7 +916,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const zoomEl = $('#zoom-chips');
   for (const [key, r] of Object.entries(REGIONS)) {
     const b = document.createElement('button'); b.className = 'chip'; b.dataset.zoom = key; b.textContent = r ? r.name : 'the world'; b.setAttribute('aria-pressed', 'false');
-    b.onclick = () => { state.zoom = key === 'world' ? null : key; writeHash(); fitViewBox(); setDashes(); render(); };
+    b.onclick = () => { state.zoom = key === 'world' ? null : key; state.view = null; writeHash(); fitView(true); render(); };
     zoomEl.appendChild(b);
   }
   /* tier chips: which lines are drawn; the card and the table always show every tie */
@@ -963,6 +998,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     if (state.who) parts.push('who');
     if (state.events) parts.push('events');
     if (state.zoom) parts.push('z=' + state.zoom);
+    else if (state.view) parts.push('v=' + state.view[0].toFixed(2) + ',' + state.view[1].toFixed(0) + ',' + state.view[2].toFixed(0));
     if (state.tiers.size < Object.keys(D.tiers).length) parts.push('t=' + [...state.tiers].join(','));
     if (state.month) parts.push('m=' + state.month);
     if (state.gridAll) parts.push('grid=all');
@@ -978,6 +1014,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     state.who = q.has('who') && !state.areas;
     state.events = q.has('events');
     const z = q.get('z'); state.zoom = (z && REGIONS[z]) ? z : null;
+    const v = (q.get('v') || '').split(',').map(Number); state.view = (!state.zoom && v.length === 3 && v.every(isFinite) && v[0] > 1) ? v : null;
     const t = q.get('t'); const tiers = t ? t.split(',').filter(x => D.tiers[x]) : []; state.tiers = new Set(tiers.length ? tiers : Object.keys(D.tiers));
     const m = q.get('m'); state.month = (m && monthsIn.includes(m)) ? m : null;
     state.gridAll = q.get('grid') === 'all';
@@ -994,7 +1031,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   function preview(kind, id) { state.kind = kind; state.id = id; state.pinned = false; render(); }
   function unpreview() { if (!state.pinned) { state.kind = null; state.id = null; render(); } }
   function clear() { state.kind = null; state.id = null; state.pinned = false; state.tie = null; writeHash(); render(); }
-  addEventListener('hashchange', () => { readHash(); fitViewBox(); setDashes(); Promise.all([loadAreas(), loadCells()]).then(render); });
+  addEventListener('hashchange', () => { readHash(); fitView(true); Promise.all([loadAreas(), loadCells()]).then(render); });
 
   /* the reading: a step sets the map from its hash and keeps the reader's own month and shading off */
   const READING = (D.reading && Array.isArray(D.reading.steps)) ? D.reading.steps : [];
@@ -1004,7 +1041,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     if (i === null || i < 0 || i >= READING.length) { state.step = null; writeHash(); render(); return; }
     const keepPressure = state.pressure;
     readHash(READING[i].hash); state.step = i; state.pressure = keepPressure;
-    writeHash(); fitViewBox(); setDashes(); Promise.all([loadAreas(), loadCells()]).then(render);
+    writeHash(); fitView(true); Promise.all([loadAreas(), loadCells()]).then(render);
   }
 
   /* at rest every line is drawn faint; a pick, every-line or a month draws them in full */
@@ -1038,7 +1075,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     const mi = monthIndex();
     buildStrip(); stripLabel();
     mPrev.disabled = mi === 0; mNext.disabled = !state.month; mNow.style.display = state.month ? '' : 'none';
-    for (const b of zoomEl.querySelectorAll('.chip')) { const on = (state.zoom || 'world') === b.dataset.zoom; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); }
+    for (const b of zoomEl.querySelectorAll('.chip')) { const on = !state.view && (state.zoom || 'world') === b.dataset.zoom; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); }
     for (const b of tierEl.querySelectorAll('.chip')) { const on = state.tiers.has(b.dataset.tier); b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); }
     eventsBtn.classList.toggle('on', state.events); eventsBtn.setAttribute('aria-pressed', String(state.events));
     $('#legend-cells').style.display = state.events && cellsData ? '' : 'none';
@@ -1167,7 +1204,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
         const [x, y] = project(b.lon, b.lat);
         const g = scaled(x, y, gBackers, { class: 'backer-dot' });
         el('circle', { class: 'fhue-' + hueOf(t.backer), cx: 0, cy: 0, r: 3.2 }, g);
-        if (!allView || b.hue) { const lab = el('text', { x: 6, y: 3 }, g); lab.textContent = b.short; }
+        if (!allView || b.hue || zoomK >= 2) { const lab = el('text', { x: 6, y: 3 }, g); lab.textContent = b.short; }
       }
     }
     $('#legend-self').style.display = outlined ? '' : 'none';
@@ -1177,10 +1214,6 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     if (!state.kind && state.step === null) { renderCard(); $('#card').appendChild(legendEl); }
     else { legendHome.insertBefore(legendEl, $('#changes')); renderCard(); }
     /* on a pannable (phone) map, bring the chosen war into view */
-    if (wrap.scrollWidth > wrap.clientWidth + 4 && state.kind === 'conflict' && state.pinned && confNodes[state.id] && confNodes[state.id].style.display !== 'none') {
-      const g = confNodes[state.id].querySelector('.glyph').getBoundingClientRect(), w = wrap.getBoundingClientRect();
-      wrap.scrollLeft += (g.left + g.width / 2) - (w.left + w.width / 2);
-    }
     $('#status').textContent = (state.kind === 'conflict' ? 'Showing ' + conflicts[state.id].name : state.kind === 'backer' ? 'Showing ' + backers[state.id].name : allView ? 'Showing every line' : '') + (state.month ? ' · ' + fmtMonth(state.month) : '');
     syncGrid();
     for (const tr of document.querySelectorAll('#ties tr.tie')) {
@@ -1429,8 +1462,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   }
 
   /* ---- deep link ---- */
-  readHash(); fitViewBox(); setDashes(); Promise.all([loadAreas(), loadCells()]).then(() => { render(); showTie(); });
-  if (wrap.scrollWidth > wrap.clientWidth + 4 && !state.pinned) wrap.scrollLeft = (wrap.scrollWidth - wrap.clientWidth) * 0.55;
+  readHash(); fitView(false); setDashes(); Promise.all([loadAreas(), loadCells()]).then(() => { render(); showTie(); });
   } catch (e) { fail('The map could not be drawn. ' + e.message); throw e; }
 })();
 </script>
