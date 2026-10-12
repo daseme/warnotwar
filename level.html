@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="paper">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Every year Uppsala and Oslo have counted conflicts, 1946 to 2025; the dead since 1989; and what oil cost since 1986. Where the level has settled, and whether this moment is different.">
+<title>The level — every year since 1946</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* the level — shares the paper/ink token set with market.html, oilflows.html and record.html */
+  :root, [data-theme="paper"] {
+    --bg: #f7f2e7; --bg-raise: #fcfaf3; --bg-sink: #efe8da;
+    --ink: #1a1610;
+    --ink-80: rgba(26,22,16,0.8); --ink-60: rgba(26,22,16,0.6); --ink-45: rgba(26,22,16,0.45);
+    --ink-30: rgba(26,22,16,0.3); --ink-18: rgba(26,22,16,0.18); --ink-10: rgba(26,22,16,0.1); --ink-06: rgba(26,22,16,0.06);
+    --rate: #1d4e89; --gold: #8f6d14; --danger: #a03428;
+    --chip-on-bg: #1a1610; --chip-on-ink: #f7f2e7;
+    /* backer hues — validated all-pairs on the paper surface */
+    --b1: #2a78d6; --b2: #eb6834; --b3: #1baf7a; --b4: #a0308e; --b5: #5634ac;
+    --land: rgba(26,22,16,0.07); --land-line: rgba(26,22,16,0.2); --grat: rgba(26,22,16,0.05);
+  }
+  [data-theme="ink"] {
+    --bg: #17140f; --bg-raise: #1e1a14; --bg-sink: #14110c;
+    --ink: #efe8d8;
+    --ink-80: rgba(239,232,216,0.8); --ink-60: rgba(239,232,216,0.6); --ink-45: rgba(239,232,216,0.45);
+    --ink-30: rgba(239,232,216,0.3); --ink-18: rgba(239,232,216,0.18); --ink-10: rgba(239,232,216,0.1); --ink-06: rgba(239,232,216,0.06);
+    --rate: #7aa8dd; --gold: #c9a94f; --danger: #d06a5c;
+    --chip-on-bg: #efe8d8; --chip-on-ink: #17140f;
+    /* backer hues — validated all-pairs on the ink surface */
+    --b1: #3987e5; --b2: #d95926; --b3: #199e70; --b4: #c454b0; --b5: #724aab;
+    --land: rgba(239,232,216,0.07); --land-line: rgba(239,232,216,0.2); --grat: rgba(239,232,216,0.05);
+  }
+  :root {
+    --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+    --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body {
+    margin: 0; min-height: 100%; font-family: var(--serif);
+    background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased;
+    transition: background 0.25s ease, color 0.25s ease; overflow-x: clip;
+  }
+  body { display: flex; flex-direction: column; align-items: center; padding: 52px 24px 120px; }
+  ::selection { background: var(--rate); color: var(--bg); }
+  a { color: var(--ink-80); text-underline-offset: 3px; }
+  a:hover { color: var(--ink); }
+
+  /* ---- nav ---- */
+  nav.topnav {
+    position: fixed; inset: 0 0 auto 0; z-index: 50; height: 52px;
+    display: flex; align-items: center; gap: 22px; flex-wrap: nowrap;
+    overflow: hidden; padding: 0 28px;
+    background: color-mix(in srgb, var(--bg) 94%, transparent);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--ink-10);
+    color: var(--ink); transition: background 0.25s ease, color 0.25s ease;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  nav.topnav a { position: relative; color: var(--ink); text-decoration: none; opacity: 0.62; transition: opacity 0.2s ease; white-space: nowrap; flex-shrink: 0; }
+  nav.topnav a::after { content: ''; position: absolute; left: 0; bottom: -3px; width: 0; height: 1px; background: var(--ink); transition: width 0.25s ease; }
+  nav.topnav a:hover { opacity: 1; }
+  nav.topnav a:hover::after, nav.topnav a.here::after { width: 100%; }
+  nav.topnav a.here { opacity: 1; }
+  nav.topnav .spacer { flex: 1; }
+  button.theme-toggle {
+    font: inherit; letter-spacing: inherit; text-transform: inherit;
+    background: none; border: 1px solid var(--ink-30); color: var(--ink);
+    padding: 4px 10px; cursor: pointer; border-radius: 999px; transition: background 0.2s ease;
+  }
+  button.theme-toggle:hover { background: var(--ink-06); }
+
+  /* ---- hero ---- */
+  .hero { width: 100%; max-width: 860px; text-align: center; padding-top: 56px; }
+  .hero-kicker { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.6em; }
+  h1 { font-size: clamp(2rem, 4.8vw, 3.3rem); font-weight: 500; letter-spacing: -0.015em; line-height: 1.12; margin: 0 0 0.55em; text-align: center; }
+  .subtitle { max-width: 640px; text-align: center; color: var(--ink-80); font-size: 1.08rem; line-height: 1.75; margin: 0 auto 1em; }
+
+  #load-error, #draft {
+    display: none; width: 100%; max-width: 1080px;
+    font-family: var(--mono); font-size: 11px; line-height: 1.7;
+    padding: 10px 14px; margin-top: 2em;
+  }
+  #load-error { color: var(--danger); border: 1px solid color-mix(in srgb, var(--danger) 40%, transparent); background: color-mix(in srgb, var(--danger) 6%, transparent); }
+  #draft { color: var(--ink-80); border: 1px solid color-mix(in srgb, var(--gold) 50%, transparent); background: color-mix(in srgb, var(--gold) 7%, transparent); }
+
+  /* ---- sections ---- */
+  section.panel { width: 100%; max-width: 1080px; margin-top: 96px; padding-top: 44px; border-top: 1px solid var(--ink-18); scroll-margin-top: 72px; }
+  section.panel.first { margin-top: 2.6em; padding-top: 0; border-top: 0; max-width: 1280px; }
+  h2 { font-size: 1.5rem; font-weight: 500; letter-spacing: -0.005em; margin: 0 0 0.35em; }
+  .panel-sub { font-family: var(--mono); font-size: 11.5px; color: var(--ink-60); margin: 0 0 20px; line-height: 1.75; max-width: 78em; }
+  h3 { font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-60); margin: 28px 0 10px; }
+  .prose { font-size: 1.02rem; line-height: 1.85; color: var(--ink-80); max-width: 46em; }
+  .prose strong { color: var(--ink); font-weight: 500; }
+  .note { font-size: 11.5px; color: var(--ink-60); margin-top: 18px; line-height: 1.85; font-family: var(--mono); max-width: 72em; padding-left: 16px; border-left: 1px solid var(--ink-18); }
+
+  /* ---- controls ---- */
+  .controls { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; font-family: var(--mono); font-size: 11px; margin: 6px 0 14px; }
+  .controls .k { color: var(--ink-45); text-transform: uppercase; letter-spacing: 0.14em; font-size: 10px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 7px; cursor: pointer; user-select: none;
+    border: 1px solid var(--ink-18); padding: 4px 10px; color: var(--ink-80); background: none; font: inherit; letter-spacing: 0.02em;
+    transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+  }
+  .chip:hover { border-color: var(--ink-45); color: var(--ink); }
+  .chip.on { background: var(--chip-on-bg); color: var(--chip-on-ink); border-color: var(--chip-on-bg); }
+  .chip .sw { width: 10px; height: 10px; border-radius: 50%; display: inline-block; background: var(--ink-45); }
+  .chip.on .sw { outline: 1px solid var(--chip-on-ink); outline-offset: 1px; }
+  .chip.ghost { border-style: dashed; }
+  .chip { white-space: nowrap; }
+  /* tier chips: on is the plain chip, off is struck through */
+  #tier-chips .chip.on, #tfilter-chips .chip[data-key^="tier:"].on { background: none; color: var(--ink); border-color: var(--ink-45); }
+  #tier-chips .chip:not(.on), #tfilter-chips .chip[data-key^="tier:"]:not(.on) { opacity: 0.4; text-decoration: line-through; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+
+  /* ---- the spine: three panels on one axis of years ---- */
+  .spine { width: 100%; max-width: 1280px; margin-top: 10px; }
+  .spine svg { width: 100%; height: auto; display: block; overflow: visible; touch-action: pan-y; cursor: crosshair; outline: none; }
+  .spine svg:focus-visible { outline: 1px solid var(--ink); outline-offset: 4px; }
+  .spine text { font-family: var(--mono); font-size: 9px; fill: var(--ink-60); pointer-events: none; }
+  .spine text.v { fill: var(--ink-45); }
+  .spine text.h { fill: var(--ink-45); letter-spacing: 0.14em; text-transform: uppercase; font-size: 9px; }
+  .spine .axis { stroke: var(--ink-18); stroke-width: 1; }
+  .spine .bar { fill: var(--danger); fill-opacity: 0.55; }
+  .spine .bar.prov { fill: url(#hatch); fill-opacity: 1; }
+  .spine .bar.on { fill-opacity: 1; stroke: var(--ink); stroke-width: 1; }
+  .spine .range { stroke: var(--ink-45); stroke-width: 1; }
+  .spine .ref { stroke: var(--ink-60); stroke-width: 1; stroke-dasharray: 3 3; }
+  .spine .avg { fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+  .spine .n { fill: none; stroke: var(--ink); stroke-width: 1.4; stroke-linejoin: round; }
+  .spine .wars { fill: var(--danger); fill-opacity: 0.35; }
+  .spine .inter { fill: none; stroke: var(--danger); stroke-width: 1.2; stroke-dasharray: 2 3; }
+  .spine .oil { fill: none; stroke: var(--gold); stroke-width: 1.4; stroke-linejoin: round; }
+  .spine .oil2 { fill: none; stroke: var(--gold); stroke-width: 1; stroke-opacity: 0.45; stroke-linejoin: round; }
+  .spine .cursor { stroke: var(--ink); stroke-width: 1; }
+  .spine .cursor-y { font-size: 10px; fill: var(--ink); font-weight: 500; }
+  .spine .hover { stroke: var(--ink-30); stroke-width: 1; }
+  .spine .bound { stroke: var(--ink-30); stroke-width: 1; stroke-dasharray: 1 3; }
+  .spine .ev { fill: var(--gold); font-size: 8.5px; }
+  .spine .catch { fill: transparent; }
+  .readout { font-family: var(--mono); font-size: 11.5px; line-height: 1.7; color: var(--ink-80); min-height: 3.4em; margin: 8px 0 0; max-width: 1280px; width: 100%; }
+  .readout b { color: var(--ink); font-weight: 500; }
+  .readout .dim { color: var(--ink-45); }
+
+  /* ---- the map at that year ---- */
+  .map-wrap { width: 100%; max-width: 1280px; margin-top: 26px; position: relative; }
+  .map-wrap svg { width: 100%; height: auto; display: block; }
+  .land { fill: var(--land); stroke: var(--land-line); stroke-width: 0.4; vector-effect: non-scaling-stroke; transition: fill 0.25s ease; }
+  .land.d1 { fill: color-mix(in srgb, var(--danger) 20%, var(--land)); }
+  .land.d2 { fill: color-mix(in srgb, var(--danger) 42%, var(--land)); }
+  .land.d3 { fill: color-mix(in srgb, var(--danger) 68%, var(--land)); }
+  .land.d4 { fill: color-mix(in srgb, var(--danger) 95%, var(--land)); }
+  .land.a1 { stroke: var(--danger); stroke-width: 0.9; }
+  .land.a2 { stroke: var(--danger); stroke-width: 0.9; fill: color-mix(in srgb, var(--danger) 22%, var(--land)); }
+  .land.hov { stroke: var(--ink); stroke-width: 1; }
+  .cell { fill: var(--danger); fill-opacity: 0.75; stroke: var(--bg); stroke-width: 0.3; }
+  .grat { fill: none; stroke: var(--grat); stroke-width: 0.5; }
+  .map-title { position: absolute; left: 12px; top: 8px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-60); pointer-events: none; }
+  .map-title b { color: var(--ink); font-weight: 500; font-size: 15px; letter-spacing: 0; text-transform: none; display: block; font-family: var(--serif); }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; font-family: var(--mono); font-size: 10.5px; color: var(--ink-60); margin-top: 8px; width: 100%; max-width: 1280px; }
+  .legend .k { color: var(--ink-45); text-transform: uppercase; letter-spacing: 0.14em; font-size: 10px; }
+  .legend i { display: inline-block; width: 14px; height: 10px; vertical-align: middle; margin-right: 6px; background: var(--land); border: 1px solid var(--land-line); }
+  .legend i.d1 { background: color-mix(in srgb, var(--danger) 20%, var(--land)); } .legend i.d2 { background: color-mix(in srgb, var(--danger) 42%, var(--land)); }
+  .legend i.d3 { background: color-mix(in srgb, var(--danger) 68%, var(--land)); } .legend i.d4 { background: color-mix(in srgb, var(--danger) 95%, var(--land)); }
+  .legend i.a1 { border-color: var(--danger); } .legend i.a2 { border-color: var(--danger); background: color-mix(in srgb, var(--danger) 22%, var(--land)); }
+  .legend i.cell { background: var(--danger); opacity: 0.75; width: 9px; height: 9px; border: 0; }
+  .map-readout { font-family: var(--mono); font-size: 11px; color: var(--ink-80); min-height: 1.7em; margin-top: 6px; width: 100%; max-width: 1280px; }
+  .controls { max-width: 1280px; width: 100%; }
+  .controls .chip.sm { padding: 3px 8px; }
+
+  /* ---- the hand-over ---- */
+  .bands svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .bands path.b { stroke: var(--bg); stroke-width: 1.2; transition: fill-opacity 0.15s ease; }
+  .bands path.b.t0 { fill: color-mix(in srgb, var(--danger) 88%, var(--bg)); } .bands path.b.t1 { fill: color-mix(in srgb, var(--danger) 58%, var(--bg)); }
+  .bands path.b.t2 { fill: color-mix(in srgb, var(--danger) 36%, var(--bg)); } .bands path.b.t3 { fill: color-mix(in srgb, var(--ink) 30%, var(--bg)); }
+  .bands path.b.t4 { fill: color-mix(in srgb, var(--ink) 16%, var(--bg)); }
+  .bands path.b.dim { fill-opacity: 0.35; }
+  .bands text { font-family: var(--mono); font-size: 9px; fill: var(--ink); pointer-events: none; paint-order: stroke; stroke: var(--bg); stroke-width: 2.5px; stroke-linejoin: round; }
+  .bands text.v, .bands text.y { fill: var(--ink-45); stroke: none; }
+  .bands .axis { stroke: var(--ink-18); stroke-width: 1; }
+  .bands .cursor { stroke: var(--ink); stroke-width: 1; }
+  .bands-readout { font-family: var(--mono); font-size: 11px; color: var(--ink-80); min-height: 1.7em; margin-top: 6px; }
+
+  /* ---- the moment ---- */
+  .facts { list-style: none; padding: 0; margin: 14px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0; border-top: 1px solid var(--ink-18); border-left: 1px solid var(--ink-18); }
+  .facts li { border-right: 1px solid var(--ink-18); border-bottom: 1px solid var(--ink-18); padding: 16px 18px 14px; }
+  .facts .big { font-family: var(--serif); font-size: 1.9rem; font-weight: 500; letter-spacing: -0.01em; line-height: 1.1; color: var(--ink); }
+  .facts .big small { font-size: 0.95rem; color: var(--ink-60); font-weight: 400; margin-left: 6px; }
+  .facts .w { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-60); margin-bottom: 8px; }
+  .facts .t { font-size: 0.98rem; line-height: 1.6; color: var(--ink-80); margin-top: 8px; }
+
+  /* ---- the past year by month ---- */
+  .m-strip { display: flex; align-items: flex-end; gap: 3px; height: 72px; width: 100%; max-width: 1280px; margin-top: 10px; }
+  .m-strip button { flex: 1; border: 0; padding: 0; background: none; cursor: pointer; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: stretch; font: inherit; }
+  .m-strip .bar { background: var(--danger); opacity: 0.55; min-height: 2px; }
+  .m-strip .bar.prov { background: repeating-linear-gradient(135deg, var(--danger) 0 3px, transparent 3px 5px); }
+  .m-strip button:hover .bar, .m-strip button.on .bar { opacity: 1; }
+  .m-strip .l { font-family: var(--mono); font-size: 9px; color: var(--ink-45); text-align: center; margin-top: 4px; }
+  .m-strip button.on .l { color: var(--ink); }
+
+  ul.plain { list-style: none; padding: 0; margin: 10px 0 0; font-size: 0.98rem; line-height: 1.7; color: var(--ink-80); max-width: 46em; }
+  ul.plain li { padding: 6px 0; border-bottom: 1px solid var(--ink-10); }
+  ul.plain li b { color: var(--ink); font-weight: 500; }
+  .back { display: inline-block; margin-top: 48px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-60); text-decoration: none; }
+  .back:hover { color: var(--ink); }
+  @media (max-width: 720px) {
+    body { padding: 52px 16px 80px; }
+    section.panel { margin-top: 72px; padding-top: 32px; }
+    .facts .big { font-size: 1.5rem; }
+    .m-strip .l { font-size: 8px; }
+    .spine, .bands { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .spine svg { min-width: 820px; touch-action: auto; cursor: default; }
+    .bands svg { min-width: 700px; }
+    .spine text, .bands text { font-size: 11px; }
+    .spine text.ev { font-size: 10px; }
+  }
+  /* ---- testing menu: the pages still being built sit under one dropdown ---- */
+  nav.topnav { overflow: visible; }
+  nav.topnav details.testing { position: relative; flex-shrink: 0; }
+  nav.topnav details.testing summary { list-style: none; cursor: pointer; color: var(--ink); opacity: 0.62; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; transition: opacity 0.2s ease; }
+  nav.topnav details.testing summary::-webkit-details-marker { display: none; }
+  nav.topnav details.testing summary::after { content: '\25BE'; font-size: 10px; }
+  nav.topnav details.testing summary:hover, nav.topnav details.testing[open] summary, nav.topnav details.testing.here summary { opacity: 1; }
+  nav.topnav details.testing .menu { position: absolute; top: calc(100% + 14px); left: -14px; min-width: 190px; display: flex; flex-direction: column; gap: 12px; padding: 14px 16px; background: var(--bg-raise, var(--bg)); border: 1px solid var(--ink-18); z-index: 60; }
+  @media (max-width: 720px) {
+    nav.topnav { overflow-x: auto; overflow-y: hidden; }
+    nav.topnav details.testing[open] { display: inline-flex; align-items: center; gap: 14px; }
+    nav.topnav details.testing .menu { position: static; flex-direction: row; gap: 14px; min-width: 0; padding: 0; border: 0; background: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="/">warnotwar</a>
+  <a href="/heuristic.html">the heuristic</a>
+  <a href="/conflicts.html">the map</a>
+  <a href="/record.html">the word</a>
+  <a href="/readings.html">readings</a>
+  <a href="/qa.html">q and a</a>
+  <details class="testing here">
+    <summary>testing</summary>
+    <div class="menu">
+      <a href="/market.html">the market</a>
+      <a href="/oilflows.html">oilflows</a>
+      <a href="/lab.html">the lab</a>
+      <a href="/teaching-module/index.html">hormuz lab (sim)</a>
+      <a href="/spr/">the reserve</a>
+      <a href="/methodology.html">methodology</a>
+      <a href="/level.html" class="here">the level</a>
+    </div>
+  </details>
+  <span class="spacer"></span>
+  <button class="theme-toggle" id="theme-toggle" title="switch paper / ink">&#9705; ink</button>
+</nav>
+
+<header class="hero">
+  <div class="hero-kicker">warnotwar · the level</div>
+  <h1>The level.</h1>
+  <p class="subtitle">Every year Uppsala and Oslo have counted conflicts, 1946 to 2025; the dead, by country, since 1989; and what oil cost since 1986. The question is where the level has settled, and whether this moment is different.</p>
+</header>
+
+<div id="load-error"></div>
+
+<section class="panel first" id="spine-panel">
+  <div class="controls">
+    <span class="k">year</span>
+    <button class="chip sm" id="step-back" title="a year back">&larr;</button>
+    <button class="chip sm" id="step-fwd" title="a year on">&rarr;</button>
+    <button class="chip sm" id="play" aria-pressed="false">play the years</button>
+    <button class="chip sm ghost" id="now">now</button>
+    <span class="k" style="margin-left:8px">click or drag the chart to a year · arrow keys step</span>
+  </div>
+  <div class="spine" id="spine"></div>
+  <div class="readout" id="readout" aria-live="polite"></div>
+
+  <div class="map-wrap" id="map-wrap"><div class="map-title" id="map-title"></div></div>
+  <div class="legend" id="legend"></div>
+  <div class="map-readout" id="map-readout"></div>
+</section>
+
+<section class="panel" id="bands-panel">
+  <h2>The hand-over</h2>
+  <p class="panel-sub">Each year's five heaviest countries, stacked, 1989 to the last full year. The level is not one war held steady. It is a war handed from one place to the next, and lately overlapping. Hover or tap a band for the country and its count that year. A band ends when the country drops out of the five, not when its war does.</p>
+  <div class="bands" id="bands"></div>
+  <div class="bands-readout" id="bands-readout"></div>
+</section>
+
+<section class="panel" id="moment-panel">
+  <h2>The current moment</h2>
+  <p class="panel-sub" id="moment-sub"></p>
+  <ul class="facts" id="facts"></ul>
+  <h3>What 1994 is</h3>
+  <p class="prose">1994 is Rwanda. Of UCDP's 824,177 deaths that year, 772,463 are in Rwanda, nearly all of them civilians killed on purpose in the genocide, in about a hundred days from April. UCDP's range for Rwanda that year runs from 347,614 to 1,612,663. It is one event in one country. The five-year average carries it from 1994 to 1998, so the shelf in the line over those years is one event spread across five. The five years to 2025 hold no event of that size. At UCDP's best estimate each of them is above 170,000, the lowest, 2023, only just, and the heaviest wars change: Ethiopia in 2021 and 2022, Ukraine from 2022, Gaza from 2023, Sudan from 2023 and second only to Ukraine in 2025, where most of 2025's civilians killed on purpose were. That is what the average above the Rwanda years means, by a small margin and with the last two years still provisional. Not a worse single year, but a level held for five.</p>
+  <h3>What the page asks</h3>
+  <p class="prose">A high year is not a world war. Most years of the eighties had more wars at the thousand-a-year level than now, and the fifties had the Korean war. What the counts show for 2025 is width and persistence: more conflicts active than in any year since 1946, as many countries over a thousand dead as in any year since 1989, the same as 2024, and the five years to 2025, taken together, averaging more than any five-year stretch before them, by a hair over the Rwanda years, with the last two years still provisional. Whether that is a level markets and governments have come to tolerate, the way a rate of unemployment is tolerated, is the question the rest of this site keeps asking. This page only shows the level.</p>
+</section>
+
+<section class="panel" id="month-panel">
+  <h2>The past year by month</h2>
+  <p class="panel-sub" id="month-sub"></p>
+  <div class="m-strip" id="m-strip" role="group" aria-label="deaths by month, click a month to show where on the map"></div>
+  <div class="note" id="month-note"></div>
+</section>
+
+<section class="panel" id="rules">
+  <h2>How this page is kept</h2>
+  <h3>The counts</h3>
+  <p class="prose" id="rule-level"></p>
+  <h3>The price</h3>
+  <p class="prose" id="rule-oil"></p>
+  <h3>Counts and credit</h3>
+  <p class="prose" id="credit"></p>
+</section>
+
+<a class="back" href="/">&larr; warnotwar</a>
+
+<script>
+const rootEl = document.documentElement, themeBtn = document.getElementById('theme-toggle');
+function applyTheme(t) { rootEl.dataset.theme = t; themeBtn.textContent = t === 'paper' ? '◑ ink' : '◐ paper'; }
+applyTheme((() => { const q = new URLSearchParams(location.search).get('theme'); if (q === 'ink' || q === 'paper') return q; try { const s = localStorage.getItem('ww-theme'); if (s) return s; } catch (e) {} return matchMedia('(prefers-color-scheme: dark)').matches ? 'ink' : 'paper'; })());
+themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 'paper'; applyTheme(t); try { localStorage.setItem('ww-theme', t); } catch (e) {} };
+</script>
+
+<script src="/vendor/d3.v7.min.js"></script>
+<script src="/vendor/topojson-client.v3.min.js"></script>
+<script>
+(async function () {
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const fmt = n => Number(n).toLocaleString('en-US');
+  const get = u => fetch(u).then(r => { if (!r.ok) throw new Error('http ' + r.status + ' ' + u); return r.json(); });
+  let L, Y, O, topo, U = null, G = null;
+  try { [L, Y, O, topo] = await Promise.all([get('/data/level.json'), get('/data/ucdp_years.json'), get('/data/oil_monthly.json'), get('/data/world_110m.json')]); }
+  catch (e) { const el = $('#load-error'); el.style.display = 'block'; el.textContent = 'The data did not load: ' + e.message; return; }
+  Promise.all([get('/data/ucdp.json'), get('/data/ucdp_grid.json')]).then(([u, g]) => { U = u; G = g; buildMonths(); }).catch(() => { $('#month-sub').textContent = 'The month file did not load.'; });
+
+  const years = L.years, Y0 = years[0].year, Y1 = years[years.length - 1].year;
+  const byYear = Object.fromEntries(years.map(r => [r.year, r]));
+  const dy = Object.fromEntries(Y.years.map(r => [r.year, r]));
+  const D0 = Y.years[0].year, D1 = Y.years[Y.years.length - 1].year;
+  const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const monthWord = m => MONTHS[+m.slice(5, 7) - 1] + ' ' + m.slice(0, 4);
+  const PROV = 2;   // UCDP revises its last two years
+
+  /* ---- state in the hash: y=1994 or m=2026-03 ---- */
+  const state = { year: Math.min(D1, Y1), month: null };
+  const readHash = () => { const h = new URLSearchParams(location.hash.slice(1)); const y = +h.get('y'); if (y >= Y0 && y <= Y1) state.year = y; const m = h.get('m'); state.month = m && /^\d{4}-(0[1-9]|1[0-2])$/.test(m) && (!G || G.months.includes(m)) ? m : null; };
+  const writeHash = () => { const h = state.month ? 'm=' + state.month : state.year !== D1 ? 'y=' + state.year : ''; history.replaceState(null, '', location.pathname + (h ? '#' + h : '')); };
+  readHash();
+
+  /* ---- the spine ---- */
+  const W = 1000, LM = 46, RM = 14, X0 = Y0, X1 = Y1 + 2;   // one column past the last counted year, for the price's current months
+  const P = { n: { top: 16, h: 86 }, d: { top: 140, h: 170 }, o: { top: 348, h: 86 } };
+  const H = P.o.top + P.o.h + 24;
+  const x = d3.scaleLinear([X0, X1], [LM, W - RM]);
+  const xm = m => x(+m.slice(0, 4) + (+m.slice(5, 7) - 1) / 12 + 1 / 24);
+  const yN = d3.scaleLinear([0, d3.max(years, r => r.n) * 1.08], [P.n.top + P.n.h, P.n.top]);
+  const peak = Y.years.reduce((a, r) => r.best > a.best ? r : a, Y.years[0]);
+  const dMax = d3.max(Y.years.filter(r => r !== peak), r => r.high) * 1.08;
+  const yD = d3.scaleLinear([0, dMax], [P.d.top + P.d.h, P.d.top]).clamp(true);
+  const oMax = d3.max(O.brent.concat(O.wti), r => r[1]) * 1.06;
+  const yO = d3.scaleLinear([0, oMax], [P.o.top + P.o.h, P.o.top]);
+  const bw = (x(1) - x(0)) - 1.2;
+  const sorted = Y.years.map(r => r.best).sort((a, b) => a - b), median = sorted[Math.floor(sorted.length / 2)];
+  const avgs = Y.years.map((r, i) => i < 4 ? null : { year: r.year, v: Y.years.slice(i - 4, i + 1).reduce((a, q) => a + q.best, 0) / 5 });
+  const avgOf = y => { const a = avgs.find(q => q && q.year === y); return a ? a.v : null; };
+  const EVENTS = [['1990-10', 'Kuwait invaded'], ['2008-12', 'the crash'], ['2020-04', 'the pandemic'], ['2022-06', 'Ukraine'], ['2026-04', 'Hormuz']];   // each at its month
+  function drawSpine() {
+    let s = `<svg viewBox="0 0 ${W} ${H}" role="slider" tabindex="0" aria-label="the year; conflicts, deaths and the oil price by year, ${Y0} to ${Y1}" aria-valuemin="${Y0}" aria-valuemax="${Y1}" aria-valuenow="${state.year}">`;
+    s += `<defs><pattern id="hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="4" fill="var(--bg)"/><rect width="2" height="4" fill="var(--danger)" fill-opacity="0.6"/></pattern></defs>`;
+    /* conflicts per year, 1946 on */
+    s += `<text class="h" x="${LM}" y="${P.n.top - 5}">conflicts active in the year, with those at war level filled and those between states dotted</text>`;
+    for (const v of [20, 40, 60]) s += `<line class="axis" x1="${LM}" x2="${W - RM}" y1="${yN(v)}" y2="${yN(v)}"/><text class="v" x="${LM - 6}" y="${yN(v) + 3}" text-anchor="end">${v}</text>`;
+    s += `<path class="wars" d="${d3.area().x(r => x(r.year) + bw / 2 + 0.6).y0(yN(0)).y1(r => yN(r.wars)).curve(d3.curveStep)(years)}"/>`;
+    s += `<path class="inter" d="${d3.line().x(r => x(r.year) + bw / 2 + 0.6).y(r => yN(r.interstate)).curve(d3.curveStep)(years)}"/>`;
+    s += `<path class="n" d="${d3.line().x(r => x(r.year) + bw / 2 + 0.6).y(r => yN(r.n)).curve(d3.curveStep)(years)}"/>`;
+    /* deaths per year, 1989 on */
+    s += `<text class="h" x="${LM}" y="${P.d.top - 5}">deaths in organized violence, UCDP best with low to high, the five-year average solid, the median year dashed</text>`;
+    const step = dMax > 400000 ? 200000 : 100000;
+    for (let v = 0; v <= dMax; v += step) s += `<line class="axis" x1="${LM}" x2="${W - RM}" y1="${yD(v).toFixed(1)}" y2="${yD(v).toFixed(1)}"/><text class="v" x="${LM - 6}" y="${(yD(v) + 3).toFixed(1)}" text-anchor="end">${v ? v / 1000 + 'k' : '0'}</text>`;
+    s += `<line class="bound" x1="${x(D0)}" x2="${x(D0)}" y1="${P.n.top}" y2="${P.d.top + P.d.h}"/><text class="v" x="${x(D0) - 4}" y="${P.d.top + 10}" text-anchor="end">deaths counted from ${D0}</text>`;
+    s += `<line class="ref" x1="${x(D0)}" x2="${W - RM}" y1="${yD(median).toFixed(1)}" y2="${yD(median).toFixed(1)}"/><text class="v" x="${x(D0 + 12)}" y="${(yD(median) - 4).toFixed(1)}">median year ${Math.round(median / 1000)}k</text>`;
+    for (const r of Y.years) {
+      const off = r === peak && r.best > dMax, prov = r.year > D1 - PROV;
+      s += `<rect class="bar${prov ? ' prov' : ''}${r.year === state.year ? ' on' : ''}" data-y="${r.year}" x="${x(r.year).toFixed(1)}" y="${yD(r.best).toFixed(1)}" width="${bw.toFixed(1)}" height="${(yD(0) - yD(r.best)).toFixed(1)}"/>`;
+      if (!off) s += `<line class="range" x1="${(x(r.year) + bw / 2).toFixed(1)}" x2="${(x(r.year) + bw / 2).toFixed(1)}" y1="${yD(r.low).toFixed(1)}" y2="${yD(r.high).toFixed(1)}"/>`;
+      else s += `<text x="${(x(r.year) + bw + 4).toFixed(1)}" y="${P.d.top + 9}">${r.year}: ${fmt(r.best)}, off the chart</text>`;
+    }
+    s += `<polyline class="avg" points="${avgs.filter(Boolean).map(a => `${(x(a.year) + bw / 2).toFixed(1)},${yD(a.v).toFixed(1)}`).join(' ')}"/>`;
+    const la = avgs[avgs.length - 1]; s += `<text x="${(x(la.year) + bw / 2 + 4).toFixed(1)}" y="${(yD(la.v) + 3).toFixed(1)}">${Math.round(la.v / 1000)}k</text>`;
+    /* the price, 1986 on */
+    s += `<text class="h" x="${LM}" y="${P.o.top - 5}">the price of oil, Brent by month in gold, WTI fainter, dollars a barrel, not adjusted for inflation</text>`;
+    for (const v of [50, 100]) s += `<line class="axis" x1="${LM}" x2="${W - RM}" y1="${yO(v).toFixed(1)}" y2="${yO(v).toFixed(1)}"/><text class="v" x="${LM - 6}" y="${(yO(v) + 3).toFixed(1)}" text-anchor="end">$${v}</text>`;
+    s += `<path class="oil2" d="${d3.line().x(r => xm(r[0])).y(r => yO(r[1]))(O.wti)}"/>`;
+    s += `<path class="oil" d="${d3.line().x(r => xm(r[0])).y(r => yO(r[1]))(O.brent)}"/>`;
+    for (const [m, w] of EVENTS) { const pt = O.brent.find(r => r[0] === m); if (!pt) continue; const yearTop = Math.max(...O.brent.filter(r => r[0].slice(0, 4) === m.slice(0, 4)).map(r => r[1])); const up = pt[1] >= yearTop * 0.8; s += `<text class="ev" x="${xm(pt[0]).toFixed(1)}" y="${(up ? yO(pt[1]) - 5 : yO(pt[1]) + 11).toFixed(1)}" text-anchor="middle">${w}</text>`; }
+    /* the axis of years */
+    for (let y = Y0; y <= Y1; y++) if (y % 10 === 0) s += `<text x="${(x(y) + bw / 2).toFixed(1)}" y="${H - 6}" text-anchor="middle">${y}</text>`;
+    const lastM = O.brent[O.brent.length - 1][0];
+    if (+lastM.slice(0, 4) <= Y1 && Y1 % 10 !== 0) s += `<text x="${(x(Y1) + bw / 2).toFixed(1)}" y="${H - 6}" text-anchor="middle">${Y1}</text>`;
+    else if (+lastM.slice(0, 4) > Y1) s += `<text class="v" x="${(x(Y1 + 1) + bw / 2).toFixed(1)}" y="${H - 6}" text-anchor="middle">${monthWord(lastM).slice(0, 3).toLowerCase()} ${lastM.slice(0, 4)}</text>`;
+    s += `<line class="hover" id="hover-line" x1="0" x2="0" y1="${P.n.top}" y2="${P.o.top + P.o.h}" style="display:none"/>`;
+    s += `<g id="cursor"><line class="cursor" x1="0" x2="0" y1="${P.n.top - 12}" y2="${P.o.top + P.o.h}"/><text class="cursor-y" x="0" y="${P.n.top - 15}" text-anchor="middle"></text></g>`;
+    s += `<rect class="catch" x="${LM}" y="${P.n.top - 14}" width="${W - LM - RM}" height="${P.o.top + P.o.h - P.n.top + 14}"/>`;
+    s += '</svg>';
+    $('#spine').innerHTML = s;
+    const svg = $('#spine svg');
+    const yearAt = ev => { const pt = svg.createSVGPoint(); pt.x = ev.clientX; pt.y = ev.clientY; const p = pt.matrixTransform(svg.getScreenCTM().inverse()); return Math.max(Y0, Math.min(Y1, Math.floor(x.invert(p.x)))); };
+    /* a mouse sets the year on press and drag; a finger only on a tap or a sideways drag, so a page scroll that starts on the chart changes nothing */
+    let down = false, touch = null;
+    svg.addEventListener('pointerdown', ev => { stopPlay(); down = true; if (ev.pointerType === 'touch') { touch = { x: ev.clientX, y: ev.clientY, committed: false }; return; } svg.setPointerCapture(ev.pointerId); setYear(yearAt(ev)); });
+    svg.addEventListener('pointermove', ev => {
+      const y = yearAt(ev);
+      if (down && touch) { if (!touch.committed) { const dx = Math.abs(ev.clientX - touch.x), dy = Math.abs(ev.clientY - touch.y); if (dx > 8 && dx > dy) { touch.committed = true; svg.setPointerCapture(ev.pointerId); } else return; } setYear(y); return; }
+      if (down) setYear(y); else { const hl = $('#hover-line'); hl.style.display = ''; hl.setAttribute('x1', x(y) + bw / 2); hl.setAttribute('x2', x(y) + bw / 2); readout(y, true); }
+    });
+    svg.addEventListener('pointerup', ev => { if (down && touch && !touch.committed && Math.abs(ev.clientX - touch.x) < 8 && Math.abs(ev.clientY - touch.y) < 8) setYear(yearAt(ev)); down = false; touch = null; });
+    svg.addEventListener('pointercancel', () => { down = false; touch = null; });
+    svg.addEventListener('pointerleave', () => { if (!touch) down = false; $('#hover-line').style.display = 'none'; readout(state.year); });
+    svg.addEventListener('keydown', ev => { if (ev.key === 'ArrowLeft') { ev.preventDefault(); setYear(state.year - 1); } if (ev.key === 'ArrowRight') { ev.preventDefault(); setYear(state.year + 1); } });
+  }
+  function placeCursor() {
+    const g = $('#cursor'), cx = (x(state.year) + bw / 2).toFixed(1);
+    g.querySelector('line').setAttribute('x1', cx); g.querySelector('line').setAttribute('x2', cx);
+    const t = g.querySelector('text'); t.setAttribute('x', cx); t.textContent = state.year;
+    const svg = $('#spine svg'); svg.setAttribute('aria-valuenow', state.year); svg.setAttribute('aria-valuetext', String(state.year));
+    for (const b of document.querySelectorAll('#spine .bar')) b.classList.toggle('on', +b.dataset.y === state.year);
+  }
+  const brentOf = y => { const pts = O.brent.filter(r => +r[0].slice(0, 4) === y); return pts.length ? pts.reduce((a, r) => a + r[1], 0) / pts.length : null; };
+  function readout(y, hover) {
+    const r = byYear[y], d = dy[y], a = avgOf(y), b = brentOf(y);
+    let s = `<b>${y}</b>${hover ? ' <span class="dim">hover · click to set</span>' : ''}${y > D1 - PROV ? ' <span class="dim">provisional: UCDP revises recent years, this page treats the last two so</span>' : ''}<br>`;
+    s += `${r.n} conflicts active, ${r.wars} at war level, ${r.interstate} between states${r.is ? `, Islamic State a side in ${r.is}` : ''}`;
+    if (d) s += ` · <b>${fmt(d.best)}</b> deaths, ${fmt(d.low)} to ${fmt(d.high)}; in fighting ${fmt(d.state)}, between armed groups ${fmt(d.nonstate)}, civilians killed on purpose ${fmt(d.onesided)} · ${d.countries_over_1000} countries over a thousand`;
+    else s += ` · <span class="dim">deaths not counted before ${D0}</span>`;
+    s += '<br>';
+    if (a) s += `five-year average to ${y}: <b>${fmt(Math.round(a))}</b> · `;
+    s += b ? `Brent averaged $${b.toFixed(0)}${y === +O.brent[0][0].slice(0, 4) ? ' from ' + monthWord(O.brent[0][0]).split(' ')[0] : ''}` : `<span class="dim">no Brent before ${monthWord(O.brent[0][0])}</span>`;
+    const top = L.top[y]; if (top && top.length) s += ` · heaviest: ${top.slice(0, 3).map(t => `${esc(t[1])} ${fmt(t[2])}`).join(', ')}`;
+    $('#readout').innerHTML = s;
+  }
+
+  /* ---- the map at that year ---- */
+  const MAPC = topo.map, MW = MAPC.viewBox[2], MH = MAPC.viewBox[3];
+  const projection = d3.geoEqualEarth().scale(MAPC.k).translate([MAPC.cx, MAPC.cy]);
+  const path = d3.geoPath(projection);
+  const land = topojson.feature(topo, topo.objects.countries).features;
+  const STEPS = [25, 1000, 10000, 100000];
+  const stepOf = v => v >= STEPS[3] ? 4 : v >= STEPS[2] ? 3 : v >= STEPS[1] ? 2 : v >= STEPS[0] ? 1 : 0;
+  const nameOf = new Map(land.map(f => [f.id, L.names[f.id] || (f.properties && f.properties.name) || f.id]));
+  function titleFor(id) {
+    const y = state.year, row = byYear[y], deaths = L.deaths[y] || null, name = nameOf.get(id);
+    if (state.month) return `${name}: the cells show ${monthWord(state.month)}`;
+    if (deaths) { const v = deaths[id]; return v ? `${name}: ${fmt(v[0])} deaths in ${y} (${fmt(v[1])} to ${fmt(v[2])}): in fighting ${fmt(v[3])}, between armed groups ${fmt(v[4])}, civilians killed on purpose ${fmt(v[5])}${v[0] < STEPS[0] ? '; under 25, not shaded' : ''}` : `${name}: no deaths counted in ${y}`; }
+    const a = row.active[id]; return a ? `${name}: ${a === 2 ? 'a conflict at war level' : 'a conflict active'} in ${y}, ${a === 2 ? 'a thousand or more dead' : '25 or more dead'}` : `${name}: no conflict counted in ${y}`;
+  }
+  function drawMap() {
+    let s = `<svg viewBox="0 0 ${MW} ${MH}" role="img" aria-label="the world, countries shaded by deaths in the year"><path class="grat" d="${path(d3.geoGraticule10())}"/><g id="lands">`;
+    for (const f of land) s += `<path class="land" id="c-${esc(f.id)}" data-id="${esc(f.id)}" d="${path(f)}"></path>`;
+    s += `</g><g id="cells"></g></svg>`;
+    const wrap = $('#map-wrap'); wrap.insertAdjacentHTML('beforeend', s);
+    wrap.addEventListener('pointerover', ev => { const p = ev.target.closest('path.land'); if (!p) return; p.classList.add('hov'); $('#map-readout').textContent = titleFor(p.dataset.id); });
+    wrap.addEventListener('pointerout', ev => { const p = ev.target.closest('path.land'); if (p) p.classList.remove('hov'); });
+  }
+  function paintMap() {
+    const y = state.year, row = byYear[y], deaths = L.deaths[y] || null;
+    for (const p of document.querySelectorAll('#lands path.land')) {
+      const id = p.dataset.id; let cls = 'land';
+      if (state.month) { }
+      else if (deaths) { const v = deaths[id]; if (v && stepOf(v[0])) cls += ' d' + stepOf(v[0]); }
+      else { const a = row.active[id]; if (a) cls += ' a' + a; }
+      if (p.classList.contains('hov')) cls += ' hov';
+      if (p.getAttribute('class') !== cls) p.setAttribute('class', cls);
+    }
+    const cells = $('#cells');
+    if (state.month && G) {
+      const i = G.months.indexOf(state.month);
+      cells.innerHTML = i < 0 ? '' : G.cells.filter(c => c.months[i] > 0).map(c => { const [cx, cy] = projection([c.lon, c.lat]); const side = 0.34 * Math.sqrt(c.months[i]); return `<rect class="cell" x="${(cx - side / 2).toFixed(1)}" y="${(cy - side / 2).toFixed(1)}" width="${side.toFixed(1)}" height="${side.toFixed(1)}"><title>${fmt(c.months[i])} deaths in ${monthWord(state.month)} in this one-degree cell</title></rect>`; }).join('');
+    } else cells.innerHTML = '';
+    const d = dy[y];
+    $('#map-title').innerHTML = state.month ? `<b>${esc(monthWord(state.month))}</b>where Uppsala counted, by one-degree cell` : deaths ? `<b>${y}</b>${fmt(d.best)} deaths · ${d.countries_over_1000} countries over a thousand` : `<b>${y}</b>${row.n} conflicts active · deaths not counted before ${D0}`;
+    $('#legend').innerHTML = state.month ? `<span class="k">month</span><span><i class="cell"></i> where Uppsala counted, area is deaths</span><span class="k" style="margin-left:8px">click a year on the chart to go back to years</span>` :
+      deaths ? `<span class="k">deaths in the year</span><span><i class="d1"></i> 25 to 999</span><span><i class="d2"></i> 1,000 to 9,999</span><span><i class="d3"></i> 10,000 to 99,999</span><span><i class="d4"></i> 100,000 and more</span><span><i></i> under 25, or none counted</span>` :
+      `<span class="k">before ${D0}</span><span><i class="a1"></i> a conflict active, 25 or more dead</span><span><i class="a2"></i> at war level, a thousand or more</span><span><i></i> none counted</span><span class="k" style="margin-left:8px">no death counts by country before ${D0}</span>`;
+    const hov = document.querySelector('#lands path.hov'); $('#map-readout').textContent = hov ? titleFor(hov.dataset.id) : '';
+  }
+
+  /* ---- the hand-over ---- */
+  const BW = 1000, BH = 240, BL = 46, BR = 60, BT = 14, BB = 22;
+  const bx = d3.scaleLinear([D0, D1], [BL, BW - BR]);
+  function drawBands() {
+    const keys = []; for (let y = D0; y <= D1; y++) for (const t of (L.top[y] || [])) if (!keys.includes(t[0])) keys.push(t[0]);
+    const rows = []; for (let y = D0; y <= D1; y++) { const r = { year: y }; for (const k of keys) r[k] = 0; for (const t of (L.top[y] || [])) r[t[0]] = t[2]; rows.push(r); }
+    const series = d3.stack().keys(keys)(rows);
+    const tot = r => keys.reduce((a, k) => a + r[k], 0);
+    const top = d3.max(rows.filter(r => r.year !== peak.year), tot) * 1.06, offRow = rows.find(r => r.year === peak.year && tot(r) > top);
+    const by = d3.scaleLinear([0, top], [BH - BB, BT]).clamp(true);
+    const area = d3.area().x(d => bx(d.data.year)).y0(d => by(d[0])).y1(d => by(d[1])).curve(d3.curveMonotoneX);
+    let s = `<svg viewBox="0 0 ${BW} ${BH}" role="img" aria-label="each year's five heaviest countries, stacked, ${D0} to ${D1}">`;
+    for (const v of [100000, 200000, 300000, 400000]) if (v < top) s += `<line class="axis" x1="${BL}" x2="${BW - BR}" y1="${by(v).toFixed(1)}" y2="${by(v).toFixed(1)}"/><text class="v" x="${BL - 6}" y="${(by(v) + 3).toFixed(1)}" text-anchor="end">${v / 1000}k</text>`;
+    series.forEach((sr, i) => { s += `<path class="b t${i % 5}" data-k="${esc(sr.key)}" d="${area(sr)}"><title></title></path>`; });
+    series.forEach(sr => { let best = null; for (const d of sr) { const h = by(d[0]) - by(d[1]); if (!best || h > best.h) best = { h, d }; } if (best && best.h > 11) s += `<text x="${bx(best.d.data.year).toFixed(1)}" y="${((by(best.d[0]) + by(best.d[1])) / 2 + 3).toFixed(1)}" text-anchor="middle">${esc(L.names[sr.key] || sr.key)}</text>`; });
+    if (offRow) s += `<text class="v" x="${(bx(offRow.year) + 6).toFixed(1)}" y="${BT + 9}">${offRow.year}: ${esc(L.top[offRow.year][0][1])} ${fmt(L.top[offRow.year][0][2])}, off the chart</text>`;
+    for (let y = D0; y <= D1; y++) if (y % 5 === 0 || y === D1) s += `<text class="y" x="${bx(y).toFixed(1)}" y="${BH - 6}" text-anchor="middle">${y}</text>`;
+    s += `<line class="cursor" id="b-cursor" x1="0" x2="0" y1="${BT}" y2="${BH - BB}"/></svg>`;
+    $('#bands').innerHTML = s;
+    const svg = $('#bands svg');
+    svg.addEventListener('pointermove', ev => {
+      const p = ev.target.closest('path.b'); const pt = svg.createSVGPoint(); pt.x = ev.clientX; pt.y = ev.clientY; const q = pt.matrixTransform(svg.getScreenCTM().inverse());
+      const y = Math.max(D0, Math.min(D1, Math.round(bx.invert(q.x))));
+      for (const b of svg.querySelectorAll('path.b')) b.classList.toggle('dim', !!p && b !== p);
+      if (p) { const k = p.dataset.k, v = (rows.find(r => r.year === y) || {})[k] || 0; $('#bands-readout').textContent = `${L.names[k] || k}, ${y}: ${v ? fmt(v) + ' deaths' : 'not among the five heaviest'}`; }
+      else $('#bands-readout').textContent = `${y}: ` + (L.top[y] || []).map(t => `${t[1]} ${fmt(t[2])}`).join(' · ');
+    });
+    svg.addEventListener('pointerleave', () => { for (const b of svg.querySelectorAll('path.b')) b.classList.remove('dim'); $('#bands-readout').textContent = ''; });
+    svg.addEventListener('click', ev => { const pt = svg.createSVGPoint(); pt.x = ev.clientX; pt.y = ev.clientY; const q = pt.matrixTransform(svg.getScreenCTM().inverse()); setYear(Math.max(D0, Math.min(D1, Math.round(bx.invert(q.x))))); });
+  }
+  const placeBandCursor = () => { const c = $('#b-cursor'); if (!c) return; const inRange = state.year >= D0 && state.year <= D1; c.style.display = inRange ? '' : 'none'; if (inRange) { const v = bx(state.year).toFixed(1); c.setAttribute('x1', v); c.setAttribute('x2', v); } };
+
+  /* ---- the moment: computed from the files ---- */
+  function buildMoment() {
+    const last = years[years.length - 1], lastD = Y.years[Y.years.length - 1];
+    const mostN = years.reduce((a, r) => r.n > a.n ? r : a), mostWars = years.reduce((a, r) => r.wars > a.wars ? r : a), mostInter = years.reduce((a, r) => r.interstate > a.interstate ? r : a);
+    const mostC = Y.years.reduce((a, r) => r.countries_over_1000 > a.countries_over_1000 ? r : a);
+    const la = avgs[avgs.length - 1], others = avgs.filter(a => a && a !== la), topAvg = others.reduce((a, q) => q.v > a.v ? q : a);
+    const f = [];
+    const howCounted = `Uppsala counts one government against one side over one thing, so a movement fighting several governments is several conflicts${last.is ? `: Islamic State is a side in ${last.is} of the ${last.n}` : ''}${last.most && last.most[1] > 1 ? `, and ${last.most[0]} alone holds ${last.most[1]}` : ''}. The number says more governments are fighting someone, not that there are ${last.n} separate wars.`;
+    f.push({ w: 'conflicts active', big: `${last.n}<small>in ${last.year}</small>`, t: (last.n >= mostN.n ? `The most in any year since ${Y0}${years.some(r => r !== last && r.n === last.n) ? ', tied with ' + years.filter(r => r !== last && r.n === last.n).map(r => r.year).join(' and ') : '; the next highest is ' + years.filter(r => r.n < last.n).reduce((a, r) => r.n > a.n ? r : a).n}. ` : `Against ${mostN.n} in ${mostN.year}, the most since ${Y0}. `) + howCounted });
+    f.push({ w: 'at war level', big: `${last.wars}<small>in ${last.year}</small>`, t: `A thousand or more dead in the year. The peak is ${mostWars.wars} in ${mostWars.year}. This is not the most wars; it is more conflicts under that line.` });
+    f.push({ w: 'between states', big: `${last.interstate}<small>in ${last.year}</small>`, t: last.interstate >= mostInter.interstate ? `The most in any year since ${Y0}. Most conflicts are inside a state; these are the ones fought between states.` : `Against ${mostInter.interstate} in ${mostInter.year}.` });
+    f.push({ w: 'countries over a thousand dead', big: `${lastD.countries_over_1000}<small>in ${lastD.year}</small>`, t: lastD.countries_over_1000 >= mostC.countries_over_1000 ? `The most in any year since ${D0}${Y.years.filter(r => r !== lastD && r.countries_over_1000 === lastD.countries_over_1000).map(r => ', tied with ' + r.year).join('')}.` : `Against ${mostC.countries_over_1000} in ${mostC.year}.` });
+    f.push({ w: 'five-year average', big: `${fmt(Math.round(la.v))}<small>${la.year - 4} to ${la.year}</small>`, t: la.v >= topAvg.v ? `The highest five-year average in the series, ${fmt(Math.round(la.v - topAvg.v))} above the ${topAvg.year - 4} to ${topAvg.year} stretch that carries 1994, with the last two years provisional. Five separate years, the lowest at UCDP's best ${fmt(Math.min(...Y.years.slice(-5).map(r => r.best)))}.` : `${fmt(Math.round(topAvg.v - la.v))} below the ${topAvg.year - 4} to ${topAvg.year} stretch that carries 1994, at ${fmt(Math.round(topAvg.v))}.` });
+    f.push({ w: 'the past year', big: `${fmt(lastD.best)}<small>${lastD.year}</small>`, t: `UCDP's best for ${lastD.year}, ${fmt(lastD.low)} to ${fmt(lastD.high)}, provisional until the next release. Heaviest: ${(L.top[lastD.year] || []).slice(0, 3).map(t => `${t[1]} ${fmt(t[2])}`).join(', ')}.` });
+    $('#facts').innerHTML = f.map(q => `<li><div class="w">${q.w}</div><div class="big">${q.big}</div><div class="t">${esc(q.t)}</div></li>`).join('');
+    $('#moment-sub').textContent = `Six figures computed from the files on this page, UCDP version${L.versions.conflicts === L.versions.deaths ? ' ' + L.versions.deaths + ' for both files' : 's ' + L.versions.conflicts + ' and ' + L.versions.deaths}. UCDP revises recent years in each release; this page treats the last two as provisional.`;
+  }
+
+  /* ---- the past year by month ---- */
+  function buildMonths() {
+    const keys = U.months.keys || G.months, w = U.months.world, from = U.months.candidate_from || null;
+    $('#month-sub').textContent = `UCDP's deaths by month, every country, ${monthWord(keys[0])} to ${monthWord(keys[keys.length - 1])}, best with low to high in the label. Click a month to see where on the map, by one-degree cell. ${from ? 'Months from ' + monthWord(from) + ' are UCDP\'s candidate data, not yet fully reviewed, and are hatched.' : ''}`;
+    const max = Math.max(...w.best);
+    $('#m-strip').innerHTML = keys.map((m, i) => `<button data-m="${m}" class="${state.month === m ? 'on' : ''}" title="${monthWord(m)}: ${fmt(w.best[i])} deaths, ${fmt(w.low[i])} to ${fmt(w.high[i])}"><div class="bar${from && m >= from ? ' prov' : ''}" style="height:${Math.max(2, 56 * w.best[i] / max).toFixed(0)}px"></div><div class="l">${m.slice(5)}</div></button>`).join('');
+    $('#m-strip').onclick = ev => { const b = ev.target.closest('button'); if (!b) return; stopPlay(); state.month = state.month === b.dataset.m ? null : b.dataset.m; syncStrip(); writeHash(); paintMap(); if (state.month) $('#map-wrap').scrollIntoView({ behavior: 'smooth', block: 'center' }); };
+    $('#month-note').textContent = `${G.rule || ''} ${G.unplaced_total ? fmt(G.unplaced_total) + ' of ' + fmt(G.unplaced_total + G.placed_total) + ' deaths in the window are placed only to a country or worse and are not drawn as cells.' : ''}`;
+    readHash(); syncStrip(); if (state.month) paintMap();
+  }
+
+  /* ---- wiring ---- */
+  const syncStrip = () => { for (const q of document.querySelectorAll('#m-strip button')) q.classList.toggle('on', q.dataset.m === state.month); };
+  let timer = null;
+  function setYear(y) {
+    y = Math.max(Y0, Math.min(Y1, y)); if (y === state.year && !state.month) return;
+    state.year = y; state.month = null; syncStrip();
+    writeHash(); placeCursor(); readout(y); paintMap(); placeBandCursor();
+  }
+  const stopPlay = () => { if (timer) { clearInterval(timer); timer = null; } const b = $('#play'); b.classList.remove('on'); b.setAttribute('aria-pressed', 'false'); b.textContent = 'play the years'; };
+  $('#play').onclick = () => { if (timer) return stopPlay(); if (state.year >= Y1) setYear(Y0); $('#play').classList.add('on'); $('#play').setAttribute('aria-pressed', 'true'); $('#play').textContent = 'stop'; timer = setInterval(() => { if (state.year >= Y1) return stopPlay(); setYear(state.year + 1); }, 420); };
+  $('#step-back').onclick = () => { stopPlay(); setYear(state.year - 1); };
+  $('#step-fwd').onclick = () => { stopPlay(); setYear(state.year + 1); };
+  $('#now').onclick = () => { stopPlay(); setYear(Y1); };
+  window.addEventListener('hashchange', () => { stopPlay(); readHash(); syncStrip(); placeCursor(); readout(state.year); paintMap(); placeBandCursor(); });
+
+  $('#rule-level').textContent = L.rule + ' Conflicts file version ' + L.versions.conflicts + ', deaths file version ' + L.versions.deaths + ', built ' + L.built + '.';
+  $('#rule-oil').textContent = O.rule + ' Pulled ' + O.pulled + '.';
+  $('#credit').innerHTML = 'UCDP figures are from the Uppsala Conflict Data Program, <a href="https://ucdp.uu.se" target="_blank" rel="noopener">ucdp.uu.se</a>, version ' + esc(L.versions.deaths) + ', used under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>: Davies, Pettersson and Öberg, Organized violence 1989–2025, and violent political protests, Journal of Peace Research, 2026, doi 10.1093/jopres/xjag046; Sundberg and Melander, Introducing the UCDP Georeferenced Event Dataset, Journal of Peace Research 50(4), 2013. The conflict counts are the UCDP/PRIO Armed Conflict Dataset, version ' + esc(L.versions.conflicts) + ': Davies, Pettersson and Öberg, 2026, and Gleditsch, Wallensteen, Eriksson, Sollenberg and Strand, Armed Conflict 1946–2001: A New Dataset, Journal of Peace Research 39(5), 2002. UCDP is part of and funded by DEMSCORE, national research infrastructure grant 2021-00162 from the Swedish Research Council. Prices are from FRED, Federal Reserve Bank of St. Louis, series MCOILBRENTEU and MCOILWTICO, which carry the U.S. Energy Information Administration\'s spot prices. Base map Natural Earth. Drawn with d3.';
+
+  drawSpine(); drawMap(); drawBands(); buildMoment();
+  placeCursor(); readout(state.year); paintMap(); placeBandCursor();
+  /* a narrow screen scrolls the charts sideways; open them at the current end */
+  for (const el of [$('#spine'), $('#bands')]) if (el.scrollWidth > el.clientWidth + 4) el.scrollLeft = el.scrollWidth;
+})();
+</script>
+</body>
+</html>
