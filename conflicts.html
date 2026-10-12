@@ -313,9 +313,17 @@
   table.grid td.cell .lane { min-height: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 3px 0; border-top: 1px dotted var(--ink-06); }
   table.grid td.cell .lane:has(.ended) { padding-bottom: 12px; }
   table.grid td.cell .lane:first-child { border-top: 0; }
-  table.grid tr.on td { background: var(--ink-06); }
-  table.grid td.cell.on { background: var(--ink-10); }
-  table.grid tr:hover td { background: var(--ink-06); }
+  /* a cell is shaded by what it holds; the pick is an inset ring so the shade still reads */
+  table.grid td.cell.s-claimed { background: color-mix(in srgb, var(--ink) 6%, var(--bg)); }
+  table.grid td.cell.s-reported { background: color-mix(in srgb, var(--ink) 11%, var(--bg)); }
+  table.grid td.cell.s-shown { background: color-mix(in srgb, var(--ink) 17%, var(--bg)); }
+  table.grid td.cell.s-open { background: color-mix(in srgb, var(--ink) 25%, var(--bg)); }
+  table.grid td.cell.s-party { background: color-mix(in srgb, var(--danger) 18%, var(--bg)); }
+  table.grid td.cell.s-ended { background: repeating-linear-gradient(135deg, transparent 0 3px, color-mix(in srgb, var(--ink) 12%, transparent) 3px 4px); }
+  table.grid td.cell .lane { border-top-color: color-mix(in srgb, var(--ink) 14%, transparent); }
+  table.grid tr.on td, table.grid tr:hover td { background: var(--ink-06); }
+  table.grid tr.on td.cell[class*=" s-"], table.grid tr:hover td.cell[class*=" s-"] { filter: brightness(0.94); }
+  table.grid td.cell.on { box-shadow: inset 0 0 0 1.5px var(--ink); }
   table.grid tr:hover td.who, table.grid tr.on td.who { background: color-mix(in srgb, var(--ink) 6%, var(--bg)); }
   table.grid td.who:focus-visible, table.grid td.cell:focus-visible { outline: 1px solid var(--ink); outline-offset: -1px; }
   #grid-panel .mk { display: inline-block; width: 22px; height: 6px; position: relative; vertical-align: middle; }
@@ -326,6 +334,15 @@
   #grid-panel .mk.ended svg, #grid-panel .mk.claimed.ended { opacity: 0.35; }
   #grid-panel .mk.ended::after { content: attr(data-y); position: absolute; left: 0; top: 7px; font-size: 7.5px; color: var(--ink-60); letter-spacing: 0; }
   .grid-foot .mk.ended { margin-bottom: 8px; }
+  .grid-foot .shades { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .grid-foot .shades .k { color: var(--ink-45); text-transform: uppercase; letter-spacing: 0.14em; font-size: 10px; margin-right: 4px; }
+  .grid-foot .sh { display: inline-block; width: 14px; height: 14px; border: 1px solid var(--ink-10); vertical-align: middle; margin-left: 6px; }
+  .grid-foot .sh.s-claimed { background: color-mix(in srgb, var(--ink) 6%, var(--bg)); }
+  .grid-foot .sh.s-reported { background: color-mix(in srgb, var(--ink) 11%, var(--bg)); }
+  .grid-foot .sh.s-shown { background: color-mix(in srgb, var(--ink) 17%, var(--bg)); }
+  .grid-foot .sh.s-open { background: color-mix(in srgb, var(--ink) 25%, var(--bg)); }
+  .grid-foot .sh.s-party { background: color-mix(in srgb, var(--danger) 18%, var(--bg)); }
+  .grid-foot .sh.s-ended { background: repeating-linear-gradient(135deg, transparent 0 3px, color-mix(in srgb, var(--ink) 12%, transparent) 3px 4px); }
   .grid-foot { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin-top: 12px; font-family: var(--mono); font-size: 11px; color: var(--ink-60); }
 
   /* ---- rules ---- */
@@ -447,6 +464,7 @@
   .years text { font-family: var(--mono); font-size: 9px; fill: var(--ink-60); }
   .years text.v { fill: var(--ink-45); }
   .years .ref { stroke: var(--ink-60); stroke-width: 1; stroke-dasharray: 3 3; }
+  .years .avg { fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
   .years-key { font-family: var(--mono); font-size: 10.5px; color: var(--ink-60); margin-top: 6px; line-height: 1.7; }
 
   /* ---- testing menu: the pages still being built sit under one dropdown ---- */
@@ -547,7 +565,7 @@
   <p class="panel-sub" id="grid-rule"></p>
   <div class="grid-wrap"><table class="grid" id="grid"></table></div>
   <div class="grid-hint">drag the grid sideways to see every column</div>
-  <div class="note" style="margin-top:10px">Lanes in a column are the war's sides, top to bottom as the card lists them. Hover a mark for the side, the help, and how we know. Click a mark for the war, a name for the state.</div>
+  <div class="note" style="margin-top:10px">Lanes in a column are the war's sides, top to bottom as the card lists them. A cell is shaded by what it holds: red where the state fights there itself, otherwise ink by the strongest evidence of its help, darker the more the state has owned. Hover a mark for the side, the help, and how we know. Click a mark for the war, a name for the state.</div>
   <div class="grid-foot">
     <span><i class="mk"><svg viewBox="0 0 22 6"><path class="arc tier-open" d="M0,3 L22,3"/></svg></i> on the record</span>
     <span><i class="mk"><svg viewBox="0 0 22 6"><path class="arc tier-shown" d="M0,3 L22,3"/></svg></i> documented</span>
@@ -555,6 +573,7 @@
     <span><i class="mk claimed"></i> alleged</span>
     <span><i class="mk party"></i> fights there</span>
     <span><i class="mk ended" data-y="26"><svg viewBox="0 0 22 6"><path class="arc tier-open" d="M0,3 L22,3"/></svg></i> ended, with the year</span>
+    <span class="shades"><span class="k">shade</span> <i class="sh s-open"></i> on the record <i class="sh s-shown"></i> documented <i class="sh s-reported"></i> reported <i class="sh s-claimed"></i> alleged <i class="sh s-party"></i> fights there <i class="sh s-ended"></i> every tie ended</span>
     <button class="chip ghost" id="grid-all" aria-pressed="false">show every state</button>
   </div>
 </section>
@@ -1337,6 +1356,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     for (const td of document.querySelectorAll('#grid td.cell')) td.classList.toggle('on', state.kind === 'conflict' && td.dataset.c === state.id);
     for (const th of document.querySelectorAll('#grid th.war')) th.classList.toggle('on', state.kind === 'conflict' && th.dataset.c === state.id);
   }
+  const RANK = { open: 4, shown: 3, reported: 2, claimed: 1 };
   function buildGrid() {
     const cols = D.conflicts.filter(c => state.pressure || c.kind !== 'pressure');
     const rowsBy = {};
@@ -1364,7 +1384,12 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
           if (p.state === x.id) marks.push(`<i class="mk party" title="${esc(x.b.short)} ${c.kind === 'pressure' ? 'acts' : 'fights'} ${p.short === x.b.short ? 'here' : 'as ' + esc(p.short)}"></i>`);
           return `<div class="lane" title="${esc(p.short)}">${marks.join('')}</div>`;
         });
-        return `<td class="cell" data-c="${esc(c.id)}" tabindex="0" role="button" aria-label="${esc(x.b.short)} in ${esc(c.name)}"><div class="lanes">${lanes.join('')}</div></td>`;
+        /* the shade says what the cell holds: red where the state fights or acts there itself, else ink by the strongest evidence of its help, lightest when every tie has ended */
+        const own = x.r.ties.filter(y => y.c.id === c.id), live = own.filter(y => !y.t.ended);
+        const fights = c.parties.some(p => p.state === x.id);
+        const best = live.reduce((a, y) => Math.max(a, RANK[y.t.tier] || 0), 0);
+        const shade = fights ? 's-party' : best ? 's-' + Object.keys(RANK).find(k => RANK[k] === best) : own.length ? 's-ended' : '';
+        return `<td class="cell${shade ? ' ' + shade : ''}" data-c="${esc(c.id)}" tabindex="0" role="button" aria-label="${esc(x.b.short)} in ${esc(c.name)}"><div class="lanes">${lanes.join('')}</div></td>`;
       });
       return `<tr data-b="${esc(x.id)}"><td class="who" tabindex="0" role="button">${swatch(x.id)}<span class="n">${esc(x.b.short)}</span><span class="c" title="helps in ${x.helps}, ${x.fights ? 'fights or acts in ' + x.fights : 'fights in none'}">${x.nWars} ${x.nWars === 1 ? 'war' : 'wars'}${x.nSq ? ' · ' + x.nSq + (x.nSq === 1 ? ' square' : ' squares') : ''}</span></td>${cells.join('')}</tr>`;
     }).join('');
@@ -1463,10 +1488,18 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       if (off) s += `<text x="${(x(i) + bw + 4).toFixed(1)}" y="${T + 8}">${r.year}: ${r.best.toLocaleString('en-US')}, off the chart</text>`;
       if (r.year % 5 === 0 || r === last) s += `<text x="${(x(i) + bw / 2).toFixed(1)}" y="${H - 6}" text-anchor="middle">${r.year}</text>`;
     });
+    /* the average of the five years to each year, from the first full window */
+    const avgs = ys.map((r, i) => i < 4 ? null : { year: r.year, v: ys.slice(i - 4, i + 1).reduce((a, q) => a + q.best, 0) / 5 });
+    const pts = avgs.map((a, i) => a ? `${(x(i) + bw / 2).toFixed(1)},${y(a.v).toFixed(1)}` : null).filter(Boolean);
+    const lastAvg = avgs[avgs.length - 1];
+    s += `<polyline class="avg" points="${pts.join(' ')}"><title>the average of the five years to each year</title></polyline>`;
+    s += `<text class="v" x="${(x(ys.length - 1) + bw / 2 + 2).toFixed(1)}" y="${(y(lastAvg.v) - 6).toFixed(1)}" text-anchor="end">five-year average ${Math.round(lastAvg.v / 1000)}k</text>`;
     s += '</svg>';
     $('#years-chart').innerHTML = s;
     const above = ys.filter(r => r.best > median).length;
-    $('#years-key').textContent = `Bars are UCDP's best estimate by year, the thin line its low to high; the ${peak.year} bar runs off the top so the other years can be read. ${last.year}: ${last.best.toLocaleString('en-US')} deaths in ${last.countries_over_1000} countries over a thousand, against a median year of ${median.toLocaleString('en-US')} since ${ys[0].year}; ${above} of ${ys.length} years sit above the median. UCDP version ${esc(Y.version || '')}.`;
+    const otherAvgs = avgs.filter(a => a && a !== lastAvg).map(a => a.v), highestAvg = lastAvg.v >= Math.max(...otherAvgs);
+    const avgWord = `The solid line is the average of the five years to each year; for ${ys[ys.length - 5].year} to ${lastAvg.year} it is ${Math.round(lastAvg.v).toLocaleString('en-US')}${highestAvg ? ', the highest five-year average in the series, above the five years that carry ' + peak.year : ''}.`;
+    $('#years-key').textContent = `Bars are UCDP's best estimate by year, the thin line its low to high; the ${peak.year} bar runs off the top so the other years can be read. ${last.year}: ${last.best.toLocaleString('en-US')} deaths in ${last.countries_over_1000} countries over a thousand, against a median year of ${median.toLocaleString('en-US')} since ${ys[0].year}; ${above} of ${ys.length} years sit above the median. ${avgWord} UCDP version ${esc(Y.version || '')}.`;
   }
 
   /* ---- what changed: computed from the data file's history, with the hand-written corrections beside ---- */
