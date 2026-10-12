@@ -189,7 +189,7 @@ def test_publish_payload_is_strict_json():
     round_trip = json.loads(text)
     # ledger as of 2026-10-11: Bessent 15-22 mb/d (c10) tops the window
     assert round_trip["current_episode"]["claim_high_mbd"] == 22.0
-    assert round_trip["current_episode"]["independent_consensus_mbd"] == 5.0
+    assert round_trip["current_episode"]["independent_consensus_mbd"] == 9.7  # Kpler, 29 Sep 2026
     assert len(round_trip["claims"]) == len(claims)
     # unverified, never adjudicated language
     assert "unverified" in round_trip["method"]["gap"]
@@ -280,7 +280,7 @@ def test_episode_reflects_wright_revision():
     estimates = load_estimates(CURATED / "hormuz_flow_estimates.csv")
 
     ep = build_current_episode(claims, estimates)
-    assert ep["claim_low_mbd"] == 8.0
+    assert ep["claim_low_mbd"] == 10.0  # ledger as of 2026-10-11: the 45-day window now starts after Wright's 8
     assert ep["claim_high_mbd"] == 22.0  # ledger as of 2026-10-11
-    assert ep["gap_low_mbd"] == 3.0
-    assert ep["gap_high_mbd"] == 17.0
+    assert round(ep["gap_low_mbd"], 1) == 0.3
+    assert round(ep["gap_high_mbd"], 1) == 12.3
