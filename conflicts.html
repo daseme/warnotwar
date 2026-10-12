@@ -113,7 +113,7 @@
 
   /* ---- map + card ---- */
   .stage { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 28px; align-items: start; }
-  @media (max-width: 900px) { .stage { grid-template-columns: 1fr; } }
+  @media (max-width: 900px) { .stage { grid-template-columns: minmax(0, 1fr); } .stage > div { min-width: 0; } }
   .map-wrap { position: relative; width: 100%; background: var(--bg-raise); border: 1px solid var(--ink-10); }
   svg#map { width: 100%; height: auto; display: block; }
   svg text { font-family: var(--mono); }
@@ -244,6 +244,14 @@
   .stamp { font-family: var(--mono); font-size: 10.5px; color: var(--ink-45); margin-top: 3em; line-height: 1.8; width: 100%; max-width: 1080px; }
   a.back { display: inline-block; margin-top: 5em; color: var(--ink-60); font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; }
   a.back:hover { color: var(--ink); }
+  @media (max-width: 640px) {
+    /* phones: the map crops to the band where the entries sit and pans sideways */
+    .map-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    svg#map { min-width: 680px; }
+    .map-hint { font-family: var(--mono); font-size: 10px; color: var(--ink-45); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 6px; }
+  }
+  .map-hint { display: none; }
+  @media (max-width: 640px) { .map-hint { display: block; } }
   @media (max-width: 720px) {
     body { padding: 52px 16px 100px; }
     nav.topnav { gap: 14px; padding: 12px 16px; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
@@ -315,6 +323,7 @@
         <svg id="map" role="group" aria-label="World map of current wars and the countries backing each side"></svg>
         <div class="tooltip" id="tip"></div>
       </div>
+      <div class="map-hint">drag the map sideways to see all of it</div>
       <div class="legend" id="legend"></div>
     </div>
     <aside class="card" id="card">
@@ -461,11 +470,19 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   /* dash lengths are in map units, so scale them to the drawn width or they turn to fuzz on a phone */
   const dashStyle = document.createElement('style'); document.head.appendChild(dashStyle);
   function setDashes() {
-    const u = world.viewBox[2] / Math.max(1, svg.clientWidth);
+    const u = svg.viewBox.baseVal.width / Math.max(1, svg.clientWidth);
     dashStyle.textContent = `#map .arc.tier-shown{stroke-dasharray:${(7 * u).toFixed(2)} ${(4 * u).toFixed(2)}} #map .arc.tier-reported{stroke-dasharray:${(3 * u).toFixed(2)} ${(4 * u).toFixed(2)}} #map .arc.tier-claimed{stroke-dasharray:${(0.5 * u).toFixed(2)} ${(5 * u).toFixed(2)}} #map .arc.ended{stroke-dasharray:${(1 * u).toFixed(2)} ${(3 * u).toFixed(2)} !important}`;
     for (const h of svg.querySelectorAll('.conflict .hit')) h.setAttribute('r', Math.max(13, 22 * u / 1.3).toFixed(1));
   }
-  addEventListener('resize', setDashes);
+  const FULL_VIEW = world.viewBox.join(' ');
+  function fitViewBox() {
+    if (innerWidth > 640 || !D.conflicts.length) { svg.setAttribute('viewBox', FULL_VIEW); return; }
+    const xs = D.conflicts.map(c => c.px), ys = D.conflicts.map(c => c.py), pad = 70;
+    const x0 = Math.max(0, Math.min(...xs) - pad), x1 = Math.min(world.viewBox[2], Math.max(...xs) + pad);
+    const y0 = Math.max(0, Math.min(...ys) - pad), y1 = Math.min(world.viewBox[3], Math.max(...ys) + pad);
+    svg.setAttribute('viewBox', `${x0.toFixed(0)} ${y0.toFixed(0)} ${(x1 - x0).toFixed(0)} ${(y1 - y0).toFixed(0)}`);
+  }
+  addEventListener('resize', () => { fitViewBox(); setDashes(); });
 
   const confNodes = {};
   for (const c of D.conflicts) {
@@ -490,7 +507,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     g.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); focus('conflict', c.id); } });
   }
   svg.addEventListener('click', () => clear());
-  setDashes();
+  fitViewBox(); setDashes();
 
   /* ---- legend ---- */
   $('#legend').innerHTML =
@@ -638,6 +655,11 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       }
     }
     renderCard();
+    /* on a pannable (phone) map, bring the chosen war into view */
+    if (wrap.scrollWidth > wrap.clientWidth + 4 && state.kind === 'conflict' && state.pinned && confNodes[state.id]) {
+      const g = confNodes[state.id].querySelector('.glyph').getBoundingClientRect(), w = wrap.getBoundingClientRect();
+      wrap.scrollLeft += (g.left + g.width / 2) - (w.left + w.width / 2);
+    }
     $('#status').textContent = state.kind === 'conflict' ? 'Showing ' + conflicts[state.id].name : state.kind === 'backer' ? 'Showing ' + backers[state.id].name : allView ? 'Showing every line' : '';
     for (const tr of document.querySelectorAll('#ties tr.tie')) {
       tr.classList.toggle('on', !!state.kind && (state.kind === 'conflict' ? tr.dataset.conflict === state.id : tr.dataset.backer === state.id));
@@ -719,6 +741,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
 
   /* ---- deep link ---- */
   readHash(); loadAreas().then(render);
+  if (wrap.scrollWidth > wrap.clientWidth + 4 && !state.pinned) wrap.scrollLeft = (wrap.scrollWidth - wrap.clientWidth) * 0.55;
   } catch (e) { fail('The map could not be drawn. ' + e.message); throw e; }
 })();
 </script>
