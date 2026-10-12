@@ -92,7 +92,17 @@
     14619,
     18956
    ],
-   "excluded": []
+   "excluded": [],
+   "secondary": {
+    "ucdp": [
+     "N. Korea"
+    ],
+    "ours": [
+     "N. Korea"
+    ],
+    "only_ucdp": [],
+    "only_ours": []
+   }
   },
   "sudan": {
    "basis": "countries: Sudan",
@@ -210,7 +220,19 @@
     18902,
     19012
    ],
-   "excluded": []
+   "excluded": [],
+   "secondary": {
+    "ucdp": [],
+    "ours": [
+     "E. Libya",
+     "UAE"
+    ],
+    "only_ucdp": [],
+    "only_ours": [
+     "E. Libya",
+     "UAE"
+    ]
+   }
   },
   "gaza": {
    "basis": "countries: Israel, Lebanon, Palestine",
@@ -331,7 +353,17 @@
     18868,
     19057
    ],
-   "excluded": []
+   "excluded": [],
+   "secondary": {
+    "ucdp": [],
+    "ours": [
+     "U.S."
+    ],
+    "only_ucdp": [],
+    "only_ours": [
+     "U.S."
+    ]
+   }
   },
   "yemen": {
    "basis": "countries: Yemen (North Yemen)",
@@ -464,7 +496,36 @@
     19028,
     19056
    ],
-   "excluded": []
+   "excluded": [],
+   "secondary": {
+    "ucdp": [
+     "Australia",
+     "Bahrain",
+     "Canada",
+     "Netherlands",
+     "New Zealand",
+     "Norway",
+     "Saudi Arabia",
+     "Singapore",
+     "Sri Lanka",
+     "UAE"
+    ],
+    "ours": [
+     "Saudi Arabia",
+     "UAE"
+    ],
+    "only_ucdp": [
+     "Australia",
+     "Bahrain",
+     "Canada",
+     "Netherlands",
+     "New Zealand",
+     "Norway",
+     "Singapore",
+     "Sri Lanka"
+    ],
+    "only_ours": []
+   }
   },
   "myanmar": {
    "basis": "countries: Myanmar (Burma)",
@@ -579,7 +640,13 @@
     18941,
     18978
    ],
-   "excluded": []
+   "excluded": [],
+   "secondary": {
+    "ucdp": [],
+    "ours": [],
+    "only_ucdp": [],
+    "only_ours": []
+   }
   },
   "congo": {
    "basis": "countries: DR Congo (Zaire)",
@@ -713,7 +780,34 @@
     18929,
     18964
    ],
-   "excluded": []
+   "excluded": [],
+   "secondary": {
+    "ucdp": [
+     "Burundi",
+     "Indonesia",
+     "Kenya",
+     "Malawi",
+     "Nepal",
+     "Rwanda",
+     "S. Africa",
+     "Tanzania",
+     "Uganda"
+    ],
+    "ours": [
+     "Burundi",
+     "Rwanda",
+     "S. Africa",
+     "Uganda"
+    ],
+    "only_ucdp": [
+     "Indonesia",
+     "Kenya",
+     "Malawi",
+     "Nepal",
+     "Tanzania"
+    ],
+    "only_ours": []
+   }
   },
   "sahel": {
    "basis": "countries: Burkina Faso, Mali, Niger",
@@ -842,7 +936,26 @@
     18152,
     18220
    ],
-   "excluded": []
+   "excluded": [],
+   "secondary": {
+    "ucdp": [
+     "Burkina Faso",
+     "Mali",
+     "Niger",
+     "Nigeria",
+     "Russia"
+    ],
+    "ours": [
+     "Russia"
+    ],
+    "only_ucdp": [
+     "Burkina Faso",
+     "Mali",
+     "Niger",
+     "Nigeria"
+    ],
+    "only_ours": []
+   }
   },
   "somalia": {
    "basis": "countries: Somalia",
@@ -944,7 +1057,36 @@
     18959,
     18979
    ],
-   "excluded": []
+   "excluded": [],
+   "secondary": {
+    "ucdp": [
+     "Djibouti",
+     "Egypt",
+     "Ethiopia",
+     "Ghana",
+     "Kenya",
+     "Nigeria",
+     "Sierra Leone",
+     "U.S.",
+     "Uganda",
+     "Zambia"
+    ],
+    "ours": [
+     "Djibouti",
+     "Egypt",
+     "Ethiopia",
+     "Kenya",
+     "U.S.",
+     "Uganda"
+    ],
+    "only_ucdp": [
+     "Ghana",
+     "Nigeria",
+     "Sierra Leone",
+     "Zambia"
+    ],
+    "only_ours": []
+   }
   },
   "syria": {
    "basis": "countries: Syria",
@@ -1058,7 +1200,23 @@
     18768,
     18868
    ],
-   "excluded": []
+   "excluded": [],
+   "secondary": {
+    "ucdp": [
+     "Türkiye",
+     "U.S."
+    ],
+    "ours": [
+     "Israel",
+     "U.S."
+    ],
+    "only_ucdp": [
+     "Türkiye"
+    ],
+    "only_ours": [
+     "Israel"
+    ]
+   }
   },
   "haiti": {
    "basis": "countries: Haiti",
@@ -1170,7 +1328,28 @@
     17971,
     18972
    ],
-   "excluded": []
+   "excluded": [],
+   "secondary": {
+    "ucdp": [
+     "Bahamas",
+     "Belize",
+     "El Salvador",
+     "Guatemala",
+     "Jamaica",
+     "Kenya"
+    ],
+    "ours": [
+     "Kenya"
+    ],
+    "only_ucdp": [
+     "Bahamas",
+     "Belize",
+     "El Salvador",
+     "Guatemala",
+     "Jamaica"
+    ],
+    "only_ours": []
+   }
   },
   "pakistan": {
    "basis": "countries: Pakistan, Afghanistan",
@@ -1302,7 +1481,13 @@
     19023,
     19024
    ],
-   "excluded": []
+   "excluded": [],
+   "secondary": {
+    "ucdp": [],
+    "ours": [],
+    "only_ucdp": [],
+    "only_ours": []
+   }
   },
   "gulf": {
    "basis": "conflicts: Iran - Israel, Iran - Israel, United States of America",
@@ -1351,7 +1536,13 @@
      "best_this_year": 19893,
      "why": "one row flagged for review puts civilians killed by Iran at 19,900 in January 2026; it is a separate one-sided conflict, not the war"
     }
-   ]
+   ],
+   "secondary": {
+    "ucdp": [],
+    "ours": [],
+    "only_ucdp": [],
+    "only_ours": []
+   }
   },
   "ethiopia": {
    "basis": "countries: Ethiopia, Eritrea",
@@ -1475,7 +1666,17 @@
     18932,
     18958
    ],
-   "excluded": []
+   "excluded": [],
+   "secondary": {
+    "ucdp": [
+     "Kenya"
+    ],
+    "ours": [],
+    "only_ucdp": [
+     "Kenya"
+    ],
+    "only_ours": []
+   }
   },
   "southsudan": {
    "basis": "countries: South Sudan",
@@ -1591,7 +1792,17 @@
     18924,
     18963
    ],
-   "excluded": []
+   "excluded": [],
+   "secondary": {
+    "ucdp": [],
+    "ours": [
+     "Uganda"
+    ],
+    "only_ucdp": [],
+    "only_ours": [
+     "Uganda"
+    ]
+   }
   },
   "nigeria": {
    "basis": "countries: Nigeria",
@@ -1756,7 +1967,24 @@
     19030,
     19036
    ],
-   "excluded": []
+   "excluded": [],
+   "secondary": {
+    "ucdp": [
+     "Cameroon",
+     "Chad",
+     "Niger",
+     "U.S."
+    ],
+    "ours": [
+     "U.S."
+    ],
+    "only_ucdp": [
+     "Cameroon",
+     "Chad",
+     "Niger"
+    ],
+    "only_ours": []
+   }
   }
  },
  "not_on_map": [
@@ -1833,5 +2061,240 @@
     "one-sided": 1007
    }
   }
- ]
+ ],
+ "secondary": {
+  "year": 2025,
+  "source": "UcdpPrioConflict_v26_1.csv",
+  "rule": "UCDP names a state that sends troops to fight on a side as a secondary warring party. Our ties with troops, air strikes or police are the same thing. The two lists should match; where they do not, both are shown.",
+  "entries": {
+   "ukraine": {
+    "ucdp": [
+     "N. Korea"
+    ],
+    "ours": [
+     "N. Korea"
+    ],
+    "only_ucdp": [],
+    "only_ours": []
+   },
+   "sudan": {
+    "ucdp": [],
+    "ours": [
+     "E. Libya",
+     "UAE"
+    ],
+    "only_ucdp": [],
+    "only_ours": [
+     "E. Libya",
+     "UAE"
+    ]
+   },
+   "gaza": {
+    "ucdp": [],
+    "ours": [
+     "U.S."
+    ],
+    "only_ucdp": [],
+    "only_ours": [
+     "U.S."
+    ]
+   },
+   "yemen": {
+    "ucdp": [
+     "Australia",
+     "Bahrain",
+     "Canada",
+     "Netherlands",
+     "New Zealand",
+     "Norway",
+     "Saudi Arabia",
+     "Singapore",
+     "Sri Lanka",
+     "UAE"
+    ],
+    "ours": [
+     "Saudi Arabia",
+     "UAE"
+    ],
+    "only_ucdp": [
+     "Australia",
+     "Bahrain",
+     "Canada",
+     "Netherlands",
+     "New Zealand",
+     "Norway",
+     "Singapore",
+     "Sri Lanka"
+    ],
+    "only_ours": []
+   },
+   "myanmar": {
+    "ucdp": [],
+    "ours": [],
+    "only_ucdp": [],
+    "only_ours": []
+   },
+   "congo": {
+    "ucdp": [
+     "Burundi",
+     "Indonesia",
+     "Kenya",
+     "Malawi",
+     "Nepal",
+     "Rwanda",
+     "S. Africa",
+     "Tanzania",
+     "Uganda"
+    ],
+    "ours": [
+     "Burundi",
+     "Rwanda",
+     "S. Africa",
+     "Uganda"
+    ],
+    "only_ucdp": [
+     "Indonesia",
+     "Kenya",
+     "Malawi",
+     "Nepal",
+     "Tanzania"
+    ],
+    "only_ours": []
+   },
+   "sahel": {
+    "ucdp": [
+     "Burkina Faso",
+     "Mali",
+     "Niger",
+     "Nigeria",
+     "Russia"
+    ],
+    "ours": [
+     "Russia"
+    ],
+    "only_ucdp": [
+     "Burkina Faso",
+     "Mali",
+     "Niger",
+     "Nigeria"
+    ],
+    "only_ours": []
+   },
+   "somalia": {
+    "ucdp": [
+     "Djibouti",
+     "Egypt",
+     "Ethiopia",
+     "Ghana",
+     "Kenya",
+     "Nigeria",
+     "Sierra Leone",
+     "U.S.",
+     "Uganda",
+     "Zambia"
+    ],
+    "ours": [
+     "Djibouti",
+     "Egypt",
+     "Ethiopia",
+     "Kenya",
+     "U.S.",
+     "Uganda"
+    ],
+    "only_ucdp": [
+     "Ghana",
+     "Nigeria",
+     "Sierra Leone",
+     "Zambia"
+    ],
+    "only_ours": []
+   },
+   "syria": {
+    "ucdp": [
+     "Türkiye",
+     "U.S."
+    ],
+    "ours": [
+     "Israel",
+     "U.S."
+    ],
+    "only_ucdp": [
+     "Türkiye"
+    ],
+    "only_ours": [
+     "Israel"
+    ]
+   },
+   "haiti": {
+    "ucdp": [
+     "Bahamas",
+     "Belize",
+     "El Salvador",
+     "Guatemala",
+     "Jamaica",
+     "Kenya"
+    ],
+    "ours": [
+     "Kenya"
+    ],
+    "only_ucdp": [
+     "Bahamas",
+     "Belize",
+     "El Salvador",
+     "Guatemala",
+     "Jamaica"
+    ],
+    "only_ours": []
+   },
+   "pakistan": {
+    "ucdp": [],
+    "ours": [],
+    "only_ucdp": [],
+    "only_ours": []
+   },
+   "gulf": {
+    "ucdp": [],
+    "ours": [],
+    "only_ucdp": [],
+    "only_ours": []
+   },
+   "ethiopia": {
+    "ucdp": [
+     "Kenya"
+    ],
+    "ours": [],
+    "only_ucdp": [
+     "Kenya"
+    ],
+    "only_ours": []
+   },
+   "southsudan": {
+    "ucdp": [],
+    "ours": [
+     "Uganda"
+    ],
+    "only_ucdp": [],
+    "only_ours": [
+     "Uganda"
+    ]
+   },
+   "nigeria": {
+    "ucdp": [
+     "Cameroon",
+     "Chad",
+     "Niger",
+     "U.S."
+    ],
+    "ours": [
+     "U.S."
+    ],
+    "only_ucdp": [
+     "Cameroon",
+     "Chad",
+     "Niger"
+    ],
+    "only_ours": []
+   }
+  }
+ }
 }

@@ -58,6 +58,57 @@ NOT_ON_MAP = ['Mexico', 'Colombia', 'Tanzania']
 
 TYPES = {1: 'state-based', 2: 'non-state', 3: 'one-sided'}
 
+# UCDP's "Government of X" names -> our backer ids, where the spelling differs
+GOV_TO_BACKER = {'United States of America': 'usa', 'Russia (Soviet Union)': 'russia', 'Turkey': 'turkey', 'United Arab Emirates': 'uae',
+                 'Saudi Arabia': 'saudi', 'South Africa': 'safrica', 'North Korea': 'nkorea', 'United Kingdom': 'britain', 'El Salvador': 'elsalvador',
+                 'Dominican Republic': 'dominican', 'Trinidad and Tobago': 'trinidad'}
+# kinds of help that UCDP would code as a secondary warring party (fighting on a side)
+FIGHTING_KINDS = {'troops', 'air', 'police'}
+
+
+def secondary_audit(d, conf, last_year):
+    """Compare UCDP's secondary warring parties (UCDP/PRIO Armed Conflict Dataset) with our fighting ties, per entry."""
+    files = glob.glob(os.path.join(d, 'UcdpPrioConflict_v*.csv'))
+    if not files:
+        return None, None
+    a = pd.read_csv(sorted(files)[-1], low_memory=False)
+    a = a[a.year == last_year]
+    version = os.path.basename(sorted(files)[-1])
+    backers = {b['id']: b for b in conf['backers']}
+    by_name = {b['name']: b['id'] for b in conf['backers']}
+    def to_id(gov):
+        gov = gov.strip().replace('Government of ', '')
+        return GOV_TO_BACKER.get(gov) or by_name.get(gov) or gov
+    out = {}
+    for c in conf['conflicts']:
+        cid = c['id']
+        all_conf = [i for v in BY_CONFLICT.values() for i in v]
+        if cid in BY_COUNTRY:
+            rows = a[a.location.apply(lambda s: bool(set(str(s).split(', ')) & set(BY_COUNTRY[cid]))) & ~a.conflict_id.isin(all_conf)]
+        elif cid in BY_CONFLICT:
+            rows = a[a.conflict_id.isin(BY_CONFLICT[cid])]
+        else:
+            continue
+        ucdp = set()
+        for col in ('side_a_2nd', 'side_b_2nd'):
+            for v in rows[col].dropna():
+                for g in str(v).split(','):
+                    if g.strip():
+                        ucdp.add(to_id(g))
+        # the entry's own state parties are not secondary parties of their own war
+        own_ids = set()
+        for p in c['parties']:
+            s = p.get('state')
+            for v in (s if isinstance(s, list) else [s]):
+                if v:
+                    own_ids.add(v)
+        ucdp -= own_ids
+        ours = set(t['backer'] for t in c['ties'] if set(t['kinds']) & FIGHTING_KINDS and not (t.get('ended') and str(t['ended'])[:4] < str(last_year)) and not (t.get('since') and str(t['since'])[:4] > str(last_year)))
+        name = lambda i: backers[i]['short'] if i in backers else i
+        out[cid] = {'ucdp': sorted(name(i) for i in ucdp), 'ours': sorted(name(i) for i in ours),
+                    'only_ucdp': sorted(name(i) for i in ucdp - ours), 'only_ours': sorted(name(i) for i in ours - ucdp)}
+    return out, version
+
 
 def load(d):
     yearly = sorted(glob.glob(os.path.join(d, 'GEDEvent_v??_?.csv')) + glob.glob(os.path.join(d, 'GEDEvent_v??_??.csv')))
@@ -148,6 +199,12 @@ def main():
             'dyad_ids': dyads,
             'excluded': excluded,
         }
+    sec, sec_version = secondary_audit(d, conf, last_year)
+    if sec:
+        out['secondary'] = {'year': last_year, 'source': sec_version, 'rule': 'UCDP names a state that sends troops to fight on a side as a secondary warring party. Our ties with troops, air strikes or police are the same thing. The two lists should match; where they do not, both are shown.', 'entries': sec}
+        for cid, s in sec.items():
+            if cid in out['entries']:
+                out['entries'][cid]['secondary'] = s
     for country in NOT_ON_MAP:
         x = df[df.country == country]
         w = x[(x.month >= win_from) & (x.month <= win_to)]

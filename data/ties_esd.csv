@@ -1,0 +1,189 @@
+war,war_name,entry_kind,supporter,supporter_name,supporter_iso,recipient,recipient_name,recipient_state,year,troops,access_territory,weapons,materiel,training,funding,intelligence,other,other_kinds,kinds_ours,alleged,tier,backer_says,since,ended,evidence_to,sources,sources_linked,entered
+ukraine,Ukraine,war,usa,United States,USA,ukr,Ukraine,ukraine,2025,0,0,1,0,0,1,1,0,,arms;money;intel,0,on the record,,,,2026-10,2,2,2026-10-11
+ukraine,Ukraine,war,usa,United States,USA,ukr,Ukraine,ukraine,2026,0,0,1,0,0,1,1,0,,arms;money;intel,0,on the record,,,,2026-10,2,2,2026-10-11
+ukraine,Ukraine,war,europe,Europe (EU states),AUT;BEL;BGR;HRV;CYP;CZE;DNK;EST;FIN;FRA;DEU;GRC;HUN;IRL;ITA;LVA;LTU;LUX;MLT;NLD;POL;PRT;ROU;SVK;SVN;ESP;SWE,ukr,Ukraine,ukraine,2025,0,0,1,0,1,1,0,0,,arms;money;training,0,on the record,,,,2026-10,1,1,2026-10-11
+ukraine,Ukraine,war,europe,Europe (EU states),AUT;BEL;BGR;HRV;CYP;CZE;DNK;EST;FIN;FRA;DEU;GRC;HUN;IRL;ITA;LVA;LTU;LUX;MLT;NLD;POL;PRT;ROU;SVK;SVN;ESP;SWE,ukr,Ukraine,ukraine,2026,0,0,1,0,1,1,0,0,,arms;money;training,0,on the record,,,,2026-10,1,1,2026-10-11
+ukraine,Ukraine,war,britain,Britain,GBR,ukr,Ukraine,ukraine,2025,0,0,1,0,1,1,0,0,,arms;money;training,0,on the record,,,,2026-10,2,1,2026-10-11
+ukraine,Ukraine,war,britain,Britain,GBR,ukr,Ukraine,ukraine,2026,0,0,1,0,1,1,0,0,,arms;money;training,0,on the record,,,,2026-10,2,1,2026-10-11
+ukraine,Ukraine,war,canada,Canada,CAN,ukr,Ukraine,ukraine,2025,0,0,1,0,1,1,0,0,,arms;money;training,0,on the record,,,,2026-02,1,1,2026-10-11
+ukraine,Ukraine,war,canada,Canada,CAN,ukr,Ukraine,ukraine,2026,0,0,1,0,1,1,0,0,,arms;money;training,0,on the record,,,,2026-02,1,1,2026-10-11
+ukraine,Ukraine,war,turkey,Türkiye,TUR,ukr,Ukraine,ukraine,2025,0,0,1,0,0,0,0,0,,drones;arms,0,on the record,,,,2026-03,2,2,2026-10-11
+ukraine,Ukraine,war,turkey,Türkiye,TUR,ukr,Ukraine,ukraine,2026,0,0,1,0,0,0,0,0,,drones;arms,0,on the record,,,,2026-03,2,2,2026-10-11
+ukraine,Ukraine,war,iran,Iran,IRN,rus,Russia,russia,2025,0,0,1,0,0,0,0,0,,drones;parts,0,documented,says it sent a few drones before the war and denies the rest,,,2023-08,4,3,2026-10-11
+ukraine,Ukraine,war,iran,Iran,IRN,rus,Russia,russia,2026,0,0,1,0,0,0,0,0,,drones;parts,0,documented,says it sent a few drones before the war and denies the rest,,,2023-08,4,3,2026-10-11
+ukraine,Ukraine,war,nkorea,North Korea,PRK,rus,Russia,russia,2025,1,0,1,0,0,0,0,0,,troops;arms,0,on the record,,,,2026-02,4,1,2026-10-11
+ukraine,Ukraine,war,nkorea,North Korea,PRK,rus,Russia,russia,2026,1,0,1,0,0,0,0,0,,troops;arms,0,on the record,,,,2026-02,4,1,2026-10-11
+ukraine,Ukraine,war,china,China,CHN,rus,Russia,russia,2025,0,0,1,0,0,1,0,0,,parts;money,0,reported,denies sending weapons,,,2026-01,5,3,2026-10-11
+ukraine,Ukraine,war,china,China,CHN,rus,Russia,russia,2026,0,0,1,0,0,1,0,0,,parts;money,0,reported,denies sending weapons,,,2026-01,5,3,2026-10-11
+ukraine,Ukraine,war,belarus,Belarus,BLR,rus,Russia,russia,2025,0,1,0,0,1,0,0,0,,bases;training,0,on the record,,,,2026-05,2,1,2026-10-11
+ukraine,Ukraine,war,belarus,Belarus,BLR,rus,Russia,russia,2026,0,1,0,0,1,0,0,0,,bases;training,0,on the record,,,,2026-05,2,1,2026-10-11
+sudan,Sudan,war,uae,United Arab Emirates,ARE,rsf,Rapid Support Forces,,2025,1,0,1,0,0,1,0,0,,arms;money;troops,0,documented,denies it all,,,2026-09,1,1,2026-10-11
+sudan,Sudan,war,uae,United Arab Emirates,ARE,rsf,Rapid Support Forces,,2026,1,0,1,0,0,1,0,0,,arms;money;troops,0,documented,denies it all,,,2026-09,1,1,2026-10-11
+sudan,Sudan,war,chad,Chad,TCD,rsf,Rapid Support Forces,,2025,0,1,0,0,0,0,0,0,,transit,0,documented,denies helping the RSF,,,2026-09,1,1,2026-10-11
+sudan,Sudan,war,chad,Chad,TCD,rsf,Rapid Support Forces,,2026,0,1,0,0,0,0,0,0,,transit,0,documented,denies helping the RSF,,,2026-09,1,1,2026-10-11
+sudan,Sudan,war,haftar,Eastern Libya (Haftar's forces),,rsf,Rapid Support Forces,,2025,1,1,1,0,0,0,0,0,,transit;arms;troops,0,documented,denies it,,,2026-04,3,1,2026-10-11
+sudan,Sudan,war,haftar,Eastern Libya (Haftar's forces),,rsf,Rapid Support Forces,,2026,1,1,1,0,0,0,0,0,,transit;arms;troops,0,documented,denies it,,,2026-04,3,1,2026-10-11
+sudan,Sudan,war,kenya,Kenya,KEN,rsf,Rapid Support Forces,,2025,0,1,0,0,0,0,0,1,cover,hosts;cover,0,on the record,"says it hosted talks, not a side",,,2025-02,4,3,2026-10-11
+sudan,Sudan,war,kenya,Kenya,KEN,rsf,Rapid Support Forces,,2026,0,1,0,0,0,0,0,1,cover,hosts;cover,0,on the record,"says it hosted talks, not a side",,,2025-02,4,3,2026-10-11
+sudan,Sudan,war,egypt,Egypt,EGY,saf,Sudanese Armed Forces,,2025,0,0,0,0,0,0,0,1,cover,cover,0,on the record,,,,2025-12,3,1,2026-10-11
+sudan,Sudan,war,egypt,Egypt,EGY,saf,Sudanese Armed Forces,,2026,0,0,0,0,0,0,0,1,cover,cover,0,on the record,,,,2025-12,3,1,2026-10-11
+sudan,Sudan,war,egypt,Egypt,EGY,saf,Sudanese Armed Forces,,2025,0,1,1,0,0,0,0,0,,drones;bases,0,reported,denies direct involvement,2025-11,,2026,2,1,2026-10-11
+sudan,Sudan,war,egypt,Egypt,EGY,saf,Sudanese Armed Forces,,2026,0,1,1,0,0,0,0,0,,drones;bases,0,reported,denies direct involvement,2025-11,,2026,2,1,2026-10-11
+sudan,Sudan,war,iran,Iran,IRN,saf,Sudanese Armed Forces,,2025,0,0,1,0,0,0,0,0,,drones,0,reported,says nothing,,,2024-12,3,2,2026-10-11
+sudan,Sudan,war,iran,Iran,IRN,saf,Sudanese Armed Forces,,2026,0,0,1,0,0,0,0,0,,drones,0,reported,says nothing,,,2024-12,3,2,2026-10-11
+sudan,Sudan,war,turkey,Türkiye,TUR,saf,Sudanese Armed Forces,,2025,0,0,1,0,0,0,0,0,,drones,0,reported,says nothing,,,2026-02,4,2,2026-10-11
+sudan,Sudan,war,turkey,Türkiye,TUR,saf,Sudanese Armed Forces,,2026,0,0,1,0,0,0,0,0,,drones,0,reported,says nothing,,,2026-02,4,2,2026-10-11
+sudan,Sudan,war,eritrea,Eritrea,ERI,saf,Sudanese Armed Forces,,2025,0,0,0,0,1,0,0,0,,training,0,on the record,says nothing,,,2026-08,2,1,2026-10-11
+sudan,Sudan,war,eritrea,Eritrea,ERI,saf,Sudanese Armed Forces,,2026,0,0,0,0,1,0,0,0,,training,0,on the record,says nothing,,,2026-08,2,1,2026-10-11
+sudan,Sudan,war,russia,Russia,RUS,saf,Sudanese Armed Forces,,2025,0,0,0,0,0,0,0,1,cover,cover,0,on the record,,,,2026-10,4,3,2026-10-11
+sudan,Sudan,war,russia,Russia,RUS,saf,Sudanese Armed Forces,,2026,0,0,0,0,0,0,0,1,cover,cover,0,on the record,,,,2026-10,4,3,2026-10-11
+gaza,Gaza and Lebanon,war,usa,United States,USA,isr,Israel,israel,2025,1,0,1,0,0,1,0,0,,arms;money;troops,0,on the record,,,,2024-12,3,2,2026-10-11
+gaza,Gaza and Lebanon,war,usa,United States,USA,isr,Israel,israel,2026,1,0,1,0,0,1,0,0,,arms;money;troops,0,on the record,,,,2024-12,3,2,2026-10-11
+gaza,Gaza and Lebanon,war,germany,Germany,DEU,isr,Israel,israel,2025,0,0,1,0,0,0,0,0,,arms,0,on the record,,,,2026,3,1,2026-10-11
+gaza,Gaza and Lebanon,war,germany,Germany,DEU,isr,Israel,israel,2026,0,0,1,0,0,0,0,0,,arms,0,on the record,,,,2026,3,1,2026-10-11
+gaza,Gaza and Lebanon,war,iran,Iran,IRN,hezb,Hezbollah,,2025,0,0,1,0,1,1,0,0,,arms;money;training,0,on the record,,,,2026-08,3,1,2026-10-11
+gaza,Gaza and Lebanon,war,iran,Iran,IRN,hezb,Hezbollah,,2026,0,0,1,0,1,1,0,0,,arms;money;training,0,on the record,,,,2026-08,3,1,2026-10-11
+gaza,Gaza and Lebanon,war,iran,Iran,IRN,hamas,Hamas,,2025,0,0,1,0,1,1,0,0,,arms;money;training,0,on the record,,,,2021-01,2,1,2026-10-11
+gaza,Gaza and Lebanon,war,iran,Iran,IRN,hamas,Hamas,,2026,0,0,1,0,1,1,0,0,,arms;money;training,0,on the record,,,,2021-01,2,1,2026-10-11
+gaza,Gaza and Lebanon,war,qatar,Qatar,QAT,hamas,Hamas,,2025,0,1,0,0,0,0,0,0,,hosts,0,on the record,says it is the mediator and its cash moved with Israel's consent,,,2026-09,3,1,2026-10-11
+gaza,Gaza and Lebanon,war,qatar,Qatar,QAT,hamas,Hamas,,2026,0,1,0,0,0,0,0,0,,hosts,0,on the record,says it is the mediator and its cash moved with Israel's consent,,,2026-09,3,1,2026-10-11
+gaza,Gaza and Lebanon,war,turkey,Türkiye,TUR,hamas,Hamas,,2025,0,1,0,0,0,0,0,1,cover,cover;hosts,0,on the record,,,,2026-04,3,1,2026-10-11
+gaza,Gaza and Lebanon,war,turkey,Türkiye,TUR,hamas,Hamas,,2026,0,1,0,0,0,0,0,1,cover,cover;hosts,0,on the record,,,,2026-04,3,1,2026-10-11
+yemen,Yemen,war,iran,Iran,IRN,houthi,Houthis (Ansar Allah),,2025,0,0,1,0,1,0,0,0,,arms;training,0,documented,denies arming the Houthis,,,2024,2,1,2026-10-11
+yemen,Yemen,war,iran,Iran,IRN,houthi,Houthis (Ansar Allah),,2026,0,0,1,0,1,0,0,0,,arms;training,0,documented,denies arming the Houthis,,,2024,2,1,2026-10-11
+yemen,Yemen,war,russia,Russia,RUS,houthi,Houthis (Ansar Allah),,2025,0,0,1,0,0,1,0,0,,arms;money,1,alleged,says nothing,,,2025-04,2,1,2026-10-11
+yemen,Yemen,war,russia,Russia,RUS,houthi,Houthis (Ansar Allah),,2026,0,0,1,0,0,1,0,0,,arms;money,1,alleged,says nothing,,,2025-04,2,1,2026-10-11
+yemen,Yemen,war,china,China,CHN,houthi,Houthis (Ansar Allah),,2025,0,0,1,0,0,0,1,0,,intel;parts,1,alleged,denies state involvement,,,2025-09,3,1,2026-10-11
+yemen,Yemen,war,china,China,CHN,houthi,Houthis (Ansar Allah),,2026,0,0,1,0,0,0,1,0,,intel;parts,1,alleged,denies state involvement,,,2025-09,3,1,2026-10-11
+yemen,Yemen,war,saudi,Saudi Arabia,SAU,ygov,Yemeni government and allied forces,,2025,1,0,1,0,0,1,0,0,,arms;troops;money;air,0,on the record,,,,2026-10,2,1,2026-10-11
+yemen,Yemen,war,saudi,Saudi Arabia,SAU,ygov,Yemeni government and allied forces,,2026,1,0,1,0,0,1,0,0,,arms;troops;money;air,0,on the record,,,,2026-10,2,1,2026-10-11
+yemen,Yemen,war,uae,United Arab Emirates,ARE,ygov,Yemeni government and allied forces,,2025,1,0,1,0,0,1,0,0,,arms;troops;money,0,reported,announced the withdrawal; its statement is not entered yet,,2025-12,2026,1,1,2026-10-11
+yemen,Yemen,war,usa,United States,USA,ygov,Yemeni government and allied forces,,2026,1,0,0,0,0,0,0,0,,air,0,on the record,"said the strikes were at Houthi threats to shipping, during the Iran war",2026-02,,2026-02,1,1,2026-10-11
+myanmar,Myanmar,war,russia,Russia,RUS,junta,Military-led government,,2025,0,0,1,0,1,0,0,0,,arms;training,0,on the record,,,,2026-07,3,2,2026-10-11
+myanmar,Myanmar,war,russia,Russia,RUS,junta,Military-led government,,2026,0,0,1,0,1,0,0,0,,arms;training,0,on the record,,,,2026-07,3,2,2026-10-11
+myanmar,Myanmar,war,china,China,CHN,junta,Military-led government,,2025,0,0,1,0,0,0,0,0,,arms,0,documented,says nothing,,,2026-08,3,3,2026-10-11
+myanmar,Myanmar,war,china,China,CHN,junta,Military-led government,,2026,0,0,1,0,0,0,0,0,,arms,0,documented,says nothing,,,2026-08,3,3,2026-10-11
+myanmar,Myanmar,war,china,China,CHN,junta,Military-led government,,2025,0,0,0,0,0,0,0,1,cover,cover,0,on the record,,,,2026,2,1,2026-10-11
+myanmar,Myanmar,war,china,China,CHN,junta,Military-led government,,2026,0,0,0,0,0,0,0,1,cover,cover,0,on the record,,,,2026,2,1,2026-10-11
+myanmar,Myanmar,war,india,India,IND,junta,Military-led government,,2025,0,0,1,0,0,0,0,0,,arms,0,documented,says nothing,,,2023-05,1,1,2026-10-11
+myanmar,Myanmar,war,india,India,IND,junta,Military-led government,,2026,0,0,1,0,0,0,0,0,,arms,0,documented,says nothing,,,2023-05,1,1,2026-10-11
+myanmar,Myanmar,war,china,China,CHN,resist,Resistance forces and ethnic armies,,2025,0,0,1,0,0,0,0,0,,arms,0,reported,says nothing,,2026-08,2025-06,3,2,2026-10-11
+myanmar,Myanmar,war,china,China,CHN,resist,Resistance forces and ethnic armies,,2026,0,0,1,0,0,0,0,0,,arms,0,reported,says nothing,,2026-08,2025-06,3,2,2026-10-11
+congo,Eastern Congo,war,rwanda,Rwanda,RWA,m23,M23 (AFC),,2025,1,0,1,0,0,0,0,0,,troops;arms;drones,0,documented,calls its measures defensive and does not confirm the numbers,,,2026-07,1,1,2026-10-11
+congo,Eastern Congo,war,rwanda,Rwanda,RWA,m23,M23 (AFC),,2026,1,0,1,0,0,0,0,0,,troops;arms;drones,0,documented,calls its measures defensive and does not confirm the numbers,,,2026-07,1,1,2026-10-11
+congo,Eastern Congo,war,uganda,Uganda,UGA,m23,M23 (AFC),,2025,0,1,0,0,0,0,0,0,,harbor;transit,0,documented,denies it,,,2025-07,2,1,2026-10-11
+congo,Eastern Congo,war,uganda,Uganda,UGA,m23,M23 (AFC),,2026,0,1,0,0,0,0,0,0,,harbor;transit,0,documented,denies it,,,2025-07,2,1,2026-10-11
+congo,Eastern Congo,war,uganda,Uganda,UGA,drc,Congolese government and allied militias,,2025,1,0,0,0,0,0,0,0,,troops,0,documented,says it fights the ADF at Kinshasa's request,,,2026-01,3,2,2026-10-11
+congo,Eastern Congo,war,uganda,Uganda,UGA,drc,Congolese government and allied militias,,2026,1,0,0,0,0,0,0,0,,troops,0,documented,says it fights the ADF at Kinshasa's request,,,2026-01,3,2,2026-10-11
+congo,Eastern Congo,war,burundi,Burundi,BDI,drc,Congolese government and allied militias,,2025,1,0,0,0,0,0,0,0,,troops,0,on the record,,,,2026-10,2,1,2026-10-11
+congo,Eastern Congo,war,burundi,Burundi,BDI,drc,Congolese government and allied militias,,2026,1,0,0,0,0,0,0,0,,troops,0,on the record,,,,2026-10,2,1,2026-10-11
+congo,Eastern Congo,war,usa,United States,USA,drc,Congolese government and allied militias,,2025,0,0,0,0,1,0,1,0,,training;intel,0,on the record,,2025-12,,2026-02,2,1,2026-10-11
+congo,Eastern Congo,war,usa,United States,USA,drc,Congolese government and allied militias,,2026,0,0,0,0,1,0,1,0,,training;intel,0,on the record,,2025-12,,2026-02,2,1,2026-10-11
+congo,Eastern Congo,war,safrica,South Africa (for SADC),ZAF,drc,Congolese government and allied militias,,2025,1,0,0,0,0,0,0,0,,troops,0,on the record,,,2025-06,2025-06,1,1,2026-10-11
+sahel,The Sahel,war,russia,Russia,RUS,aes,"Mali, Burkina Faso and Niger (military governments)",,2025,1,0,1,0,0,0,0,0,,troops;arms;air,0,on the record,,,,2026-10,6,5,2026-10-11
+sahel,The Sahel,war,russia,Russia,RUS,aes,"Mali, Burkina Faso and Niger (military governments)",,2026,1,0,1,0,0,0,0,0,,troops;arms;air,0,on the record,,,,2026-10,6,5,2026-10-11
+sahel,The Sahel,war,turkey,Türkiye,TUR,aes,"Mali, Burkina Faso and Niger (military governments)",,2025,0,0,1,0,1,0,0,0,,drones;training,0,on the record,,,,2026-09,5,4,2026-10-11
+sahel,The Sahel,war,turkey,Türkiye,TUR,aes,"Mali, Burkina Faso and Niger (military governments)",,2026,0,0,1,0,1,0,0,0,,drones;training,0,on the record,,,,2026-09,5,4,2026-10-11
+sahel,The Sahel,war,china,China,CHN,aes,"Mali, Burkina Faso and Niger (military governments)",,2025,0,0,1,0,0,0,0,0,,arms,0,reported,says nothing,,,2026-03,1,1,2026-10-11
+sahel,The Sahel,war,china,China,CHN,aes,"Mali, Burkina Faso and Niger (military governments)",,2026,0,0,1,0,0,0,0,0,,arms,0,reported,says nothing,,,2026-03,1,1,2026-10-11
+sahel,The Sahel,war,iran,Iran,IRN,aes,"Mali, Burkina Faso and Niger (military governments)",,2026,0,0,1,0,1,0,0,0,,drones;training,0,reported,says nothing about deliveries,2026-01,,2026-02,2,1,2026-10-11
+sahel,The Sahel,war,ukraine,Ukraine,UKR,fla,Azawad Liberation Front (Tuareg),,2026,0,0,1,0,1,0,1,0,,intel;training;drones,0,reported,denies it,2026-09,,2026-10,2,1,2026-10-11
+sahel,The Sahel,war,algeria,Algeria,DZA,fla,Azawad Liberation Front (Tuareg),,2025,0,1,0,0,0,0,0,0,,harbor,1,alleged,denies it and says it backs Mali's unity,,2026-07,2025-04,3,2,2026-10-11
+sahel,The Sahel,war,algeria,Algeria,DZA,fla,Azawad Liberation Front (Tuareg),,2026,0,1,0,0,0,0,0,0,,harbor,1,alleged,denies it and says it backs Mali's unity,,2026-07,2025-04,3,2,2026-10-11
+somalia,Somalia,war,usa,United States,USA,sgov,Federal government and AU mission,,2025,1,0,1,0,1,0,0,0,,air;training;arms,0,on the record,,,,2026,1,1,2026-10-11
+somalia,Somalia,war,usa,United States,USA,sgov,Federal government and AU mission,,2026,1,0,1,0,1,0,0,0,,air;training;arms,0,on the record,,,,2026,1,1,2026-10-11
+somalia,Somalia,war,turkey,Türkiye,TUR,sgov,Federal government and AU mission,,2025,0,1,1,0,1,0,0,0,,training;drones;bases,0,on the record,,,,2026-09,4,3,2026-10-11
+somalia,Somalia,war,turkey,Türkiye,TUR,sgov,Federal government and AU mission,,2026,0,1,1,0,1,0,0,0,,training;drones;bases,0,on the record,,,,2026-09,4,3,2026-10-11
+somalia,Somalia,war,uganda,Uganda,UGA,sgov,Federal government and AU mission,,2025,1,0,0,0,0,0,0,0,,troops,0,on the record,,,,2026-08,3,1,2026-10-11
+somalia,Somalia,war,uganda,Uganda,UGA,sgov,Federal government and AU mission,,2026,1,0,0,0,0,0,0,0,,troops,0,on the record,,,,2026-08,3,1,2026-10-11
+somalia,Somalia,war,ethiopia,Ethiopia,ETH,sgov,Federal government and AU mission,,2025,1,0,0,0,0,0,0,0,,troops,0,on the record,,,,2026-09,3,1,2026-10-11
+somalia,Somalia,war,ethiopia,Ethiopia,ETH,sgov,Federal government and AU mission,,2026,1,0,0,0,0,0,0,0,,troops,0,on the record,,,,2026-09,3,1,2026-10-11
+somalia,Somalia,war,kenya,Kenya,KEN,sgov,Federal government and AU mission,,2025,1,0,0,0,0,0,0,0,,troops,0,on the record,,,,2026-07,1,1,2026-10-11
+somalia,Somalia,war,kenya,Kenya,KEN,sgov,Federal government and AU mission,,2026,1,0,0,0,0,0,0,0,,troops,0,on the record,,,,2026-07,1,1,2026-10-11
+somalia,Somalia,war,djibouti,Djibouti,DJI,sgov,Federal government and AU mission,,2025,1,0,0,0,0,0,0,0,,troops,0,on the record,,,,2026-07,1,1,2026-10-11
+somalia,Somalia,war,djibouti,Djibouti,DJI,sgov,Federal government and AU mission,,2026,1,0,0,0,0,0,0,0,,troops,0,on the record,,,,2026-07,1,1,2026-10-11
+somalia,Somalia,war,egypt,Egypt,EGY,sgov,Federal government and AU mission,,2025,1,0,1,0,0,0,0,0,,arms;troops,0,on the record,,,,2026-02,2,1,2026-10-11
+somalia,Somalia,war,egypt,Egypt,EGY,sgov,Federal government and AU mission,,2026,1,0,1,0,0,0,0,0,,arms;troops,0,on the record,,,,2026-02,2,1,2026-10-11
+somalia,Somalia,war,saudi,Saudi Arabia,SAU,sgov,Federal government and AU mission,,2026,0,0,0,0,0,0,0,1,cover,cover,0,on the record,,2026-02,,2026-02,2,1,2026-10-11
+somalia,Somalia,war,uae,United Arab Emirates,ARE,sgov,Federal government and AU mission,,2025,0,0,0,0,1,1,0,0,,training;money,0,on the record,,,2026-01,2026-01,2,1,2026-10-11
+somalia,Somalia,war,uae,United Arab Emirates,ARE,sgov,Federal government and AU mission,,2026,0,0,0,0,1,1,0,0,,training;money,0,on the record,,,2026-01,2026-01,2,1,2026-10-11
+syria,Syria,war,turkey,Türkiye,TUR,sgov2,Transitional government,,2025,0,0,1,0,1,0,0,1,cover,training;arms;cover,0,on the record,,,,2026-01,6,4,2026-10-11
+syria,Syria,war,turkey,Türkiye,TUR,sgov2,Transitional government,,2026,0,0,1,0,1,0,0,1,cover,training;arms;cover,0,on the record,,,,2026-01,6,4,2026-10-11
+syria,Syria,war,qatar,Qatar,QAT,sgov2,Transitional government,,2025,0,0,0,0,0,1,0,0,,money,0,on the record,,,,2025-10,5,4,2026-10-11
+syria,Syria,war,qatar,Qatar,QAT,sgov2,Transitional government,,2026,0,0,0,0,0,1,0,0,,money,0,on the record,,,,2025-10,5,4,2026-10-11
+syria,Syria,war,saudi,Saudi Arabia,SAU,sgov2,Transitional government,,2025,0,0,0,0,0,1,0,1,cover,money;cover,0,on the record,,,,2025-10,5,4,2026-10-11
+syria,Syria,war,saudi,Saudi Arabia,SAU,sgov2,Transitional government,,2026,0,0,0,0,0,1,0,1,cover,money;cover,0,on the record,,,,2025-10,5,4,2026-10-11
+syria,Syria,war,usa,United States,USA,sgov2,Transitional government,,2025,0,0,0,0,0,0,0,1,cover,cover,0,on the record,,2025-11,,2026-01,2,1,2026-10-11
+syria,Syria,war,usa,United States,USA,sgov2,Transitional government,,2026,0,0,0,0,0,0,0,1,cover,cover,0,on the record,,2025-11,,2026-01,2,1,2026-10-11
+syria,Syria,war,usa,United States,USA,sdf,"Syrian Democratic Forces (Kurdish-led, dissolved August 2026)",,2025,1,0,1,0,1,0,0,0,,troops;arms;training,0,on the record,,,2026-04,2026-08,3,1,2026-10-11
+syria,Syria,war,usa,United States,USA,sdf,"Syrian Democratic Forces (Kurdish-led, dissolved August 2026)",,2026,1,0,1,0,1,0,0,0,,troops;arms;training,0,on the record,,,2026-04,2026-08,3,1,2026-10-11
+syria,Syria,war,israel,Israel,ISR,local,Druze militias in Sweida and Assad loyalists on the coast,,2025,1,0,0,0,0,0,0,0,,air,0,on the record,,,,2026-03,2,1,2026-10-11
+syria,Syria,war,israel,Israel,ISR,local,Druze militias in Sweida and Assad loyalists on the coast,,2026,1,0,0,0,0,0,0,0,,air,0,on the record,,,,2026-03,2,1,2026-10-11
+syria,Syria,war,israel,Israel,ISR,local,Druze militias in Sweida and Assad loyalists on the coast,,2025,0,0,1,0,0,1,0,0,,arms;money,0,reported,says nothing,,,2025-09,2,2,2026-10-11
+syria,Syria,war,israel,Israel,ISR,local,Druze militias in Sweida and Assad loyalists on the coast,,2026,0,0,1,0,0,1,0,0,,arms;money,0,reported,says nothing,,,2025-09,2,2,2026-10-11
+haiti,Haiti,war,usa,United States,USA,hstate,Haitian government and the foreign force,,2025,0,0,1,0,0,1,0,1,cover,money;arms;cover,0,on the record,,,,2026-09,1,1,2026-10-11
+haiti,Haiti,war,usa,United States,USA,hstate,Haitian government and the foreign force,,2026,0,0,1,0,0,1,0,1,cover,money;arms;cover,0,on the record,,,,2026-09,1,1,2026-10-11
+haiti,Haiti,war,canada,Canada,CAN,hstate,Haitian government and the foreign force,,2025,0,0,0,0,0,1,0,0,,money,0,on the record,,,,2026-09,1,1,2026-10-11
+haiti,Haiti,war,canada,Canada,CAN,hstate,Haitian government and the foreign force,,2026,0,0,0,0,0,1,0,0,,money,0,on the record,,,,2026-09,1,1,2026-10-11
+haiti,Haiti,war,chad,Chad,TCD,hstate,Haitian government and the foreign force,,2026,1,0,0,0,0,0,0,0,,police,0,reported,has announced the deployment; its statement is not entered yet,2026-04,,2026-04,1,1,2026-10-11
+haiti,Haiti,war,kenya,Kenya,KEN,hstate,Haitian government and the foreign force,,2025,1,0,0,0,0,0,0,0,,police,0,reported,has said so; its statements are not entered yet,,2026-04,2026-04,1,1,2026-10-11
+haiti,Haiti,war,kenya,Kenya,KEN,hstate,Haitian government and the foreign force,,2026,1,0,0,0,0,0,0,0,,police,0,reported,has said so; its statements are not entered yet,,2026-04,2026-04,1,1,2026-10-11
+pakistan,Pakistan and Afghanistan,war,china,China,CHN,pak,Pakistan,,2025,0,0,1,0,0,0,0,0,,arms,0,reported,says it backs neither side against Afghanistan and hosts the talks,,,2026-04,2,2,2026-10-11
+pakistan,Pakistan and Afghanistan,war,china,China,CHN,pak,Pakistan,,2026,0,0,1,0,0,0,0,0,,arms,0,reported,says it backs neither side against Afghanistan and hosts the talks,,,2026-04,2,2,2026-10-11
+pakistan,Pakistan and Afghanistan,war,usa,United States,USA,pak,Pakistan,,2025,0,0,1,0,0,0,0,0,,arms,0,on the record,,,,2025-12,2,1,2026-10-11
+pakistan,Pakistan and Afghanistan,war,usa,United States,USA,pak,Pakistan,,2026,0,0,1,0,0,0,0,0,,arms,0,on the record,,,,2025-12,2,1,2026-10-11
+pakistan,Pakistan and Afghanistan,war,afghanistan,Afghanistan (Taliban government),AFG,ttp,Pakistani Taliban (TTP) and Baloch insurgents,,2025,0,1,0,0,0,0,0,0,,harbor,0,documented,denies it,,,2026-08,2,1,2026-10-11
+pakistan,Pakistan and Afghanistan,war,afghanistan,Afghanistan (Taliban government),AFG,ttp,Pakistani Taliban (TTP) and Baloch insurgents,,2026,0,1,0,0,0,0,0,0,,harbor,0,documented,denies it,,,2026-08,2,1,2026-10-11
+pakistan,Pakistan and Afghanistan,war,india,India,IND,ttp,Pakistani Taliban (TTP) and Baloch insurgents,,2025,0,0,1,0,0,1,0,0,,money;arms,1,alleged,denies it,,,2026-10,2,1,2026-10-11
+pakistan,Pakistan and Afghanistan,war,india,India,IND,ttp,Pakistani Taliban (TTP) and Baloch insurgents,,2026,0,0,1,0,0,1,0,0,,money;arms,1,alleged,denies it,,,2026-10,2,1,2026-10-11
+pakistan,Pakistan and Afghanistan,war,india,India,IND,afg,Afghan Taliban government,afghanistan,2025,0,0,0,0,0,1,0,1,cover,money;cover,0,on the record,"says the aid is for the people, not the government",2025-10,,2025-10,1,1,2026-10-11
+pakistan,Pakistan and Afghanistan,war,india,India,IND,afg,Afghan Taliban government,afghanistan,2026,0,0,0,0,0,1,0,1,cover,money;cover,0,on the record,"says the aid is for the people, not the government",2025-10,,2025-10,1,1,2026-10-11
+gulf,The Gulf and Hormuz,war,bahrain,Bahrain,BHR,us,United States,usa,2026,1,1,0,0,0,0,0,0,,bases;shield,0,on the record,,2026-03,,2026-03,3,2,2026-10-11
+gulf,The Gulf and Hormuz,war,qatar,Qatar,QAT,us,United States,usa,2026,1,1,0,0,0,0,0,0,,bases;shield,0,on the record,says Al Udeid was not used to attack Iran,2026-03,,2026-03,1,1,2026-10-11
+gulf,The Gulf and Hormuz,war,kuwait,Kuwait,KWT,us,United States,usa,2026,1,1,0,0,0,0,0,0,,bases;shield,0,on the record,"says it allowed no attack on Iran from its land, air or sea",2026-03,,2026-03,3,2,2026-10-11
+gulf,The Gulf and Hormuz,war,uae,United Arab Emirates,ARE,us,United States,usa,2026,1,1,0,0,0,0,0,0,,bases;shield,0,on the record,,2026-03,,2026-03,4,3,2026-10-11
+gulf,The Gulf and Hormuz,war,uae,United Arab Emirates,ARE,us,United States,usa,2026,1,0,0,0,0,0,0,0,,air,0,reported,has not said so,2026-05,,2026-05,4,3,2026-10-11
+gulf,The Gulf and Hormuz,war,saudi,Saudi Arabia,SAU,us,United States,usa,2026,1,1,0,0,0,0,0,0,,bases;shield,0,on the record,,2026-03,,2026-03,3,2,2026-10-11
+gulf,The Gulf and Hormuz,war,saudi,Saudi Arabia,SAU,us,United States,usa,2026,1,0,0,0,0,0,0,0,,air,0,reported,has not said so,2026-05,,2026-07,3,1,2026-10-11
+gulf,The Gulf and Hormuz,war,jordan,Jordan,JOR,us,United States,usa,2026,1,1,0,0,0,0,0,0,,bases;shield,0,on the record,,2026-03,,2026-07,2,1,2026-10-11
+gulf,The Gulf and Hormuz,war,britain,Britain,GBR,us,United States,usa,2026,1,1,0,0,0,0,0,0,,bases;shield,0,on the record,,2026-03,,2026-03,2,1,2026-10-11
+gulf,The Gulf and Hormuz,war,turkey,Türkiye,TUR,us,United States,usa,2026,1,0,0,0,0,0,0,0,,shield,0,on the record,says it did not join the strikes,2026-03,,2026-03,2,1,2026-10-11
+gulf,The Gulf and Hormuz,war,russia,Russia,RUS,irn,"Iran and allied groups (Hezbollah, Houthis, Iraqi militias)",iran,2026,0,0,1,0,0,0,1,0,,intel;arms;drones,0,reported,has not said so,2026-03,,2026-10,4,1,2026-10-11
+gulf,The Gulf and Hormuz,war,russia,Russia,RUS,irn,"Iran and allied groups (Hezbollah, Houthis, Iraqi militias)",iran,2026,0,0,0,0,0,0,0,1,cover,cover,0,on the record,,2026-04,,2026-04,2,1,2026-10-11
+gulf,The Gulf and Hormuz,war,china,China,CHN,irn,"Iran and allied groups (Hezbollah, Houthis, Iraqi militias)",iran,2026,0,0,1,0,0,0,1,0,,parts;intel,0,reported,denies arming Iran,2026-04,,2026-09,4,1,2026-10-11
+gulf,The Gulf and Hormuz,war,china,China,CHN,irn,"Iran and allied groups (Hezbollah, Houthis, Iraqi militias)",iran,2026,0,0,0,0,0,1,0,1,cover,cover;money,0,on the record,,2026-04,,2026-09,5,3,2026-10-11
+ethiopia,Ethiopia,war,turkey,Türkiye,TUR,egov,Federal government,ethiopia,2025,0,0,1,0,0,0,0,0,,drones,0,on the record,,,,2026-01,4,2,2026-10-11
+ethiopia,Ethiopia,war,turkey,Türkiye,TUR,egov,Federal government,ethiopia,2026,0,0,1,0,0,0,0,0,,drones,0,on the record,,,,2026-01,4,2,2026-10-11
+ethiopia,Ethiopia,war,uae,United Arab Emirates,ARE,egov,Federal government,ethiopia,2025,0,0,1,0,0,0,0,0,,drones;arms,0,reported,says nothing,,,2025-02,1,1,2026-10-11
+ethiopia,Ethiopia,war,uae,United Arab Emirates,ARE,egov,Federal government,ethiopia,2026,0,0,1,0,0,0,0,0,,drones;arms,0,reported,says nothing,,,2025-02,1,1,2026-10-11
+ethiopia,Ethiopia,war,eritrea,Eritrea,ERI,alliance,"Alliance for Survival (TPLF, Fano, Oromo Liberation Army and others)",,2026,1,0,1,0,0,0,0,0,,troops;arms,0,reported,denies an invasion and calls the ammunition claim a false flag,2026-10,,2026-10,3,1,2026-10-11
+ethiopia,Ethiopia,war,egypt,Egypt,EGY,eri,Eritrea,eritrea,2025,0,0,0,0,0,0,0,1,cover,cover,0,on the record,,2025-12,,2026-10,3,1,2026-10-11
+ethiopia,Ethiopia,war,egypt,Egypt,EGY,eri,Eritrea,eritrea,2026,0,0,0,0,0,0,0,1,cover,cover,0,on the record,,2025-12,,2026-10,3,1,2026-10-11
+southsudan,South Sudan,war,uganda,Uganda,UGA,ssgov,Government forces (SSPDF),,2025,1,0,0,0,0,0,0,0,,troops;air,0,on the record,,,,2026-10,3,2,2026-10-11
+southsudan,South Sudan,war,uganda,Uganda,UGA,ssgov,Government forces (SSPDF),,2026,1,0,0,0,0,0,0,0,,troops;air,0,on the record,,,,2026-10,3,2,2026-10-11
+nigeria,Nigeria,war,usa,United States,USA,ngov,Nigerian government,,2025,1,0,1,0,1,0,0,0,,arms;training;air,0,on the record,,,,2025-12,2,1,2026-10-11
+nigeria,Nigeria,war,usa,United States,USA,ngov,Nigerian government,,2026,1,0,1,0,1,0,0,0,,arms;training;air,0,on the record,,,,2025-12,2,1,2026-10-11
+nigeria,Nigeria,war,china,China,CHN,ngov,Nigerian government,,2025,0,0,1,0,0,0,0,0,,arms;drones,0,on the record,,,,2023,3,2,2026-10-11
+nigeria,Nigeria,war,china,China,CHN,ngov,Nigerian government,,2026,0,0,1,0,0,0,0,0,,arms;drones,0,on the record,,,,2023,3,2,2026-10-11
+nigeria,Nigeria,war,turkey,Türkiye,TUR,ngov,Nigerian government,,2025,0,0,1,0,0,0,0,0,,drones;arms,0,on the record,,,,2024-12,3,2,2026-10-11
+nigeria,Nigeria,war,turkey,Türkiye,TUR,ngov,Nigerian government,,2026,0,0,1,0,0,0,0,0,,drones;arms,0,on the record,,,,2024-12,3,2,2026-10-11
+us-boats,U.S. strikes on boats,pressure,dominican,Dominican Republic,DOM,us,United States,usa,2025,0,1,0,0,0,0,0,0,,bases,0,on the record,,2025-11,,2025-11,2,1,2026-10-11
+us-boats,U.S. strikes on boats,pressure,dominican,Dominican Republic,DOM,us,United States,usa,2026,0,1,0,0,0,0,0,0,,bases,0,on the record,,2025-11,,2025-11,2,1,2026-10-11
+us-boats,U.S. strikes on boats,pressure,trinidad,Trinidad and Tobago,TTO,us,United States,usa,2025,0,1,0,0,0,0,0,0,,bases,0,on the record,,,,2025-12,2,1,2026-10-11
+us-boats,U.S. strikes on boats,pressure,trinidad,Trinidad and Tobago,TTO,us,United States,usa,2026,0,1,0,0,0,0,0,0,,bases,0,on the record,,,,2025-12,2,1,2026-10-11
+us-boats,U.S. strikes on boats,pressure,elsalvador,El Salvador,SLV,us,United States,usa,2025,0,1,0,0,0,0,0,0,,bases,0,reported,says nothing,2025-10,,2025-11,3,1,2026-10-11
+us-boats,U.S. strikes on boats,pressure,elsalvador,El Salvador,SLV,us,United States,usa,2026,0,1,0,0,0,0,0,0,,bases,0,reported,says nothing,2025-10,,2025-11,3,1,2026-10-11
+us-venezuela,U.S. raid on Venezuela,pressure,cuba,Cuba,CUB,ven,Venezuela (Maduro's government),venezuela,2025,1,0,0,0,0,0,0,0,,troops,0,on the record,,,2026-01,2026-01,2,1,2026-10-11
+us-venezuela,U.S. raid on Venezuela,pressure,cuba,Cuba,CUB,ven,Venezuela (Maduro's government),venezuela,2026,1,0,0,0,0,0,0,0,,troops,0,on the record,,,2026-01,2026-01,2,1,2026-10-11
+us-venezuela,U.S. raid on Venezuela,pressure,russia,Russia,RUS,ven,Venezuela (Maduro's government),venezuela,2026,0,0,0,0,0,0,0,1,cover,cover,0,on the record,,2026-01,,2026-01,3,2,2026-10-11
+us-venezuela,U.S. raid on Venezuela,pressure,china,China,CHN,ven,Venezuela (Maduro's government),venezuela,2026,0,0,0,0,0,0,0,1,cover,cover,0,on the record,,2026-01,,2026-01,2,1,2026-10-11
+us-venezuela,U.S. raid on Venezuela,pressure,iran,Iran,IRN,ven,Venezuela (Maduro's government),venezuela,2025,0,0,0,0,0,0,0,1,cover,cover,0,on the record,,2025-12,,2026-01,3,2,2026-10-11
+us-venezuela,U.S. raid on Venezuela,pressure,iran,Iran,IRN,ven,Venezuela (Maduro's government),venezuela,2026,0,0,0,0,0,0,0,1,cover,cover,0,on the record,,2025-12,,2026-01,3,2,2026-10-11
+us-venezuela,U.S. raid on Venezuela,pressure,britain,Britain,GBR,us,United States,usa,2025,0,0,0,0,0,0,1,0,,intel,0,on the record,,2025-12,,2026-01,3,1,2026-10-11
+us-venezuela,U.S. raid on Venezuela,pressure,britain,Britain,GBR,us,United States,usa,2026,0,0,0,0,0,0,1,0,,intel,0,on the record,,2025-12,,2026-01,3,1,2026-10-11
+us-cuba,U.S. fuel blockade on Cuba,pressure,russia,Russia,RUS,cub,Cuba,cuba,2026,0,0,0,1,0,0,0,0,,oil,0,reported,says nothing here,2026-03,,2026-03,1,1,2026-10-11
+us-cuba,U.S. fuel blockade on Cuba,pressure,china,China,CHN,cub,Cuba,cuba,2026,0,0,0,0,0,1,0,0,,money,0,on the record,calls the aid humanitarian,2026-01,,2026-01,2,1,2026-10-11
+us-cuba,U.S. fuel blockade on Cuba,pressure,mexico,Mexico,MEX,cub,Cuba,cuba,2026,0,0,0,0,0,1,0,0,,money,0,on the record,calls the aid humanitarian,2026-02,,2026-02,2,1,2026-10-11
+us-cuba,U.S. fuel blockade on Cuba,pressure,venezuela,Venezuela,VEN,cub,Cuba,cuba,2025,0,0,0,1,0,0,0,0,,oil,0,on the record,,,2026-01,2026-02,5,2,2026-10-11
+us-cuba,U.S. fuel blockade on Cuba,pressure,venezuela,Venezuela,VEN,cub,Cuba,cuba,2026,0,0,0,1,0,0,0,0,,oil,0,on the record,,,2026-01,2026-02,5,2,2026-10-11
+us-ecuador,U.S. strikes in Ecuador,pressure,ecuador,Ecuador,ECU,us,United States,usa,2026,1,1,0,0,0,0,0,0,,troops;bases,0,on the record,,2026-03,,2026-03,2,1,2026-10-11

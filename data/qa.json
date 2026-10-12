@@ -17,6 +17,26 @@
     }
    ],
    "added": "2026-10-11"
+  },
+  {
+   "id": "sources-2026-10-12",
+   "date": "2026-10-12",
+   "question": "Who are your sources?",
+   "asked_by": "Kurt",
+   "asked_at": null,
+   "answers": [
+    {
+     "by": "warnotwar",
+     "at": null,
+     "paragraphs": [
+      "The map. Who helps whom is our own record. Every line names its sources on the page: the backer's own statements, UN panel and mission reports, named press, the Kiel Institute's tracker that compiles governments' own announcements on Ukraine, and SIPRI's database of arms transfers. The deaths are rounded from the Uppsala Conflict Data Program, from ACLED's published reports, and from UN missions and agencies named in each entry; where they disagree the page gives both. Uppsala's own files are summed by a script we publish, and our troop lines are checked against Uppsala's list of states that fight on a side. The ties are also published as a table in the shape of Uppsala's External Support Dataset, which stops at 2017, so the two can be read end to end. The base map is Natural Earth.",
+      "The word. The statements are U.S. government statements, each with the publisher, date and link it was taken from: official sites such as CENTCOM and the White House, and press such as Reuters, Bloomberg, Axios, Al Jazeera and Iran International. The estimates set against them come from ship trackers and analysts, mostly Kpler, with Vortexa, TankerTrackers, Rystad, Goldman Sachs and the IEA's Oil Market Report, as reported by named press.",
+      "The market and the reserve. Prices and rates come from the U.S. Energy Information Administration and the Federal Reserve's FRED series, with Cboe's volatility indexes and its ten-year index as a fallback. The reserve's stocks are the EIA's weekly series.",
+      "The heuristic uses daily Brent closes and a live quote from Finnhub. The readings page quotes the article it names. No link is invented: every link is to a page we opened, and a source named without a link says so."
+     ]
+    }
+   ],
+   "added": "2026-10-12"
   }
  ]
 }

@@ -1342,7 +1342,8 @@
    ],
    "ucdp": {
     "against": "same band",
-    "note": "12,269 killed in fighting, the army against the RSF and its partner force, and 62,775 civilians killed on purpose, most at el-Fasher. The band counts both."
+    "note": "12,269 killed in fighting, the army against the RSF and its partner force, and 62,775 civilians killed on purpose, most at el-Fasher. The band counts both.",
+    "troops_note": "UCDP codes no troops in Sudan; our UAE and eastern Libya lines carry hired fighters and transit, not state troops."
    },
    "counted_by": [
     "tracker",
@@ -1650,7 +1651,8 @@
    ],
    "ucdp": {
     "against": "same band",
-    "note": "Two conflicts: Israel and the Palestinian groups, over a thousand battle deaths a year; Israel and Hezbollah, under a thousand in 2025 and 4,434 so far in 2026. Six rows carry a high below their best, so the window's high reads low."
+    "note": "Two conflicts: Israel and the Palestinian groups, over a thousand battle deaths a year; Israel and Hezbollah, under a thousand in 2025 and 4,434 so far in 2026. Six rows carry a high below their best, so the window's high reads low.",
+    "troops_note": "Our U.S. line carries the THAAD crew of about a hundred soldiers; UCDP does not code an air-defence crew as fighting."
    },
    "counted_by": [
     "tracker",
@@ -1946,7 +1948,8 @@
    ],
    "ucdp": {
     "against": "same band",
-    "note": "UCDP treats the Houthis as the government, since they hold the capital, and the Presidential Leadership Council as the rebel. Saudi Arabia, the UAE and Bahrain send troops on the council's side."
+    "note": "UCDP treats the Houthis as the government, since they hold the capital, and the Presidential Leadership Council as the rebel. Saudi Arabia, the UAE and Bahrain send troops on the council's side.",
+    "troops_note": "UCDP's extra names are the states in the shipping coalition that struck the Houthis with the U.S. and Britain; UCDP counts the U.S. as a party to that war, not a backer."
    },
    "counted_by": [
     "tracker",
@@ -2459,7 +2462,8 @@
    "turns": [],
    "ucdp": {
     "against": "same band",
-    "note": "M23's war with Rwanda sending troops on its side; the ADF a separate conflict with Uganda sending troops against it."
+    "note": "M23's war with Rwanda sending troops on its side; the ADF a separate conflict with Uganda sending troops against it.",
+    "troops_note": "Malawi and Tanzania fought under SADC with South Africa; Indonesia, Kenya and Nepal are troop contributors to the UN mission."
    },
    "counted_by": [
     "tracker",
@@ -2959,7 +2963,8 @@
    ],
    "ucdp": {
     "against": "same band",
-    "note": "Seven conflicts across the three states, plus three groups killing civilians. ACLED and UCDP both land in the thousands."
+    "note": "Seven conflicts across the three states, plus three groups killing civilians. ACLED and UCDP both land in the thousands.",
+    "troops_note": "UCDP names the three juntas as parties to each other's wars, which we draw as one side, and Nigeria beside Niger against Islamic State."
    },
    "counted_by": [
     "tracker"
@@ -3344,7 +3349,8 @@
    "turns": [],
    "ucdp": {
     "against": "same band",
-    "note": "One war, with Djibouti, Egypt, Ethiopia, Kenya and Uganda sending troops on the government's side."
+    "note": "One war, with Djibouti, Egypt, Ethiopia, Kenya and Uganda sending troops on the government's side.",
+    "troops_note": "UCDP's extra names are troop contributors to the AU mission."
    },
    "counted_by": [
     "tracker"
@@ -3737,7 +3743,8 @@
    ],
    "ucdp": {
     "against": "same band",
-    "note": "Half of 2025 is civilians killed on purpose, on the coast and in Sweida. 564 so far in 2026. Nearly nine in ten of the 2026 rows carry a check flag."
+    "note": "Half of 2025 is civilians killed on purpose, on the coast and in Sweida. 564 so far in 2026. Nearly nine in ten of the 2026 rows carry a check flag.",
+    "troops_note": "UCDP names Türkiye against the Kurdish-led forces in 2025; our Türkiye line carries training and vehicles. UCDP's U.S. is beside the Syrian government against Islamic State; ours was with the Kurdish-led forces. Israel's strikes are not a secondary party in UCDP's coding."
    },
    "counted_by": [
     "tracker"
@@ -3906,7 +3913,8 @@
    ],
    "ucdp": {
     "against": "UCDP lower",
-    "note": "UCDP counts Haiti as a war between the state and the gangs, with Kenya and five others sending police. The UN's count is higher than UCDP's."
+    "note": "UCDP counts Haiti as a war between the state and the gangs, with Kenya and five others sending police. The UN's count is higher than UCDP's.",
+    "troops_note": "UCDP's extra names are police contributors to the Kenya-led mission, which closed in April 2026."
    },
    "counted_by": [
     "un",
@@ -5152,7 +5160,8 @@
    ],
    "ucdp": {
     "against": "same band",
-    "note": "Fano, 3,835; the Oromo Liberation Army under a thousand. September is after the data."
+    "note": "Fano, 3,835; the Oromo Liberation Army under a thousand. September is after the data.",
+    "troops_note": "UCDP's 2025 file names Kenya against the Oromo Liberation Army, which we do not draw."
    },
    "counted_by": [
     "tracker"
@@ -5272,7 +5281,8 @@
    "turns": [],
    "ucdp": {
     "against": "UCDP lower",
-    "note": "Under a thousand, most of it fighting between armed groups and civilians killed on purpose. The UN's count for 2025 is higher."
+    "note": "Under a thousand, most of it fighting between armed groups and civilians killed on purpose. The UN's count for 2025 is higher.",
+    "troops_note": "UCDP's 2025 file does not name Uganda, which sent troops in March 2025 by its own account."
    },
    "counted_by": [
     "un",
@@ -6240,7 +6250,7 @@
   "research": "a tracker, institute or rights group",
   "reference": "an encyclopedia page; it points at the sources but is not one"
  },
- "source_rule": "Each tie lists its sources with a class, a date where we have one, and a link where we have one. A source without a link says so. A source that shows the help ending, or something beside the help, is marked and does not date the tie. A reference page never carries a tier by itself; 1 tie still links only a reference page. 1 on-the-record tie rests on a tracker without the backer's own words linked. 3 entries say press reporting without naming the outlet. A documented tie stands on its document; 5 name a UN report without a link. A reported tie wants two sources of different class, or two publishers not relaying the same officials; 5 have one publisher behind them and say so. This is the next work.",
+ "source_rule": "Each tie lists its sources with a class, a date where we have one, and a link where we have one. A source without a link says so. A source that shows the help ending, or something beside the help, is marked and does not date the tie. A reference page never carries a tier by itself; 1 tie still links only a reference page. 1 on-the-record tie rests on a tracker without the backer's own words linked. 3 entries say press reporting without naming the outlet. A documented tie stands on its document; 5 name a UN report without a link. A reported tie wants two sources of different class, or two publishers not relaying the same officials; 5 have one publisher behind them and say so. Of 47 live ties that carry weapons, 4 cite SIPRI's arms transfers database; the rest should, or say why SIPRI has no entry. This is the next work.",
  "finding_rule": "A finding by a state that fights in the war, or backs the other side in it, counts as alleged unless the thing found is public: a weapon recovered and traced, a cargo photographed, a document released. A sanctions notice names firms; it does not show the evidence. Press that only relays a party's officials counts as that party. A press item names whom it cites; where it only relays one side's officials, it is that side.",
  "evidence_rule": "Every tie carries the date of its latest dated source that shows the help. A source that shows the help ending, or reversing, ends the tie or leaves its date where it was; it does not refresh it. A tie whose sources all come from before the window, or carry no date, is drawn faint and the table says so. A bare year that is the window's own year counts as inside it.",
  "corrections": [
@@ -6444,5 +6454,6 @@
     "why": "One press publisher only."
    }
   ]
- }
+ },
+ "esd_note": "The ties are also published as data/ties_esd.csv, one row per backer, side and year in the shape of UCDP's External Support Dataset, which stops at 2017, so the two can be read end to end. Our sixteen kinds of help fold into its eight: troops, air strikes, air defence and police count as troops, since the state's own forces engage; bases, transit, shelter and hosting as access to territory; weapons, drones and parts as weapons; oil as materiel; backing in public and at the UN as other. Alleged is our fourth tier."
 }
