@@ -1,0 +1,37 @@
+name: Deploy to Cloudflare
+
+# warnotwar.com is a Cloudflare Worker serving this repo as static assets.
+# Every push to main deploys, so the bot data updates and the weekly routine
+# go live without a hand deploy. Needs two repository secrets:
+#   CLOUDFLARE_API_TOKEN  — an API token with Workers Scripts: Edit
+#   CLOUDFLARE_ACCOUNT_ID — the account id (f7a6df65d89d6aa74de902c9baf40ead)
+# Until the token secret exists the job skips itself.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: check for the token
+        id: gate
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then echo "skip=true" >> "$GITHUB_OUTPUT"; echo "No CLOUDFLARE_API_TOKEN secret; skipping deploy."; else echo "skip=false" >> "$GITHUB_OUTPUT"; fi
+      - uses: actions/checkout@v4
+        if: steps.gate.outputs.skip == 'false'
+      - name: deploy with wrangler
+        if: steps.gate.outputs.skip == 'false'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy
