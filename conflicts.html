@@ -116,8 +116,8 @@
   .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 
   /* ---- map + card ---- */
-  .stage { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 28px; align-items: start; }
-  @media (max-width: 900px) { .stage { grid-template-columns: minmax(0, 1fr); } .stage > div { min-width: 0; } }
+  .stage { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; align-items: start; }
+  .stage > div { min-width: 0; }
   .map-wrap { position: relative; width: 100%; background: var(--bg-raise); border: 1px solid var(--ink-10); }
   svg#map { width: 100%; height: auto; display: block; touch-action: pan-y; cursor: grab; }
   svg#map:active { cursor: grabbing; }
@@ -195,7 +195,13 @@
   .legend .g.ring { background: none; border: 1.5px solid var(--danger); }
 
   /* the card */
-  .card { border: 1px solid var(--ink-18); padding: 18px 20px 16px; background: var(--bg-raise); min-height: 120px; }
+  .card { border: 1px solid var(--ink-18); border-top: 0; padding: 18px 20px 16px; background: var(--bg-raise); display: none; }
+  .card.show { display: block; }
+  .card .rows { column-count: 2; column-gap: 32px; }
+  .card .row, .card .side { break-inside: avoid; }
+  @media (max-width: 760px) { .card .rows { column-count: 1; } }
+  .card .top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 8px 32px; align-items: start; }
+  @media (max-width: 760px) { .card .top { grid-template-columns: minmax(0, 1fr); } }
   .card .k { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; color: var(--ink-45); text-transform: uppercase; }
   .card .t { font-size: 1.35rem; font-weight: 500; margin: 6px 0 2px; line-height: 1.2; }
   .card .s { font-family: var(--mono); font-size: 10.5px; color: var(--ink-60); line-height: 1.7; }
@@ -389,7 +395,7 @@
   .reading { border-bottom: 1px solid var(--ink-18); padding-bottom: 14px; margin-bottom: 12px; }
   .reading .k { display: flex; justify-content: space-between; align-items: center; }
   .reading .t { font-size: 1.2rem; }
-  .reading p { margin-top: 8px; }
+  .reading p { margin-top: 8px; max-width: 46em; }
   .reading .nav { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
   .reading .nav button, .card button.start { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; background: none; border: 1px solid var(--ink-30); color: var(--ink); padding: 5px 10px; cursor: pointer; }
   .reading .nav button:hover, .card button.start:hover { border-color: var(--ink); }
@@ -492,6 +498,7 @@
     <button class="chip ghost" id="show-areas" aria-pressed="false">color the areas</button>
     <button class="chip ghost" id="show-who" aria-pressed="false">shade the participants</button>
     <button class="chip ghost" id="show-events" aria-pressed="false">where Uppsala counted</button>
+    <button class="chip" id="start-reading">start the reading &rsaquo;</button>
   </div>
   <div class="controls" style="margin-top:-6px">
     <span class="k">zoom</span>
@@ -505,7 +512,8 @@
         <svg id="map" role="group" aria-label="World map of current wars and the countries backing each side"></svg>
         <div class="tooltip" id="tip"></div>
       </div>
-      <div class="map-hint"><span class="dk">drag to move · ctrl + scroll or pinch to zoom · double-click to zoom in</span><span class="ph">two fingers to zoom and move the map</span></div>
+      <aside class="card" id="card"></aside>
+      <div class="map-hint"><span class="dk">drag to move · ctrl + scroll or pinch to zoom · double-click to zoom in · click a war or a backer for its lines and sources</span><span class="ph">two fingers to zoom and move the map · tap a war for its lines</span></div>
       <div class="map-note" id="events-note" style="display:none"></div>
       <div class="stepper" id="stepper">
         <span class="k">the year</span>
@@ -519,9 +527,6 @@
       <div class="legend" id="legend"></div>
       <details class="changes" id="changes" style="display:none"><summary>what changed on this map</summary><ul id="changes-list"></ul></details>
     </div>
-    <aside class="card" id="card">
-      <div class="empty">Click a war to see who is fighting and who helps. Click a backer above to see everything it supports.</div>
-    </aside>
     <div id="status" aria-live="polite"></div>
   </div>
 </section>
@@ -934,6 +939,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     return cellsLoading;
   }
   eventsBtn.onclick = () => { state.events = !state.events; loadCells().then(() => { writeHash(); render(); }); };
+  $('#start-reading').onclick = () => goStep(0);
   const mPrev = $('#m-prev'), mNext = $('#m-next'), mNow = $('#m-now'), mLabel = $('#m-label'), mStatus = $('#m-status'), mStrip = $('#m-strip');
   const monthIndex = () => state.month ? monthsIn.indexOf(state.month) : monthsIn.length;   /* one past the last month = now */
   const setMonth = i => { i = Math.max(0, Math.min(monthsIn.length, i)); state.month = i === monthsIn.length ? null : monthsIn[i]; writeHash(); Promise.all([loadAreas(), loadCells()]).then(render); };
@@ -1209,10 +1215,9 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     }
     $('#legend-self').style.display = outlined ? '' : 'none';
     outlinedNow = outlined;
-    /* the legend sits in the card while nothing is picked, under the map once something is */
-    const legendEl = $('#legend');
-    if (!state.kind && state.step === null) { renderCard(); $('#card').appendChild(legendEl); }
-    else { legendHome.insertBefore(legendEl, $('#changes')); renderCard(); }
+    renderCard();
+    $('#card').classList.toggle('show', !!state.kind || state.step !== null);
+    $('#start-reading').style.display = (state.step === null && READING.length) ? '' : 'none';
     /* on a pannable (phone) map, bring the chosen war into view */
     $('#status').textContent = (state.kind === 'conflict' ? 'Showing ' + conflicts[state.id].name : state.kind === 'backer' ? 'Showing ' + backers[state.id].name : allView ? 'Showing every line' : '') + (state.month ? ' · ' + fmtMonth(state.month) : '');
     syncGrid();
@@ -1221,7 +1226,6 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       tr.classList.toggle('hit', !!state.tie && tr.dataset.tie === state.tie);
     }
   }
-  const legendHome = $('#legend').parentNode;
 
   const swatch = b => `<i class="sw" style="background:${hueOf(b) ? 'var(--b' + hueOf(b) + ')' : 'var(--ink-45)'}"></i>`;
   const srcOne = e => { const u = safeUrl(e.url); const cls = (D.source_classes && D.source_classes[e.class]) ? e.class : 'other'; return `<span class="so"><span class="sc ${esc(cls)}" title="${esc((D.source_classes || {})[e.class] || '')}">${esc(e.class)}</span>${u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(e.text)}</a>` : esc(e.text) + ' <span class="nl">(no link)</span>'}${e.date ? ` <span class="nl">· ${esc(fmtMonth(e.date))}</span>` : ''}${e.counts === false ? ' <span class="nl">· shows the help ending or something beside it; does not date the tie</span>' : ''}${e.seen ? ` <span class="nl">· ${esc(e.seen)}</span>` : ''}</span>`; };
@@ -1255,11 +1259,8 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   function renderCard() {
     const card = $('#card');
     if (!state.kind) {
-      card.innerHTML = stepHTML() + (state.step === null
-        ? `<div class="empty">Every line is drawn faint. Hover a war to see its lines, click to keep them. Click a backer above to see everything it supports.</div>` + (READING.length ? `<button class="start">start the reading &rsaquo;</button>` : '')
-        : `<div class="empty">Click a war or a backer to look closer; the reading stays.</div>`);
+      card.innerHTML = stepHTML() + (state.step === null ? '' : `<div class="empty">Click a war or a backer to look closer; the reading stays.</div>`);
       wireStep(card);
-      const st = card.querySelector('.start'); if (st) st.onclick = () => goStep(0);
       return;
     }
     if (state.kind === 'conflict') {
@@ -1267,7 +1268,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       const inMonth = t => !state.month || !t.since || t.since <= state.month;
       const byParty = c.parties.map(p => ({ p, ties: c.ties.filter(t => t.party === p.id && inMonth(t)) }));
       const notYet = state.month && c.start > state.month ? `<div class="s" style="margin-top:8px">Not on the map until ${esc(fmtMonth(c.start))}.</div>` : '';
-      card.innerHTML = stepHTML() + `<div class="k">${c.kind === 'pressure' ? 'force short of war' : 'war'} &middot; since ${esc(c.since)}</div><div class="t">${esc(c.name)}</div>${notYet}
+      card.innerHTML = stepHTML() + `<div class="top"><div><div class="k">${c.kind === 'pressure' ? 'force short of war' : 'war'} &middot; since ${esc(c.since)}</div><div class="t">${esc(c.name)}</div>${notYet}
         <div class="s">${esc(c.status)}${c.band ? ' &middot; ' + esc(D.bands[c.band]) : c.kind === 'pressure' ? '' : ' &middot; deaths not entered'}</div>
         <div class="s" style="margin-top:6px">${esc(tieSummary(c))}.</div>
         <p>${esc(c.summary)}</p>
@@ -1276,9 +1277,9 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
         ${c.actor_statement ? `<div class="s" style="margin-top:8px">What the acting state says: ${esc(c.actor_statement)}</div>` : ''}
         ${c.target_statement ? `<div class="s" style="margin-top:6px">What the other side says: ${esc(c.target_statement)}</div>` : ''}
         ${state.areas && !state.month && areasData && areasData[c.id] ? `<div class="s" style="margin-top:8px">Colored: ${esc(areasData[c.id].regions.join(', '))}</div>` : ''}
-        <div class="rows">` +
+        </div><div><div class="rows">` +
         byParty.map(({ p, ties }) => `<div class="side">${esc(p.name)}</div>` + (ties.length ? ties.map(t => `<div class="row">${swatch(t.backer)}<div><span class="who">${esc(backers[t.backer].short)}</span> <span class="what">· ${esc(kindsText(t))}</span><div>${tierLabel(t)}</div><div class="src">${srcHTML(t)}</div></div></div>`).join('') : `<div class="row"><span></span><span class="what">no state backer on record</span></div>`)).join('') +
-        `</div>` + (c.none_note ? `<div class="none">${esc(c.none_note)}</div>` : '') +
+        `</div>` + (c.none_note ? `<div class="none">${esc(c.none_note)}</div>` : '') + `</div></div>` +
         `<button class="clear">clear</button>`;
     } else {
       const b = backers[state.id];
