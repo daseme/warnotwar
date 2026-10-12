@@ -1,0 +1,1837 @@
+{
+ "versions": "GED 26.1, Candidate 26.01 to 26.06, Candidate 26.0.7, Candidate 26.0.8",
+ "pulled": "2026-10-11",
+ "reach": "2026-08",
+ "window": {
+  "from": "2025-10",
+  "to": "2026-08"
+ },
+ "flagged_share": 0.374,
+ "rule": "Sums of UCDP best, low and high estimates by entry: by the countries each entry covers, or by named conflicts where a country sum would mix in other wars. The window is the months of the map's twelve that UCDP has reached. Candidate rows are not fully reviewed.",
+ "entries": {
+  "ukraine": {
+   "basis": "countries: Ukraine, Russia (Soviet Union)",
+   "last_year": {
+    "year": 2025,
+    "low": 87336,
+    "best": 94778,
+    "high": 140931
+   },
+   "this_year": {
+    "year": 2026,
+    "to": "2026-08",
+    "low": 56542,
+    "best": 57906,
+    "high": 60898
+   },
+   "window": {
+    "from": "2025-10",
+    "to": "2026-08",
+    "low": 81305,
+    "best": 83936,
+    "high": 89367
+   },
+   "flagged_share_window": 0.033,
+   "conflicts": [
+    {
+     "id": 13243,
+     "name": "Russia - Ukraine",
+     "type": "state-based",
+     "best_window": 83849
+    },
+    {
+     "id": 453,
+     "name": "Government of Russia (Soviet Union) - Civilians",
+     "type": "one-sided",
+     "best_window": 32
+    },
+    {
+     "id": 399,
+     "name": "Russia (Soviet Union): Government",
+     "type": "state-based",
+     "best_window": 29
+    },
+    {
+     "id": 13588,
+     "name": "Russia: Islamic State",
+     "type": "state-based",
+     "best_window": 5
+    },
+    {
+     "id": 4420,
+     "name": "unnamed groups - Civilians",
+     "type": "one-sided",
+     "best_window": 12
+    },
+    {
+     "id": 132,
+     "name": "unnamed groups",
+     "type": "state-based",
+     "best_window": 7
+    },
+    {
+     "id": 161,
+     "name": "unnamed groups",
+     "type": "state-based",
+     "best_window": 1
+    },
+    {
+     "id": 683,
+     "name": "Government of Ukraine - Civilians",
+     "type": "one-sided",
+     "best_window": 1
+    }
+   ],
+   "dyad_ids": [
+    263,
+    321,
+    920,
+    1150,
+    5026,
+    14117,
+    14619,
+    18956
+   ],
+   "excluded": []
+  },
+  "sudan": {
+   "basis": "countries: Sudan",
+   "last_year": {
+    "year": 2025,
+    "low": 20890,
+    "best": 75174,
+    "high": 90837
+   },
+   "this_year": {
+    "year": 2026,
+    "to": "2026-08",
+    "low": 3889,
+    "best": 3987,
+    "high": 4278
+   },
+   "window": {
+    "from": "2025-10",
+    "to": "2026-08",
+    "low": 12970,
+    "best": 66737,
+    "high": 82062
+   },
+   "flagged_share_window": 0.178,
+   "conflicts": [
+    {
+     "id": 16712,
+     "name": "SFA - Civilians",
+     "type": "one-sided",
+     "best_window": 60505
+    },
+    {
+     "id": 309,
+     "name": "Sudan: Government",
+     "type": "state-based",
+     "best_window": 5709
+    },
+    {
+     "id": 480,
+     "name": "Government of Sudan - Civilians",
+     "type": "one-sided",
+     "best_window": 231
+    },
+    {
+     "id": 15913,
+     "name": "RSF - Civilians",
+     "type": "one-sided",
+     "best_window": 0
+    },
+    {
+     "id": 16792,
+     "name": "SLFA, SLM/A - RSF",
+     "type": "non-state",
+     "best_window": 0
+    },
+    {
+     "id": 13656,
+     "name": "Beni Halba Baggara - Salamat Baggara",
+     "type": "non-state",
+     "best_window": 103
+    },
+    {
+     "id": 145,
+     "name": "unnamed groups - unnamed groups",
+     "type": "non-state",
+     "best_window": 59
+    },
+    {
+     "id": 16929,
+     "name": "Salamat Baggara - Nuer",
+     "type": "non-state",
+     "best_window": 36
+    },
+    {
+     "id": 17009,
+     "name": "Nuwaiba - Salamat Baggara",
+     "type": "non-state",
+     "best_window": 17
+    },
+    {
+     "id": 9714,
+     "name": "Tarjam - Beni Halba Baggara",
+     "type": "non-state",
+     "best_window": 17
+    },
+    {
+     "id": 453,
+     "name": "Government of Russia (Soviet Union) - Civilians",
+     "type": "one-sided",
+     "best_window": 10
+    },
+    {
+     "id": 4634,
+     "name": "Habaniya  - Rizeigat Baggara",
+     "type": "non-state",
+     "best_window": 16
+    }
+   ],
+   "dyad_ids": [
+    62,
+    290,
+    555,
+    920,
+    932,
+    947,
+    5010,
+    5244,
+    5584,
+    10324,
+    14693,
+    16174,
+    18621,
+    18623,
+    18884,
+    18902,
+    19012
+   ],
+   "excluded": []
+  },
+  "gaza": {
+   "basis": "countries: Israel, Lebanon, Palestine",
+   "last_year": {
+    "year": 2025,
+    "low": 14294,
+    "best": 14910,
+    "high": 15593
+   },
+   "this_year": {
+    "year": 2026,
+    "to": "2026-08",
+    "low": 5529,
+    "best": 5548,
+    "high": 5318
+   },
+   "window": {
+    "from": "2025-10",
+    "to": "2026-08",
+    "low": 6441,
+    "best": 6495,
+    "high": 6319
+   },
+   "flagged_share_window": 0.09,
+   "conflicts": [
+    {
+     "id": 234,
+     "name": "Israel: Palestine",
+     "type": "state-based",
+     "best_window": 1893
+    },
+    {
+     "id": 426,
+     "name": "Israel: Southern Lebanon",
+     "type": "state-based",
+     "best_window": 4471
+    },
+    {
+     "id": 483,
+     "name": "Government of Israel - Civilians",
+     "type": "one-sided",
+     "best_window": 57
+    },
+    {
+     "id": 14609,
+     "name": "Iran - Israel",
+     "type": "state-based",
+     "best_window": 21
+    },
+    {
+     "id": 16905,
+     "name": "Iran - Israel, United States of America",
+     "type": "state-based",
+     "best_window": 24
+    },
+    {
+     "id": 79,
+     "name": "unnamed groups - unnamed groups",
+     "type": "non-state",
+     "best_window": 14
+    },
+    {
+     "id": 13197,
+     "name": "Israeli settlers - Palestinian insurgents",
+     "type": "non-state",
+     "best_window": 4
+    },
+    {
+     "id": 16830,
+     "name": "The Popular Forces - Hamas",
+     "type": "non-state",
+     "best_window": 4
+    },
+    {
+     "id": 79,
+     "name": "unnamed groups",
+     "type": "state-based",
+     "best_window": 2
+    },
+    {
+     "id": 783,
+     "name": "PNA - Civilians",
+     "type": "one-sided",
+     "best_window": 2
+    },
+    {
+     "id": 4338,
+     "name": "unnamed groups - Civilians",
+     "type": "one-sided",
+     "best_window": 2
+    },
+    {
+     "id": 501,
+     "name": "Hamas - Civilians",
+     "type": "one-sided",
+     "best_window": 1
+    }
+   ],
+   "dyad_ids": [
+    157,
+    158,
+    470,
+    474,
+    475,
+    476,
+    477,
+    478,
+    481,
+    891,
+    950,
+    968,
+    1251,
+    4944,
+    14048,
+    15633,
+    18787,
+    18806,
+    18868,
+    19057
+   ],
+   "excluded": []
+  },
+  "yemen": {
+   "basis": "countries: Yemen (North Yemen)",
+   "last_year": {
+    "year": 2025,
+    "low": 1048,
+    "best": 1718,
+    "high": 2056
+   },
+   "this_year": {
+    "year": 2026,
+    "to": "2026-08",
+    "low": 1231,
+    "best": 2038,
+    "high": 2631
+   },
+   "window": {
+    "from": "2025-10",
+    "to": "2026-08",
+    "low": 1490,
+    "best": 2378,
+    "high": 2977
+   },
+   "flagged_share_window": 0.319,
+   "conflicts": [
+    {
+     "id": 230,
+     "name": "Yemen (North Yemen): Government",
+     "type": "state-based",
+     "best_window": 1846
+    },
+    {
+     "id": 16099,
+     "name": "United Kingdom, United States of America - Yemen",
+     "type": "state-based",
+     "best_window": 4
+    },
+    {
+     "id": 14623,
+     "name": "Forces of the Presidential Leadership Council - STC",
+     "type": "non-state",
+     "best_window": 244
+    },
+    {
+     "id": 16470,
+     "name": "Israel - Yemen",
+     "type": "state-based",
+     "best_window": 0
+    },
+    {
+     "id": 13587,
+     "name": "AQAP - Forces of the Presidential Leadership Council",
+     "type": "non-state",
+     "best_window": 46
+    },
+    {
+     "id": 715,
+     "name": "Government of Yemen (North Yemen) - Civilians",
+     "type": "one-sided",
+     "best_window": 27
+    },
+    {
+     "id": 169,
+     "name": "unnamed groups - unnamed groups",
+     "type": "non-state",
+     "best_window": 45
+    },
+    {
+     "id": 16749,
+     "name": "HTA - STC",
+     "type": "non-state",
+     "best_window": 41
+    },
+    {
+     "id": 14740,
+     "name": "AQAP - STC",
+     "type": "non-state",
+     "best_window": 27
+    },
+    {
+     "id": 402,
+     "name": "Yemen (North Yemen): South Yemen",
+     "type": "state-based",
+     "best_window": 27
+    },
+    {
+     "id": 14511,
+     "name": "Forces of the Presidential Leadership Council - Civilians",
+     "type": "one-sided",
+     "best_window": 15
+    },
+    {
+     "id": 169,
+     "name": "unnamed groups",
+     "type": "state-based",
+     "best_window": 10
+    }
+   ],
+   "dyad_ids": [
+    337,
+    338,
+    1166,
+    1182,
+    14595,
+    14596,
+    14611,
+    15781,
+    15915,
+    16059,
+    16346,
+    16617,
+    17014,
+    17347,
+    17474,
+    17568,
+    17738,
+    17789,
+    18685,
+    18861,
+    18862,
+    18897,
+    18920,
+    18947,
+    18948,
+    18951,
+    19006,
+    19007,
+    19008,
+    19009,
+    19028,
+    19056
+   ],
+   "excluded": []
+  },
+  "myanmar": {
+   "basis": "countries: Myanmar (Burma)",
+   "last_year": {
+    "year": 2025,
+    "low": 2280,
+    "best": 2317,
+    "high": 3322
+   },
+   "this_year": {
+    "year": 2026,
+    "to": "2026-08",
+    "low": 1248,
+    "best": 1252,
+    "high": 1588
+   },
+   "window": {
+    "from": "2025-10",
+    "to": "2026-08",
+    "low": 1706,
+    "best": 1741,
+    "high": 2352
+   },
+   "flagged_share_window": 0.077,
+   "conflicts": [
+    {
+     "id": 222,
+     "name": "Myanmar (Burma): Government",
+     "type": "state-based",
+     "best_window": 1031
+    },
+    {
+     "id": 223,
+     "name": "Myanmar (Burma): Arakan",
+     "type": "state-based",
+     "best_window": 249
+    },
+    {
+     "id": 488,
+     "name": "Government of Myanmar (Burma) - Civilians",
+     "type": "one-sided",
+     "best_window": 162
+    },
+    {
+     "id": 221,
+     "name": "Myanmar (Burma): Karen",
+     "type": "state-based",
+     "best_window": 167
+    },
+    {
+     "id": 231,
+     "name": "Myanmar (Burma): Kachin",
+     "type": "state-based",
+     "best_window": 97
+    },
+    {
+     "id": 253,
+     "name": "Myanmar (Burma): Karenni",
+     "type": "state-based",
+     "best_window": 19
+    },
+    {
+     "id": 13653,
+     "name": "India: Western South East Asia",
+     "type": "state-based",
+     "best_window": 0
+    },
+    {
+     "id": 112,
+     "name": "unnamed groups",
+     "type": "state-based",
+     "best_window": 5
+    },
+    {
+     "id": 16989,
+     "name": "SCEF - Civilians",
+     "type": "one-sided",
+     "best_window": 5
+    },
+    {
+     "id": 16940,
+     "name": "SCEF - KTLA",
+     "type": "non-state",
+     "best_window": 5
+    },
+    {
+     "id": 3736,
+     "name": "ULA - Civilians",
+     "type": "one-sided",
+     "best_window": 1
+    },
+    {
+     "id": 15516,
+     "name": "NUG - Civilians",
+     "type": "one-sided",
+     "best_window": 0
+    }
+   ],
+   "dyad_ids": [
+    223,
+    428,
+    461,
+    511,
+    955,
+    4321,
+    10988,
+    11387,
+    14273,
+    16759,
+    18893,
+    18919,
+    18941,
+    18978
+   ],
+   "excluded": []
+  },
+  "congo": {
+   "basis": "countries: DR Congo (Zaire)",
+   "last_year": {
+    "year": 2025,
+    "low": 8305,
+    "best": 9172,
+    "high": 29659
+   },
+   "this_year": {
+    "year": 2026,
+    "to": "2026-08",
+    "low": 1832,
+    "best": 2412,
+    "high": 6284
+   },
+   "window": {
+    "from": "2025-10",
+    "to": "2026-08",
+    "low": 2827,
+    "best": 3617,
+    "high": 10394
+   },
+   "flagged_share_window": 0.374,
+   "conflicts": [
+    {
+     "id": 283,
+     "name": "DR Congo (Zaire): Government",
+     "type": "state-based",
+     "best_window": 1010
+    },
+    {
+     "id": 506,
+     "name": "IS - Civilians",
+     "type": "one-sided",
+     "best_window": 998
+    },
+    {
+     "id": 16101,
+     "name": "AFC - Civilians",
+     "type": "one-sided",
+     "best_window": 437
+    },
+    {
+     "id": 16179,
+     "name": "AFC - VDP",
+     "type": "non-state",
+     "best_window": 551
+    },
+    {
+     "id": 14745,
+     "name": "URDPC - Civilians",
+     "type": "one-sided",
+     "best_window": 136
+    },
+    {
+     "id": 16066,
+     "name": "VDP - Civilians",
+     "type": "one-sided",
+     "best_window": 81
+    },
+    {
+     "id": 467,
+     "name": "Government of DR Congo (Zaire) - Civilians",
+     "type": "one-sided",
+     "best_window": 42
+    },
+    {
+     "id": 14692,
+     "name": "DR Congo (Zaire): Islamic State",
+     "type": "state-based",
+     "best_window": 172
+    },
+    {
+     "id": 15893,
+     "name": "Mobondo - Civilians",
+     "type": "one-sided",
+     "best_window": 23
+    },
+    {
+     "id": 374,
+     "name": "Rwanda: Government",
+     "type": "state-based",
+     "best_window": 0
+    },
+    {
+     "id": 472,
+     "name": "Government of Rwanda - Civilians",
+     "type": "one-sided",
+     "best_window": 0
+    },
+    {
+     "id": 16401,
+     "name": "AFC - FDLR-FOCA, VDP",
+     "type": "non-state",
+     "best_window": 36
+    }
+   ],
+   "dyad_ids": [
+    75,
+    934,
+    935,
+    973,
+    1026,
+    1036,
+    3664,
+    4903,
+    5062,
+    11381,
+    12009,
+    15612,
+    15998,
+    16024,
+    16065,
+    16402,
+    16418,
+    17280,
+    17488,
+    17706,
+    17740,
+    17741,
+    17833,
+    17904,
+    17983,
+    18205,
+    18485,
+    18536,
+    18710,
+    18903,
+    18927,
+    18929,
+    18964
+   ],
+   "excluded": []
+  },
+  "sahel": {
+   "basis": "countries: Burkina Faso, Mali, Niger",
+   "last_year": {
+    "year": 2025,
+    "low": 7514,
+    "best": 7715,
+    "high": 10346
+   },
+   "this_year": {
+    "year": 2026,
+    "to": "2026-08",
+    "low": 3937,
+    "best": 4217,
+    "high": 6719
+   },
+   "window": {
+    "from": "2025-10",
+    "to": "2026-08",
+    "low": 5114,
+    "best": 5437,
+    "high": 8401
+   },
+   "flagged_share_window": 0.459,
+   "conflicts": [
+    {
+     "id": 360,
+     "name": "Burkina Faso: Government",
+     "type": "state-based",
+     "best_window": 2180
+    },
+    {
+     "id": 11347,
+     "name": "Mali: Government",
+     "type": "state-based",
+     "best_window": 1087
+    },
+    {
+     "id": 13639,
+     "name": "Niger: Islamic State",
+     "type": "state-based",
+     "best_window": 411
+    },
+    {
+     "id": 695,
+     "name": "Government of Burkina Faso - Civilians",
+     "type": "one-sided",
+     "best_window": 60
+    },
+    {
+     "id": 13968,
+     "name": "JNIM - Civilians",
+     "type": "one-sided",
+     "best_window": 228
+    },
+    {
+     "id": 506,
+     "name": "IS - Civilians",
+     "type": "one-sided",
+     "best_window": 235
+    },
+    {
+     "id": 16369,
+     "name": "Government of Mali, Government of Russia (Soviet Union) - Civilians",
+     "type": "one-sided",
+     "best_window": 86
+    },
+    {
+     "id": 430,
+     "name": "Niger: Government",
+     "type": "state-based",
+     "best_window": 237
+    },
+    {
+     "id": 14113,
+     "name": "Mali: Islamic State",
+     "type": "state-based",
+     "best_window": 91
+    },
+    {
+     "id": 16038,
+     "name": "Mali: Government/Azawad",
+     "type": "state-based",
+     "best_window": 168
+    },
+    {
+     "id": 14864,
+     "name": "IS - JNIM",
+     "type": "non-state",
+     "best_window": 112
+    },
+    {
+     "id": 454,
+     "name": "Government of Mali - Civilians",
+     "type": "one-sided",
+     "best_window": 126
+    }
+   ],
+   "dyad_ids": [
+    235,
+    236,
+    640,
+    920,
+    921,
+    923,
+    973,
+    1162,
+    2332,
+    4968,
+    4983,
+    14668,
+    14953,
+    15108,
+    15136,
+    15161,
+    15162,
+    15174,
+    15175,
+    15256,
+    15259,
+    15662,
+    15914,
+    16207,
+    16685,
+    17666,
+    18152,
+    18220
+   ],
+   "excluded": []
+  },
+  "somalia": {
+   "basis": "countries: Somalia",
+   "last_year": {
+    "year": 2025,
+    "low": 3808,
+    "best": 3872,
+    "high": 4535
+   },
+   "this_year": {
+    "year": 2026,
+    "to": "2026-08",
+    "low": 2881,
+    "best": 2890,
+    "high": 3279
+   },
+   "window": {
+    "from": "2025-10",
+    "to": "2026-08",
+    "low": 3548,
+    "best": 3567,
+    "high": 4112
+   },
+   "flagged_share_window": 0.063,
+   "conflicts": [
+    {
+     "id": 337,
+     "name": "Somalia: Government",
+     "type": "state-based",
+     "best_window": 3301
+    },
+    {
+     "id": 16734,
+     "name": "Puntland State of Somalia - IS",
+     "type": "non-state",
+     "best_window": 104
+    },
+    {
+     "id": 14197,
+     "name": "Somalia: Islamic State",
+     "type": "state-based",
+     "best_window": 33
+    },
+    {
+     "id": 604,
+     "name": "Al-Shabaab - Civilians",
+     "type": "one-sided",
+     "best_window": 47
+    },
+    {
+     "id": 141,
+     "name": "unnamed groups - unnamed groups",
+     "type": "non-state",
+     "best_window": 42
+    },
+    {
+     "id": 141,
+     "name": "unnamed groups",
+     "type": "state-based",
+     "best_window": 20
+    },
+    {
+     "id": 16990,
+     "name": "IS - SFC",
+     "type": "non-state",
+     "best_window": 15
+    },
+    {
+     "id": 473,
+     "name": "Government of Somalia - Civilians",
+     "type": "one-sided",
+     "best_window": 4
+    },
+    {
+     "id": 16920,
+     "name": "Jubaland State of Somalia - Civilians",
+     "type": "one-sided",
+     "best_window": 1
+    },
+    {
+     "id": 13646,
+     "name": "Kenya: Northeastern Province and Coast",
+     "type": "state-based",
+     "best_window": 0
+    }
+   ],
+   "dyad_ids": [
+    281,
+    282,
+    750,
+    940,
+    1071,
+    10589,
+    15077,
+    18661,
+    18889,
+    18890,
+    18957,
+    18959,
+    18979
+   ],
+   "excluded": []
+  },
+  "syria": {
+   "basis": "countries: Syria",
+   "last_year": {
+    "year": 2025,
+    "low": 3141,
+    "best": 3449,
+    "high": 3753
+   },
+   "this_year": {
+    "year": 2026,
+    "to": "2026-08",
+    "low": 563,
+    "best": 564,
+    "high": 565
+   },
+   "window": {
+    "from": "2025-10",
+    "to": "2026-08",
+    "low": 636,
+    "best": 637,
+    "high": 639
+   },
+   "flagged_share_window": 0.891,
+   "conflicts": [
+    {
+     "id": 711,
+     "name": "Government of Syria - Civilians",
+     "type": "one-sided",
+     "best_window": 22
+    },
+    {
+     "id": 299,
+     "name": "Syria: Government",
+     "type": "state-based",
+     "best_window": 0
+    },
+    {
+     "id": 14803,
+     "name": "SNA - SDF",
+     "type": "non-state",
+     "best_window": 0
+    },
+    {
+     "id": 4409,
+     "name": "unnamed groups - Civilians",
+     "type": "one-sided",
+     "best_window": 256
+    },
+    {
+     "id": 13809,
+     "name": "Syria: Government/Rojava Kurdistan",
+     "type": "state-based",
+     "best_window": 95
+    },
+    {
+     "id": 16564,
+     "name": "Military Council for the Liberation of Syria - Civilians",
+     "type": "one-sided",
+     "best_window": 0
+    },
+    {
+     "id": 16895,
+     "name": "Southern Tribes Gathering, Syrian Council of Tribes and Clans - Suwayda Military Council",
+     "type": "non-state",
+     "best_window": 0
+    },
+    {
+     "id": 13616,
+     "name": "IS - SDF",
+     "type": "non-state",
+     "best_window": 23
+    },
+    {
+     "id": 150,
+     "name": "unnamed groups",
+     "type": "state-based",
+     "best_window": 92
+    },
+    {
+     "id": 16893,
+     "name": "Southern Tribes Gathering - Suwayda Military Council",
+     "type": "non-state",
+     "best_window": 0
+    },
+    {
+     "id": 150,
+     "name": "unnamed groups - unnamed groups",
+     "type": "non-state",
+     "best_window": 66
+    },
+    {
+     "id": 13604,
+     "name": "Syria: Islamic State",
+     "type": "state-based",
+     "best_window": 51
+    }
+   ],
+   "dyad_ids": [
+    299,
+    300,
+    649,
+    973,
+    1178,
+    5015,
+    14620,
+    14637,
+    14773,
+    14784,
+    18657,
+    18768,
+    18868
+   ],
+   "excluded": []
+  },
+  "haiti": {
+   "basis": "countries: Haiti",
+   "last_year": {
+    "year": 2025,
+    "low": 2311,
+    "best": 2448,
+    "high": 2587
+   },
+   "this_year": {
+    "year": 2026,
+    "to": "2026-08",
+    "low": 432,
+    "best": 492,
+    "high": 514
+   },
+   "window": {
+    "from": "2025-10",
+    "to": "2026-08",
+    "low": 762,
+    "best": 832,
+    "high": 880
+   },
+   "flagged_share_window": 0.579,
+   "conflicts": [
+    {
+     "id": 381,
+     "name": "Haiti: Government",
+     "type": "state-based",
+     "best_window": 233
+    },
+    {
+     "id": 16265,
+     "name": "Viv Ansanm - Civilians",
+     "type": "one-sided",
+     "best_window": 319
+    },
+    {
+     "id": 15163,
+     "name": "Gran Grif - Civilians",
+     "type": "one-sided",
+     "best_window": 106
+    },
+    {
+     "id": 70,
+     "name": "unnamed groups - unnamed groups",
+     "type": "non-state",
+     "best_window": 99
+    },
+    {
+     "id": 16592,
+     "name": "La Coalition - Civilians",
+     "type": "one-sided",
+     "best_window": 0
+    },
+    {
+     "id": 70,
+     "name": "unnamed groups",
+     "type": "state-based",
+     "best_window": 47
+    },
+    {
+     "id": 16085,
+     "name": "Kokorat sans ras - Civilians",
+     "type": "one-sided",
+     "best_window": 6
+    },
+    {
+     "id": 16733,
+     "name": "Forces of Micanor Altes - Civilians",
+     "type": "one-sided",
+     "best_window": 0
+    },
+    {
+     "id": 16984,
+     "name": "Nan Belekou gang - Civilians",
+     "type": "one-sided",
+     "best_window": 10
+    },
+    {
+     "id": 444,
+     "name": "Government of Haiti - Civilians",
+     "type": "one-sided",
+     "best_window": 1
+    },
+    {
+     "id": 16097,
+     "name": "Gran Grif, Kokorat sans ras - Civilians",
+     "type": "one-sided",
+     "best_window": 6
+    },
+    {
+     "id": 4329,
+     "name": "unnamed groups - Civilians",
+     "type": "one-sided",
+     "best_window": 5
+    }
+   ],
+   "dyad_ids": [
+    139,
+    140,
+    911,
+    4935,
+    16572,
+    17725,
+    17736,
+    17857,
+    17970,
+    17971,
+    18972
+   ],
+   "excluded": []
+  },
+  "pakistan": {
+   "basis": "countries: Pakistan, Afghanistan",
+   "last_year": {
+    "year": 2025,
+    "low": 3270,
+    "best": 3663,
+    "high": 5888
+   },
+   "this_year": {
+    "year": 2026,
+    "to": "2026-08",
+    "low": 3558,
+    "best": 4052,
+    "high": 7234
+   },
+   "window": {
+    "from": "2025-10",
+    "to": "2026-08",
+    "low": 4585,
+    "best": 5238,
+    "high": 9132
+   },
+   "flagged_share_window": 0.24,
+   "conflicts": [
+    {
+     "id": 404,
+     "name": "Pakistan: Government",
+     "type": "state-based",
+     "best_window": 2470
+    },
+    {
+     "id": 325,
+     "name": "Pakistan: Balochistan",
+     "type": "state-based",
+     "best_window": 1167
+    },
+    {
+     "id": 11639,
+     "name": "Afghanistan - Pakistan",
+     "type": "state-based",
+     "best_window": 816
+    },
+    {
+     "id": 122,
+     "name": "unnamed groups",
+     "type": "state-based",
+     "best_window": 297
+    },
+    {
+     "id": 14859,
+     "name": "BRAS - Civilians",
+     "type": "one-sided",
+     "best_window": 102
+    },
+    {
+     "id": 13637,
+     "name": "Afghanistan: Islamic State",
+     "type": "state-based",
+     "best_window": 59
+    },
+    {
+     "id": 506,
+     "name": "IS - Civilians",
+     "type": "one-sided",
+     "best_window": 80
+    },
+    {
+     "id": 13936,
+     "name": "Pakistan: Islamic State",
+     "type": "state-based",
+     "best_window": 35
+    },
+    {
+     "id": 333,
+     "name": "Afghanistan: Government",
+     "type": "state-based",
+     "best_window": 34
+    },
+    {
+     "id": 530,
+     "name": "TTP - Civilians",
+     "type": "one-sided",
+     "best_window": 41
+    },
+    {
+     "id": 730,
+     "name": "Government of Pakistan - Civilians",
+     "type": "one-sided",
+     "best_window": 18
+    },
+    {
+     "id": 16952,
+     "name": "Jamaat-ul-Ahrar - TTP",
+     "type": "non-state",
+     "best_window": 41
+    }
+   ],
+   "dyad_ids": [
+    1,
+    243,
+    244,
+    857,
+    951,
+    973,
+    997,
+    1197,
+    4866,
+    4987,
+    5522,
+    10744,
+    11295,
+    12291,
+    14227,
+    14319,
+    14320,
+    15847,
+    16177,
+    16202,
+    16456,
+    16825,
+    17083,
+    17442,
+    18068,
+    18458,
+    18761,
+    18933,
+    19010,
+    19023,
+    19024
+   ],
+   "excluded": []
+  },
+  "gulf": {
+   "basis": "conflicts: Iran - Israel, Iran - Israel, United States of America",
+   "last_year": {
+    "year": 2025,
+    "low": 1094,
+    "best": 1222,
+    "high": 1224
+   },
+   "this_year": {
+    "year": 2026,
+    "to": "2026-08",
+    "low": 3829,
+    "best": 3829,
+    "high": 3837
+   },
+   "window": {
+    "from": "2025-10",
+    "to": "2026-08",
+    "low": 3831,
+    "best": 3831,
+    "high": 3839
+   },
+   "flagged_share_window": 0.432,
+   "conflicts": [
+    {
+     "id": 16905,
+     "name": "Iran - Israel, United States of America",
+     "type": "state-based",
+     "best_window": 3810
+    },
+    {
+     "id": 14609,
+     "name": "Iran - Israel",
+     "type": "state-based",
+     "best_window": 21
+    }
+   ],
+   "dyad_ids": [
+    15633,
+    18868
+   ],
+   "excluded": [
+    {
+     "dyad": "Government of Iran - Civilians",
+     "best_this_year": 19893,
+     "why": "one row flagged for review puts civilians killed by Iran at 19,900 in January 2026; it is a separate one-sided conflict, not the war"
+    }
+   ]
+  },
+  "ethiopia": {
+   "basis": "countries: Ethiopia, Eritrea",
+   "last_year": {
+    "year": 2025,
+    "low": 3319,
+    "best": 5458,
+    "high": 17924
+   },
+   "this_year": {
+    "year": 2026,
+    "to": "2026-08",
+    "low": 2284,
+    "best": 2826,
+    "high": 10132
+   },
+   "window": {
+    "from": "2025-10",
+    "to": "2026-08",
+    "low": 3322,
+    "best": 4609,
+    "high": 13184
+   },
+   "flagged_share_window": 0.426,
+   "conflicts": [
+    {
+     "id": 16069,
+     "name": "Ethiopia: Government/Amhara",
+     "type": "state-based",
+     "best_window": 3307
+    },
+    {
+     "id": 474,
+     "name": "Government of Ethiopia - Civilians",
+     "type": "one-sided",
+     "best_window": 280
+    },
+    {
+     "id": 413,
+     "name": "Ethiopia: Oromiya",
+     "type": "state-based",
+     "best_window": 410
+    },
+    {
+     "id": 15364,
+     "name": "Fano - Civilians",
+     "type": "one-sided",
+     "best_window": 67
+    },
+    {
+     "id": 4582,
+     "name": "Anuak - Nuer",
+     "type": "non-state",
+     "best_window": 155
+    },
+    {
+     "id": 14893,
+     "name": "OLA - Civilians",
+     "type": "one-sided",
+     "best_window": 66
+    },
+    {
+     "id": 16626,
+     "name": "AFNF - AFPO",
+     "type": "non-state",
+     "best_window": 0
+    },
+    {
+     "id": 267,
+     "name": "Ethiopia: Government",
+     "type": "state-based",
+     "best_window": 99
+    },
+    {
+     "id": 4314,
+     "name": "unnamed groups - Civilians",
+     "type": "one-sided",
+     "best_window": 91
+    },
+    {
+     "id": 16951,
+     "name": "Ethiopia: Benishangul-Gumuz",
+     "type": "state-based",
+     "best_window": 41
+    },
+    {
+     "id": 9432,
+     "name": "Guji - Sidama",
+     "type": "non-state",
+     "best_window": 34
+    },
+    {
+     "id": 55,
+     "name": "unnamed groups - unnamed groups",
+     "type": "non-state",
+     "best_window": 22
+    }
+   ],
+   "dyad_ids": [
+    109,
+    110,
+    555,
+    941,
+    947,
+    1405,
+    4920,
+    5192,
+    10042,
+    15819,
+    16240,
+    16241,
+    16832,
+    17147,
+    17936,
+    18621,
+    18809,
+    18864,
+    18869,
+    18918,
+    18931,
+    18932,
+    18958
+   ],
+   "excluded": []
+  },
+  "southsudan": {
+   "basis": "countries: South Sudan",
+   "last_year": {
+    "year": 2025,
+    "low": 621,
+    "best": 661,
+    "high": 825
+   },
+   "this_year": {
+    "year": 2026,
+    "to": "2026-08",
+    "low": 601,
+    "best": 613,
+    "high": 699
+   },
+   "window": {
+    "from": "2025-10",
+    "to": "2026-08",
+    "low": 678,
+    "best": 707,
+    "high": 900
+   },
+   "flagged_share_window": 0.639,
+   "conflicts": [
+    {
+     "id": 11345,
+     "name": "South Sudan: Government",
+     "type": "state-based",
+     "best_window": 178
+    },
+    {
+     "id": 16670,
+     "name": "Luac Jang Dinka, Pan-Juaj Dinka - Jalwau Dinka",
+     "type": "non-state",
+     "best_window": 0
+    },
+    {
+     "id": 197,
+     "name": "unnamed groups - unnamed groups",
+     "type": "non-state",
+     "best_window": 198
+    },
+    {
+     "id": 4456,
+     "name": "unnamed groups - Civilians",
+     "type": "one-sided",
+     "best_window": 181
+    },
+    {
+     "id": 16529,
+     "name": "Bor Dinka - Acholi, Murle",
+     "type": "non-state",
+     "best_window": 0
+    },
+    {
+     "id": 708,
+     "name": "Government of South Sudan - Civilians",
+     "type": "one-sided",
+     "best_window": 29
+    },
+    {
+     "id": 15828,
+     "name": "Gawaar Nuer - Lou Nuer",
+     "type": "non-state",
+     "best_window": 33
+    },
+    {
+     "id": 16216,
+     "name": "Murle - Toposa",
+     "type": "non-state",
+     "best_window": 0
+    },
+    {
+     "id": 11732,
+     "name": "SPLM/A - IO - Civilians",
+     "type": "one-sided",
+     "best_window": 19
+    },
+    {
+     "id": 14167,
+     "name": "Pakam Dinka - Rup Dinka",
+     "type": "non-state",
+     "best_window": 0
+    },
+    {
+     "id": 16977,
+     "name": "Luac Jang Dinka - Manuer Dinka",
+     "type": "non-state",
+     "best_window": 14
+    },
+    {
+     "id": 16826,
+     "name": "Nyarmuong - Jur-Man-Anger",
+     "type": "non-state",
+     "best_window": 14
+    }
+   ],
+   "dyad_ids": [
+    394,
+    1175,
+    5062,
+    12413,
+    12414,
+    16702,
+    17412,
+    18302,
+    18623,
+    18783,
+    18788,
+    18922,
+    18923,
+    18924,
+    18963
+   ],
+   "excluded": []
+  },
+  "nigeria": {
+   "basis": "countries: Nigeria",
+   "last_year": {
+    "year": 2025,
+    "low": 3548,
+    "best": 4158,
+    "high": 4774
+   },
+   "this_year": {
+    "year": 2026,
+    "to": "2026-08",
+    "low": 5849,
+    "best": 6488,
+    "high": 9170
+   },
+   "window": {
+    "from": "2025-10",
+    "to": "2026-08",
+    "low": 6678,
+    "best": 7441,
+    "high": 10272
+   },
+   "flagged_share_window": 0.771,
+   "conflicts": [
+    {
+     "id": 13641,
+     "name": "Nigeria: Islamic State",
+     "type": "state-based",
+     "best_window": 2134
+    },
+    {
+     "id": 119,
+     "name": "unnamed groups",
+     "type": "state-based",
+     "best_window": 1627
+    },
+    {
+     "id": 4378,
+     "name": "unnamed groups - Civilians",
+     "type": "one-sided",
+     "best_window": 845
+    },
+    {
+     "id": 119,
+     "name": "unnamed groups - unnamed groups",
+     "type": "non-state",
+     "best_window": 760
+    },
+    {
+     "id": 1850,
+     "name": "JAS - Civilians",
+     "type": "one-sided",
+     "best_window": 360
+    },
+    {
+     "id": 506,
+     "name": "IS - Civilians",
+     "type": "one-sided",
+     "best_window": 345
+    },
+    {
+     "id": 4973,
+     "name": "Fulani - Tiv",
+     "type": "non-state",
+     "best_window": 90
+    },
+    {
+     "id": 13884,
+     "name": "IS - JAS",
+     "type": "non-state",
+     "best_window": 314
+    },
+    {
+     "id": 297,
+     "name": "Nigeria: Government",
+     "type": "state-based",
+     "best_window": 206
+    },
+    {
+     "id": 4948,
+     "name": "Birom - Fulani",
+     "type": "non-state",
+     "best_window": 121
+    },
+    {
+     "id": 16382,
+     "name": "Forces of Bello Turji  - Civilians",
+     "type": "one-sided",
+     "best_window": 87
+    },
+    {
+     "id": 13876,
+     "name": "Farmers (Nigeria) - Herders (Nigeria)",
+     "type": "non-state",
+     "best_window": 71
+    }
+   ],
+   "dyad_ids": [
+    237,
+    238,
+    640,
+    930,
+    973,
+    2332,
+    4377,
+    4893,
+    4984,
+    5405,
+    5558,
+    5583,
+    9951,
+    10098,
+    10104,
+    11428,
+    11433,
+    11435,
+    11436,
+    11441,
+    12341,
+    12342,
+    14636,
+    14669,
+    14887,
+    15013,
+    15019,
+    15023,
+    15050,
+    15186,
+    15214,
+    15358,
+    15551,
+    16207,
+    16246,
+    16687,
+    17385,
+    17535,
+    17770,
+    17831,
+    18012,
+    18024,
+    18043,
+    18102,
+    18158,
+    18174,
+    18280,
+    18411,
+    18613,
+    18692,
+    18745,
+    18758,
+    18827,
+    18876,
+    18877,
+    18960,
+    18961,
+    18962,
+    18965,
+    18984,
+    18985,
+    18987,
+    19030,
+    19036
+   ],
+   "excluded": []
+  }
+ },
+ "not_on_map": [
+  {
+   "country": "Mexico",
+   "last_year": {
+    "year": 2025,
+    "low": 2720,
+    "best": 7904,
+    "high": 8088
+   },
+   "this_year": {
+    "year": 2026,
+    "low": 1433,
+    "best": 1779,
+    "high": 2042
+   },
+   "window": {
+    "low": 1817,
+    "best": 2922,
+    "high": 3206
+   },
+   "by_type": {
+    "state-based": 36,
+    "non-state": 2767,
+    "one-sided": 119
+   }
+  },
+  {
+   "country": "Colombia",
+   "last_year": {
+    "year": 2025,
+    "low": 817,
+    "best": 986,
+    "high": 1193
+   },
+   "this_year": {
+    "year": 2026,
+    "low": 1342,
+    "best": 1392,
+    "high": 1405
+   },
+   "window": {
+    "low": 1472,
+    "best": 1550,
+    "high": 1620
+   },
+   "by_type": {
+    "state-based": 293,
+    "non-state": 966,
+    "one-sided": 291
+   }
+  },
+  {
+   "country": "Tanzania",
+   "last_year": {
+    "year": 2025,
+    "low": 408,
+    "best": 1009,
+    "high": 2692
+   },
+   "this_year": {
+    "year": 2026,
+    "low": 1,
+    "best": 1,
+    "high": 1
+   },
+   "window": {
+    "low": 408,
+    "best": 1007,
+    "high": 2690
+   },
+   "by_type": {
+    "one-sided": 1007
+   }
+  }
+ ]
+}

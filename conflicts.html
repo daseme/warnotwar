@@ -462,7 +462,7 @@
   <p class="panel-sub" id="ucdp-sub"></p>
   <div class="table-wrap">
   <table class="mono" id="ucdp-table">
-    <thead><tr><th>war</th><th>our band</th><th>UCDP 2025, best (low to high)</th><th>2026 to August</th><th>Oct 2025 to Aug 2026</th><th>UCDP against the other counter</th><th>what UCDP counts</th></tr></thead>
+    <thead></thead>
     <tbody></tbody>
   </table>
   </div>
@@ -486,6 +486,13 @@
   <p class="prose" id="naming-note"></p>
   <h3>Left off</h3>
   <ul class="plain" id="excluded"></ul>
+  <h3>The form of a tie</h3>
+  <p class="prose" id="tie-form"></p>
+  <h3>A second reading</h3>
+  <p class="prose" id="second-reader"></p>
+  <ul class="plain corr" id="second-reader-list"></ul>
+  <h3>Reporting an error</h3>
+  <p class="prose" id="report-error"></p>
   <h3>Corrections</h3>
   <ul class="plain corr" id="corrections"></ul>
   <div class="note" id="keep-note"></div>
@@ -511,10 +518,10 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const errBox = $('#load-error');
   const fail = msg => { errBox.style.display = 'block'; errBox.textContent = msg; };
 
-  let world, D;
+  let world, D, U = null;
   try {
     const get = u => fetch(u).then(r => { if (!r.ok) throw new Error('http ' + r.status + ' ' + u); return r.json(); });
-    [world, D] = await Promise.all([get('/data/world_paths.json'), get('/data/conflicts.json')]);
+    [world, D, U] = await Promise.all([get('/data/world_paths.json'), get('/data/conflicts.json'), get('/data/ucdp.json').catch(() => null)]);
   } catch (e) { fail('The map data did not load. ' + e.message); return; }
 
   try {
@@ -606,22 +613,33 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   $('#source-rule').textContent = D.source_rule || '';
   $('#classes').innerHTML = Object.entries(D.source_classes || {}).map(([k, v]) => `<div><b>${esc(k)}</b>${esc(v)}</div>`).join('');
   $('#evidence-rule').textContent = D.evidence_rule || '';
+  $('#tie-form').textContent = D.tie_form || '';
+  if (D.second_reader) { const r = D.second_reader; $('#second-reader').textContent = `In ${fmtMonth(r.date.slice(0, 7))}, ${r.who}. ${r.note}`; $('#second-reader-list').innerHTML = (r.open || []).map(x => `<li><span class="d">${esc(x.ours)} / ${esc(x.reader)}</span><span><b>${esc(x.tie)}.</b> <span class="w">${esc(x.why)}</span></span></li>`).join(''); }
+  $('#report-error').innerHTML = D.report_error ? esc(D.report_error) + ' <a href="https://github.com/daseme/warnotwar/issues" target="_blank" rel="noopener">github.com/daseme/warnotwar/issues</a>.' : '';
   $('#corrections').innerHTML = (D.corrections || []).slice().reverse().map(x => { const c = D.conflicts.find(k => k.id === x.entry); return `<li><span class="d">${esc(x.date)}</span><span><b>${esc(c ? c.name : (x.entry === 'all' ? 'all entries' : x.entry))}.</b> ${esc(x.what)} <span class="w">${esc(x.why)}</span></span></li>`; }).join('') || '<li>None yet.</li>';
   $('#naming-note').innerHTML = esc(D.naming_rule || '') + ' <a href="/methodology.html">The methodology page</a> keeps the rule.';
   $('#tiers').innerHTML = Object.entries(D.tiers).map(([id, t]) => `<div><div class="w">${tierSample(id)} ${esc(t.word)}</div><div class="n">${esc(t.note)}</div></div>`).join('');
   $('#excluded').innerHTML = (D.excluded || []).map(x => `<li><b>${esc(x.name)}.</b> ${esc(x.why)}</li>`).join('');
   /* the UCDP comparison */
   const ucdpNum = v => (v == null ? '—' : Number(v).toLocaleString('en-US'));
-  const ucdpLine = u => `${ucdpNum(u.best_2025)}${u.low_2025 != null && u.high_2025 != null ? ' (' + ucdpNum(u.low_2025) + ' to ' + ucdpNum(u.high_2025) + ')' : ''}`;
-  if (D.ucdp_meta) {
-    $('#ucdp-sub').textContent = D.ucdp_meta.note + ' Versions: ' + D.ucdp_meta.versions + '. Pulled ' + D.ucdp_meta.pulled + '.';
-    $('#ucdp-table tbody').innerHTML = D.conflicts.filter(c => c.ucdp).map(c => `<tr><td>${esc(c.name)}</td><td>${esc(D.bands[c.band] || 'not entered')}</td><td>${ucdpLine(c.ucdp)}</td><td>${ucdpNum(c.ucdp.best_2026_to_aug)}</td><td>${ucdpNum(c.ucdp.best_window)}</td><td>${esc(c.ucdp.against)}</td><td class="src">${esc(c.ucdp.note)}</td></tr>`).join('');
+  const ucdpRange = x => x ? `${ucdpNum(x.best)}${x.low != null && x.high != null ? ' (' + ucdpNum(x.low) + ' to ' + ucdpNum(x.high) + ')' : ''}` : '—';
+  const uOf = c => (U && U.entries && U.entries[c.id]) || null;
+  const pct = v => (v == null ? '—' : Math.round(v * 100) + '%');
+  const monthWord = m => m ? fmtMonth(m) : '';
+  const nextPull = () => { if (!U || !U.pulled) return ''; const [y, mo] = U.pulled.split('-').map(Number); const d = new Date(Date.UTC(y, mo - 1, 21)); if (d <= new Date(U.pulled + 'T00:00:00Z')) d.setUTCMonth(d.getUTCMonth() + 1); return 'next pull after 20 ' + MONTHS[d.getUTCMonth()] + ' ' + d.getUTCFullYear(); };
+  if (U && U.entries && Object.keys(U.entries).length) {
+    const ly = Object.values(U.entries)[0].last_year.year, ty = Object.values(U.entries)[0].this_year.year;
+    $('#ucdp-sub').textContent = (D.ucdp_note || '') + ' ' + (U.rule || '') + ' Versions: ' + U.versions + '. Data to ' + monthWord(U.reach) + '. Pulled ' + U.pulled + '; ' + nextPull() + '. ' + pct(U.flagged_share) + ' of the ' + ty + ' rows carry a check flag.';
+    $('#ucdp-table thead').innerHTML = `<tr><th>war</th><th>our band</th><th>UCDP ${ly}, best (low to high)</th><th>January to ${esc(monthWord(U.reach))}</th><th>${esc(monthWord(U.window.from))} to ${esc(monthWord(U.window.to))}, best (low to high)</th><th>rows flagged</th><th>UCDP against the other counter</th><th>what UCDP counts</th></tr>`;
+    $('#ucdp-table tbody').innerHTML = D.conflicts.filter(c => uOf(c)).map(c => { const u = uOf(c); const top = (u.conflicts || []).filter(k => k.best_window > 0).slice(0, 4); return `<tr><td>${esc(c.name)}</td><td>${esc(D.bands[c.band] || 'not entered')}</td><td>${ucdpRange(u.last_year)}</td><td>${ucdpNum(u.this_year.best)}</td><td>${ucdpRange(u.window)}</td><td>${pct(u.flagged_share_window)}</td><td>${esc((c.ucdp && c.ucdp.against) || '')}</td><td class="src">${esc((c.ucdp && c.ucdp.note) || '')}<span class="n">${esc(u.basis)}. In the window: ${top.map(k => esc(k.name) + ' ' + ucdpNum(k.best_window)).join('; ')}${(u.conflicts || []).filter(k => k.best_window > 0).length > top.length ? '; and ' + ((u.conflicts || []).filter(k => k.best_window > 0).length - top.length) + ' more' : ''}.${(u.excluded || []).map(x => ' Not in this sum: ' + esc(x.dyad) + ', ' + ucdpNum(x.best_this_year) + ' in ' + ty + '; ' + esc(x.why) + '.').join('')}</span></td></tr>`; }).join('');
     $('#ucdp-missing').textContent = D.ucdp_missing || '';
+  } else {
+    $('#ucdp-sub').textContent = 'The UCDP file did not load.';
   }
-  $('#attribution').innerHTML = 'Figures credited to ACLED (Armed Conflict Location &amp; Event Data), <a href="https://acleddata.com" target="_blank" rel="noopener">acleddata.com</a>, are taken from ACLED\'s published reports or from others\' reports of them; each entry says which. We did not download ACLED data. UCDP figures are from the Uppsala Conflict Data Program, <a href="https://ucdp.uu.se" target="_blank" rel="noopener">ucdp.uu.se</a>, ' + esc((D.ucdp_meta && D.ucdp_meta.versions) || '') + ', used under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>: Davies, Pettersson and Öberg, Organized violence 1989–2025, and violent political protests, Journal of Peace Research, 2026, doi 10.1093/jopres/xjag046; Sundberg and Melander, Introducing the UCDP Georeferenced Event Dataset, Journal of Peace Research 50(4), 2013; Hegre, Croicu, Eck and Högbladh, Introducing the UCDP Candidate Events Dataset, Research &amp; Politics 7(3), 2020. UCDP is part of and funded by DEMSCORE, national research infrastructure grant 2021-00162 from the Swedish Research Council. UN counts name their mission or agency in each entry. A party\'s own figure is shown as its claim.';
+  $('#attribution').innerHTML = 'Figures credited to ACLED (Armed Conflict Location &amp; Event Data), <a href="https://acleddata.com" target="_blank" rel="noopener">acleddata.com</a>, are taken from ACLED\'s published reports or from others\' reports of them; each entry says which. We did not download ACLED data. UCDP figures are from the Uppsala Conflict Data Program, <a href="https://ucdp.uu.se" target="_blank" rel="noopener">ucdp.uu.se</a>, ' + esc((U && U.versions) || '') + ', used under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>: Davies, Pettersson and Öberg, Organized violence 1989–2025, and violent political protests, Journal of Peace Research, 2026, doi 10.1093/jopres/xjag046; Sundberg and Melander, Introducing the UCDP Georeferenced Event Dataset, Journal of Peace Research 50(4), 2013; Hegre, Croicu, Eck and Högbladh, Introducing the UCDP Candidate Events Dataset, Research &amp; Politics 7(3), 2020. UCDP is part of and funded by DEMSCORE, national research infrastructure grant 2021-00162 from the Swedish Research Council. UN counts name their mission or agency in each entry. A party\'s own figure is shown as its claim.';
   $('#keep-note').textContent = 'Every tie has a source and the date it was entered. A check is a person reopening the source and finding it still says what the row says. ' + (nChecked ? '' : 'No tie has been checked yet. ') + 'A tie fades on the map ninety days after it was entered or last checked, or when its sources are all from before the window or carry no date, and the table says which. ' + (D.kept_by || '') + ' A tie that has ended is drawn as a faint dotted line and dated. ' + (D.band_note || '') + ' Base map: Natural Earth, Equal Earth projection, so Africa is drawn at its true size.';
   const nTies = D.conflicts.reduce((n, c) => n + c.ties.length, 0);
-  $('#stamp').innerHTML = 'Entered ' + esc(D.entered_on || D.as_of) + ' &middot; ' + (nChecked ? nChecked + ' ties checked' : 'no tie checked yet') + ' &middot; ' + nOld + ' on old evidence &middot; ' + nUndated + ' with no dated source &middot; ' + D.conflicts.filter(c => c.kind !== 'pressure').length + ' wars, ' + D.conflicts.filter(c => c.kind === 'pressure').length + ' squares, ' + nTies + ' ties &middot; base map Natural Earth 1:110m, Equal Earth projection &middot; data/conflicts.json';
+  $('#stamp').innerHTML = 'Entered ' + esc(D.entered_on || D.as_of) + ' &middot; ' + (nChecked ? nChecked + ' ties checked' : 'no tie checked yet') + ' &middot; ' + nOld + ' on old evidence &middot; ' + (nUndated ? nUndated + ' with no dated source &middot; ' : '') + D.conflicts.filter(c => c.kind !== 'pressure').length + ' wars, ' + D.conflicts.filter(c => c.kind === 'pressure').length + ' squares, ' + nTies + ' ties &middot; base map Natural Earth 1:110m, Equal Earth projection &middot; data/conflicts.json';
 
   /* ---- base map ---- */
   const svg = $('#map');
@@ -916,12 +934,12 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   }
 
   const swatch = b => `<i class="sw" style="background:${hueOf(b) ? 'var(--b' + hueOf(b) + ')' : 'var(--ink-45)'}"></i>`;
-  const srcOne = e => { const u = safeUrl(e.url); const cls = (D.source_classes && D.source_classes[e.class]) ? e.class : 'other'; return `<span class="so"><span class="sc ${esc(cls)}" title="${esc((D.source_classes || {})[e.class] || '')}">${esc(e.class)}</span>${u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(e.text)}</a>` : esc(e.text) + ' <span class="nl">(no link)</span>'}${e.date ? ` <span class="nl">· ${esc(fmtMonth(e.date))}</span>` : ''}</span>`; };
+  const srcOne = e => { const u = safeUrl(e.url); const cls = (D.source_classes && D.source_classes[e.class]) ? e.class : 'other'; return `<span class="so"><span class="sc ${esc(cls)}" title="${esc((D.source_classes || {})[e.class] || '')}">${esc(e.class)}</span>${u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(e.text)}</a>` : esc(e.text) + ' <span class="nl">(no link)</span>'}${e.date ? ` <span class="nl">· ${esc(fmtMonth(e.date))}</span>` : ''}${e.counts === false ? ' <span class="nl">· shows the help ending or something beside it; does not date the tie</span>' : ''}</span>`; };
   const evidenceText = t => t.evidence_to ? (isOld(t) ? 'evidence to ' + fmtMonth(t.evidence_to) + ', before the window' : 'evidence to ' + fmtMonth(t.evidence_to)) : 'no dated source';
   const srcHTML = t => (Array.isArray(t.sources) ? t.sources.map(srcOne).join('') : '') + `<span class="ev">${esc(evidenceText(t))}</span>` + (t.note ? `<span class="n">${esc(t.note)}</span>` : '');
   function tierLabel(t) {
     const b = backers[t.backer];
-    const bits = [esc(D.tiers[t.tier].word) + (t.tier === 'open' && t.stance ? ', the framing is ours' : '')];
+    const bits = [esc(D.tiers[t.tier].word) + (t.tier === 'open' && t.stance ? ', the framing is ours' : '') + (t.tier === 'reported' && t.single ? ', one publisher' : '')];
     if (t.stance) bits.push(`<span class="stance">${esc(b.short)} ${esc(t.stance)}</span>`);
     if (t.since) bits.push(`since ${esc(fmtSince(t))}`);
     if (t.ended) bits.push(`ended ${esc(fmtMonth(t.ended))}`);
@@ -945,7 +963,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
         <div class="s" style="margin-top:6px">${esc(tieSummary(c))}.</div>
         <p>${esc(c.summary)}</p>
         ${c.band_source ? `<div class="s" style="margin-top:8px">Deaths: ${esc(c.band_source)}${Array.isArray(c.counted_by) && D.band_classes ? ' Counted by ' + esc(listNames(c.counted_by.map(k => D.band_classes[k] || k))) + '.' : ''}</div>` : ''}
-        ${c.ucdp ? `<div class="s" style="margin-top:6px">UCDP: ${ucdpLine(c.ucdp)} in 2025; ${ucdpNum(c.ucdp.best_2026_to_aug)} from January to August 2026; ${ucdpNum(c.ucdp.best_window)} in the eleven months to August. ${esc(c.ucdp.note)}</div>` : ''}
+        ${uOf(c) ? `<div class="s" style="margin-top:6px">UCDP: ${ucdpRange(uOf(c).last_year)} in ${uOf(c).last_year.year}; ${ucdpNum(uOf(c).this_year.best)} from January to ${esc(monthWord(uOf(c).this_year.to))}; ${ucdpRange(uOf(c).window)} from ${esc(monthWord(uOf(c).window.from))} to ${esc(monthWord(uOf(c).window.to))}. ${esc((c.ucdp && c.ucdp.note) || '')}</div>` : ''}
         ${c.actor_statement ? `<div class="s" style="margin-top:8px">What the acting state says: ${esc(c.actor_statement)}</div>` : ''}
         ${c.target_statement ? `<div class="s" style="margin-top:6px">What the other side says: ${esc(c.target_statement)}</div>` : ''}
         ${state.areas && !state.month && areasData && areasData[c.id] ? `<div class="s" style="margin-top:8px">Colored: ${esc(areasData[c.id].regions.join(', '))}</div>` : ''}
