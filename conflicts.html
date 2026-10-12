@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="The wars being fought right now, who is fighting, and which countries help which side. Every line carries its evidence and its source.">
+<meta name="description" content="The wars being fought now, who is fighting, and which countries help which side. Every line carries its evidence and its source.">
 <title>Who fights, who helps — the map</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -511,7 +511,7 @@
 <header class="hero">
   <div class="hero-kicker">warnotwar &middot; the map</div>
   <h1>Who fights, who helps.</h1>
-  <p class="subtitle">The wars of the past year, who is fighting, and which countries help which side. Every line says how we know: solid when the backer says so on the record, more broken the less it has owned.</p>
+  <p class="subtitle">The wars of the past year, who is fighting, and which countries help which side. Every line says how we know: solid when the backer says so on the record, more broken the less it has acknowledged.</p>
 </header>
 
 <div id="draft"></div>
@@ -566,7 +566,7 @@
   <p class="panel-sub" id="grid-rule"></p>
   <div class="grid-wrap"><table class="grid" id="grid"></table></div>
   <div class="grid-hint">drag the grid sideways to see every column</div>
-  <div class="note" style="margin-top:10px">Lanes in a column are the war's sides, top to bottom as the card lists them. A cell is shaded by what it holds: red where the state fights there itself, otherwise ink by the strongest evidence of its help, darker the more the state has owned. Hover a mark for the side, the help, and how we know. Click a mark for the war, a name for the state.</div>
+  <div class="note" style="margin-top:10px">Lanes in a column are the war's sides, top to bottom as the card lists them. A cell is shaded by what it holds: red where the state fights there itself, otherwise ink by the strongest evidence of its help, darker the more the state has acknowledged. Hover a mark for the side, the help and how we know. Click a mark for the war, a name for the state.</div>
   <div class="grid-foot">
     <span><i class="mk"><svg viewBox="0 0 22 6"><path class="arc tier-open" d="M0,3 L22,3"/></svg></i> on the record</span>
     <span><i class="mk"><svg viewBox="0 0 22 6"><path class="arc tier-shown" d="M0,3 L22,3"/></svg></i> documented</span>
@@ -614,7 +614,7 @@
 <section class="panel" id="table-panel">
   <details class="fold" id="table-fold">
   <summary><h2>Every line on the map</h2><span class="n" id="fold-count"></span><span class="hint">open the list</span></summary>
-  <p class="panel-sub">One row per tie. The line shape in the tier column is the same one drawn on the map. Each row has a link of its own and a link to report it.</p>
+  <p class="panel-sub">One row per tie. The line in the tier column is the one drawn on the map. Each row has a link of its own and a link to report it.</p>
   <div class="tfilters" id="tfilters">
     <span class="k" style="color:var(--ink-45);text-transform:uppercase;letter-spacing:0.14em;font-size:10px">show</span>
     <div class="chips" id="tfilter-chips"></div>
@@ -802,7 +802,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     $('#ucdp-sub').textContent = 'The UCDP file did not load.';
   }
   $('#attribution').innerHTML = 'Figures credited to ACLED (Armed Conflict Location &amp; Event Data), <a href="https://acleddata.com" target="_blank" rel="noopener">acleddata.com</a>, are taken from ACLED\'s published reports or from others\' reports of them; each entry says which. We did not download ACLED data. UCDP figures are from the Uppsala Conflict Data Program, <a href="https://ucdp.uu.se" target="_blank" rel="noopener">ucdp.uu.se</a>, ' + esc((U && U.versions) || '') + ', used under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>: Davies, Pettersson and Öberg, Organized violence 1989–2025, and violent political protests, Journal of Peace Research, 2026, doi 10.1093/jopres/xjag046; Sundberg and Melander, Introducing the UCDP Georeferenced Event Dataset, Journal of Peace Research 50(4), 2013; Hegre, Croicu, Eck and Högbladh, Introducing the UCDP Candidate Events Dataset, Research &amp; Politics 7(3), 2020. UCDP is part of and funded by DEMSCORE, national research infrastructure grant 2021-00162 from the Swedish Research Council. UN counts name their mission or agency in each entry. A party\'s own figure is shown as its claim. The troops audit uses the UCDP/PRIO Armed Conflict Dataset, version 26.1: Davies, Pettersson and Öberg, 2026, and Gleditsch, Wallensteen, Eriksson, Sollenberg and Strand, Armed Conflict 1946–2001: A New Dataset, Journal of Peace Research 39(5), 2002. The shape of the ties table follows the UCDP External Support Dataset: Meier, Karlén, Pettersson and Croicu, External Support in Armed Conflicts: Introducing the UCDP External Support Dataset (ESD), 1975–2017, Journal of Peace Research 60(3), 2023. Arms ties cite the SIPRI Arms Transfers Database, <a href="https://www.sipri.org/databases/armstransfers" target="_blank" rel="noopener">sipri.org</a>, March 2026 release, and the Kiel Institute\'s Ukraine Support Tracker.';
-  $('#keep-note').textContent = 'Every tie has a source and the date it was entered. A check is a person reopening the source and finding it still says what the row says. ' + (nChecked ? '' : 'No tie has been checked yet. ') + 'A tie fades on the map ninety days after it was entered or last checked, or when its sources are all from before the window or carry no date, and the table says which. ' + (D.kept_by || '') + ' A tie that has ended is drawn as a faint dotted line and dated. ' + (D.band_note || '') + ' Base map: Natural Earth, Equal Earth projection, so Africa is drawn at its true size.';
+  $('#keep-note').textContent = 'Every tie has a source and the date it was entered. A check is a person reopening the source and finding it still says what the row says. ' + (nChecked ? '' : 'No tie has been checked yet. ') + 'A tie fades on the map ninety days after it was entered or last checked, or when its sources all predate the period or carry no date; the table says which. ' + (D.kept_by || '') + ' A tie that has ended is drawn as a faint dotted line and dated. ' + (D.band_note || '') + ' Base map: Natural Earth, Equal Earth projection, which draws Africa at its true size.';
   const nTies = D.conflicts.reduce((n, c) => n + c.ties.length, 0);
   $('#stamp').innerHTML = 'Entered ' + esc(D.entered_on || D.as_of) + ' &middot; ' + (nChecked ? nChecked + ' ties checked' : 'no tie checked yet') + ' &middot; ' + nOld + ' on old evidence &middot; ' + (nUndated ? nUndated + ' with no dated source &middot; ' : '') + D.conflicts.filter(c => c.kind !== 'pressure').length + ' wars, ' + D.conflicts.filter(c => c.kind === 'pressure').length + ' squares, ' + nTies + ' ties &middot; base map Natural Earth 1:110m, 1:50m up close, Equal Earth projection, drawn with d3-geo &middot; data/conflicts.json';
 
@@ -1016,9 +1016,9 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     const k = m ? lv.keys.indexOf(m) : -1; const v = k >= 0 ? lv.best[k] : null;
     const prov = m && LV.candidate_from && m >= LV.candidate_from;
     const key = `<span class="m-level-key"><i class="solid"></i> UCDP's count <i class="prov"></i> provisional</span>`;
-    if (!m) mLabel.innerHTML = `today <span>· the bars are UCDP's best estimate of deaths by month in ${esc(lv.scope)}; hover a bar for its low and high; UCDP's data reaches ${esc(fmtMonth(U.reach))}</span>${key}`;
+    if (!m) mLabel.innerHTML = `today <span>· bars are UCDP's best estimate of deaths by month in ${esc(lv.scope)}; hover a bar for its range; UCDP's data reaches ${esc(fmtMonth(U.reach))}</span>${key}`;
     else if (v == null) mLabel.innerHTML = `${esc(fmtMonth(m))} <span>· not yet counted by UCDP</span>${key}`;
-    else mLabel.innerHTML = `${esc(fmtMonth(m))} <span>· ${v.toLocaleString('en-US')} deaths counted by UCDP in ${esc(lv.scope)}, its best; low ${(lv.low[k] || 0).toLocaleString('en-US')}, high ${(lv.high[k] || 0).toLocaleString('en-US')}${prov ? '; provisional' : ''}${k > 0 ? (v > lv.best[k - 1] ? ', up from ' : v < lv.best[k - 1] ? ', down from ' : ', the same as ') + lv.best[k - 1].toLocaleString('en-US') + ' the month before' : ''}</span>${key}`;
+    else mLabel.innerHTML = `${esc(fmtMonth(m))} <span>· ${v.toLocaleString('en-US')} deaths counted by UCDP in ${esc(lv.scope)}, best estimate, within a range of ${(lv.low[k] || 0).toLocaleString('en-US')} to ${(lv.high[k] || 0).toLocaleString('en-US')}${prov ? '; provisional' : ''}${k > 0 ? (v > lv.best[k - 1] ? ', up from ' : v < lv.best[k - 1] ? ', down from ' : ', the same as ') + lv.best[k - 1].toLocaleString('en-US') + ' the month before' : ''}</span>${key}`;
   }
   $('#grid-all').onclick = () => { state.gridAll = !state.gridAll; writeHash(); buildGrid(); syncGrid(); };
   allBtn.onclick = () => { state.all = !state.all; writeHash(); render(); };
@@ -1137,7 +1137,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       }
       const unplaced = Object.entries(cellsData.unplaced || {}).filter(([id, n]) => n > 0 && conflicts[id]).sort((a, b) => b[1] - a[1]).slice(0, 4);
       evNote.style.display = '';
-      evNote.innerHTML = `${esc(D.grid_note || '')} Placed: ${cellsData.placed_total.toLocaleString('en-US')} deaths; placed only to a country and not drawn: ${cellsData.unplaced_total.toLocaleString('en-US')}, of which ${unplaced.map(([id, n]) => esc(conflicts[id].short) + ' ' + n.toLocaleString('en-US')).join(', ')}. ${esc(cellsData.versions)}, pulled ${esc(cellsData.pulled)}.`;
+      evNote.innerHTML = `${esc(D.grid_note || '')} Placed: ${cellsData.placed_total.toLocaleString('en-US')} deaths; located only to a country and not drawn: ${cellsData.unplaced_total.toLocaleString('en-US')}, of which ${unplaced.map(([id, n]) => esc(conflicts[id].short) + ' ' + n.toLocaleString('en-US')).join(', ')}. ${esc(cellsData.versions)}, pulled ${esc(cellsData.pulled)}.`;
     } else evNote.style.display = 'none';
     for (const btn of [areasBtn, whoBtn]) btn.title = state.month ? 'The shading has no month; this turns it on and brings the map back to today.' : '';
     const turnsNow = [];
@@ -1484,7 +1484,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     for (const v of ticks) s += `<line class="axis" x1="${L}" x2="${W - R}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}"/><text class="v" x="${L - 6}" y="${(y(v) + 3).toFixed(1)}" text-anchor="end">${v ? (v / 1000) + 'k' : '0'}</text>`;
     s += `<line class="ref" x1="${L}" x2="${W - R}" y1="${y(median).toFixed(1)}" y2="${y(median).toFixed(1)}"/><text class="v" x="${(L + (W - L - R) * 0.45).toFixed(1)}" y="${(y(median) - 5).toFixed(1)}" text-anchor="middle">median year ${Math.round(median / 1000)}k</text>`;
     ys.forEach((r, i) => {
-      const title = `${r.year}: ${r.best.toLocaleString('en-US')} deaths, UCDP best (${r.low.toLocaleString('en-US')} to ${r.high.toLocaleString('en-US')}); in fighting ${r.state.toLocaleString('en-US')}, between armed groups ${r.nonstate.toLocaleString('en-US')}, civilians killed on purpose ${r.onesided.toLocaleString('en-US')}; ${r.countries_over_1000} countries over a thousand`;
+      const title = `${r.year}: ${r.best.toLocaleString('en-US')} deaths, UCDP best (${r.low.toLocaleString('en-US')} to ${r.high.toLocaleString('en-US')}); in fighting ${r.state.toLocaleString('en-US')}, between armed groups ${r.nonstate.toLocaleString('en-US')}, civilians killed deliberately ${r.onesided.toLocaleString('en-US')}; ${r.countries_over_1000} countries over a thousand`;
       const off = r === peak && r.best > max;
       s += `<g><title>${esc(title)}</title><rect class="bar${r === last ? ' on' : ''}" x="${x(i).toFixed(1)}" y="${y(r.best).toFixed(1)}" width="${bw.toFixed(1)}" height="${(y(0) - y(r.best)).toFixed(1)}" rx="1"/>${off ? '' : `<line class="range" x1="${(x(i) + bw / 2).toFixed(1)}" x2="${(x(i) + bw / 2).toFixed(1)}" y1="${y(r.low).toFixed(1)}" y2="${y(r.high).toFixed(1)}"/>`}</g>`;
       if (off) s += `<text x="${(x(i) + bw + 4).toFixed(1)}" y="${T + 8}">${r.year}: ${r.best.toLocaleString('en-US')}, off the chart</text>`;
@@ -1501,8 +1501,8 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     const above = ys.filter(r => r.best > median).length;
     if (D.years_1994) { $('#years-1994').textContent = D.years_1994; $('#years-1994').style.display = ''; }
     const otherAvgs = avgs.filter(a => a && a !== lastAvg).map(a => a.v), highestAvg = lastAvg.v >= Math.max(...otherAvgs);
-    const avgWord = `The solid line is the average of the five years to each year; for ${ys[ys.length - 5].year} to ${lastAvg.year} it is ${Math.round(lastAvg.v).toLocaleString('en-US')}${highestAvg ? ', the highest five-year average in the series, above the five years that carry ' + peak.year : ''}.`;
-    $('#years-key').textContent = `Bars are UCDP's best estimate by year, the thin line its low to high; the ${peak.year} bar runs off the top so the other years can be read. ${last.year}: ${last.best.toLocaleString('en-US')} deaths in ${last.countries_over_1000} countries over a thousand, against a median year of ${median.toLocaleString('en-US')} since ${ys[0].year}; ${above} of ${ys.length} years sit above the median. ${avgWord} UCDP version ${esc(Y.version || '')}.`;
+    const avgWord = `The solid line is the five-year average of deaths to each year; for ${ys[ys.length - 5].year} to ${lastAvg.year} it is ${Math.round(lastAvg.v).toLocaleString('en-US')}${highestAvg ? ', the highest in the series, narrowly above the five years that include ' + peak.year : ''}.`;
+    $('#years-key').textContent = `Bars are UCDP's best estimate of deaths by year, the thin line its range; the ${peak.year} bar runs off the top so the other years can be read. ${last.year}: ${last.best.toLocaleString('en-US')} deaths, with ${last.countries_over_1000} countries above 1,000, against a median year of ${median.toLocaleString('en-US')} since ${ys[0].year}; ${above} of ${ys.length} years are above the median. ${avgWord} UCDP version ${esc(Y.version || '')}.`;
   }
 
   /* ---- what changed: computed from the data file's history, with the hand-written corrections beside ---- */

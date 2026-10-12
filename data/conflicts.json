@@ -1,12 +1,12 @@
 {
  "as_of": "2026-10-12",
  "status": "entered",
- "rule": "A war is on the map if it had organized fighting with roughly a thousand or more deaths in the past twelve months, or is an active war between states, and an outside state fights there or backs a side.",
- "color_rule": "Five states get a color: the ones that fight in or back a side in the most wars. Everyone else is grey and labelled.",
+ "rule": "A war is on the map if organized fighting killed roughly 1,000 or more people in the past twelve months, or it is an active war between states, and an outside state fights in it or backs a side.",
+ "color_rule": "Five states are colored: those that fight in or back a side in the most wars. The rest are grey and labelled.",
  "tiers": {
   "open": {
    "word": "on the record",
-   "note": "The backer says so itself, or the side it helps shows the help in public and the backer does not deny it. A backer's words count as a source only when entered as one. Where the backer denies one kind of help and admits another, the tie is graded on what it admits and the table shows the denial. A tracker that compiles governments' own announcements, such as the Kiel Institute's, counts as their record. Where the backer says something else about what it is doing, the table carries its words beside ours."
+   "note": "The backer says so itself, or the side it helps shows the help in public and the backer does not deny it. A backer's words count as a source only when entered as one. Where the backer denies one kind of help and admits another, the tie is graded on what it admits and the table shows the denial. A tracker that compiles governments' own announcements, such as the Kiel Institute's, counts as their record. Where the backer describes what it is doing differently, the table carries its words beside ours."
   },
   "shown": {
    "word": "documented",
@@ -45,7 +45,7 @@
   "2": "thousands a year",
   "1": "about a thousand a year"
  },
- "band_note": "Deaths are a band for the past year, because the counters disagree. Every war's band is set from UCDP's count for the same window, October 2025 to the last month UCDP has reached, so the bands can be compared; each entry gives the other counts beside it with their own windows. About a thousand is 500 to 1,500; thousands is 1,500 to 10,000; tens of thousands is over 10,000. Where another counter lands lower than UCDP, the map draws the lower and the card says so. A party's own figure is a claim and never sets the band by itself. Where two counts differ by more than two times, the card gives both.",
+ "band_note": "Deaths are shown as a band for the past year, because the counters disagree. Every war's band is set from UCDP's count for the same period, October 2025 to the last month UCDP has reached, so the bands can be compared; each entry gives the other counts beside it, each with its own period. About 1,000 means 500 to 1,500 deaths; thousands, 1,500 to 10,000; tens of thousands, more than 10,000. Where another counter lands below UCDP, the map draws the lower band and the card says so. A party's own figure is a claim and never sets the band on its own. Where two counts differ by more than a factor of two, the card gives both.",
  "label_note": "label: [dx, dy, anchor] offset of the war's name from its glyph, in map units; anchor is start, middle or end",
  "backers": [
   {
@@ -938,7 +938,7 @@
     "end"
    ],
    "band": "3",
-   "band_source": "UCDP counted 66,737 (12,970 to 82,062) from October 2025 to August 2026; 75,174 in all of 2025, 62,775 of them civilians killed on purpose, which is why the low is so far below the best. ACLED counted at least 19,000 deaths in fighting in 2025. The UN human rights office documented more than 6,000 killed in three days when el-Fasher fell.",
+   "band_source": "UCDP counted 66,737 (12,970 to 82,062) from October 2025 to August 2026; 75,174 in all of 2025, 62,775 of them civilians killed deliberately, which is why the low is so far below the best. ACLED counted at least 19,000 deaths in fighting in 2025. The UN human rights office documented more than 6,000 killed in three days when el-Fasher fell.",
    "status": "War between the army and the RSF. The RSF took el-Fasher in October 2025 and holds Darfur. The army holds Khartoum and the centre. Famine in Darfur and parts of Kordofan.",
    "summary": "Two armed forces that once shared power turned on each other in April 2023. The RSF set up a rival government in 2025. The UN counts it the largest displacement in the world.",
    "parties": [
@@ -1585,7 +1585,7 @@
    ],
    "ucdp": {
     "against": "same band",
-    "note": "12,269 killed in fighting, the army against the RSF and its partner force, and 62,775 civilians killed on purpose, most at el-Fasher. The band counts both.",
+    "note": "12,269 killed in fighting, the army against the RSF and its partner force, and 62,775 civilians killed deliberately, most at el-Fasher. The band counts both.",
     "troops_note": "UCDP codes no troops in Sudan; our UAE and eastern Libya lines carry hired fighters and transit, not state troops."
    },
    "counted_by": [
@@ -4464,7 +4464,7 @@
    ],
    "ucdp": {
     "against": "same band",
-    "note": "Half of 2025 is civilians killed on purpose, on the coast and in Sweida. 564 so far in 2026. Nearly nine in ten of the 2026 rows carry a check flag.",
+    "note": "Half of 2025 is civilians killed deliberately, on the coast and in Sweida. 564 so far in 2026. Nearly nine in ten of the 2026 rows carry a check flag.",
     "troops_note": "UCDP names Türkiye against the Kurdish-led forces in 2025; our Türkiye line carries training and vehicles. UCDP's U.S. is beside the Syrian government against Islamic State; ours was with the Kurdish-led forces. Israel's strikes are not a secondary party in UCDP's coding."
    },
    "counted_by": [
@@ -6533,7 +6533,7 @@
    "turns": [],
    "ucdp": {
     "against": "UCDP lower",
-    "note": "Under a thousand, most of it fighting between armed groups and civilians killed on purpose. The UN's count for 2025 is higher.",
+    "note": "Under a thousand, most of it fighting between armed groups and civilians killed deliberately. The UN's count for 2025 is higher.",
     "troops_note": "UCDP's 2025 file does not name Uganda, which sent troops in March 2025 by its own account."
    },
    "counted_by": [
@@ -7642,13 +7642,13 @@
    "why": "Peace deal initialed in August 2025."
   }
  ],
- "areas_rule": "The colored view shades the provinces with ground fighting, sieges, or an air campaign against them in the past twelve months. A province hit only by the occasional long-range drone or missile is not shaded. Provinces are the unit the conflict trackers report, so the shading follows their borders, not front lines.",
- "tier_note": "The line answers one question: how do we know? The more broken the line, the less the backer has owned. These words grade the evidence for a line, never a speaker; the Word keeps one verb for everyone.",
- "naming_rule": "A state is named as it registers itself at the United Nations, in the short form it uses in English: Türkiye, Myanmar, Czechia, Eswatini. Armed groups keep their common name with their own name beside it.",
- "pressure_rule": "A state is also on the map where it uses military force or a blockade against another state, or on its territory, without sustained fighting: strikes, raids, seizures, sinkings. These are drawn as hollow squares with no lines and no death band; who helps whom is on the card. One is entered only when the acting state says so itself.",
- "participants_rule": "The participants view shades whole countries by their part: darkest where there is fighting on its own soil, lighter for a state in a war or using force from outside its borders, lightest for a state that backs a side. A country takes its darkest shade. Pick a state and only its wars are shaded: the ones it fights in or backs now. Its own country is outlined. A tie that has ended does not count here; its line still shows, dotted. Pick a war and only that war is shaded. The colored view narrows the same way.",
- "motion_rule": "Step back through the year. A war appears in the month its fighting began. A line appears in the month the help began. A line with no start month is older than this year and is there from the first frame, faint. A ring marks a war with something new that month; wars with nothing new that month are dimmed. A heavy line begins that month; a medium line began earlier this year. Lines are drawn as we know them today, not as they were known at the time. Circle size is the year's deaths and does not change with the month. One thing after another is not one thing because of another.",
- "grid_rule": "One row per state, one column per war or square. A mark is a tie. The lane says which party it helps; the line says how we know. A filled square means the state fights there itself. A mark is a tie on this map, not a measure of how much. A state with marks in lanes on opposing sides is on both sides. Faint and dated means it switched or stopped. Only states in two or more columns are shown unless you ask for all.",
+ "areas_rule": "The colored view shades provinces that saw ground fighting, sieges or an air campaign in the past twelve months. A province struck only by the occasional long-range drone or missile is not shaded. Provinces are the unit the conflict trackers report, so the shading follows their borders, not front lines.",
+ "tier_note": "The line answers one question: how do we know? The more broken the line, the less the backer has acknowledged. These words grade the evidence for a line, never a speaker; the Word keeps one verb for everyone.",
+ "naming_rule": "A state is named as it registers itself at the United Nations, in the short English form: Türkiye, Myanmar, Czechia, Eswatini. Armed groups keep their common name, with their own name beside it.",
+ "pressure_rule": "A state is also on the map where it uses military force or a blockade against another state, or on its territory, without sustained fighting: strikes, raids, seizures, sinkings. These are drawn as hollow squares, with no lines and no death band; who helps whom is on the card. One is entered only when the acting state says so itself.",
+ "participants_rule": "The participants view shades whole countries by their part: darkest where there is fighting on its own soil, lighter for a state in a war or using force from outside its borders, lightest for a state that backs a side. A country takes its darkest shade. Pick a state and only its wars are shaded, those it fights in or backs now, with its own country outlined. A tie that has ended does not count here; its line still shows, dotted. Pick a war and only that war is shaded. The colored view narrows the same way.",
+ "motion_rule": "Step back through the year. A war appears in the month its fighting began; a line in the month the help began. A line with no start month is older than this year and is there from the first frame, faint. A ring marks a war with something new that month; wars with nothing new are dimmed. A heavy line begins that month; a medium line began earlier in the year. Lines are drawn as they are known today, not as they were known at the time. Circle size is the year's deaths and does not change with the month. One thing after another is not one thing because of another.",
+ "grid_rule": "One row per state, one column per war or square. A mark is a tie: the lane says which party it helps, the line says how we know. A filled square means the state fights there itself. A mark records a tie, not its size. A state with marks in lanes on opposing sides is on both sides. Faint and dated means it switched or stopped. Only states in two or more columns are shown unless you ask for all.",
  "window": {
   "from": "2025-10",
   "to": "2026-10"
@@ -7659,7 +7659,7 @@
   "un": "a UN mission or agency",
   "party": "a party to the war, whose figure is a claim"
  },
- "ucdp_missing": "Above a thousand in UCDP and not on the map: Mexico, 7,904 deaths in 2025 in fighting between cartels, with a low of 2,720; Colombia, 1,392 so far in 2026; Tanzania, 1,009 civilians killed in 2025. Mexico is left off because no outside state fights there or backs a side. Colombia and Tanzania are not entered yet.",
+ "ucdp_missing": "Above 1,000 deaths in UCDP and not on the map: Mexico, 7,904 deaths in 2025 in fighting between cartels, with a low of 2,720; Colombia, 1,392 so far in 2026; Tanzania, 1,009 civilians killed in 2025. Mexico is left off because no outside state fights there or backs a side. Colombia and Tanzania are not yet entered.",
  "kept_by": "Kept by Kurt Olmstead with Claude, an AI assistant. The assistant drafts rows from the public record; the editor enters them. The second reading so far is by the assistant, not a person; a blind packet for a human reader is at data/blind_packet.json and scripts/blind_reader.py scores the grades.",
  "source_classes": {
   "backer": "the backer itself: its government, armed forces, state media or arms makers",
@@ -7671,9 +7671,9 @@
   "research": "a tracker, institute or rights group",
   "reference": "an encyclopedia page; it points at the sources but is not one"
  },
- "source_rule": "Each tie lists its sources with a class, a publisher, a date where we have one, and a link where we have one. A source without a link says so. A source that shows the help ending, or something beside the help, is marked and does not date the tie. A reference page never carries a tier by itself. An on-the-record tie stands on the backer's or the helped side's own words, or on a tracker that compiles them. A documented tie stands on its document. A reported tie wants two sources of different class, or two publishers not relaying the same officials; where one publisher alone carries it, the table says so. A weapons tie should cite SIPRI's arms transfers database, or say why SIPRI has no entry. The counts that follow are computed from the file each time it changes, not typed.",
- "finding_rule": "A finding by a state that fights in the war, or backs the other side in it, counts as alleged unless the thing found is public: a weapon recovered and traced, a cargo photographed, a document released. A sanctions notice names firms; it does not show the evidence. Press that only relays a party's officials counts as that party. A press item names whom it cites; where it only relays one side's officials, it is that side.",
- "evidence_rule": "Every tie carries the date of its latest dated source that shows the help. A source that shows the help ending, or reversing, ends the tie or leaves its date where it was; it does not refresh it. A tie whose sources all come from before the window, or carry no date, is drawn faint and the table says so. A bare year that is the window's own year counts as inside it.",
+ "source_rule": "Each tie lists its sources with a class, a publisher, a date where there is one and a link where there is one. A source without a link says so. A source that shows the help ending, or something other than the help, is marked and does not date the tie. A reference page never carries a tier on its own. An on-the-record tie rests on the backer's or the helped side's own words, or on a tracker that compiles them. A documented tie rests on its document. A reported tie needs two sources of different class, or two publishers not relaying the same officials; where one publisher alone carries it, the table says so. A weapons tie should cite SIPRI's arms transfers database, or say why SIPRI has no entry.",
+ "finding_rule": "A finding by a state that fights in the war, or backs the other side, counts as alleged unless the thing found is public: a weapon recovered and traced, a cargo photographed, a document released. A sanctions notice names firms; it does not show the evidence. A press item names whom it cites; where it only relays one side's officials, it counts as that side.",
+ "evidence_rule": "Every tie carries the date of its latest dated source showing the help. A source showing the help ending or reversing ends the tie or leaves its date as it was; it does not refresh it. A tie whose sources all predate the period, or carry no date, is drawn faint, and the table says so. A bare year that is the period's own year counts as inside it.",
  "corrections": [
   {
    "date": "2026-10-11",
@@ -7796,8 +7796,8 @@
    "why": "The second pass found a Bloomberg investigation, carried by Business Today, tracing Chinese parts in containers seized at Aden; the finder is outside the fight, so the tie is no longer only a claim by a side. A rule on the page says an alleged tie cannot hold a source from outside the fight, which is how this surfaced. The Panel of Experts' report due 15 October 2026 may move it again."
   }
  ],
- "ucdp_note": "UCDP counts deaths in fighting, deaths in fighting between armed groups, and civilians killed on purpose, each with a low, best and high. UCDP calls a conflict a war at a thousand battle deaths in a year and minor below that. The figures here are our own sums from data/ucdp.json, built by scripts/build_ucdp.py from the yearly file and the monthly candidate files, pulled after the 20th of each month. A few UCDP rows carry a high below their best; we sum them as given. A flag is UCDP's own mark that a row still needs a check on its deaths, its sides, its place or its source.",
- "tie_form": "A tie is one line from a backer to a side: who helps, whom, with what (the kinds), how we know (the tier), what the backer says about it (the stance), since when and how exact that date is, when it ended if it did, the sources by class with dates and links, the date of the latest dated source, the date the row was entered, and the date a person last checked it. The data is one file, data/conflicts.json, and this page draws it.",
+ "ucdp_note": "UCDP counts deaths in fighting between a state and an opponent, deaths in fighting between armed groups, and civilians killed deliberately, each with a low, best and high. UCDP calls a conflict a war at 1,000 battle deaths in a year, and minor below that. The figures here are our own sums from data/ucdp.json, built by scripts/build_ucdp.py from the yearly file and the monthly candidate files, pulled after the 20th of each month. A few UCDP rows carry a high below their best; they are summed as given. A flag is UCDP's own mark that a row still needs a check on its deaths, its sides, its place or its source.",
+ "tie_form": "A tie is one line from a backer to a side: who helps, whom, with what (the kinds), how we know (the tier), what the backer says (the stance), since when and how exact that date is, when it ended if it did, the sources by class with dates and links, the date of the latest dated source, the date the row was entered, and the date a person last checked it. The data is one file, data/conflicts.json; this page draws it.",
  "report_error": "If a line is wrong, say which tie, what is wrong, and where the better evidence is. Open an issue at",
  "second_reader": {
   "date": "2026-10-11",
@@ -7894,7 +7894,7 @@
    }
   ]
  },
- "esd_note": "The ties are also published as data/ties_esd.csv, one row per backer, side and year in the shape of UCDP's External Support Dataset, which stops at 2017, so the two can be read end to end. Our sixteen kinds of help fold into its eight: troops, air strikes, air defence and police count as troops, since the state's own forces engage; bases, transit, shelter and hosting as access to territory; weapons, drones and parts as weapons; oil as materiel; backing in public and at the UN as other. Alleged is our fourth tier.",
+ "esd_note": "The ties are also published as data/ties_esd.csv, one row per backer, side and year, in the shape of UCDP's External Support Dataset, which stops at 2017, so the two can be read end to end. Our sixteen kinds of help fold into its eight: troops, air strikes, air defence and police count as troops, since the state's own forces engage; bases, transit, shelter and hosting as access to territory; weapons, drones and parts as weapons; oil as materiel; backing in public and at the UN as other. Alleged is our fourth tier.",
  "source_counts": {
   "ties": 110,
   "live": 99,
@@ -7926,7 +7926,7 @@
     "id": "systems",
     "title": "One map, many wars",
     "hash": "all",
-    "text": "{wars} wars and {squares} uses of force short of war, with {ties} lines between {backers} backers and the sides they help. The Red Cross counts 130 armed conflicts, twice as many as fifteen years ago, and its president says they are joining into systems: the same states in war after war, the same weapons. This map draws those lines. A solid line is help the backer owns in public. The more broken the line, the less it owns."
+    "text": "{wars} wars and {squares} uses of force short of war, with {ties} lines between {backers} backers and the sides they help. The Red Cross counts 130 armed conflicts, twice as many as fifteen years ago, and its president says they are joining into systems: the same states in war after war, the same weapons. This map draws those lines. A solid line is help the backer acknowledges in public. The more broken the line, the less it acknowledges."
    },
    {
     "id": "gulf",
@@ -7938,13 +7938,13 @@
     "id": "americas",
     "title": "The Americas, force short of war",
     "hash": "b=usa",
-    "text": "The hollow squares in the Americas are U.S. force without a war: strikes on boats, the raid that took Maduro, the fuel blockade on Cuba, the strike in Ecuador. A square is entered only because the acting state said so itself. Squares get no lines; who helps is on the card. The United States is in {usa_n} of the {entries} wars and squares on this map, more than any other state."
+    "text": "The hollow squares in the Americas are U.S. force without a war: strikes on boats, the raid that took Maduro, the fuel blockade on Cuba, the strike in Ecuador. A square is entered only because the acting state said so itself. Squares have no lines; who helps is on the card. The United States is in {usa_n} of the {entries} wars and squares on this map, more than any other state."
    },
    {
     "id": "africa",
     "title": "Africa's wars and who arms them",
     "hash": "all&z=africa",
-    "text": "{africa_wars} of the {wars} wars are in Africa. Türkiye's drones are on the record in the Sahel, Somalia, Ethiopia and Nigeria, and reported in Sudan. The UAE is documented arming the RSF in Sudan and reported arming Ethiopia's government; Egypt is on the other side in both. Russia's troops are in the Sahel. Most of these lines are solid: the backers say so. The dashed ones in Sudan are what UN investigators documented and the backers deny."
+    "text": "{africa_wars} of the {wars} wars are in Africa. Türkiye's drones are on the record in the Sahel, Somalia, Ethiopia and Nigeria, and reported in Sudan. The UAE is documented arming the RSF in Sudan and reported arming Ethiopia's government; Egypt is on the other side in both. Russia's troops are in the Sahel. Most of these lines are solid: the backers say so themselves. The dashed ones in Sudan are what UN investigators documented and the backers deny."
    },
    {
     "id": "both",
@@ -7955,7 +7955,7 @@
   ]
  },
  "level_note": "The level is UCDP's best estimate of deaths by the month the event began, summed over the wars on this map, with its low and high beside it. It is not the world, and it is not a count of ours. October 2025 is el-Fasher: UCDP coded the fall of the city as tens of thousands killed in days. Months from the candidate files are provisional, about six weeks behind, and a share of their rows still carry a check flag. UCDP counts only what it can source, so where reporters cannot go it counts less; for el-Fasher its low is far below its best, and the bar shows the best.",
- "grid_note": "Where Uppsala counted: UCDP's events for the window in one-degree cells, drawn as squares whose area is deaths, under the provinces we shaded. Only events UCDP could place to a province or better are drawn. Deaths it could place only to a country are listed and not drawn; for Ukraine that is most of them. A grey cell is violence UCDP counted that is not on this map.",
- "years_note": "The level since 1989: UCDP's deaths in organized violence by year, every country, with the low and the high. The line is where the past year sits against {years} years of counting. A high year is not a world war; the question the page asks is whether the level is settling somewhere, and where.",
+ "grid_note": "Where Uppsala counted: UCDP's events for the period in one-degree cells, drawn as squares whose area is deaths, beneath the provinces we shade. Only events UCDP could place to a province or better are drawn. Deaths it could place only to a country are listed, not drawn; for Ukraine that is most of them. A grey cell is violence UCDP counted that is not on this map.",
+ "years_note": "The level since 1989: UCDP's deaths in organized violence by year, all countries, with the low and the high. The line shows where the past year sits against {years} years of counting. A high year is not a world war; the question is whether the level is settling, and where. The whole run, with the conflicts counted since 1946 and the price of oil, is on the level page.",
  "years_1994": "1994 is Rwanda. Of the 824,177 deaths UCDP counts that year, 772,463 were in Rwanda, almost all of them civilians killed deliberately in the genocide, in about a hundred days from April. UCDP's range for Rwanda that year is 347,614 to 1,612,663. It was one event in one country. The five-year average carries it from 1994 to 1998, so the plateau in the line over those years is a single event spread across five. The five years to 2025 contain no event of that size. On UCDP's best estimate each of them had more than 170,000 deaths, 2023 narrowly, and the heaviest wars changed: Ethiopia in 2021 and 2022, Ukraine from 2022, Gaza from 2023, Sudan from 2023, second only to Ukraine in 2025 and the site of most of that year's deliberate killings of civilians. That is what the average above the Rwanda years means, by a small margin and with the last two years still provisional: not a worse single year, but a level sustained for five. The figures are from UCDP's country-year file, version 26.1."
 }
