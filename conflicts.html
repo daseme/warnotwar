@@ -421,7 +421,7 @@
   <p class="panel-sub">One row per tie. The line shape in the tier column is the same one drawn on the map.</p>
   <div class="table-wrap">
   <table class="mono" id="ties">
-    <thead><tr><th>backer</th><th>helps</th><th>what</th><th>tier</th><th>source</th><th>checked</th></tr></thead>
+    <thead><tr><th>backer</th><th>helps</th><th>what</th><th>tier</th><th>source</th><th>entered</th></tr></thead>
     <tbody></tbody>
   </table>
   </div>
@@ -442,6 +442,20 @@
     <span><i class="mk ended" data-y="26"><svg viewBox="0 0 22 6"><path class="arc tier-open" d="M0,3 L22,3"/></svg></i> ended, with the year</span>
     <button class="chip ghost" id="grid-all" aria-pressed="false">show every state</button>
   </div>
+</section>
+
+<section class="panel" id="ucdp-panel">
+  <h2>Our counts against Uppsala</h2>
+  <p class="panel-sub" id="ucdp-sub"></p>
+  <div class="table-wrap">
+  <table class="mono" id="ucdp-table">
+    <thead><tr><th>war</th><th>our band</th><th>UCDP 2025, best (low to high)</th><th>2026 to August</th><th>Oct 2025 to Aug 2026</th><th>UCDP against the other counter</th><th>what UCDP counts</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  </div>
+  <div class="note" id="ucdp-missing"></div>
+  <h3>Counts and credit</h3>
+  <p class="prose" id="attribution"></p>
 </section>
 
 <section class="panel" id="rules">
@@ -503,7 +517,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const hueOf = b => (backers[b] && backers[b].hue) || 0;
   const GLYPH_R = { '3': 7.5, '2': 5.5, '1': 4 };
   const today = new Date();
-  const staleDays = t => t.checked ? Math.round((today - new Date(t.checked)) / 86400000) : null;
+  const staleDays = t => (t.checked || t.entered) ? Math.round((today - new Date(t.checked || t.entered)) / 86400000) : null;
   const isStale = t => { const n = staleDays(t); return n !== null && n > 90; };
   const kindsText = t => t.kinds.map(k => D.kinds[k] || k).join(', ');
   const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -558,15 +572,25 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
 
   /* ---- rules, stamp ---- */
   if (D.status === 'draft' && D.status_note) { const b = $('#draft'); b.style.display = 'block'; b.textContent = D.status_note; }
+  const nChecked = D.conflicts.reduce((n, c) => n + c.ties.filter(t => t.checked).length, 0);
   $('#rule-text').textContent = [D.rule, D.pressure_rule, D.color_rule, D.areas_rule, D.participants_rule, D.motion_rule].filter(Boolean).join(' ');
   const tierSample = (tier, hueClass = 'hue-0', w = 40) => `<svg viewBox="0 0 ${w} 8" aria-hidden="true"><path class="arc tier-${tier} ${hueClass} legend-line" d="M1,4 L${w - 1},4"/></svg>`;
   $('#tier-note').textContent = D.tier_note || '';
   $('#naming-note').innerHTML = esc(D.naming_rule || '') + ' <a href="/methodology.html">The methodology page</a> keeps the rule.';
   $('#tiers').innerHTML = Object.entries(D.tiers).map(([id, t]) => `<div><div class="w">${tierSample(id)} ${esc(t.word)}</div><div class="n">${esc(t.note)}</div></div>`).join('');
   $('#excluded').innerHTML = (D.excluded || []).map(x => `<li><b>${esc(x.name)}.</b> ${esc(x.why)}</li>`).join('');
-  $('#keep-note').textContent = 'Every tie has a source and the date it was last checked. A tie not checked in ninety days fades on the map and says so in the table. A tie that has ended is drawn as a faint dotted line and dated. ' + (D.band_note || '') + ' Base map: Natural Earth, Equal Earth projection, so Africa is drawn at its true size.';
+  /* the UCDP comparison */
+  const ucdpNum = v => (v == null ? '—' : Number(v).toLocaleString('en-US'));
+  const ucdpLine = u => `${ucdpNum(u.best_2025)}${u.low_2025 != null && u.high_2025 != null ? ' (' + ucdpNum(u.low_2025) + ' to ' + ucdpNum(u.high_2025) + ')' : ''}`;
+  if (D.ucdp_meta) {
+    $('#ucdp-sub').textContent = D.ucdp_meta.note + ' Versions: ' + D.ucdp_meta.versions + '. Pulled ' + D.ucdp_meta.pulled + '.';
+    $('#ucdp-table tbody').innerHTML = D.conflicts.filter(c => c.ucdp).map(c => `<tr><td>${esc(c.name)}</td><td>${esc(D.bands[c.band] || 'not entered')}</td><td>${ucdpLine(c.ucdp)}</td><td>${ucdpNum(c.ucdp.best_2026_to_aug)}</td><td>${ucdpNum(c.ucdp.best_window)}</td><td>${esc(c.ucdp.against)}</td><td class="src">${esc(c.ucdp.note)}</td></tr>`).join('');
+    $('#ucdp-missing').textContent = D.ucdp_missing || '';
+  }
+  $('#attribution').innerHTML = 'Figures credited to ACLED (Armed Conflict Location &amp; Event Data), <a href="https://acleddata.com" target="_blank" rel="noopener">acleddata.com</a>, are taken from ACLED\'s published reports or from others\' reports of them; each entry says which. We did not download ACLED data. UCDP figures are from the Uppsala Conflict Data Program, <a href="https://ucdp.uu.se" target="_blank" rel="noopener">ucdp.uu.se</a>, ' + esc((D.ucdp_meta && D.ucdp_meta.versions) || '') + ', used under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>: Davies, Pettersson and Öberg, Organized violence 1989–2025, and violent political protests, Journal of Peace Research, 2026, doi 10.1093/jopres/xjag046; Sundberg and Melander, Introducing the UCDP Georeferenced Event Dataset, Journal of Peace Research 50(4), 2013; Hegre, Croicu, Eck and Högbladh, Introducing the UCDP Candidate Events Dataset, Research &amp; Politics 7(3), 2020. UCDP is part of and funded by DEMSCORE, national research infrastructure grant 2021-00162 from the Swedish Research Council. UN counts name their mission or agency in each entry. A party\'s own figure is shown as its claim.';
+  $('#keep-note').textContent = 'Every tie has a source and the date it was entered. A check is a person reopening the source and finding it still says what the row says. ' + (nChecked ? '' : 'No tie has been checked yet. ') + 'A tie fades on the map ninety days after it was entered or last checked, and the table says so. ' + (D.kept_by || '') + ' A tie that has ended is drawn as a faint dotted line and dated. ' + (D.band_note || '') + ' Base map: Natural Earth, Equal Earth projection, so Africa is drawn at its true size.';
   const nTies = D.conflicts.reduce((n, c) => n + c.ties.length, 0);
-  $('#stamp').innerHTML = 'Sources checked ' + esc(D.checked_on || D.as_of) + ' &middot; ' + D.conflicts.length + ' wars, ' + nTies + ' ties &middot; base map Natural Earth 1:110m, Equal Earth projection &middot; data/conflicts.json';
+  $('#stamp').innerHTML = 'Entered ' + esc(D.entered_on || D.as_of) + ' &middot; ' + (nChecked ? nChecked + ' ties checked' : 'no tie checked yet') + ' &middot; ' + D.conflicts.filter(c => c.kind !== 'pressure').length + ' wars, ' + D.conflicts.filter(c => c.kind === 'pressure').length + ' squares, ' + nTies + ' ties &middot; base map Natural Earth 1:110m, Equal Earth projection &middot; data/conflicts.json';
 
   /* ---- base map ---- */
   const svg = $('#map');
@@ -868,7 +892,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     if (t.stance) bits.push(`<span class="stance">${esc(b.short)} ${esc(t.stance)}</span>`);
     if (t.since) bits.push(`since ${esc(fmtMonth(t.since))}`);
     if (t.ended) bits.push(`ended ${esc(fmtMonth(t.ended))}`);
-    else if (isStale(t)) bits.push(`last checked ${esc(t.checked)}`);
+    else if (isStale(t)) bits.push(t.checked ? `last checked ${esc(fmtMonth(t.checked))}` : `entered ${esc(fmtMonth(t.entered))}, not re-checked`);
     return `<span class="tier">${tierSample(t.tier, 'hue-' + hueOf(t.backer) + (t.ended ? ' ended' : ''), 30)} <span>${bits.join(' · ')}</span></span>`;
   }
 
@@ -885,7 +909,8 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
         <div class="s">${esc(c.status)}${c.band ? ' &middot; ' + esc(D.bands[c.band]) : c.kind === 'pressure' ? '' : ' &middot; deaths not entered'}</div>
         <div class="s" style="margin-top:6px">${esc(tieSummary(c))}.</div>
         <p>${esc(c.summary)}</p>
-        ${c.band_source ? `<div class="s" style="margin-top:8px">Deaths: ${esc(c.band_source)}</div>` : ''}
+        ${c.band_source ? `<div class="s" style="margin-top:8px">Deaths: ${esc(c.band_source)}${Array.isArray(c.counted_by) && D.band_classes ? ' Counted by ' + esc(listNames(c.counted_by.map(k => D.band_classes[k] || k))) + '.' : ''}</div>` : ''}
+        ${c.ucdp ? `<div class="s" style="margin-top:6px">UCDP: ${ucdpLine(c.ucdp)} in 2025; ${ucdpNum(c.ucdp.best_2026_to_aug)} from January to August 2026; ${ucdpNum(c.ucdp.best_window)} in the eleven months to August. ${esc(c.ucdp.note)}</div>` : ''}
         ${c.actor_statement ? `<div class="s" style="margin-top:8px">What the acting state says: ${esc(c.actor_statement)}</div>` : ''}
         ${c.target_statement ? `<div class="s" style="margin-top:6px">What the other side says: ${esc(c.target_statement)}</div>` : ''}
         ${state.areas && !state.month && areasData && areasData[c.id] ? `<div class="s" style="margin-top:8px">Colored: ${esc(areasData[c.id].regions.join(', '))}</div>` : ''}
@@ -988,7 +1013,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
         <td>${esc(kindsText(t))}</td>
         <td>${tierLabel(t)}</td>
         <td class="src">${srcHTML(t)}</td>
-        <td class="chk">${t.checked ? esc(t.checked) : '—'}</td></tr>`;
+        <td class="chk">entered ${esc(t.entered || '—')}${t.checked ? ' · checked ' + esc(t.checked) : ''}</td></tr>`;
     }
     if (c.none_note) html += `<tr class="tie" data-conflict="${esc(c.id)}"><td colspan="6" style="color:var(--ink-60)">${esc(c.none_note)}</td></tr>`;
   }
