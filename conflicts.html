@@ -249,7 +249,15 @@
   .all .arc.new:not(.stale), svg.motion .arc.new:not(.stale) { opacity: 1 !important; stroke-width: 2.2; }
   .conflict.turn .glyph { stroke: var(--ink); stroke-width: 2.2; }
   .turn-ring { fill: none; stroke: var(--danger); stroke-width: 1.2; vector-effect: non-scaling-stroke; opacity: 0.7; pointer-events: none; }
-  svg.motion .conflict:not(.turn):not(.on) .lbl { opacity: 0.55; }
+  svg.motion .conflict:not(.turn):not(.on) .lbl { opacity: 0.45; }
+  svg.motion .conflict:not(.turn):not(.on) .glyph { opacity: 0.3; }
+  /* three weights while stepping: begins this month (new), began earlier this year (recent), older than the window (the faint background) */
+  svg.motion .arc.recent.tier-open:not(.stale) { opacity: 0.85 !important; stroke-width: 1.6; }
+  svg.motion .arc.recent.tier-shown:not(.stale) { opacity: 0.75 !important; stroke-width: 1.6; }
+  svg.motion .arc.recent.tier-reported:not(.stale) { opacity: 0.6 !important; stroke-width: 1.6; }
+  svg.motion .arc.recent.tier-claimed:not(.stale) { opacity: 0.5 !important; stroke-width: 1.6; }
+  svg.motion .arc.recent.ended { opacity: 0.3 !important; }
+  svg.motion .arc:not(.new):not(.recent):not(.ended) { opacity: 0.28 !important; stroke-width: 1.1; }
   @media (max-width: 640px) {
     table.grid th.who, table.grid td.who { min-width: 104px; padding-right: 8px; }
     table.grid td.who .c { display: block; margin-left: 0; margin-top: 2px; }
@@ -613,7 +621,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     Object.entries(D.bands).sort((a, b) => b[0].localeCompare(a[0])).map(([id, label]) => `<span><i class="g s${id}"></i> ${esc(label)}</span>`).join('') +
     `<span><i class="g ring"></i> not entered</span>` +
     `<span class="k" style="margin-left:8px">also</span><span><i class="g sq"></i> force short of war</span><span id="legend-areas" style="display:none"><i class="g fill"></i> provinces with fighting this year</span>` +
-    `<span id="legend-motion" style="display:none"><i class="g ring" style="border-color:var(--danger);width:11px;height:11px"></i> something new this month <svg viewBox="0 0 40 8" style="margin-left:8px"><path class="arc tier-open hue-0" d="M1,4 L39,4" style="stroke-width:2.6"/></svg> line begins this month</span>` +
+    `<span id="legend-motion" style="display:none"><i class="g ring" style="border-color:var(--danger);width:11px;height:11px"></i> something new this month <svg viewBox="0 0 40 8" style="margin-left:8px"><path class="arc tier-open hue-0" d="M1,4 L39,4" style="stroke-width:2.6"/></svg> line begins this month <svg viewBox="0 0 40 8" style="margin-left:8px"><path class="arc tier-open hue-0" d="M1,4 L39,4" style="stroke-width:1.6;opacity:0.85"/></svg> began earlier this year <svg viewBox="0 0 40 8" style="margin-left:8px"><path class="arc tier-open hue-0" d="M1,4 L39,4" style="stroke-width:1.2;opacity:0.4"/></svg> older than this year</span>` +
     `<span id="legend-who" style="display:none"><i class="g pf" style="background:color-mix(in srgb, var(--danger) 52%, var(--land))"></i> fighting on its soil <i class="g pf" style="background:color-mix(in srgb, var(--danger) 30%, var(--land));margin-left:10px"></i> in it from outside <i class="g pf" style="background:color-mix(in srgb, var(--danger) 14%, var(--land));margin-left:10px"></i> backs a side</span>`;
 
   /* ---- backer chips ---- */
@@ -792,7 +800,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       if (a) d += (d ? 'L' : 'M' + project(b.lon, b.lat).map(v => v.toFixed(1)).join(',') + 'L') + a[0].toFixed(1) + ',' + a[1].toFixed(1);
       if (!d) continue;
       const endedNow = t.ended && (!state.month || monthKey(t.ended) <= state.month);
-      const cls = ['arc', 'tier-' + t.tier, 'hue-' + hueOf(t.backer), isStale(t) ? 'stale' : '', endedNow ? 'ended' : '', (state.month && t.since === state.month) ? 'new' : ''].join(' ');
+      const cls = ['arc', 'tier-' + t.tier, 'hue-' + hueOf(t.backer), isStale(t) ? 'stale' : '', endedNow ? 'ended' : '', (state.month && t.since === state.month) ? 'new' : (state.month && t.since && t.since < state.month) ? 'recent' : ''].join(' ');
       el('path', { class: cls, d, 'data-conflict': c.id, 'data-backer': t.backer }, gArcs);
       if (allView) {
         const hit = el('path', { class: 'arc-hit', d }, gArcs);
