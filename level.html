@@ -201,6 +201,14 @@
   .m-strip .l { font-family: var(--mono); font-size: 9px; color: var(--ink-45); text-align: center; margin-top: 4px; }
   .m-strip button.on .l { color: var(--ink); }
 
+  /* a section that folds under its heading */
+  details.fold summary { list-style: none; cursor: pointer; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+  details.fold summary::-webkit-details-marker { display: none; }
+  details.fold summary h2 { margin: 0; }
+  details.fold summary .n, details.fold summary .hint { font-family: var(--mono); font-size: 11px; color: var(--ink-45); }
+  details.fold summary .hint::after { content: ' \25BE'; }
+  details.fold[open] summary .hint::after { content: ' \25B4'; }
+  details.fold summary:hover .hint { color: var(--ink); }
   ul.plain { list-style: none; padding: 0; margin: 10px 0 0; font-size: 0.98rem; line-height: 1.7; color: var(--ink-80); max-width: 46em; }
   ul.plain li { padding: 6px 0; border-bottom: 1px solid var(--ink-10); }
   ul.plain li b { color: var(--ink); font-weight: 500; }
@@ -307,13 +315,15 @@
 </section>
 
 <section class="panel" id="rules">
-  <h2>How this page is kept</h2>
+  <details class="fold" id="rules-fold">
+  <summary><h2>How this page is kept</h2><span class="n">the counts, the price, and credit</span><span class="hint">open</span></summary>
   <h3>The counts</h3>
   <p class="prose" id="rule-level"></p>
   <h3>The price</h3>
   <p class="prose" id="rule-oil"></p>
   <h3>Counts and credit</h3>
   <p class="prose" id="credit"></p>
+  </details>
 </section>
 
 <a class="back" href="/">&larr; warnotwar</a>
