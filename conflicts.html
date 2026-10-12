@@ -250,6 +250,12 @@
   .conflict.turn .glyph { stroke: var(--ink); stroke-width: 2.2; }
   .turn-ring { fill: none; stroke: var(--danger); stroke-width: 1.2; vector-effect: non-scaling-stroke; opacity: 0.7; pointer-events: none; }
   svg.motion .conflict:not(.turn):not(.on) .lbl { opacity: 0.55; }
+  @media (max-width: 640px) {
+    table.grid th.who, table.grid td.who { min-width: 104px; padding-right: 8px; }
+    table.grid td.who .c { display: block; margin-left: 0; margin-top: 2px; }
+    .grid-hint { display: block; }
+  }
+  .grid-hint { display: none; font-family: var(--mono); font-size: 10px; color: var(--ink-45); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 6px; }
   @media (max-width: 640px) { .stepper { flex-wrap: wrap; } .stepper .k { flex-basis: 100%; } .stepper .m-label { flex: 1; min-width: 0; font-size: 13px; white-space: nowrap; } }
 
   /* ---- the same states, war after war: grid ---- */
@@ -414,6 +420,7 @@
   <h2>The same states, war after war</h2>
   <p class="panel-sub" id="grid-rule"></p>
   <div class="grid-wrap"><table class="grid" id="grid"></table></div>
+  <div class="grid-hint">drag the grid sideways to see every column</div>
   <div class="note" style="margin-top:10px">Lanes in a column are the war's sides, top to bottom as the card lists them. Hover a mark for the side, the help, and how we know. Click a mark for the war, a name for the state.</div>
   <div class="grid-foot">
     <span><i class="mk"><svg viewBox="0 0 22 6"><path class="arc tier-open" d="M0,3 L22,3"/></svg></i> on the record</span>
