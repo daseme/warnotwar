@@ -82,3 +82,32 @@ The widest disagreement is not with us but between the two trackers we both lean
 - Data: ged261-csv.zip; GEDEvent_v26_01_26_06.csv, GEDEvent_v26_0_7.csv, GEDEvent_v26_0_8.csv; ucdp-prio-acd-261, ucdp-brd-conf-261, ucdp-nonstate-261, ucdp-onesided-261, ucdp-actor-261, organizedviolencecy-261
 - Davies, Pettersson and Öberg, "Organized violence 1989–2025", Journal of Peace Research 63(4), 2026
 - Citation required: the dataset papers (Sundberg and Melander 2013 for GED; Hegre et al. 2020 for Candidate; Meier et al. 2022 for ESD) and the version number
+
+## 6. Red team: is our data trustworthy, and why would we be better
+
+Written 2026-10-11 against the data file as it stood that day (112 ties) and the UCDP codebooks.
+
+**What UCDP's trust rests on.** Full-time long-term coders. A two-pass method: global wires and BBC Monitoring, then local sources. Weekly resolution meetings. Automated tests before release. A persistent event id across versions, so revisions can be traced. Low, best and high on every event, with a source reference and a count of sources, and precision codes for place and date. Peer-reviewed dataset papers. University funding and no belligerent among funders. Thirty years as the field's reference. Where it is weak: it is media-dependent and says so; best is conservative by design, so closed theatres undercount (Myanmar 2,317 against ACLED's 15,000); Sudan's one-sided best of 62,775 sits on a low of 8,300; candidate data is six weeks behind and 37 percent flagged; the government is whoever holds the capital; and it has coded no support but troops since 2017.
+
+**Where a reader should not trust us today.**
+
+1. The checked date is the entry date. Every tie says 2026-10-11 because that is the day the rows were drafted. Nothing has been re-checked. The field should be called `entered` until a person reopens a source and confirms it, and the fade rule should wait for that.
+2. "On the record" is used as a verdict on at least eight ties where the backer says something else about what it is doing: Kenya and the RSF, India and the Afghan Taliban, China and Pakistan, the U.S. air strikes and Yemen's government, Qatar and Hamas, Mexico and Cuba. The help may be on the record; the framing "backs that side" is ours.
+3. The ladder does not ask whether the finding comes from a party to the fight. Five ties rest on U.S. Treasury or State findings, three of them in wars where the United States is a belligerent. By our own fourth tier, that is a side saying so.
+4. Sixteen ties link Wikipedia, eleven of them on the record. All are in the newest entries, drafted when the search budget was gone. Four "documented" ties do not link the document they name. Forty-seven source texts name a primary document and link something else.
+5. Twenty-four ties draw a 2025 to 2026 line on evidence with no date after 2024. One says so in its own note: "The evidence is from 2021 and 2022. No fresh proof for 2026."
+6. The Sahel band says tens of thousands; its own source sentence says just under ten thousand. Myanmar's band rests on ACLED's count alone. The band note says bands come from trackers and the UN, but Ukraine's, the Gulf's and Yemen's come from the parties.
+7. The windows are mixed: calendar 2025, April to March, one quarter, and soon UCDP's to August.
+8. Sixty-eight ties name two or more sources in text; each has one link and no date.
+9. There is no attribution for ACLED or UCDP anywhere on the page. Both require it.
+10. A tie is one editor's reading of one link, entered by a research agent in one day, with no second reader and no corrections log. That is a draft of a dataset.
+
+**The claim that survives.** None of "more accurate," "more complete," "verified," "independent" or "definitive." What is true: faster, narrower, about help rather than deaths, with the evidence shown on every line, and auditable against UCDP where UCDP has anything to audit. The sentence the page can carry: "UCDP counts the dead; this map draws who helps whom. The death bands are rounded from UCDP, ACLED and UN counts, and where they disagree the page says so. The ties are ours: each one names its evidence and how far the backer owns it, because no public dataset has tracked arms, money, bases or intelligence since 2017."
+
+**Six weeks.**
+
+Week 1: fix the Sahel band or its sentence and settle Myanmar against both counts; add the attribution block; rename `checked` to `entered`; make the band note say which counts are parties' counts; drop the placeholder Philippines tie; publish the fifteen-row comparison table on the page; name the editor and say a research agent drafts and a person enters.
+
+Weeks 2 and 3: sources become a list with class, publisher, title, date, link and quote; add `evidence_to` and a precision for `since`, and fade or end the twenty-four undated ties; replace the sixteen Wikipedia links with the statements they paraphrase and point the four documented ties at their documents; write the rule for findings by belligerents and re-tier the five; add `disputed_by` beside the tier word and framing notes on the inferred open ties; start a corrections log the reader can see.
+
+Weeks 4 to 6: two sources of different class for every non-open tie, or the tier drops a step, with the count published; UCDP conflict and dyad ids per entry with low, best and high for the window, the version string, the flagged share, and a monthly pull after the 20th shown with its own stamp; the two-numbers sentence wherever counts differ by more than two times; a second reader re-tiers every tie blind, with the disagreement rate published; a map methodology section with the standard form for a tie and how to report an error.
