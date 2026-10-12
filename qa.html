@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="paper">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Questions and answers, kept as they were asked and answered, each one dated.">
+<title>Q and A — warnotwar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* q and a — shares the paper/ink token set with the rest of the site */
+  :root, [data-theme="paper"] {
+    --bg: #f7f2e7; --bg-raise: #fcfaf3; --bg-sink: #efe8da;
+    --ink: #1a1610;
+    --ink-80: rgba(26,22,16,0.8); --ink-60: rgba(26,22,16,0.6); --ink-45: rgba(26,22,16,0.45);
+    --ink-30: rgba(26,22,16,0.3); --ink-18: rgba(26,22,16,0.18); --ink-10: rgba(26,22,16,0.1); --ink-06: rgba(26,22,16,0.06);
+    --rate: #1d4e89; --gold: #8f6d14; --danger: #a03428;
+    --chip-on-bg: #1a1610; --chip-on-ink: #f7f2e7;
+    /* backer hues — validated all-pairs on the paper surface */
+    --b1: #2a78d6; --b2: #eb6834; --b3: #1baf7a; --b4: #a0308e; --b5: #5634ac;
+    --land: rgba(26,22,16,0.07); --land-line: rgba(26,22,16,0.2); --grat: rgba(26,22,16,0.05);
+  }
+  [data-theme="ink"] {
+    --bg: #17140f; --bg-raise: #1e1a14; --bg-sink: #14110c;
+    --ink: #efe8d8;
+    --ink-80: rgba(239,232,216,0.8); --ink-60: rgba(239,232,216,0.6); --ink-45: rgba(239,232,216,0.45);
+    --ink-30: rgba(239,232,216,0.3); --ink-18: rgba(239,232,216,0.18); --ink-10: rgba(239,232,216,0.1); --ink-06: rgba(239,232,216,0.06);
+    --rate: #7aa8dd; --gold: #c9a94f; --danger: #d06a5c;
+    --chip-on-bg: #efe8d8; --chip-on-ink: #17140f;
+    /* backer hues — validated all-pairs on the ink surface */
+    --b1: #3987e5; --b2: #d95926; --b3: #199e70; --b4: #c454b0; --b5: #724aab;
+    --land: rgba(239,232,216,0.07); --land-line: rgba(239,232,216,0.2); --grat: rgba(239,232,216,0.05);
+  }
+  :root {
+    --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+    --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body {
+    margin: 0; min-height: 100%; font-family: var(--serif);
+    background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased;
+    transition: background 0.25s ease, color 0.25s ease; overflow-x: clip;
+  }
+  body { display: flex; flex-direction: column; align-items: center; padding: 52px 24px 120px; }
+  ::selection { background: var(--rate); color: var(--bg); }
+  a { color: var(--ink-80); text-underline-offset: 3px; }
+  a:hover { color: var(--ink); }
+
+  /* ---- nav ---- */
+  nav.topnav {
+    position: fixed; inset: 0 0 auto 0; z-index: 50; height: 52px;
+    display: flex; align-items: center; gap: 22px; flex-wrap: nowrap;
+    overflow: hidden; padding: 0 28px;
+    background: color-mix(in srgb, var(--bg) 94%, transparent);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--ink-10);
+    color: var(--ink); transition: background 0.25s ease, color 0.25s ease;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  nav.topnav a { position: relative; color: var(--ink); text-decoration: none; opacity: 0.62; transition: opacity 0.2s ease; white-space: nowrap; flex-shrink: 0; }
+  nav.topnav a::after { content: ''; position: absolute; left: 0; bottom: -3px; width: 0; height: 1px; background: var(--ink); transition: width 0.25s ease; }
+  nav.topnav a:hover { opacity: 1; }
+  nav.topnav a:hover::after, nav.topnav a.here::after { width: 100%; }
+  nav.topnav a.here { opacity: 1; }
+  nav.topnav .spacer { flex: 1; }
+  button.theme-toggle {
+    font: inherit; letter-spacing: inherit; text-transform: inherit;
+    background: none; border: 1px solid var(--ink-30); color: var(--ink);
+    padding: 4px 10px; cursor: pointer; border-radius: 999px; transition: background 0.2s ease;
+  }
+  button.theme-toggle:hover { background: var(--ink-06); }
+
+  /* ---- hero ---- */
+  .hero { width: 100%; max-width: 860px; text-align: center; padding-top: 56px; }
+  .hero-kicker { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.6em; }
+  h1 { font-size: clamp(2rem, 4.8vw, 3.3rem); font-weight: 500; letter-spacing: -0.015em; line-height: 1.12; margin: 0 0 0.55em; text-align: center; }
+  .subtitle { max-width: 640px; text-align: center; color: var(--ink-80); font-size: 1.08rem; line-height: 1.75; margin: 0 auto 1em; }
+
+  #load-error, #draft {
+    display: none; width: 100%; max-width: 1080px;
+    font-family: var(--mono); font-size: 11px; line-height: 1.7;
+    padding: 10px 14px; margin-top: 2em;
+  }
+  #load-error { color: var(--danger); border: 1px solid color-mix(in srgb, var(--danger) 40%, transparent); background: color-mix(in srgb, var(--danger) 6%, transparent); }
+  #draft { color: var(--ink-80); border: 1px solid color-mix(in srgb, var(--gold) 50%, transparent); background: color-mix(in srgb, var(--gold) 7%, transparent); }
+
+  /* ---- sections ---- */
+  section.panel { width: 100%; max-width: 1080px; margin-top: 96px; padding-top: 44px; border-top: 1px solid var(--ink-18); scroll-margin-top: 72px; }
+  section.panel.first { margin-top: 2.6em; padding-top: 0; border-top: 0; max-width: 1280px; }
+  h2 { font-size: 1.5rem; font-weight: 500; letter-spacing: -0.005em; margin: 0 0 0.35em; }
+  .panel-sub { font-family: var(--mono); font-size: 11.5px; color: var(--ink-60); margin: 0 0 20px; line-height: 1.75; max-width: 78em; }
+  h3 { font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-60); margin: 28px 0 10px; }
+  .prose { font-size: 1.02rem; line-height: 1.85; color: var(--ink-80); max-width: 46em; }
+  .prose strong { color: var(--ink); font-weight: 500; }
+  .note { font-size: 11.5px; color: var(--ink-60); margin-top: 18px; line-height: 1.85; font-family: var(--mono); max-width: 72em; padding-left: 16px; border-left: 1px solid var(--ink-18); }
+
+  .stamp { font-family: var(--mono); font-size: 10.5px; color: var(--ink-45); margin-top: 3em; line-height: 1.8; width: 100%; max-width: 760px; }
+  a.back { display: inline-block; margin-top: 5em; color: var(--ink-60); font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; }
+  a.back:hover { color: var(--ink); }
+  /* ---- entries ---- */
+  .entry { width: 100%; max-width: 760px; margin-top: 72px; padding-top: 36px; border-top: 1px solid var(--ink-18); scroll-margin-top: 72px; }
+  .entry:first-of-type { margin-top: 2.4em; }
+  .entry .k { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-45); }
+  .entry h2 { font-size: 1.55rem; font-weight: 500; line-height: 1.25; margin: 8px 0 10px; }
+  .entry .src { font-family: var(--mono); font-size: 11px; color: var(--ink-60); line-height: 1.75; }
+  .entry .src a { color: var(--rate); }
+  .entry .who { font-size: 1rem; line-height: 1.7; color: var(--ink-80); margin: 14px 0 0; }
+  .entry .why { font-size: 1.02rem; line-height: 1.7; color: var(--ink); margin: 10px 0 0; padding-left: 16px; border-left: 2px solid var(--gold); }
+  ol.points { list-style: none; counter-reset: p; padding: 0; margin: 26px 0 0; }
+  ol.points li { counter-increment: p; display: grid; grid-template-columns: 28px 1fr; gap: 10px; padding: 12px 0; border-top: 1px solid var(--ink-10); font-size: 1.02rem; line-height: 1.7; color: var(--ink-80); }
+  ol.points li::before { content: counter(p, decimal-leading-zero); font-family: var(--mono); font-size: 10.5px; color: var(--ink-45); padding-top: 5px; }
+  ol.points li q { color: var(--ink); font-style: italic; quotes: "\201C" "\201D"; }
+  ol.points .tags { display: inline-flex; gap: 6px; margin-left: 10px; vertical-align: middle; }
+  ol.points .tags a { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; color: var(--ink-60); border: 1px solid var(--ink-18); padding: 1px 7px; }
+  ol.points .tags a:hover { color: var(--ink); border-color: var(--gold); }
+  .entry .q { font-size: 1.55rem; font-weight: 500; line-height: 1.3; margin: 8px 0 6px; }
+  .entry .by { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-45); margin: 0 0 22px; }
+  .entry .a { font-size: 1.08rem; line-height: 1.8; color: var(--ink-80); margin: 10px 0 0; padding-left: 16px; border-left: 2px solid var(--gold); }
+  .entry .a p { margin: 0 0 0.9em; }
+  .entry .a p:last-child { margin-bottom: 0; }
+  .entry .added { font-family: var(--mono); font-size: 10.5px; color: var(--ink-45); margin-top: 18px; }
+  @media (max-width: 720px) {
+    body { padding: 52px 16px 100px; }
+    nav.topnav { gap: 14px; padding: 12px 16px; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+    nav.topnav::-webkit-scrollbar { display: none; }
+  }
+
+  /* ---- testing menu: the pages still being built sit under one dropdown ---- */
+  nav.topnav { overflow: visible; }
+  nav.topnav details.testing { position: relative; flex-shrink: 0; }
+  nav.topnav details.testing summary { list-style: none; cursor: pointer; color: var(--ink); opacity: 0.62; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; transition: opacity 0.2s ease; }
+  nav.topnav details.testing summary::-webkit-details-marker { display: none; }
+  nav.topnav details.testing summary::after { content: '\25BE'; font-size: 10px; }
+  nav.topnav details.testing summary:hover, nav.topnav details.testing[open] summary, nav.topnav details.testing.here summary { opacity: 1; }
+  nav.topnav details.testing .menu { position: absolute; top: calc(100% + 14px); left: -14px; min-width: 190px; display: flex; flex-direction: column; gap: 12px; padding: 14px 16px; background: var(--bg-raise, var(--bg)); border: 1px solid var(--ink-18); z-index: 60; }
+  @media (max-width: 720px) {
+    nav.topnav { overflow-x: auto; overflow-y: hidden; }
+    nav.topnav details.testing[open] { display: inline-flex; align-items: center; gap: 14px; }
+    nav.topnav details.testing .menu { position: static; flex-direction: row; gap: 14px; min-width: 0; padding: 0; border: 0; background: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="/">warnotwar</a>
+  <a href="/heuristic.html">the heuristic</a>
+  <a href="/conflicts.html">the map</a>
+  <a href="/record.html">the word</a>
+  <a href="/readings.html">readings</a>
+  <a href="/qa.html" class="here">q and a</a>
+  <details class="testing">
+    <summary>testing</summary>
+    <div class="menu">
+      <a href="/market.html">the market</a>
+      <a href="/oilflows.html">oilflows</a>
+      <a href="/lab.html">the lab</a>
+      <a href="/teaching-module/index.html">hormuz lab (sim)</a>
+      <a href="/spr/">the reserve</a>
+      <a href="/methodology.html">methodology</a>
+    </div>
+  </details>
+  <span class="spacer"></span>
+  <button class="theme-toggle" id="theme-toggle" title="switch paper / ink">&#9705; ink</button>
+</nav>
+<script>document.addEventListener('click', e => { for (const d of document.querySelectorAll('details.testing[open]')) if (!d.contains(e.target)) d.removeAttribute('open'); });</script>
+
+<header class="hero">
+  <div class="hero-kicker">warnotwar &middot; q and a</div>
+  <h1>Q and A.</h1>
+  <p class="subtitle">Questions and answers, kept as they were asked and answered. Each one is dated. It is the answer for that time.</p>
+</header>
+
+<div id="load-error"></div>
+<main id="entries"></main>
+
+<div class="stamp" id="stamp"></div>
+<a class="back" href="/">&larr; warnotwar</a>
+
+<script>
+const rootEl = document.documentElement, themeBtn = document.getElementById('theme-toggle');
+function applyTheme(t) { rootEl.dataset.theme = t; themeBtn.textContent = t === 'paper' ? '◑ ink' : '◐ paper'; }
+applyTheme((() => { const q = new URLSearchParams(location.search).get('theme'); if (q === 'ink' || q === 'paper') return q; try { const s = localStorage.getItem('ww-theme'); if (s) return s; } catch (e) {} return matchMedia('(prefers-color-scheme: dark)').matches ? 'ink' : 'paper'; })());
+themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 'paper'; applyTheme(t); try { localStorage.setItem('ww-theme', t); } catch (e) {} };
+</script>
+
+<script>
+(async function () {
+  const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  let D;
+  try {
+    const r = await fetch('/data/qa.json'); if (!r.ok) throw new Error('http ' + r.status);
+    D = await r.json();
+  } catch (e) { const err = document.getElementById('load-error'); err.style.display = 'block'; err.textContent = 'The questions did not load. ' + e.message; return; }
+  const fmt = d => { const [y, m, day] = d.split('-').map(Number); return new Date(Date.UTC(y, m - 1, day)).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }); };
+  const entries = (D.entries || []).slice().sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  document.getElementById('entries').innerHTML = entries.map(e => `
+    <article class="entry" id="${esc(e.id)}">
+      <div class="k">${esc(fmt(e.date))}</div>
+      <h2 class="q">${esc(e.question)}</h2>
+      <div class="by">${esc(e.asked_by)}${e.asked_at ? ' &middot; ' + esc(e.asked_at) : ''}</div>
+      ${(e.answers || []).map(a => `<div class="by">${esc(a.by)}${a.at ? ' &middot; ' + esc(a.at) : ''}</div><div class="a">${(a.paragraphs || []).map(p => `<p>${esc(p)}</p>`).join('')}</div>`).join('')}
+      ${e.added ? `<div class="added">added ${esc(e.added)}</div>` : ''}
+    </article>`).join('');
+  document.getElementById('stamp').textContent = (D.note || '') + ' · ' + entries.length + (entries.length === 1 ? ' entry' : ' entries') + ' · data/qa.json';
+})();
+</script>
+</body>
+</html>
