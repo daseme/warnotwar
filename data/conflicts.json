@@ -96,7 +96,7 @@
   },
   {
    "id": "europe",
-   "name": "Europe (EU states and Britain)",
+   "name": "Europe (EU states)",
    "short": "Europe",
    "lon": 4.4,
    "lat": 50.8,
@@ -127,8 +127,7 @@
     "SVK",
     "SVN",
     "ESP",
-    "SWE",
-    "GBR"
+    "SWE"
    ]
   },
   {
@@ -402,6 +401,14 @@
    "lon": 9.1,
    "lat": 9.1,
    "iso": "NGA"
+  },
+  {
+   "id": "britain",
+   "name": "Britain",
+   "short": "Britain",
+   "lon": -0.1,
+   "lat": 51.5,
+   "iso": "GBR"
   }
  ],
  "conflicts": [
@@ -425,12 +432,16 @@
     {
      "id": "ukr",
      "name": "Ukraine",
-     "state": "ukraine"
+     "state": "ukraine",
+     "side": "A",
+     "short": "Ukraine"
     },
     {
      "id": "rus",
      "name": "Russia",
-     "state": "russia"
+     "state": "russia",
+     "side": "B",
+     "short": "Russia"
     }
    ],
    "ties": [
@@ -446,7 +457,8 @@
      "source": "Congressional Research Service, U.S. Security Assistance to Ukraine Since 2022 (IF12040)",
      "url": "https://www.congress.gov/crs-product/IF12040",
      "note": "Direct U.S. grants ended in 2025. Since August 2025 European states and Canada have bought American weapons for Ukraine through NATO's PURL scheme. In October 2026 Washington warned it might pause even that.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "europe",
@@ -460,7 +472,23 @@
      "source": "Kiel Institute, Ukraine Support Tracker",
      "url": "https://www.kielinstitut.de/topics/war-against-ukraine/ukraine-support-tracker/",
      "note": null,
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
+    },
+    {
+     "backer": "britain",
+     "party": "ukr",
+     "kinds": [
+      "arms",
+      "money",
+      "training"
+     ],
+     "tier": "open",
+     "source": "Kiel Institute, Ukraine Support Tracker; U.K. Ministry of Defence statements",
+     "url": "https://www.kielinstitut.de/topics/war-against-ukraine/ukraine-support-tracker/",
+     "note": "Britain trains Ukrainian troops and buys American weapons for Ukraine through NATO's scheme.",
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "canada",
@@ -474,7 +502,8 @@
      "source": "Government of Canada, Department of National Defence, 24 February 2026",
      "url": "https://www.canada.ca/en/department-national-defence/news/2026/02/government-of-canada-reaffirms-unwavering-support-for-ukraine-four-years-into-russias-full-scale-invasion.html",
      "note": "Canada has given about 8.5 billion dollars in military aid since 2022 and trains Ukrainian troops under Operation Unifier.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "turkey",
@@ -487,7 +516,8 @@
      "source": "SIPRI Arms Transfers Database; Baykar press statements on its drone plant near Kyiv",
      "url": "https://baykartech.com/en/press/turkeys-baykar-to-complete-plant-in-ukraine-in-two-years-ceo/",
      "note": "Baykar is building a Bayraktar plant near Kyiv.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "iran",
@@ -501,7 +531,8 @@
      "source": "Conflict Armament Research field dispatches on Shahed drones recovered in Ukraine; U.S., U.K. and EU sanctions",
      "url": "https://www.conflictarm.com/field-dispatches/",
      "note": "Iran sent drones and kits in 2022 and 2023 and over 350 Fath-360 missiles in 2024. Russia now builds most of its Shahed copies at home. In March 2026 the flow reversed: Russia shipped drones to Iran for its war with the U.S. and Israel.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "nkorea",
@@ -514,7 +545,8 @@
      "source": "Russian General Staff statement, 26 April 2025; KCNA statement, 28 April 2025; South Korean intelligence briefings 2026",
      "url": "https://kyivindependent.com/nearly-11-000-north-korean-troops-stationed-in-russias-kursk-oblast-at-start-of-2026-media-reports/",
      "note": "Both governments said so in April 2025. About 9,000 to 11,000 North Korean soldiers were still in Kursk through 2026, mostly on border duty.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "china",
@@ -528,7 +560,8 @@
      "source": "U.S. Treasury, 17 October 2024: sanctions on Chinese firms making engines and parts for Russia's Garpiya attack drones; EU sanctions packages",
      "url": "https://home.treasury.gov/news/press-releases/jy2651",
      "note": "The U.S. Treasury found Chinese-made engines in Russian Garpiya drones and sanctioned the makers. Teardowns keep finding Chinese parts in Russian drones.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "belarus",
@@ -541,7 +574,8 @@
      "source": "Belarus and Russia joint military statements since 2022; joint nuclear drills May 2026",
      "url": "https://carnegieendowment.org/russia-eurasia/politika/2026/05/belarus-ukraine-new-war",
      "note": "The 2022 invasion launched partly from Belarusian soil. Russia based Oreshnik missiles in Belarus in 2025 and 2026. Belarus has not sent its own troops.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     }
    ],
    "areas": [
@@ -613,7 +647,10 @@
     }
    ],
    "areas_source": "Wikipedia 2026 Ukrainian counteroffensive and Eastern Ukraine campaign; ISW daily assessments (listing seen on criticalthreats.org, 10 Oct 2026); Wikipedia Portal current events Aug–Sep 2026; own knowledge for struck Russian oblasts",
-   "areas_url": "https://en.wikipedia.org/wiki/2026_Ukrainian_counteroffensive"
+   "areas_url": "https://en.wikipedia.org/wiki/2026_Ukrainian_counteroffensive",
+   "start": "2022-02",
+   "short": "Ukraine",
+   "turns": []
   },
   {
    "id": "sudan",
@@ -635,11 +672,15 @@
    "parties": [
     {
      "id": "saf",
-     "name": "Sudanese Armed Forces"
+     "name": "Sudanese Armed Forces",
+     "side": "A",
+     "short": "army"
     },
     {
      "id": "rsf",
-     "name": "Rapid Support Forces"
+     "name": "Rapid Support Forces",
+     "side": "B",
+     "short": "RSF"
     }
    ],
    "ties": [
@@ -656,7 +697,8 @@
      "source": "UN Independent International Fact-Finding Mission for the Sudan, Fuelling Sudan's conflict, A/HRC/63/23, September 2026",
      "url": "https://www.ohchr.org/sites/default/files/documents/hrbodies/hrcouncil/sessions-regular/session63/advance-versions/a-hrc-63-23-auv.pdf",
      "note": "A UN fact-finding mission found in September 2026 that weapons, money and up to 2,000 hired Colombian fighters reached the RSF through networks based in the UAE, Chad, Libya and Somalia. Cargo flights ran from the UAE to Chad.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "chad",
@@ -669,7 +711,8 @@
      "source": "UN Independent International Fact-Finding Mission for the Sudan, A/HRC/63/23, September 2026",
      "url": "https://www.ohchr.org/sites/default/files/documents/hrbodies/hrcouncil/sessions-regular/session63/advance-versions/a-hrc-63-23-auv.pdf",
      "note": "The UN mission found that cargo flights from the UAE landed in Chad and that trucks and fighters crossed Chadian border areas into Darfur.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "haftar",
@@ -684,7 +727,8 @@
      "source": "UN Panel of Experts on Libya, final report S/2026/224, April 2026; UN fact-finding mission on Sudan, A/HRC/63/23",
      "url": "https://www.ictj.org/latest-news/libya-fueled-war-sudan-colombian-mercenaries-and-equipment-un-report-finds",
      "note": "UN experts found that a Haftar-aligned battalion moved Colombian fighters, weapons and fuel to the RSF through Kufra and Benghazi.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "kenya",
@@ -697,7 +741,8 @@
      "source": "Kenyan government hosting of the RSF charter conference, Nairobi, February 2025",
      "url": "https://icj-kenya.org/news/joint-statement-kenyas-rsf-ties-undermine-sudan-peace-efforts/",
      "note": "Kenya hosted the meeting where the RSF and its allies signed a charter for a rival government in February 2025. Nairobi says it was helping talks. Sudan pulled its ambassador.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "egypt",
@@ -709,7 +754,8 @@
      "source": "Egyptian and Sudanese government statements; Sisi and Burhan call to activate the 1976 joint defence pact, December 2025",
      "url": "https://www.trtworld.com/article/ea6337cb61c0",
      "note": "Egypt backs the army in public. In December 2025 Sisi and Burhan called for activating their joint defence pact.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "egypt",
@@ -723,7 +769,8 @@
      "source": "New York Times investigation of the East Oweinat drone base, early 2026; Middle East Eye, 6 November 2025",
      "url": "https://www.middleeasteye.net/news/egypt-and-turkey-move-support-saf-following-fall-el-fasher",
      "note": "Turkish-made Akinci drones fly against the RSF from an Egyptian desert base at East Oweinat, the New York Times found in early 2026 from satellite images and flight data.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2025-11"
     },
     {
      "backer": "iran",
@@ -736,7 +783,8 @@
      "source": "Bloomberg, 24 January 2024, on Mohajer-6 drones; Iran and Sudan restored relations in October 2023",
      "url": "https://www.bloomberg.com/news/articles/2024-01-24/iran-supplies-sudan-army-with-drones-as-civil-war-continues",
      "note": "Western officials told Bloomberg Iran sent Mohajer-6 drones. Satellite images showed one at Wadi Sayyidna air base in January 2024.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "turkey",
@@ -749,7 +797,8 @@
      "source": "Press reports on Baykar's $120 million deal for Bayraktar TB2 and Akinci drones, 2023 to 2025; Middle East Eye, November 2025",
      "url": "https://www.middleeasteye.net/news/egypt-and-turkey-move-support-saf-following-fall-el-fasher",
      "note": "Baykar sent at least eight TB2 drones, warheads and technicians under a $120 million deal.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "eritrea",
@@ -762,7 +811,8 @@
      "source": "Horn Review, August 2026; Burhan called Eritrean support substantial in March 2025",
      "url": "https://hornreview.org/2026/08/18/making-sense-of-the-alignment-between-eritrea-and-the-sudanese-armed-forces/",
      "note": "Eritrea trains militias and army units for Sudan's eastern front.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "russia",
@@ -774,7 +824,8 @@
      "source": "Russian veto of the U.K. ceasefire resolution at the UN Security Council, 18 November 2024; Port Sudan naval base talks",
      "url": "https://www.aljazeera.com/news/2024/11/18/russia-vetoes-sudan-ceasefire-resolution-at-un-security-council",
      "note": "Moscow sided with the army in 2024 after earlier Wagner dealings with the RSF. It was the only vote against the ceasefire resolution.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "russia",
@@ -785,11 +836,12 @@
      ],
      "tier": "reported",
      "stance": "says nothing",
-     "ended": "2024",
+     "ended": "2024-04",
      "source": "U.S. Treasury sanctions on Wagner-linked gold firms, 2023; Jamestown Foundation, Russia Switches Sides in Sudan War",
      "url": "https://jamestown.org/russia-switches-sides-in-sudan-war/",
      "note": "Wagner traded gold and arms with the RSF early in the war. In spring 2024 Russia switched to the army in return for a Red Sea base deal.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     }
    ],
    "areas": [
@@ -865,7 +917,15 @@
     }
    ],
    "areas_source": "Wikipedia Timeline of the Sudanese civil war (2026); 2026 in Sudan; 2026 Kauda clashes; Portal current events Oct 2026",
-   "areas_url": "https://en.wikipedia.org/wiki/Timeline_of_the_Sudanese_civil_war_(2026)"
+   "areas_url": "https://en.wikipedia.org/wiki/Timeline_of_the_Sudanese_civil_war_(2026)",
+   "start": "2023-04",
+   "short": "Sudan",
+   "turns": [
+    {
+     "month": "2025-10",
+     "what": "The RSF took el-Fasher."
+    }
+   ]
   },
   {
    "id": "gaza",
@@ -888,15 +948,21 @@
     {
      "id": "isr",
      "name": "Israel",
-     "state": "israel"
+     "state": "israel",
+     "side": "A",
+     "short": "Israel"
     },
     {
      "id": "hamas",
-     "name": "Hamas"
+     "name": "Hamas",
+     "side": "B",
+     "short": "Hamas"
     },
     {
      "id": "hezb",
-     "name": "Hezbollah"
+     "name": "Hezbollah",
+     "side": "B",
+     "short": "Hezbollah"
     }
    ],
    "ties": [
@@ -912,7 +978,8 @@
      "source": "Congressional Research Service, U.S. Foreign Aid to Israel (RL33222); CRS on the THAAD system (IF12645)",
      "url": "https://www.congress.gov/crs-product/RL33222",
      "note": "About 100 U.S. soldiers have run a THAAD missile battery in Israel since October 2024. They fired against Iranian missiles in 2025 and 2026.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "germany",
@@ -924,7 +991,8 @@
      "source": "SIPRI Arms Transfers Database; German government export figures, 2026",
      "url": "https://www.aljazeera.com/news/2026/7/27/german-arms-export-licences-for-israel-surge-with-focus-on-sub-project",
      "note": "Berlin paused approvals for weapons that could be used in Gaza from August to November 2025, then resumed after the ceasefire.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "iran",
@@ -938,7 +1006,8 @@
      "source": "Statements by Iranian and Hezbollah leaders; U.S. Treasury designation of Hezbollah as an Iranian proxy, August 2026",
      "url": "https://www.aljazeera.com/news/2026/8/21/us-designates-hezbollah-an-iranian-proxy-sanctions-funding-network",
      "note": "Hezbollah fired on Israel again in March 2026 after the U.S. and Israel struck Iran. In August 2026 the U.S. Treasury named Hezbollah an Iranian proxy and sanctioned a cash courier network.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "iran",
@@ -952,7 +1021,8 @@
      "source": "IRGC commander Hajizadeh, January 2021, on Gaza's missiles being built with Iran's support; U.S. Treasury designations",
      "url": "https://www.washingtoninstitute.org/policy-analysis/how-iran-fuels-hamas-terrorism",
      "note": "Iranian commanders have said in public that Gaza's rockets came with Iran's help. Some officials deny direct arms transfers.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "qatar",
@@ -964,7 +1034,8 @@
      "source": "Qatari government statements; Hamas political office in Doha; FDD, September 2026",
      "url": "https://www.fdd.org/analysis/analysis-analysis/2026/09/09/qatar-still-hosts-hamass-top-brass-one-year-after-they-were-targeted/",
      "note": "Qatar's cash to Gaza moved with Israel's consent and stopped when the war began in 2023. Hamas leaders still live in Doha, where Israel tried to kill them in September 2025. Qatar is also the main mediator.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "turkey",
@@ -977,7 +1048,8 @@
      "source": "Turkish government statements; Erdogan received Hamas leaders in Istanbul, April 2026",
      "url": "https://www.aa.com.tr/en/middle-east/turkish-president-erdogan-receives-hamas-delegation-in-istanbul/3892068",
      "note": "Erdogan met Hamas leaders in Istanbul in April 2026. Israel has barred Turkish troops from the Gaza force over these ties.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     }
    ],
    "areas": [
@@ -1013,7 +1085,15 @@
     }
    ],
    "areas_source": "Wikipedia 2026 Lebanon war; 2026 Israel–Lebanon ceasefire; 2026 in the State of Palestine; Portal current events Aug–Sep 2026",
-   "areas_url": "https://en.wikipedia.org/wiki/2026_Lebanon_war"
+   "areas_url": "https://en.wikipedia.org/wiki/2026_Lebanon_war",
+   "start": "2023-10",
+   "short": "Gaza & Lebanon",
+   "turns": [
+    {
+     "month": "2026-03",
+     "what": "New war with Hezbollah. Israel invaded south Lebanon."
+    }
+   ]
   },
   {
    "id": "yemen",
@@ -1034,11 +1114,15 @@
    "parties": [
     {
      "id": "houthi",
-     "name": "Houthis (Ansar Allah)"
+     "name": "Houthis (Ansar Allah)",
+     "side": "A",
+     "short": "Houthis"
     },
     {
      "id": "ygov",
-     "name": "Yemeni government and allied forces"
+     "name": "Yemeni government and allied forces",
+     "side": "B",
+     "short": "government"
     }
    ],
    "ties": [
@@ -1054,7 +1138,8 @@
      "source": "UN Security Council Panel of Experts on Yemen reports; U.S. Defense Intelligence Agency, Seized at Sea, 2024",
      "url": "https://www.dia.mil/News-Features/Articles/Article-View/Article/3834111/dia-report-showcases-iranian-origin-of-houthi-weapons-interdicted-at-sea/",
      "note": "The UN panel has found Iranian-made missiles and drone parts. In July 2026 Saudi jets hit the Sanaa airport runway to stop an Iranian plane landing with weapons.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "russia",
@@ -1068,7 +1153,8 @@
      "source": "U.S. Treasury sanctions, 5 March and 2 April 2025; Reuters, September 2024, on anti-ship missile talks",
      "url": "https://content.govdelivery.com/accounts/USTREAS/bulletins/3d5616e",
      "note": "Houthi leaders went to Moscow to buy missiles and a Russia-based network bought them weapons and goods. Washington sanctioned them for it. No Russian missile has been shown in Yemen.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "china",
@@ -1082,7 +1168,8 @@
      "source": "U.S. State Department, 17 April 2025, on Chang Guang satellite imagery; U.S. Treasury, 11 September 2025, sanctions on China-based suppliers of missile and drone parts",
      "url": "https://home.treasury.gov/news/press-releases/sb0243",
      "note": "Washington says a Chinese satellite firm sells the Houthis targeting pictures and that Chinese companies sell them missile and drone parts.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "saudi",
@@ -1097,7 +1184,8 @@
      "source": "Saudi-led coalition statements; Al Jazeera, 5 October 2026, on the battlefield",
      "url": "https://www.aljazeera.com/news/2026/10/5/yemen-war-escalates-whats-the-latest-on-the-battlefield",
      "note": "Saudi jets went back to bombing the Houthis in 2026, the first strikes since 2022. The coalition hit Houthi positions around Taiz 97 times in one day of the October offensive.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "uae",
@@ -1108,11 +1196,12 @@
       "money"
      ],
      "tier": "open",
-     "ended": "2025",
+     "ended": "2025-12",
      "source": "House of Commons Library, Yemen 2026: Southern Transitional Council's fall and renewed Houthi-Saudi conflict",
      "url": "https://commonslibrary.parliament.uk/research-briefings/cbp-10427/",
      "note": "The UAE pulled its last forces out of Yemen on 30 December 2025 after Saudi jets struck its southern allies. The STC it backed fell in January 2026.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "usa",
@@ -1124,7 +1213,8 @@
      "source": "U.S. Central Command, joint strikes in Yemen, 24 February 2026",
      "url": "https://www.centcom.mil/MEDIA/igphoto/2003399524/",
      "note": "U.S. and British jets hit Houthi weapons stores, radars and air defences in February 2026 during the Iran war. The strikes were about shipping and Iran, not the Yemeni government. Washington turned down Saudi requests to join the autumn offensive.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-02"
     }
    ],
    "areas": [
@@ -1190,7 +1280,15 @@
     }
    ],
    "areas_source": "Wikipedia 2026 Yemen offensives; Critical Threats Iran Updates 30 Sep–10 Oct 2026; Portal current events Oct 2026",
-   "areas_url": "https://www.criticalthreats.org/analysis/iran-update-october-6-2026"
+   "areas_url": "https://www.criticalthreats.org/analysis/iran-update-october-6-2026",
+   "start": "2014-09",
+   "short": "Yemen",
+   "turns": [
+    {
+     "month": "2026-07",
+     "what": "The 2022 truce collapsed."
+    }
+   ]
   },
   {
    "id": "myanmar",
@@ -1211,11 +1309,15 @@
    "parties": [
     {
      "id": "junta",
-     "name": "Military-led government"
+     "name": "Military-led government",
+     "side": "A",
+     "short": "army"
     },
     {
      "id": "resist",
-     "name": "Resistance forces and ethnic armies"
+     "name": "Resistance forces and ethnic armies",
+     "side": "B",
+     "short": "resistance"
     }
    ],
    "ties": [
@@ -1230,7 +1332,8 @@
      "source": "UN Special Rapporteur on Myanmar, The Billion Dollar Death Trade, May 2023; TASS on Su-30 deliveries; joint exercise, July 2026",
      "url": "https://tass.com/defense/986222",
      "note": "Russia delivered six Su-30 jets by January 2025 and ran the first joint army exercise with Myanmar in July 2026.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "china",
@@ -1243,7 +1346,8 @@
      "source": "UN Special Rapporteur on Myanmar, The Billion Dollar Death Trade, May 2023",
      "url": "https://www.ohchr.org/en/documents/thematic-reports/ahrc53crp2-billion-dollar-death-trade-international-arms-networks-enable",
      "note": "The UN report traced $260 million of arms from Chinese state firms.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "china",
@@ -1255,7 +1359,8 @@
      "source": "Chinese government statements backing the 2025-26 election; The Diplomat, June 2025, on Chinese pressure on the MNDAA and TNLA",
      "url": "https://thediplomat.com/2025/06/china-pressuring-two-major-myanmar-armed-groups-to-halt-offensives/",
      "note": "Beijing backed the election in public, and in 2025 it cut power and trade to the Kokang army until it handed Lashio back to the government.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "india",
@@ -1268,7 +1373,8 @@
      "source": "UN Special Rapporteur on Myanmar, The Billion Dollar Death Trade, May 2023",
      "url": "https://www.ohchr.org/en/documents/thematic-reports/ahrc53crp2-billion-dollar-death-trade-international-arms-networks-enable",
      "note": "Indian state firms sold the army weapons after the coup.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "china",
@@ -1281,7 +1387,8 @@
      "source": "Press and think-tank reporting on supply through the United Wa State Army; The Diplomat, June 2025",
      "url": "https://thediplomat.com/2025/06/china-pressuring-two-major-myanmar-armed-groups-to-halt-offensives/",
      "note": "Chinese-made arms reach some border armies through the Wa. It does not reach the wider resistance.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     }
    ],
    "areas": [
@@ -1347,7 +1454,10 @@
     }
    ],
    "areas_source": "Wikipedia 2026 in Myanmar; Myanmar civil war (2021–present) ('fighting in all regions and states')",
-   "areas_url": "https://en.wikipedia.org/wiki/2026_in_Myanmar"
+   "areas_url": "https://en.wikipedia.org/wiki/2026_in_Myanmar",
+   "start": "2021-02",
+   "short": "Myanmar",
+   "turns": []
   },
   {
    "id": "congo",
@@ -1368,11 +1478,15 @@
    "parties": [
     {
      "id": "drc",
-     "name": "Congolese government and allied militias"
+     "name": "Congolese government and allied militias",
+     "side": "A",
+     "short": "Congo"
     },
     {
      "id": "m23",
-     "name": "M23 (AFC)"
+     "name": "M23 (AFC)",
+     "side": "B",
+     "short": "M23"
     }
    ],
    "ties": [
@@ -1389,7 +1503,8 @@
      "source": "UN Security Council Group of Experts on the DRC, report S/2026/466, July 2026",
      "url": "https://main.un.org/securitycouncil/sanctions/1533/work-and-mandate/expert-reports",
      "note": "The UN experts counted 14,000 to 18,000 Rwandan soldiers in Congo in mid-2026 and say they command M23 units. Washington sanctioned Rwandan officers in March 2026.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "uganda",
@@ -1403,7 +1518,8 @@
      "source": "UN Security Council Group of Experts on the DRC, July 2024 and July 2025 reports",
      "url": "https://www.aljazeera.com/news/2024/7/9/uganda-backed-m23-in-drc-rwandas-de-facto-control-on-group-un-experts",
      "note": "UN experts said in 2024 that M23 moved men and supplies through Uganda with help from Ugandan officers. In 2025 they said Ugandan troops shielded M23's northern flank.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "uganda",
@@ -1415,7 +1531,8 @@
      "source": "UN Group of Experts on the DRC, July 2025; Al Jazeera, 18 July 2025",
      "url": "https://www.aljazeera.com/news/2025/7/18/un-experts-cast-blame-on-rwanda-and-uganda-what-are-they-doing-in-drc",
      "note": "Ugandan troops have fought the ADF beside the Congolese army since 2021 and doubled their numbers in 2025. Uganda is on both sides of this map.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "burundi",
@@ -1427,7 +1544,8 @@
      "source": "Burundian government statements; Security Council Report, October 2026 forecast",
      "url": "https://www.securitycouncilreport.org/monthly-forecast/2026-10/great-lakes-region-drc-10.php",
      "note": "More than 6,000 Burundian troops were in South Kivu in mid-2026 under a deal with Kinshasa.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "usa",
@@ -1440,7 +1558,8 @@
      "source": "U.S.-DRC security memorandum of December 2025 under the Washington Accords; Critical Threats Congo War Security Review, 27 February 2026",
      "url": "https://www.criticalthreats.org/briefs/congo-war-security-review/february-27-2026",
      "note": "Washington signed a security deal with Kinshasa in December 2025. It trains the army and shares intelligence, and sanctioned Rwandan officers in March 2026.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2025-12"
     },
     {
      "backer": "safrica",
@@ -1449,11 +1568,12 @@
       "troops"
      ],
      "tier": "open",
-     "ended": "2025",
+     "ended": "2025-06",
      "source": "SADC press release on the phased withdrawal of SAMIDRC from Goma and Sake, June 2025",
      "url": "https://www.sadc.int/document/sadc-continues-phased-withdrawal-samidrc-forces-goma-and-sake-eastern-drc",
      "note": "SADC ended the mission in March 2025. The last troops left Goma in June 2025.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     }
    ],
    "areas": [
@@ -1474,7 +1594,10 @@
     }
    ],
    "areas_source": "Wikipedia Timeline of the M23 campaign (2026); 2026 in the DRC",
-   "areas_url": "https://en.wikipedia.org/wiki/Timeline_of_the_M23_campaign_(2026)"
+   "areas_url": "https://en.wikipedia.org/wiki/Timeline_of_the_M23_campaign_(2026)",
+   "start": "2022-03",
+   "short": "Congo",
+   "turns": []
   },
   {
    "id": "sahel",
@@ -1496,15 +1619,21 @@
    "parties": [
     {
      "id": "aes",
-     "name": "Mali, Burkina Faso and Niger (military governments)"
+     "name": "Mali, Burkina Faso and Niger (military governments)",
+     "side": "A",
+     "short": "juntas"
     },
     {
      "id": "jihad",
-     "name": "JNIM and Islamic State Sahel"
+     "name": "JNIM and Islamic State Sahel",
+     "side": "B",
+     "short": "jihadists"
     },
     {
      "id": "fla",
-     "name": "Azawad Liberation Front (Tuareg)"
+     "name": "Azawad Liberation Front (Tuareg)",
+     "side": "C",
+     "short": "Tuareg"
     }
    ],
    "ties": [
@@ -1520,7 +1649,8 @@
      "source": "Congressional Research Service, Russia's Security Operations in Africa (IF12389); Russian Defence Ministry statements on the Africa Corps",
      "url": "https://www.congress.gov/crs-product/IF12389",
      "note": "About 2,500 Russian troops are in Mali. Russian jets and helicopters fly Mali's air war from Bamako. Smaller units are in Burkina Faso and Niger.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "turkey",
@@ -1532,7 +1662,8 @@
      "source": "Malian presidency delivery ceremonies reported by defenceWeb; Burkinabe and Nigerien announcements",
      "url": "https://defenceweb.co.za/aerospace/aerospace-aerospace/mali-receives-more-bayraktar-tb2-uavs/",
      "note": "All three states have shown off Turkish TB2 drones. Mali and Burkina Faso also fly the larger Akinci.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "china",
@@ -1545,7 +1676,8 @@
      "source": "SIPRI Arms Transfers Database",
      "url": "https://www.sipri.org/databases/armstransfers",
      "note": null,
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "iran",
@@ -1559,7 +1691,8 @@
      "source": "Arab Gulf States Institute, Iran Ups Its Engagement With the Sahel, January 2026; Iranian government statement on the defence ministers' meeting, 23 February 2026",
      "url": "https://agsi.org/analysis/iran-ups-its-engagement-with-the-sahel/",
      "note": "Think-tank and press reports say Iran has sent combat drones and trainers to Mali, Burkina Faso and Niger. Iran's defence minister met Burkina Faso's in February 2026.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-01"
     },
     {
      "backer": "usa",
@@ -1569,11 +1702,12 @@
       "intel"
      ],
      "tier": "open",
-     "ended": "2024",
+     "ended": "2024-08",
      "source": "U.S. Air Force, US completes withdrawal from AB 201, August 2024",
      "url": "https://www.af.mil/News/Article-Display/Article/3863464/us-completes-withdrawal-from-ab-201/",
      "note": "U.S. forces trained Nigerien troops and flew drones from Agadez until Niger's junta ordered them out. The last left in August 2024.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "ukraine",
@@ -1588,7 +1722,8 @@
      "source": "CNN, 12 September 2026, Ukraine is fighting Russia anywhere it can; African Arguments, October 2026",
      "url": "https://africanarguments.org/2026/10/who-wins-from-ukraines-drones-in-mali/",
      "note": "CNN found about fifteen Ukrainian drone specialists training and guiding the rebels in 2026. One said they helped take Kidal.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-09"
     },
     {
      "backer": "algeria",
@@ -1601,7 +1736,8 @@
      "source": "Malian government statements, 2024 to 2025; Al Jazeera, 7 April 2025",
      "url": "https://www.aljazeera.com/news/2025/4/7/alliance-of-sahel-states-recall-ambassadors-as-tension-with-algeria-rises",
      "note": "Mali says Algeria shelters the rebels and shot down a Malian drone near the border in April 2025.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     }
    ],
    "none_note": "No state is known to back JNIM or Islamic State Sahel.",
@@ -1793,7 +1929,15 @@
     }
    ],
    "areas_source": "Wikipedia 2026 Mali offensives; 2026 in Burkina Faso; 2026 in Niger; Critical Threats Africa File 8 Oct 2026",
-   "areas_url": "https://en.wikipedia.org/wiki/2026_Mali_offensives"
+   "areas_url": "https://en.wikipedia.org/wiki/2026_Mali_offensives",
+   "start": "2012-01",
+   "short": "Sahel",
+   "turns": [
+    {
+     "month": "2026-04",
+     "what": "Kidal taken. The defence minister killed."
+    }
+   ]
   },
   {
    "id": "somalia",
@@ -1814,11 +1958,15 @@
    "parties": [
     {
      "id": "sgov",
-     "name": "Federal government and AU mission"
+     "name": "Federal government and AU mission",
+     "side": "A",
+     "short": "government"
     },
     {
      "id": "shabaab",
-     "name": "Al-Shabaab"
+     "name": "Al-Shabaab",
+     "side": "B",
+     "short": "al-Shabaab"
     }
    ],
    "ties": [
@@ -1834,7 +1982,8 @@
      "source": "U.S. Africa Command press releases, 2026",
      "url": "https://www.africom.mil/media-gallery/press-releases",
      "note": "U.S. strikes on al-Shabaab continued through September 2026. Washington will stop paying for the AU mission's UN logistics after December 2026.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "turkey",
@@ -1848,7 +1997,8 @@
      "source": "Turkish delivery of two Akinci armed drones, March 2025; TURKSOM training base in Mogadishu",
      "url": "https://turkishminute.com/2025/03/19/turkey-delivers-2-akinci-armed-drones-to-somalia-amid-tensions-with-us-report/",
      "note": "Türkiye trains Somali troops at its Mogadishu base and flies armed drones for them.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "uganda",
@@ -1860,7 +2010,8 @@
      "source": "Uganda defence minister statement, 15 August 2026; AU mission troop list",
      "url": "https://www.military.africa/2026/08/uganda-signals-continued-military-commitment-to-somalia/",
      "note": "Uganda is the biggest foreign force in Somalia, with 4,500 troops under the AU mission and more under a bilateral deal. It says it will stay even if the AU mission ends.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "ethiopia",
@@ -1872,7 +2023,8 @@
      "source": "AU mission troop list, 2,500 Ethiopian troops; Bloomberg, 30 September 2026, on a planned pullout",
      "url": "https://www.thereporterethiopia.com/44556/",
      "note": "Ethiopia has 2,500 troops under the AU mission and more under a bilateral deal. In late September 2026 it was reported planning to pull more than 3,000 out to fight rebels at home.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "kenya",
@@ -1884,7 +2036,8 @@
      "source": "ISS Africa on AU mission contributors, 29 July 2026",
      "url": "https://issafrica.org/iss-today/rethinking-the-au-s-somalia-peace-mission-after-us-funding-cuts",
      "note": "Kenya keeps about 1,400 troops in the Jubaland sector of the AU mission.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "djibouti",
@@ -1896,7 +2049,8 @@
      "source": "ISS Africa on AU mission contributors, 29 July 2026",
      "url": "https://issafrica.org/iss-today/rethinking-the-au-s-somalia-peace-mission-after-us-funding-cuts",
      "note": "Djibouti keeps about 1,500 troops in the Hiran sector.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "egypt",
@@ -1909,7 +2063,8 @@
      "source": "Egypt-Somalia defence pact, August 2024; Cairo deployment parade, 11 February 2026",
      "url": "https://www.newarab.com/news/egypt-sends-troops-somalia-amid-israel-tensions",
      "note": "Egypt paraded about 1,100 troops for the AU mission in February 2026. In October 2026 its advisers were still preparing a base north of Mogadishu for the main body.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "saudi",
@@ -1921,7 +2076,8 @@
      "source": "Somalia-Saudi defence and military cooperation memorandum, Riyadh, 10 February 2026",
      "url": "https://www.aljazeera.com/news/2026/2/10/somalia-saudi-arabia-sign-agreement-on-military-cooperation",
      "note": "Saudi Arabia signed a defence deal with Somalia a month after Mogadishu dropped the UAE. What it delivers is not public.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-02"
     },
     {
      "backer": "uae",
@@ -1931,11 +2087,12 @@
       "money"
      ],
      "tier": "open",
-     "ended": "2026",
+     "ended": "2026-01",
      "source": "Somali government cancellation of all UAE security and defence agreements, 12 January 2026",
      "url": "https://www.aljazeera.com/news/2026/1/12/somalia-cancels-all-agreements-with-uae-over-alleged-sovereignty-violations",
      "note": "The UAE paid salaries for thousands of Somali soldiers and trained police until Somalia tore up every agreement in January 2026 over the UAE's recognition of Somaliland.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     }
    ],
    "none_note": "No state is known to back al-Shabaab.",
@@ -1997,7 +2154,10 @@
     }
    ],
    "areas_source": "Wikipedia 2025 Shabelle offensive; 2026 in Somalia; conflicts.json status (stalemate, Shabaab holds south and centre); own knowledge",
-   "areas_url": "https://en.wikipedia.org/wiki/2025_Shabelle_offensive"
+   "areas_url": "https://en.wikipedia.org/wiki/2025_Shabelle_offensive",
+   "start": "2006-12",
+   "short": "Somalia",
+   "turns": []
   },
   {
    "id": "syria",
@@ -2018,15 +2178,21 @@
    "parties": [
     {
      "id": "sgov2",
-     "name": "Transitional government"
+     "name": "Transitional government",
+     "side": "A",
+     "short": "government"
     },
     {
      "id": "sdf",
-     "name": "Syrian Democratic Forces (Kurdish-led, dissolved August 2026)"
+     "name": "Syrian Democratic Forces (Kurdish-led, dissolved August 2026)",
+     "side": "B",
+     "short": "SDF"
     },
     {
      "id": "local",
-     "name": "Druze militias in Sweida and Assad loyalists on the coast"
+     "name": "Druze militias in Sweida and Assad loyalists on the coast",
+     "side": "C",
+     "short": "Druze, loyalists"
     }
    ],
    "ties": [
@@ -2042,7 +2208,8 @@
      "source": "Türkiye-Syria military training memorandum, 13 August 2025; Turkish armoured vehicle deliveries",
      "url": "https://www.longwarjournal.org/archives/2025/08/turkey-ramps-up-military-support-for-syria.php",
      "note": "Türkiye signed a training deal in August 2025, delivered armoured vehicles, and backed the government's January 2026 offensive on the Kurdish-led forces.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "qatar",
@@ -2054,7 +2221,8 @@
      "source": "Qatari grant of $29 million a month for state salaries from May 2025; gas deliveries via Jordan and Türkiye",
      "url": "https://www.aljazeera.com/news/2025/5/31/saudi-arabia-says-it-will-jointly-fund-syria-state-salaries-with-qatar",
      "note": "Qatar pays part of the state payroll and sends gas for power plants.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "saudi",
@@ -2067,7 +2235,8 @@
      "source": "Saudi and Qatari payment of Syria's World Bank arrears, April 2025; joint salary funding, May and September 2025",
      "url": "https://www.aljazeera.com/news/2025/4/27/saudi-arabia-qatar-to-settle-syrias-outstanding-debt-to-world-bank",
      "note": "Saudi Arabia paid Syria's World Bank debt with Qatar and shares the salary grant.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "usa",
@@ -2079,7 +2248,8 @@
      "source": "Syria joined the U.S.-led anti-ISIS coalition, 11 November 2025; sanctions suspended; U.S. brokered the January 2026 SDF deal",
      "url": "https://www.aljazeera.com/news/2025/11/11/syria-signs-up-to-us-led-coalition-against-isil",
      "note": "Washington took the new government off its terror lists, suspended sanctions, and brokered the deal that folded the Kurdish-led forces into the army.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2025-11"
     },
     {
      "backer": "usa",
@@ -2090,11 +2260,12 @@
       "training"
      ],
      "tier": "open",
-     "ended": "2026",
+     "ended": "2026-04",
      "source": "U.S. withdrawal order, February 2026; last troops left the Qasrak base on 16 April 2026; SDF dissolved 25 August 2026",
      "url": "https://www.aljazeera.com/news/2026/2/18/us-is-withdrawing-all-1000-troops-from-syria-wsj-report",
      "note": "The U.S. pushed the SDF into a deal with Damascus in January 2026, then pulled its last troops out in April. The SDF dissolved in August.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "israel",
@@ -2106,7 +2277,8 @@
      "source": "Israeli military statements on strikes against Syrian army sites to protect the Druze, July 2025 and 20 March 2026",
      "url": "https://www.washingtontimes.com/news/2026/mar/20/israel-launches-strikes-syria-alleged-attacks-druze-minority-members/",
      "note": "Israel struck Syrian army camps again on 20 March 2026 and says it will keep acting for the Druze.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "israel",
@@ -2120,7 +2292,8 @@
      "source": "Reuters, 17 September 2025, citing two senior Druze officials and a Western intelligence source",
      "url": "https://www.haaretz.com/israel-news/2025-09-17/ty-article/.premium/israel-reportedly-supplying-weapons-and-salaries-to-druze-in-southern-syria/00000199-53d6-dc75-a1d9-57deec260000",
      "note": "Druze officials say Israel sends rifles and pays salaries to about 3,000 fighters of the Sweida National Guard.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     }
    ],
    "areas": [
@@ -2176,7 +2349,15 @@
     }
    ],
    "areas_source": "Wikipedia 2026 in Syria; conflicts.json status",
-   "areas_url": "https://en.wikipedia.org/wiki/2026_in_Syria"
+   "areas_url": "https://en.wikipedia.org/wiki/2026_in_Syria",
+   "start": "2011-03",
+   "short": "Syria",
+   "turns": [
+    {
+     "month": "2026-01",
+     "what": "The government fought the Kurdish-led forces."
+    }
+   ]
   },
   {
    "id": "haiti",
@@ -2198,11 +2379,15 @@
    "parties": [
     {
      "id": "hstate",
-     "name": "Haitian government and the foreign force"
+     "name": "Haitian government and the foreign force",
+     "side": "A",
+     "short": "state"
     },
     {
      "id": "gangs",
-     "name": "Viv Ansanm gang coalition"
+     "name": "Viv Ansanm gang coalition",
+     "side": "B",
+     "short": "gangs"
     }
    ],
    "ties": [
@@ -2218,7 +2403,8 @@
      "source": "U.S. State Department report to Congress on the security situation in Haiti, September 2026",
      "url": "https://www.state.gov/wp-content/uploads/2026/09/Report-to-Congress-on-The-Security-Situation-in-Haiti-2026-HRC1519287-Accessible-9.11.2026.pdf",
      "note": "The U.S. says it has put close to a billion dollars into the two foreign missions and the Haitian police. It also wrote the UN resolution for the new force.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "canada",
@@ -2230,7 +2416,8 @@
      "source": "Government of Canada, Canada-Haiti relations",
      "url": "https://www.international.gc.ca/country-pays/haiti/relations.aspx?lang=eng",
      "note": "Canada is one of the two biggest donors to the foreign force and trains and equips the Haitian police.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "chad",
@@ -2242,7 +2429,8 @@
      "source": "First Chadian contingent arrived 1 April 2026; Chad pledged 1,500 for the Gang Suppression Force",
      "url": "https://passblue.com/2026/05/21/the-new-un-backed-anti-gang-force-is-finally-arriving-in-haiti-as-violence-surges/",
      "note": "Chad is the biggest contributor to the new force, with about 1,500 police pledged. Guatemala, Jamaica, Mongolia and Sri Lanka also send troops.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-04"
     },
     {
      "backer": "kenya",
@@ -2251,11 +2439,12 @@
       "police"
      ],
      "tier": "open",
-     "ended": "2026",
+     "ended": "2026-04",
      "source": "Last Kenyan police left Haiti on 27 April 2026 as the Multinational Security Support mission closed",
      "url": "https://haitiantimes.com/2026/04/28/kenyan-officers-leave-haiti-mission-end-mandate/",
      "note": "Kenya led the police mission from June 2024 until April 2026. It does not take part in the new force.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     }
    ],
    "none_note": "No state backs the gangs. The UN's 2023 arms report traced most of their guns to illegal trade from the United States.",
@@ -2277,7 +2466,15 @@
     }
    ],
    "areas_source": "Wikipedia Viv Ansanm; 2026 in Haiti",
-   "areas_url": "https://en.wikipedia.org/wiki/Viv_Ansanm"
+   "areas_url": "https://en.wikipedia.org/wiki/Viv_Ansanm",
+   "start": "2021-07",
+   "short": "Haiti",
+   "turns": [
+    {
+     "month": "2026-04",
+     "what": "The UN-backed force replaced the Kenya-led mission."
+    }
+   ]
   },
   {
    "id": "pakistan",
@@ -2298,16 +2495,22 @@
    "parties": [
     {
      "id": "pak",
-     "name": "Pakistan"
+     "name": "Pakistan",
+     "side": "A",
+     "short": "Pakistan"
     },
     {
      "id": "ttp",
-     "name": "Pakistani Taliban (TTP) and Baloch insurgents"
+     "name": "Pakistani Taliban (TTP) and Baloch insurgents",
+     "side": "B",
+     "short": "TTP, Baloch"
     },
     {
      "id": "afg",
      "name": "Afghan Taliban government",
-     "state": "afghanistan"
+     "state": "afghanistan",
+     "side": "B",
+     "short": "Afghanistan"
     }
    ],
    "ties": [
@@ -2321,7 +2524,8 @@
      "source": "SIPRI Arms Transfers Database; NPR, 3 April 2026, on China hosting Pakistan-Afghanistan talks",
      "url": "https://www.npr.org/2026/04/03/g-s1-116299/pakistan-says-a-new-round-of-peace-talks-with-afghanistan-is-underway-in-china",
      "note": "China is Pakistan's main arms supplier. It also hosts the peace talks with Afghanistan, so it does not back one side in that fight.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "usa",
@@ -2333,7 +2537,8 @@
      "source": "U.S. Defense Security Cooperation Agency notification to Congress, 4 December 2025, $686 million F-16 package",
      "url": "https://www.aljazeera.com/news/2025/12/11/is-trumps-686m-f-16-upgrade-for-pakistan-a-message-to-india",
      "note": "The U.S. approved a $686 million F-16 upgrade in December 2025 and added Pakistan to a missile order.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "afghanistan",
@@ -2346,7 +2551,8 @@
      "source": "UN Security Council Monitoring Team, 38th report, released 10 August 2026",
      "url": "https://www.arabnews.pk/node/2654474/pakistan",
      "note": "The UN sanctions monitors say the Taliban kept supporting the Pakistani Taliban, with safe houses, permits and about 6,000 fighters on Afghan soil.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "india",
@@ -2360,7 +2566,8 @@
      "source": "Pakistani statements at the UN General Assembly, 7 and 8 October 2026",
      "url": "https://tribune.com.pk/story/2633668/at-un-pakistan-says-india-provides-active-support-to-taliban-backs-terrorist-groups",
      "note": "Pakistan says India funds and arms the Pakistani Taliban and Baloch separatists through Afghanistan.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "india",
@@ -2373,7 +2580,8 @@
      "source": "Indian Council of World Affairs on India's aid to Afghanistan; embassy in Kabul reopened October 2025",
      "url": "https://www.icwa.in/show_content.php?lang=1&level=3&ls_id=14213&lid=8638",
      "note": "India reopened its Kabul embassy, accepted a Taliban envoy, and budgets aid for Afghanistan. It says the aid is for the people, not the government.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2025-10"
     }
    ],
    "areas": [
@@ -2429,7 +2637,15 @@
     }
    ],
    "areas_source": "Wikipedia 2026 Pakistan–Afghanistan War; 2026 in Pakistan",
-   "areas_url": "https://en.wikipedia.org/wiki/2026_Afghanistan%E2%80%93Pakistan_conflict"
+   "areas_url": "https://en.wikipedia.org/wiki/2026_Afghanistan%E2%80%93Pakistan_conflict",
+   "start": "2007-12",
+   "short": "Pakistan",
+   "turns": [
+    {
+     "month": "2026-02",
+     "what": "Open war with Afghanistan."
+    }
+   ]
   },
   {
    "id": "gulf",
@@ -2451,17 +2667,23 @@
     {
      "id": "irn",
      "name": "Iran and allied groups (Hezbollah, Houthis, Iraqi militias)",
-     "state": "iran"
+     "state": "iran",
+     "side": "A",
+     "short": "Iran"
     },
     {
      "id": "us",
      "name": "United States",
-     "state": "usa"
+     "state": "usa",
+     "side": "B",
+     "short": "U.S."
     },
     {
      "id": "isr",
      "name": "Israel",
-     "state": "israel"
+     "state": "israel",
+     "side": "B",
+     "short": "Israel"
     }
    ],
    "ties": [
@@ -2476,7 +2698,8 @@
      "source": "U.S. Fifth Fleet headquarters at Manama; Bahraini interception statements, 2026",
      "url": "https://en.wikipedia.org/wiki/2026_Iran_war",
      "note": "Iran struck Fifth Fleet facilities in 2026 and Bahrain shot down missiles and drones. Two civilians were killed in Bahrain.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-03"
     },
     {
      "backer": "qatar",
@@ -2489,7 +2712,8 @@
      "source": "Qatar Ministry of Foreign Affairs statement, 1 March 2026, on intercepting waves of Iranian missiles; Al Udeid Air Base",
      "url": "https://mofa.gov.qa/en/qatar/latest-articles/latest-news/details/2026/03/01/ministries-of-defense--interior--foreign-affairs--armed-forces-interrupted-waves-of-iranian-missiles--no-casualties",
      "note": "Qatar shot down more than 60 Iranian missiles and two Iranian jets in March 2026. Qatar says Al Udeid was not used to attack Iran. Qatar also carries messages between Washington and Tehran.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-03"
     },
     {
      "backer": "kuwait",
@@ -2502,7 +2726,8 @@
      "source": "Kuwaiti government statements, March 2026",
      "url": "https://en.wikipedia.org/wiki/Kuwait_in_the_2026_Iran_war",
      "note": "Kuwait's emir said on 9 March 2026 that Kuwait allowed no attack on Iran from its land, air or sea. Kuwait shot down Iranian missiles and drones. Twelve people were killed in Kuwait.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-03"
     },
     {
      "backer": "uae",
@@ -2515,7 +2740,8 @@
      "source": "UAE confirmation that Iranian drones hit Al Dhafra Air Base, March 2026",
      "url": "https://en.wikipedia.org/wiki/2026_Iran_war",
      "note": "Iran hit Al Dhafra. The UAE shot down missiles and drones. Fifteen people were killed in the UAE.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-03"
     },
     {
      "backer": "uae",
@@ -2528,7 +2754,8 @@
      "source": "Wall Street Journal, 16 May 2026, on secret Saudi and UAE strikes on Iran",
      "url": "https://en.wikipedia.org/wiki/Saudi_Arabia_in_the_2026_Iran_war",
      "note": "The Journal reported Emirati jets secretly hit Iranian drone and missile sites.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-05"
     },
     {
      "backer": "saudi",
@@ -2541,7 +2768,8 @@
      "source": "Saudi Ministry of Defense interception statements; Prince Sultan Air Base hit on 1, 14 and 27 March 2026",
      "url": "https://en.wikipedia.org/wiki/Saudi_Arabia_in_the_2026_Iran_war",
      "note": "Iranian missiles destroyed a U.S. radar plane and damaged tankers at Prince Sultan in March 2026. Saudi forces shot down missiles aimed at the base and at oil sites.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-03"
     },
     {
      "backer": "saudi",
@@ -2554,7 +2782,8 @@
      "source": "Wall Street Journal, 16 May 2026, on secret Saudi and UAE strikes on Iran; U.S. and Saudi strikes on militias in Iraq, 29 July 2026",
      "url": "https://www.washingtontimes.com/news/2026/jul/29/jordan-intercepts-iranian-missiles-saudi-arabia-us-launch-strikes/",
      "note": "The Journal reported Saudi jets secretly hit Iranian drone and missile sites. Saudi and U.S. aircraft struck Iran-backed militias in Iraq in July.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-05"
     },
     {
      "backer": "jordan",
@@ -2567,10 +2796,11 @@
      "source": "Jordanian armed forces interception statements, June and July 2026; Muwaffaq Salti Air Base",
      "url": "https://www.al-monitor.com/originals/2026/07/jordan-intercepts-7-missiles-6-drones-iran-warns-civilians-near-us-bases",
      "note": "Jordan hosts U.S. forces at Muwaffaq Salti and Azraq. An Iranian strike there on 17 June 2026 killed three Americans. Jordan's army says it shot down Iranian missiles and drones many times.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-03"
     },
     {
-     "backer": "europe",
+     "backer": "britain",
      "party": "us",
      "kinds": [
       "bases",
@@ -2580,7 +2810,8 @@
      "source": "U.K. Prime Minister Keir Starmer, 1 March 2026",
      "url": "https://www.stripes.com/theaters/europe/2026-03-02/uk-us-bases-iran-20928006.html",
      "note": "Britain let the U.S. use RAF Fairford and Diego Garcia from 1 March 2026 to hit Iranian missile depots and launchers. British jets shot down Iranian drones over Jordan, Iraq and Qatar.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-03"
     },
     {
      "backer": "turkey",
@@ -2592,7 +2823,8 @@
      "source": "Turkish Ministry of National Defense statements on NATO Patriot batteries at Incirlik, March 2026",
      "url": "https://www.defensenews.com/global/europe/2026/03/18/turkey-deploys-third-nato-patriot-system-to-repel-iranian-missiles/",
      "note": "Iran fired at least four missiles toward Incirlik in March 2026. NATO and U.S. ships shot them down. Türkiye added Patriot batteries and did not join the strikes.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-03"
     },
     {
      "backer": "russia",
@@ -2607,7 +2839,8 @@
      "source": "CNN and Washington Post, 6 March 2026, citing U.S. officials; U.S. and European officials on drone deliveries, 27 March 2026; Bloomberg, October 2026, on missile resupply",
      "url": "https://www.cnn.com/2026/03/06/politics/russia-aiding-iran-targeting",
      "note": "U.S. officials say Russia feeds Iran satellite data on American ships and planes, sent upgraded drones, and is rebuilding Iran's missile stock.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-03"
     },
     {
      "backer": "russia",
@@ -2619,7 +2852,8 @@
      "source": "Russian and Chinese veto of the UN Security Council resolution on the Strait of Hormuz, 7 April 2026",
      "url": "https://en.wikipedia.org/wiki/China_in_the_2026_Iran_war",
      "note": "Russia and China vetoed the Hormuz resolution. Russia abstained on resolution 2817 on Iranian attacks on the Gulf states.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-04"
     },
     {
      "backer": "china",
@@ -2633,7 +2867,8 @@
      "source": "U.S. Treasury designations of three Chinese satellite firms, 8 May 2026; U.S. seizure of the MV Touska, 19 April 2026; Wall Street Journal, September 2026, on 1,300 shipments of drone and missile parts",
      "url": "https://www.cnn.com/2026/04/11/politics/us-intelligence-iran-china-weapons",
      "note": "The U.S. seized an Iranian ship carrying dual-use cargo from China and sanctioned Chinese firms for selling Iran satellite targeting data.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-04"
     },
     {
      "backer": "china",
@@ -2646,7 +2881,8 @@
      "source": "UN Security Council vetoes, 7 April and September 2026; China buys more than 80 percent of Iran's shipped oil",
      "url": "https://en.wikipedia.org/wiki/China_in_the_2026_Iran_war",
      "note": "China vetoed the Hormuz resolution and the renewal of nuclear sanctions monitoring. It also helped Pakistan broker the April ceasefire.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-04"
     }
    ],
    "none_note": "The Gulf states say their bases were not used to attack Iran. What they say they did is shoot down what Iran fired at them.",
@@ -2828,7 +3064,19 @@
     }
    ],
    "areas_source": "Wikipedia 2026 Iranian strikes on Arab countries; 2026 Israeli–United States strikes on Iran; 2026 Iranian strikes on Israel; 2026 in Iran; Critical Threats Iran Updates Oct 2026",
-   "areas_url": "https://en.wikipedia.org/wiki/2026_Iranian_strikes_on_Arab_countries"
+   "areas_url": "https://en.wikipedia.org/wiki/2026_Iranian_strikes_on_Arab_countries",
+   "start": "2026-02",
+   "short": "Gulf",
+   "turns": [
+    {
+     "month": "2026-03",
+     "what": "Hormuz shut on 4 March."
+    },
+    {
+     "month": "2026-07",
+     "what": "The ceasefire collapsed on 8 July."
+    }
+   ]
   },
   {
    "id": "ethiopia",
@@ -2851,16 +3099,22 @@
     {
      "id": "egov",
      "name": "Federal government",
-     "state": "ethiopia"
+     "state": "ethiopia",
+     "side": "A",
+     "short": "government"
     },
     {
      "id": "alliance",
-     "name": "Alliance for Survival (TPLF, Fano, Oromo Liberation Army and others)"
+     "name": "Alliance for Survival (TPLF, Fano, Oromo Liberation Army and others)",
+     "side": "B",
+     "short": "alliance"
     },
     {
      "id": "eri",
      "name": "Eritrea",
-     "state": "eritrea"
+     "state": "eritrea",
+     "side": "B",
+     "short": "Eritrea"
     }
    ],
    "ties": [
@@ -2874,7 +3128,8 @@
      "source": "Ethiopia-Türkiye defence agreement, August 2021; Ethiopian military statements on drone use; ECFR, Deadly Skies, February 2025",
      "url": "https://ecfr.eu/publication/deadly-skies-drone-warfare-in-ethiopia-and-the-future-of-conflict-in-africa/",
      "note": "Ethiopia signed a defence deal with Türkiye in 2021 and flies Bayraktar TB2 and Akinci drones. Both were seen in the October 2026 fighting.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "uae",
@@ -2888,7 +3143,8 @@
      "source": "Open-source flight tracking of UAE cargo flights to Ethiopia, September to November 2021; ECFR, Deadly Skies, February 2025",
      "url": "https://ecfr.eu/publication/deadly-skies-drone-warfare-in-ethiopia-and-the-future-of-conflict-in-africa/",
      "note": "Trackers logged more than 90 UAE cargo flights to Ethiopia in late 2021 while Ethiopia bought Wing Loong drones. The evidence is from 2021 and 2022. No fresh proof for 2026.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "eritrea",
@@ -2902,7 +3158,8 @@
      "source": "Reuters and Guardian eyewitness reports from Adigrat, 7 and 8 October 2026; Ethiopian federal police statement, 14 January 2026, on seized ammunition",
      "url": "https://www.aljazeera.com/news/2026/10/7/witnesses-spot-eritrean-troops-inside-northern-ethiopia-as-tensions-flare",
      "note": "Residents saw Eritrean soldiers in trucks in Adigrat on 7 October. Ethiopian drones hit Eritrean convoys on 7 and 8 October. Ethiopia also says Eritrea sent the alliance ammunition.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-10"
     },
     {
      "backer": "egypt",
@@ -2914,7 +3171,8 @@
      "source": "Joint declaration of Egypt, Eritrea, Somalia and Sudan, 4 October 2026; Egypt-Eritrea port agreements, December 2025 to July 2026",
      "url": "https://www.criticalthreats.org/analysis/Ethiopia-eritrea-tigray-tplf-egypt-somalia-sudan-saf-mali-fla-jnim",
      "note": "Egypt leads a four-state bloc against Ethiopia over the Nile dam and Red Sea access. It signed port deals with Eritrea in 2026.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2025-12"
     }
    ],
    "areas": [
@@ -2950,7 +3208,15 @@
     }
    ],
    "areas_source": "Wikipedia 2026 Ethiopian offensive; War in Amhara; Critical Threats Africa File 8 Oct 2026",
-   "areas_url": "https://en.wikipedia.org/wiki/2026_Ethiopian_offensive"
+   "areas_url": "https://en.wikipedia.org/wiki/2026_Ethiopian_offensive",
+   "start": "2023-04",
+   "short": "Ethiopia",
+   "turns": [
+    {
+     "month": "2026-09",
+     "what": "The alliance offensive began on 23 September."
+    }
+   ]
   },
   {
    "id": "southsudan",
@@ -2971,11 +3237,15 @@
    "parties": [
     {
      "id": "ssgov",
-     "name": "Government forces (SSPDF)"
+     "name": "Government forces (SSPDF)",
+     "side": "A",
+     "short": "government"
     },
     {
      "id": "splaio",
-     "name": "SPLA-IO and the Nuer White Army"
+     "name": "SPLA-IO and the Nuer White Army",
+     "side": "B",
+     "short": "SPLA-IO"
     }
    ],
    "ties": [
@@ -2990,7 +3260,8 @@
      "source": "Ugandan deployment at Juba's request, March 2025; Human Rights Watch on air strikes and the breach of the UN arms embargo",
      "url": "https://www.hrw.org/world-report/2026/country-chapters/south-sudan",
      "note": "Uganda sent troops in March 2025 and its aircraft bombed opposition areas. Neither state asked the UN for an exemption to the arms embargo.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     }
    ],
    "none_note": "No state is known to back the opposition.",
@@ -3032,7 +3303,10 @@
     }
    ],
    "areas_source": "Wikipedia 2026 in South Sudan; conflicts.json status",
-   "areas_url": "https://en.wikipedia.org/wiki/2026_in_South_Sudan"
+   "areas_url": "https://en.wikipedia.org/wiki/2026_in_South_Sudan",
+   "start": "2025-03",
+   "short": "South Sudan",
+   "turns": []
   },
   {
    "id": "nigeria",
@@ -3054,11 +3328,15 @@
    "parties": [
     {
      "id": "ngov",
-     "name": "Nigerian government"
+     "name": "Nigerian government",
+     "side": "A",
+     "short": "state"
     },
     {
      "id": "jihadn",
-     "name": "Boko Haram, Islamic State West Africa, bandit groups and Sahel jihadists"
+     "name": "Boko Haram, Islamic State West Africa, bandit groups and Sahel jihadists",
+     "side": "B",
+     "short": "jihadists, bandits"
     }
    ],
    "ties": [
@@ -3074,7 +3352,8 @@
      "source": "U.S. Defense Security Cooperation Agency notification, 13 August 2025; U.S. Africa Command strikes in Sokoto, 25 December 2025",
      "url": "https://www.dsca.mil/Press-Media/Major-Arms-Sales/Article-Display/Article/4273754/nigeria-munitions-precision-bombs-and-precision-rockets",
      "note": "The U.S. approved $346 million in bombs and rockets in August 2025. U.S. drones struck jihadist camps in Sokoto on 25 December 2025 with Nigeria's agreement.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "china",
@@ -3087,7 +3366,8 @@
      "source": "Nigerian Air Force announcement of Wing Loong II deliveries, November 2020; further deliveries 2023",
      "url": "https://thedefensepost.com/2020/11/10/nigeria-wing-loong-drones/",
      "note": "Nigeria's air chief announced the first Chinese Wing Loong II drones in 2020. More came in 2023.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "turkey",
@@ -3100,7 +3380,8 @@
      "source": "Nigerian Army announcement of 43 Bayraktar TB2 drones, 19 December 2024; Nigerian Air Force TB2 deliveries, 2023",
      "url": "https://www.channelstv.com/2024/12/19/army-acquires-43-drones-wings-46-turkey-trained-personnel/",
      "note": "The army bought 43 TB2 drones for the northwest in 2024. The air force got TB2s and T-129 helicopters earlier.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     }
    ],
    "none_note": "No state is known to back the insurgents.",
@@ -3172,7 +3453,15 @@
     }
    ],
    "areas_source": "Wikipedia 2026 in Nigeria; Portal current events Sep 2026",
-   "areas_url": "https://en.wikipedia.org/wiki/2026_in_Nigeria"
+   "areas_url": "https://en.wikipedia.org/wiki/2026_in_Nigeria",
+   "start": "2009-07",
+   "short": "Nigeria",
+   "turns": [
+    {
+     "month": "2025-12",
+     "what": "U.S. drone strikes in Sokoto began."
+    }
+   ]
   },
   {
    "id": "us-boats",
@@ -3197,11 +3486,15 @@
     {
      "id": "us",
      "name": "United States",
-     "state": "usa"
+     "state": "usa",
+     "side": "A",
+     "short": "U.S."
     },
     {
      "id": "boats",
-     "name": "Boat crews from Venezuela, Colombia, Ecuador and Trinidad"
+     "name": "Boat crews from Venezuela, Colombia, Ecuador and Trinidad",
+     "side": "B",
+     "short": "boat crews"
     }
    ],
    "ties": [
@@ -3215,7 +3508,8 @@
      "source": "Dominican government grant of San Isidro air base and Las Americas airport to U.S. forces, 26 November 2025",
      "url": "https://en.wikipedia.org/wiki/War_on_cartels_(2025%E2%80%93present)",
      "note": null,
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2025-11"
     },
     {
      "backer": "trinidad",
@@ -3227,7 +3521,8 @@
      "source": "Trinidad and Tobago approval of U.S. radar and aircraft use, late 2025",
      "url": "https://en.wikipedia.org/wiki/War_on_cartels_(2025%E2%80%93present)",
      "note": null,
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "elsalvador",
@@ -3240,10 +3535,11 @@
      "source": "Press reporting on U.S. AC-130J, P-8 and C-40 aircraft operating from Salvadoran bases from mid-October 2025",
      "url": "https://en.wikipedia.org/wiki/War_on_cartels_(2025%E2%80%93present)",
      "note": null,
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2025-10"
     },
     {
-     "backer": "europe",
+     "backer": "britain",
      "party": "us",
      "kinds": [
       "intel"
@@ -3252,12 +3548,16 @@
      "stance": "says nothing",
      "source": "Press reporting on RAF surveillance aircraft and RFA Tideforce supporting the U.S. Caribbean campaign",
      "url": "https://en.wikipedia.org/wiki/2025%E2%80%932026_United_States_oil_blockade_of_Venezuela",
-     "note": "Britain. Support is to the wider campaign, not to single strikes.",
-     "checked": "2026-10-11"
+     "note": "Support is to the wider campaign, not to single strikes.",
+     "checked": "2026-10-11",
+     "since": null
     }
    ],
    "areas": [],
-   "none_note": "The boats are not a state. The entry is here because the strikes led into the Venezuela raid and because each one is announced by the United States."
+   "none_note": "The boats are not a state. The entry is here because the strikes led into the Venezuela raid and because each one is announced by the United States.",
+   "start": "2025-09",
+   "short": "Boats",
+   "turns": []
   },
   {
    "id": "us-venezuela",
@@ -3282,12 +3582,16 @@
     {
      "id": "us",
      "name": "United States",
-     "state": "usa"
+     "state": "usa",
+     "side": "A",
+     "short": "U.S."
     },
     {
      "id": "ven",
      "name": "Venezuela (Maduro's government)",
-     "state": "venezuela"
+     "state": "venezuela",
+     "side": "B",
+     "short": "Venezuela"
     }
    ],
    "ties": [
@@ -3298,11 +3602,12 @@
       "troops"
      ],
      "tier": "open",
-     "ended": "2026",
+     "ended": "2026-01",
      "source": "Cuban government statement, 5 January 2026, on 32 Cubans killed in the raid",
      "url": "https://www.aljazeera.com/news/2026/1/5/cuba-says-32-cubans-killed-during-us-raids-on-venezuela",
      "note": "Cuba said its personnel were 'carrying out missions' at Venezuela's request and 'fell in direct combat'. Cuban security staff left in the following weeks.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     },
     {
      "backer": "russia",
@@ -3314,7 +3619,8 @@
      "source": "Russian statements at the UN Security Council, January 2026",
      "url": "https://en.wikipedia.org/wiki/2025%E2%80%932026_United_States_oil_blockade_of_Venezuela",
      "note": "Russia called the seizures 'outright piracy' and the raid 'an act of armed aggression'. Press reported a Russian submarine escorting the tanker Marinera before the U.S. seized it on 7 January 2026.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-01"
     },
     {
      "backer": "china",
@@ -3326,7 +3632,8 @@
      "source": "Chinese foreign ministry statement, 3 January 2026; UN Security Council",
      "url": "https://en.wikipedia.org/wiki/International_reactions_to_the_2026_United_States_intervention_in_Venezuela",
      "note": "China 'strongly condemns the U.S. for recklessly using force against a sovereign state' and called for Maduro's release.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-01"
     },
     {
      "backer": "iran",
@@ -3338,10 +3645,11 @@
      "source": "Iranian foreign ministry statements, December 2025 and January 2026",
      "url": "https://en.wikipedia.org/wiki/International_reactions_to_the_2026_United_States_intervention_in_Venezuela",
      "note": "Iran called the seizures 'an act of piracy' and the raid a violation of sovereignty.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2025-12"
     },
     {
-     "backer": "europe",
+     "backer": "britain",
      "party": "us",
      "kinds": [
       "intel"
@@ -3350,13 +3658,22 @@
      "stance": "says nothing",
      "source": "Press reporting on RAF surveillance aircraft and RFA Tideforce supporting the blockade",
      "url": "https://en.wikipedia.org/wiki/2025%E2%80%932026_United_States_oil_blockade_of_Venezuela",
-     "note": "Britain.",
-     "checked": "2026-10-11"
+     "note": null,
+     "checked": "2026-10-11",
+     "since": "2025-12"
     }
    ],
    "areas": [],
    "struck": [
     "VEN"
+   ],
+   "start": "2025-12",
+   "short": "Venezuela",
+   "turns": [
+    {
+     "month": "2026-01",
+     "what": "The raid. Maduro taken to the United States."
+    }
    ]
   },
   {
@@ -3383,12 +3700,16 @@
     {
      "id": "us",
      "name": "United States",
-     "state": "usa"
+     "state": "usa",
+     "side": "A",
+     "short": "U.S."
     },
     {
      "id": "cub",
      "name": "Cuba",
-     "state": "cuba"
+     "state": "cuba",
+     "side": "B",
+     "short": "Cuba"
     }
    ],
    "ties": [
@@ -3402,7 +3723,8 @@
      "source": "Delivery of 100,000 tonnes of crude by the tanker Anatoly Kolodkin, 30 March 2026",
      "url": "https://www.theguardian.com/us-news/2026/mar/29/us-russian-oil-tanker-cuba-blockade",
      "note": "A second Russian tanker turned around off Brazil on 27 May 2026.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-03"
     },
     {
      "backer": "china",
@@ -3414,7 +3736,8 @@
      "source": "Chinese donation of 15,000 tons of rice; $80 million in aid approved in January 2026",
      "url": "https://www.dw.com/en/cuba-receives-china-rice-shipment-amid-us-threats-blackouts/a-77281770",
      "note": null,
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-01"
     },
     {
      "backer": "mexico",
@@ -3426,7 +3749,8 @@
      "source": "Mexican humanitarian aid ships, February 2026; oil shipments halted 27 January 2026 under tariff threat",
      "url": "https://www.reuters.com/business/energy/sheinbaum-does-not-deny-report-mexico-halted-oil-shipment-cuba-2026-01-27/",
      "note": "Mexico stopped sending oil and sent food and medicine instead. Sheinbaum called the halt 'sovereign' and warned of a humanitarian crisis.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-02"
     },
     {
      "backer": "venezuela",
@@ -3435,14 +3759,18 @@
       "oil"
      ],
      "tier": "open",
-     "ended": "2026",
+     "ended": "2026-01",
      "source": "Venezuelan oil to Cuba ended with the January 2026 raid; a U.S. licence from 25 February 2026 allows private resale only",
      "url": "https://en.wikipedia.org/wiki/2026_United_States_fuel_blockade_on_Cuba",
      "note": null,
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": null
     }
    ],
-   "areas": []
+   "areas": [],
+   "start": "2026-01",
+   "short": "Cuba",
+   "turns": []
   },
   {
    "id": "us-ecuador",
@@ -3467,11 +3795,15 @@
     {
      "id": "us",
      "name": "United States",
-     "state": "usa"
+     "state": "usa",
+     "side": "A",
+     "short": "U.S."
     },
     {
      "id": "cdf",
-     "name": "Comandos de la Frontera (FARC splinter)"
+     "name": "Comandos de la Frontera (FARC splinter)",
+     "side": "B",
+     "short": "FARC splinter"
     }
    ],
    "ties": [
@@ -3486,13 +3818,17 @@
      "source": "Joint operation announced by both governments, 4 March 2026",
      "url": "https://www.bbc.com/news/articles/cgjzz4gn64zo",
      "note": "Ecuador is a co-belligerent, not a target.",
-     "checked": "2026-10-11"
+     "checked": "2026-10-11",
+     "since": "2026-03"
     }
    ],
    "areas": [],
    "struck": [
     "ECU"
-   ]
+   ],
+   "start": "2026-03",
+   "short": "Ecuador",
+   "turns": []
   },
   {
    "id": "china-philippines",
@@ -3518,11 +3854,15 @@
     {
      "id": "chn",
      "name": "China",
-     "state": "china"
+     "state": "china",
+     "side": "A",
+     "short": "China"
     },
     {
      "id": "phl",
-     "name": "Philippines"
+     "name": "Philippines",
+     "side": "B",
+     "short": "Philippines"
     }
    ],
    "ties": [
@@ -3537,10 +3877,27 @@
      "source": "U.S.-Philippines Mutual Defense Treaty; U.S. Defense Security Cooperation Agency notifications",
      "url": null,
      "note": "A standing alliance, not entered for this year's incidents.",
-     "checked": null
+     "checked": null,
+     "since": null
     }
    ],
-   "areas": []
+   "areas": [],
+   "start": "2023-08",
+   "short": "Philippines",
+   "turns": [
+    {
+     "month": "2025-10",
+     "what": "Water cannon and ramming near Thitu Island on 12 October."
+    },
+    {
+     "month": "2026-07",
+     "what": "A sailor struck with a baton at Second Thomas Shoal."
+    },
+    {
+     "month": "2026-09",
+     "what": "A fisheries vessel rammed off Palawan."
+    }
+   ]
   }
  ],
  "excluded": [
@@ -3589,5 +3946,11 @@
  "tier_note": "The line answers one question: how do we know? The more broken the line, the less the backer has owned. These words grade the evidence for a line, never a speaker; the Word keeps one verb for everyone.",
  "naming_rule": "A state is named as it registers itself at the United Nations, in the short form it uses in English: Türkiye, Myanmar, Czechia, Eswatini. Armed groups keep their common name with their own name beside it.",
  "pressure_rule": "A state is also on the map where it uses military force or a blockade against another state, or on its territory, without sustained fighting: strikes, raids, seizures, sinkings. These are drawn as hollow squares with no lines and no death band; who helps whom is on the card. One is entered only when the acting state says so itself.",
- "participants_rule": "The participants view shades whole countries by their part: darkest where there is fighting on its own soil, lighter for a state in a war or using force from outside its borders, lightest for a state that backs a side. A country takes its darkest shade."
+ "participants_rule": "The participants view shades whole countries by their part: darkest where there is fighting on its own soil, lighter for a state in a war or using force from outside its borders, lightest for a state that backs a side. A country takes its darkest shade.",
+ "motion_rule": "Step back through the year. A war appears in the month its fighting began. A line appears in the month the help began. A line with no start month is older than this year and is there from the first frame. A ring marks a war with something new that month; a heavy line is one that begins that month. Lines are drawn as we know them today, not as they were known at the time. Circle size is the year's deaths and does not change with the month. One thing after another is not one thing because of another.",
+ "grid_rule": "One row per state, one column per war or square. A mark is a tie. The lane says which party it helps; the line says how we know. A filled square means the state fights there itself. A mark is a tie on this map, not a measure of how much. A state with marks in lanes on opposing sides is on both sides. Faint and dated means it switched or stopped. Only states in two or more columns are shown unless you ask for all.",
+ "window": {
+  "from": "2025-10",
+  "to": "2026-10"
+ }
 }
