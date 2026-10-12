@@ -47,7 +47,7 @@ Our band is the past twelve months: "3" tens of thousands a year, "2" thousands,
 | Somalia | 2 | 3,872 | 2,890 | one war with six contributing states as secondary parties | agrees |
 | Syria | 1 | 3,449 | 564 | half one-sided (coast, Sweida); SDF and IS conflicts with Türkiye and the US as secondaries | agrees for 2026 |
 | Haiti | 2 | 2,448 | 492 | **state-based**, a war in 2025, Kenya and five others as secondary parties | agrees for 2025; 2026 pace is band 1 |
-| Pakistan and Afghanistan | 2 | 3,331 plus 745 | 3,307 plus 745 | TTP a war, Balochistan rising, the Afghanistan border an interstate minor | agrees |
+| Pakistan and Afghanistan | 2 | 3,331 plus 332 | 3,307 plus 745 | TTP a war, Balochistan rising, the Afghanistan border an interstate minor | agrees |
 | The Gulf | 2 | 1,222 (Iran-Israel, a war) | 3,810 in the new conflict "Iran – Israel, United States" | events across ten countries; US tanker strikes coded as one-sided, 5 deaths | agrees |
 | Ethiopia | 2 | 5,458 (3,319 to 17,924) | 2,826 | Fano a war at 3,835; OLA minor | agrees; September is after the data |
 | South Sudan | 2 | 661 (621 to 825) | 613 | government vs SPLM/A-IO minor; most deaths non-state and one-sided | **contradicts: UCDP says 1** |

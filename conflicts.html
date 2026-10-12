@@ -182,6 +182,7 @@
   .legend span { display: inline-flex; align-items: center; gap: 8px; }
   .legend svg { width: 44px; height: 10px; overflow: visible; }
   .legend .arc { opacity: 1 !important; }
+  .legend .arc.stale { opacity: 0.35 !important; }
   .card .row .arc, table.mono .tier .arc, .tiers .arc { opacity: 1 !important; }
   .legend .k { color: var(--ink-45); text-transform: uppercase; letter-spacing: 0.14em; font-size: 10px; }
   .legend .g { width: 9px; height: 9px; border-radius: 50%; background: var(--danger); display: inline-block; }
@@ -235,6 +236,17 @@
   table.mono .src { font-size: 10.5px; color: var(--ink-60); max-width: 36em; }
   table.mono .src a { overflow-wrap: anywhere; }
   table.mono .src .n { display: block; color: var(--ink-45); margin-top: 2px; }
+  .src .so { display: block; }
+  .src .sc { font-family: var(--mono); font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-45); border: 1px solid var(--ink-18); border-radius: 3px; padding: 0 4px; margin-right: 5px; white-space: nowrap; }
+  .src .sc.opponent, .src .sc.reference { border-style: dashed; }
+  .src .nl { color: var(--ink-45); }
+  .src .ev { display: block; color: var(--ink-45); margin-top: 3px; }
+  .classes { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px 24px; margin-top: 12px; font-size: 0.95rem; line-height: 1.55; color: var(--ink-80); max-width: 60em; }
+  .classes div b { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); font-weight: 500; display: block; }
+  ul.plain.corr li { display: grid; grid-template-columns: 7em 1fr; gap: 12px; }
+  ul.plain.corr li span.d { font-family: var(--mono); font-size: 11px; color: var(--ink-45); padding-top: 3px; }
+  ul.plain.corr li span.w { color: var(--ink-60); }
+  @media (max-width: 640px) { ul.plain.corr li { grid-template-columns: 1fr; gap: 2px; } }
   table.mono td.chk { white-space: nowrap; color: var(--ink-45); }
   .table-wrap { overflow-x: auto; }
   @media (max-width: 720px) { table.mono { font-size: 11px; min-width: 640px; } }
@@ -464,10 +476,17 @@
   <h3>How we know</h3>
   <p class="prose" id="tier-note"></p>
   <div class="tiers" id="tiers"></div>
+  <p class="prose" id="finding-rule" style="margin-top:14px"></p>
+  <h3>Sources</h3>
+  <p class="prose" id="source-rule"></p>
+  <div class="classes" id="classes"></div>
+  <p class="prose" id="evidence-rule"></p>
   <h3>Names</h3>
   <p class="prose" id="naming-note"></p>
   <h3>Left off</h3>
   <ul class="plain" id="excluded"></ul>
+  <h3>Corrections</h3>
+  <ul class="plain corr" id="corrections"></ul>
   <div class="note" id="keep-note"></div>
 </section>
 
@@ -506,7 +525,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     c.parties = Array.isArray(c.parties) ? c.parties.filter(p => p && p.id && p.name) : [];
     const ps = new Set(c.parties.map(p => p.id));
     c.ties = (Array.isArray(c.ties) ? c.ties : []).filter(t => {
-      const bad = !t || !backers[t.backer] ? 'unknown backer' : !ps.has(t.party) ? 'unknown party' : !D.tiers[t.tier] ? 'unknown tier' : !Array.isArray(t.kinds) ? 'no kinds' : null;
+      const bad = !t || !backers[t.backer] ? 'unknown backer' : !ps.has(t.party) ? 'unknown party' : !D.tiers[t.tier] ? 'unknown tier' : !Array.isArray(t.kinds) ? 'no kinds' : !Array.isArray(t.sources) || !t.sources.length ? 'no sources' : null;
       if (bad) problems.push(c.id + ': ' + bad + ' in ' + JSON.stringify(t));
       return !bad;
     });
@@ -519,6 +538,10 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const today = new Date();
   const staleDays = t => (t.checked || t.entered) ? Math.round((today - new Date(t.checked || t.entered)) / 86400000) : null;
   const isStale = t => { const n = staleDays(t); return n !== null && n > 90; };
+  const winFrom = (D.window && D.window.from) || '2025-10';
+  const isOld = t => !!t.evidence_to && (t.evidence_to.length > 4 ? t.evidence_to < winFrom : t.evidence_to < winFrom.slice(0, 4));
+  const isFaint = t => isStale(t) || isOld(t) || !t.evidence_to;
+  const fmtSince = t => t.since_precision === 'year' ? String(t.since).slice(0, 4) : fmtMonth(t.since);
   const kindsText = t => t.kinds.map(k => D.kinds[k] || k).join(', ');
   const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   const fmtMonth = m => { if (!m) return ''; const [y, mo] = String(m).split('-'); return mo ? MONTHS[+mo - 1] + ' ' + y : y; };
@@ -573,9 +596,16 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   /* ---- rules, stamp ---- */
   if (D.status === 'draft' && D.status_note) { const b = $('#draft'); b.style.display = 'block'; b.textContent = D.status_note; }
   const nChecked = D.conflicts.reduce((n, c) => n + c.ties.filter(t => t.checked).length, 0);
+  const nOld = D.conflicts.reduce((n, c) => n + c.ties.filter(isOld).length, 0);
+  const nUndated = D.conflicts.reduce((n, c) => n + c.ties.filter(t => !t.evidence_to).length, 0);
   $('#rule-text').textContent = [D.rule, D.pressure_rule, D.color_rule, D.areas_rule, D.participants_rule, D.motion_rule].filter(Boolean).join(' ');
   const tierSample = (tier, hueClass = 'hue-0', w = 40) => `<svg viewBox="0 0 ${w} 8" aria-hidden="true"><path class="arc tier-${tier} ${hueClass} legend-line" d="M1,4 L${w - 1},4"/></svg>`;
   $('#tier-note').textContent = D.tier_note || '';
+  $('#finding-rule').textContent = D.finding_rule || '';
+  $('#source-rule').textContent = D.source_rule || '';
+  $('#classes').innerHTML = Object.entries(D.source_classes || {}).map(([k, v]) => `<div><b>${esc(k)}</b>${esc(v)}</div>`).join('');
+  $('#evidence-rule').textContent = D.evidence_rule || '';
+  $('#corrections').innerHTML = (D.corrections || []).slice().reverse().map(x => { const c = D.conflicts.find(k => k.id === x.entry); return `<li><span class="d">${esc(x.date)}</span><span><b>${esc(c ? c.name : (x.entry === 'all' ? 'all entries' : x.entry))}.</b> ${esc(x.what)} <span class="w">${esc(x.why)}</span></span></li>`; }).join('') || '<li>None yet.</li>';
   $('#naming-note').innerHTML = esc(D.naming_rule || '') + ' <a href="/methodology.html">The methodology page</a> keeps the rule.';
   $('#tiers').innerHTML = Object.entries(D.tiers).map(([id, t]) => `<div><div class="w">${tierSample(id)} ${esc(t.word)}</div><div class="n">${esc(t.note)}</div></div>`).join('');
   $('#excluded').innerHTML = (D.excluded || []).map(x => `<li><b>${esc(x.name)}.</b> ${esc(x.why)}</li>`).join('');
@@ -588,9 +618,9 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     $('#ucdp-missing').textContent = D.ucdp_missing || '';
   }
   $('#attribution').innerHTML = 'Figures credited to ACLED (Armed Conflict Location &amp; Event Data), <a href="https://acleddata.com" target="_blank" rel="noopener">acleddata.com</a>, are taken from ACLED\'s published reports or from others\' reports of them; each entry says which. We did not download ACLED data. UCDP figures are from the Uppsala Conflict Data Program, <a href="https://ucdp.uu.se" target="_blank" rel="noopener">ucdp.uu.se</a>, ' + esc((D.ucdp_meta && D.ucdp_meta.versions) || '') + ', used under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>: Davies, Pettersson and Öberg, Organized violence 1989–2025, and violent political protests, Journal of Peace Research, 2026, doi 10.1093/jopres/xjag046; Sundberg and Melander, Introducing the UCDP Georeferenced Event Dataset, Journal of Peace Research 50(4), 2013; Hegre, Croicu, Eck and Högbladh, Introducing the UCDP Candidate Events Dataset, Research &amp; Politics 7(3), 2020. UCDP is part of and funded by DEMSCORE, national research infrastructure grant 2021-00162 from the Swedish Research Council. UN counts name their mission or agency in each entry. A party\'s own figure is shown as its claim.';
-  $('#keep-note').textContent = 'Every tie has a source and the date it was entered. A check is a person reopening the source and finding it still says what the row says. ' + (nChecked ? '' : 'No tie has been checked yet. ') + 'A tie fades on the map ninety days after it was entered or last checked, and the table says so. ' + (D.kept_by || '') + ' A tie that has ended is drawn as a faint dotted line and dated. ' + (D.band_note || '') + ' Base map: Natural Earth, Equal Earth projection, so Africa is drawn at its true size.';
+  $('#keep-note').textContent = 'Every tie has a source and the date it was entered. A check is a person reopening the source and finding it still says what the row says. ' + (nChecked ? '' : 'No tie has been checked yet. ') + 'A tie fades on the map ninety days after it was entered or last checked, or when its sources are all from before the window or carry no date, and the table says which. ' + (D.kept_by || '') + ' A tie that has ended is drawn as a faint dotted line and dated. ' + (D.band_note || '') + ' Base map: Natural Earth, Equal Earth projection, so Africa is drawn at its true size.';
   const nTies = D.conflicts.reduce((n, c) => n + c.ties.length, 0);
-  $('#stamp').innerHTML = 'Entered ' + esc(D.entered_on || D.as_of) + ' &middot; ' + (nChecked ? nChecked + ' ties checked' : 'no tie checked yet') + ' &middot; ' + D.conflicts.filter(c => c.kind !== 'pressure').length + ' wars, ' + D.conflicts.filter(c => c.kind === 'pressure').length + ' squares, ' + nTies + ' ties &middot; base map Natural Earth 1:110m, Equal Earth projection &middot; data/conflicts.json';
+  $('#stamp').innerHTML = 'Entered ' + esc(D.entered_on || D.as_of) + ' &middot; ' + (nChecked ? nChecked + ' ties checked' : 'no tie checked yet') + ' &middot; ' + nOld + ' on old evidence &middot; ' + nUndated + ' with no dated source &middot; ' + D.conflicts.filter(c => c.kind !== 'pressure').length + ' wars, ' + D.conflicts.filter(c => c.kind === 'pressure').length + ' squares, ' + nTies + ' ties &middot; base map Natural Earth 1:110m, Equal Earth projection &middot; data/conflicts.json';
 
   /* ---- base map ---- */
   const svg = $('#map');
@@ -652,7 +682,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   $('#legend').innerHTML =
     `<span class="k">tier</span>` +
     Object.entries(D.tiers).map(([id, t]) => `<span>${tierSample(id)} ${esc(t.word)}</span>`).join('') +
-    `<span>${tierSample('open', 'hue-0 ended')} ended</span>` +
+    `<span>${tierSample('open', 'hue-0 ended')} ended</span><span>${tierSample('open', 'hue-0 stale')} old evidence, no dated source, or unchecked</span>` +
     `<span class="k" style="margin-left:8px">deaths</span>` +
     Object.entries(D.bands).sort((a, b) => b[0].localeCompare(a[0])).map(([id, label]) => `<span><i class="g s${id}"></i> ${esc(label)}</span>`).join('') +
     `<span><i class="g ring"></i> not entered</span>` +
@@ -853,11 +883,11 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       if (a) d += (d ? 'L' : 'M' + project(b.lon, b.lat).map(v => v.toFixed(1)).join(',') + 'L') + a[0].toFixed(1) + ',' + a[1].toFixed(1);
       if (!d) continue;
       const endedNow = t.ended && (!state.month || monthKey(t.ended) <= state.month);
-      const cls = ['arc', 'tier-' + t.tier, 'hue-' + hueOf(t.backer), isStale(t) ? 'stale' : '', endedNow ? 'ended' : '', (state.month && t.since === state.month) ? 'new' : (state.month && t.since && t.since < state.month) ? 'recent' : ''].join(' ');
+      const cls = ['arc', 'tier-' + t.tier, 'hue-' + hueOf(t.backer), isFaint(t) ? 'stale' : '', endedNow ? 'ended' : '', (state.month && t.since === state.month) ? 'new' : (state.month && t.since && t.since < state.month) ? 'recent' : ''].join(' ');
       el('path', { class: cls, d, 'data-conflict': c.id, 'data-backer': t.backer }, gArcs);
       if (allView) {
         const hit = el('path', { class: 'arc-hit', d }, gArcs);
-        hit.addEventListener('mouseenter', ev => showTip(ev, `<b>${esc(b.short)} → ${esc(partyName(c, t.party))}</b><br>${esc(c.name)} · ${esc(kindsText(t))}<br>${esc(D.tiers[t.tier].word)}${t.stance ? ' · ' + esc(b.short) + ' ' + esc(t.stance) : ''}${t.since ? ' · since ' + esc(fmtMonth(t.since)) : ''}${endedNow ? ' · ended ' + esc(fmtMonth(t.ended)) : ''}`));
+        hit.addEventListener('mouseenter', ev => showTip(ev, `<b>${esc(b.short)} → ${esc(partyName(c, t.party))}</b><br>${esc(c.name)} · ${esc(kindsText(t))}<br>${esc(D.tiers[t.tier].word)}${t.stance ? ' · ' + esc(b.short) + ' ' + esc(t.stance) : ''}${t.since ? ' · since ' + esc(fmtSince(t)) : ''}${endedNow ? ' · ended ' + esc(fmtMonth(t.ended)) : ''}`));
         hit.addEventListener('mousemove', ev => placeTip(ev));
         hit.addEventListener('mouseleave', hideTip);
       }
@@ -885,14 +915,18 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   }
 
   const swatch = b => `<i class="sw" style="background:${hueOf(b) ? 'var(--b' + hueOf(b) + ')' : 'var(--ink-45)'}"></i>`;
-  const srcHTML = t => { const u = safeUrl(t.url); return (u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(t.source)}</a>` : esc(t.source)) + (t.note ? `<span class="n">${esc(t.note)}</span>` : ''); };
+  const srcOne = e => { const u = safeUrl(e.url); const cls = (D.source_classes && D.source_classes[e.class]) ? e.class : 'other'; return `<span class="so"><span class="sc ${esc(cls)}" title="${esc((D.source_classes || {})[e.class] || '')}">${esc(e.class)}</span>${u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(e.text)}</a>` : esc(e.text) + ' <span class="nl">(no link)</span>'}${e.date ? ` <span class="nl">· ${esc(fmtMonth(e.date))}</span>` : ''}</span>`; };
+  const evidenceText = t => t.evidence_to ? (isOld(t) ? 'evidence to ' + fmtMonth(t.evidence_to) + ', before the window' : 'evidence to ' + fmtMonth(t.evidence_to)) : 'no dated source';
+  const srcHTML = t => (Array.isArray(t.sources) ? t.sources.map(srcOne).join('') : '') + `<span class="ev">${esc(evidenceText(t))}</span>` + (t.note ? `<span class="n">${esc(t.note)}</span>` : '');
   function tierLabel(t) {
     const b = backers[t.backer];
-    const bits = [esc(D.tiers[t.tier].word)];
+    const bits = [esc(D.tiers[t.tier].word) + (t.tier === 'open' && t.stance ? ', the framing is ours' : '')];
     if (t.stance) bits.push(`<span class="stance">${esc(b.short)} ${esc(t.stance)}</span>`);
-    if (t.since) bits.push(`since ${esc(fmtMonth(t.since))}`);
+    if (t.since) bits.push(`since ${esc(fmtSince(t))}`);
     if (t.ended) bits.push(`ended ${esc(fmtMonth(t.ended))}`);
     else if (isStale(t)) bits.push(t.checked ? `last checked ${esc(fmtMonth(t.checked))}` : `entered ${esc(fmtMonth(t.entered))}, not re-checked`);
+    if (isOld(t) && !t.ended) bits.push(`evidence to ${esc(fmtMonth(t.evidence_to))}`);
+    else if (!t.evidence_to && !t.ended) bits.push('no dated source');
     return `<span class="tier">${tierSample(t.tier, 'hue-' + hueOf(t.backer) + (t.ended ? ' ended' : ''), 30)} <span>${bits.join(' · ')}</span></span>`;
   }
 
@@ -1007,7 +1041,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   for (const c of D.conflicts) {
     html += `<tr class="group" data-conflict="${esc(c.id)}"><td colspan="6">${esc(c.name)}<small>${c.kind === 'pressure' ? 'force short of war · ' : ''}since ${esc(c.since)} · ${esc(c.status)}</small></td></tr>`;
     for (const t of c.ties) {
-      html += `<tr class="tie${isStale(t) ? ' stale' : ''}" data-conflict="${esc(c.id)}" data-backer="${esc(t.backer)}" tabindex="0" role="button">
+      html += `<tr class="tie${isFaint(t) ? ' stale' : ''}" data-conflict="${esc(c.id)}" data-backer="${esc(t.backer)}" tabindex="0" role="button">
         <td><span class="who">${swatch(t.backer)}${esc(backers[t.backer].short)}</span></td>
         <td>${esc(partyName(c, t.party))}</td>
         <td>${esc(kindsText(t))}</td>
