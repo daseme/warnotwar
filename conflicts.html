@@ -146,6 +146,11 @@
   .conflict.pressure.on .glyph { stroke: var(--ink); }
   .area { fill: var(--danger); fill-opacity: 0.2; stroke: var(--danger); stroke-opacity: 0.55; stroke-width: 0.5; vector-effect: non-scaling-stroke; pointer-events: none; transition: opacity 0.2s ease; }
   .dim .area:not(.on) { opacity: 0.35; }
+  /* participants: one hue, three steps */
+  .land.p1 { fill: color-mix(in srgb, var(--danger) 52%, var(--land)); }
+  .land.p2 { fill: color-mix(in srgb, var(--danger) 30%, var(--land)); }
+  .land.p3 { fill: color-mix(in srgb, var(--danger) 14%, var(--land)); }
+  .legend .g.pf { width: 12px; height: 9px; border-radius: 0; border: 1px solid var(--ink-18); }
   .legend .g.sq { width: 9px; height: 9px; border-radius: 0; background: none; border: 1.5px solid var(--danger); }
   .legend .g.fill { width: 12px; height: 9px; border-radius: 0; background: color-mix(in srgb, var(--danger) 25%, transparent); border: 1px solid color-mix(in srgb, var(--danger) 60%, transparent); }
   .conflict .lbl { font-size: 10.5px; fill: var(--ink-80); pointer-events: none; letter-spacing: 0.02em; paint-order: stroke; stroke: var(--bg-raise); stroke-width: 3px; stroke-linejoin: round; }
@@ -316,6 +321,7 @@
     <button class="chip ghost" id="show-all" aria-pressed="false">show every line</button>
     <button class="chip ghost" id="show-pressure" aria-pressed="true">force short of war</button>
     <button class="chip ghost" id="show-areas" aria-pressed="false">color the areas</button>
+    <button class="chip ghost" id="show-who" aria-pressed="false">shade the participants</button>
   </div>
   <div class="stage">
     <div>
@@ -444,7 +450,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
 
   /* ---- rules, stamp ---- */
   if (D.status === 'draft' && D.status_note) { const b = $('#draft'); b.style.display = 'block'; b.textContent = D.status_note; }
-  $('#rule-text').textContent = [D.rule, D.pressure_rule, D.color_rule, D.areas_rule].filter(Boolean).join(' ');
+  $('#rule-text').textContent = [D.rule, D.pressure_rule, D.color_rule, D.areas_rule, D.participants_rule].filter(Boolean).join(' ');
   const tierSample = (tier, hueClass = 'hue-0', w = 40) => `<svg viewBox="0 0 ${w} 8" aria-hidden="true"><path class="arc tier-${tier} ${hueClass} legend-line" d="M1,4 L${w - 1},4"/></svg>`;
   $('#tier-note').textContent = D.tier_note || '';
   $('#naming-note').innerHTML = esc(D.naming_rule || '') + ' <a href="/methodology.html">The methodology page</a> keeps the rule.';
@@ -460,7 +466,8 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   el('path', { class: 'outline', d: world.outline }, svg);
   el('path', { class: 'grat', d: world.graticule }, svg);
   const gLand = el('g', {}, svg);
-  for (const c of world.countries) el('path', { class: 'land', d: c.d }, gLand);
+  const landByIso = {}; const ISO_NE = { SSD: 'SDS', PSE: 'PSX' };
+  for (const c of world.countries) landByIso[c.id] = el('path', { class: 'land', d: c.d }, gLand);
   const gAreas = el('g', { id: 'areas' }, svg);
   const gArcs = el('g', { id: 'arcs' }, svg);
   const gParties = el('g', {}, svg);
@@ -517,7 +524,8 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     `<span class="k" style="margin-left:8px">deaths</span>` +
     Object.entries(D.bands).sort((a, b) => b[0].localeCompare(a[0])).map(([id, label]) => `<span><i class="g s${id}"></i> ${esc(label)}</span>`).join('') +
     `<span><i class="g ring"></i> not entered</span>` +
-    `<span class="k" style="margin-left:8px">also</span><span><i class="g sq"></i> force short of war</span><span id="legend-areas" style="display:none"><i class="g fill"></i> provinces with fighting this year</span>`;
+    `<span class="k" style="margin-left:8px">also</span><span><i class="g sq"></i> force short of war</span><span id="legend-areas" style="display:none"><i class="g fill"></i> provinces with fighting this year</span>` +
+    `<span id="legend-who" style="display:none"><i class="g pf" style="background:color-mix(in srgb, var(--danger) 52%, var(--land))"></i> fighting on its soil <i class="g pf" style="background:color-mix(in srgb, var(--danger) 30%, var(--land));margin-left:10px"></i> in it from outside <i class="g pf" style="background:color-mix(in srgb, var(--danger) 14%, var(--land));margin-left:10px"></i> backs a side</span>`;
 
   /* ---- backer chips ---- */
   const tieCount = {}; for (const c of D.conflicts) for (const t of c.ties) tieCount[t.backer] = (tieCount[t.backer] || 0) + 1;
@@ -534,11 +542,12 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   sel.innerHTML = `<option value="">others (${others.length})…</option>` + others.map(b => `<option value="${esc(b.id)}">${esc(b.short)}</option>`).join('');
   sel.onchange = () => { if (sel.value) focus('backer', sel.value); };
   chipsEl.appendChild(sel);
-  const allBtn = $('#show-all'), pressureBtn = $('#show-pressure'), areasBtn = $('#show-areas');
+  const allBtn = $('#show-all'), pressureBtn = $('#show-pressure'), areasBtn = $('#show-areas'), whoBtn = $('#show-who');
+  whoBtn.onclick = () => { state.who = !state.who; if (state.who) state.areas = false; writeHash(); render(); };
   allBtn.onclick = () => { state.all = !state.all; writeHash(); render(); };
   pressureBtn.onclick = () => { state.pressure = !state.pressure; if (!state.pressure && state.kind === 'conflict' && conflicts[state.id] && conflicts[state.id].kind === 'pressure') { state.kind = null; state.id = null; state.pinned = false; } writeHash(); render(); };
   let areasData = null, areasLoading = null;
-  areasBtn.onclick = () => { state.areas = !state.areas; writeHash(); loadAreas().then(render); };
+  areasBtn.onclick = () => { state.areas = !state.areas; if (state.areas) state.who = false; writeHash(); loadAreas().then(render); };
   function loadAreas() {
     if (!state.areas || areasData) return Promise.resolve();
     if (!areasLoading) areasLoading = fetch('/data/war_areas.json').then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); }).then(j => { areasData = j.areas || {}; }).catch(e => { fail('The province shapes did not load. ' + e.message); state.areas = false; });
@@ -546,13 +555,14 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   }
 
   /* ---- state ---- */
-  const state = { kind: null, id: null, pinned: false, all: false, pressure: true, areas: false };
+  const state = { kind: null, id: null, pinned: false, all: false, pressure: true, areas: false, who: false };
   function writeHash() {
     const parts = [];
     if (state.pinned && state.kind) parts.push((state.kind === 'conflict' ? 'c=' : 'b=') + state.id);
     if (state.all) parts.push('all');
     if (!state.pressure) parts.push('pressure=0');
     if (state.areas) parts.push('areas');
+    if (state.who) parts.push('who');
     history.replaceState(null, '', location.pathname + location.search + (parts.length ? '#' + parts.join('&') : ''));
   }
   function readHash() {
@@ -560,6 +570,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     state.all = q.has('all');
     state.pressure = q.get('pressure') !== '0';
     state.areas = q.has('areas');
+    state.who = q.has('who') && !state.areas;
     const c = q.get('c'), b = q.get('b');
     if (c && conflicts[c]) { state.kind = 'conflict'; state.id = c; state.pinned = true; }
     else if (b && backers[b]) { state.kind = 'backer'; state.id = b; state.pinned = true; }
@@ -590,6 +601,21 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     pressureBtn.classList.toggle('on', state.pressure); pressureBtn.setAttribute('aria-pressed', String(state.pressure));
     areasBtn.classList.toggle('on', state.areas); areasBtn.setAttribute('aria-pressed', String(state.areas));
     $('#legend-areas').style.display = state.areas ? '' : 'none';
+    $('#legend-who').style.display = state.who ? '' : 'none';
+    whoBtn.classList.toggle('on', state.who); whoBtn.setAttribute('aria-pressed', String(state.who));
+    for (const iso in landByIso) landByIso[iso].classList.remove('p1', 'p2', 'p3');
+    if (state.who) {
+      const rank = {};  /* 1 fighting on its soil, 2 in it from outside, 3 backs a side; lowest number wins */
+      const put = (iso, r) => { if (!iso) return; for (const i of (Array.isArray(iso) ? iso : [iso])) if (!(i in rank) || rank[i] > r) rank[i] = r; };
+      for (const c of D.conflicts) {
+        if (!state.pressure && c.kind === 'pressure') continue;
+        for (const a of (c.areas || [])) put(a.country, 1);
+        for (const i of (c.struck || [])) put(i, 1);
+        for (const p of c.parties) if (p.state && backers[p.state]) put(backers[p.state].iso, 2);
+        for (const t of c.ties) if (!t.ended) put(backers[t.backer].iso, 3);
+      }
+      for (const iso in rank) { const n = landByIso[ISO_NE[iso] || iso]; if (n) n.classList.add('p' + rank[iso]); }
+    }
     for (const id in confNodes) confNodes[id].style.display = (!state.pressure && conflicts[id].kind === 'pressure') ? 'none' : '';
     if (state.areas && areasData) {
       for (const c of D.conflicts) {
