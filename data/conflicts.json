@@ -6,20 +6,20 @@
  "color_rule": "Five states get a color: the ones that fight in or back a side in the most wars. Everyone else is grey and labelled.",
  "tiers": {
   "open": {
-   "word": "open",
+   "word": "on the record",
    "note": "The backer says so itself."
   },
   "shown": {
-   "word": "shown",
-   "note": "Weapons, money or people from the backer have been found and shown in public, by a UN panel, a sanctions finding or a weapons teardown. The backer denies it or says nothing."
+   "word": "documented",
+   "note": "The evidence is in a public document: a UN panel report, a sanctions finding, a weapon recovered and traced. The backer denies it or says nothing."
   },
   "reported": {
    "word": "reported",
    "note": "A government outside the fight or named press says so. Nothing has been shown in public."
   },
   "claimed": {
-   "word": "claimed",
-   "note": "A side in the fight says so. No one outside the fight has confirmed it."
+   "word": "alleged",
+   "note": "Only a side in the fight says so. No one outside the fight has confirmed it."
   }
  },
  "kinds": {
@@ -37,7 +37,9 @@
   "cover": "backs it in public and at the UN",
   "hosts": "hosts its leaders",
   "harbor": "lets its fighters shelter inside its borders",
-  "transit": "lets supplies cross"
+  "transit": "lets supplies cross",
+  "oil": "oil and fuel",
+  "seize": "seizes its ships"
  },
  "bands": {
   "3": "tens of thousands a year",
@@ -81,8 +83,8 @@
   },
   {
    "id": "turkey",
-   "name": "Turkey",
-   "short": "Turkey",
+   "name": "Türkiye",
+   "short": "Türkiye",
    "lon": 32.9,
    "lat": 39.9,
    "hue": 5
@@ -275,6 +277,62 @@
    "short": "Afghanistan",
    "lon": 69.2,
    "lat": 34.5
+  },
+  {
+   "id": "dominican",
+   "name": "Dominican Republic",
+   "short": "Dominican Rep.",
+   "lon": -69.9,
+   "lat": 18.5
+  },
+  {
+   "id": "trinidad",
+   "name": "Trinidad and Tobago",
+   "short": "Trinidad",
+   "lon": -61.5,
+   "lat": 10.7
+  },
+  {
+   "id": "elsalvador",
+   "name": "El Salvador",
+   "short": "El Salvador",
+   "lon": -89.2,
+   "lat": 13.7
+  },
+  {
+   "id": "ecuador",
+   "name": "Ecuador",
+   "short": "Ecuador",
+   "lon": -78.5,
+   "lat": -0.2
+  },
+  {
+   "id": "cuba",
+   "name": "Cuba",
+   "short": "Cuba",
+   "lon": -82.4,
+   "lat": 23.1
+  },
+  {
+   "id": "mexico",
+   "name": "Mexico",
+   "short": "Mexico",
+   "lon": -99.1,
+   "lat": 19.4
+  },
+  {
+   "id": "venezuela",
+   "name": "Venezuela",
+   "short": "Venezuela",
+   "lon": -66.9,
+   "lat": 10.5
+  },
+  {
+   "id": "nigeria",
+   "name": "Nigeria",
+   "short": "Nigeria",
+   "lon": 9.1,
+   "lat": 9.1
   }
  ],
  "conflicts": [
@@ -416,7 +474,77 @@
      "note": "The 2022 invasion launched partly from Belarusian soil. Russia based Oreshnik missiles in Belarus in 2025 and 2026. Belarus has not sent its own troops.",
      "checked": "2026-10-11"
     }
-   ]
+   ],
+   "areas": [
+    {
+     "country": "UKR",
+     "name": "Donets'k",
+     "why": "Main front; Pokrovsk, Lyman"
+    },
+    {
+     "country": "UKR",
+     "name": "Luhans'k",
+     "why": "Front; Russian-held, shelled"
+    },
+    {
+     "country": "UKR",
+     "name": "Zaporizhzhya",
+     "why": "Front; Huliaipole, city struck"
+    },
+    {
+     "country": "UKR",
+     "name": "Kherson",
+     "why": "Dnipro front, daily shelling"
+    },
+    {
+     "country": "UKR",
+     "name": "Kharkiv",
+     "why": "Kupyansk front, city struck"
+    },
+    {
+     "country": "UKR",
+     "name": "Sumy",
+     "why": "Border fighting, Russian incursion"
+    },
+    {
+     "country": "UKR",
+     "name": "Dnipropetrovs'k",
+     "why": "2026 counteroffensive retook ground"
+    },
+    {
+     "country": "UKR",
+     "name": "Mykolayiv",
+     "why": "Repeated drone, missile strikes"
+    },
+    {
+     "country": "UKR",
+     "name": "Chernihiv",
+     "why": "Border shelling; Pryluky strikes"
+    },
+    {
+     "country": "UKR",
+     "name": "Crimea",
+     "why": "Ukrainian strikes on bases",
+     "ne": "RUS"
+    },
+    {
+     "country": "RUS",
+     "name": "Kursk",
+     "why": "Border fighting, Operation Stream"
+    },
+    {
+     "country": "RUS",
+     "name": "Belgorod",
+     "why": "Incursions, daily shelling"
+    },
+    {
+     "country": "RUS",
+     "name": "Bryansk",
+     "why": "Border raids, drone strikes"
+    }
+   ],
+   "areas_source": "Wikipedia 2026 Ukrainian counteroffensive and Eastern Ukraine campaign; ISW daily assessments (listing seen on criticalthreats.org, 10 Oct 2026); Wikipedia Portal current events Aug–Sep 2026; own knowledge for struck Russian oblasts",
+   "areas_url": "https://en.wikipedia.org/wiki/2026_Ukrainian_counteroffensive"
   },
   {
    "id": "sudan",
@@ -594,7 +722,81 @@
      "note": "Wagner traded gold and arms with the RSF early in the war. In spring 2024 Russia switched to the army in return for a Red Sea base deal.",
      "checked": "2026-10-11"
     }
-   ]
+   ],
+   "areas": [
+    {
+     "country": "SDN",
+     "name": "North Darfur",
+     "why": "El Fasher fell; Tina, Kutum"
+    },
+    {
+     "country": "SDN",
+     "name": "Southern Darfur",
+     "why": "Nyala, Kubum drone strikes"
+    },
+    {
+     "country": "SDN",
+     "name": "Western Darfur",
+     "why": "Jebel Moon, Kulbus, Geneina"
+    },
+    {
+     "country": "SDN",
+     "name": "Central Darfur",
+     "why": "Umm Dukhun, Firdous strikes"
+    },
+    {
+     "country": "SDN",
+     "name": "Eastern Darfur",
+     "why": "Ed Daein hospital strikes"
+    },
+    {
+     "country": "SDN",
+     "name": "North Kordofan",
+     "why": "El Obeid, Bara front"
+    },
+    {
+     "country": "SDN",
+     "name": "South Kordofan",
+     "why": "Dilling, Kadugli sieges; Kauda"
+    },
+    {
+     "country": "SDN",
+     "name": "Khartoum",
+     "why": "Airport, Omdurman drone strikes"
+    },
+    {
+     "country": "SDN",
+     "name": "White Nile",
+     "why": "Kosti, Jabalain, Rabak strikes"
+    },
+    {
+     "country": "SDN",
+     "name": "Blue Nile",
+     "why": "Kurmuk campaign; Damazin strikes"
+    },
+    {
+     "country": "SDN",
+     "name": "Sennar",
+     "why": "Singa, Mazmoum drone strikes"
+    },
+    {
+     "country": "SDN",
+     "name": "Gezira",
+     "why": "Butana, May drone strikes"
+    },
+    {
+     "country": "SDN",
+     "name": "Northern",
+     "why": "Merowe, Al Dabbah strikes"
+    },
+    {
+     "country": "SDN",
+     "name": "River Nile",
+     "why": "Gold mine strikes, June"
+    }
+   ],
+   "areas_source": "Wikipedia Timeline of the Sudanese civil war (2026); 2026 in Sudan; 2026 Kauda clashes; Portal current events Oct 2026",
+   "areas_url": "https://en.wikipedia.org/wiki/Timeline_of_the_Sudanese_civil_war_(2026)"
   },
   {
    "id": "gaza",
@@ -708,7 +910,41 @@
      "note": "Erdogan met Hamas leaders in Istanbul in April 2026. Israel has barred Turkish troops from the Gaza force over these ties.",
      "checked": "2026-10-11"
     }
-   ]
+   ],
+   "areas": [
+    {
+     "country": "PSE",
+     "name": "Gaza Strip",
+     "why": "Israeli strikes despite ceasefire"
+    },
+    {
+     "country": "PSE",
+     "name": "West Bank",
+     "why": "IDF raids, settler attacks"
+    },
+    {
+     "country": "LBN",
+     "name": "South Lebanon",
+     "why": "Invasion, Litani crossing, strikes"
+    },
+    {
+     "country": "LBN",
+     "name": "An Nabatiyah",
+     "why": "Khiam, Yohmor, Deir Qanoun"
+    },
+    {
+     "country": "LBN",
+     "name": "Beqaa",
+     "why": "Machghara, Nabi Chit strikes"
+    },
+    {
+     "country": "ISR",
+     "name": "HaZafon",
+     "why": "Hezbollah rockets, Golan, Meron"
+    }
+   ],
+   "areas_source": "Wikipedia 2026 Lebanon war; 2026 Israel–Lebanon ceasefire; 2026 in the State of Palestine; Portal current events Aug–Sep 2026",
+   "areas_url": "https://en.wikipedia.org/wiki/2026_Lebanon_war"
   },
   {
    "id": "yemen",
@@ -821,7 +1057,71 @@
      "note": "U.S. and British jets hit Houthi weapons stores, radars and air defences in February 2026 during the Iran war. The strikes were about shipping and Iran, not the Yemeni government. Washington turned down Saudi requests to join the autumn offensive.",
      "checked": "2026-10-11"
     }
-   ]
+   ],
+   "areas": [
+    {
+     "country": "YEM",
+     "name": "Al Hudaydah",
+     "why": "Hays, Khawkhah; coast taken"
+    },
+    {
+     "country": "YEM",
+     "name": "Ta`izz",
+     "why": "Mokha, Dhubab; Taiz encircled"
+    },
+    {
+     "country": "YEM",
+     "name": "Lahij",
+     "why": "Ras al Ara missile strikes"
+    },
+    {
+     "country": "YEM",
+     "name": "Ad Dali'",
+     "why": "Houthi front, offensives"
+    },
+    {
+     "country": "YEM",
+     "name": "Al Bayda'",
+     "why": "Dhi Na'im fighting"
+    },
+    {
+     "country": "YEM",
+     "name": "Al Jawf",
+     "why": "Al Hazm, Yatma fighting"
+    },
+    {
+     "country": "YEM",
+     "name": "Ma'rib",
+     "why": "Houthi missiles, August offensive"
+    },
+    {
+     "country": "YEM",
+     "name": "Sa`dah",
+     "why": "Saudi strikes on depots"
+    },
+    {
+     "country": "YEM",
+     "name": "Amran",
+     "why": "Saudi strikes on launchers"
+    },
+    {
+     "country": "YEM",
+     "name": "Sana'a",
+     "why": "Saudi strikes, Houthi bases"
+    },
+    {
+     "country": "YEM",
+     "name": "Amanat Al Asimah",
+     "why": "Sanaa airport, city airstrikes"
+    },
+    {
+     "country": "YEM",
+     "name": "`Adan",
+     "why": "STC crushed, January 2026"
+    }
+   ],
+   "areas_source": "Wikipedia 2026 Yemen offensives; Critical Threats Iran Updates 30 Sep–10 Oct 2026; Portal current events Oct 2026",
+   "areas_url": "https://www.criticalthreats.org/analysis/iran-update-october-6-2026"
   },
   {
    "id": "myanmar",
@@ -914,7 +1214,71 @@
      "note": "Chinese-made arms reach some border armies through the Wa. It does not reach the wider resistance.",
      "checked": "2026-10-11"
     }
-   ]
+   ],
+   "areas": [
+    {
+     "country": "MMR",
+     "name": "Rakhine",
+     "why": "Arakan Army; Kyauktaw, Ann strikes"
+    },
+    {
+     "country": "MMR",
+     "name": "Chin",
+     "why": "Resistance holds; junta strikes"
+    },
+    {
+     "country": "MMR",
+     "name": "Kachin",
+     "why": "KIA fighting; Bhamo strike"
+    },
+    {
+     "country": "MMR",
+     "name": "Sagaing",
+     "why": "PDF heartland, airstrikes"
+    },
+    {
+     "country": "MMR",
+     "name": "Shan",
+     "why": "Kyaukme, Lashio, Mogok"
+    },
+    {
+     "country": "MMR",
+     "name": "Kayah",
+     "why": "Karenni resistance fighting"
+    },
+    {
+     "country": "MMR",
+     "name": "Kayin",
+     "why": "KNLA fighting, airstrikes"
+    },
+    {
+     "country": "MMR",
+     "name": "Mon",
+     "why": "KNLA, PDF clashes"
+    },
+    {
+     "country": "MMR",
+     "name": "Tanintharyi",
+     "why": "Mawdaung captured, May"
+    },
+    {
+     "country": "MMR",
+     "name": "Bago",
+     "why": "Junta offensive, March"
+    },
+    {
+     "country": "MMR",
+     "name": "Magway",
+     "why": "Mindon strike; PDF fighting"
+    },
+    {
+     "country": "MMR",
+     "name": "Mandalay",
+     "why": "Tagaung retaken; airstrikes"
+    }
+   ],
+   "areas_source": "Wikipedia 2026 in Myanmar; Myanmar civil war (2021–present) ('fighting in all regions and states')",
+   "areas_url": "https://en.wikipedia.org/wiki/2026_in_Myanmar"
   },
   {
    "id": "congo",
@@ -1022,7 +1386,26 @@
      "note": "SADC ended the mission in March 2025. The last troops left Goma in June 2025.",
      "checked": "2026-10-11"
     }
-   ]
+   ],
+   "areas": [
+    {
+     "country": "COD",
+     "name": "Nord-Kivu",
+     "why": "Masisi, Walikale, Lubero, Goma"
+    },
+    {
+     "country": "COD",
+     "name": "Sud-Kivu",
+     "why": "Uvira, Fizi, Kalehe, Minembwe"
+    },
+    {
+     "country": "COD",
+     "name": "Orientale",
+     "why": "Ituri ADF, CODECO; Kisangani drones"
+    }
+   ],
+   "areas_source": "Wikipedia Timeline of the M23 campaign (2026); 2026 in the DRC",
+   "areas_url": "https://en.wikipedia.org/wiki/Timeline_of_the_M23_campaign_(2026)"
   },
   {
    "id": "sahel",
@@ -1152,7 +1535,196 @@
      "checked": "2026-10-11"
     }
    ],
-   "none_note": "No state is known to back JNIM or Islamic State Sahel."
+   "none_note": "No state is known to back JNIM or Islamic State Sahel.",
+   "areas": [
+    {
+     "country": "MLI",
+     "name": "Kidal",
+     "why": "FLA took, Mali retook October"
+    },
+    {
+     "country": "MLI",
+     "name": "Gao",
+     "why": "Tessit, Bourem, Anefis fighting"
+    },
+    {
+     "country": "MLI",
+     "name": "Timbuktu",
+     "why": "Gourma-Rharous attacks"
+    },
+    {
+     "country": "MLI",
+     "name": "Mopti",
+     "why": "JNIM seized Mopti, Sevare"
+    },
+    {
+     "country": "MLI",
+     "name": "Ségou",
+     "why": "San attacks, August"
+    },
+    {
+     "country": "MLI",
+     "name": "Koulikoro",
+     "why": "Kati base attacked"
+    },
+    {
+     "country": "MLI",
+     "name": "Bamako",
+     "why": "April assault, blockade"
+    },
+    {
+     "country": "BFA",
+     "name": "Oudalan",
+     "why": "JNIM, IS heartland (Sahel region)"
+    },
+    {
+     "country": "BFA",
+     "name": "Séno",
+     "why": "JNIM, IS heartland (Sahel region)"
+    },
+    {
+     "country": "BFA",
+     "name": "Soum",
+     "why": "JNIM, IS heartland (Sahel region)"
+    },
+    {
+     "country": "BFA",
+     "name": "Yagha",
+     "why": "JNIM, IS heartland (Sahel region)"
+    },
+    {
+     "country": "BFA",
+     "name": "Gnagna",
+     "why": "Balga police attack; JNIM (Est region)"
+    },
+    {
+     "country": "BFA",
+     "name": "Gourma",
+     "why": "Balga police attack; JNIM (Est region)"
+    },
+    {
+     "country": "BFA",
+     "name": "Komondjari",
+     "why": "Balga police attack; JNIM (Est region)"
+    },
+    {
+     "country": "BFA",
+     "name": "Kompienga",
+     "why": "Balga police attack; JNIM (Est region)"
+    },
+    {
+     "country": "BFA",
+     "name": "Tapoa",
+     "why": "Balga police attack; JNIM (Est region)"
+    },
+    {
+     "country": "BFA",
+     "name": "Bam",
+     "why": "Repeated JNIM attacks (Centre-Nord region)"
+    },
+    {
+     "country": "BFA",
+     "name": "Namentenga",
+     "why": "Repeated JNIM attacks (Centre-Nord region)"
+    },
+    {
+     "country": "BFA",
+     "name": "Sanmatenga",
+     "why": "Repeated JNIM attacks (Centre-Nord region)"
+    },
+    {
+     "country": "BFA",
+     "name": "Loroum",
+     "why": "Titao attack, February (Nord region)"
+    },
+    {
+     "country": "BFA",
+     "name": "Passoré",
+     "why": "Titao attack, February (Nord region)"
+    },
+    {
+     "country": "BFA",
+     "name": "Yatenga",
+     "why": "Titao attack, February (Nord region)"
+    },
+    {
+     "country": "BFA",
+     "name": "Zondoma",
+     "why": "Titao attack, February (Nord region)"
+    },
+    {
+     "country": "BFA",
+     "name": "Balé",
+     "why": "Repeated JNIM attacks (Boucle du Mouhoun region)"
+    },
+    {
+     "country": "BFA",
+     "name": "Banwa",
+     "why": "Repeated JNIM attacks (Boucle du Mouhoun region)"
+    },
+    {
+     "country": "BFA",
+     "name": "Kossi",
+     "why": "Repeated JNIM attacks (Boucle du Mouhoun region)"
+    },
+    {
+     "country": "BFA",
+     "name": "Mou Houn",
+     "why": "Repeated JNIM attacks (Boucle du Mouhoun region)"
+    },
+    {
+     "country": "BFA",
+     "name": "Nayala",
+     "why": "Repeated JNIM attacks (Boucle du Mouhoun region)"
+    },
+    {
+     "country": "BFA",
+     "name": "Sourou",
+     "why": "Repeated JNIM attacks (Boucle du Mouhoun region)"
+    },
+    {
+     "country": "BFA",
+     "name": "Boulgou",
+     "why": "Bagmoussa base attacked (Centre-Est region)"
+    },
+    {
+     "country": "BFA",
+     "name": "Koulpélogo",
+     "why": "Bagmoussa base attacked (Centre-Est region)"
+    },
+    {
+     "country": "BFA",
+     "name": "Kouritenga",
+     "why": "Bagmoussa base attacked (Centre-Est region)"
+    },
+    {
+     "country": "NER",
+     "name": "Tillabéri",
+     "why": "Torodi, Gorouol, Garbougna attacks"
+    },
+    {
+     "country": "NER",
+     "name": "Tahoua",
+     "why": "Airport attack, March"
+    },
+    {
+     "country": "NER",
+     "name": "Diffa",
+     "why": "ISWAP, Boko Haram attacks"
+    },
+    {
+     "country": "NER",
+     "name": "Dosso",
+     "why": "Makalondi base attack"
+    },
+    {
+     "country": "NER",
+     "name": "Niamey",
+     "why": "Airport attacks Jan, June"
+    }
+   ],
+   "areas_source": "Wikipedia 2026 Mali offensives; 2026 in Burkina Faso; 2026 in Niger; Critical Threats Africa File 8 Oct 2026",
+   "areas_url": "https://en.wikipedia.org/wiki/2026_Mali_offensives"
   },
   {
    "id": "somalia",
@@ -1206,7 +1778,7 @@
      "tier": "open",
      "source": "Turkish delivery of two Akinci armed drones, March 2025; TURKSOM training base in Mogadishu",
      "url": "https://turkishminute.com/2025/03/19/turkey-delivers-2-akinci-armed-drones-to-somalia-amid-tensions-with-us-report/",
-     "note": "Turkey trains Somali troops at its Mogadishu base and flies armed drones for them.",
+     "note": "Türkiye trains Somali troops at its Mogadishu base and flies armed drones for them.",
      "checked": "2026-10-11"
     },
     {
@@ -1297,7 +1869,66 @@
      "checked": "2026-10-11"
     }
    ],
-   "none_note": "No state is known to back al-Shabaab."
+   "none_note": "No state is known to back al-Shabaab.",
+   "areas": [
+    {
+     "country": "SOM",
+     "name": "Shabeellaha Hoose",
+     "why": "Awdheegle, Sabiid, Bariire"
+    },
+    {
+     "country": "SOM",
+     "name": "Shabeellaha Dhexe",
+     "why": "Balad, Adale, Adan Yabal"
+    },
+    {
+     "country": "SOM",
+     "name": "Hiiraan",
+     "why": "Beledweyne attacks"
+    },
+    {
+     "country": "SOM",
+     "name": "Galguduud",
+     "why": "El Buur fighting"
+    },
+    {
+     "country": "SOM",
+     "name": "Banaadir",
+     "why": "Afgooye corridor, Mogadishu attacks"
+    },
+    {
+     "country": "SOM",
+     "name": "Bay",
+     "why": "Diinsoor, Baidoa attacks"
+    },
+    {
+     "country": "SOM",
+     "name": "Bakool",
+     "why": "Al-Shabaab held, clashes"
+    },
+    {
+     "country": "SOM",
+     "name": "Gedo",
+     "why": "Jubaland, Shabaab clashes"
+    },
+    {
+     "country": "SOM",
+     "name": "Jubbada Hoose",
+     "why": "Jubaland operations, April"
+    },
+    {
+     "country": "SOM",
+     "name": "Jubbada Dhexe",
+     "why": "Jilib airstrikes"
+    },
+    {
+     "country": "SOM",
+     "name": "Bari",
+     "why": "Puntland vs ISIS, strikes"
+    }
+   ],
+   "areas_source": "Wikipedia 2025 Shabelle offensive; 2026 in Somalia; conflicts.json status (stalemate, Shabaab holds south and centre); own knowledge",
+   "areas_url": "https://en.wikipedia.org/wiki/2025_Shabelle_offensive"
   },
   {
    "id": "syria",
@@ -1339,9 +1970,9 @@
       "cover"
      ],
      "tier": "open",
-     "source": "Turkey-Syria military training memorandum, 13 August 2025; Turkish armoured vehicle deliveries",
+     "source": "Türkiye-Syria military training memorandum, 13 August 2025; Turkish armoured vehicle deliveries",
      "url": "https://www.longwarjournal.org/archives/2025/08/turkey-ramps-up-military-support-for-syria.php",
-     "note": "Turkey signed a training deal in August 2025, delivered armoured vehicles, and backed the government's January 2026 offensive on the Kurdish-led forces.",
+     "note": "Türkiye signed a training deal in August 2025, delivered armoured vehicles, and backed the government's January 2026 offensive on the Kurdish-led forces.",
      "checked": "2026-10-11"
     },
     {
@@ -1351,7 +1982,7 @@
       "money"
      ],
      "tier": "open",
-     "source": "Qatari grant of $29 million a month for state salaries from May 2025; gas deliveries via Jordan and Turkey",
+     "source": "Qatari grant of $29 million a month for state salaries from May 2025; gas deliveries via Jordan and Türkiye",
      "url": "https://www.aljazeera.com/news/2025/5/31/saudi-arabia-says-it-will-jointly-fund-syria-state-salaries-with-qatar",
      "note": "Qatar pays part of the state payroll and sends gas for power plants.",
      "checked": "2026-10-11"
@@ -1422,7 +2053,61 @@
      "note": "Druze officials say Israel sends rifles and pays salaries to about 3,000 fighters of the Sweida National Guard.",
      "checked": "2026-10-11"
     }
-   ]
+   ],
+   "areas": [
+    {
+     "country": "SYR",
+     "name": "Aleppo",
+     "why": "January offensive vs SDF; Manbij"
+    },
+    {
+     "country": "SYR",
+     "name": "Ar Raqqah",
+     "why": "SDF fighting; IS attacks"
+    },
+    {
+     "country": "SYR",
+     "name": "Hasaka (Al Haksa)",
+     "why": "Prison clashes, drone strike"
+    },
+    {
+     "country": "SYR",
+     "name": "Dayr Az Zawr",
+     "why": "Al-Omar retaken; IS"
+    },
+    {
+     "country": "SYR",
+     "name": "Lattakia",
+     "why": "Assad loyalist fighting"
+    },
+    {
+     "country": "SYR",
+     "name": "Tartus",
+     "why": "Assad loyalist fighting"
+    },
+    {
+     "country": "SYR",
+     "name": "Homs",
+     "why": "Palmyra strikes; bus attack"
+    },
+    {
+     "country": "SYR",
+     "name": "Rif Dimashq",
+     "why": "Beit Jinn Israeli attack"
+    },
+    {
+     "country": "SYR",
+     "name": "As Suwayda'",
+     "why": "Druze clashes; Israeli strikes"
+    },
+    {
+     "country": "SYR",
+     "name": "Quneitra",
+     "why": "Israeli ground presence, raids"
+    }
+   ],
+   "areas_source": "Wikipedia 2026 in Syria; conflicts.json status",
+   "areas_url": "https://en.wikipedia.org/wiki/2026_in_Syria"
   },
   {
    "id": "haiti",
@@ -1504,7 +2189,26 @@
      "checked": "2026-10-11"
     }
    ],
-   "none_note": "No state backs the gangs. The UN's 2023 arms report traced most of their guns to illegal trade from the United States."
+   "none_note": "No state backs the gangs. The UN's 2023 arms report traced most of their guns to illegal trade from the United States.",
+   "areas": [
+    {
+     "country": "HTI",
+     "name": "Ouest",
+     "why": "Port-au-Prince, Kenscoff fighting"
+    },
+    {
+     "country": "HTI",
+     "name": "L'Artibonite",
+     "why": "Gran Grif; Petite-Riviere"
+    },
+    {
+     "country": "HTI",
+     "name": "Centre",
+     "why": "Mirebalais, Saut-d'Eau"
+    }
+   ],
+   "areas_source": "Wikipedia Viv Ansanm; 2026 in Haiti",
+   "areas_url": "https://en.wikipedia.org/wiki/Viv_Ansanm"
   },
   {
    "id": "pakistan",
@@ -1602,7 +2306,61 @@
      "note": "India reopened its Kabul embassy, accepted a Taliban envoy, and budgets aid for Afghanistan. It says the aid is for the people, not the government.",
      "checked": "2026-10-11"
     }
-   ]
+   ],
+   "areas": [
+    {
+     "country": "PAK",
+     "name": "K.P.",
+     "why": "Bannu, DI Khan, Kohat attacks"
+    },
+    {
+     "country": "PAK",
+     "name": "F.A.T.A.",
+     "why": "Bajaur, Kurram, Waziristan fighting"
+    },
+    {
+     "country": "PAK",
+     "name": "Baluchistan",
+     "why": "BLA attacks; Zhob, Quetta"
+    },
+    {
+     "country": "AFG",
+     "name": "Kabul",
+     "why": "Pakistani airstrikes, Bagram"
+    },
+    {
+     "country": "AFG",
+     "name": "Kandahar",
+     "why": "Airstrikes on bases"
+    },
+    {
+     "country": "AFG",
+     "name": "Nangarhar",
+     "why": "Airstrikes; Torkham fighting"
+    },
+    {
+     "country": "AFG",
+     "name": "Paktika",
+     "why": "Airstrikes, border fighting"
+    },
+    {
+     "country": "AFG",
+     "name": "Khost",
+     "why": "Airstrikes, border fighting"
+    },
+    {
+     "country": "AFG",
+     "name": "Paktya",
+     "why": "Airstrikes"
+    },
+    {
+     "country": "AFG",
+     "name": "Kunar",
+     "why": "Airstrikes, border fighting"
+    }
+   ],
+   "areas_source": "Wikipedia 2026 Pakistan–Afghanistan War; 2026 in Pakistan",
+   "areas_url": "https://en.wikipedia.org/wiki/2026_Afghanistan%E2%80%93Pakistan_conflict"
   },
   {
    "id": "gulf",
@@ -1764,7 +2522,7 @@
      "tier": "open",
      "source": "Turkish Ministry of National Defense statements on NATO Patriot batteries at Incirlik, March 2026",
      "url": "https://www.defensenews.com/global/europe/2026/03/18/turkey-deploys-third-nato-patriot-system-to-repel-iranian-missiles/",
-     "note": "Iran fired at least four missiles toward Incirlik in March 2026. NATO and U.S. ships shot them down. Turkey added Patriot batteries and did not join the strikes.",
+     "note": "Iran fired at least four missiles toward Incirlik in March 2026. NATO and U.S. ships shot them down. Türkiye added Patriot batteries and did not join the strikes.",
      "checked": "2026-10-11"
     },
     {
@@ -1822,7 +2580,186 @@
      "checked": "2026-10-11"
     }
    ],
-   "none_note": "The Gulf states say their bases were not used to attack Iran. What they say they did is shoot down what Iran fired at them."
+   "none_note": "The Gulf states say their bases were not used to attack Iran. What they say they did is shoot down what Iran fired at them.",
+   "areas": [
+    {
+     "country": "IRN",
+     "name": "Tehran",
+     "why": "Decapitation strikes; Karaj, Eslamshahr"
+    },
+    {
+     "country": "IRN",
+     "name": "Qom",
+     "why": "Assembly of Experts struck"
+    },
+    {
+     "country": "IRN",
+     "name": "Esfahan",
+     "why": "Natanz, command sites struck"
+    },
+    {
+     "country": "IRN",
+     "name": "Fars",
+     "why": "Lamerd, Shiraz strikes"
+    },
+    {
+     "country": "IRN",
+     "name": "Bushehr",
+     "why": "Depot, Kharg Island struck"
+    },
+    {
+     "country": "IRN",
+     "name": "Hormozgan",
+     "why": "Bandar Abbas, Minab, Kuhestak"
+    },
+    {
+     "country": "IRN",
+     "name": "Kermanshah",
+     "why": "Kurdistan air campaign"
+    },
+    {
+     "country": "IRN",
+     "name": "Ilam",
+     "why": "Eyvan station struck"
+    },
+    {
+     "country": "IRN",
+     "name": "Kordestan",
+     "why": "Sanandaj struck"
+    },
+    {
+     "country": "IRN",
+     "name": "West Azarbaijan",
+     "why": "Urmia struck"
+    },
+    {
+     "country": "IRN",
+     "name": "East Azarbaijan",
+     "why": "Tabriz HQ struck"
+    },
+    {
+     "country": "IRN",
+     "name": "Markazi",
+     "why": "Arak strikes"
+    },
+    {
+     "country": "IRN",
+     "name": "Kerman",
+     "why": "US strikes, September"
+    },
+    {
+     "country": "ISR",
+     "name": "Tel Aviv",
+     "why": "Iranian missiles; Ramat Gan"
+    },
+    {
+     "country": "ISR",
+     "name": "HaMerkaz",
+     "why": "Yehud, Petah Tikva hits"
+    },
+    {
+     "country": "ISR",
+     "name": "Jerusalem",
+     "why": "Beit Shemesh, Old City"
+    },
+    {
+     "country": "ISR",
+     "name": "HaDarom",
+     "why": "Dimona, Arad, Eilat"
+    },
+    {
+     "country": "ISR",
+     "name": "Haifa",
+     "why": "Refinery struck"
+    },
+    {
+     "country": "SAU",
+     "name": "Ar Riyad",
+     "why": "Embassy drone; Al-Kharj base"
+    },
+    {
+     "country": "SAU",
+     "name": "Ash Sharqiyah",
+     "why": "Ras Tanura, Shaybah targeted"
+    },
+    {
+     "country": "ARE",
+     "name": "Abu Dhabi",
+     "why": "Airport, Taweelah struck"
+    },
+    {
+     "country": "ARE",
+     "name": "Dubay",
+     "why": "Airport, Al Minhad targeted"
+    },
+    {
+     "country": "QAT",
+     "name": "Ar Rayyan",
+     "why": "Al Udeid base hit"
+    },
+    {
+     "country": "QAT",
+     "name": "Ad Dawhah",
+     "why": "Doha warehouse damaged"
+    },
+    {
+     "country": "KWT",
+     "name": "Al Jahrah",
+     "why": "Ali Al Salem, Subiya"
+    },
+    {
+     "country": "KWT",
+     "name": "Al Ahmadi",
+     "why": "Ahmad al-Jaber base"
+    },
+    {
+     "country": "KWT",
+     "name": "Al Farwaniyah",
+     "why": "Airport targeted"
+    },
+    {
+     "country": "BHR",
+     "name": "Capital",
+     "why": "Sitra, Juffair struck"
+    },
+    {
+     "country": "BHR",
+     "name": "Muharraq",
+     "why": "Air defences struck"
+    },
+    {
+     "country": "OMN",
+     "name": "Al Wusta",
+     "why": "Duqm port drones"
+    },
+    {
+     "country": "OMN",
+     "name": "Dhofar",
+     "why": "Salalah fuel tank"
+    },
+    {
+     "country": "OMN",
+     "name": "Al Batnah North",
+     "why": "Sohar strikes"
+    },
+    {
+     "country": "OMN",
+     "name": "Musandam",
+     "why": "Bukha drone strikes"
+    },
+    {
+     "country": "IRQ",
+     "name": "Baghdad",
+     "why": "Intelligence HQ drone strike"
+    },
+    {
+     "country": "IRQ",
+     "name": "Arbil",
+     "why": "Kurdistan Region struck"
+    }
+   ],
+   "areas_source": "Wikipedia 2026 Iranian strikes on Arab countries; 2026 Israeli–United States strikes on Iran; 2026 Iranian strikes on Israel; 2026 in Iran; Critical Threats Iran Updates Oct 2026",
+   "areas_url": "https://en.wikipedia.org/wiki/2026_Iranian_strikes_on_Arab_countries"
   },
   {
    "id": "ethiopia",
@@ -1865,9 +2802,9 @@
       "drones"
      ],
      "tier": "open",
-     "source": "Ethiopia-Turkey defence agreement, August 2021; Ethiopian military statements on drone use; ECFR, Deadly Skies, February 2025",
+     "source": "Ethiopia-Türkiye defence agreement, August 2021; Ethiopian military statements on drone use; ECFR, Deadly Skies, February 2025",
      "url": "https://ecfr.eu/publication/deadly-skies-drone-warfare-in-ethiopia-and-the-future-of-conflict-in-africa/",
-     "note": "Ethiopia signed a defence deal with Turkey in 2021 and flies Bayraktar TB2 and Akinci drones. Both were seen in the October 2026 fighting.",
+     "note": "Ethiopia signed a defence deal with Türkiye in 2021 and flies Bayraktar TB2 and Akinci drones. Both were seen in the October 2026 fighting.",
      "checked": "2026-10-11"
     },
     {
@@ -1910,7 +2847,41 @@
      "note": "Egypt leads a four-state bloc against Ethiopia over the Nile dam and Red Sea access. It signed port deals with Eritrea in 2026.",
      "checked": "2026-10-11"
     }
-   ]
+   ],
+   "areas": [
+    {
+     "country": "ETH",
+     "name": "Tigray",
+     "why": "Mekelle, Adigrat, Alamata fighting"
+    },
+    {
+     "country": "ETH",
+     "name": "Amhara",
+     "why": "Fano; Wollo, Wag Hemra"
+    },
+    {
+     "country": "ETH",
+     "name": "Afar",
+     "why": "Abala, Erebti, Kobo front"
+    },
+    {
+     "country": "ETH",
+     "name": "Oromiya",
+     "why": "OLA insurgency continues"
+    },
+    {
+     "country": "ERI",
+     "name": "Debub",
+     "why": "Zalambessa crossing, clashes"
+    },
+    {
+     "country": "ERI",
+     "name": "Debubawi Keyih Bahri",
+     "why": "Assab–Bure route"
+    }
+   ],
+   "areas_source": "Wikipedia 2026 Ethiopian offensive; War in Amhara; Critical Threats Africa File 8 Oct 2026",
+   "areas_url": "https://en.wikipedia.org/wiki/2026_Ethiopian_offensive"
   },
   {
    "id": "southsudan",
@@ -1953,7 +2924,46 @@
      "checked": "2026-10-11"
     }
    ],
-   "none_note": "No state is known to back the opposition."
+   "none_note": "No state is known to back the opposition.",
+   "areas": [
+    {
+     "country": "SSD",
+     "name": "Jonglei",
+     "why": "Akobo, Lankien, Walgak"
+    },
+    {
+     "country": "SSD",
+     "name": "Upper Nile",
+     "why": "Nasir, White Army fighting"
+    },
+    {
+     "country": "SSD",
+     "name": "Unity",
+     "why": "Abiemnom killings; fighting"
+    },
+    {
+     "country": "SSD",
+     "name": "Central Equatoria",
+     "why": "Panyume seized; Jebel Iraq"
+    },
+    {
+     "country": "SSD",
+     "name": "Western Equatoria",
+     "why": "SPLA-IO clashes; Tambura"
+    },
+    {
+     "country": "SSD",
+     "name": "Lakes",
+     "why": "Rumbek killings"
+    },
+    {
+     "country": "SSD",
+     "name": "Warrap",
+     "why": "Cattle camp attack, August"
+    }
+   ],
+   "areas_source": "Wikipedia 2026 in South Sudan; conflicts.json status",
+   "areas_url": "https://en.wikipedia.org/wiki/2026_in_South_Sudan"
   },
   {
    "id": "nigeria",
@@ -2024,25 +3034,468 @@
      "checked": "2026-10-11"
     }
    ],
-   "none_note": "No state is known to back the insurgents."
+   "none_note": "No state is known to back the insurgents.",
+   "areas": [
+    {
+     "country": "NGA",
+     "name": "Borno",
+     "why": "ISWAP, Boko Haram bases attacked"
+    },
+    {
+     "country": "NGA",
+     "name": "Yobe",
+     "why": "Buni Yadi, airstrikes"
+    },
+    {
+     "country": "NGA",
+     "name": "Adamawa",
+     "why": "Gombi, village attacks"
+    },
+    {
+     "country": "NGA",
+     "name": "Zamfara",
+     "why": "Bandit raids, army operations"
+    },
+    {
+     "country": "NGA",
+     "name": "Katsina",
+     "why": "Jibia, Faskari raids"
+    },
+    {
+     "country": "NGA",
+     "name": "Kaduna",
+     "why": "Kajuru, Kauru attacks"
+    },
+    {
+     "country": "NGA",
+     "name": "Sokoto",
+     "why": "US drone strikes; Kebbe"
+    },
+    {
+     "country": "NGA",
+     "name": "Kebbi",
+     "why": "Lakurawa, Sakaba clashes"
+    },
+    {
+     "country": "NGA",
+     "name": "Niger",
+     "why": "Borgu, Lakurawa raids"
+    },
+    {
+     "country": "NGA",
+     "name": "Plateau",
+     "why": "Bokkos, Kanam attacks"
+    },
+    {
+     "country": "NGA",
+     "name": "Benue",
+     "why": "Otukpo attacks, abductions"
+    },
+    {
+     "country": "NGA",
+     "name": "Taraba",
+     "why": "Herder-farmer, bandit attacks"
+    },
+    {
+     "country": "NGA",
+     "name": "Kwara",
+     "why": "Woro, Nuku attacks"
+    }
+   ],
+   "areas_source": "Wikipedia 2026 in Nigeria; Portal current events Sep 2026",
+   "areas_url": "https://en.wikipedia.org/wiki/2026_in_Nigeria"
+  },
+  {
+   "id": "us-boats",
+   "kind": "pressure",
+   "name": "U.S. strikes on boats",
+   "since": "September 2025",
+   "point": [
+    -63.5,
+    13.5
+   ],
+   "label": [
+    9,
+    -3
+   ],
+   "band": null,
+   "band_source": "At least 235 to 238 killed in 70 to 79 strikes by 4 October 2026, by the New York Times and NBC counts. The U.S. gives counts per strike only.",
+   "status": "Strikes continue. The latest announced strike, on 4 October 2026 in the Caribbean, killed four. Since late August the U.S. has also announced boardings and sinkings of refuelling vessels.",
+   "summary": "Since 1 September 2025 the U.S. military has blown up small boats it says carry drugs, first in the Caribbean and from October 2025 in the eastern Pacific. The Pentagon calls the campaign Operation Southern Spear and the dead narco-terrorists. For most strikes no evidence of cargo has been shown. A UN special rapporteur said in September 2026 there are reasonable grounds to believe the strikes are crimes against humanity.",
+   "actor_statement": "Southern Command, 3 October 2026: U.S. forces 'executed a lethal, kinetic strike on a go-fast vessel operating along established narco-trafficking routes in the Caribbean' and 'the operation killed four narco-terrorists'. Each strike is announced, with video.",
+   "target_statement": "Venezuela under Maduro called the strikes a pretext for regime change. Colombia's president said a Colombian fisherman was killed in a September 2025 strike. Families in Trinidad and Tobago identified dead.",
+   "parties": [
+    {
+     "id": "us",
+     "name": "United States",
+     "state": "usa"
+    },
+    {
+     "id": "boats",
+     "name": "Boat crews from Venezuela, Colombia, Ecuador and Trinidad"
+    }
+   ],
+   "ties": [
+    {
+     "backer": "dominican",
+     "party": "us",
+     "kinds": [
+      "bases"
+     ],
+     "tier": "open",
+     "source": "Dominican government grant of San Isidro air base and Las Americas airport to U.S. forces, 26 November 2025",
+     "url": "https://en.wikipedia.org/wiki/War_on_cartels_(2025%E2%80%93present)",
+     "note": null,
+     "checked": "2026-10-11"
+    },
+    {
+     "backer": "trinidad",
+     "party": "us",
+     "kinds": [
+      "bases"
+     ],
+     "tier": "open",
+     "source": "Trinidad and Tobago approval of U.S. radar and aircraft use, late 2025",
+     "url": "https://en.wikipedia.org/wiki/War_on_cartels_(2025%E2%80%93present)",
+     "note": null,
+     "checked": "2026-10-11"
+    },
+    {
+     "backer": "elsalvador",
+     "party": "us",
+     "kinds": [
+      "bases"
+     ],
+     "tier": "reported",
+     "stance": "says nothing",
+     "source": "Press reporting on U.S. AC-130J, P-8 and C-40 aircraft operating from Salvadoran bases from mid-October 2025",
+     "url": "https://en.wikipedia.org/wiki/War_on_cartels_(2025%E2%80%93present)",
+     "note": null,
+     "checked": "2026-10-11"
+    },
+    {
+     "backer": "europe",
+     "party": "us",
+     "kinds": [
+      "intel"
+     ],
+     "tier": "reported",
+     "stance": "says nothing",
+     "source": "Press reporting on RAF surveillance aircraft and RFA Tideforce supporting the U.S. Caribbean campaign",
+     "url": "https://en.wikipedia.org/wiki/2025%E2%80%932026_United_States_oil_blockade_of_Venezuela",
+     "note": "Britain. Support is to the wider campaign, not to single strikes.",
+     "checked": "2026-10-11"
+    }
+   ],
+   "areas": [],
+   "none_note": "The boats are not a state. The entry is here because the strikes led into the Venezuela raid and because each one is announced by the United States."
+  },
+  {
+   "id": "us-venezuela",
+   "kind": "pressure",
+   "name": "U.S. raid on Venezuela",
+   "since": "December 2025",
+   "point": [
+    -66.9,
+    10.5
+   ],
+   "label": [
+    8,
+    11
+   ],
+   "band": null,
+   "band_source": "The 3 January 2026 strikes: 77 to about 80 dead identified by the Venezuelan outlets Tal Cual and El Pitazo, among them 32 Cubans by Cuba's own count. No U.S. count published.",
+   "status": "Maduro is in U.S. custody awaiting trial. Delcy Rodríguez has governed since 5 January 2026 and the U.S. recognised her government in March. The oil blockade declared in December 2025 stands. A U.S. strike on 12 June 2026, coordinated with Caracas, killed the Tren de Aragua leader.",
+   "summary": "From 10 December 2025 the U.S. seized tankers carrying Venezuelan oil and declared a blockade. On 3 January 2026 about 150 U.S. aircraft struck Caracas and several states and special forces took Maduro and his wife to the United States to face charges. The fighting lasted hours. In August 2026 Trump announced a deal giving the U.S. control of 65 billion barrels of Venezuelan reserves.",
+   "actor_statement": "Trump, 3 January 2026: announced Maduro's capture and said the U.S. would 'run the country' during a transition. At the UN Security Council the U.S. called the raid 'a targeted law enforcement measure to arrest an indicted fugitive'. Trump, 10 December 2025, on the first tanker: 'the largest one ever seized'.",
+   "target_statement": "Maduro's government called the seizures 'a shameless robbery and an act of international piracy' and the raid a 'cowardly kidnapping'. The Rodríguez government restored relations with the U.S. in March 2026.",
+   "parties": [
+    {
+     "id": "us",
+     "name": "United States",
+     "state": "usa"
+    },
+    {
+     "id": "ven",
+     "name": "Venezuela (Maduro's government)",
+     "state": "venezuela"
+    }
+   ],
+   "ties": [
+    {
+     "backer": "cuba",
+     "party": "ven",
+     "kinds": [
+      "troops"
+     ],
+     "tier": "open",
+     "ended": "2026",
+     "source": "Cuban government statement, 5 January 2026, on 32 Cubans killed in the raid",
+     "url": "https://www.aljazeera.com/news/2026/1/5/cuba-says-32-cubans-killed-during-us-raids-on-venezuela",
+     "note": "Cuba said its personnel were 'carrying out missions' at Venezuela's request and 'fell in direct combat'. Cuban security staff left in the following weeks.",
+     "checked": "2026-10-11"
+    },
+    {
+     "backer": "russia",
+     "party": "ven",
+     "kinds": [
+      "cover"
+     ],
+     "tier": "open",
+     "source": "Russian statements at the UN Security Council, January 2026",
+     "url": "https://en.wikipedia.org/wiki/2025%E2%80%932026_United_States_oil_blockade_of_Venezuela",
+     "note": "Russia called the seizures 'outright piracy' and the raid 'an act of armed aggression'. Press reported a Russian submarine escorting the tanker Marinera before the U.S. seized it on 7 January 2026.",
+     "checked": "2026-10-11"
+    },
+    {
+     "backer": "china",
+     "party": "ven",
+     "kinds": [
+      "cover"
+     ],
+     "tier": "open",
+     "source": "Chinese foreign ministry statement, 3 January 2026; UN Security Council",
+     "url": "https://en.wikipedia.org/wiki/International_reactions_to_the_2026_United_States_intervention_in_Venezuela",
+     "note": "China 'strongly condemns the U.S. for recklessly using force against a sovereign state' and called for Maduro's release.",
+     "checked": "2026-10-11"
+    },
+    {
+     "backer": "iran",
+     "party": "ven",
+     "kinds": [
+      "cover"
+     ],
+     "tier": "open",
+     "source": "Iranian foreign ministry statements, December 2025 and January 2026",
+     "url": "https://en.wikipedia.org/wiki/International_reactions_to_the_2026_United_States_intervention_in_Venezuela",
+     "note": "Iran called the seizures 'an act of piracy' and the raid a violation of sovereignty.",
+     "checked": "2026-10-11"
+    },
+    {
+     "backer": "europe",
+     "party": "us",
+     "kinds": [
+      "intel"
+     ],
+     "tier": "reported",
+     "stance": "says nothing",
+     "source": "Press reporting on RAF surveillance aircraft and RFA Tideforce supporting the blockade",
+     "url": "https://en.wikipedia.org/wiki/2025%E2%80%932026_United_States_oil_blockade_of_Venezuela",
+     "note": "Britain.",
+     "checked": "2026-10-11"
+    }
+   ],
+   "areas": []
+  },
+  {
+   "id": "us-cuba",
+   "kind": "pressure",
+   "name": "U.S. fuel blockade on Cuba",
+   "since": "January 2026",
+   "point": [
+    -80.0,
+    22.3
+   ],
+   "label": [
+    -9,
+    -5,
+    "end"
+   ],
+   "band": null,
+   "band_source": "Not counted. No U.S. strike on Cuba. Blackouts of up to 22 hours a day and a rise in infant mortality are reported.",
+   "status": "Standing. Cuba's energy ministry said on 14 May 2026 the country had run out of oil and diesel. Talks began in March; Cuba freed more than 2,000 prisoners in April. The U.S. sanctioned Díaz-Canel in June and says Cuba is building attack drones, which Cuba calls a fabricated case.",
+   "summary": "After the Venezuela raid cut off Cuba's oil, the U.S. put tariffs on any country that ships oil to Cuba, by executive order on 29 January 2026, and kept seizing tankers carrying Venezuelan oil. Mexico stopped its shipments the same week. One Russian tanker got through in March; another turned back in May. No shot has been fired at Cuba. The entry is here because a blockade is force, and because Trump has said Cuba 'will fall very soon'.",
+   "actor_statement": "Executive Order 14380, 29 January 2026, declaring a national emergency and tariffs on oil suppliers to Cuba. Trump, January 2026: Cuba should 'make a deal before it's too late'; the U.S. could do a 'friendly takeover'. Rubio, May 2026: offered $100 million in aid and called the government's refusal 'unacceptable'.",
+   "target_statement": "Cuba calls it a blockade. Díaz-Canel called the Venezuela raid 'state terrorism' and confirmed talks with the U.S. on 13 March 2026. Cuba called the drone allegations 'fraudulent'.",
+   "parties": [
+    {
+     "id": "us",
+     "name": "United States",
+     "state": "usa"
+    },
+    {
+     "id": "cub",
+     "name": "Cuba",
+     "state": "cuba"
+    }
+   ],
+   "ties": [
+    {
+     "backer": "russia",
+     "party": "cub",
+     "kinds": [
+      "oil"
+     ],
+     "tier": "open",
+     "source": "Delivery of 100,000 tonnes of crude by the tanker Anatoly Kolodkin, 30 March 2026",
+     "url": "https://www.theguardian.com/us-news/2026/mar/29/us-russian-oil-tanker-cuba-blockade",
+     "note": "A second Russian tanker turned around off Brazil on 27 May 2026.",
+     "checked": "2026-10-11"
+    },
+    {
+     "backer": "china",
+     "party": "cub",
+     "kinds": [
+      "money"
+     ],
+     "tier": "open",
+     "source": "Chinese donation of 15,000 tons of rice; $80 million in aid approved in January 2026",
+     "url": "https://www.dw.com/en/cuba-receives-china-rice-shipment-amid-us-threats-blackouts/a-77281770",
+     "note": null,
+     "checked": "2026-10-11"
+    },
+    {
+     "backer": "mexico",
+     "party": "cub",
+     "kinds": [
+      "money"
+     ],
+     "tier": "open",
+     "source": "Mexican humanitarian aid ships, February 2026; oil shipments halted 27 January 2026 under tariff threat",
+     "url": "https://www.reuters.com/business/energy/sheinbaum-does-not-deny-report-mexico-halted-oil-shipment-cuba-2026-01-27/",
+     "note": "Mexico stopped sending oil and sent food and medicine instead. Sheinbaum called the halt 'sovereign' and warned of a humanitarian crisis.",
+     "checked": "2026-10-11"
+    },
+    {
+     "backer": "venezuela",
+     "party": "cub",
+     "kinds": [
+      "oil"
+     ],
+     "tier": "open",
+     "ended": "2026",
+     "source": "Venezuelan oil to Cuba ended with the January 2026 raid; a U.S. licence from 25 February 2026 allows private resale only",
+     "url": "https://en.wikipedia.org/wiki/2026_United_States_fuel_blockade_on_Cuba",
+     "note": null,
+     "checked": "2026-10-11"
+    }
+   ],
+   "areas": []
+  },
+  {
+   "id": "us-ecuador",
+   "kind": "pressure",
+   "name": "U.S. strikes in Ecuador",
+   "since": "March 2026",
+   "point": [
+    -76.9,
+    0.2
+   ],
+   "label": [
+    9,
+    8
+   ],
+   "band": null,
+   "band_source": "Not counted in the sources checked.",
+   "status": "Joint U.S. and Ecuadorian operations announced 4 March 2026; the first bombing came on 6 March. No later strike found.",
+   "summary": "On 6 March 2026 U.S. and Ecuadorian forces bombed a camp near the Colombian border that they said belonged to Comandos de la Frontera, a FARC splinter group that moves cocaine. Ecuador's president had invited the U.S. in as a 'regional ally' in his war on the gangs. Force with the host's consent.",
+   "actor_statement": "Southern Command, 4 March 2026: U.S. and Ecuadorian forces 'took action' in Ecuador against drug trafficking. The U.S. military said on 6 March it struck a 'narco-terrorist' supply complex.",
+   "target_statement": "Ecuador joined and consented. Noboa, 3 March 2026: the U.S. is among 'regional allies' in a 'new phase' against the cartels.",
+   "parties": [
+    {
+     "id": "us",
+     "name": "United States",
+     "state": "usa"
+    },
+    {
+     "id": "cdf",
+     "name": "Comandos de la Frontera (FARC splinter)"
+    }
+   ],
+   "ties": [
+    {
+     "backer": "ecuador",
+     "party": "us",
+     "kinds": [
+      "troops",
+      "bases"
+     ],
+     "tier": "open",
+     "source": "Joint operation announced by both governments, 4 March 2026",
+     "url": "https://www.bbc.com/news/articles/cgjzz4gn64zo",
+     "note": "Ecuador is a co-belligerent, not a target.",
+     "checked": "2026-10-11"
+    }
+   ],
+   "areas": []
+  },
+  {
+   "id": "china-philippines",
+   "kind": "pressure",
+   "name": "China and the Philippines at sea",
+   "since": "2025 (a long pattern)",
+   "point": [
+    116.0,
+    10.5
+   ],
+   "label": [
+    0,
+    14,
+    "middle"
+   ],
+   "band": null,
+   "band_source": "None killed in the past year. One Philippine Navy officer seriously hurt on 20 July 2026.",
+   "status": "Three incidents in the past year: water cannon and ramming near Thitu Island on 12 October 2025, a sailor struck with a baton at Second Thomas Shoal on 20 July 2026, and a fisheries vessel rammed off Palawan on 18 September 2026.",
+   "summary": "China's coast guard keeps using water cannon, ramming and, once, a baton against Philippine boats and crews in the South China Sea. Manila reports each incident with photographs. Beijing says the Philippine ships entered its waters and 'approached dangerously'.",
+   "actor_statement": "China, 12 October 2025: Philippine ships 'illegally entered waters near Sandy Cay and approached dangerously'. Its standard line on later incidents is that the coast guard took control measures 'in accordance with law'.",
+   "target_statement": "Armed Forces of the Philippines, 21 July 2026: 'No act of coercion or aggression will deter us from carrying out our constitutional mandate or exercising the Philippines' lawful rights in the West Philippine Sea.'",
+   "parties": [
+    {
+     "id": "chn",
+     "name": "China",
+     "state": "china"
+    },
+    {
+     "id": "phl",
+     "name": "Philippines"
+    }
+   ],
+   "ties": [
+    {
+     "backer": "usa",
+     "party": "phl",
+     "kinds": [
+      "arms",
+      "training"
+     ],
+     "tier": "open",
+     "source": "U.S.-Philippines Mutual Defense Treaty; U.S. Defense Security Cooperation Agency notifications",
+     "url": null,
+     "note": "A standing alliance, not entered for this year's incidents.",
+     "checked": null
+    }
+   ],
+   "areas": []
   }
  ],
  "excluded": [
   {
    "name": "Mexico",
-   "why": "Criminal violence on a war scale. The United States gives Mexico intelligence against the cartels and no state backs the cartels, so there are no lines to draw. Left off for that reason."
+   "why": "Criminal violence on a war scale, but no U.S. strike or raid on Mexican soil. The Jalisco raid of February 2026 was Mexican-led with U.S. intelligence. No state backs the cartels, so there are no lines to draw."
   },
   {
    "name": "Taiwan",
-   "why": "No shooting."
+   "why": "China's drills of December 2025 fired rockets into waters Taiwan claims and rehearsed a blockade. An exercise, not force applied. No shots at Taiwanese ships or land."
+  },
+  {
+   "name": "Russian drones over NATO states",
+   "why": "Drones hit Romania and were shot down over the Baltics in 2026. Russia denies sending them, so the acting-state rule is not met."
+  },
+  {
+   "name": "Seizures of shadow-fleet tankers by Finland, France, Belgium, Sweden and Britain",
+   "why": "Sanctions enforcement against merchant ships under false flags, not force against a state."
+  },
+  {
+   "name": "Russian warning shot at a British yacht, June 2026",
+   "why": "One incident. No injuries."
+  },
+  {
+   "name": "Türkiye in Iraq and Syria",
+   "why": "No strike in the past year that Türkiye has acknowledged."
   },
   {
    "name": "India and Pakistan, May 2025; Thailand and Cambodia, July and December 2025",
    "why": "Days of fighting, not sustained."
-  },
-  {
-   "name": "United States and Venezuela, January 2026",
-   "why": "One night of strikes and the capture of Maduro. About eighty dead. Not a war."
   },
   {
    "name": "Iraq",
@@ -2056,5 +3509,9 @@
    "name": "Armenia and Azerbaijan",
    "why": "Peace deal initialed in August 2025."
   }
- ]
+ ],
+ "areas_rule": "The colored view shades the provinces with ground fighting, sieges, or an air campaign against them in the past twelve months. A province hit only by the occasional long-range drone or missile is not shaded. Provinces are the unit the conflict trackers report, so the shading follows their borders, not front lines.",
+ "tier_note": "The line answers one question: how do we know? The more broken the line, the less the backer has owned. These words grade the evidence for a line, never a speaker; the Word keeps one verb for everyone.",
+ "naming_rule": "A state is named as it registers itself at the United Nations, in the short form it uses in English: Türkiye, Myanmar, Czechia, Eswatini. Armed groups keep their common name with their own name beside it.",
+ "pressure_rule": "A state is also on the map where it uses military force or a blockade against another state, or on its territory, without sustained fighting: strikes, raids, seizures, sinkings. These are drawn as hollow squares and carry no death band. One is entered only when the acting state says so itself."
 }
