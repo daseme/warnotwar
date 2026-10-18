@@ -1,5 +1,5 @@
 {
- "as_of": "2026-10-12",
+ "as_of": "2026-10-18",
  "status": "entered",
  "rule": "A war is on the map if organized fighting killed roughly 1,000 or more people in the past twelve months, or it is an active war between states, and an outside state fights in it or backs a side.",
  "color_rule": "Five states are colored: those that fight in or back a side in the most wars. The rest are grey and labelled.",
@@ -425,7 +425,7 @@
    ],
    "band": "3",
    "band_source": "UCDP counted 83,936 (81,305 to 89,367) from October 2025 to August 2026, and 94,778 in all of 2025. Ukraine's own claims of Russian dead run higher.",
-   "status": "Full-scale war. Ukraine took back ground in the east in 2026. Peace talks stopped in February 2026.",
+   "status": "Full-scale war. Ukraine took back ground in the east in 2026. Peace talks stopped in February 2026. Trump declared an energy ceasefire on 11 October; neither side confirmed it and strikes on energy sites went on.",
    "summary": "Russia invaded in February 2022 after eight years of fighting in the Donbas.",
    "parties": [
     {
@@ -913,7 +913,12 @@
    "areas_url": "https://en.wikipedia.org/wiki/2026_Ukrainian_counteroffensive",
    "start": "2022-02",
    "short": "Ukraine",
-   "turns": [],
+   "turns": [
+    {
+     "month": "2026-10",
+     "what": "Trump declared an energy ceasefire on 11 October. Ukraine said it learned of it from the media and Russian strikes on energy sites went on."
+    }
+   ],
    "ucdp": {
     "against": "same band",
     "note": "One war between two states. North Korea sends troops on Russia's side."
@@ -939,7 +944,7 @@
    ],
    "band": "3",
    "band_source": "UCDP counted 66,737 (12,970 to 82,062) from October 2025 to August 2026; 75,174 in all of 2025, 62,775 of them civilians killed deliberately, which is why the low is so far below the best. ACLED counted at least 19,000 deaths in fighting in 2025. The UN human rights office documented more than 6,000 killed in three days when el-Fasher fell.",
-   "status": "War between the army and the RSF. The RSF took el-Fasher in October 2025 and holds Darfur. The army holds Khartoum and the centre. Famine in Darfur and parts of Kordofan.",
+   "status": "War between the army and the RSF. The RSF took el-Fasher in October 2025 and holds Darfur. The army holds Khartoum and the centre. The RSF is massing around El Obeid in North Kordofan and striking it with drones. Famine in Darfur and parts of Kordofan.",
    "summary": "Two armed forces that once shared power turned on each other in April 2023. The RSF set up a rival government in 2025. The UN counts it the largest displacement in the world.",
    "parties": [
     {
@@ -1953,7 +1958,7 @@
    ],
    "band": "2",
    "band_source": "UCDP counted 2,378 (1,490 to 2,977) from October 2025 to August 2026. The WHO counted 965 killed in Yemen in the Gulf war. The two sides' own counts of fighters killed run into the thousands.",
-   "status": "Full-scale war again. The 2022 truce collapsed in July 2026. The Houthis took the Red Sea coast in September. The government, with Saudi air cover, is pushing back. Houthi missiles hit Saudi airports.",
+   "status": "Full-scale war again. The 2022 truce collapsed in July 2026. The Houthis took the Red Sea coast in September. The government, with Saudi air cover, is pushing back. Houthi missiles hit Saudi airports, and in October the presidential palace and the airport in Aden.",
    "summary": "The Houthis hold the north and the capital. The government, backed by Saudi Arabia, crushed its southern rival the STC in January 2026 after the UAE pulled out. The 2022 truce collapsed in July 2026 and the war is back on. Since late 2023 the Houthis have also fired on ships in the Red Sea and at Israel.",
    "parties": [
     {
@@ -1982,7 +1987,7 @@
      "since": null,
      "since_precision": null,
      "ended": null,
-     "evidence_to": "2024",
+     "evidence_to": "2026-10",
      "sources": [
       {
        "class": "document",
@@ -1997,9 +2002,29 @@
        "date": "2024",
        "url": "https://www.dia.mil/News-Features/Articles/Article-View/Article/3834111/dia-report-showcases-iranian-origin-of-houthi-weapons-interdicted-at-sea/",
        "publisher": "U.S. Defense Intelligence Agency"
+      },
+      {
+       "class": "opponent",
+       "publisher": "Wall Street Journal",
+       "text": "Wall Street Journal, Iran has stepped up military help to the Houthis with intelligence for targeting, training and tactical advice, citing people briefed on intelligence from Saudi Arabia and Yemen's anti-Houthi alliance, 17 October 2026",
+       "date": "2026-10",
+       "url": "https://www.iranintl.com/en/202610170171",
+       "via": "Iran International",
+       "seen": "search listing only, not opened",
+       "entered": "2026-10-18"
+      },
+      {
+       "class": "opponent",
+       "publisher": "Associated Press",
+       "text": "Associated Press, a Saudi diplomat says Iran is encouraging the Houthi escalation against the kingdom and that Tehran keeps arming and training the group, October 2026",
+       "date": "2026-10",
+       "url": "https://www.pbs.org/newshour/world/saudi-diplomat-says-iran-is-encouraging-houthi-escalation-of-attacks-on-the-kingdom",
+       "via": "PBS NewsHour",
+       "seen": "search listing only, not opened",
+       "entered": "2026-10-18"
       }
      ],
-     "note": "The UN panel has found Iranian-made missiles and drone parts. In July 2026 Saudi jets hit the Sanaa airport runway to stop an Iranian plane landing with weapons.",
+     "note": "The UN panel has found Iranian-made missiles and drone parts. In July 2026 Saudi jets hit the Sanaa airport runway to stop an Iranian plane landing with weapons. In October 2026 the Wall Street Journal reported stepped-up Iranian help, including intelligence for targeting Saudi Arabia; that account rests on Saudi and Yemeni government briefings, so it counts as the opponent and intelligence is not entered among the kinds.",
      "entered": "2026-10-11",
      "checked": null
     },
@@ -2262,6 +2287,10 @@
     {
      "month": "2026-07",
      "what": "The 2022 truce collapsed."
+    },
+    {
+     "month": "2026-10",
+     "what": "Houthi missiles hit the presidential palace in Aden on 15 October. Five were killed."
     }
    ],
    "ucdp": {
@@ -5045,7 +5074,7 @@
    ],
    "band": "2",
    "band_source": "UCDP counted 3,831 (3,831 to 3,839) in the war itself from October 2025 to August 2026. Iran counts 3,528 dead and Israel estimates 6,000; 72 killed in Israel, about two dozen U.S. troops, and dozens across the Gulf states, by those states. Lebanon's dead are counted under Gaza and Lebanon.",
-   "status": "War since 28 February 2026. A ceasefire from 8 April collapsed on 8 July. U.S. strikes again in September. The strait is still mostly shut. Talks run through Qatar and Pakistan.",
+   "status": "War since 28 February 2026. A ceasefire from 8 April collapsed on 8 July. U.S. strikes again in September. Iran's attacks on shipping in the strait reached a record in October and a container ship sank. The strait is still mostly shut. Talks run through Qatar and Pakistan.",
    "summary": "Israel and the United States struck Iran in June 2025 and again on 28 February 2026, killing Ali Khamenei. Iran shut the Strait of Hormuz on 4 March and fired missiles and drones at Israel, U.S. bases and every Gulf state. Hezbollah joined on 2 March and the Houthis seized the Bab al-Mandab coast in September. A Pakistan-brokered ceasefire held from April to July. U.S. forces cleared Iranian mines by late August, but traffic is still a fraction of normal. This site's other pages follow the oil.",
    "parties": [
     {
@@ -5620,7 +5649,7 @@
        "text": "CNN and Washington Post, 6 March 2026, citing U.S. officials",
        "date": "2026-03",
        "url": "https://www.cnn.com/2026/03/06/politics/russia-aiding-iran-targeting",
-       "publisher": "Russian mission to the UN"
+       "publisher": "CNN and Washington Post"
       },
       {
        "class": "opponent",
@@ -5705,7 +5734,7 @@
      "since": "2026-04",
      "since_precision": "month",
      "ended": null,
-     "evidence_to": "2026-04",
+     "evidence_to": "2026-09",
      "sources": [
       {
        "class": "backer",
@@ -5719,10 +5748,19 @@
        "text": "UN News, 7 April 2026, Russia and China veto the Security Council resolution on the Strait of Hormuz; 11 in favour, 2 abstentions",
        "date": "2026-04",
        "url": "https://news.un.org/en/story/2026/04/1167261",
-       "publisher": "U.S. officials, unnamed"
+       "publisher": "UN News"
+      },
+      {
+       "class": "press",
+       "publisher": "Al Jazeera",
+       "text": "Al Jazeera, Russia and China veto the U.S. draft renewing the UN panel that monitors Iran sanctions; 11 in favour, 2 against, 2 abstentions, 17 September 2026",
+       "date": "2026-09",
+       "url": "https://www.aljazeera.com/news/2026/9/17/russia-china-veto-un-mandate-to-monitor-iran-sanctions",
+       "seen": "search listing only, not opened",
+       "entered": "2026-10-18"
       }
      ],
-     "note": "Russia and China vetoed the Hormuz resolution. Russia abstained on resolution 2817 on Iranian attacks on the Gulf states.",
+     "note": "Russia and China vetoed the Hormuz resolution in April 2026 and the renewal of the Iran sanctions panel in September 2026. Russia abstained on resolution 2817 on Iranian attacks on the Gulf states.",
      "entered": "2026-10-11",
      "checked": null
     },
@@ -5868,7 +5906,7 @@
        "text": "Wikipedia, the page linked here",
        "date": null,
        "url": "https://en.wikipedia.org/wiki/China_in_the_2026_Iran_war",
-       "publisher": "U.S. Department of Justice"
+       "publisher": "Wikipedia"
       },
       {
        "class": "press",
@@ -6087,6 +6125,10 @@
     {
      "month": "2026-07",
      "what": "The ceasefire collapsed on 8 July."
+    },
+    {
+     "month": "2026-10",
+     "what": "Attacks on shipping in the strait reached a record. The container ship GFS Pride sank."
     }
    ],
    "ucdp": {
@@ -6113,7 +6155,7 @@
    ],
    "band": "2",
    "band_source": "UCDP counted 4,609 (3,322 to 13,184) from October 2025 to August 2026. ACLED counted about 1,150 deaths in Amhara, Oromia and Tigray in one quarter of 2025. The September offensive is after both.",
-   "status": "A rebel alliance of Tigray, Amhara and Oromo forces attacked on 23 September 2026. The army retook Mekelle on 3 October. Eritrean troops crossed into Tigray. Ethiopia and Eritrea cut ties on 1 October and their forces have clashed.",
+   "status": "A rebel alliance of Tigray, Amhara and Oromo forces attacked on 23 September 2026. The army retook Mekelle on 3 October and the towns on the Eritrean border on 12 and 13 October. Eritrean troops crossed into Tigray and pulled back over the border; some are reported to be still inside. Ethiopia and Eritrea cut ties on 1 October and their forces have clashed.",
    "summary": "The Tigray war ended in 2022. Fano militias in Amhara and the Oromo Liberation Army then fought the federal army. In September 2026 the Tigray People's Liberation Front joined them in an Alliance for Survival and launched an offensive in the north. Eritrea, once Ethiopia's ally against Tigray, now backs the alliance and has sent troops across the border.",
    "parties": [
     {
@@ -6394,6 +6436,10 @@
     {
      "month": "2026-09",
      "what": "The alliance offensive began on 23 September."
+    },
+    {
+     "month": "2026-10",
+     "what": "The army and allied Tigray militia took Aksum, Shire and the border towns. Eritrean forces pulled back over the border."
     }
    ],
    "ucdp": {
@@ -7794,6 +7840,24 @@
    "entry": "yemen",
    "what": "China to the Houthis, alleged to reported.",
    "why": "The second pass found a Bloomberg investigation, carried by Business Today, tracing Chinese parts in containers seized at Aden; the finder is outside the fight, so the tie is no longer only a claim by a side. A rule on the page says an alleged tie cannot hold a source from outside the fight, which is how this surfaced. The Panel of Experts' report due 15 October 2026 may move it again."
+  },
+  {
+   "date": "2026-10-18",
+   "entry": "yemen",
+   "what": "Iran to the Houthis now carries two October 2026 sources and its evidence date moves from 2024 to October 2026. The kinds are unchanged.",
+   "why": "The Wall Street Journal, relayed by Iran International, and the Associated Press relaying a Saudi diplomat both report stepped-up Iranian help this month. Each rests on one side's officials, so under the finding rule they count as the opponent: they date the tie but do not put intelligence among its kinds, which rest on the UN panel's findings."
+  },
+  {
+   "date": "2026-10-18",
+   "entry": "gulf",
+   "what": "Russia's on-the-record backing of Iran gained the 17 September 2026 veto as a dated and linked source. Its evidence date moves from April to September 2026.",
+   "why": "The tie's own source for the vetoes carried no link, and the September veto was not among its dated sources."
+  },
+  {
+   "date": "2026-10-18",
+   "entry": "gulf",
+   "what": "Three source publishers corrected: the UN News item on the 7 April veto was credited to unnamed U.S. officials, the CNN and Washington Post item of 6 March to the Russian mission to the UN, and the Wikipedia page on China in the Iran war to the U.S. Department of Justice.",
+   "why": "Each named a publisher that did not publish it. No tier moved."
   }
  ],
  "ucdp_note": "UCDP counts deaths in fighting between a state and an opponent, deaths in fighting between armed groups, and civilians killed deliberately, each with a low, best and high. UCDP calls a conflict a war at 1,000 battle deaths in a year, and minor below that. The figures here are our own sums from data/ucdp.json, built by scripts/build_ucdp.py from the yearly file and the monthly candidate files, pulled after the 20th of each month. A few UCDP rows carry a high below their best; they are summed as given. A flag is UCDP's own mark that a row still needs a check on its deaths, its sides, its place or its source.",
@@ -7908,14 +7972,14 @@
   "no_outlet": 2,
   "document_unlinked": 1,
   "single_publisher": 0,
-  "prewindow": 11,
+  "prewindow": 10,
   "undated": 0,
   "weapons": 47,
   "weapons_sipri": 4,
-  "sources": 404,
+  "sources": 407,
   "sources_unlinked": 34,
   "sources_undated": 58,
-  "sources_unopened": 38,
+  "sources_unopened": 41,
   "checked": 0,
   "one_class": 9
  },
