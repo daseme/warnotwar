@@ -10,6 +10,8 @@ permissions:
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    outputs:
+      pushed: ${{ steps.commit.outputs.pushed }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -18,6 +20,7 @@ jobs:
       - run: pip install -r oilflows/requirements.txt
       - run: ./scripts/refresh_weekly.sh
       - name: commit if changed
+        id: commit
         run: |
           git config user.name "oilflows-bot"
           git config user.email "actions@users.noreply.github.com"
@@ -27,4 +30,14 @@ jobs:
           else
             git commit -m "weekly EIA data refresh"
             git push
+            echo "pushed=true" >> "$GITHUB_OUTPUT"
           fi
+
+  deploy:
+    needs: refresh
+    if: needs.refresh.outputs.pushed == 'true'
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit
+    concurrency:
+      group: deploy
+      cancel-in-progress: false

@@ -12,6 +12,8 @@ permissions:
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    outputs:
+      pushed: ${{ steps.commit.outputs.pushed }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -20,6 +22,7 @@ jobs:
       - run: pip install xlrd
       - run: python3 scripts/build_spr.py
       - name: commit if changed
+        id: commit
         run: |
           git config user.name "spr-bot"
           git config user.email "actions@github.com"
@@ -29,4 +32,14 @@ jobs:
           else
             git commit -m "update SPR stocks"
             git push
+            echo "pushed=true" >> "$GITHUB_OUTPUT"
           fi
+
+  deploy:
+    needs: refresh
+    if: needs.refresh.outputs.pushed == 'true'
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit
+    concurrency:
+      group: deploy
+      cancel-in-progress: false

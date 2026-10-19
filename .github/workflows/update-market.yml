@@ -12,6 +12,8 @@ permissions:
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    outputs:
+      pushed: ${{ steps.commit.outputs.pushed }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -22,6 +24,7 @@ jobs:
         env:
           FRED_KEY: ${{ secrets.FRED_KEY }}
       - name: commit if changed
+        id: commit
         run: |
           git config user.name "market-bot"
           git config user.email "actions@github.com"
@@ -31,4 +34,14 @@ jobs:
           else
             git commit -m "update market data"
             git push
+            echo "pushed=true" >> "$GITHUB_OUTPUT"
           fi
+
+  deploy:
+    needs: refresh
+    if: needs.refresh.outputs.pushed == 'true'
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit
+    concurrency:
+      group: deploy
+      cancel-in-progress: false
