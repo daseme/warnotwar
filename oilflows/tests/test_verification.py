@@ -164,6 +164,23 @@ def test_all_liquids_never_enters_the_crude_episode():
     assert ep["estimate_count"] == 1
 
 
+def test_consensus_is_the_newest_reading_not_the_last_row():
+    claims = claims_frame([{"claim_id": "c1", "claim_date": "2026-10-13"}])
+    estimates = estimates_frame([
+        {"estimate_id": "e1", "estimate_date": "2026-10-13",
+         "value_low": 11.6, "value_high": 11.6, "value_central": 11.6},
+        # appended later but dated earlier: must not become the consensus
+        {"estimate_id": "e2", "estimate_date": "2026-09-01",
+         "value_low": 8.0, "value_high": 8.0, "value_central": 8.0},
+        # a floor with no central value never becomes the consensus
+        {"estimate_id": "e3", "estimate_date": "2026-10-14",
+         "value_low": 10.0, "value_high": None, "value_central": None},
+    ])
+
+    ep = build_current_episode(claims, estimates)
+    assert ep["independent_consensus_mbd"] == 11.6
+
+
 def test_stale_claims_fall_out_of_window():
     claims = claims_frame([
         {"claim_id": "c1", "claim_date": "2026-05-01",

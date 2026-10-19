@@ -325,9 +325,15 @@ def build_current_episode(
 
     est_low = float(window_estimates["value_low"].min())
     est_high = float(window_estimates["value_high"].max())
+    # The consensus is the newest reading by date, not the last row in the
+    # file: ledgers are appended in the order rows are found, which is not
+    # the order of the readings. Same-day readings fall to the later row.
     with_central = window_estimates.dropna(subset=["value_central"])
     consensus = (
-        float(with_central.iloc[-1]["value_central"])
+        float(
+            with_central.sort_values("estimate_date", kind="stable")
+            .iloc[-1]["value_central"]
+        )
         if not with_central.empty
         else None
     )
@@ -398,8 +404,9 @@ def build_verification_publish(
             "gap":
                 "The verification gap is the claimed flow minus the "
                 "independent tracker consensus, computed only within one "
-                "scope, one unit, and one time window. It is labeled "
-                "unverified, not false.",
+                "scope, one unit, and one time window. The consensus is "
+                "the newest tracker reading by date that gives a single "
+                "figure. It is labeled unverified, not false.",
             "estimates_provenance":
                 "Independent tracker figures reach this dataset secondhand, "
                 "as reported by the named press outlet on each row.",
