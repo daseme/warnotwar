@@ -189,7 +189,7 @@ def test_publish_payload_is_strict_json():
     round_trip = json.loads(text)
     # ledger as of 2026-10-18: Bessent 15-22 mb/d (c10) tops the window
     assert round_trip["current_episode"]["claim_high_mbd"] == 22.0
-    assert round_trip["current_episode"]["independent_consensus_mbd"] == 11.62  # Kpler, 13 Oct 2026
+    assert round_trip["current_episode"]["independent_consensus_mbd"] == 9.4  # Kpler crude, week to 14 Oct 2026 (e34)
     assert len(round_trip["claims"]) == len(claims)
     # unverified, never adjudicated language
     assert "unverified" in round_trip["method"]["gap"]
@@ -221,9 +221,9 @@ def test_archive_ledger_loads_and_links():
     assert escort["disputed_by"] == "USOF-20260310-02"
 
     comparable = comparable_hormuz_flow_claims(archive)
-    # ledger as of 2026-10-18; open-ended floors ("at least 10") are excluded
+    # ledger as of 2026-10-19; open-ended floors ("at least 10") are excluded
     assert set(comparable["value_min"]) == {
-        8.0, 9.0, 10.0, 13.0, 14.0, 15.0, 18.0,
+        8.0, 9.0, 10.0, 11.0, 13.0, 14.0, 15.0, 18.0,
     }
     # successive 7-day readings are series members, not corrections
     aug11 = archive.loc[archive["claim_id"] == "USOF-20260811-01"].iloc[0]
@@ -282,9 +282,9 @@ def test_episode_reflects_wright_revision():
     estimates = load_estimates(CURATED / "hormuz_flow_estimates.csv")
 
     ep = build_current_episode(claims, estimates)
-    assert ep["claim_low_mbd"] == 10.0  # ledger as of 2026-10-18: the 45-day window now starts after Wright's 8
-    assert ep["claim_high_mbd"] == 22.0  # ledger as of 2026-10-18
-    # the Kpler reading of 13 Oct (11.62) sits above the bottom of the
-    # claimed range, so the low end of the gap is now negative
-    assert round(ep["gap_low_mbd"], 1) == -1.6
-    assert round(ep["gap_high_mbd"], 1) == 10.4
+    assert ep["claim_low_mbd"] == 10.0  # ledger as of 2026-10-19: the 45-day window now starts after Wright's 8
+    assert ep["claim_high_mbd"] == 22.0  # ledger as of 2026-10-19
+    # the newest reading is Kpler's 9.4 for the week to 14 Oct (e34), below
+    # the 11.62 of 13 Oct (e23), so the low end of the gap is positive again
+    assert round(ep["gap_low_mbd"], 1) == 0.6
+    assert round(ep["gap_high_mbd"], 1) == 12.6
