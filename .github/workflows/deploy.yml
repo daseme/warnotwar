@@ -39,4 +39,5 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: "4.151.2"   # the version the hand deploys use; the runner's fallback wrangler is too old for an assets-only config
           command: deploy
