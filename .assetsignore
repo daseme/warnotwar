@@ -12,3 +12,7 @@ __pycache__
 RECHECK.md
 MAP_STACK_BRIEF.md
 _shot.html
+node_modules
+package.json
+package-lock.json
+.github
