@@ -184,14 +184,6 @@
   .bands .cursor { stroke: var(--ink); stroke-width: 1; }
   .bands-readout { font-family: var(--mono); font-size: 11px; color: var(--ink-80); min-height: 1.7em; margin-top: 6px; }
 
-  /* ---- the moment ---- */
-  .facts { list-style: none; padding: 0; margin: 14px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0; border-top: 1px solid var(--ink-18); border-left: 1px solid var(--ink-18); }
-  .facts li { border-right: 1px solid var(--ink-18); border-bottom: 1px solid var(--ink-18); padding: 16px 18px 14px; }
-  .facts .big { font-family: var(--serif); font-size: 1.9rem; font-weight: 500; letter-spacing: -0.01em; line-height: 1.1; color: var(--ink); }
-  .facts .big small { font-size: 0.95rem; color: var(--ink-60); font-weight: 400; margin-left: 6px; }
-  .facts .w { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-60); margin-bottom: 8px; }
-  .facts .t { font-size: 0.98rem; line-height: 1.6; color: var(--ink-80); margin-top: 8px; }
-
   /* ---- the past year by month ---- */
   .m-strip { display: flex; align-items: flex-end; gap: 3px; height: 72px; width: 100%; max-width: 1280px; margin-top: 10px; }
   .m-strip button { flex: 1; border: 0; padding: 0; background: none; cursor: pointer; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: stretch; font: inherit; }
@@ -217,7 +209,6 @@
   @media (max-width: 720px) {
     body { padding: 52px 16px 80px; }
     section.panel { margin-top: 72px; padding-top: 32px; }
-    .facts .big { font-size: 1.5rem; }
     .m-strip .l { font-size: 8px; }
     .spine, .bands { overflow-x: auto; -webkit-overflow-scrolling: touch; }
     .spine svg { min-width: 820px; touch-action: auto; cursor: default; }
@@ -245,6 +236,7 @@
 <nav class="topnav">
   <a href="/">warnotwar</a>
   <a href="/heuristic.html">the heuristic</a>
+  <a href="/moment.html">the moment</a>
   <a href="/conflicts.html">the map</a>
   <a href="/record.html">the word</a>
   <a href="/readings.html">readings</a>
@@ -299,12 +291,9 @@
 
 <section class="panel" id="moment-panel">
   <h2>The current moment</h2>
-  <p class="panel-sub" id="moment-sub"></p>
-  <ul class="facts" id="facts"></ul>
+  <p class="prose">Six figures from the files behind this page, each set against every year the files cover, and a count of how many are the highest yet, are on their own page: <a href="/moment.html">the current moment</a>.</p>
   <h3>What 1994 is</h3>
   <p class="prose">1994 is Rwanda. Of the 824,177 deaths UCDP counts that year, 772,463 were in Rwanda, almost all of them civilians killed deliberately in the genocide, in about a hundred days from April. UCDP's range for Rwanda that year is 347,614 to 1,612,663. It was one event in one country. The five-year average carries it from 1994 to 1998, so the plateau in the line over those years is a single event spread across five. The five years to 2025 contain no event of that size. On UCDP's best estimate each of them had more than 170,000 deaths, 2023 narrowly, and the heaviest wars changed: Ethiopia in 2021 and 2022, Ukraine from 2022, Gaza from 2023, Sudan from 2023, second only to Ukraine in 2025 and the site of most of that year's deliberate killings of civilians. That is what the average above the Rwanda years means, by a small margin and with the last two years still provisional: not a worse single year, but a level sustained for five.</p>
-  <h3>What the page asks</h3>
-  <p class="prose">A high year is not a world war. Most years of the 1980s had more wars at the level of 1,000 deaths a year than 2025, and the 1950s had Korea. What the counts show for 2025 is breadth and persistence: more conflicts active than in any year since 1946; as many countries with more than 1,000 deaths as in any year since 1989, level with 2024; and a five-year average of deaths higher than any before it, narrowly above the Rwanda years, with the last two years provisional. Whether that is a level of violence that markets and governments have learned to tolerate, as a rate of unemployment is tolerated, is the question the rest of this site asks. This page shows the level.</p>
 </section>
 
 <section class="panel" id="month-panel">
@@ -531,24 +520,6 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   }
   const placeBandCursor = () => { const c = $('#b-cursor'); if (!c) return; const inRange = state.year >= D0 && state.year <= D1; c.style.display = inRange ? '' : 'none'; if (inRange) { const v = bx(state.year).toFixed(1); c.setAttribute('x1', v); c.setAttribute('x2', v); } };
 
-  /* ---- the moment: computed from the files ---- */
-  function buildMoment() {
-    const last = years[years.length - 1], lastD = Y.years[Y.years.length - 1];
-    const mostN = years.reduce((a, r) => r.n > a.n ? r : a), mostWars = years.reduce((a, r) => r.wars > a.wars ? r : a), mostInter = years.reduce((a, r) => r.interstate > a.interstate ? r : a);
-    const mostC = Y.years.reduce((a, r) => r.countries_over_1000 > a.countries_over_1000 ? r : a);
-    const la = avgs[avgs.length - 1], others = avgs.filter(a => a && a !== la), topAvg = others.reduce((a, q) => q.v > a.v ? q : a);
-    const f = [];
-    const howCounted = `UCDP counts one government against one opposing side over one issue, so a movement fighting several governments counts as several conflicts${last.is ? `: Islamic State is a party to ${last.is} of the ${last.n}` : ''}${last.most && last.most[1] > 1 ? `, and ${last.most[0]} alone accounts for ${last.most[1]}` : ''}. The figure shows that more governments are fighting someone, not that there are ${last.n} separate wars.`;
-    f.push({ w: 'conflicts active', big: `${last.n}<small>in ${last.year}</small>`, t: (last.n >= mostN.n ? `The most in any year since ${Y0}${years.some(r => r !== last && r.n === last.n) ? ', level with ' + years.filter(r => r !== last && r.n === last.n).map(r => r.year).join(' and ') : '; the next highest is ' + years.filter(r => r.n < last.n).reduce((a, r) => r.n > a.n ? r : a).n}. ` : `Against ${mostN.n} in ${mostN.year}, the most since ${Y0}. `) + howCounted });
-    f.push({ w: 'conflicts at war level', big: `${last.wars}<small>in ${last.year}</small>`, t: `A conflict with 1,000 or more deaths in the year. The peak was ${mostWars.wars} in ${mostWars.year}. The rise is in conflicts below that line, not above it.` });
-    f.push({ w: 'conflicts between states', big: `${last.interstate}<small>in ${last.year}</small>`, t: last.interstate >= mostInter.interstate ? `The most in any year since ${Y0}. Most conflicts are fought within a state; these are fought between states.` : `Against ${mostInter.interstate} in ${mostInter.year}.` });
-    f.push({ w: 'countries with more than 1,000 deaths', big: `${lastD.countries_over_1000}<small>in ${lastD.year}</small>`, t: lastD.countries_over_1000 >= mostC.countries_over_1000 ? `The most in any year since ${D0}${Y.years.filter(r => r !== lastD && r.countries_over_1000 === lastD.countries_over_1000).map(r => ', level with ' + r.year).join('')}.` : `Against ${mostC.countries_over_1000} in ${mostC.year}.` });
-    f.push({ w: 'deaths a year, five-year average', big: `${fmt(Math.round(la.v))}<small>${la.year - 4} to ${la.year}</small>`, t: la.v >= topAvg.v ? `The highest five-year average of deaths in the series, ${fmt(Math.round(la.v - topAvg.v))} above the ${topAvg.year - 4} to ${topAvg.year} period that includes Rwanda. The last two years are provisional. Each of the five years had at least ${fmt(Math.min(...Y.years.slice(-5).map(r => r.best)))} deaths on UCDP's best estimate.` : `${fmt(Math.round(topAvg.v - la.v))} below the ${topAvg.year - 4} to ${topAvg.year} period that includes Rwanda, at ${fmt(Math.round(topAvg.v))}.` });
-    f.push({ w: `deaths in ${lastD.year}`, big: `${fmt(lastD.best)}<small>best estimate</small>`, t: `UCDP's best estimate for ${lastD.year}, within a range of ${fmt(lastD.low)} to ${fmt(lastD.high)}, provisional until the next release. The most: ${(L.top[lastD.year] || []).slice(0, 3).map(t => `${t[1]} ${fmt(t[2])}`).join(', ')}.` });
-    $('#facts').innerHTML = f.map(q => `<li><div class="w">${q.w}</div><div class="big">${q.big}</div><div class="t">${esc(q.t)}</div></li>`).join('');
-    $('#moment-sub').textContent = `Six figures from the files behind this page, UCDP version${L.versions.conflicts === L.versions.deaths ? ' ' + L.versions.deaths : 's ' + L.versions.conflicts + ' and ' + L.versions.deaths}. UCDP revises recent years with each release; the last two are treated as provisional.`;
-  }
-
   /* ---- the past year by month ---- */
   function buildMonths() {
     const keys = U.months.keys || G.months, w = U.months.world, from = U.months.candidate_from || null;
@@ -579,7 +550,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   $('#rule-oil').textContent = O.rule + ' Pulled ' + O.pulled + '.';
   $('#credit').innerHTML = 'UCDP figures are from the Uppsala Conflict Data Program, <a href="https://ucdp.uu.se" target="_blank" rel="noopener">ucdp.uu.se</a>, version ' + esc(L.versions.deaths) + ', used under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>: Davies, Pettersson and Öberg, Organized violence 1989–2025, and violent political protests, Journal of Peace Research, 2026, doi 10.1093/jopres/xjag046; Sundberg and Melander, Introducing the UCDP Georeferenced Event Dataset, Journal of Peace Research 50(4), 2013. The conflict counts are the UCDP/PRIO Armed Conflict Dataset, version ' + esc(L.versions.conflicts) + ': Davies, Pettersson and Öberg, 2026, and Gleditsch, Wallensteen, Eriksson, Sollenberg and Strand, Armed Conflict 1946–2001: A New Dataset, Journal of Peace Research 39(5), 2002. UCDP is part of and funded by DEMSCORE, national research infrastructure grant 2021-00162 from the Swedish Research Council. Prices are from FRED, Federal Reserve Bank of St. Louis, series MCOILBRENTEU and MCOILWTICO, which carry the U.S. Energy Information Administration\'s spot prices. Base map Natural Earth. Drawn with d3.';
 
-  drawSpine(); drawMap(); drawBands(); buildMoment();
+  drawSpine(); drawMap(); drawBands();
   placeCursor(); readout(state.year); paintMap(); placeBandCursor();
   /* a narrow screen scrolls the charts sideways; open them at the current end */
   for (const el of [$('#spine'), $('#bands')]) if (el.scrollWidth > el.clientWidth + 4) el.scrollLeft = el.scrollWidth;

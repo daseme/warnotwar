@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="paper">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Six figures from Uppsala's conflict files, each set against every year on record, and how many of them are the highest yet.">
+<title>The current moment — how many of Uppsala's counts are at a record</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* the moment — shares the paper/ink token set with level.html, market.html, oilflows.html and record.html */
+  :root, [data-theme="paper"] {
+    --bg: #f7f2e7; --bg-raise: #fcfaf3; --bg-sink: #efe8da;
+    --ink: #1a1610;
+    --ink-80: rgba(26,22,16,0.8); --ink-60: rgba(26,22,16,0.6); --ink-45: rgba(26,22,16,0.45);
+    --ink-30: rgba(26,22,16,0.3); --ink-18: rgba(26,22,16,0.18); --ink-10: rgba(26,22,16,0.1); --ink-06: rgba(26,22,16,0.06);
+    --rate: #1d4e89; --gold: #8f6d14; --danger: #a03428;
+  }
+  [data-theme="ink"] {
+    --bg: #17140f; --bg-raise: #1e1a14; --bg-sink: #14110c;
+    --ink: #efe8d8;
+    --ink-80: rgba(239,232,216,0.8); --ink-60: rgba(239,232,216,0.6); --ink-45: rgba(239,232,216,0.45);
+    --ink-30: rgba(239,232,216,0.3); --ink-18: rgba(239,232,216,0.18); --ink-10: rgba(239,232,216,0.1); --ink-06: rgba(239,232,216,0.06);
+    --rate: #7aa8dd; --gold: #c9a94f; --danger: #d06a5c;
+  }
+  :root {
+    --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+    --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body {
+    margin: 0; min-height: 100%; font-family: var(--serif);
+    background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased;
+    transition: background 0.25s ease, color 0.25s ease; overflow-x: clip;
+  }
+  body { display: flex; flex-direction: column; align-items: center; padding: 52px 24px 120px; }
+  ::selection { background: var(--rate); color: var(--bg); }
+  a { color: var(--ink-80); text-underline-offset: 3px; }
+  a:hover { color: var(--ink); }
+
+  /* ---- nav ---- */
+  nav.topnav {
+    position: fixed; inset: 0 0 auto 0; z-index: 50; height: 52px;
+    display: flex; align-items: center; gap: 22px; flex-wrap: nowrap;
+    overflow: hidden; padding: 0 28px;
+    background: color-mix(in srgb, var(--bg) 94%, transparent);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--ink-10);
+    color: var(--ink); transition: background 0.25s ease, color 0.25s ease;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  nav.topnav a { position: relative; color: var(--ink); text-decoration: none; opacity: 0.62; transition: opacity 0.2s ease; white-space: nowrap; flex-shrink: 0; }
+  nav.topnav a::after { content: ''; position: absolute; left: 0; bottom: -3px; width: 0; height: 1px; background: var(--ink); transition: width 0.25s ease; }
+  nav.topnav a:hover { opacity: 1; }
+  nav.topnav a:hover::after, nav.topnav a.here::after { width: 100%; }
+  nav.topnav a.here { opacity: 1; }
+  nav.topnav .spacer { flex: 1; }
+  button.theme-toggle {
+    font: inherit; letter-spacing: inherit; text-transform: inherit;
+    background: none; border: 1px solid var(--ink-30); color: var(--ink);
+    padding: 4px 10px; cursor: pointer; border-radius: 999px; transition: background 0.2s ease;
+  }
+  button.theme-toggle:hover { background: var(--ink-06); }
+
+  /* ---- hero ---- */
+  .hero { width: 100%; max-width: 860px; text-align: center; padding-top: 56px; }
+  .hero-kicker { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.6em; }
+  h1 { font-size: clamp(2rem, 4.8vw, 3.3rem); font-weight: 500; letter-spacing: -0.015em; line-height: 1.12; margin: 0 0 0.55em; text-align: center; }
+  .subtitle { max-width: 640px; text-align: center; color: var(--ink-80); font-size: 1.08rem; line-height: 1.75; margin: 0 auto 1em; }
+
+  #load-error {
+    display: none; width: 100%; max-width: 1080px;
+    font-family: var(--mono); font-size: 11px; line-height: 1.7;
+    padding: 10px 14px; margin-top: 2em;
+    color: var(--danger); border: 1px solid color-mix(in srgb, var(--danger) 40%, transparent); background: color-mix(in srgb, var(--danger) 6%, transparent);
+  }
+
+  /* ---- sections ---- */
+  section.panel { width: 100%; max-width: 1080px; margin-top: 96px; padding-top: 44px; border-top: 1px solid var(--ink-18); scroll-margin-top: 72px; }
+  section.panel.first { margin-top: 2.6em; padding-top: 0; border-top: 0; }
+  h2 { font-size: 1.5rem; font-weight: 500; letter-spacing: -0.005em; margin: 0 0 0.35em; }
+  .panel-sub { font-family: var(--mono); font-size: 11.5px; color: var(--ink-60); margin: 0 0 20px; line-height: 1.75; max-width: 78em; }
+  h3 { font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-60); margin: 28px 0 10px; }
+  .prose { font-size: 1.02rem; line-height: 1.85; color: var(--ink-80); max-width: 46em; }
+  .prose strong { color: var(--ink); font-weight: 500; }
+
+  /* ---- the tally: how many of the six are at a record ---- */
+  .tally { font-size: clamp(1.3rem, 2.6vw, 1.7rem); font-weight: 500; line-height: 1.35; letter-spacing: -0.005em; color: var(--ink); max-width: 30em; margin: 0 0 0.4em; }
+  .tally b { color: var(--danger); font-weight: 500; }
+  .tally-sub { font-family: var(--mono); font-size: 11.5px; color: var(--ink-60); line-height: 1.75; max-width: 78em; margin: 0 0 28px; }
+
+  /* ---- the six figures ---- */
+  .facts { list-style: none; padding: 0; margin: 14px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0; border-top: 1px solid var(--ink-18); border-left: 1px solid var(--ink-18); }
+  .facts li { border-right: 1px solid var(--ink-18); border-bottom: 1px solid var(--ink-18); padding: 16px 18px 14px; position: relative; }
+  .facts li.rec { background: color-mix(in srgb, var(--danger) 5%, transparent); }
+  .facts .big { font-family: var(--serif); font-size: 1.9rem; font-weight: 500; letter-spacing: -0.01em; line-height: 1.1; color: var(--ink); }
+  .facts .big small { font-size: 0.95rem; color: var(--ink-60); font-weight: 400; margin-left: 6px; }
+  .facts .w { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-60); margin-bottom: 8px; }
+  .facts .tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--danger); margin-top: 8px; }
+  .facts .t { font-size: 0.98rem; line-height: 1.6; color: var(--ink-80); margin-top: 8px; }
+
+  /* a section that folds under its heading */
+  details.fold summary { list-style: none; cursor: pointer; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+  details.fold summary::-webkit-details-marker { display: none; }
+  details.fold summary h2 { margin: 0; }
+  details.fold summary .n, details.fold summary .hint { font-family: var(--mono); font-size: 11px; color: var(--ink-45); }
+  details.fold summary .hint::after { content: ' \25BE'; }
+  details.fold[open] summary .hint::after { content: ' \25B4'; }
+  details.fold summary:hover .hint { color: var(--ink); }
+  .back { display: inline-block; margin-top: 48px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-60); text-decoration: none; }
+  .back:hover { color: var(--ink); }
+  @media (max-width: 720px) {
+    body { padding: 52px 16px 80px; }
+    section.panel { margin-top: 72px; padding-top: 32px; }
+    .facts .big { font-size: 1.5rem; }
+  }
+  /* ---- testing menu: the pages still being built sit under one dropdown ---- */
+  nav.topnav { overflow: visible; }
+  nav.topnav details.testing { position: relative; flex-shrink: 0; }
+  nav.topnav details.testing summary { list-style: none; cursor: pointer; color: var(--ink); opacity: 0.62; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; transition: opacity 0.2s ease; }
+  nav.topnav details.testing summary::-webkit-details-marker { display: none; }
+  nav.topnav details.testing summary::after { content: '\25BE'; font-size: 10px; }
+  nav.topnav details.testing summary:hover, nav.topnav details.testing[open] summary, nav.topnav details.testing.here summary { opacity: 1; }
+  nav.topnav details.testing .menu { position: absolute; top: calc(100% + 14px); left: -14px; min-width: 190px; display: flex; flex-direction: column; gap: 12px; padding: 14px 16px; background: var(--bg-raise, var(--bg)); border: 1px solid var(--ink-18); z-index: 60; }
+  @media (max-width: 720px) {
+    nav.topnav { overflow-x: auto; overflow-y: hidden; }
+    nav.topnav details.testing[open] { display: inline-flex; align-items: center; gap: 14px; }
+    nav.topnav details.testing .menu { position: static; flex-direction: row; gap: 14px; min-width: 0; padding: 0; border: 0; background: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="/">warnotwar</a>
+  <a href="/heuristic.html">the heuristic</a>
+  <a href="/moment.html" class="here">the moment</a>
+  <a href="/conflicts.html">the map</a>
+  <a href="/record.html">the word</a>
+  <a href="/readings.html">readings</a>
+  <a href="/qa.html">q and a</a>
+  <details class="testing">
+    <summary>testing</summary>
+    <div class="menu">
+      <a href="/market.html">the market</a>
+      <a href="/oilflows.html">oilflows</a>
+      <a href="/lab.html">the lab</a>
+      <a href="/teaching-module/index.html">hormuz lab (sim)</a>
+      <a href="/spr/">the reserve</a>
+      <a href="/methodology.html">methodology</a>
+      <a href="/level.html">the level</a>
+    </div>
+  </details>
+  <span class="spacer"></span>
+  <button class="theme-toggle" id="theme-toggle" title="switch paper / ink">&#9705; ink</button>
+</nav>
+<script>document.addEventListener('click', e => { for (const d of document.querySelectorAll('details.testing[open]')) if (!d.contains(e.target)) d.removeAttribute('open'); });</script>
+
+<header class="hero">
+  <div class="hero-kicker">warnotwar · the moment</div>
+  <h1>The current moment.</h1>
+  <p class="subtitle">Six figures from Uppsala's conflict files, each set against every year the files cover, back to 1946 for the counts and 1989 for the deaths. The line at the top says how many of them are the highest yet.</p>
+</header>
+
+<div id="load-error"></div>
+
+<section class="panel first" id="moment-panel">
+  <p class="tally" id="tally"></p>
+  <p class="tally-sub" id="moment-sub"></p>
+  <ul class="facts" id="facts"></ul>
+  <h3>What 1994 is</h3>
+  <p class="prose">1994 is Rwanda. Of the 824,177 deaths UCDP counts that year, 772,463 were in Rwanda, almost all of them civilians killed deliberately in the genocide, in about a hundred days from April. UCDP's range for Rwanda that year is 347,614 to 1,612,663. It was one event in one country. The five-year average carries it from 1994 to 1998, so the plateau in the deaths line on <a href="/level.html">the level</a> over those years is a single event spread across five. The five years to 2025 contain no event of that size. On UCDP's best estimate each of them had more than 170,000 deaths, 2023 narrowly, and the heaviest wars changed: Ethiopia in 2021 and 2022, Ukraine from 2022, Gaza from 2023, Sudan from 2023, second only to Ukraine in 2025 and the site of most of that year's deliberate killings of civilians. That is what the average above the Rwanda years means, by a small margin and with the last two years still provisional: not a worse single year, but a level sustained for five.</p>
+  <h3>What the figures ask</h3>
+  <p class="prose">A high year is not a world war. Most years of the 1980s had more wars at the level of 1,000 deaths a year than 2025, and the 1950s had Korea. What the counts show for 2025 is breadth and persistence: more conflicts active than in any year since 1946; as many countries with more than 1,000 deaths as in any year since 1989, level with 2024; and a five-year average of deaths higher than any before it, narrowly above the Rwanda years, with the last two years provisional. Whether that is a level of violence that markets and governments have learned to tolerate, as a rate of unemployment is tolerated, is the question the rest of this site asks. <a href="/level.html">The level</a> shows the whole run of years these figures come from.</p>
+</section>
+
+<section class="panel" id="rules">
+  <details class="fold" id="rules-fold">
+  <summary><h2>How this page is kept</h2><span class="n">the counts, credit</span><span class="hint">open</span></summary>
+  <h3>The counts</h3>
+  <p class="prose" id="rule-level"></p>
+  <h3>Counts and credit</h3>
+  <p class="prose" id="credit"></p>
+  </details>
+</section>
+
+<a class="back" href="/">&larr; warnotwar</a>
+
+<script>
+const rootEl = document.documentElement, themeBtn = document.getElementById('theme-toggle');
+function applyTheme(t) { rootEl.dataset.theme = t; themeBtn.textContent = t === 'paper' ? '◑ ink' : '◐ paper'; }
+applyTheme((() => { const q = new URLSearchParams(location.search).get('theme'); if (q === 'ink' || q === 'paper') return q; try { const s = localStorage.getItem('ww-theme'); if (s) return s; } catch (e) {} return matchMedia('(prefers-color-scheme: dark)').matches ? 'ink' : 'paper'; })());
+themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 'paper'; applyTheme(t); try { localStorage.setItem('ww-theme', t); } catch (e) {} };
+</script>
+
+<script>
+(async function () {
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const fmt = n => Number(n).toLocaleString('en-US');
+  const get = u => fetch(u).then(r => { if (!r.ok) throw new Error('http ' + r.status + ' ' + u); return r.json(); });
+  let L, Y;
+  try { [L, Y] = await Promise.all([get('/data/level.json'), get('/data/ucdp_years.json')]); }
+  catch (e) { const el = $('#load-error'); el.style.display = 'block'; el.textContent = 'The data did not load: ' + e.message; return; }
+
+  const years = L.years, Y0 = years[0].year;
+  const D0 = Y.years[0].year;
+  const avgs = Y.years.map((r, i) => i < 4 ? null : { year: r.year, v: Y.years.slice(i - 4, i + 1).reduce((a, q) => a + q.best, 0) / 5 });
+  const WORDS = ['none', 'one', 'two', 'three', 'four', 'five', 'six'];
+
+  /* ---- the six figures, computed from the files; the same code as the level page once carried ---- */
+  function buildMoment() {
+    const last = years[years.length - 1], lastD = Y.years[Y.years.length - 1];
+    const mostN = years.reduce((a, r) => r.n > a.n ? r : a), mostWars = years.reduce((a, r) => r.wars > a.wars ? r : a), mostInter = years.reduce((a, r) => r.interstate > a.interstate ? r : a);
+    const mostC = Y.years.reduce((a, r) => r.countries_over_1000 > a.countries_over_1000 ? r : a);
+    const mostD = Y.years.reduce((a, r) => r.best > a.best ? r : a);
+    const la = avgs[avgs.length - 1], others = avgs.filter(a => a && a !== la), topAvg = others.reduce((a, q) => q.v > a.v ? q : a);
+    const f = [];
+    const howCounted = `UCDP counts one government against one opposing side over one issue, so a movement fighting several governments counts as several conflicts${last.is ? `: Islamic State is a party to ${last.is} of the ${last.n}` : ''}${last.most && last.most[1] > 1 ? `, and ${last.most[0]} alone accounts for ${last.most[1]}` : ''}. The figure shows that more governments are fighting someone, not that there are ${last.n} separate wars.`;
+    f.push({ w: 'conflicts active', rec: last.n >= mostN.n, big: `${last.n}<small>in ${last.year}</small>`, t: (last.n >= mostN.n ? `The most in any year since ${Y0}${years.some(r => r !== last && r.n === last.n) ? ', level with ' + years.filter(r => r !== last && r.n === last.n).map(r => r.year).join(' and ') : '; the next highest is ' + years.filter(r => r.n < last.n).reduce((a, r) => r.n > a.n ? r : a).n}. ` : `Against ${mostN.n} in ${mostN.year}, the most since ${Y0}. `) + howCounted });
+    f.push({ w: 'conflicts at war level', rec: last.wars >= mostWars.wars, big: `${last.wars}<small>in ${last.year}</small>`, t: last.wars >= mostWars.wars ? `A conflict with 1,000 or more deaths in the year. The most in any year since ${Y0}.` : `A conflict with 1,000 or more deaths in the year. The peak was ${mostWars.wars} in ${mostWars.year}. The rise is in conflicts below that line, not above it.` });
+    f.push({ w: 'conflicts between states', rec: last.interstate >= mostInter.interstate, big: `${last.interstate}<small>in ${last.year}</small>`, t: last.interstate >= mostInter.interstate ? `The most in any year since ${Y0}. Most conflicts are fought within a state; these are fought between states.` : `Against ${mostInter.interstate} in ${mostInter.year}.` });
+    f.push({ w: 'countries with more than 1,000 deaths', rec: lastD.countries_over_1000 >= mostC.countries_over_1000, big: `${lastD.countries_over_1000}<small>in ${lastD.year}</small>`, t: lastD.countries_over_1000 >= mostC.countries_over_1000 ? `The most in any year since ${D0}${Y.years.filter(r => r !== lastD && r.countries_over_1000 === lastD.countries_over_1000).map(r => ', level with ' + r.year).join('')}.` : `Against ${mostC.countries_over_1000} in ${mostC.year}.` });
+    f.push({ w: 'deaths a year, five-year average', rec: la.v >= topAvg.v, big: `${fmt(Math.round(la.v))}<small>${la.year - 4} to ${la.year}</small>`, t: la.v >= topAvg.v ? `The highest five-year average of deaths in the series, ${fmt(Math.round(la.v - topAvg.v))} above the ${topAvg.year - 4} to ${topAvg.year} period that includes Rwanda. The last two years are provisional. Each of the five years had at least ${fmt(Math.min(...Y.years.slice(-5).map(r => r.best)))} deaths on UCDP's best estimate.` : `${fmt(Math.round(topAvg.v - la.v))} below the ${topAvg.year - 4} to ${topAvg.year} period that includes Rwanda, at ${fmt(Math.round(topAvg.v))}.` });
+    f.push({ w: `deaths in ${lastD.year}`, rec: lastD.best >= mostD.best, big: `${fmt(lastD.best)}<small>best estimate</small>`, t: `UCDP's best estimate for ${lastD.year}, within a range of ${fmt(lastD.low)} to ${fmt(lastD.high)}, provisional until the next release. ${lastD.best >= mostD.best ? `The most in any year since ${D0}.` : `Against ${fmt(mostD.best)} in ${mostD.year}, the year of Rwanda.`} The most: ${(L.top[lastD.year] || []).slice(0, 3).map(t => `${t[1]} ${fmt(t[2])}`).join(', ')}.` });
+    $('#facts').innerHTML = f.map(q => `<li${q.rec ? ' class="rec"' : ''}><div class="w">${q.w}</div><div class="big">${q.big}</div>${q.rec ? '<div class="tag">highest on record</div>' : ''}<div class="t">${esc(q.t)}</div></li>`).join('');
+    const n = f.filter(q => q.rec).length;
+    const names = f.filter(q => q.rec).map(q => q.w.replace(/^deaths in \d{4}$/, 'deaths in the year'));
+    $('#tally').innerHTML = n === 0
+      ? `None of the six figures is at its highest.`
+      : `<b>${WORDS[n][0].toUpperCase() + WORDS[n].slice(1)} of the six</b> figures ${n === 1 ? 'is' : 'are'} the highest in ${n === 1 ? 'its' : 'their'} series: ${esc(names.length > 1 ? names.slice(0, -1).join(', ') + ' and ' + names[names.length - 1] : names[0])}.`;
+    $('#moment-sub').textContent = `Each figure is read against every earlier year in the same file, so "highest" means the highest that UCDP has counted, not a judgment. UCDP version${L.versions.conflicts === L.versions.deaths ? ' ' + L.versions.deaths : 's ' + L.versions.conflicts + ' and ' + L.versions.deaths}. UCDP revises recent years with each release; the last two are treated as provisional.`;
+  }
+
+  $('#rule-level').textContent = L.rule + ' Conflicts file version ' + L.versions.conflicts + ', deaths file version ' + L.versions.deaths + ', built ' + L.built + '.';
+  $('#credit').innerHTML = 'UCDP figures are from the Uppsala Conflict Data Program, <a href="https://ucdp.uu.se" target="_blank" rel="noopener">ucdp.uu.se</a>, version ' + esc(L.versions.deaths) + ', used under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>: Davies, Pettersson and Öberg, Organized violence 1989–2025, and violent political protests, Journal of Peace Research, 2026, doi 10.1093/jopres/xjag046; Sundberg and Melander, Introducing the UCDP Georeferenced Event Dataset, Journal of Peace Research 50(4), 2013. The conflict counts are the UCDP/PRIO Armed Conflict Dataset, version ' + esc(L.versions.conflicts) + ': Davies, Pettersson and Öberg, 2026, and Gleditsch, Wallensteen, Eriksson, Sollenberg and Strand, Armed Conflict 1946–2001: A New Dataset, Journal of Peace Research 39(5), 2002. UCDP is part of and funded by DEMSCORE, national research infrastructure grant 2021-00162 from the Swedish Research Council. The same figures are drawn year by year on <a href="/level.html">the level</a>.';
+
+  buildMoment();
+})();
+</script>
+</body>
+</html>
