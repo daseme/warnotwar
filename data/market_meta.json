@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-10-22T00:14:57Z",
+ "generated_at_utc": "2026-10-22T07:56:20Z",
  "schema_version": 1,
  "window_start": "2025-06-23",
  "war_start": "2026-02-28",
@@ -23,8 +23,8 @@
    "value": 89.8
   },
   "bno": {
-   "date": "2026-10-20",
-   "value": 66.87
+   "date": "2026-10-21",
+   "value": 67.05
   },
   "ovx": {
    "date": "2026-10-20",
@@ -39,16 +39,16 @@
    "value": 3.01
   },
   "corr20": {
-   "date": "2026-10-20",
-   "value": -0.461
+   "date": "2026-10-21",
+   "value": -0.397
   },
   "spy_drawdown_pct": {
-   "date": "2026-10-20",
-   "value": -1.29
+   "date": "2026-10-21",
+   "value": -0.77
   },
   "us10y": {
    "date": "2026-10-20",
-   "value": 5.117
+   "value": 5.12
   }
  },
  "bno_brent_ratio_60obs_median": 0.5331,
@@ -80,10 +80,10 @@
   "2026-10-01"
  ],
  "sources": {
-  "brent_spot": "EIA RBRTE workbook (EIA Europe Brent Spot FOB, daily, published weekly)",
-  "ovx": "Yahoo ^OVX",
-  "vix": "Yahoo ^VIX",
-  "us10y": "Yahoo ^TNX",
+  "brent_spot": "FRED DCOILBRENTEU (EIA Europe Brent Spot FOB, daily, published weekly)",
+  "ovx": "FRED OVXCLS",
+  "vix": "FRED VIXCLS",
+  "us10y": "FRED DGS10",
   "bno_spy": "Yahoo Finance daily closes: BNO, SPY"
  }
 }
