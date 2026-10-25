@@ -1,5 +1,5 @@
 {
- "as_of": "2026-10-18",
+ "as_of": "2026-10-25",
  "status": "entered",
  "rule": "A war is on the map if organized fighting killed roughly 1,000 or more people in the past twelve months, or it is an active war between states, and an outside state fights in it or backs a side.",
  "color_rule": "Five states are colored: those that fight in or back a side in the most wars. The rest are grey and labelled.",
@@ -425,7 +425,7 @@
    ],
    "band": "3",
    "band_source": "UCDP counted 83,936 (81,305 to 89,367) from October 2025 to August 2026, and 94,778 in all of 2025. Ukraine's own claims of Russian dead run higher.",
-   "status": "Full-scale war. Ukraine took back ground in the east in 2026. Peace talks stopped in February 2026. Trump declared an energy ceasefire on 11 October; neither side confirmed it and strikes on energy sites went on.",
+   "status": "Full-scale war. Ukraine took back ground in the east in 2026. Talks restarted in October: Steve Witkoff met Zelenskyy in Oslo on 20 October and Putin on 21 October, and Putin said Moscow was ready to resume U.S.-mediated talks in November. Trump declared an energy ceasefire on 11 October; Russia went on striking energy sites, and an attack on 23 October cut power to more than 500,000 people.",
    "summary": "Russia invaded in February 2022 after eight years of fighting in the Donbas.",
    "parties": [
     {
@@ -917,6 +917,10 @@
     {
      "month": "2026-10",
      "what": "Trump declared an energy ceasefire on 11 October. Ukraine said it learned of it from the media and Russian strikes on energy sites went on."
+    },
+    {
+     "month": "2026-10",
+     "what": "Talks restarted. Witkoff met Zelenskyy in Oslo on 20 October and Putin on 21 October."
     }
    ],
    "ucdp": {
@@ -944,7 +948,7 @@
    ],
    "band": "3",
    "band_source": "UCDP counted 66,737 (12,970 to 82,062) from October 2025 to August 2026; 75,174 in all of 2025, 62,775 of them civilians killed deliberately, which is why the low is so far below the best. ACLED counted at least 19,000 deaths in fighting in 2025. The UN human rights office documented more than 6,000 killed in three days when el-Fasher fell.",
-   "status": "War between the army and the RSF. The RSF took el-Fasher in October 2025 and holds Darfur. The army holds Khartoum and the centre. The RSF is massing around El Obeid in North Kordofan and striking it with drones. Famine in Darfur and parts of Kordofan.",
+   "status": "War between the army and the RSF. The RSF took el-Fasher in October 2025 and holds Darfur. The army holds Khartoum and the centre. The RSF is massing around El Obeid in North Kordofan and striking it with drones. Since early October the army has flown near-daily air strikes on RSF-held towns in Darfur and Kordofan. Famine in Darfur and parts of Kordofan.",
    "summary": "Two armed forces that once shared power turned on each other in April 2023. The RSF set up a rival government in 2025. The UN counts it the largest displacement in the world.",
    "parties": [
     {
@@ -1586,6 +1590,10 @@
     {
      "month": "2025-10",
      "what": "The RSF took el-Fasher."
+    },
+    {
+     "month": "2026-10",
+     "what": "The army began near-daily air strikes on RSF-held towns in Darfur and Kordofan. The UN human rights office counted at least 306 people killed by drone strikes, by both sides, in the first three weeks of the month."
     }
    ],
    "ucdp": {
@@ -1614,7 +1622,7 @@
    ],
    "band": "2",
    "band_source": "UCDP counted 6,495 (6,441 to 6,319) from October 2025 to August 2026, and 14,910 in all of 2025. Gaza's health ministry counts about 1,500 killed since the October 2025 ceasefire and Lebanon's more than 4,000 since March 2026; both are parties. UCDP's high here reads below its best because six of its rows carry one.",
-   "status": "Ceasefire in Gaza since October 2025, on paper. Israel holds most of Gaza and keeps striking. A new war with Hezbollah from March 2026; a shaky truce in Lebanon since April.",
+   "status": "Ceasefire in Gaza since October 2025, on paper. Israel holds most of Gaza and keeps striking. A new war with Hezbollah from March 2026; a shaky truce in Lebanon since April, with Israeli strikes in the south through October.",
    "summary": "Hamas attacked Israel on 7 October 2023. Israel's war in Gaza followed, with a second front against Hezbollah in Lebanon. A ceasefire took hold in Gaza in October 2025, but Israel still holds most of the strip and strikes continue. After the U.S. and Israel struck Iran in February 2026, Hezbollah fired again and Israel invaded south Lebanon.",
    "parties": [
     {
@@ -1958,7 +1966,7 @@
    ],
    "band": "2",
    "band_source": "UCDP counted 2,378 (1,490 to 2,977) from October 2025 to August 2026. The WHO counted 965 killed in Yemen in the Gulf war. The two sides' own counts of fighters killed run into the thousands.",
-   "status": "Full-scale war again. The 2022 truce collapsed in July 2026. The Houthis took the Red Sea coast in September. The government, with Saudi air cover, is pushing back. Houthi missiles hit Saudi airports, and in October the presidential palace and the airport in Aden.",
+   "status": "Full-scale war again. The 2022 truce collapsed in July 2026. The Houthis took the Red Sea coast in September. The government, with Saudi air cover, is pushing back. Houthi missiles hit Saudi airports, and in October the presidential palace, the airport and the coast guard headquarters in Aden. The Houthis say they have also struck Saudi oil sites.",
    "summary": "The Houthis hold the north and the capital. The government, backed by Saudi Arabia, crushed its southern rival the STC in January 2026 after the UAE pulled out. The 2022 truce collapsed in July 2026 and the war is back on. Since late 2023 the Houthis have also fired on ships in the Red Sea and at Israel.",
    "parties": [
     {
@@ -2291,6 +2299,10 @@
     {
      "month": "2026-10",
      "what": "Houthi missiles hit the presidential palace in Aden on 15 October. Five were killed."
+    },
+    {
+     "month": "2026-10",
+     "what": "Houthi missiles hit Aden airport and the coast guard headquarters on 24 October. The Houthis said they also struck Saudi oil sites and airports."
     }
    ],
    "ucdp": {
@@ -3501,7 +3513,7 @@
    ],
    "band": "2",
    "band_source": "UCDP counted 3,567 (3,548 to 4,112) from October 2025 to August 2026. ACLED counted about 8,750 deaths from April 2025 to March 2026. Both say thousands.",
-   "status": "Stalemate. Al-Shabaab holds much of the south and centre. The AU mission loses its UN funding at the end of 2026, and Ethiopia plans to pull troops out.",
+   "status": "Stalemate. Al-Shabaab holds much of the south and centre. The AU mission's mandate runs to the end of 2026. The United States has given the UN a further year to wind down the logistics office the mission depends on, so the drawdown begins in January 2027 and no replacement funding has been announced. Ethiopia plans to pull troops out.",
    "summary": "The government and African Union troops have fought al-Shabaab for almost twenty years. The group took back ground near the capital in 2025 and still holds much of the south.",
    "parties": [
     {
@@ -4010,7 +4022,7 @@
    ],
    "band": "1",
    "band_source": "UCDP counted 637 (636 to 639) from October 2025 to August 2026. ACLED counted about 1,300 deaths from October 2025 to February 2026, most of them in the January offensive. Most of UCDP's rows for Syria still carry a check flag.",
-   "status": "Assad gone since December 2024. The Kurdish-led forces folded into the army in 2026 and U.S. troops left. Small fights go on with Assad loyalists on the coast, Islamic State in the east and Druze militias in Sweida. Israeli strikes.",
+   "status": "Assad gone since December 2024. The Kurdish-led forces folded into the army in 2026 and U.S. troops left. Small fights go on with Assad loyalists on the coast, Islamic State in the east and Druze militias in Sweida. Syria moved troops to the Sweida front line on 22 October and says it expects an Israeli-backed Druze attack. Israeli strikes.",
    "summary": "The rebels who toppled Assad now govern. They fought the Kurdish-led forces in January 2026 and absorbed them by August. Druze militias in the south and Assad loyalists on the coast still resist.",
    "parties": [
     {
@@ -4339,7 +4351,7 @@
      "since": null,
      "since_precision": null,
      "ended": null,
-     "evidence_to": "2026-03",
+     "evidence_to": "2026-10",
      "sources": [
       {
        "class": "backer",
@@ -4387,6 +4399,15 @@
        "url": "https://www.middleeastmonitor.com/20251224-us-report-says-israel-secretly-armed-druze-factions-in-southern-syria/",
        "seen": "search listing only, not opened",
        "entered": "2026-10-12"
+      },
+      {
+       "class": "press",
+       "publisher": "The Jerusalem Post",
+       "text": "The Jerusalem Post, relaying Walla: Israel is monitoring Syria around the clock and will keep acting to protect the Druze against attacks, citing Israeli officials, October 2026",
+       "date": "2026-10",
+       "url": "http://www.jpost.com/middle-east/article-912755",
+       "seen": "search listing only, not opened",
+       "entered": "2026-10-25"
       }
      ],
      "note": "Israel struck Syrian army camps again on 20 March 2026 and says it will keep acting for the Druze.",
@@ -4405,7 +4426,7 @@
      "since": null,
      "since_precision": null,
      "ended": null,
-     "evidence_to": "2025-09",
+     "evidence_to": "2026-10",
      "sources": [
       {
        "class": "press",
@@ -4421,9 +4442,18 @@
        "url": "https://www.timesofisrael.com/israel-said-arming-paying-salaries-of-druze-militia-in-syrias-sweida-area/",
        "publisher": "Times of Israel",
        "via": "Reuters"
+      },
+      {
+       "class": "opponent",
+       "publisher": "The National",
+       "text": "The National, a senior Syrian official says communication devices, night-vision systems and sniper rifles have reached the Sweida National Guard and that an Israeli helicopter delivered weapons to the province, 22 October 2026",
+       "date": "2026-10",
+       "url": "https://www.thenationalnews.com/news/mena/2026/10/22/syria-druze-israel/",
+       "seen": "search listing only, not opened",
+       "entered": "2026-10-25"
       }
      ],
-     "note": "Druze officials say Israel sends rifles and pays salaries to about 3,000 fighters of the Sweida National Guard.",
+     "note": "Druze officials say Israel sends rifles and pays salaries to about 3,000 fighters of the Sweida National Guard. A Syrian official said in October 2026 that communication devices, night-vision systems and sniper rifles had reached the Sweida National Guard; Syria fights there, so its account does not carry the tier on its own.",
      "entered": "2026-10-11",
      "checked": null,
      "single": false
@@ -4516,7 +4546,7 @@
    ],
    "band": "1",
    "band_source": "UCDP counted 832 (762 to 880) from October 2025 to August 2026. The UN human rights office counted 5,519 killed from March 2025 to January 2026 and 1,408 from April to June 2026, most of them in police and army operations. The band follows the lower count.",
-   "status": "Gangs hold most of the capital and are spreading into the provinces. A UN-backed Gang Suppression Force replaced the Kenya-led mission in April 2026 but is far below strength. Elections were postponed in October 2026.",
+   "status": "Gangs hold most of the capital and are spreading into the provinces. A UN-backed Gang Suppression Force replaced the Kenya-led mission in April 2026 but is far below strength, with about 2,000 troops against the 5,500 authorised. Gangs ambushed one of its vehicles at Croix-des-Bouquets in mid-October and four Salvadoran soldiers are missing. Elections were postponed in October 2026.",
    "summary": "Armed gangs joined forces in 2023 and control most of Port-au-Prince. The Haitian police and a UN-backed foreign force fight them, and vigilante groups fight too.",
    "parties": [
     {
@@ -4628,7 +4658,7 @@
      "since": "2026-04",
      "since_precision": "month",
      "ended": null,
-     "evidence_to": "2026-04",
+     "evidence_to": "2026-10",
      "sources": [
       {
        "class": "press",
@@ -4661,6 +4691,15 @@
        "url": "https://www.africanews.com/amp/2026/03/21/chad-to-deploy-800-troops-to-haitis-gang-suppression-force-as-kenya-steps-back/",
        "seen": "search listing only, not opened",
        "entered": "2026-10-12"
+      },
+      {
+       "class": "press",
+       "publisher": "CNN",
+       "text": "CNN, the Gang Suppression Force has more than 2,000 troops on the ground in Haiti, including soldiers from Chad, Jamaica and Guatemala, against an authorised ceiling of 5,500, 19 October 2026",
+       "date": "2026-10",
+       "url": "https://www.cnn.com/2026/10/19/americas/haiti-el-salvador-ambush-latam-intl",
+       "seen": "search listing only, not opened",
+       "entered": "2026-10-25"
       }
      ],
      "note": "Chad is the biggest contributor to the new force, with about 1,500 police pledged. Guatemala, Jamaica, Mongolia and Sri Lanka also send troops.",
@@ -4693,6 +4732,60 @@
      "entered": "2026-10-11",
      "checked": null,
      "single": true
+    },
+    {
+     "backer": "elsalvador",
+     "party": "hstate",
+     "kinds": [
+      "troops"
+     ],
+     "tier": "open",
+     "stance": null,
+     "since": null,
+     "since_precision": null,
+     "ended": null,
+     "evidence_to": "2026-10",
+     "sources": [
+      {
+       "class": "press",
+       "publisher": "NPR",
+       "text": "NPR, President Nayib Bukele says El Salvador has launched a military operation to recover four Salvadoran soldiers serving with the Gang Suppression Force in Haiti, 22 October 2026",
+       "date": "2026-10",
+       "url": "https://www.npr.org/2026/10/22/nx-s1-6012029/bukele-military-operation-haiti",
+       "seen": "search listing only, not opened",
+       "entered": "2026-10-25"
+      },
+      {
+       "class": "recipient",
+       "publisher": "Haitian Times",
+       "text": "Haitian Times, the Gang Suppression Force confirms the arrival on 22 October of a Salvadoran contingent to support search and security operations in the Plaine du Cul-de-Sac, 23 October 2026",
+       "date": "2026-10",
+       "url": "https://haitiantimes.com/2026/10/23/salvadoran-contingent-arrives-haiti-search-four-missing-soldiers/",
+       "seen": "search listing only, not opened",
+       "entered": "2026-10-25"
+      },
+      {
+       "class": "press",
+       "publisher": "CNN",
+       "text": "CNN, gangs fired on a Gang Suppression Force armoured vehicle at Croix-des-Bouquets and four Salvadoran soldiers are unaccounted for; the four are aviation technicians with the force, 19 October 2026",
+       "date": "2026-10",
+       "url": "https://www.cnn.com/2026/10/19/americas/haiti-el-salvador-ambush-latam-intl",
+       "seen": "search listing only, not opened",
+       "entered": "2026-10-25"
+      },
+      {
+       "class": "press",
+       "publisher": "Al Jazeera",
+       "text": "Al Jazeera, Bukele warns the Haitian gangs over the abducted soldiers, 22 October 2026",
+       "date": "2026-10",
+       "url": "https://www.aljazeera.com/news/2026/10/22/el-salvadors-bukele-threatens-haitian-gangs-over-abducted-soldiers",
+       "seen": "search listing only, not opened",
+       "entered": "2026-10-25"
+      }
+     ],
+     "note": "El Salvador has had military personnel in Haiti since early 2025, first with the Multinational Security Support mission and then with the Gang Suppression Force; the four men ambushed in October were aviation technicians. About 200 more soldiers arrived on 22 and 23 October to search for them. The start month is older than the window.",
+     "entered": "2026-10-25",
+     "checked": null
     }
    ],
    "none_note": "No state backs the gangs. The UN's 2023 arms report traced most of their guns to illegal trade from the United States.",
@@ -4721,6 +4814,10 @@
     {
      "month": "2026-04",
      "what": "The UN-backed force replaced the Kenya-led mission."
+    },
+    {
+     "month": "2026-10",
+     "what": "Gangs ambushed a Gang Suppression Force vehicle at Croix-des-Bouquets. Four Salvadoran soldiers are missing and El Salvador sent about 200 troops to look for them."
     }
    ],
    "ucdp": {
@@ -4748,7 +4845,7 @@
    ],
    "band": "2",
    "band_source": "UCDP counted 5,238 (4,585 to 9,132) across both countries from October 2025 to August 2026. Pakistan's CRSS counted about 3,000 killed in Pakistan in 2026 to September; UNAMA counted 372 Afghan civilians killed in the first quarter of the war with Afghanistan.",
-   "status": "Open war with Afghanistan since February 2026: Pakistani air strikes, Taliban attacks on the border, two short truces. Militant attacks inside Pakistan at a twelve-year high, by CRSS counts.",
+   "status": "Open war with Afghanistan since February 2026: Pakistani air strikes, Taliban attacks on the border, two short truces. Border fighting resumed in October in Kurram and Paktia, and talks in Moscow ended without agreement. Militant attacks inside Pakistan at a twelve-year high, by CRSS counts.",
    "summary": "Pakistan fights the Pakistani Taliban in the northwest and Baloch separatists in the southwest. In February 2026 it went to open war with Afghanistan, which it blames for sheltering the Pakistani Taliban. China hosts the peace talks.",
    "parties": [
     {
@@ -5048,6 +5145,10 @@
     {
      "month": "2026-02",
      "what": "Open war with Afghanistan."
+    },
+    {
+     "month": "2026-10",
+     "what": "Border fighting resumed in Kurram and Paktia from 5 October and talks in Moscow ended without agreement."
     }
    ],
    "ucdp": {
@@ -5074,7 +5175,7 @@
    ],
    "band": "2",
    "band_source": "UCDP counted 3,831 (3,831 to 3,839) in the war itself from October 2025 to August 2026. Iran counts 3,528 dead and Israel estimates 6,000; 72 killed in Israel, about two dozen U.S. troops, and dozens across the Gulf states, by those states. Lebanon's dead are counted under Gaza and Lebanon.",
-   "status": "War since 28 February 2026. A ceasefire from 8 April collapsed on 8 July. U.S. strikes again in September. Iran's attacks on shipping in the strait reached a record in October and a container ship sank. The strait is still mostly shut. Talks run through Qatar and Pakistan.",
+   "status": "War since 28 February 2026. A ceasefire from 8 April collapsed on 8 July. U.S. strikes again in September. Iran's attacks on shipping in the strait reached a record in October: Iran said seven tankers were hit on 22 October and two more struck mines on 24 October. Ship traffic is still far below normal, though Kpler put the oil leaving through the strait in the week to 18 October at about 82 percent of the pre-war rate. The United States and Israel are reported to be planning strikes after the U.S. midterm elections. Talks run through Qatar and Pakistan.",
    "summary": "Israel and the United States struck Iran in June 2025 and again on 28 February 2026, killing Ali Khamenei. Iran shut the Strait of Hormuz on 4 March and fired missiles and drones at Israel, U.S. bases and every Gulf state. Hezbollah joined on 2 March and the Houthis seized the Bab al-Mandab coast in September. A Pakistan-brokered ceasefire held from April to July. U.S. forces cleared Iranian mines by late August, but traffic is still a fraction of normal. This site's other pages follow the oil.",
    "parties": [
     {
@@ -6129,6 +6230,10 @@
     {
      "month": "2026-10",
      "what": "Attacks on shipping in the strait reached a record. The container ship GFS Pride sank."
+    },
+    {
+     "month": "2026-10",
+     "what": "Iran said seven tankers were hit in the strait on 22 October and two more struck mines on 24 October."
     }
    ],
    "ucdp": {
@@ -7605,7 +7710,7 @@
    ],
    "band": null,
    "band_source": "None killed in the past year. One Philippine Navy officer seriously hurt on 20 July 2026.",
-   "status": "Three incidents in the past year: water cannon and ramming near Thitu Island on 12 October 2025, a sailor struck with a baton at Second Thomas Shoal on 20 July 2026, and a fisheries vessel rammed off Palawan on 18 September 2026.",
+   "status": "Four incidents in the past year: water cannon and ramming near Thitu Island on 12 October 2025, a sailor struck with a baton at Second Thomas Shoal on 20 July 2026, a fisheries vessel rammed off Palawan on 18 September 2026, and water cannon that held up a medical evacuation at Second Thomas Shoal on 8 October 2026.",
    "summary": "China's coast guard keeps using water cannon, ramming and, once, a baton against Philippine boats and crews in the South China Sea. Manila reports each incident with photographs. Beijing says the Philippine ships entered its waters and 'approached dangerously'.",
    "actor_statement": "China, 12 October 2025: Philippine ships 'illegally entered waters near Sandy Cay and approached dangerously'. Its standard line on later incidents is that the coast guard took control measures 'in accordance with law'.",
    "target_statement": "Armed Forces of the Philippines, 21 July 2026: 'No act of coercion or aggression will deter us from carrying out our constitutional mandate or exercising the Philippines' lawful rights in the West Philippine Sea.'",
@@ -7640,6 +7745,10 @@
     {
      "month": "2026-09",
      "what": "A fisheries vessel rammed off Palawan."
+    },
+    {
+     "month": "2026-10",
+     "what": "Water cannon held up a medical evacuation at Second Thomas Shoal on 8 October."
     }
    ],
    "none_note": "The U.S. alliance with the Philippines is a standing treaty and is not entered for this year's incidents. No other state is on record helping either side.",
@@ -7858,6 +7967,18 @@
    "entry": "gulf",
    "what": "Three source publishers corrected: the UN News item on the 7 April veto was credited to unnamed U.S. officials, the CNN and Washington Post item of 6 March to the Russian mission to the UN, and the Wikipedia page on China in the Iran war to the U.S. Department of Justice.",
    "why": "Each named a publisher that did not publish it. No tier moved."
+  },
+  {
+   "date": "2026-10-25",
+   "entry": "somalia",
+   "what": "The status had the AU mission losing its UN funding at the end of 2026.",
+   "why": "The United States gave the UN a further year to wind down the logistics office the mission depends on, so the drawdown begins in January 2027."
+  },
+  {
+   "date": "2026-10-25",
+   "entry": "china-philippines",
+   "what": "Three incidents in the past year became four.",
+   "why": "Water cannon held up a medical evacuation at Second Thomas Shoal on 8 October 2026; the incident had been missed."
   }
  ],
  "ucdp_note": "UCDP counts deaths in fighting between a state and an opponent, deaths in fighting between armed groups, and civilians killed deliberately, each with a low, best and high. UCDP calls a conflict a war at 1,000 battle deaths in a year, and minor below that. The figures here are our own sums from data/ucdp.json, built by scripts/build_ucdp.py from the yearly file and the monthly candidate files, pulled after the 20th of each month. A few UCDP rows carry a high below their best; they are summed as given. A flag is UCDP's own mark that a row still needs a check on its deaths, its sides, its place or its source.",
@@ -7960,9 +8081,9 @@
  },
  "esd_note": "The ties are also published as data/ties_esd.csv, one row per backer, side and year, in the shape of UCDP's External Support Dataset, which stops at 2017, so the two can be read end to end. Our sixteen kinds of help fold into its eight: troops, air strikes, air defence and police count as troops, since the state's own forces engage; bases, transit, shelter and hosting as access to territory; weapons, drones and parts as weapons; oil as materiel; backing in public and at the UN as other. Alleged is our fourth tier.",
  "source_counts": {
-  "ties": 110,
-  "live": 99,
-  "open": 73,
+  "ties": 111,
+  "live": 100,
+  "open": 74,
   "shown": 11,
   "reported": 23,
   "claimed": 3,
@@ -7972,16 +8093,16 @@
   "no_outlet": 2,
   "document_unlinked": 1,
   "single_publisher": 0,
-  "prewindow": 10,
+  "prewindow": 9,
   "undated": 0,
   "weapons": 47,
   "weapons_sipri": 4,
-  "sources": 407,
+  "sources": 414,
   "sources_unlinked": 34,
   "sources_undated": 58,
-  "sources_unopened": 41,
+  "sources_unopened": 48,
   "checked": 0,
-  "one_class": 9
+  "one_class": 8
  },
  "reading": {
   "note": "A reading of the map in five steps. Each step sets the map and says what to look at. Braces are filled from the data by the page.",

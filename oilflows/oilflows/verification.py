@@ -83,6 +83,8 @@ TIME_BASIS_PLAIN = {
     "recent_days": "the previous few days",
     "two_weeks": "the previous two weeks",
     "past_seven_days": "the previous seven days",
+    "past_ten_days": "the previous ten days",
+    "some_single_days": "some individual days",
     "past_12_weeks": "the previous twelve weeks",
     "calendar_month": "one calendar month",
     "running_average": "running average, window unstated",
