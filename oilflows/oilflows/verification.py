@@ -94,6 +94,9 @@ TIME_BASIS_PLAIN = {
     "cumulative_blockade": "running total since the blockade began",
     "cumulative_unspecified": "running total, start unstated",
     "unspecified_current": "current, basis unstated",
+    "cumulative_since_summer": "running total since summer 2026",
+    "cumulative_since_jun_2026": "running total since June 2026",
+    "past_six_months": "the previous six months",
 }
 
 ARCHIVE_STATUS_PLAIN = {
