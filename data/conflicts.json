@@ -1,5 +1,5 @@
 {
- "as_of": "2026-10-25",
+ "as_of": "2026-11-01",
  "status": "entered",
  "rule": "A war is on the map if organized fighting killed roughly 1,000 or more people in the past twelve months, or it is an active war between states, and an outside state fights in it or backs a side.",
  "color_rule": "Five states are colored: those that fight in or back a side in the most wars. The rest are grey and labelled.",
@@ -425,7 +425,7 @@
    ],
    "band": "3",
    "band_source": "UCDP counted 83,936 (81,305 to 89,367) from October 2025 to August 2026, and 94,778 in all of 2025. Ukraine's own claims of Russian dead run higher.",
-   "status": "Full-scale war. Ukraine took back ground in the east in 2026. Talks restarted in October: Steve Witkoff met Zelenskyy in Oslo on 20 October and Putin on 21 October, and Putin said Moscow was ready to resume U.S.-mediated talks in November. Trump declared an energy ceasefire on 11 October; Russia went on striking energy sites, and an attack on 23 October cut power to more than 500,000 people.",
+   "status": "Full-scale war. Ukraine took back ground in the east in 2026. Talks restarted in October: Steve Witkoff met Zelenskyy in Oslo on 20 October and Putin on 21 October, and Putin said Moscow was ready to resume U.S.-mediated talks in November. Trump declared an energy ceasefire on 11 October; Russia went on striking energy sites, and an attack on 23 October cut power to more than 500,000 people. A local truce around Russian-held Oleshky in Kherson took effect on 27 October and held while an aid convoy went in and residents were taken out. Fighting goes on elsewhere: a Russian strike on the railway station in Dnipro killed fourteen people, by one count fifteen, and Ukraine sent more than 600 drones at Moscow.",
    "summary": "Russia invaded in February 2022 after eight years of fighting in the Donbas.",
    "parties": [
     {
@@ -1966,7 +1966,7 @@
    ],
    "band": "2",
    "band_source": "UCDP counted 2,378 (1,490 to 2,977) from October 2025 to August 2026. The WHO counted 965 killed in Yemen in the Gulf war. The two sides' own counts of fighters killed run into the thousands.",
-   "status": "Full-scale war again. The 2022 truce collapsed in July 2026. The Houthis took the Red Sea coast in September. The government, with Saudi air cover, is pushing back. Houthi missiles hit Saudi airports, and in October the presidential palace, the airport and the coast guard headquarters in Aden. The Houthis say they have also struck Saudi oil sites.",
+   "status": "Full-scale war again. The 2022 truce collapsed in July 2026. The Houthis took the Red Sea coast in September. The government, with Saudi air cover, is pushing back. Houthi missiles hit Saudi airports, and in October the presidential palace, the airport and the coast guard headquarters in Aden. The Houthis say they have also struck Saudi oil sites. The Saudi-led coalition said it shot down two ballistic missiles aimed at Taif and Yanbu on 24 October. Houthi media said Saudi strikes killed sixteen people in Sanaa and Hodeida the same day. The United States ordered non-essential embassy staff out of Saudi Arabia on 23 October.",
    "summary": "The Houthis hold the north and the capital. The government, backed by Saudi Arabia, crushed its southern rival the STC in January 2026 after the UAE pulled out. The 2022 truce collapsed in July 2026 and the war is back on. Since late 2023 the Houthis have also fired on ships in the Red Sea and at Israel.",
    "parties": [
     {
@@ -2030,6 +2030,15 @@
        "via": "PBS NewsHour",
        "seen": "search listing only, not opened",
        "entered": "2026-10-18"
+      },
+      {
+       "class": "research",
+       "text": "Security Council Report, Yemen forecast for October 2026: ahead of the Panel of Experts' final report, due to the Council on 15 October 2026, the Panel's briefings find more weapons being built inside Yemen and the arms embargo too weak to stop the flow of sanctioned materiel",
+       "date": "2026-10",
+       "url": "https://www.securitycouncilreport.org/monthly-forecast/2026-10/yemen-91.php",
+       "publisher": "Security Council Report",
+       "seen": "search listing only, not opened",
+       "entered": "2026-11-01"
       }
      ],
      "note": "The UN panel has found Iranian-made missiles and drone parts. In July 2026 Saudi jets hit the Sanaa airport runway to stop an Iranian plane landing with weapons. In October 2026 the Wall Street Journal reported stepped-up Iranian help, including intelligence for targeting Saudi Arabia; that account rests on Saudi and Yemeni government briefings, so it counts as the opponent and intelligence is not entered among the kinds.",
@@ -3513,7 +3522,7 @@
    ],
    "band": "2",
    "band_source": "UCDP counted 3,567 (3,548 to 4,112) from October 2025 to August 2026. ACLED counted about 8,750 deaths from April 2025 to March 2026. Both say thousands.",
-   "status": "Stalemate. Al-Shabaab holds much of the south and centre. The AU mission's mandate runs to the end of 2026. The United States has given the UN a further year to wind down the logistics office the mission depends on, so the drawdown begins in January 2027 and no replacement funding has been announced. Ethiopia plans to pull troops out.",
+   "status": "Stalemate. Al-Shabaab holds much of the south and centre. The AU mission's mandate runs to the end of 2026. The United States has given the UN a further year to wind down the logistics office the mission depends on, so the drawdown begins in January 2027 and no replacement funding has been announced. Ethiopia plans to pull troops out. Al-Shabaab ambushed government troops near Leego in Lower Shabelle on 26 October. The group said it killed 321 soldiers and allied fighters; the defence ministry said its forces killed 75 fighters, and a Somali officer said more than 20 of his own side were killed.",
    "summary": "The government and African Union troops have fought al-Shabaab for almost twenty years. The group took back ground near the capital in 2025 and still holds much of the south.",
    "parties": [
     {
@@ -3997,7 +4006,12 @@
    "areas_url": "https://en.wikipedia.org/wiki/2025_Shabelle_offensive",
    "start": "2006-12",
    "short": "Somalia",
-   "turns": [],
+   "turns": [
+    {
+     "month": "2026-10",
+     "what": "Al-Shabaab ambushed government troops near Leego in Lower Shabelle on 26 October. The group said it killed 321 soldiers; a Somali officer said more than 20."
+    }
+   ],
    "ucdp": {
     "against": "same band",
     "note": "One war, with Djibouti, Egypt, Ethiopia, Kenya and Uganda sending troops on the government's side.",
@@ -5175,7 +5189,7 @@
    ],
    "band": "2",
    "band_source": "UCDP counted 3,831 (3,831 to 3,839) in the war itself from October 2025 to August 2026. Iran counts 3,528 dead and Israel estimates 6,000; 72 killed in Israel, about two dozen U.S. troops, and dozens across the Gulf states, by those states. Lebanon's dead are counted under Gaza and Lebanon.",
-   "status": "War since 28 February 2026. A ceasefire from 8 April collapsed on 8 July. U.S. strikes again in September. Iran's attacks on shipping in the strait reached a record in October: Iran said seven tankers were hit on 22 October and two more struck mines on 24 October. Ship traffic is still far below normal, though Kpler put the oil leaving through the strait in the week to 18 October at about 82 percent of the pre-war rate. The United States and Israel are reported to be planning strikes after the U.S. midterm elections. Talks run through Qatar and Pakistan.",
+   "status": "War since 28 February 2026. A ceasefire from 8 April collapsed on 8 July. U.S. strikes again in September. Iran's attacks on shipping in the strait reached a record in October: Iran said seven tankers were hit on 22 October and two more struck mines on 24 October, and attacks on ships about doubled on September. CENTCOM said on 25 October that the strait's main transit routes were clear of Iranian mines and that more than 3,000 commercial vessels had crossed with its support in six months. Kpler put the oil leaving through the strait in the week to 28 October at 7.3 million barrels a day, more than 40 percent below the pre-war rate, after about 14 million in the week to 18 October. The United States and Israel are reported to be planning strikes after the U.S. midterm elections. Talks run through Qatar and Pakistan.",
    "summary": "Israel and the United States struck Iran in June 2025 and again on 28 February 2026, killing Ali Khamenei. Iran shut the Strait of Hormuz on 4 March and fired missiles and drones at Israel, U.S. bases and every Gulf state. Hezbollah joined on 2 March and the Houthis seized the Bab al-Mandab coast in September. A Pakistan-brokered ceasefire held from April to July. U.S. forces cleared Iranian mines by late August, but traffic is still a fraction of normal. This site's other pages follow the oil.",
    "parties": [
     {
@@ -5566,10 +5580,12 @@
      "sources": [
       {
        "class": "press",
-       "text": "Wall Street Journal, 16 May 2026, on secret Saudi and UAE strikes on Iran",
+       "text": "Wall Street Journal, about 11 to 12 May 2026, on secret Emirati strikes on Iran, including an oil refinery on Lavan Island; the report named no Saudi strike, and the Saudi strikes were reported by Reuters",
        "date": "2026-05",
        "url": null,
-       "publisher": "Saudi Ministry of Defense"
+       "publisher": "The Wall Street Journal",
+       "counts": false,
+       "seen": "search listing only, not opened"
       },
       {
        "class": "backer",
@@ -5580,13 +5596,24 @@
       },
       {
        "class": "press",
-       "text": "Washington Times, the page linked here",
-       "date": null,
+       "text": "Washington Times, 29 July 2026, Jordan intercepts Iranian missiles as Saudi Arabia and the United States launch strikes on Iran-backed militias in Iraq",
+       "date": "2026-07",
        "url": "https://www.washingtontimes.com/news/2026/jul/29/jordan-intercepts-iranian-missiles-saudi-arabia-us-launch-strikes/",
-       "publisher": "Washington Times"
+       "publisher": "Washington Times",
+       "seen": "search listing only, not opened"
+      },
+      {
+       "class": "press",
+       "text": "France 24, 14 May 2026, relaying Reuters: Saudi Arabia launched numerous air strikes against Iran towards the end of March 2026, citing Iranian and Western officials",
+       "date": "2026-05",
+       "url": "https://www.france24.com/en/middle-east/20260514-why-did-saudi-arabia-and-the-uae-allegedly-carry-out-secret-bombing-raids-iran",
+       "publisher": "France 24",
+       "via": "Reuters",
+       "seen": "search listing only, not opened",
+       "entered": "2026-11-01"
       }
      ],
-     "note": "The Journal reported Saudi jets secretly hit Iranian drone and missile sites. Saudi and U.S. aircraft struck Iran-backed militias in Iraq in July.",
+     "note": "Reuters reported that Saudi jets struck Iran in late March 2026, citing Iranian and Western officials. Saudi and U.S. aircraft struck Iran-backed militias in Iraq in July. The Wall Street Journal report the tie once rested on is about Emirati strikes, not Saudi ones, and no longer dates the tie.",
      "entered": "2026-10-11",
      "checked": null,
      "single": false
@@ -6029,6 +6056,15 @@
        "date": "2026-09",
        "url": null,
        "publisher": "New York Times"
+      },
+      {
+       "class": "press",
+       "text": "The National, 17 September 2026, Russia and China veto the U.S. draft extending UN monitoring of Iran sanctions; 11 in favour, Pakistan and Somalia abstaining",
+       "date": "2026-09",
+       "url": "https://www.thenationalnews.com/news/us/2026/09/17/russia-and-china-veto-us-draft-to-extend-un-monitoring-of-iran-sanctions/",
+       "publisher": "The National",
+       "seen": "search listing only, not opened",
+       "entered": "2026-11-01"
       }
      ],
      "note": "China vetoed the Hormuz resolution and the renewal of nuclear sanctions monitoring. It also helped Pakistan broker the April ceasefire.",
@@ -6260,7 +6296,7 @@
    ],
    "band": "2",
    "band_source": "UCDP counted 4,609 (3,322 to 13,184) from October 2025 to August 2026. ACLED counted about 1,150 deaths in Amhara, Oromia and Tigray in one quarter of 2025. The September offensive is after both.",
-   "status": "A rebel alliance of Tigray, Amhara and Oromo forces attacked on 23 September 2026. The army retook Mekelle on 3 October and the towns on the Eritrean border on 12 and 13 October. Eritrean troops crossed into Tigray and pulled back over the border; some are reported to be still inside. Ethiopia and Eritrea cut ties on 1 October and their forces have clashed.",
+   "status": "A rebel alliance of Tigray, Amhara and Oromo forces attacked on 23 September 2026. The army retook Mekelle on 3 October and the towns on the Eritrean border on 12 and 13 October. Eritrean troops crossed into Tigray and pulled back over the border; some are reported to be still inside. Ethiopia and Eritrea cut ties on 1 October and their forces have clashed. Abiy Ahmed said on 28 October that Ethiopia had taken delivery of twelve Russian Su-35 fighters and would receive four S-400 air defence batteries; Russia's arms exporter said two jets had been delivered.",
    "summary": "The Tigray war ended in 2022. Fano militias in Amhara and the Oromo Liberation Army then fought the federal army. In September 2026 the Tigray People's Liberation Front joined them in an Alliance for Survival and launched an offensive in the north. Eritrea, once Ethiopia's ally against Tigray, now backs the alliance and has sent troops across the border.",
    "parties": [
     {
@@ -6498,6 +6534,61 @@
      ],
      "note": "Egypt leads a four-state bloc against Ethiopia over the Nile dam and Red Sea access. It signed port deals with Eritrea in 2026.",
      "entered": "2026-10-11",
+     "checked": null
+    },
+    {
+     "backer": "russia",
+     "party": "egov",
+     "kinds": [
+      "arms"
+     ],
+     "tier": "open",
+     "stance": "its state arms exporter says the first batch delivered was two aircraft, not twelve",
+     "since": null,
+     "since_precision": null,
+     "ended": null,
+     "evidence_to": "2026-10",
+     "sources": [
+      {
+       "class": "recipient",
+       "text": "Addis Standard, Prime Minister Abiy Ahmed's office says Ethiopia has received twelve Russian Su-35 fighter jets and plans to acquire four S-400 air defence batteries, announced at the Russia-Africa summit in Moscow, 28 October 2026",
+       "date": "2026-10",
+       "url": "https://addisstandard.com/news-alert-ethiopia-receives-12-russian-su-35-fighter-jets-plans-to-acquire-four-s-400-air-defense-batteries/",
+       "publisher": "Addis Standard",
+       "seen": "search listing only, not opened",
+       "entered": "2026-11-01"
+      },
+      {
+       "class": "backer",
+       "text": "Rosoboronexport, Russia's state arms exporter, tells Reuters the first batch delivered to the Ethiopian air force on 28 October 2026 was two aircraft, not twelve",
+       "date": "2026-10",
+       "url": "https://www.usnews.com/news/world/articles/2026-10-28/ethiopia-says-it-has-taken-delivery-of-12-russian-su-35-fighter-jets",
+       "publisher": "Rosoboronexport",
+       "via": "Reuters",
+       "seen": "search listing only, not opened",
+       "entered": "2026-11-01"
+      },
+      {
+       "class": "press",
+       "text": "The Moscow Times, Ethiopia receives twelve Russian Su-35 fighter jets, 28 October 2026; Rostec did not answer a request for comment",
+       "date": "2026-10",
+       "url": "https://www.themoscowtimes.com/2026/10/28/ethiopia-receives-12-russian-su-35-fighter-jets-a94110",
+       "publisher": "The Moscow Times",
+       "seen": "search listing only, not opened",
+       "entered": "2026-11-01"
+      },
+      {
+       "class": "press",
+       "text": "Al Jazeera, why Russia is sending fighter jets and air defences to Ethiopia, 29 October 2026",
+       "date": "2026-10",
+       "url": "https://aljazeera.com/news/2026/10/29/why-is-russia-sending-fighter-jets-and-air-defences-to-ethiopia",
+       "publisher": "Al Jazeera",
+       "seen": "search listing only, not opened",
+       "entered": "2026-11-01"
+      }
+     ],
+     "note": "Abiy Ahmed announced the delivery at the Russia-Africa summit in Moscow on 28 October 2026: twelve Su-35 fighters received and four S-400 batteries to follow, a year early. Russia's arms exporter said the first batch was two aircraft. No price and no delivery date for the air defence batteries. Russian weapons to Ethiopia are older than the window: defenceWeb reported Yak-130 trainers and Orion-E drones in January 2026, and Ethiopia flies Su-30Ks built for India in the 1990s. SIPRI's arms transfers database could not be reached from this week's run and has not been checked for this tie.",
+     "entered": "2026-11-01",
      "checked": null
     }
    ],
@@ -6980,8 +7071,8 @@
    ],
    "band": null,
    "band_source": "At least 235 to 238 killed in 70 to 79 strikes by 4 October 2026, by the New York Times and NBC counts. The U.S. gives counts per strike only.",
-   "status": "Strikes continue. The latest announced strike, on 4 October 2026 in the Caribbean, killed four. Since late August the U.S. has also announced boardings and sinkings of refuelling vessels.",
-   "summary": "Since 1 September 2025 the U.S. military has blown up small boats it says carry drugs, first in the Caribbean and from October 2025 in the eastern Pacific. The Pentagon calls the campaign Operation Southern Spear and the dead narco-terrorists. For most strikes no evidence of cargo has been shown. A UN special rapporteur said in September 2026 there are reasonable grounds to believe the strikes are crimes against humanity.",
+   "status": "Strikes continue. The latest announced strike, on 27 October 2026 in the eastern Pacific, killed five; it was the second announced that month. Southern Command activated Joint Task Force Western Hemisphere in August 2026 in place of Joint Task Force Southern Spear, and the strikes are announced under the new name. Most of this year's strikes have been in the eastern Pacific. Since late August the U.S. has also announced boardings and sinkings of refuelling vessels. USNI News counts 243 people killed in the campaign.",
+   "summary": "Since 1 September 2025 the U.S. military has blown up small boats it says carry drugs, first in the Caribbean and from October 2025 in the eastern Pacific. The Pentagon called the campaign Operation Southern Spear and calls the dead narco-terrorists; Southern Command put Joint Task Force Western Hemisphere in its place in August 2026. For most strikes no evidence of cargo has been shown. A UN special rapporteur said in September 2026 there are reasonable grounds to believe the strikes are crimes against humanity.",
    "actor_statement": "Southern Command, 3 October 2026: U.S. forces 'executed a lethal, kinetic strike on a go-fast vessel operating along established narco-trafficking routes in the Caribbean' and 'the operation killed four narco-terrorists'. Each strike is announced, with video.",
    "target_statement": "Venezuela under Maduro called the strikes a pretext for regime change. Colombia's president said a Colombian fisherman was killed in a September 2025 strike. Families in Trinidad and Tobago identified dead.",
    "parties": [
@@ -7079,7 +7170,7 @@
      "sources": [
       {
        "class": "press",
-       "text": "Press reporting on U.S. AC-130J, P-8 and C-40 aircraft operating from Salvadoran bases from mid-October 2025",
+       "text": "El Mundo (El Salvador), relaying the New York Times: U.S. AC-130J, P-8 and C-40 aircraft operating from El Salvador's airport from mid-October 2025",
        "date": "2025-10",
        "url": "https://diario.elmundo.sv/nacionales/aviones-militares-de-ee-uu-estarian-operando-desde-el-aeropuerto-de-el-salvador",
        "publisher": "El Mundo (El Salvador), relaying the New York Times"
@@ -7094,9 +7185,9 @@
       },
       {
        "class": "press",
-       "text": "New York Times, 6 November 2025, US sends attack aircraft to El Salvador amid regional troop build-up (visual investigation)",
+       "text": "New York Times, 6 November 2025, US sends attack aircraft to El Salvador amid a regional troop build-up (visual investigation); the Times page is not linked here, and the link this source once carried was to El Mundo's page",
        "date": "2025-11",
-       "url": "https://diario.elmundo.sv/nacionales/aviones-militares-de-ee-uu-estarian-operando-desde-el-aeropuerto-de-el-salvador",
+       "url": null,
        "publisher": "New York Times"
       },
       {
@@ -7118,7 +7209,12 @@
    "none_note": "The boats are not a state. The entry is here because the strikes led into the Venezuela raid and because each one is announced by the United States.",
    "start": "2025-09",
    "short": "Boats",
-   "turns": [],
+   "turns": [
+    {
+     "month": "2026-10",
+     "what": "A strike in the eastern Pacific on 27 October killed five, the second announced that month."
+    }
+   ],
    "region": "americas"
   },
   {
@@ -7979,6 +8075,36 @@
    "entry": "china-philippines",
    "what": "Three incidents in the past year became four.",
    "why": "Water cannon held up a medical evacuation at Second Thomas Shoal on 8 October 2026; the incident had been missed."
+  },
+  {
+   "date": "2026-11-01",
+   "entry": "us-boats",
+   "what": "The summary had the Pentagon calling the campaign Operation Southern Spear. Southern Command put Joint Task Force Western Hemisphere in its place in August 2026, and the strike of 27 October was announced under the new name.",
+   "why": "The name had not been changed on the card since the task force changed."
+  },
+  {
+   "date": "2026-11-01",
+   "entry": "gulf",
+   "what": "The Wall Street Journal source behind Saudi Arabia's reported air strikes on Iran describes Emirati strikes, not Saudi ones, and is dated about 11 to 12 May 2026, not 16 May; its publisher was given as the Saudi Ministry of Defense. It is now marked so it does not date the tie, and a France 24 account of Reuters' reporting of the Saudi strikes is a dated and linked source. No tier moved.",
+   "why": "The source rule asks that the thing a tie links be the statement it names."
+  },
+  {
+   "date": "2026-11-01",
+   "entry": "gulf",
+   "what": "China's on-the-record backing of Iran gained a dated and linked source for the 17 September 2026 veto.",
+   "why": "The New York Times item the tie named carried no link and the Times page could not be found."
+  },
+  {
+   "date": "2026-11-01",
+   "entry": "yemen",
+   "what": "Iran to the Houthis gained a dated and linked source for the Panel of Experts' 2026 findings.",
+   "why": "The tie's document source names the Panel's reports and links none; the report itself could not be reached this week."
+  },
+  {
+   "date": "2026-11-01",
+   "entry": "us-boats",
+   "what": "Two source texts corrected on the El Salvador tie: the first now says El Mundo carries it, and the New York Times item no longer carries El Mundo's link.",
+   "why": "A source named one publisher and linked another."
   }
  ],
  "ucdp_note": "UCDP counts deaths in fighting between a state and an opponent, deaths in fighting between armed groups, and civilians killed deliberately, each with a low, best and high. UCDP calls a conflict a war at 1,000 battle deaths in a year, and minor below that. The figures here are our own sums from data/ucdp.json, built by scripts/build_ucdp.py from the yearly file and the monthly candidate files, pulled after the 20th of each month. A few UCDP rows carry a high below their best; they are summed as given. A flag is UCDP's own mark that a row still needs a check on its deaths, its sides, its place or its source.",
@@ -8081,9 +8207,9 @@
  },
  "esd_note": "The ties are also published as data/ties_esd.csv, one row per backer, side and year, in the shape of UCDP's External Support Dataset, which stops at 2017, so the two can be read end to end. Our sixteen kinds of help fold into its eight: troops, air strikes, air defence and police count as troops, since the state's own forces engage; bases, transit, shelter and hosting as access to territory; weapons, drones and parts as weapons; oil as materiel; backing in public and at the UN as other. Alleged is our fourth tier.",
  "source_counts": {
-  "ties": 111,
-  "live": 100,
-  "open": 74,
+  "ties": 112,
+  "live": 101,
+  "open": 75,
   "shown": 11,
   "reported": 23,
   "claimed": 3,
@@ -8095,12 +8221,12 @@
   "single_publisher": 0,
   "prewindow": 9,
   "undated": 0,
-  "weapons": 47,
+  "weapons": 48,
   "weapons_sipri": 4,
-  "sources": 414,
-  "sources_unlinked": 34,
-  "sources_undated": 58,
-  "sources_unopened": 48,
+  "sources": 421,
+  "sources_unlinked": 35,
+  "sources_undated": 57,
+  "sources_unopened": 57,
   "checked": 0,
   "one_class": 8
  },
