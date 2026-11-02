@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "generated_at_utc": "2026-11-02T14:56:56Z",
+ "generated_at_utc": "2026-11-02T15:41:34Z",
  "war_start": "2026-02-28",
  "rules": {
   "think": "The Dean Street Heuristic, as on the front page: BNO's last close of the week. Under $49 peace, over $55 war, between them the perpetual war sweet spot.",
@@ -27,24 +27,24 @@
   "bno": "data/market_daily.json (Yahoo Finance daily closes), last 2026-10-30",
   "portwatch": "data/oilflows_daily.json, hormuz_tanker_count_index_7d, last 2026-08-23",
   "ledger": "data/hormuz_verification.json estimates, newest independent reading 2026-10-28",
-  "ucdp": "data/ucdp.json, GED 26.1, Candidate 26.01 to 26.06, Candidate 26.0.7, Candidate 26.0.8, reach 2026-08, pulled 2026-10-11"
+  "ucdp": "data/ucdp.json, GED 26.1, Candidate 26.01 to 26.09, reach 2026-09, pulled 2026-11-02"
  },
  "deaths_months": [
   {
    "month": "2026-02",
-   "best": 3275,
+   "best": 2431,
    "state": "war",
    "provisional": true
   },
   {
    "month": "2026-03",
-   "best": 331,
+   "best": 1048,
    "state": "war",
    "provisional": true
   },
   {
    "month": "2026-04",
-   "best": 129,
+   "best": 255,
    "state": "war",
    "provisional": true
   },
@@ -56,19 +56,25 @@
   },
   {
    "month": "2026-06",
-   "best": 6,
+   "best": 12,
    "state": "quiet",
    "provisional": true
   },
   {
    "month": "2026-07",
-   "best": 64,
+   "best": 68,
    "state": "fighting",
    "provisional": true
   },
   {
    "month": "2026-08",
-   "best": 2,
+   "best": 4,
+   "state": "quiet",
+   "provisional": true
+  },
+  {
+   "month": "2026-09",
+   "best": 22,
    "state": "quiet",
    "provisional": true
   }
@@ -154,7 +160,7 @@
    "are": "shut",
    "deaths": {
     "month": "2026-03",
-    "best": 331,
+    "best": 1048,
     "state": "war",
     "provisional": true
    },
@@ -181,7 +187,7 @@
    "are": "shut",
    "deaths": {
     "month": "2026-03",
-    "best": 331,
+    "best": 1048,
     "state": "war",
     "provisional": true
    },
@@ -208,7 +214,7 @@
    "are": "shut",
    "deaths": {
     "month": "2026-03",
-    "best": 331,
+    "best": 1048,
     "state": "war",
     "provisional": true
    },
@@ -235,7 +241,7 @@
    "are": "shut",
    "deaths": {
     "month": "2026-03",
-    "best": 331,
+    "best": 1048,
     "state": "war",
     "provisional": true
    },
@@ -262,7 +268,7 @@
    "are": "shut",
    "deaths": {
     "month": "2026-03",
-    "best": 331,
+    "best": 1048,
     "state": "war",
     "provisional": true
    },
@@ -289,7 +295,7 @@
    "are": "shut",
    "deaths": {
     "month": "2026-04",
-    "best": 129,
+    "best": 255,
     "state": "war",
     "provisional": true
    },
@@ -316,7 +322,7 @@
    "are": "shut",
    "deaths": {
     "month": "2026-04",
-    "best": 129,
+    "best": 255,
     "state": "war",
     "provisional": true
    },
@@ -343,7 +349,7 @@
    "are": "shut",
    "deaths": {
     "month": "2026-04",
-    "best": 129,
+    "best": 255,
     "state": "war",
     "provisional": true
    },
@@ -370,7 +376,7 @@
    "are": "shut",
    "deaths": {
     "month": "2026-04",
-    "best": 129,
+    "best": 255,
     "state": "war",
     "provisional": true
    },
@@ -505,7 +511,7 @@
    "are": "shut",
    "deaths": {
     "month": "2026-06",
-    "best": 6,
+    "best": 12,
     "state": "quiet",
     "provisional": true
    },
@@ -532,7 +538,7 @@
    "are": "shut",
    "deaths": {
     "month": "2026-06",
-    "best": 6,
+    "best": 12,
     "state": "quiet",
     "provisional": true
    },
@@ -559,7 +565,7 @@
    "are": "shut",
    "deaths": {
     "month": "2026-06",
-    "best": 6,
+    "best": 12,
     "state": "quiet",
     "provisional": true
    },
@@ -586,7 +592,7 @@
    "are": "shut",
    "deaths": {
     "month": "2026-06",
-    "best": 6,
+    "best": 12,
     "state": "quiet",
     "provisional": true
    },
@@ -613,7 +619,7 @@
    "are": "shut",
    "deaths": {
     "month": "2026-06",
-    "best": 6,
+    "best": 12,
     "state": "quiet",
     "provisional": true
    },
@@ -640,7 +646,7 @@
    "are": "shut",
    "deaths": {
     "month": "2026-07",
-    "best": 64,
+    "best": 68,
     "state": "fighting",
     "provisional": true
    },
@@ -667,7 +673,7 @@
    "are": "shut",
    "deaths": {
     "month": "2026-07",
-    "best": 64,
+    "best": 68,
     "state": "fighting",
     "provisional": true
    },
@@ -694,7 +700,7 @@
    "are": "shut",
    "deaths": {
     "month": "2026-07",
-    "best": 64,
+    "best": 68,
     "state": "fighting",
     "provisional": true
    },
@@ -721,7 +727,7 @@
    "are": "shut",
    "deaths": {
     "month": "2026-07",
-    "best": 64,
+    "best": 68,
     "state": "fighting",
     "provisional": true
    },
@@ -748,7 +754,7 @@
    "are": "shut",
    "deaths": {
     "month": "2026-08",
-    "best": 2,
+    "best": 4,
     "state": "quiet",
     "provisional": true
    },
@@ -775,7 +781,7 @@
    "are": "shut",
    "deaths": {
     "month": "2026-08",
-    "best": 2,
+    "best": 4,
     "state": "quiet",
     "provisional": true
    },
@@ -802,7 +808,7 @@
    "are": "shut",
    "deaths": {
     "month": "2026-08",
-    "best": 2,
+    "best": 4,
     "state": "quiet",
     "provisional": true
    },
@@ -831,7 +837,7 @@
    "are": "shut",
    "deaths": {
     "month": "2026-08",
-    "best": 2,
+    "best": 4,
     "state": "quiet",
     "provisional": true
    },
@@ -860,7 +866,7 @@
    "are": "shut",
    "deaths": {
     "month": "2026-08",
-    "best": 2,
+    "best": 4,
     "state": "quiet",
     "provisional": true
    },
@@ -889,8 +895,8 @@
    "are": "shut",
    "deaths": {
     "month": "2026-09",
-    "best": null,
-    "state": "unknown",
+    "best": 22,
+    "state": "quiet",
     "provisional": true
    },
    "cell": "are-think"
@@ -918,8 +924,8 @@
    "are": "shut",
    "deaths": {
     "month": "2026-09",
-    "best": null,
-    "state": "unknown",
+    "best": 22,
+    "state": "quiet",
     "provisional": true
    },
    "cell": "are-think"
@@ -947,8 +953,8 @@
    "are": "shut",
    "deaths": {
     "month": "2026-09",
-    "best": null,
-    "state": "unknown",
+    "best": 22,
+    "state": "quiet",
     "provisional": true
    },
    "cell": "are-think"
@@ -976,8 +982,8 @@
    "are": "shut",
    "deaths": {
     "month": "2026-09",
-    "best": null,
-    "state": "unknown",
+    "best": 22,
+    "state": "quiet",
     "provisional": true
    },
    "cell": "are-think"

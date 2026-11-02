@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-01",
+ "as_of": "2026-11-02",
  "status": "entered",
  "rule": "A war is on the map if organized fighting killed roughly 1,000 or more people in the past twelve months, or it is an active war between states, and an outside state fights in it or backs a side.",
  "color_rule": "Five states are colored: those that fight in or back a side in the most wars. The rest are grey and labelled.",
@@ -424,7 +424,7 @@
     -4
    ],
    "band": "3",
-   "band_source": "UCDP counted 83,936 (81,305 to 89,367) from October 2025 to August 2026, and 94,778 in all of 2025. Ukraine's own claims of Russian dead run higher.",
+   "band_source": "UCDP counted 90,535 (87,762 to 96,050) from October 2025 to September 2026, and 94,778 in all of 2025. Ukraine's own claims of Russian dead run higher.",
    "status": "Full-scale war. Ukraine took back ground in the east in 2026. Talks restarted in October: Steve Witkoff met Zelenskyy in Oslo on 20 October and Putin on 21 October, and Putin said Moscow was ready to resume U.S.-mediated talks in November. Trump declared an energy ceasefire on 11 October; Russia went on striking energy sites, and an attack on 23 October cut power to more than 500,000 people. A local truce around Russian-held Oleshky in Kherson took effect on 27 October and held while an aid convoy went in and residents were taken out. Fighting goes on elsewhere: a Russian strike on the railway station in Dnipro killed fourteen people, by one count fifteen, and Ukraine sent more than 600 drones at Moscow.",
    "summary": "Russia invaded in February 2022 after eight years of fighting in the Donbas.",
    "parties": [
@@ -947,7 +947,7 @@
     "end"
    ],
    "band": "3",
-   "band_source": "UCDP counted 66,737 (12,970 to 82,062) from October 2025 to August 2026; 75,174 in all of 2025, 62,775 of them civilians killed deliberately, which is why the low is so far below the best. ACLED counted at least 19,000 deaths in fighting in 2025. The UN human rights office documented more than 6,000 killed in three days when el-Fasher fell.",
+   "band_source": "UCDP counted 66,979 (13,220 to 82,746) from October 2025 to September 2026; 75,174 in all of 2025, 62,775 of them civilians killed deliberately, which is why the low is so far below the best. ACLED counted at least 19,000 deaths in fighting in 2025. The UN human rights office documented more than 6,000 killed in three days when el-Fasher fell.",
    "status": "War between the army and the RSF. The RSF took el-Fasher in October 2025 and holds Darfur. The army holds Khartoum and the centre. The RSF is massing around El Obeid in North Kordofan and striking it with drones. Since early October the army has flown near-daily air strikes on RSF-held towns in Darfur and Kordofan. Famine in Darfur and parts of Kordofan.",
    "summary": "Two armed forces that once shared power turned on each other in April 2023. The RSF set up a rival government in 2025. The UN counts it the largest displacement in the world.",
    "parties": [
@@ -1621,7 +1621,7 @@
     "end"
    ],
    "band": "2",
-   "band_source": "UCDP counted 6,495 (6,441 to 6,319) from October 2025 to August 2026, and 14,910 in all of 2025. Gaza's health ministry counts about 1,500 killed since the October 2025 ceasefire and Lebanon's more than 4,000 since March 2026; both are parties. UCDP's high here reads below its best because six of its rows carry one.",
+   "band_source": "UCDP counted 6,777 (6,724 to 6,643) from October 2025 to September 2026, and 14,910 in all of 2025. Gaza's health ministry counts about 1,500 killed since the October 2025 ceasefire and Lebanon's more than 4,000 since March 2026; both are parties. UCDP's high here reads below its best because six of its rows carry one.",
    "status": "Ceasefire in Gaza since October 2025, on paper. Israel holds most of Gaza and keeps striking. A new war with Hezbollah from March 2026; a shaky truce in Lebanon since April, with Israeli strikes in the south through October.",
    "summary": "Hamas attacked Israel on 7 October 2023. Israel's war in Gaza followed, with a second front against Hezbollah in Lebanon. A ceasefire took hold in Gaza in October 2025, but Israel still holds most of the strip and strikes continue. After the U.S. and Israel struck Iran in February 2026, Hezbollah fired again and Israel invaded south Lebanon.",
    "parties": [
@@ -1965,7 +1965,7 @@
     2
    ],
    "band": "2",
-   "band_source": "UCDP counted 2,378 (1,490 to 2,977) from October 2025 to August 2026. The WHO counted 965 killed in Yemen in the Gulf war. The two sides' own counts of fighters killed run into the thousands.",
+   "band_source": "UCDP counted 5,436 (2,981 to 6,556) from October 2025 to September 2026. The WHO counted 965 killed in Yemen in the Gulf war. The two sides' own counts of fighters killed run into the thousands.",
    "status": "Full-scale war again. The 2022 truce collapsed in July 2026. The Houthis took the Red Sea coast in September. The government, with Saudi air cover, is pushing back. Houthi missiles hit Saudi airports, and in October the presidential palace, the airport and the coast guard headquarters in Aden. The Houthis say they have also struck Saudi oil sites. The Saudi-led coalition said it shot down two ballistic missiles aimed at Taif and Yanbu on 24 October. Houthi media said Saudi strikes killed sixteen people in Sanaa and Hodeida the same day. The United States ordered non-essential embassy staff out of Saudi Arabia on 23 October.",
    "summary": "The Houthis hold the north and the capital. The government, backed by Saudi Arabia, crushed its southern rival the STC in January 2026 after the UAE pulled out. The 2022 truce collapsed in July 2026 and the war is back on. Since late 2023 the Houthis have also fired on ships in the Red Sea and at Israel.",
    "parties": [
@@ -2339,7 +2339,7 @@
     2
    ],
    "band": "2",
-   "band_source": "UCDP counted 1,741 (1,706 to 2,352) from October 2025 to August 2026. ACLED counted about 15,000 deaths in 2025; UCDP counted 2,317 for that year. The band follows the lower count.",
+   "band_source": "UCDP counted 1,932 (1,896 to 2,547) from October 2025 to September 2026. ACLED counted about 15,000 deaths in 2025; UCDP counted 2,317 for that year. The band follows the lower count.",
    "status": "Civil war since the coup. Min Aung Hlaing became president in April 2026 after a staged election. The army has taken back some towns. Resistance still holds much of the border regions.",
    "summary": "The army took power in February 2021. Ethnic armies and new resistance forces fight it across most of the country. The Arakan Army holds almost all of Rakhine. China has pressed the northern armies to stop and give towns back.",
    "parties": [
@@ -2649,7 +2649,7 @@
     8
    ],
    "band": "2",
-   "band_source": "UCDP counted 3,617 (2,827 to 10,394) from October 2025 to August 2026, and 9,172 in all of 2025. UN reports and the Congolese government put the toll at hundreds a month.",
+   "band_source": "UCDP counted 3,810 (3,019 to 11,318) from October 2025 to September 2026, and 9,172 in all of 2025. UN reports and the Congolese government put the toll at hundreds a month.",
    "status": "M23 holds Goma and Bukavu. It took Uvira in December 2025 and left it in May 2026 under U.S. pressure. Peace deals were signed in 2025. Doha talks drag on and fighting continues.",
    "summary": "The M23 rebels took the two main cities of the east in early 2025. The UN says 14,000 to 18,000 Rwandan troops fight alongside them and give the orders. In the north, Congolese and Ugandan troops fight the ADF, an Islamic State affiliate.",
    "parties": [
@@ -2972,7 +2972,7 @@
     "end"
    ],
    "band": "2",
-   "band_source": "UCDP counted 5,437 (5,114 to 8,401) from October 2025 to August 2026. The Africa Center for Strategic Studies, from ACLED data, counted just under 10,000 deaths linked to militant Islamist groups in the past twelve months. Both say thousands.",
+   "band_source": "UCDP counted 5,885 (5,512 to 9,396) from October 2025 to September 2026. The Africa Center for Strategic Studies, from ACLED data, counted just under 10,000 deaths linked to militant Islamist groups in the past twelve months. Both say thousands.",
    "status": "Jihadists and Tuareg rebels struck across Mali in April 2026, killed the defence minister and took Kidal. Mali and Russian forces retook Kidal in October. Military governments in all three states.",
    "summary": "Mali, Burkina Faso and Niger fight al-Qaeda and Islamic State affiliates, and Mali also fights Tuareg separatists, who now attack together with the jihadists. French and UN forces are gone. Russian forces took their place.",
    "parties": [
@@ -3521,7 +3521,7 @@
     5
    ],
    "band": "2",
-   "band_source": "UCDP counted 3,567 (3,548 to 4,112) from October 2025 to August 2026. ACLED counted about 8,750 deaths from April 2025 to March 2026. Both say thousands.",
+   "band_source": "UCDP counted 3,757 (3,737 to 4,355) from October 2025 to September 2026. ACLED counted about 8,750 deaths from April 2025 to March 2026. Both say thousands.",
    "status": "Stalemate. Al-Shabaab holds much of the south and centre. The AU mission's mandate runs to the end of 2026. The United States has given the UN a further year to wind down the logistics office the mission depends on, so the drawdown begins in January 2027 and no replacement funding has been announced. Ethiopia plans to pull troops out. Al-Shabaab ambushed government troops near Leego in Lower Shabelle on 26 October. The group said it killed 321 soldiers and allied fighters; the defence ministry said its forces killed 75 fighters, and a Somali officer said more than 20 of his own side were killed.",
    "summary": "The government and African Union troops have fought al-Shabaab for almost twenty years. The group took back ground near the capital in 2025 and still holds much of the south.",
    "parties": [
@@ -4035,7 +4035,7 @@
     -5
    ],
    "band": "1",
-   "band_source": "UCDP counted 637 (636 to 639) from October 2025 to August 2026. ACLED counted about 1,300 deaths from October 2025 to February 2026, most of them in the January offensive. Most of UCDP's rows for Syria still carry a check flag.",
+   "band_source": "UCDP counted 677 (676 to 679) from October 2025 to September 2026. ACLED counted about 1,300 deaths from October 2025 to February 2026, most of them in the January offensive. Most of UCDP's rows for Syria still carry a check flag.",
    "status": "Assad gone since December 2024. The Kurdish-led forces folded into the army in 2026 and U.S. troops left. Small fights go on with Assad loyalists on the coast, Islamic State in the east and Druze militias in Sweida. Syria moved troops to the Sweida front line on 22 October and says it expects an Israeli-backed Druze attack. Israeli strikes.",
    "summary": "The rebels who toppled Assad now govern. They fought the Kurdish-led forces in January 2026 and absorbed them by August. Druze militias in the south and Assad loyalists on the coast still resist.",
    "parties": [
@@ -4559,7 +4559,7 @@
     "end"
    ],
    "band": "1",
-   "band_source": "UCDP counted 832 (762 to 880) from October 2025 to August 2026. The UN human rights office counted 5,519 killed from March 2025 to January 2026 and 1,408 from April to June 2026, most of them in police and army operations. The band follows the lower count.",
+   "band_source": "UCDP counted 868 (786 to 923) from October 2025 to September 2026. The UN human rights office counted 5,519 killed from March 2025 to January 2026 and 1,408 from April to June 2026, most of them in police and army operations. The band follows the lower count.",
    "status": "Gangs hold most of the capital and are spreading into the provinces. A UN-backed Gang Suppression Force replaced the Kenya-led mission in April 2026 but is far below strength, with about 2,000 troops against the 5,500 authorised. Gangs ambushed one of its vehicles at Croix-des-Bouquets in mid-October and four Salvadoran soldiers are missing. Elections were postponed in October 2026.",
    "summary": "Armed gangs joined forces in 2023 and control most of Port-au-Prince. The Haitian police and a UN-backed foreign force fight them, and vigilante groups fight too.",
    "parties": [
@@ -4858,7 +4858,7 @@
     -1
    ],
    "band": "2",
-   "band_source": "UCDP counted 5,238 (4,585 to 9,132) across both countries from October 2025 to August 2026. Pakistan's CRSS counted about 3,000 killed in Pakistan in 2026 to September; UNAMA counted 372 Afghan civilians killed in the first quarter of the war with Afghanistan.",
+   "band_source": "UCDP counted 5,793 (5,046 to 9,912) across both countries from October 2025 to September 2026. Pakistan's CRSS counted about 3,000 killed in Pakistan in 2026 to September; UNAMA counted 372 Afghan civilians killed in the first quarter of the war with Afghanistan.",
    "status": "Open war with Afghanistan since February 2026: Pakistani air strikes, Taliban attacks on the border, two short truces. Border fighting resumed in October in Kurram and Paktia, and talks in Moscow ended without agreement. Militant attacks inside Pakistan at a twelve-year high, by CRSS counts.",
    "summary": "Pakistan fights the Pakistani Taliban in the northwest and Baloch separatists in the southwest. In February 2026 it went to open war with Afghanistan, which it blames for sheltering the Pakistani Taliban. China hosts the peace talks.",
    "parties": [
@@ -5188,7 +5188,7 @@
     4
    ],
    "band": "2",
-   "band_source": "UCDP counted 3,831 (3,831 to 3,839) in the war itself from October 2025 to August 2026. Iran counts 3,528 dead and Israel estimates 6,000; 72 killed in Israel, about two dozen U.S. troops, and dozens across the Gulf states, by those states. Lebanon's dead are counted under Gaza and Lebanon.",
+   "band_source": "UCDP counted 3,864 (3,862 to 3,947) in the war itself from October 2025 to September 2026. Iran counts 3,528 dead and Israel estimates 6,000; 72 killed in Israel, about two dozen U.S. troops, and dozens across the Gulf states, by those states. Lebanon's dead are counted under Gaza and Lebanon.",
    "status": "War since 28 February 2026. A ceasefire from 8 April collapsed on 8 July. U.S. strikes again in September. Iran's attacks on shipping in the strait reached a record in October: Iran said seven tankers were hit on 22 October and two more struck mines on 24 October, and attacks on ships about doubled on September. CENTCOM said on 25 October that the strait's main transit routes were clear of Iranian mines and that more than 3,000 commercial vessels had crossed with its support in six months. Kpler put the oil leaving through the strait in the week to 28 October at 7.3 million barrels a day, more than 40 percent below the pre-war rate, after about 14 million in the week to 18 October. The United States and Israel are reported to be planning strikes after the U.S. midterm elections. Talks run through Qatar and Pakistan.",
    "summary": "Israel and the United States struck Iran in June 2025 and again on 28 February 2026, killing Ali Khamenei. Iran shut the Strait of Hormuz on 4 March and fired missiles and drones at Israel, U.S. bases and every Gulf state. Hezbollah joined on 2 March and the Houthis seized the Bab al-Mandab coast in September. A Pakistan-brokered ceasefire held from April to July. U.S. forces cleared Iranian mines by late August, but traffic is still a fraction of normal. This site's other pages follow the oil.",
    "parties": [
@@ -6295,7 +6295,7 @@
     3
    ],
    "band": "2",
-   "band_source": "UCDP counted 4,609 (3,322 to 13,184) from October 2025 to August 2026. ACLED counted about 1,150 deaths in Amhara, Oromia and Tigray in one quarter of 2025. The September offensive is after both.",
+   "band_source": "UCDP counted 5,278 (3,925 to 14,592) from October 2025 to September 2026. ACLED counted about 1,150 deaths in Amhara, Oromia and Tigray in one quarter of 2025. The September offensive is after both.",
    "status": "A rebel alliance of Tigray, Amhara and Oromo forces attacked on 23 September 2026. The army retook Mekelle on 3 October and the towns on the Eritrean border on 12 and 13 October. Eritrean troops crossed into Tigray and pulled back over the border; some are reported to be still inside. Ethiopia and Eritrea cut ties on 1 October and their forces have clashed. Abiy Ahmed said on 28 October that Ethiopia had taken delivery of twelve Russian Su-35 fighters and would receive four S-400 air defence batteries; Russia's arms exporter said two jets had been delivered.",
    "summary": "The Tigray war ended in 2022. Fano militias in Amhara and the Oromo Liberation Army then fought the federal army. In September 2026 the Tigray People's Liberation Front joined them in an Alliance for Survival and launched an offensive in the north. Eritrea, once Ethiopia's ally against Tigray, now backs the alliance and has sent troops across the border.",
    "parties": [
@@ -6662,7 +6662,7 @@
     "end"
    ],
    "band": "1",
-   "band_source": "UCDP counted 707 (678 to 900) from October 2025 to August 2026. The UN human rights office counted 1,854 killed from January to September 2025. The band follows the lower count.",
+   "band_source": "UCDP counted 731 (702 to 924) from October 2025 to September 2026. The UN human rights office counted 1,854 killed from January to September 2025. The band follows the lower count.",
    "status": "The 2018 peace deal collapsed when President Kiir arrested Riek Machar in March 2025. Government forces, with Ugandan troops and air strikes, fight the opposition in Jonglei, Upper Nile and Unity.",
    "summary": "The two men who led the 2013 to 2018 civil war went back to war in 2025. Government forces fight Machar's SPLA-IO and the Nuer White Army in the north and east. Uganda sent troops at Juba's request.",
    "parties": [
@@ -6798,7 +6798,7 @@
     "end"
    ],
    "band": "2",
-   "band_source": "UCDP counted 7,441 (6,678 to 10,272) from October 2025 to August 2026. ACLED counted about 12,000 conflict deaths in 2025. The band follows the lower count.",
+   "band_source": "UCDP counted 7,734 (6,952 to 10,545) from October 2025 to September 2026. ACLED counted about 12,000 conflict deaths in 2025. The band follows the lower count.",
    "status": "Jihadists in the northeast, armed bandit groups in the northwest, and Sahel jihadists now raiding across the Niger border. U.S. drone strikes in Sokoto since December 2025.",
    "summary": "Boko Haram and Islamic State West Africa fight the army in the northeast. In the northwest, bandit groups kill and kidnap on a similar scale.",
    "parties": [
