@@ -1,7 +1,7 @@
 {
  "rule": "Computed from every saved version of the data file, one line per change a reader would care about, dated by the save. Hand-written reasons are in the corrections log; this list has none.",
  "first": "2026-10-11",
- "built": "2026-10-12",
+ "built": "2026-11-02",
  "changes": [
   {
    "date": "2026-10-11",
@@ -3225,6 +3225,126 @@
    "tie": "us-ecuador/ecuador/us",
    "kind": "sources",
    "what": "Ecuador to U.S. in Ecuador: 2 sources added"
+  },
+  {
+   "date": "2026-10-18",
+   "commit": "45b4d24",
+   "entry": "yemen",
+   "tie": "yemen/iran/houthi",
+   "kind": "sources",
+   "what": "Iran to Houthis in Yemen: 2 sources added"
+  },
+  {
+   "date": "2026-10-18",
+   "commit": "45b4d24",
+   "entry": "yemen",
+   "tie": "yemen/iran/houthi",
+   "kind": "evidence",
+   "what": "Iran to Houthis in Yemen: evidence now to 2026-10"
+  },
+  {
+   "date": "2026-10-18",
+   "commit": "45b4d24",
+   "entry": "gulf",
+   "tie": "gulf/russia/irn/2",
+   "kind": "sources",
+   "what": "Russia to Iran in Gulf: 1 source added"
+  },
+  {
+   "date": "2026-10-18",
+   "commit": "45b4d24",
+   "entry": "gulf",
+   "tie": "gulf/russia/irn/2",
+   "kind": "evidence",
+   "what": "Russia to Iran in Gulf: evidence now to 2026-09"
+  },
+  {
+   "date": "2026-10-25",
+   "commit": "8145b8c",
+   "entry": "syria",
+   "tie": "syria/israel/local",
+   "kind": "sources",
+   "what": "Israel to Druze, loyalists in Syria: 1 source added"
+  },
+  {
+   "date": "2026-10-25",
+   "commit": "8145b8c",
+   "entry": "syria",
+   "tie": "syria/israel/local",
+   "kind": "evidence",
+   "what": "Israel to Druze, loyalists in Syria: evidence now to 2026-10"
+  },
+  {
+   "date": "2026-10-25",
+   "commit": "8145b8c",
+   "entry": "syria",
+   "tie": "syria/israel/local/2",
+   "kind": "sources",
+   "what": "Israel to Druze, loyalists in Syria: 1 source added"
+  },
+  {
+   "date": "2026-10-25",
+   "commit": "8145b8c",
+   "entry": "syria",
+   "tie": "syria/israel/local/2",
+   "kind": "evidence",
+   "what": "Israel to Druze, loyalists in Syria: evidence now to 2026-10"
+  },
+  {
+   "date": "2026-10-25",
+   "commit": "8145b8c",
+   "entry": "haiti",
+   "tie": "haiti/chad/hstate",
+   "kind": "sources",
+   "what": "Chad to state in Haiti: 1 source added"
+  },
+  {
+   "date": "2026-10-25",
+   "commit": "8145b8c",
+   "entry": "haiti",
+   "tie": "haiti/chad/hstate",
+   "kind": "evidence",
+   "what": "Chad to state in Haiti: evidence now to 2026-10"
+  },
+  {
+   "date": "2026-10-25",
+   "commit": "8145b8c",
+   "entry": "haiti",
+   "tie": "haiti/elsalvador/hstate",
+   "kind": "tie",
+   "what": "El Salvador to state in Haiti: entered, on the record"
+  },
+  {
+   "date": "2026-11-01",
+   "commit": "f177e7b",
+   "entry": "yemen",
+   "tie": "yemen/iran/houthi",
+   "kind": "sources",
+   "what": "Iran to Houthis in Yemen: 1 source added"
+  },
+  {
+   "date": "2026-11-01",
+   "commit": "f177e7b",
+   "entry": "gulf",
+   "tie": "gulf/saudi/us/2",
+   "kind": "sources",
+   "what": "Saudi Arabia to U.S. in Gulf: 2 sources added"
+  },
+  {
+   "date": "2026-11-01",
+   "commit": "f177e7b",
+   "entry": "gulf",
+   "tie": "gulf/china/irn/2",
+   "kind": "sources",
+   "what": "China to Iran in Gulf: 1 source added"
+  },
+  {
+   "date": "2026-11-01",
+   "commit": "f177e7b",
+   "entry": "ethiopia",
+   "tie": "ethiopia/russia/egov",
+   "kind": "tie",
+   "what": "Russia to government in Ethiopia: entered, on the record"
   }
  ]
 }
