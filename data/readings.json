@@ -20,6 +20,10 @@
   "word": {
    "label": "the word",
    "href": "/record.html"
+  },
+  "spr": {
+   "label": "the salt caverns",
+   "href": "/spr/"
   }
  },
  "entries": [
@@ -136,6 +140,60 @@
     {
      "text": "What to do: retreat from the overfocus on weapons and defence technology, and rebuild a positive case for peace. Her children still imagine peace as their future.",
      "tags": []
+    }
+   ]
+  },
+  {
+   "id": "al-jaber-2026-11-02",
+   "added": "2026-11-02",
+   "date": "2026-11-02",
+   "title": "Nearly a billion barrels drawn from the world's oil stocks",
+   "source": "Reuters, with the fuller speech in The National",
+   "url": "https://www.reuters.com/business/energy/nearly-1-billion-oil-barrels-drained-global-inventories-since-hormuz-disruption-2026-11-02/",
+   "who": "Sultan Al Jaber, chief executive of ADNOC, the Abu Dhabi state oil company, opening the ADIPEC conference in Abu Dhabi on 2 November 2026. He is a seller of oil and was asking for storage and refineries to be built nearer the buyers, so the figure is his estimate and no outside tally backs it yet.",
+   "why": "It is the first running total of what the Hormuz disruption has cost the world in stored oil. The war began on 28 February, 247 days before he spoke, so a billion barrels is about 4 million barrels a day of shortfall after rerouting, reserve releases and lost demand. That sits inside the gap between what U.S. officials claim is moving through the strait and what the trackers see. The U.S. reserve alone has given up about 130 million barrels since the shock, roughly an eighth of his total.",
+   "points": [
+    {
+     "text": "Nearly one billion barrels have been drawn from global oil inventories since shipping through the Strait of Hormuz was disrupted. He gave no start date and no split between commercial stocks and strategic reserves.",
+     "tags": [
+      "hormuz",
+      "spr"
+     ]
+    },
+    {
+     "text": "Simply put, the world has eroded its supply buffers.",
+     "quote": true,
+     "tags": [
+      "spr",
+      "market"
+     ]
+    },
+    {
+     "text": "Diesel stocks in some markets are at their lowest seasonal level in 35 years, and some markets face a gap of 600 billion cubic feet in gas supplies.",
+     "tags": [
+      "market"
+     ]
+    },
+    {
+     "text": "Shipping and logistics were under 5 percent of the cost of a barrel before the disruption. They are now over 30 percent.",
+     "tags": [
+      "hormuz",
+      "market"
+     ]
+    },
+    {
+     "text": "For years, our industry optimised for just in time. This year we got the bill for just in case.",
+     "quote": true,
+     "tags": [
+      "spr"
+     ]
+    },
+    {
+     "text": "His ask: more strategic storage, larger stockpiles of refined products, and flexible refining near the markets that use the oil. Supply only counts when it arrives.",
+     "tags": [
+      "spr",
+      "hormuz"
+     ]
     }
    ]
   }
