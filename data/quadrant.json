@@ -1,0 +1,1128 @@
+{
+ "schema_version": 1,
+ "generated_at_utc": "2026-11-02T14:56:56Z",
+ "war_start": "2026-02-28",
+ "rules": {
+  "think": "The Dean Street Heuristic, as on the front page: BNO's last close of the week. Under $49 peace, over $55 war, between them the perpetual war sweet spot.",
+  "are": "The strait. A week counts as shut when oil leaving through Hormuz is below three quarters of normal. Before 2026-08-24 that is PortWatch's tanker-activity index against a normal late-2025 week, the series on the oilflows page. From then on it is the newest independent tracker reading in the ledger (a seven-day or longer average, never a single day) against a pre-war rate of about 17 million barrels a day, the figure Kpler's own percentages imply.",
+  "deaths": "Uppsala's deaths in the Gulf dyad by the month the event began, UCDP best estimate. 84 or more in a month is the war line (1,000 a year); 25 or more is the conflict line. Months from the candidate files are provisional; months Uppsala has not reached are unknown.",
+  "cells": {
+   "are-think": "at war, and the market says so",
+   "are-not-think": "at war, and the market says peace",
+   "are-sweet": "at war, and the market says perpetual war",
+   "think-not-are": "the market says war, the strait is open",
+   "open-sweet": "the strait is open, the market says perpetual war",
+   "neither": "the strait is open, and the market says peace"
+  }
+ },
+ "thresholds": {
+  "bno_low": 49.0,
+  "bno_high": 55.0,
+  "strait_open_share": 0.75,
+  "prewar_mbd": 17.0,
+  "deaths_war_month": 84,
+  "deaths_conflict_month": 25
+ },
+ "sources": {
+  "bno": "data/market_daily.json (Yahoo Finance daily closes), last 2026-10-30",
+  "portwatch": "data/oilflows_daily.json, hormuz_tanker_count_index_7d, last 2026-08-23",
+  "ledger": "data/hormuz_verification.json estimates, newest independent reading 2026-10-28",
+  "ucdp": "data/ucdp.json, GED 26.1, Candidate 26.01 to 26.06, Candidate 26.0.7, Candidate 26.0.8, reach 2026-08, pulled 2026-10-11"
+ },
+ "deaths_months": [
+  {
+   "month": "2026-02",
+   "best": 3275,
+   "state": "war",
+   "provisional": true
+  },
+  {
+   "month": "2026-03",
+   "best": 331,
+   "state": "war",
+   "provisional": true
+  },
+  {
+   "month": "2026-04",
+   "best": 129,
+   "state": "war",
+   "provisional": true
+  },
+  {
+   "month": "2026-05",
+   "best": 22,
+   "state": "quiet",
+   "provisional": true
+  },
+  {
+   "month": "2026-06",
+   "best": 6,
+   "state": "quiet",
+   "provisional": true
+  },
+  {
+   "month": "2026-07",
+   "best": 64,
+   "state": "fighting",
+   "provisional": true
+  },
+  {
+   "month": "2026-08",
+   "best": 2,
+   "state": "quiet",
+   "provisional": true
+  }
+ ],
+ "counts": {
+  "are-not-think": 10,
+  "are-sweet": 14,
+  "are-think": 9,
+  "think-not-are": 2
+ },
+ "weeks_full": 35,
+ "lags": [
+  {
+   "from": "2026-03-02",
+   "to": "2026-03-08",
+   "weeks": 1,
+   "ended_by": "sweet"
+  },
+  {
+   "from": "2026-04-06",
+   "to": "2026-04-19",
+   "weeks": 2,
+   "ended_by": "sweet"
+  },
+  {
+   "from": "2026-06-08",
+   "to": "2026-07-19",
+   "weeks": 6,
+   "ended_by": "sweet"
+  },
+  {
+   "from": "2026-08-03",
+   "to": "2026-08-09",
+   "weeks": 1,
+   "ended_by": "sweet"
+  }
+ ],
+ "current": {
+  "week": "2026-11-02",
+  "to": "2026-11-08",
+  "partial": true,
+  "bno": 71.39,
+  "bno_date": "2026-10-30",
+  "think": "war",
+  "days": null,
+  "bno_carried": true,
+  "strait": {
+   "source": "ledger",
+   "tracker": "Kpler",
+   "mbd": 7.3,
+   "date": "2026-10-28",
+   "share": 0.429,
+   "estimate_id": "e40"
+  },
+  "are": "shut",
+  "deaths": {
+   "month": "2026-11",
+   "best": null,
+   "state": "unknown",
+   "provisional": true
+  },
+  "cell": "are-think"
+ },
+ "weeks": [
+  {
+   "week": "2026-03-02",
+   "to": "2026-03-08",
+   "partial": false,
+   "bno": 43.95,
+   "bno_date": "2026-03-06",
+   "think": "peace",
+   "days": {
+    "peace": 5,
+    "sweet": 0,
+    "war": 0
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 1.2346507414614507,
+    "date": "2026-03-08",
+    "share": 0.012
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-03",
+    "best": 331,
+    "state": "war",
+    "provisional": true
+   },
+   "cell": "are-not-think"
+  },
+  {
+   "week": "2026-03-09",
+   "to": "2026-03-15",
+   "partial": false,
+   "bno": 49.04,
+   "bno_date": "2026-03-13",
+   "think": "sweet",
+   "days": {
+    "peace": 4,
+    "sweet": 1,
+    "war": 0
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 1.2346507414614507,
+    "date": "2026-03-15",
+    "share": 0.012
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-03",
+    "best": 331,
+    "state": "war",
+    "provisional": true
+   },
+   "cell": "are-sweet"
+  },
+  {
+   "week": "2026-03-16",
+   "to": "2026-03-22",
+   "partial": false,
+   "bno": 52.92,
+   "bno_date": "2026-03-20",
+   "think": "sweet",
+   "days": {
+    "peace": 1,
+    "sweet": 4,
+    "war": 0
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 0.9259880560960878,
+    "date": "2026-03-22",
+    "share": 0.009
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-03",
+    "best": 331,
+    "state": "war",
+    "provisional": true
+   },
+   "cell": "are-sweet"
+  },
+  {
+   "week": "2026-03-23",
+   "to": "2026-03-29",
+   "partial": false,
+   "bno": 52.7,
+   "bno_date": "2026-03-27",
+   "think": "sweet",
+   "days": {
+    "peace": 2,
+    "sweet": 3,
+    "war": 0
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 2.4693014829229014,
+    "date": "2026-03-29",
+    "share": 0.025
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-03",
+    "best": 331,
+    "state": "war",
+    "provisional": true
+   },
+   "cell": "are-sweet"
+  },
+  {
+   "week": "2026-03-30",
+   "to": "2026-04-05",
+   "partial": false,
+   "bno": 54.12,
+   "bno_date": "2026-04-02",
+   "think": "sweet",
+   "days": {
+    "peace": 0,
+    "sweet": 4,
+    "war": 0
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 4.62994028048044,
+    "date": "2026-04-05",
+    "share": 0.046
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-03",
+    "best": 331,
+    "state": "war",
+    "provisional": true
+   },
+   "cell": "are-sweet"
+  },
+  {
+   "week": "2026-04-06",
+   "to": "2026-04-12",
+   "partial": false,
+   "bno": 47.25,
+   "bno_date": "2026-04-10",
+   "think": "peace",
+   "days": {
+    "peace": 3,
+    "sweet": 2,
+    "war": 0
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 4.012614909749714,
+    "date": "2026-04-12",
+    "share": 0.04
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-04",
+    "best": 129,
+    "state": "war",
+    "provisional": true
+   },
+   "cell": "are-not-think"
+  },
+  {
+   "week": "2026-04-13",
+   "to": "2026-04-19",
+   "partial": false,
+   "bno": 45.47,
+   "bno_date": "2026-04-17",
+   "think": "peace",
+   "days": {
+    "peace": 3,
+    "sweet": 2,
+    "war": 0
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 8.642555190230155,
+    "date": "2026-04-19",
+    "share": 0.086
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-04",
+    "best": 129,
+    "state": "war",
+    "provisional": true
+   },
+   "cell": "are-not-think"
+  },
+  {
+   "week": "2026-04-20",
+   "to": "2026-04-26",
+   "partial": false,
+   "bno": 52.59,
+   "bno_date": "2026-04-24",
+   "think": "sweet",
+   "days": {
+    "peace": 1,
+    "sweet": 4,
+    "war": 0
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 3.703952224384352,
+    "date": "2026-04-26",
+    "share": 0.037
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-04",
+    "best": 129,
+    "state": "war",
+    "provisional": true
+   },
+   "cell": "are-sweet"
+  },
+  {
+   "week": "2026-04-27",
+   "to": "2026-05-03",
+   "partial": false,
+   "bno": 57.27,
+   "bno_date": "2026-05-01",
+   "think": "war",
+   "days": {
+    "peace": 0,
+    "sweet": 1,
+    "war": 4
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 12.037844729249144,
+    "date": "2026-05-03",
+    "share": 0.12
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-04",
+    "best": 129,
+    "state": "war",
+    "provisional": true
+   },
+   "cell": "are-think"
+  },
+  {
+   "week": "2026-05-04",
+   "to": "2026-05-10",
+   "partial": false,
+   "bno": 53.11,
+   "bno_date": "2026-05-08",
+   "think": "sweet",
+   "days": {
+    "peace": 0,
+    "sweet": 3,
+    "war": 2
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 0.9259880560960878,
+    "date": "2026-05-10",
+    "share": 0.009
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-05",
+    "best": 22,
+    "state": "quiet",
+    "provisional": true
+   },
+   "cell": "are-sweet"
+  },
+  {
+   "week": "2026-05-11",
+   "to": "2026-05-17",
+   "partial": false,
+   "bno": 57.69,
+   "bno_date": "2026-05-15",
+   "think": "war",
+   "days": {
+    "peace": 0,
+    "sweet": 0,
+    "war": 5
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 4.3212775951150775,
+    "date": "2026-05-17",
+    "share": 0.043
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-05",
+    "best": 22,
+    "state": "quiet",
+    "provisional": true
+   },
+   "cell": "are-think"
+  },
+  {
+   "week": "2026-05-18",
+   "to": "2026-05-24",
+   "partial": false,
+   "bno": 55.0,
+   "bno_date": "2026-05-22",
+   "think": "sweet",
+   "days": {
+    "peace": 0,
+    "sweet": 1,
+    "war": 4
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 4.012614909749714,
+    "date": "2026-05-24",
+    "share": 0.04
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-05",
+    "best": 22,
+    "state": "quiet",
+    "provisional": true
+   },
+   "cell": "are-sweet"
+  },
+  {
+   "week": "2026-05-25",
+   "to": "2026-05-31",
+   "partial": false,
+   "bno": 50.59,
+   "bno_date": "2026-05-29",
+   "think": "sweet",
+   "days": {
+    "peace": 0,
+    "sweet": 4,
+    "war": 0
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 0.9259880560960878,
+    "date": "2026-05-31",
+    "share": 0.009
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-05",
+    "best": 22,
+    "state": "quiet",
+    "provisional": true
+   },
+   "cell": "are-sweet"
+  },
+  {
+   "week": "2026-06-01",
+   "to": "2026-06-07",
+   "partial": false,
+   "bno": 51.2,
+   "bno_date": "2026-06-05",
+   "think": "sweet",
+   "days": {
+    "peace": 0,
+    "sweet": 5,
+    "war": 0
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 2.4693014829229014,
+    "date": "2026-06-07",
+    "share": 0.025
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-06",
+    "best": 6,
+    "state": "quiet",
+    "provisional": true
+   },
+   "cell": "are-sweet"
+  },
+  {
+   "week": "2026-06-08",
+   "to": "2026-06-14",
+   "partial": false,
+   "bno": 47.82,
+   "bno_date": "2026-06-12",
+   "think": "peace",
+   "days": {
+    "peace": 1,
+    "sweet": 4,
+    "war": 0
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 1.851976112192176,
+    "date": "2026-06-14",
+    "share": 0.019
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-06",
+    "best": 6,
+    "state": "quiet",
+    "provisional": true
+   },
+   "cell": "are-not-think"
+  },
+  {
+   "week": "2026-06-15",
+   "to": "2026-06-21",
+   "partial": false,
+   "bno": 43.88,
+   "bno_date": "2026-06-18",
+   "think": "peace",
+   "days": {
+    "peace": 4,
+    "sweet": 0,
+    "war": 0
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 9.568543246326245,
+    "date": "2026-06-21",
+    "share": 0.096
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-06",
+    "best": 6,
+    "state": "quiet",
+    "provisional": true
+   },
+   "cell": "are-not-think"
+  },
+  {
+   "week": "2026-06-22",
+   "to": "2026-06-28",
+   "partial": false,
+   "bno": 40.31,
+   "bno_date": "2026-06-26",
+   "think": "peace",
+   "days": {
+    "peace": 5,
+    "sweet": 0,
+    "war": 0
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 30.248943165805542,
+    "date": "2026-06-28",
+    "share": 0.302
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-06",
+    "best": 6,
+    "state": "quiet",
+    "provisional": true
+   },
+   "cell": "are-not-think"
+  },
+  {
+   "week": "2026-06-29",
+   "to": "2026-07-05",
+   "partial": false,
+   "bno": 39.67,
+   "bno_date": "2026-07-02",
+   "think": "peace",
+   "days": {
+    "peace": 4,
+    "sweet": 0,
+    "war": 0
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 28.70562973897873,
+    "date": "2026-07-05",
+    "share": 0.287
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-06",
+    "best": 6,
+    "state": "quiet",
+    "provisional": true
+   },
+   "cell": "are-not-think"
+  },
+  {
+   "week": "2026-07-06",
+   "to": "2026-07-12",
+   "partial": false,
+   "bno": 42.15,
+   "bno_date": "2026-07-10",
+   "think": "peace",
+   "days": {
+    "peace": 5,
+    "sweet": 0,
+    "war": 0
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 13.889820841441322,
+    "date": "2026-07-12",
+    "share": 0.139
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-07",
+    "best": 64,
+    "state": "fighting",
+    "provisional": true
+   },
+   "cell": "are-not-think"
+  },
+  {
+   "week": "2026-07-13",
+   "to": "2026-07-19",
+   "partial": false,
+   "bno": 48.7,
+   "bno_date": "2026-07-17",
+   "think": "peace",
+   "days": {
+    "peace": 5,
+    "sweet": 0,
+    "war": 0
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 4.938602965845803,
+    "date": "2026-07-19",
+    "share": 0.049
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-07",
+    "best": 64,
+    "state": "fighting",
+    "provisional": true
+   },
+   "cell": "are-not-think"
+  },
+  {
+   "week": "2026-07-20",
+   "to": "2026-07-26",
+   "partial": false,
+   "bno": 52.58,
+   "bno_date": "2026-07-24",
+   "think": "sweet",
+   "days": {
+    "peace": 0,
+    "sweet": 5,
+    "war": 0
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 1.851976112192176,
+    "date": "2026-07-26",
+    "share": 0.019
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-07",
+    "best": 64,
+    "state": "fighting",
+    "provisional": true
+   },
+   "cell": "are-sweet"
+  },
+  {
+   "week": "2026-07-27",
+   "to": "2026-08-02",
+   "partial": false,
+   "bno": 50.38,
+   "bno_date": "2026-07-31",
+   "think": "sweet",
+   "days": {
+    "peace": 2,
+    "sweet": 3,
+    "war": 0
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 3.0866268536536268,
+    "date": "2026-08-02",
+    "share": 0.031
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-07",
+    "best": 64,
+    "state": "fighting",
+    "provisional": true
+   },
+   "cell": "are-sweet"
+  },
+  {
+   "week": "2026-08-03",
+   "to": "2026-08-09",
+   "partial": false,
+   "bno": 46.93,
+   "bno_date": "2026-08-07",
+   "think": "peace",
+   "days": {
+    "peace": 5,
+    "sweet": 0,
+    "war": 0
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 4.012614909749714,
+    "date": "2026-08-09",
+    "share": 0.04
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-08",
+    "best": 2,
+    "state": "quiet",
+    "provisional": true
+   },
+   "cell": "are-not-think"
+  },
+  {
+   "week": "2026-08-10",
+   "to": "2026-08-16",
+   "partial": false,
+   "bno": 50.64,
+   "bno_date": "2026-08-14",
+   "think": "sweet",
+   "days": {
+    "peace": 0,
+    "sweet": 5,
+    "war": 0
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 3.39528953901899,
+    "date": "2026-08-16",
+    "share": 0.034
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-08",
+    "best": 2,
+    "state": "quiet",
+    "provisional": true
+   },
+   "cell": "are-sweet"
+  },
+  {
+   "week": "2026-08-17",
+   "to": "2026-08-23",
+   "partial": false,
+   "bno": 53.8,
+   "bno_date": "2026-08-21",
+   "think": "sweet",
+   "days": {
+    "peace": 0,
+    "sweet": 5,
+    "war": 0
+   },
+   "strait": {
+    "source": "portwatch",
+    "index": 5.2472656512111655,
+    "date": "2026-08-23",
+    "share": 0.052
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-08",
+    "best": 2,
+    "state": "quiet",
+    "provisional": true
+   },
+   "cell": "are-sweet"
+  },
+  {
+   "week": "2026-08-24",
+   "to": "2026-08-30",
+   "partial": false,
+   "bno": 51.48,
+   "bno_date": "2026-08-28",
+   "think": "sweet",
+   "days": {
+    "peace": 0,
+    "sweet": 5,
+    "war": 0
+   },
+   "strait": {
+    "source": "ledger",
+    "tracker": "vessel-monitoring services (consensus)",
+    "mbd": 5.0,
+    "date": "2026-08-24",
+    "share": 0.294,
+    "estimate_id": "e1"
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-08",
+    "best": 2,
+    "state": "quiet",
+    "provisional": true
+   },
+   "cell": "are-sweet"
+  },
+  {
+   "week": "2026-08-31",
+   "to": "2026-09-06",
+   "partial": false,
+   "bno": 56.11,
+   "bno_date": "2026-09-04",
+   "think": "war",
+   "days": {
+    "peace": 0,
+    "sweet": 1,
+    "war": 4
+   },
+   "strait": {
+    "source": "ledger",
+    "tracker": "TankerTrackers.com",
+    "mbd": 5.04,
+    "date": "2026-09-02",
+    "share": 0.296,
+    "estimate_id": "e6"
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-08",
+    "best": 2,
+    "state": "quiet",
+    "provisional": true
+   },
+   "cell": "are-think"
+  },
+  {
+   "week": "2026-09-07",
+   "to": "2026-09-13",
+   "partial": false,
+   "bno": 61.37,
+   "bno_date": "2026-09-11",
+   "think": "war",
+   "days": {
+    "peace": 0,
+    "sweet": 0,
+    "war": 4
+   },
+   "strait": {
+    "source": "ledger",
+    "tracker": "TankerTrackers.com",
+    "mbd": 5.04,
+    "date": "2026-09-02",
+    "share": 0.296,
+    "estimate_id": "e6"
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-09",
+    "best": null,
+    "state": "unknown",
+    "provisional": true
+   },
+   "cell": "are-think"
+  },
+  {
+   "week": "2026-09-14",
+   "to": "2026-09-20",
+   "partial": false,
+   "bno": 60.57,
+   "bno_date": "2026-09-18",
+   "think": "war",
+   "days": {
+    "peace": 0,
+    "sweet": 0,
+    "war": 5
+   },
+   "strait": {
+    "source": "ledger",
+    "tracker": "TankerTrackers.com",
+    "mbd": 5.04,
+    "date": "2026-09-02",
+    "share": 0.296,
+    "estimate_id": "e6"
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-09",
+    "best": null,
+    "state": "unknown",
+    "provisional": true
+   },
+   "cell": "are-think"
+  },
+  {
+   "week": "2026-09-21",
+   "to": "2026-09-27",
+   "partial": false,
+   "bno": 59.65,
+   "bno_date": "2026-09-25",
+   "think": "war",
+   "days": {
+    "peace": 0,
+    "sweet": 0,
+    "war": 5
+   },
+   "strait": {
+    "source": "ledger",
+    "tracker": "Kpler",
+    "mbd": 6.5,
+    "date": "2026-09-21",
+    "share": 0.382,
+    "estimate_id": "e9"
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-09",
+    "best": null,
+    "state": "unknown",
+    "provisional": true
+   },
+   "cell": "are-think"
+  },
+  {
+   "week": "2026-09-28",
+   "to": "2026-10-04",
+   "partial": false,
+   "bno": 63.1,
+   "bno_date": "2026-10-02",
+   "think": "war",
+   "days": {
+    "peace": 0,
+    "sweet": 0,
+    "war": 5
+   },
+   "strait": {
+    "source": "ledger",
+    "tracker": "Kpler",
+    "mbd": 11.1,
+    "date": "2026-10-01",
+    "share": 0.653,
+    "estimate_id": "e41"
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-09",
+    "best": null,
+    "state": "unknown",
+    "provisional": true
+   },
+   "cell": "are-think"
+  },
+  {
+   "week": "2026-10-05",
+   "to": "2026-10-11",
+   "partial": false,
+   "bno": 63.99,
+   "bno_date": "2026-10-09",
+   "think": "war",
+   "days": {
+    "peace": 0,
+    "sweet": 0,
+    "war": 5
+   },
+   "strait": {
+    "source": "ledger",
+    "tracker": "Kpler",
+    "mbd": 8.5,
+    "date": "2026-10-07",
+    "share": 0.5,
+    "estimate_id": "e32"
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-10",
+    "best": null,
+    "state": "unknown",
+    "provisional": true
+   },
+   "cell": "are-think"
+  },
+  {
+   "week": "2026-10-12",
+   "to": "2026-10-18",
+   "partial": false,
+   "bno": 67.19,
+   "bno_date": "2026-10-16",
+   "think": "war",
+   "days": {
+    "peace": 0,
+    "sweet": 0,
+    "war": 5
+   },
+   "strait": {
+    "source": "ledger",
+    "tracker": "Kpler",
+    "mbd": 14.0,
+    "date": "2026-10-18",
+    "share": 0.824,
+    "estimate_id": "e35"
+   },
+   "are": "open",
+   "deaths": {
+    "month": "2026-10",
+    "best": null,
+    "state": "unknown",
+    "provisional": true
+   },
+   "cell": "think-not-are"
+  },
+  {
+   "week": "2026-10-19",
+   "to": "2026-10-25",
+   "partial": false,
+   "bno": 70.99,
+   "bno_date": "2026-10-23",
+   "think": "war",
+   "days": {
+    "peace": 0,
+    "sweet": 0,
+    "war": 5
+   },
+   "strait": {
+    "source": "ledger",
+    "tracker": "Kpler",
+    "mbd": 14.0,
+    "date": "2026-10-18",
+    "share": 0.824,
+    "estimate_id": "e35"
+   },
+   "are": "open",
+   "deaths": {
+    "month": "2026-10",
+    "best": null,
+    "state": "unknown",
+    "provisional": true
+   },
+   "cell": "think-not-are"
+  },
+  {
+   "week": "2026-10-26",
+   "to": "2026-11-01",
+   "partial": false,
+   "bno": 71.39,
+   "bno_date": "2026-10-30",
+   "think": "war",
+   "days": {
+    "peace": 0,
+    "sweet": 0,
+    "war": 5
+   },
+   "strait": {
+    "source": "ledger",
+    "tracker": "Kpler",
+    "mbd": 7.3,
+    "date": "2026-10-28",
+    "share": 0.429,
+    "estimate_id": "e40"
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-10",
+    "best": null,
+    "state": "unknown",
+    "provisional": true
+   },
+   "cell": "are-think"
+  },
+  {
+   "week": "2026-11-02",
+   "to": "2026-11-08",
+   "partial": true,
+   "bno": 71.39,
+   "bno_date": "2026-10-30",
+   "think": "war",
+   "days": null,
+   "bno_carried": true,
+   "strait": {
+    "source": "ledger",
+    "tracker": "Kpler",
+    "mbd": 7.3,
+    "date": "2026-10-28",
+    "share": 0.429,
+    "estimate_id": "e40"
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-11",
+    "best": null,
+    "state": "unknown",
+    "provisional": true
+   },
+   "cell": "are-think"
+  }
+ ]
+}
