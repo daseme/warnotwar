@@ -1,0 +1,2724 @@
+{
+ "schema_version": 1,
+ "generated_at_utc": "2026-11-02T18:10:57Z",
+ "war_start": "2026-02-28",
+ "prewar_month": "2026-02",
+ "driver": {
+  "gasoline": {
+   "series_from": "2000-01",
+   "months": [
+    {
+     "month": "2025-01",
+     "price": 3.076,
+     "share": {
+      "crude": 58.0,
+      "refining": 9.2,
+      "distribution": 16.3,
+      "taxes": 16.6
+     },
+     "usd": {
+      "crude": 1.784,
+      "refining": 0.283,
+      "distribution": 0.501,
+      "taxes": 0.511
+     }
+    },
+    {
+     "month": "2025-02",
+     "price": 3.121,
+     "share": {
+      "crude": 57.5,
+      "refining": 10.0,
+      "distribution": 16.2,
+      "taxes": 16.4
+     },
+     "usd": {
+      "crude": 1.795,
+      "refining": 0.312,
+      "distribution": 0.506,
+      "taxes": 0.512
+     }
+    },
+    {
+     "month": "2025-03",
+     "price": 3.096,
+     "share": {
+      "crude": 53.6,
+      "refining": 13.7,
+      "distribution": 16.2,
+      "taxes": 16.5
+     },
+     "usd": {
+      "crude": 1.659,
+      "refining": 0.424,
+      "distribution": 0.502,
+      "taxes": 0.511
+     }
+    },
+    {
+     "month": "2025-04",
+     "price": 3.171,
+     "share": {
+      "crude": 49.1,
+      "refining": 16.3,
+      "distribution": 18.5,
+      "taxes": 16.1
+     },
+     "usd": {
+      "crude": 1.557,
+      "refining": 0.517,
+      "distribution": 0.587,
+      "taxes": 0.511
+     }
+    },
+    {
+     "month": "2025-05",
+     "price": 3.15,
+     "share": {
+      "crude": 50.0,
+      "refining": 16.6,
+      "distribution": 17.2,
+      "taxes": 16.2
+     },
+     "usd": {
+      "crude": 1.575,
+      "refining": 0.523,
+      "distribution": 0.542,
+      "taxes": 0.51
+     }
+    },
+    {
+     "month": "2025-06",
+     "price": 3.125,
+     "share": {
+      "crude": 51.9,
+      "refining": 15.7,
+      "distribution": 16.1,
+      "taxes": 16.3
+     },
+     "usd": {
+      "crude": 1.622,
+      "refining": 0.491,
+      "distribution": 0.503,
+      "taxes": 0.509
+     }
+    },
+    {
+     "month": "2025-07",
+     "price": 3.125,
+     "share": {
+      "crude": 52.1,
+      "refining": 16.1,
+      "distribution": 15.4,
+      "taxes": 16.5
+     },
+     "usd": {
+      "crude": 1.628,
+      "refining": 0.503,
+      "distribution": 0.481,
+      "taxes": 0.516
+     }
+    },
+    {
+     "month": "2025-08",
+     "price": 3.133,
+     "share": {
+      "crude": 50.5,
+      "refining": 17.6,
+      "distribution": 15.5,
+      "taxes": 16.4
+     },
+     "usd": {
+      "crude": 1.582,
+      "refining": 0.551,
+      "distribution": 0.486,
+      "taxes": 0.514
+     }
+    },
+    {
+     "month": "2025-09",
+     "price": 3.166,
+     "share": {
+      "crude": 48.3,
+      "refining": 17.7,
+      "distribution": 17.8,
+      "taxes": 16.3
+     },
+     "usd": {
+      "crude": 1.529,
+      "refining": 0.56,
+      "distribution": 0.564,
+      "taxes": 0.516
+     }
+    },
+    {
+     "month": "2025-10",
+     "price": 3.06,
+     "share": {
+      "crude": 49.1,
+      "refining": 13.5,
+      "distribution": 20.6,
+      "taxes": 16.8
+     },
+     "usd": {
+      "crude": 1.502,
+      "refining": 0.413,
+      "distribution": 0.63,
+      "taxes": 0.514
+     }
+    },
+    {
+     "month": "2025-11",
+     "price": 3.05,
+     "share": {
+      "crude": 47.3,
+      "refining": 15.8,
+      "distribution": 20.0,
+      "taxes": 16.9
+     },
+     "usd": {
+      "crude": 1.443,
+      "refining": 0.482,
+      "distribution": 0.61,
+      "taxes": 0.515
+     }
+    },
+    {
+     "month": "2025-12",
+     "price": 2.894,
+     "share": {
+      "crude": 49.1,
+      "refining": 9.2,
+      "distribution": 23.9,
+      "taxes": 17.8
+     },
+     "usd": {
+      "crude": 1.421,
+      "refining": 0.266,
+      "distribution": 0.692,
+      "taxes": 0.515
+     }
+    },
+    {
+     "month": "2026-01",
+     "price": 2.809,
+     "share": {
+      "crude": 50.6,
+      "refining": 19.7,
+      "distribution": 11.4,
+      "taxes": 18.4
+     },
+     "usd": {
+      "crude": 1.421,
+      "refining": 0.553,
+      "distribution": 0.32,
+      "taxes": 0.517
+     }
+    },
+    {
+     "month": "2026-02",
+     "price": 2.908,
+     "share": {
+      "crude": 52.0,
+      "refining": 17.0,
+      "distribution": 13.3,
+      "taxes": 17.8
+     },
+     "usd": {
+      "crude": 1.512,
+      "refining": 0.494,
+      "distribution": 0.387,
+      "taxes": 0.518
+     }
+    },
+    {
+     "month": "2026-03",
+     "price": 3.638,
+     "share": {
+      "crude": 56.9,
+      "refining": 21.3,
+      "distribution": 7.6,
+      "taxes": 14.2
+     },
+     "usd": {
+      "crude": 2.07,
+      "refining": 0.775,
+      "distribution": 0.276,
+      "taxes": 0.517
+     }
+    },
+    {
+     "month": "2026-04",
+     "price": 4.103,
+     "share": {
+      "crude": 57.1,
+      "refining": 16.6,
+      "distribution": 13.7,
+      "taxes": 12.6
+     },
+     "usd": {
+      "crude": 2.343,
+      "refining": 0.681,
+      "distribution": 0.562,
+      "taxes": 0.517
+     }
+    },
+    {
+     "month": "2026-05",
+     "price": 4.479,
+     "share": {
+      "crude": 51.9,
+      "refining": 21.7,
+      "distribution": 14.8,
+      "taxes": 11.5
+     },
+     "usd": {
+      "crude": 2.325,
+      "refining": 0.972,
+      "distribution": 0.663,
+      "taxes": 0.515
+     }
+    },
+    {
+     "month": "2026-06",
+     "price": 4.05,
+     "share": {
+      "crude": 53.7,
+      "refining": 15.7,
+      "distribution": 17.8,
+      "taxes": 12.8
+     },
+     "usd": {
+      "crude": 2.175,
+      "refining": 0.636,
+      "distribution": 0.721,
+      "taxes": 0.518
+     }
+    },
+    {
+     "month": "2026-07",
+     "price": 3.932,
+     "share": {
+      "crude": 49.8,
+      "refining": 26.4,
+      "distribution": 10.5,
+      "taxes": 13.3
+     },
+     "usd": {
+      "crude": 1.958,
+      "refining": 1.038,
+      "distribution": 0.413,
+      "taxes": 0.523
+     }
+    },
+    {
+     "month": "2026-08",
+     "price": 4.058,
+     "share": {
+      "crude": 50.3,
+      "refining": 24.4,
+      "distribution": 12.5,
+      "taxes": 12.9
+     },
+     "usd": {
+      "crude": 2.041,
+      "refining": 0.99,
+      "distribution": 0.507,
+      "taxes": 0.523
+     }
+    }
+   ],
+   "facts": {
+    "latest_month": "2026-08",
+    "prewar": {
+     "month": "2026-02",
+     "price": 2.908,
+     "share": {
+      "crude": 52.0,
+      "refining": 17.0,
+      "distribution": 13.3,
+      "taxes": 17.8
+     },
+     "usd": {
+      "crude": 1.512,
+      "refining": 0.494,
+      "distribution": 0.387,
+      "taxes": 0.518
+     }
+    },
+    "latest": {
+     "month": "2026-08",
+     "price": 4.058,
+     "share": {
+      "crude": 50.3,
+      "refining": 24.4,
+      "distribution": 12.5,
+      "taxes": 12.9
+     },
+     "usd": {
+      "crude": 2.041,
+      "refining": 0.99,
+      "distribution": 0.507,
+      "taxes": 0.523
+     }
+    },
+    "change_usd": {
+     "crude": 0.529,
+     "refining": 0.496,
+     "distribution": 0.12,
+     "taxes": 0.005
+    },
+    "price_change": 1.15,
+    "refining_share": {
+     "value": 24.4,
+     "rank_from_top": 16,
+     "of": 320,
+     "previous_higher_month": "2026-07"
+    },
+    "crude_share": {
+     "value": 50.3,
+     "rank_from_top": 211,
+     "of": 320,
+     "previous_higher_month": "2026-06"
+    },
+    "distribution_share": {
+     "value": 12.5,
+     "rank_from_top": 151,
+     "of": 320,
+     "previous_higher_month": "2026-06"
+    },
+    "price_month": {
+     "value": 4.058,
+     "rank_from_top": 9,
+     "of": 320,
+     "previous_higher_month": "2026-05"
+    },
+    "weekly": {
+     "latest": {
+      "date": "2026-10-26",
+      "v": 4.121
+     },
+     "max": {
+      "date": "2022-06-13",
+      "v": 4.844
+     },
+     "first": "1990-08-20",
+     "latest_rank_from_top": 24,
+     "weeks": 1883,
+     "war_max": {
+      "date": "2026-05-11",
+      "v": 4.353
+     }
+    }
+   },
+   "weekly_since_2025": [
+    {
+     "date": "2025-01-06",
+     "v": 2.958
+    },
+    {
+     "date": "2025-01-13",
+     "v": 2.95
+    },
+    {
+     "date": "2025-01-20",
+     "v": 3.011
+    },
+    {
+     "date": "2025-01-27",
+     "v": 3.006
+    },
+    {
+     "date": "2025-02-03",
+     "v": 2.972
+    },
+    {
+     "date": "2025-02-10",
+     "v": 3.022
+    },
+    {
+     "date": "2025-02-17",
+     "v": 3.021
+    },
+    {
+     "date": "2025-02-24",
+     "v": 2.997
+    },
+    {
+     "date": "2025-03-03",
+     "v": 2.951
+    },
+    {
+     "date": "2025-03-10",
+     "v": 2.947
+    },
+    {
+     "date": "2025-03-17",
+     "v": 2.943
+    },
+    {
+     "date": "2025-03-24",
+     "v": 2.999
+    },
+    {
+     "date": "2025-03-31",
+     "v": 3.04
+    },
+    {
+     "date": "2025-04-07",
+     "v": 3.118
+    },
+    {
+     "date": "2025-04-14",
+     "v": 3.043
+    },
+    {
+     "date": "2025-04-21",
+     "v": 3.02
+    },
+    {
+     "date": "2025-04-28",
+     "v": 3.013
+    },
+    {
+     "date": "2025-05-05",
+     "v": 3.031
+    },
+    {
+     "date": "2025-05-12",
+     "v": 2.986
+    },
+    {
+     "date": "2025-05-19",
+     "v": 3.041
+    },
+    {
+     "date": "2025-05-26",
+     "v": 3.03
+    },
+    {
+     "date": "2025-06-02",
+     "v": 3.008
+    },
+    {
+     "date": "2025-06-09",
+     "v": 2.99
+    },
+    {
+     "date": "2025-06-16",
+     "v": 3.023
+    },
+    {
+     "date": "2025-06-23",
+     "v": 3.102
+    },
+    {
+     "date": "2025-06-30",
+     "v": 3.047
+    },
+    {
+     "date": "2025-07-07",
+     "v": 3.013
+    },
+    {
+     "date": "2025-07-14",
+     "v": 3.018
+    },
+    {
+     "date": "2025-07-21",
+     "v": 3.018
+    },
+    {
+     "date": "2025-07-28",
+     "v": 3.023
+    },
+    {
+     "date": "2025-08-04",
+     "v": 3.036
+    },
+    {
+     "date": "2025-08-11",
+     "v": 3.016
+    },
+    {
+     "date": "2025-08-18",
+     "v": 3.018
+    },
+    {
+     "date": "2025-08-25",
+     "v": 3.038
+    },
+    {
+     "date": "2025-09-01",
+     "v": 3.058
+    },
+    {
+     "date": "2025-09-08",
+     "v": 3.069
+    },
+    {
+     "date": "2025-09-15",
+     "v": 3.036
+    },
+    {
+     "date": "2025-09-22",
+     "v": 3.05
+    },
+    {
+     "date": "2025-09-29",
+     "v": 2.994
+    },
+    {
+     "date": "2025-10-06",
+     "v": 3.0
+    },
+    {
+     "date": "2025-10-13",
+     "v": 2.932
+    },
+    {
+     "date": "2025-10-20",
+     "v": 2.898
+    },
+    {
+     "date": "2025-10-27",
+     "v": 2.92
+    },
+    {
+     "date": "2025-11-03",
+     "v": 2.898
+    },
+    {
+     "date": "2025-11-10",
+     "v": 2.927
+    },
+    {
+     "date": "2025-11-17",
+     "v": 2.939
+    },
+    {
+     "date": "2025-11-24",
+     "v": 2.936
+    },
+    {
+     "date": "2025-12-01",
+     "v": 2.854
+    },
+    {
+     "date": "2025-12-08",
+     "v": 2.819
+    },
+    {
+     "date": "2025-12-15",
+     "v": 2.773
+    },
+    {
+     "date": "2025-12-22",
+     "v": 2.72
+    },
+    {
+     "date": "2025-12-29",
+     "v": 2.69
+    },
+    {
+     "date": "2026-01-05",
+     "v": 2.681
+    },
+    {
+     "date": "2026-01-12",
+     "v": 2.665
+    },
+    {
+     "date": "2026-01-19",
+     "v": 2.7
+    },
+    {
+     "date": "2026-01-26",
+     "v": 2.747
+    },
+    {
+     "date": "2026-02-02",
+     "v": 2.747
+    },
+    {
+     "date": "2026-02-09",
+     "v": 2.77
+    },
+    {
+     "date": "2026-02-16",
+     "v": 2.79
+    },
+    {
+     "date": "2026-02-23",
+     "v": 2.796
+    },
+    {
+     "date": "2026-03-02",
+     "v": 2.884
+    },
+    {
+     "date": "2026-03-09",
+     "v": 3.364
+    },
+    {
+     "date": "2026-03-16",
+     "v": 3.566
+    },
+    {
+     "date": "2026-03-23",
+     "v": 3.788
+    },
+    {
+     "date": "2026-03-30",
+     "v": 3.814
+    },
+    {
+     "date": "2026-04-06",
+     "v": 3.947
+    },
+    {
+     "date": "2026-04-13",
+     "v": 3.962
+    },
+    {
+     "date": "2026-04-20",
+     "v": 3.885
+    },
+    {
+     "date": "2026-04-27",
+     "v": 3.948
+    },
+    {
+     "date": "2026-05-04",
+     "v": 4.305
+    },
+    {
+     "date": "2026-05-11",
+     "v": 4.353
+    },
+    {
+     "date": "2026-05-18",
+     "v": 4.334
+    },
+    {
+     "date": "2026-05-25",
+     "v": 4.327
+    },
+    {
+     "date": "2026-06-01",
+     "v": 4.138
+    },
+    {
+     "date": "2026-06-08",
+     "v": 3.986
+    },
+    {
+     "date": "2026-06-15",
+     "v": 3.908
+    },
+    {
+     "date": "2026-06-22",
+     "v": 3.771
+    },
+    {
+     "date": "2026-06-29",
+     "v": 3.7
+    },
+    {
+     "date": "2026-07-06",
+     "v": 3.645
+    },
+    {
+     "date": "2026-07-13",
+     "v": 3.728
+    },
+    {
+     "date": "2026-07-20",
+     "v": 3.863
+    },
+    {
+     "date": "2026-07-27",
+     "v": 3.952
+    },
+    {
+     "date": "2026-08-03",
+     "v": 3.935
+    },
+    {
+     "date": "2026-08-10",
+     "v": 3.864
+    },
+    {
+     "date": "2026-08-17",
+     "v": 3.919
+    },
+    {
+     "date": "2026-08-24",
+     "v": 3.949
+    },
+    {
+     "date": "2026-08-31",
+     "v": 3.916
+    },
+    {
+     "date": "2026-09-07",
+     "v": 3.996
+    },
+    {
+     "date": "2026-09-14",
+     "v": 4.168
+    },
+    {
+     "date": "2026-09-21",
+     "v": 4.337
+    },
+    {
+     "date": "2026-09-28",
+     "v": 4.309
+    },
+    {
+     "date": "2026-10-05",
+     "v": 4.157
+    },
+    {
+     "date": "2026-10-12",
+     "v": 4.15
+    },
+    {
+     "date": "2026-10-19",
+     "v": 4.121
+    },
+    {
+     "date": "2026-10-26",
+     "v": 4.121
+    }
+   ]
+  },
+  "diesel": {
+   "series_from": "2002-05",
+   "months": [
+    {
+     "month": "2025-01",
+     "price": 3.634,
+     "share": {
+      "crude": 49.1,
+      "refining": 16.3,
+      "distribution": 18.3,
+      "taxes": 16.3
+     },
+     "usd": {
+      "crude": 1.784,
+      "refining": 0.592,
+      "distribution": 0.665,
+      "taxes": 0.592
+     }
+    },
+    {
+     "month": "2025-02",
+     "price": 3.675,
+     "share": {
+      "crude": 48.8,
+      "refining": 15.7,
+      "distribution": 19.3,
+      "taxes": 16.1
+     },
+     "usd": {
+      "crude": 1.793,
+      "refining": 0.577,
+      "distribution": 0.709,
+      "taxes": 0.592
+     }
+    },
+    {
+     "month": "2025-03",
+     "price": 3.585,
+     "share": {
+      "crude": 46.3,
+      "refining": 14.7,
+      "distribution": 22.5,
+      "taxes": 16.5
+     },
+     "usd": {
+      "crude": 1.66,
+      "refining": 0.527,
+      "distribution": 0.807,
+      "taxes": 0.592
+     }
+    },
+    {
+     "month": "2025-04",
+     "price": 3.567,
+     "share": {
+      "crude": 43.7,
+      "refining": 16.6,
+      "distribution": 23.1,
+      "taxes": 16.6
+     },
+     "usd": {
+      "crude": 1.559,
+      "refining": 0.592,
+      "distribution": 0.824,
+      "taxes": 0.592
+     }
+    },
+    {
+     "month": "2025-05",
+     "price": 3.499,
+     "share": {
+      "crude": 45.0,
+      "refining": 14.9,
+      "distribution": 23.1,
+      "taxes": 17.0
+     },
+     "usd": {
+      "crude": 1.575,
+      "refining": 0.521,
+      "distribution": 0.808,
+      "taxes": 0.595
+     }
+    },
+    {
+     "month": "2025-06",
+     "price": 3.599,
+     "share": {
+      "crude": 45.1,
+      "refining": 18.5,
+      "distribution": 19.9,
+      "taxes": 16.5
+     },
+     "usd": {
+      "crude": 1.623,
+      "refining": 0.666,
+      "distribution": 0.716,
+      "taxes": 0.594
+     }
+    },
+    {
+     "month": "2025-07",
+     "price": 3.779,
+     "share": {
+      "crude": 43.7,
+      "refining": 21.9,
+      "distribution": 18.6,
+      "taxes": 15.8
+     },
+     "usd": {
+      "crude": 1.651,
+      "refining": 0.828,
+      "distribution": 0.703,
+      "taxes": 0.597
+     }
+    },
+    {
+     "month": "2025-08",
+     "price": 3.744,
+     "share": {
+      "crude": 42.3,
+      "refining": 19.5,
+      "distribution": 22.3,
+      "taxes": 15.9
+     },
+     "usd": {
+      "crude": 1.584,
+      "refining": 0.73,
+      "distribution": 0.835,
+      "taxes": 0.595
+     }
+    },
+    {
+     "month": "2025-09",
+     "price": 3.748,
+     "share": {
+      "crude": 40.8,
+      "refining": 23.9,
+      "distribution": 19.4,
+      "taxes": 15.9
+     },
+     "usd": {
+      "crude": 1.529,
+      "refining": 0.896,
+      "distribution": 0.727,
+      "taxes": 0.596
+     }
+    },
+    {
+     "month": "2025-10",
+     "price": 3.679,
+     "share": {
+      "crude": 40.9,
+      "refining": 22.6,
+      "distribution": 20.3,
+      "taxes": 16.2
+     },
+     "usd": {
+      "crude": 1.505,
+      "refining": 0.831,
+      "distribution": 0.747,
+      "taxes": 0.596
+     }
+    },
+    {
+     "month": "2025-11",
+     "price": 3.822,
+     "share": {
+      "crude": 37.8,
+      "refining": 27.2,
+      "distribution": 19.4,
+      "taxes": 15.6
+     },
+     "usd": {
+      "crude": 1.445,
+      "refining": 1.04,
+      "distribution": 0.741,
+      "taxes": 0.596
+     }
+    },
+    {
+     "month": "2025-12",
+     "price": 3.615,
+     "share": {
+      "crude": 39.3,
+      "refining": 18.1,
+      "distribution": 26.1,
+      "taxes": 16.5
+     },
+     "usd": {
+      "crude": 1.421,
+      "refining": 0.654,
+      "distribution": 0.944,
+      "taxes": 0.596
+     }
+    },
+    {
+     "month": "2026-01",
+     "price": 3.523,
+     "share": {
+      "crude": 41.4,
+      "refining": 17.8,
+      "distribution": 23.9,
+      "taxes": 17.0
+     },
+     "usd": {
+      "crude": 1.459,
+      "refining": 0.627,
+      "distribution": 0.842,
+      "taxes": 0.599
+     }
+    },
+    {
+     "month": "2026-02",
+     "price": 3.722,
+     "share": {
+      "crude": 40.6,
+      "refining": 22.6,
+      "distribution": 20.6,
+      "taxes": 16.1
+     },
+     "usd": {
+      "crude": 1.511,
+      "refining": 0.841,
+      "distribution": 0.767,
+      "taxes": 0.599
+     }
+    },
+    {
+     "month": "2026-03",
+     "price": 4.921,
+     "share": {
+      "crude": 42.1,
+      "refining": 34.0,
+      "distribution": 11.8,
+      "taxes": 12.2
+     },
+     "usd": {
+      "crude": 2.072,
+      "refining": 1.673,
+      "distribution": 0.581,
+      "taxes": 0.6
+     }
+    },
+    {
+     "month": "2026-04",
+     "price": 5.501,
+     "share": {
+      "crude": 42.6,
+      "refining": 31.7,
+      "distribution": 14.9,
+      "taxes": 10.9
+     },
+     "usd": {
+      "crude": 2.343,
+      "refining": 1.744,
+      "distribution": 0.82,
+      "taxes": 0.6
+     }
+    },
+    {
+     "month": "2026-05",
+     "price": 5.6,
+     "share": {
+      "crude": 41.5,
+      "refining": 25.3,
+      "distribution": 22.5,
+      "taxes": 10.7
+     },
+     "usd": {
+      "crude": 2.324,
+      "refining": 1.417,
+      "distribution": 1.26,
+      "taxes": 0.599
+     }
+    },
+    {
+     "month": "2026-06",
+     "price": 5.024,
+     "share": {
+      "crude": 43.3,
+      "refining": 23.8,
+      "distribution": 21.0,
+      "taxes": 11.9
+     },
+     "usd": {
+      "crude": 2.175,
+      "refining": 1.196,
+      "distribution": 1.055,
+      "taxes": 0.598
+     }
+    },
+    {
+     "month": "2026-07",
+     "price": 4.955,
+     "share": {
+      "crude": 39.5,
+      "refining": 37.1,
+      "distribution": 11.2,
+      "taxes": 12.2
+     },
+     "usd": {
+      "crude": 1.957,
+      "refining": 1.838,
+      "distribution": 0.555,
+      "taxes": 0.605
+     }
+    },
+    {
+     "month": "2026-08",
+     "price": 5.462,
+     "share": {
+      "crude": 37.3,
+      "refining": 40.3,
+      "distribution": 11.4,
+      "taxes": 11.0
+     },
+     "usd": {
+      "crude": 2.037,
+      "refining": 2.201,
+      "distribution": 0.623,
+      "taxes": 0.601
+     }
+    }
+   ],
+   "facts": {
+    "latest_month": "2026-08",
+    "prewar": {
+     "month": "2026-02",
+     "price": 3.722,
+     "share": {
+      "crude": 40.6,
+      "refining": 22.6,
+      "distribution": 20.6,
+      "taxes": 16.1
+     },
+     "usd": {
+      "crude": 1.511,
+      "refining": 0.841,
+      "distribution": 0.767,
+      "taxes": 0.599
+     }
+    },
+    "latest": {
+     "month": "2026-08",
+     "price": 5.462,
+     "share": {
+      "crude": 37.3,
+      "refining": 40.3,
+      "distribution": 11.4,
+      "taxes": 11.0
+     },
+     "usd": {
+      "crude": 2.037,
+      "refining": 2.201,
+      "distribution": 0.623,
+      "taxes": 0.601
+     }
+    },
+    "change_usd": {
+     "crude": 0.526,
+     "refining": 1.36,
+     "distribution": -0.144,
+     "taxes": 0.002
+    },
+    "price_change": 1.74,
+    "refining_share": {
+     "value": 40.3,
+     "rank_from_top": 1,
+     "of": 292,
+     "previous_higher_month": null
+    },
+    "crude_share": {
+     "value": 37.3,
+     "rank_from_top": 285,
+     "of": 292,
+     "previous_higher_month": "2026-07"
+    },
+    "distribution_share": {
+     "value": 11.4,
+     "rank_from_top": 208,
+     "of": 292,
+     "previous_higher_month": "2026-06"
+    },
+    "price_month": {
+     "value": 5.462,
+     "rank_from_top": 6,
+     "of": 292,
+     "previous_higher_month": "2026-05"
+    },
+    "weekly": {
+     "latest": {
+      "date": "2026-10-26",
+      "v": 6.352
+     },
+     "max": {
+      "date": "2026-09-21",
+      "v": 6.529
+     },
+     "first": "1994-03-21",
+     "latest_rank_from_top": 3,
+     "weeks": 1702,
+     "war_max": {
+      "date": "2026-09-21",
+      "v": 6.529
+     }
+    }
+   },
+   "weekly_since_2025": [
+    {
+     "date": "2025-01-06",
+     "v": 3.561
+    },
+    {
+     "date": "2025-01-13",
+     "v": 3.602
+    },
+    {
+     "date": "2025-01-20",
+     "v": 3.715
+    },
+    {
+     "date": "2025-01-27",
+     "v": 3.659
+    },
+    {
+     "date": "2025-02-03",
+     "v": 3.66
+    },
+    {
+     "date": "2025-02-10",
+     "v": 3.665
+    },
+    {
+     "date": "2025-02-17",
+     "v": 3.677
+    },
+    {
+     "date": "2025-02-24",
+     "v": 3.697
+    },
+    {
+     "date": "2025-03-03",
+     "v": 3.635
+    },
+    {
+     "date": "2025-03-10",
+     "v": 3.582
+    },
+    {
+     "date": "2025-03-17",
+     "v": 3.549
+    },
+    {
+     "date": "2025-03-24",
+     "v": 3.567
+    },
+    {
+     "date": "2025-03-31",
+     "v": 3.592
+    },
+    {
+     "date": "2025-04-07",
+     "v": 3.639
+    },
+    {
+     "date": "2025-04-14",
+     "v": 3.579
+    },
+    {
+     "date": "2025-04-21",
+     "v": 3.534
+    },
+    {
+     "date": "2025-04-28",
+     "v": 3.514
+    },
+    {
+     "date": "2025-05-05",
+     "v": 3.497
+    },
+    {
+     "date": "2025-05-12",
+     "v": 3.476
+    },
+    {
+     "date": "2025-05-19",
+     "v": 3.536
+    },
+    {
+     "date": "2025-05-26",
+     "v": 3.487
+    },
+    {
+     "date": "2025-06-02",
+     "v": 3.451
+    },
+    {
+     "date": "2025-06-09",
+     "v": 3.471
+    },
+    {
+     "date": "2025-06-16",
+     "v": 3.571
+    },
+    {
+     "date": "2025-06-23",
+     "v": 3.775
+    },
+    {
+     "date": "2025-06-30",
+     "v": 3.727
+    },
+    {
+     "date": "2025-07-07",
+     "v": 3.739
+    },
+    {
+     "date": "2025-07-14",
+     "v": 3.758
+    },
+    {
+     "date": "2025-07-21",
+     "v": 3.812
+    },
+    {
+     "date": "2025-07-28",
+     "v": 3.805
+    },
+    {
+     "date": "2025-08-04",
+     "v": 3.8
+    },
+    {
+     "date": "2025-08-11",
+     "v": 3.754
+    },
+    {
+     "date": "2025-08-18",
+     "v": 3.713
+    },
+    {
+     "date": "2025-08-25",
+     "v": 3.708
+    },
+    {
+     "date": "2025-09-01",
+     "v": 3.734
+    },
+    {
+     "date": "2025-09-08",
+     "v": 3.766
+    },
+    {
+     "date": "2025-09-15",
+     "v": 3.739
+    },
+    {
+     "date": "2025-09-22",
+     "v": 3.749
+    },
+    {
+     "date": "2025-09-29",
+     "v": 3.754
+    },
+    {
+     "date": "2025-10-06",
+     "v": 3.711
+    },
+    {
+     "date": "2025-10-13",
+     "v": 3.665
+    },
+    {
+     "date": "2025-10-20",
+     "v": 3.62
+    },
+    {
+     "date": "2025-10-27",
+     "v": 3.718
+    },
+    {
+     "date": "2025-11-03",
+     "v": 3.753
+    },
+    {
+     "date": "2025-11-10",
+     "v": 3.837
+    },
+    {
+     "date": "2025-11-17",
+     "v": 3.868
+    },
+    {
+     "date": "2025-11-24",
+     "v": 3.831
+    },
+    {
+     "date": "2025-12-01",
+     "v": 3.758
+    },
+    {
+     "date": "2025-12-08",
+     "v": 3.665
+    },
+    {
+     "date": "2025-12-15",
+     "v": 3.607
+    },
+    {
+     "date": "2025-12-22",
+     "v": 3.544
+    },
+    {
+     "date": "2025-12-29",
+     "v": 3.5
+    },
+    {
+     "date": "2026-01-05",
+     "v": 3.477
+    },
+    {
+     "date": "2026-01-12",
+     "v": 3.459
+    },
+    {
+     "date": "2026-01-19",
+     "v": 3.53
+    },
+    {
+     "date": "2026-01-26",
+     "v": 3.624
+    },
+    {
+     "date": "2026-02-02",
+     "v": 3.681
+    },
+    {
+     "date": "2026-02-09",
+     "v": 3.688
+    },
+    {
+     "date": "2026-02-16",
+     "v": 3.711
+    },
+    {
+     "date": "2026-02-23",
+     "v": 3.809
+    },
+    {
+     "date": "2026-03-02",
+     "v": 3.897
+    },
+    {
+     "date": "2026-03-09",
+     "v": 4.859
+    },
+    {
+     "date": "2026-03-16",
+     "v": 5.071
+    },
+    {
+     "date": "2026-03-23",
+     "v": 5.375
+    },
+    {
+     "date": "2026-03-30",
+     "v": 5.401
+    },
+    {
+     "date": "2026-04-06",
+     "v": 5.643
+    },
+    {
+     "date": "2026-04-13",
+     "v": 5.608
+    },
+    {
+     "date": "2026-04-20",
+     "v": 5.403
+    },
+    {
+     "date": "2026-04-27",
+     "v": 5.351
+    },
+    {
+     "date": "2026-05-04",
+     "v": 5.64
+    },
+    {
+     "date": "2026-05-11",
+     "v": 5.639
+    },
+    {
+     "date": "2026-05-18",
+     "v": 5.596
+    },
+    {
+     "date": "2026-05-25",
+     "v": 5.523
+    },
+    {
+     "date": "2026-06-01",
+     "v": 5.35
+    },
+    {
+     "date": "2026-06-08",
+     "v": 5.21
+    },
+    {
+     "date": "2026-06-15",
+     "v": 5.059
+    },
+    {
+     "date": "2026-06-22",
+     "v": 4.832
+    },
+    {
+     "date": "2026-06-29",
+     "v": 4.668
+    },
+    {
+     "date": "2026-07-06",
+     "v": 4.578
+    },
+    {
+     "date": "2026-07-13",
+     "v": 4.796
+    },
+    {
+     "date": "2026-07-20",
+     "v": 5.134
+    },
+    {
+     "date": "2026-07-27",
+     "v": 5.313
+    },
+    {
+     "date": "2026-08-03",
+     "v": 5.348
+    },
+    {
+     "date": "2026-08-10",
+     "v": 5.257
+    },
+    {
+     "date": "2026-08-17",
+     "v": 5.454
+    },
+    {
+     "date": "2026-08-24",
+     "v": 5.652
+    },
+    {
+     "date": "2026-08-31",
+     "v": 5.599
+    },
+    {
+     "date": "2026-09-07",
+     "v": 5.967
+    },
+    {
+     "date": "2026-09-14",
+     "v": 6.285
+    },
+    {
+     "date": "2026-09-21",
+     "v": 6.529
+    },
+    {
+     "date": "2026-09-28",
+     "v": 6.382
+    },
+    {
+     "date": "2026-10-05",
+     "v": 6.199
+    },
+    {
+     "date": "2026-10-12",
+     "v": 6.179
+    },
+    {
+     "date": "2026-10-19",
+     "v": 6.276
+    },
+    {
+     "date": "2026-10-26",
+     "v": 6.352
+    }
+   ]
+  }
+ },
+ "exporter": {
+  "checkpoints": [
+   {
+    "checkpoint": "2026-01",
+    "brent": 66.6,
+    "brent_source": "EIA monthly average",
+    "layers": {
+     "freight": {
+      "usd": 1.73,
+      "low": 1.73,
+      "high": 1.73,
+      "quotes": [
+       "q1"
+      ]
+     }
+    },
+    "logistics_usd": 1.73,
+    "logistics_share_of_delivered": 2.5,
+    "logistics_share_of_fob": 2.6,
+    "complete": false,
+    "unpriced_layers": [
+     "war_risk",
+     "sts",
+     "fuel"
+    ],
+    "other_quotes": []
+   },
+   {
+    "checkpoint": "2026-03",
+    "brent": 103.13,
+    "brent_source": "EIA monthly average",
+    "layers": {
+     "freight": {
+      "usd": 17.0,
+      "low": 17.0,
+      "high": 17.0,
+      "quotes": [
+       "q4"
+      ]
+     }
+    },
+    "logistics_usd": 17.0,
+    "logistics_share_of_delivered": 14.2,
+    "logistics_share_of_fob": 16.5,
+    "complete": false,
+    "unpriced_layers": [
+     "war_risk",
+     "sts",
+     "fuel"
+    ],
+    "other_quotes": [
+     "q3",
+     "q14"
+    ]
+   },
+   {
+    "checkpoint": "2026-06",
+    "brent": 85.4,
+    "brent_source": "EIA monthly average",
+    "layers": {
+     "freight": {
+      "usd": 11.5,
+      "low": 11.0,
+      "high": 12.0,
+      "quotes": [
+       "q5"
+      ]
+     }
+    },
+    "logistics_usd": 11.5,
+    "logistics_share_of_delivered": 11.9,
+    "logistics_share_of_fob": 13.5,
+    "complete": false,
+    "unpriced_layers": [
+     "war_risk",
+     "sts",
+     "fuel"
+    ],
+    "other_quotes": [
+     "q15"
+    ]
+   },
+   {
+    "checkpoint": "2026-09",
+    "brent": 114.16,
+    "brent_source": "EIA monthly average",
+    "layers": {
+     "freight": {
+      "usd": 26.0,
+      "low": 26.0,
+      "high": 26.0,
+      "quotes": [
+       "q8"
+      ]
+     }
+    },
+    "logistics_usd": 26.0,
+    "logistics_share_of_delivered": 18.6,
+    "logistics_share_of_fob": 22.8,
+    "complete": false,
+    "unpriced_layers": [
+     "war_risk",
+     "sts",
+     "fuel"
+    ],
+    "other_quotes": [
+     "q7",
+     "q9"
+    ]
+   },
+   {
+    "checkpoint": "2026-10",
+    "brent": 124.83,
+    "brent_source": "average of FRED daily Brent spot, 19 days to 2026-10-27",
+    "layers": {
+     "freight": {
+      "usd": 35.5,
+      "low": 34.0,
+      "high": 37.0,
+      "quotes": [
+       "q11"
+      ]
+     },
+     "war_risk": {
+      "usd": 5.75,
+      "low": 4.0,
+      "high": 7.0,
+      "quotes": [
+       "q18",
+       "q19"
+      ]
+     },
+     "sts": {
+      "usd": 4.0,
+      "low": 4.0,
+      "high": 4.0,
+      "quotes": [
+       "q20"
+      ]
+     },
+     "fuel": {
+      "usd": 4.0,
+      "low": 4.0,
+      "high": 4.0,
+      "quotes": [
+       "q21"
+      ]
+     }
+    },
+    "logistics_usd": 49.25,
+    "logistics_share_of_delivered": 28.3,
+    "logistics_share_of_fob": 39.5,
+    "complete": true,
+    "unpriced_layers": [],
+    "other_quotes": [
+     "q10",
+     "q12",
+     "q17",
+     "q23",
+     "q24"
+    ]
+   }
+  ],
+  "layers": [
+   "freight",
+   "war_risk",
+   "sts",
+   "fuel"
+  ],
+  "claim": "q27",
+  "share_series": [
+   "q9",
+   "q12"
+  ]
+ },
+ "iran": {
+  "checkpoints": [
+   {
+    "checkpoint": "2026-02",
+    "brent": 70.89,
+    "discount": -12.0,
+    "discount_quote": "q28",
+    "volume_mbd": 1.7,
+    "volume_quote": "q32",
+    "volume_known": true
+   },
+   {
+    "checkpoint": "2026-03",
+    "brent": 103.13,
+    "discount": 1.0,
+    "discount_quote": "q29",
+    "volume_mbd": null,
+    "volume_quote": null,
+    "volume_known": false
+   },
+   {
+    "checkpoint": "2026-06",
+    "brent": 85.4,
+    "discount": -0.75,
+    "discount_quote": "q30",
+    "volume_mbd": 0.0,
+    "volume_quote": "q33",
+    "volume_known": true
+   },
+   {
+    "checkpoint": "2026-08",
+    "brent": 91.08,
+    "discount": null,
+    "discount_quote": null,
+    "volume_mbd": 0.21,
+    "volume_quote": "q34",
+    "volume_known": true
+   },
+   {
+    "checkpoint": "2026-09",
+    "brent": 114.16,
+    "discount": -4.0,
+    "discount_quote": "q31",
+    "volume_mbd": null,
+    "volume_quote": null,
+    "volume_known": false
+   },
+   {
+    "checkpoint": "2026-10",
+    "brent": 124.83,
+    "discount": null,
+    "discount_quote": null,
+    "volume_mbd": null,
+    "volume_quote": "q35",
+    "volume_known": false
+   }
+  ],
+  "prewar_volume_mbd": 1.7
+ },
+ "producer": {
+  "wti": [
+   {
+    "month": "2025-01",
+    "usd": 75.74
+   },
+   {
+    "month": "2025-02",
+    "usd": 71.53
+   },
+   {
+    "month": "2025-03",
+    "usd": 68.24
+   },
+   {
+    "month": "2025-04",
+    "usd": 63.54
+   },
+   {
+    "month": "2025-05",
+    "usd": 62.17
+   },
+   {
+    "month": "2025-06",
+    "usd": 68.17
+   },
+   {
+    "month": "2025-07",
+    "usd": 68.39
+   },
+   {
+    "month": "2025-08",
+    "usd": 64.86
+   },
+   {
+    "month": "2025-09",
+    "usd": 63.96
+   },
+   {
+    "month": "2025-10",
+    "usd": 60.89
+   },
+   {
+    "month": "2025-11",
+    "usd": 60.06
+   },
+   {
+    "month": "2025-12",
+    "usd": 57.97
+   },
+   {
+    "month": "2026-01",
+    "usd": 60.04
+   },
+   {
+    "month": "2026-02",
+    "usd": 64.51
+   },
+   {
+    "month": "2026-03",
+    "usd": 91.38
+   },
+   {
+    "month": "2026-04",
+    "usd": 100.32
+   },
+   {
+    "month": "2026-05",
+    "usd": 102.13
+   },
+   {
+    "month": "2026-06",
+    "usd": 84.81
+   },
+   {
+    "month": "2026-07",
+    "usd": 80.46
+   },
+   {
+    "month": "2026-08",
+    "usd": 83.9
+   },
+   {
+    "month": "2026-09",
+    "usd": 97.31
+   }
+  ],
+  "brent": [
+   {
+    "month": "2025-01",
+    "usd": 79.27,
+    "source": "EIA"
+   },
+   {
+    "month": "2025-02",
+    "usd": 75.44,
+    "source": "EIA"
+   },
+   {
+    "month": "2025-03",
+    "usd": 72.73,
+    "source": "EIA"
+   },
+   {
+    "month": "2025-04",
+    "usd": 68.13,
+    "source": "EIA"
+   },
+   {
+    "month": "2025-05",
+    "usd": 64.45,
+    "source": "EIA"
+   },
+   {
+    "month": "2025-06",
+    "usd": 71.44,
+    "source": "EIA"
+   },
+   {
+    "month": "2025-07",
+    "usd": 71.04,
+    "source": "EIA"
+   },
+   {
+    "month": "2025-08",
+    "usd": 67.87,
+    "source": "EIA"
+   },
+   {
+    "month": "2025-09",
+    "usd": 67.99,
+    "source": "EIA"
+   },
+   {
+    "month": "2025-10",
+    "usd": 64.54,
+    "source": "EIA"
+   },
+   {
+    "month": "2025-11",
+    "usd": 63.8,
+    "source": "EIA"
+   },
+   {
+    "month": "2025-12",
+    "usd": 62.54,
+    "source": "EIA"
+   },
+   {
+    "month": "2026-01",
+    "usd": 66.6,
+    "source": "EIA"
+   },
+   {
+    "month": "2026-02",
+    "usd": 70.89,
+    "source": "EIA"
+   },
+   {
+    "month": "2026-03",
+    "usd": 103.13,
+    "source": "EIA"
+   },
+   {
+    "month": "2026-04",
+    "usd": 117.29,
+    "source": "EIA"
+   },
+   {
+    "month": "2026-05",
+    "usd": 107.14,
+    "source": "EIA"
+   },
+   {
+    "month": "2026-06",
+    "usd": 85.4,
+    "source": "EIA"
+   },
+   {
+    "month": "2026-07",
+    "usd": 83.76,
+    "source": "EIA"
+   },
+   {
+    "month": "2026-08",
+    "usd": 91.08,
+    "source": "EIA"
+   },
+   {
+    "month": "2026-09",
+    "usd": 114.16,
+    "source": "EIA"
+   },
+   {
+    "month": "2026-10",
+    "usd": 124.83,
+    "source": "average of FRED daily Brent spot, 19 days to 2026-10-27"
+   }
+  ],
+  "exports_kbd": [
+   {
+    "month": "2025-01",
+    "kbd": 3968.0
+   },
+   {
+    "month": "2025-02",
+    "kbd": 4263.0
+   },
+   {
+    "month": "2025-03",
+    "kbd": 3985.0
+   },
+   {
+    "month": "2025-04",
+    "kbd": 3835.0
+   },
+   {
+    "month": "2025-05",
+    "kbd": 3610.0
+   },
+   {
+    "month": "2025-06",
+    "kbd": 3761.0
+   },
+   {
+    "month": "2025-07",
+    "kbd": 3499.0
+   },
+   {
+    "month": "2025-08",
+    "kbd": 3998.0
+   },
+   {
+    "month": "2025-09",
+    "kbd": 4356.0
+   },
+   {
+    "month": "2025-10",
+    "kbd": 4401.0
+   },
+   {
+    "month": "2025-11",
+    "kbd": 3818.0
+   },
+   {
+    "month": "2025-12",
+    "kbd": 4068.0
+   },
+   {
+    "month": "2026-01",
+    "kbd": 3922.0
+   },
+   {
+    "month": "2026-02",
+    "kbd": 4345.0
+   },
+   {
+    "month": "2026-03",
+    "kbd": 4043.0
+   },
+   {
+    "month": "2026-04",
+    "kbd": 5593.0
+   },
+   {
+    "month": "2026-05",
+    "kbd": 5728.0
+   },
+   {
+    "month": "2026-06",
+    "kbd": 4735.0
+   },
+   {
+    "month": "2026-07",
+    "kbd": 3556.0
+   },
+   {
+    "month": "2026-08",
+    "kbd": 3992.0
+   }
+  ],
+  "prewar_wti": 64.51,
+  "latest_wti": {
+   "month": "2026-09",
+   "usd": 97.31
+  },
+  "exports_prewar": 4345.0,
+  "exports_peak": [
+   "2026-05",
+   5728.0
+  ],
+  "quotes": [
+   "q36",
+   "q37"
+  ]
+ },
+ "quotes": {
+  "q1": {
+   "quote_id": "q1",
+   "barrel": "gulf",
+   "layer": "freight",
+   "checkpoint": "2026-01",
+   "value_low": null,
+   "value_high": null,
+   "value": 1.73,
+   "unit": "usd_per_barrel",
+   "quote": "the benchmark Middle East Gulf-to-Far East route cost about $30,000 per day; in January freight added about $1.73 per barrel",
+   "published": "2026-10-05",
+   "as_reported_by": "Gulf News (citing Poten)",
+   "source_url": "https://gulfnews.com/business/energy/tanker-costs-soar-43-fold-as-hormuz-tensions-reshape-global-oil-trade-1.500698296",
+   "opened": "yes",
+   "note": "Poten puts this at roughly 3 percent of delivered cost in January."
+  },
+  "q2": {
+   "quote_id": "q2",
+   "barrel": "gulf",
+   "layer": "freight_day",
+   "checkpoint": "2026-02",
+   "value_low": null,
+   "value_high": null,
+   "value": 200000.0,
+   "unit": "usd_per_day",
+   "quote": "just before the Iran war broke out, it was just over $200,000 a day.",
+   "published": "2026-08-10",
+   "as_reported_by": "Associated Press via Transport Topics (Baltic Exchange TD3)",
+   "source_url": "https://www.ttnews.com/articles/supertanker-fee-benchmark",
+   "opened": "yes",
+   "note": "Rates were already high before the war on sanctions and winter demand; LSEG had the route over $170,000 a day on 24 February, a six-year high."
+  },
+  "q3": {
+   "quote_id": "q3",
+   "barrel": "gulf",
+   "layer": "freight_day",
+   "checkpoint": "2026-03",
+   "value_low": null,
+   "value_high": null,
+   "value": 423736.0,
+   "unit": "usd_per_day",
+   "quote": "$423,736/day",
+   "published": "2026-08-28",
+   "as_reported_by": "ShipUniverse (table, dated 2 March)",
+   "source_url": "https://www.shipuniverse.com/vlcc-rates-are-turning-into-the-cleanest-signal-in-the-crude-tanker-market/",
+   "opened": "yes",
+   "note": ""
+  },
+  "q4": {
+   "quote_id": "q4",
+   "barrel": "gulf",
+   "layer": "freight",
+   "checkpoint": "2026-03",
+   "value_low": null,
+   "value_high": null,
+   "value": 17.0,
+   "unit": "usd_per_barrel",
+   "quote": "VLCC rates from the Gulf to China initially jumped from around $4/bbl to $17/bbl",
+   "published": "2026-10-18",
+   "as_reported_by": "Oilprice.com",
+   "source_url": "https://oilprice.com/Energy/Crude-Oil/Record-Shipping-Costs-Force-Oil-Producers-to-Slash-Prices.html",
+   "opened": "yes",
+   "note": "The same sentence gives about $4 a barrel as the pre-war rate."
+  },
+  "q5": {
+   "quote_id": "q5",
+   "barrel": "gulf",
+   "layer": "freight",
+   "checkpoint": "2026-06",
+   "value_low": 11.0,
+   "value_high": 12.0,
+   "value": 11.5,
+   "unit": "usd_per_barrel",
+   "quote": "before easing to $11–12/bbl through April–July",
+   "published": "2026-10-18",
+   "as_reported_by": "Oilprice.com",
+   "source_url": "https://oilprice.com/Energy/Crude-Oil/Record-Shipping-Costs-Force-Oil-Producers-to-Slash-Prices.html",
+   "opened": "yes",
+   "note": "A range for April to July; the midpoint is drawn. S&P Global via Al Jazeera put early June at a little over $60 a tonne, the low since March."
+  },
+  "q6": {
+   "quote_id": "q6",
+   "barrel": "gulf",
+   "layer": "freight_day",
+   "checkpoint": "2026-08",
+   "value_low": null,
+   "value_high": null,
+   "value": 498000.0,
+   "unit": "usd_per_day",
+   "quote": "On Aug. 7, the exchange assessed earnings on the Middle East-to-China route at $498,000 a day.",
+   "published": "2026-08-10",
+   "as_reported_by": "Associated Press via Transport Topics (Baltic Exchange)",
+   "source_url": "https://www.ttnews.com/articles/supertanker-fee-benchmark",
+   "opened": "yes",
+   "note": "A record of $656,000 a day followed on 28 August."
+  },
+  "q7": {
+   "quote_id": "q7",
+   "barrel": "gulf",
+   "layer": "freight_day",
+   "checkpoint": "2026-09",
+   "value_low": null,
+   "value_high": null,
+   "value": 1035000.0,
+   "unit": "usd_per_day",
+   "quote": "put the Middle East Gulf-to-China TD3C route at the equivalent of about $1.035m per day",
+   "published": "2026-09-15",
+   "as_reported_by": "Xinde Marine News (Baltic Exchange, 14 September)",
+   "source_url": "https://www.xindemarinenews.com/news/2099699485518344193",
+   "opened": "yes",
+   "note": "The Signal Group has the route averaging $1.02 million a day across September, 17.5 times its 2025 average."
+  },
+  "q8": {
+   "quote_id": "q8",
+   "barrel": "gulf",
+   "layer": "freight",
+   "checkpoint": "2026-09",
+   "value_low": null,
+   "value_high": null,
+   "value": 26.0,
+   "unit": "usd_per_barrel",
+   "quote": "Loaded at Ras Tanura, inside the Strait, the cargo paid about US$ 52 million in freight, or US$ 26/bbl.",
+   "published": "2026-10-27",
+   "as_reported_by": "The Signal Group, Who Pays the Freight?",
+   "source_url": "https://www.thesignalgroup.com/newsroom/ramble-on-who-pays-the-freight",
+   "opened": "yes",
+   "note": "Kpler had $24 a barrel on 16 September; LSEG had more than $30 on 21 September."
+  },
+  "q9": {
+   "quote_id": "q9",
+   "barrel": "gulf",
+   "layer": "freight_share",
+   "checkpoint": "2026-09",
+   "value_low": null,
+   "value_high": null,
+   "value": 25.0,
+   "unit": "percent_of_fob_price",
+   "quote": "Freight now accounts for 25% of the fob crude price from the MEG and 11% from the Gulf of Oman.",
+   "published": "2026-09-16",
+   "as_reported_by": "Kpler via Hellenic Shipping News",
+   "source_url": "https://www.hellenicshippingnews.com/crude-tanker-rates-hit-new-highs-as-hormuz-risk-escalates/",
+   "opened": "yes",
+   "note": "'up from 17% at the start of the conflict and around 5% before the war.' The nearest published series to the figure Al Jaber gave."
+  },
+  "q10": {
+   "quote_id": "q10",
+   "barrel": "gulf",
+   "layer": "freight_day",
+   "checkpoint": "2026-10",
+   "value_low": null,
+   "value_high": null,
+   "value": 1300000.0,
+   "unit": "usd_per_day",
+   "quote": "The benchmark rate to ship crude on a VLCC to China from Saudi Arabia has surpassed $1.3 million per day",
+   "published": "2026-10-08",
+   "as_reported_by": "Windward",
+   "source_url": "https://windward.ai/blog/tanker-attacks-spread-beyond-the-strait-of-hormuz-as-gulf-freight-costs-soar/",
+   "opened": "yes",
+   "note": "Bloomberg data via Oilprice had a record $1.4 million a day the same week."
+  },
+  "q11": {
+   "quote_id": "q11",
+   "barrel": "gulf",
+   "layer": "freight",
+   "checkpoint": "2026-10",
+   "value_low": 34.0,
+   "value_high": 37.0,
+   "value": 35.5,
+   "unit": "usd_per_barrel",
+   "quote": "the cost of shipping crude from the Middle East Gulf to Asia on a large tanker had climbed to over $37 per barrel",
+   "published": "2026-10-21",
+   "as_reported_by": "International Energy Agency commentary",
+   "source_url": "https://www.iea.org/commentaries/the-soaring-cost-of-shipping-is-lifting-the-price-of-oil-for-consumers",
+   "opened": "yes",
+   "note": "'more than five times its level before the war began.' The Signal Group has October at about $34 from Ras Tanura; the range is drawn at its midpoint."
+  },
+  "q12": {
+   "quote_id": "q12",
+   "barrel": "gulf",
+   "layer": "freight_share",
+   "checkpoint": "2026-10",
+   "value_low": null,
+   "value_high": null,
+   "value": 27.0,
+   "unit": "percent_of_delivered_cost",
+   "quote": "freight adds almost $33 per barrel, about 27% of delivered cost",
+   "published": "2026-10-05",
+   "as_reported_by": "Gulf News (citing Poten, Brent near $120)",
+   "source_url": "https://gulfnews.com/business/energy/tanker-costs-soar-43-fold-as-hormuz-tensions-reshape-global-oil-trade-1.500698296",
+   "opened": "yes",
+   "note": "Windward: 25 to 30 percent of the cost of the commodity, against 1 to 3 percent in normal conditions. Braemar via CNBC on 30 October: 20 to 30 percent of delivered cost."
+  },
+  "q13": {
+   "quote_id": "q13",
+   "barrel": "gulf",
+   "layer": "war_risk_hull",
+   "checkpoint": "2026-02",
+   "value_low": null,
+   "value_high": null,
+   "value": 0.25,
+   "unit": "percent_of_hull_value",
+   "quote": "Before the war, the premium stood at roughly 0.25 per cent of the hull value",
+   "published": "2026-07-17",
+   "as_reported_by": "The National",
+   "source_url": "https://www.thenationalnews.com/business/2026/07/17/war-risk-shipping-premium-surges-again-as-tensions-escalate-at-strait-of-hormuz/",
+   "opened": "yes",
+   "note": "Baselines disagree: gCaptain about 0.1 percent; Lloyd's List 0.15 to 0.25 percent for seven days."
+  },
+  "q14": {
+   "quote_id": "q14",
+   "barrel": "gulf",
+   "layer": "war_risk_hull",
+   "checkpoint": "2026-03",
+   "value_low": null,
+   "value_high": null,
+   "value": 2.5,
+   "unit": "percent_of_hull_value",
+   "quote": "By mid-March 2026, that figure had reached 2.5% of hull value per seven-day period.",
+   "published": "2026-06-16",
+   "as_reported_by": "gCaptain",
+   "source_url": "https://gcaptain.com/hormuz-is-reopening-shippings-old-playbook-isnt/",
+   "opened": "yes",
+   "note": "Some stranded tankers paid up to 10 percent of hull value for a single transit. Marsh via Reuters had 1 to 1.5 percent on 6 March; Bloomberg about 5 percent on 16 March."
+  },
+  "q15": {
+   "quote_id": "q15",
+   "barrel": "gulf",
+   "layer": "war_risk_hull",
+   "checkpoint": "2026-06",
+   "value_low": null,
+   "value_high": null,
+   "value": 2.0,
+   "unit": "percent_of_hull_value",
+   "quote": "eased to around 2% when the US and Iran signed their memorandum of understanding in June",
+   "published": "2026-07-14",
+   "as_reported_by": "Ops Con Intelligence",
+   "source_url": "https://theopscon.com/intelligence/hormuz-war-risk-cover-five-percent-norm-2026-07-14",
+   "opened": "yes",
+   "note": "gCaptain put the post-ceasefire rate at about 1 percent of hull value a voyage, $1.1 million on a $110 million VLCC."
+  },
+  "q16": {
+   "quote_id": "q16",
+   "barrel": "gulf",
+   "layer": "war_risk_hull",
+   "checkpoint": "2026-07",
+   "value_low": 3.0,
+   "value_high": 10.0,
+   "value": null,
+   "unit": "percent_of_hull_value",
+   "quote": "Rates can be anywhere between 3 per cent and 10 per cent on hull value",
+   "published": "2026-07-17",
+   "as_reported_by": "The National (quoting Marcus Baker, Marsh)",
+   "source_url": "https://www.thenationalnews.com/business/2026/07/17/war-risk-shipping-premium-surges-again-as-tensions-escalate-at-strait-of-hormuz/",
+   "opened": "yes",
+   "note": "S&P Global via Al Jazeera on 23 July: 7.5 to 10 percent of hull value."
+  },
+  "q17": {
+   "quote_id": "q17",
+   "barrel": "gulf",
+   "layer": "war_risk_hull",
+   "checkpoint": "2026-10",
+   "value_low": 6.0,
+   "value_high": 10.0,
+   "value": null,
+   "unit": "percent_of_hull_value",
+   "quote": "now costs about 6% to 10% of the ship's hull value in war-risk premiums",
+   "published": "2026-10-18",
+   "as_reported_by": "The Boston Report (citing the Financial Times of 7 October and Marsh)",
+   "source_url": "https://thebostonreport.com/2026/10/18/strait-of-hormuz-war-risk-insurance-rates-explained/",
+   "opened": "yes",
+   "note": "Up to $20 million in war insurance for one supertanker voyage. The Financial Times page itself was not opened."
+  },
+  "q18": {
+   "quote_id": "q18",
+   "barrel": "gulf",
+   "layer": "war_risk",
+   "checkpoint": "2026-10",
+   "value_low": 4.0,
+   "value_high": 5.0,
+   "value": 4.5,
+   "unit": "usd_per_barrel",
+   "quote": "War-risk premiums have climbed to 7–8% of hull and machinery value (roughly $9–10 million, or $4–5/bbl)",
+   "published": "2026-10-18",
+   "as_reported_by": "Oilprice.com",
+   "source_url": "https://oilprice.com/Energy/Crude-Oil/Record-Shipping-Costs-Force-Oil-Producers-to-Slash-Prices.html",
+   "opened": "yes",
+   "note": "The only per-barrel conversion of the hull premium found apart from Goldman's $7."
+  },
+  "q19": {
+   "quote_id": "q19",
+   "barrel": "gulf",
+   "layer": "war_risk",
+   "checkpoint": "2026-10",
+   "value_low": null,
+   "value_high": null,
+   "value": 7.0,
+   "unit": "usd_per_barrel",
+   "quote": "The rise includes an extra $7 for the war-risk premium in the Strait of Hormuz",
+   "published": "2026-10-20",
+   "as_reported_by": "Bloomberg via Yahoo Finance UK (Goldman Sachs note)",
+   "source_url": "https://uk.finance.yahoo.com/news/goldman-sachs-says-war-spurs-033847966.html",
+   "opened": "yes",
+   "note": "Goldman's decomposition of a global average crude freight rate above $20 a barrel, up from $3 a year earlier."
+  },
+  "q20": {
+   "quote_id": "q20",
+   "barrel": "gulf",
+   "layer": "sts",
+   "checkpoint": "2026-10",
+   "value_low": null,
+   "value_high": null,
+   "value": 4.0,
+   "unit": "usd_per_barrel",
+   "quote": "and $4 each for higher fuel costs and the impact of ship-to-ship transfers.",
+   "published": "2026-10-20",
+   "as_reported_by": "Bloomberg via Yahoo Finance UK (Goldman Sachs note)",
+   "source_url": "https://uk.finance.yahoo.com/news/goldman-sachs-says-war-spurs-033847966.html",
+   "opened": "yes",
+   "note": "Ship-to-ship transfers, $4 a barrel."
+  },
+  "q21": {
+   "quote_id": "q21",
+   "barrel": "gulf",
+   "layer": "fuel",
+   "checkpoint": "2026-10",
+   "value_low": null,
+   "value_high": null,
+   "value": 4.0,
+   "unit": "usd_per_barrel",
+   "quote": "and $4 each for higher fuel costs and the impact of ship-to-ship transfers.",
+   "published": "2026-10-20",
+   "as_reported_by": "Bloomberg via Yahoo Finance UK (Goldman Sachs note)",
+   "source_url": "https://uk.finance.yahoo.com/news/goldman-sachs-says-war-spurs-033847966.html",
+   "opened": "yes",
+   "note": "Bunker fuel, $4 a barrel."
+  },
+  "q22": {
+   "quote_id": "q22",
+   "barrel": "gulf",
+   "layer": "shuttle",
+   "checkpoint": "2026-10",
+   "value_low": null,
+   "value_high": null,
+   "value": 21.0,
+   "unit": "usd_per_barrel",
+   "quote": "This translates to about $21 in transportation costs per barrel of crude oil compared with $6.50 a barrel in September.",
+   "published": "2026-10-30",
+   "as_reported_by": "CNBC (quoting Mary Melton, Braemar)",
+   "source_url": "https://www.cnbc.com/2026/10/30/tanker-attack-strait-hormuz-iran-war-oil.html",
+   "opened": "yes",
+   "note": "The Gulf of Oman to Asia leg alone: a supertanker for that run cost $249,000 a day in early September and more than $900,000 a day by the first week of October. Not added to the stack, since it overlaps the freight layer."
+  },
+  "q23": {
+   "quote_id": "q23",
+   "barrel": "gulf",
+   "layer": "shuttle_transit",
+   "checkpoint": "2026-10",
+   "value_low": null,
+   "value_high": null,
+   "value": 50000000.0,
+   "unit": "usd_per_transit",
+   "quote": "National oil companies are paying tankers $50 million per transit to ship crude to ship-to-ship transfer areas off Fujairah",
+   "published": "2026-10-08",
+   "as_reported_by": "Windward",
+   "source_url": "https://windward.ai/blog/tanker-attacks-spread-beyond-the-strait-of-hormuz-as-gulf-freight-costs-soar/",
+   "opened": "yes",
+   "note": "A Wall Street Journal account via Seoul Economic Daily: each shuttle run $30 to $40 million, about $15 to $20 a barrel before insurance."
+  },
+  "q24": {
+   "quote_id": "q24",
+   "barrel": "gulf",
+   "layer": "demurrage_day",
+   "checkpoint": "2026-10",
+   "value_low": null,
+   "value_high": null,
+   "value": 1000000.0,
+   "unit": "usd_per_day",
+   "quote": "Demurrage rates for cargoes moving out of the Gulf have soared to $1 million/day",
+   "published": "2026-10-18",
+   "as_reported_by": "Oilprice.com",
+   "source_url": "https://oilprice.com/Energy/Crude-Oil/Record-Shipping-Costs-Force-Oil-Producers-to-Slash-Prices.html",
+   "opened": "yes",
+   "note": "No pre-war figure found."
+  },
+  "q25": {
+   "quote_id": "q25",
+   "barrel": "gulf",
+   "layer": "osp_discount",
+   "checkpoint": "2026-11",
+   "value_low": null,
+   "value_high": null,
+   "value": -5.0,
+   "unit": "usd_per_barrel_vs_oman_dubai",
+   "quote": "The November OSP for Saudi Aramco's flagship Arab Light grade has been set at a $5/bbl discount to Oman/Dubai",
+   "published": "2026-10-18",
+   "as_reported_by": "Oilprice.com",
+   "source_url": "https://oilprice.com/Energy/Crude-Oil/Record-Shipping-Costs-Force-Oil-Producers-to-Slash-Prices.html",
+   "opened": "yes",
+   "note": "The seller cutting the price of the oil to carry the freight: who pays the logistics bill."
+  },
+  "q26": {
+   "quote_id": "q26",
+   "barrel": "gulf",
+   "layer": "buyer_price",
+   "checkpoint": "2026-08",
+   "value_low": 50.0,
+   "value_high": 60.0,
+   "value": 55.0,
+   "unit": "usd_per_barrel",
+   "quote": "TotalEnergies was buying Gulf crude at some USD 50-60 / bbl while Brent traded above USD 90 / bbl, Pouyanne said.",
+   "published": "2026-08-31",
+   "as_reported_by": "Enterprise (Egypt), quoting Patrick Pouyanné, TotalEnergies",
+   "source_url": "https://enterpriseam.com/logistics/2026/08/31/as-gulf-crude-exports-find-a-route-to-buyers-tanker-capacity-pays-the-price/",
+   "opened": "yes",
+   "note": "The one buyer who said what he paid: a discounted price at the Gulf, and about $20 million to move a shipment through the strait."
+  },
+  "q27": {
+   "quote_id": "q27",
+   "barrel": "gulf",
+   "layer": "claim",
+   "checkpoint": "2026-11",
+   "value_low": 5.0,
+   "value_high": 30.0,
+   "value": 30.0,
+   "unit": "percent_of_barrel_cost",
+   "quote": "Shipping and logistics costs, which accounted for less than 5 per cent of the cost of a barrel before the disruption, now exceed 30 per cent.",
+   "published": "2026-11-02",
+   "as_reported_by": "The National (reporting Sultan Al Jaber, ADNOC, at ADIPEC)",
+   "source_url": "https://www.thenationalnews.com/business/energy/2026/11/02/dr-sultan-al-jaber-urges-energy-security-overhaul-as-nearly-billion-barrels-drawn-from-oil-markets/",
+   "opened": "yes",
+   "note": "No basis given in any of the four reports of the speech. The page checks it against the sum of the sourced layers."
+  },
+  "q28": {
+   "quote_id": "q28",
+   "barrel": "iran",
+   "layer": "discount",
+   "checkpoint": "2026-02",
+   "value_low": null,
+   "value_high": null,
+   "value": -12.0,
+   "unit": "usd_per_barrel_vs_brent",
+   "quote": "Iranian Light into China has flipped from a steep $12/bbl discount to a $1/bbl premium to ICE Brent",
+   "published": "2026-04-08",
+   "as_reported_by": "Oilprice.com",
+   "source_url": "https://oilprice.com/Energy/Crude-Oil/Tehran-Takes-the-Strait-and-the-Premium.html",
+   "opened": "yes",
+   "note": "The pre-war discount, not dated to a month by the source; drawn at February."
+  },
+  "q29": {
+   "quote_id": "q29",
+   "barrel": "iran",
+   "layer": "discount",
+   "checkpoint": "2026-03",
+   "value_low": null,
+   "value_high": null,
+   "value": 1.0,
+   "unit": "usd_per_barrel_vs_brent",
+   "quote": "Iranian crude, once deeply discounted, is now trading at a $1/bbl premium to ICE Brent",
+   "published": "2026-04-08",
+   "as_reported_by": "Oilprice.com",
+   "source_url": "https://oilprice.com/Energy/Crude-Oil/Tehran-Takes-the-Strait-and-the-Premium.html",
+   "opened": "yes",
+   "note": "A premium: with the strait shut to everyone else, the barrel that could still move was worth more. Reuters trade sources had premiums of $1 to $2 in April and May."
+  },
+  "q30": {
+   "quote_id": "q30",
+   "barrel": "iran",
+   "layer": "discount",
+   "checkpoint": "2026-06",
+   "value_low": -1.0,
+   "value_high": -0.5,
+   "value": -0.75,
+   "unit": "usd_per_barrel_vs_brent",
+   "quote": "Iranian Light crude is being offered at a discount of 50 cents to $1 per barrel against ICE Brent for delivery this month",
+   "published": "2026-06-05",
+   "as_reported_by": "Iran International (citing three traders who spoke to Reuters)",
+   "source_url": "https://www.iranintl.com/en/202606054011",
+   "opened": "yes",
+   "note": ""
+  },
+  "q31": {
+   "quote_id": "q31",
+   "barrel": "iran",
+   "layer": "discount",
+   "checkpoint": "2026-09",
+   "value_low": null,
+   "value_high": null,
+   "value": -4.0,
+   "unit": "usd_per_barrel_vs_brent",
+   "quote": "Iranian Light for delivery in September was offered at discounts of about $4 a barrel to ICE Brent earlier this month",
+   "published": "2026-08-11",
+   "as_reported_by": "Bloomberg via BusinessMirror (citing traders)",
+   "source_url": "https://businessmirror.com.ph/2026/08/11/chinas-teapots-may-boost-iran-oil-buying-as-stockpiles-dwindle/",
+   "opened": "yes",
+   "note": "Narrowed from about $5. Kpler: close to 30 million barrels of Iranian crude on tankers in Asian waters."
+  },
+  "q32": {
+   "quote_id": "q32",
+   "barrel": "iran",
+   "layer": "volume",
+   "checkpoint": "2026-02",
+   "value_low": null,
+   "value_high": null,
+   "value": 1.7,
+   "unit": "mbd",
+   "quote": "Iranian crude and condensate exports trended at roughly 1.7 Mbd prior to the war",
+   "published": "2026-06-23",
+   "as_reported_by": "Kpler",
+   "source_url": "https://www.kpler.com/blog/despite-a-60-day-sanctions-waiver-iranian-oil-will-mainly-flow-to-china",
+   "opened": "yes",
+   "note": "Oilprice, unattributed satellite tracking: 2.2 million a day loaded in February, 1.9 in March."
+  },
+  "q33": {
+   "quote_id": "q33",
+   "barrel": "iran",
+   "layer": "volume",
+   "checkpoint": "2026-06",
+   "value_low": null,
+   "value_high": null,
+   "value": 0.0,
+   "unit": "mbd",
+   "quote": "fell to near zero in May and the first half of June following the US naval blockade imposed in mid-April.",
+   "published": "2026-06-23",
+   "as_reported_by": "Kpler",
+   "source_url": "https://www.kpler.com/blog/despite-a-60-day-sanctions-waiver-iranian-oil-will-mainly-flow-to-china",
+   "opened": "yes",
+   "note": "Near zero, drawn as empty."
+  },
+  "q34": {
+   "quote_id": "q34",
+   "barrel": "iran",
+   "layer": "volume",
+   "checkpoint": "2026-08",
+   "value_low": null,
+   "value_high": null,
+   "value": 0.21,
+   "unit": "mbd",
+   "quote": "Iranian crude loadings fell to around 210kbd in August, down from roughly 2mbd earlier this year",
+   "published": "2026-09-15",
+   "as_reported_by": "Vortexa",
+   "source_url": "https://www.vortexa.com/insights/irans-export-floor-disappears",
+   "opened": "yes",
+   "note": "Iran suspended a 10 percent freight charge on foreign vessels carrying its oil the same month."
+  },
+  "q35": {
+   "quote_id": "q35",
+   "barrel": "iran",
+   "layer": "volume",
+   "checkpoint": "2026-10",
+   "value_low": null,
+   "value_high": null,
+   "value": null,
+   "unit": "mbd",
+   "quote": "Iranian oil stored aboard tankers in Asian waters had been depleted by mid-October",
+   "published": "2026-10-23",
+   "as_reported_by": "International Business Times via Yahoo (citing the Wall Street Journal and Kpler)",
+   "source_url": "https://www.yahoo.com/news/us/articles/u-keeps-blocking-irans-ports-104500660.html",
+   "opened": "yes",
+   "note": "Floating stock down from about 90 million barrels in mid-July to about 29 million. Reuters in September: no Iranian crude cargo had crossed the strait toward China since the blockade resumed on 14 July. No October differential was quoted anywhere: there was nothing to price."
+  },
+  "q36": {
+   "quote_id": "q36",
+   "barrel": "us",
+   "layer": "exports_claim",
+   "checkpoint": "2026-04",
+   "value_low": null,
+   "value_high": null,
+   "value": 5.2,
+   "unit": "mbd",
+   "quote": "as exports have increased by 30%, from 3.9 million barrels per day in February to 5.2 million barrels per day in April",
+   "published": "2026-05-03",
+   "as_reported_by": "UPI (citing Bloomberg and CNBC)",
+   "source_url": "https://www.upi.com/Top_News/US/2026/05/03/american-oil-exports-increase-as-hormuz-remains-blocked/1191777824128/",
+   "opened": "yes",
+   "note": "The EIA's own monthly series, drawn on the page, has February 4.3 and April 5.6."
+  },
+  "q37": {
+   "quote_id": "q37",
+   "barrel": "us",
+   "layer": "profit_claim",
+   "checkpoint": "2026-09",
+   "value_low": null,
+   "value_high": null,
+   "value": 56.3,
+   "unit": "usd_billion",
+   "quote": "combined adjusted net income of $56.3 billion in the most recent quarter",
+   "published": "2026-10-30",
+   "as_reported_by": "Bloomberg via The Spokesman-Review",
+   "source_url": "https://www.spokesman.com/stories/2026/oct/30/big-oil-scores-56-billion-windfall-on-spiking-fuel/",
+   "opened": "yes",
+   "note": "ExxonMobil, Chevron, BP, Shell and TotalEnergies together, third quarter 2026. ExxonMobil's refining division earned a record $9.05 billion; Chevron's refineries $4.93 billion. No source puts a per-barrel figure on what American producers gained."
+  }
+ },
+ "sources": {
+  "components": "EIA Gasoline and Diesel Fuel Update, pump components history (gaspump_hist.php, dieselpump_hist.php), latest month 2026-08",
+  "weekly": "EIA weekly retail prices, pswrgvwall.xls and psw18vwall.xls, latest week 2026-10-26",
+  "spot": "EIA spot prices, RWTC and RBRTE monthly, latest 2026-09",
+  "exports": "EIA U.S. exports of crude oil, MCREXUS2 monthly, latest 2026-08",
+  "quotes": "data/barrel_quotes.csv, 37 dated quotes"
+ },
+ "method": {
+  "components": "EIA's four components: crude is the refiner acquisition cost; refining is the spot price of the fuel less crude; distribution and marketing is the retail price less the other three; taxes are the national average of federal and state taxes. Refining and distribution are residuals, costs and profits together, and swing against each other when the retail price lags the spot price. Dollars per gallon here are EIA's shares times its retail price.",
+  "exporter": "Each layer is a source's own per-barrel figure for that month, never a conversion from a day rate or a percentage of hull value; where two sources priced the same layer the midpoint is drawn and both are cited. The oil is Brent's monthly average from the EIA. The logistics share is the sum of the priced layers against Brent plus those layers. A checkpoint with an unpriced layer is marked, and its share is a floor.",
+  "iran": "The discount is the price of Iranian Light against ICE Brent quoted by traders for that month; the fill is the export volume against the pre-war 1.7 million barrels a day. October has a volume statement and no price, because no cargo was being sold."
+ }
+}
