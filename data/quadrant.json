@@ -1,10 +1,10 @@
 {
  "schema_version": 1,
- "generated_at_utc": "2026-11-02T15:41:34Z",
+ "generated_at_utc": "2026-11-02T17:02:33Z",
  "war_start": "2026-02-28",
  "rules": {
   "think": "The Dean Street Heuristic, as on the front page: BNO's last close of the week. Under $49 peace, over $55 war, between them the perpetual war sweet spot.",
-  "are": "The strait. A week counts as shut when oil leaving through Hormuz is below three quarters of normal. Before 2026-08-24 that is PortWatch's tanker-activity index against a normal late-2025 week, the series on the oilflows page. From then on it is the newest independent tracker reading in the ledger (a seven-day or longer average, never a single day) against a pre-war rate of about 17 million barrels a day, the figure Kpler's own percentages imply.",
+  "are": "The strait. A week counts as shut when oil leaving through Hormuz is below three quarters of normal. The reading is the estimates ledger's: a dated weekly tracker figure as of the week's end when one is less than three weeks old, otherwise the tracker's published average for that month, against a pre-war rate of about 17 million barrels a day, the figure Kpler's own percentages imply. Single-day prints and all-liquids figures never count, the same rule as the verification panel. Where the ledger has nothing for a week, PortWatch's tanker-signal index against a normal late-2025 week stands in, and the week says so.",
   "deaths": "Uppsala's deaths in the Gulf dyad by the month the event began, UCDP best estimate. 84 or more in a month is the war line (1,000 a year); 25 or more is the conflict line. Months from the candidate files are provisional; months Uppsala has not reached are unknown.",
   "cells": {
    "are-think": "at war, and the market says so",
@@ -85,6 +85,51 @@
   "are-think": 9,
   "think-not-are": 2
  },
+ "counts_sweet_as_think": {
+  "are-think": 23,
+  "are-not-think": 10,
+  "think-not-are": 2,
+  "neither": 0
+ },
+ "deaths_moves": {
+  "from_pull": "2026-10-11",
+  "to_pull": "2026-11-02",
+  "moved": [
+   {
+    "month": "2026-02",
+    "from": 3275,
+    "to": 2431
+   },
+   {
+    "month": "2026-03",
+    "from": 331,
+    "to": 1048
+   },
+   {
+    "month": "2026-04",
+    "from": 129,
+    "to": 255
+   },
+   {
+    "month": "2026-06",
+    "from": 6,
+    "to": 12
+   },
+   {
+    "month": "2026-07",
+    "from": 64,
+    "to": 68
+   },
+   {
+    "month": "2026-08",
+    "from": 2,
+    "to": 4
+   }
+  ],
+  "months_added": [
+   "2026-09"
+  ]
+ },
  "weeks_full": 35,
  "lags": [
   {
@@ -121,8 +166,14 @@
   "think": "war",
   "days": null,
   "bno_carried": true,
+  "signals": {
+   "index": 5.2,
+   "date": "2026-08-23",
+   "share": 0.052
+  },
   "strait": {
    "source": "ledger",
+   "basis": "weekly",
    "tracker": "Kpler",
    "mbd": 7.3,
    "date": "2026-10-28",
@@ -151,11 +202,19 @@
     "sweet": 0,
     "war": 0
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 1.2346507414614507,
+   "signals": {
+    "index": 1.2,
     "date": "2026-03-08",
     "share": 0.012
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 1.8,
+    "date": "2026-03-01",
+    "share": 0.106,
+    "estimate_id": "e44"
    },
    "are": "shut",
    "deaths": {
@@ -178,11 +237,19 @@
     "sweet": 1,
     "war": 0
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 1.2346507414614507,
+   "signals": {
+    "index": 1.2,
     "date": "2026-03-15",
     "share": 0.012
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 1.8,
+    "date": "2026-03-01",
+    "share": 0.106,
+    "estimate_id": "e44"
    },
    "are": "shut",
    "deaths": {
@@ -205,11 +272,19 @@
     "sweet": 4,
     "war": 0
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 0.9259880560960878,
+   "signals": {
+    "index": 0.9,
     "date": "2026-03-22",
     "share": 0.009
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 1.8,
+    "date": "2026-03-01",
+    "share": 0.106,
+    "estimate_id": "e44"
    },
    "are": "shut",
    "deaths": {
@@ -232,11 +307,19 @@
     "sweet": 3,
     "war": 0
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 2.4693014829229014,
+   "signals": {
+    "index": 2.5,
     "date": "2026-03-29",
     "share": 0.025
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 1.8,
+    "date": "2026-03-01",
+    "share": 0.106,
+    "estimate_id": "e44"
    },
    "are": "shut",
    "deaths": {
@@ -259,11 +342,19 @@
     "sweet": 4,
     "war": 0
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 4.62994028048044,
+   "signals": {
+    "index": 4.6,
     "date": "2026-04-05",
     "share": 0.046
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 1.8,
+    "date": "2026-03-01",
+    "share": 0.106,
+    "estimate_id": "e44"
    },
    "are": "shut",
    "deaths": {
@@ -286,11 +377,19 @@
     "sweet": 2,
     "war": 0
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 4.012614909749714,
+   "signals": {
+    "index": 4.0,
     "date": "2026-04-12",
     "share": 0.04
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 2.3,
+    "date": "2026-04-01",
+    "share": 0.135,
+    "estimate_id": "e46"
    },
    "are": "shut",
    "deaths": {
@@ -313,11 +412,19 @@
     "sweet": 2,
     "war": 0
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 8.642555190230155,
+   "signals": {
+    "index": 8.6,
     "date": "2026-04-19",
     "share": 0.086
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 2.3,
+    "date": "2026-04-01",
+    "share": 0.135,
+    "estimate_id": "e46"
    },
    "are": "shut",
    "deaths": {
@@ -340,11 +447,19 @@
     "sweet": 4,
     "war": 0
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 3.703952224384352,
+   "signals": {
+    "index": 3.7,
     "date": "2026-04-26",
     "share": 0.037
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 2.3,
+    "date": "2026-04-01",
+    "share": 0.135,
+    "estimate_id": "e46"
    },
    "are": "shut",
    "deaths": {
@@ -367,11 +482,19 @@
     "sweet": 1,
     "war": 4
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 12.037844729249144,
+   "signals": {
+    "index": 12.0,
     "date": "2026-05-03",
     "share": 0.12
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 2.3,
+    "date": "2026-04-01",
+    "share": 0.135,
+    "estimate_id": "e46"
    },
    "are": "shut",
    "deaths": {
@@ -394,11 +517,19 @@
     "sweet": 3,
     "war": 2
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 0.9259880560960878,
+   "signals": {
+    "index": 0.9,
     "date": "2026-05-10",
     "share": 0.009
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 0.881,
+    "date": "2026-05-01",
+    "share": 0.052,
+    "estimate_id": "e49"
    },
    "are": "shut",
    "deaths": {
@@ -421,11 +552,19 @@
     "sweet": 0,
     "war": 5
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 4.3212775951150775,
+   "signals": {
+    "index": 4.3,
     "date": "2026-05-17",
     "share": 0.043
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 0.881,
+    "date": "2026-05-01",
+    "share": 0.052,
+    "estimate_id": "e49"
    },
    "are": "shut",
    "deaths": {
@@ -448,11 +587,19 @@
     "sweet": 1,
     "war": 4
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 4.012614909749714,
+   "signals": {
+    "index": 4.0,
     "date": "2026-05-24",
     "share": 0.04
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 0.881,
+    "date": "2026-05-01",
+    "share": 0.052,
+    "estimate_id": "e49"
    },
    "are": "shut",
    "deaths": {
@@ -475,11 +622,19 @@
     "sweet": 4,
     "war": 0
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 0.9259880560960878,
+   "signals": {
+    "index": 0.9,
     "date": "2026-05-31",
     "share": 0.009
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 0.881,
+    "date": "2026-05-01",
+    "share": 0.052,
+    "estimate_id": "e49"
    },
    "are": "shut",
    "deaths": {
@@ -502,11 +657,19 @@
     "sweet": 5,
     "war": 0
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 2.4693014829229014,
+   "signals": {
+    "index": 2.5,
     "date": "2026-06-07",
     "share": 0.025
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 2.79,
+    "date": "2026-06-01",
+    "share": 0.164,
+    "estimate_id": "e51"
    },
    "are": "shut",
    "deaths": {
@@ -529,11 +692,19 @@
     "sweet": 4,
     "war": 0
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 1.851976112192176,
+   "signals": {
+    "index": 1.9,
     "date": "2026-06-14",
     "share": 0.019
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 2.79,
+    "date": "2026-06-01",
+    "share": 0.164,
+    "estimate_id": "e51"
    },
    "are": "shut",
    "deaths": {
@@ -556,11 +727,19 @@
     "sweet": 0,
     "war": 0
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 9.568543246326245,
+   "signals": {
+    "index": 9.6,
     "date": "2026-06-21",
     "share": 0.096
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 2.79,
+    "date": "2026-06-01",
+    "share": 0.164,
+    "estimate_id": "e51"
    },
    "are": "shut",
    "deaths": {
@@ -583,11 +762,19 @@
     "sweet": 0,
     "war": 0
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 30.248943165805542,
+   "signals": {
+    "index": 30.2,
     "date": "2026-06-28",
     "share": 0.302
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 2.79,
+    "date": "2026-06-01",
+    "share": 0.164,
+    "estimate_id": "e51"
    },
    "are": "shut",
    "deaths": {
@@ -610,11 +797,19 @@
     "sweet": 0,
     "war": 0
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 28.70562973897873,
+   "signals": {
+    "index": 28.7,
     "date": "2026-07-05",
     "share": 0.287
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 2.79,
+    "date": "2026-06-01",
+    "share": 0.164,
+    "estimate_id": "e51"
    },
    "are": "shut",
    "deaths": {
@@ -637,11 +832,19 @@
     "sweet": 0,
     "war": 0
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 13.889820841441322,
+   "signals": {
+    "index": 13.9,
     "date": "2026-07-12",
     "share": 0.139
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 4.49,
+    "date": "2026-07-01",
+    "share": 0.264,
+    "estimate_id": "e53"
    },
    "are": "shut",
    "deaths": {
@@ -664,11 +867,19 @@
     "sweet": 0,
     "war": 0
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 4.938602965845803,
+   "signals": {
+    "index": 4.9,
     "date": "2026-07-19",
     "share": 0.049
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 4.49,
+    "date": "2026-07-01",
+    "share": 0.264,
+    "estimate_id": "e53"
    },
    "are": "shut",
    "deaths": {
@@ -691,11 +902,19 @@
     "sweet": 5,
     "war": 0
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 1.851976112192176,
+   "signals": {
+    "index": 1.9,
     "date": "2026-07-26",
     "share": 0.019
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 4.49,
+    "date": "2026-07-01",
+    "share": 0.264,
+    "estimate_id": "e53"
    },
    "are": "shut",
    "deaths": {
@@ -718,11 +937,19 @@
     "sweet": 3,
     "war": 0
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 3.0866268536536268,
+   "signals": {
+    "index": 3.1,
     "date": "2026-08-02",
     "share": 0.031
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 4.49,
+    "date": "2026-07-01",
+    "share": 0.264,
+    "estimate_id": "e53"
    },
    "are": "shut",
    "deaths": {
@@ -745,11 +972,19 @@
     "sweet": 0,
     "war": 0
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 4.012614909749714,
+   "signals": {
+    "index": 4.0,
     "date": "2026-08-09",
     "share": 0.04
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 2.3,
+    "date": "2026-08-01",
+    "share": 0.135,
+    "estimate_id": "e55"
    },
    "are": "shut",
    "deaths": {
@@ -772,11 +1007,19 @@
     "sweet": 5,
     "war": 0
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 3.39528953901899,
+   "signals": {
+    "index": 3.4,
     "date": "2026-08-16",
     "share": 0.034
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 2.3,
+    "date": "2026-08-01",
+    "share": 0.135,
+    "estimate_id": "e55"
    },
    "are": "shut",
    "deaths": {
@@ -799,11 +1042,19 @@
     "sweet": 5,
     "war": 0
    },
-   "strait": {
-    "source": "portwatch",
-    "index": 5.2472656512111655,
+   "signals": {
+    "index": 5.2,
     "date": "2026-08-23",
     "share": 0.052
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "monthly",
+    "tracker": "Kpler",
+    "mbd": 2.3,
+    "date": "2026-08-01",
+    "share": 0.135,
+    "estimate_id": "e55"
    },
    "are": "shut",
    "deaths": {
@@ -826,8 +1077,14 @@
     "sweet": 5,
     "war": 0
    },
+   "signals": {
+    "index": 5.2,
+    "date": "2026-08-23",
+    "share": 0.052
+   },
    "strait": {
     "source": "ledger",
+    "basis": "weekly",
     "tracker": "vessel-monitoring services (consensus)",
     "mbd": 5.0,
     "date": "2026-08-24",
@@ -855,8 +1112,14 @@
     "sweet": 1,
     "war": 4
    },
+   "signals": {
+    "index": 5.2,
+    "date": "2026-08-23",
+    "share": 0.052
+   },
    "strait": {
     "source": "ledger",
+    "basis": "weekly",
     "tracker": "TankerTrackers.com",
     "mbd": 5.04,
     "date": "2026-09-02",
@@ -884,8 +1147,14 @@
     "sweet": 0,
     "war": 4
    },
+   "signals": {
+    "index": 5.2,
+    "date": "2026-08-23",
+    "share": 0.052
+   },
    "strait": {
     "source": "ledger",
+    "basis": "weekly",
     "tracker": "TankerTrackers.com",
     "mbd": 5.04,
     "date": "2026-09-02",
@@ -913,8 +1182,14 @@
     "sweet": 0,
     "war": 5
    },
+   "signals": {
+    "index": 5.2,
+    "date": "2026-08-23",
+    "share": 0.052
+   },
    "strait": {
     "source": "ledger",
+    "basis": "weekly",
     "tracker": "TankerTrackers.com",
     "mbd": 5.04,
     "date": "2026-09-02",
@@ -942,8 +1217,14 @@
     "sweet": 0,
     "war": 5
    },
+   "signals": {
+    "index": 5.2,
+    "date": "2026-08-23",
+    "share": 0.052
+   },
    "strait": {
     "source": "ledger",
+    "basis": "weekly",
     "tracker": "Kpler",
     "mbd": 6.5,
     "date": "2026-09-21",
@@ -971,13 +1252,19 @@
     "sweet": 0,
     "war": 5
    },
+   "signals": {
+    "index": 5.2,
+    "date": "2026-08-23",
+    "share": 0.052
+   },
    "strait": {
     "source": "ledger",
+    "basis": "weekly",
     "tracker": "Kpler",
-    "mbd": 11.1,
-    "date": "2026-10-01",
-    "share": 0.653,
-    "estimate_id": "e41"
+    "mbd": 9.7,
+    "date": "2026-09-29",
+    "share": 0.571,
+    "estimate_id": "e11"
    },
    "are": "shut",
    "deaths": {
@@ -1000,8 +1287,14 @@
     "sweet": 0,
     "war": 5
    },
+   "signals": {
+    "index": 5.2,
+    "date": "2026-08-23",
+    "share": 0.052
+   },
    "strait": {
     "source": "ledger",
+    "basis": "weekly",
     "tracker": "Kpler",
     "mbd": 8.5,
     "date": "2026-10-07",
@@ -1029,8 +1322,14 @@
     "sweet": 0,
     "war": 5
    },
+   "signals": {
+    "index": 5.2,
+    "date": "2026-08-23",
+    "share": 0.052
+   },
    "strait": {
     "source": "ledger",
+    "basis": "weekly",
     "tracker": "Kpler",
     "mbd": 14.0,
     "date": "2026-10-18",
@@ -1058,8 +1357,14 @@
     "sweet": 0,
     "war": 5
    },
+   "signals": {
+    "index": 5.2,
+    "date": "2026-08-23",
+    "share": 0.052
+   },
    "strait": {
     "source": "ledger",
+    "basis": "weekly",
     "tracker": "Kpler",
     "mbd": 14.0,
     "date": "2026-10-18",
@@ -1087,8 +1392,14 @@
     "sweet": 0,
     "war": 5
    },
+   "signals": {
+    "index": 5.2,
+    "date": "2026-08-23",
+    "share": 0.052
+   },
    "strait": {
     "source": "ledger",
+    "basis": "weekly",
     "tracker": "Kpler",
     "mbd": 7.3,
     "date": "2026-10-28",
@@ -1113,8 +1424,14 @@
    "think": "war",
    "days": null,
    "bno_carried": true,
+   "signals": {
+    "index": 5.2,
+    "date": "2026-08-23",
+    "share": 0.052
+   },
    "strait": {
     "source": "ledger",
+    "basis": "weekly",
     "tracker": "Kpler",
     "mbd": 7.3,
     "date": "2026-10-28",

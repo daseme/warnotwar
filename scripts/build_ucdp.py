@@ -278,7 +278,8 @@ def main():
     hist = json.load(open(hpath)) if os.path.exists(hpath) else {'rule': 'One row per pull: the versions pulled, the month reached, and each entry\'s window sum as it stood. A later pull that moves a number is a revision by UCDP or a change in our basis, and the page shows the move.', 'pulls': []}
     hist['pulls'] = [h for h in hist['pulls'] if h['pulled'] != pulled]
     hist['pulls'].append({'pulled': pulled, 'versions': out['versions'], 'reach': reach, 'window': out['window'], 'flagged_share': flagged,
-                          'entries': {cid: {'window': e['window'], 'last_year': e['last_year'], 'this_year': e['this_year'], 'basis': e['basis']} for cid, e in out['entries'].items()}})
+                          'month_keys': out['months']['keys'],
+                          'entries': {cid: {'window': e['window'], 'last_year': e['last_year'], 'this_year': e['this_year'], 'basis': e['basis'], 'months': e.get('months')} for cid, e in out['entries'].items()}})
     hist['pulls'].sort(key=lambda h: h['pulled'])
     json.dump(hist, open(hpath, 'w'), indent=1, ensure_ascii=False)
     print('wrote data/ucdp.json:', len(out['entries']), 'entries, versions', out['versions'], 'reach', reach, 'flagged', flagged)

@@ -85,6 +85,9 @@
   h3 { font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-60); margin: 28px 0 10px; }
   .prose { font-size: 1.02rem; line-height: 1.85; color: var(--ink-80); max-width: 46em; }
   .prose strong { color: var(--ink); font-weight: 500; }
+  blockquote.prose { margin: 18px 0; padding-left: 18px; border-left: 2px solid var(--gold); }
+  blockquote.prose p { margin: 0 0 10px; }
+  blockquote.prose .who { font-family: var(--mono); font-size: 10.5px; color: var(--ink-45); margin-right: 10px; }
   .tally { font-size: clamp(1.3rem, 2.6vw, 1.7rem); font-weight: 500; line-height: 1.35; letter-spacing: -0.005em; color: var(--ink); max-width: 30em; margin: 0 0 0.4em; }
   .tally b { color: var(--danger); font-weight: 500; }
   .tally-sub { font-family: var(--mono); font-size: 11.5px; color: var(--ink-60); line-height: 1.75; max-width: 78em; margin: 0 0 28px; }
@@ -126,6 +129,7 @@
   .strip rect.d-unknown { fill: none; stroke: var(--ink-18); stroke-dasharray: 2 2; }
   .strip rect.prov { opacity: 0.6; }
   .strip rect.partial { opacity: 0.55; }
+  .strip rect.sig { fill: var(--bg); opacity: 0.85; pointer-events: none; }
   .strip text { font-family: var(--mono); fill: var(--ink-60); font-size: 10px; letter-spacing: 0.06em; }
   .strip text.row { text-transform: uppercase; letter-spacing: 0.1em; fill: var(--ink-45); }
   .strip line.sep { stroke: var(--ink-30); stroke-width: 1; stroke-dasharray: 3 3; }
@@ -234,8 +238,24 @@
   <div class="strip-wrap"><svg class="strip" id="strip"></svg></div>
   <div class="keys" id="keys"></div>
   <ul class="cells" id="cells"></ul>
+  <p class="prose" id="second-count"></p>
+  <p class="tally-sub" id="moved"></p>
   <h3>What falls out</h3>
   <div class="prose" id="findings"></div>
+</section>
+
+<section class="panel" id="origin">
+  <details class="fold">
+  <summary><h2>Where this comes from</h2><span class="n">the Dean Street correspondence, 8 September 2026</span><span class="hint">open</span></summary>
+  <p class="prose">The heuristic on the front page came out of a text thread. So did this page. On 8 September 2026, with BNO a week into its longest stretch above 55, the thread read:</p>
+  <blockquote class="prose">
+    <p><span class="who">8:15 AM</span> Not sure the Dean Street Heuristic can hold up under market rationality</p>
+    <p><span class="who">2:19 PM</span> Are we not at war but think we are?</p>
+    <p><span class="who">2:23 PM</span> That could be divided into quadrants: are / are not; think / think not. I was thinking at this stage it's we are and we think we are, a condition we rarely seem to meet. March through May arguable we were and thought we were but seemed to recalibrate and did not think we were even though we are. Now it seems to be aligning. If the reserves really are at the breaking point, then perhaps all this is leading to proof that oil exists. I guess that would be the strategic endgame. Once oil exists, everyone will act as if we're at war</p>
+    <p><span class="who">2:28 PM</span> there's no fighting in here it's the nonexistent oil room!</p>
+  </blockquote>
+  <p class="prose">The page takes the two questions literally and answers each with a number the site already keeps. The <a href="/qa.html">q and a</a> page holds the first answer given that day.</p>
+  </details>
 </section>
 
 <section class="panel" id="rules">
@@ -282,8 +302,8 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const CELLS = Q.rules.cells;
   const THINK = { peace: 'peace', sweet: 'the perpetual war sweet spot', war: 'war' };
   const strait = w => w.strait ? (w.strait.source === 'ledger'
-      ? `${w.strait.tracker} ${w.strait.mbd} million barrels a day, ${pct(w.strait.share)} of the pre-war rate, reading of ${fd(w.strait.date)}`
-      : `PortWatch tanker activity at ${pct(w.strait.share)} of a normal week, ${fd(w.strait.date)}`) : 'no strait reading';
+      ? `${w.strait.tracker} ${w.strait.mbd} million barrels a day, ${pct(w.strait.share)} of the pre-war rate, ${w.strait.basis === 'monthly' ? `the ${MON[Number(w.strait.date.slice(5, 7)) - 1]} average` : `reading of ${fd(w.strait.date)}`}`
+      : `ship signals near the strait at ${pct(w.strait.share)} of a normal week, ${fd(w.strait.date)}; no tracker figure in the ledger for this week`) : 'no strait reading';
   const deathsLine = w => w.deaths.state === 'unknown' ? `Uppsala has not reached ${MON[Number(w.deaths.month.slice(5)) - 1]}` : `Uppsala: ${w.deaths.best.toLocaleString('en-US')} deaths in the Gulf dyad in ${MON[Number(w.deaths.month.slice(5)) - 1]}${w.deaths.provisional ? ', provisional' : ''}`;
 
   /* ---- the line at the top ---- */
@@ -328,7 +348,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       <dl>
         <dt>across</dt><dd>how much oil the trackers see leaving through the strait, against a normal week. Left of the line, below three quarters of normal, the strait counts as shut.</dd>
         <dt>up</dt><dd>BNO, the oil fund the front page watches. Under ${T.bno_low} peace, over ${T.bno_high} war. The grey band between is the perpetual war sweet spot.</dd>
-        <dt>the jump</dt><dd>until ${esc(fd(W.find(w => w.strait && w.strait.source === 'ledger').week))} the strait is read from ship signals, which fell to a few percent of normal as tankers went dark. From then on it is read from the trackers' barrel counts, which see more. The two are not the same measure, so the marks step right at the join.</dd>
+        ${(() => { const sig = W.filter(w => w.strait && w.strait.source === 'portwatch'); const mon = W.filter(w => w.strait && w.strait.basis === 'monthly'); return (sig.length ? `<dt>ship signals</dt><dd>${sig.length} ${sig.length === 1 ? 'week has' : 'weeks have'} no tracker figure in the ledger and ${sig.length === 1 ? 'is' : 'are'} read from ship signals near the strait instead, which fell to a few percent of normal as tankers went dark. That is a different measure from barrels, and those marks sit far left for that reason.</dd>` : '') + (mon.length ? `<dt>months</dt><dd>${mon.length} ${mon.length === 1 ? 'week takes' : 'weeks take'} the tracker's published average for the month, because no weekly reading was published then.</dd>` : ''); })()}
       </dl>`;
   })();
 
@@ -349,15 +369,16 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       s += `<rect class="w c-${w.cell || 'none'}${w.partial ? ' partial' : ''}" data-i="${i}" x="${x}" y="22" width="${cw}" height="${h1}"/>`;
       const d = w.deaths;
       s += `<rect class="w d-${d.state}${d.provisional && d.state !== 'unknown' ? ' prov' : ''}" data-i="${i}" x="${x}" y="${22 + h1 + gap}" width="${cw}" height="${h2}"/>`;
-      if (w.strait && w.strait.source === 'ledger' && (i === 0 || !W[i - 1].strait || W[i - 1].strait.source !== 'ledger')) {
-        s += `<line class="sep" x1="${x}" x2="${x}" y1="18" y2="${22 + h1 + 4}"/><text x="${x + 3}" y="${22 + h1 + gap + h2 + 26}">← ship signals · tracker barrels →</text>`;
+      if (w.strait && w.strait.basis === 'weekly' && (i === 0 || !W[i - 1].strait || W[i - 1].strait.basis !== 'weekly')) {
+        s += `<line class="sep" x1="${x}" x2="${x}" y1="18" y2="${22 + h1 + 4}"/><text x="${x + 3}" y="${22 + h1 + gap + h2 + 26}">weekly tracker readings from here →</text>`;
       }
+      if (w.strait && w.strait.source === 'portwatch') s += `<rect class="sig" x="${x}" y="${22 + h1 - 4}" width="${cw}" height="4"/>`;
     });
     const svg = $('#strip');
     svg.setAttribute('viewBox', `0 0 ${width} ${H}`);
     svg.innerHTML = s;
     $('#keys').innerHTML = ['are-think', 'are-not-think', 'are-sweet', 'think-not-are', 'open-sweet', 'neither'].map(k => `<span><i class="${k}"></i>${esc(CELLS[k])}</span>`).join('')
-      + `<span><i style="background:var(--ink-80)"></i>deaths at the war line</span><span><i style="background:var(--ink-45)"></i>at the conflict line</span><span><i style="background:var(--ink-10)"></i>quiet</span><span><i style="border:1px dashed var(--ink-30)"></i>not yet counted</span>`;
+      + (W.some(w => w.strait && w.strait.source === 'portwatch') ? `<span><i style="border-bottom:4px solid var(--bg);background:var(--ink-30)"></i>read from ship signals, no tracker figure</span>` : '') + `<span><i style="background:var(--ink-80)"></i>deaths at the war line</span><span><i style="background:var(--ink-45)"></i>at the conflict line</span><span><i style="background:var(--ink-10)"></i>quiet</span><span><i style="border:1px dashed var(--ink-30)"></i>not yet counted</span>`;
     // hover
     const tip = $('#tip');
     const show = (i, ev) => {
@@ -379,6 +400,17 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const order = ['are-think', 'are-sweet', 'are-not-think', 'think-not-are', 'open-sweet', 'neither'];
   $('#weeks-sub').textContent = `${full.length} full weeks from the first Monday of the war, ${fdy(W[0].week)}, each a box: the top row is the cell, the thin row underneath is Uppsala's count of deaths in the Gulf war that month. Hover or tap a week for its readings. The current week is faint until it closes.`;
   $('#cells').innerHTML = order.filter(k => Q.counts[k]).map(k => `<li><div class="w"><i class="${k}" style="width:10px;height:10px;display:inline-block;${k === 'are-sweet' ? 'background:repeating-linear-gradient(135deg,var(--danger) 0 2px,transparent 2px 5px)' : k === 'open-sweet' ? 'background:repeating-linear-gradient(135deg,var(--gold) 0 2px,transparent 2px 5px)' : `background:var(--${{ 'are-think': 'danger', 'are-not-think': 'rate', 'think-not-are': 'gold', 'neither': 'ink-18' }[k]})`}"></i>${esc(CELLS[k])}</div><div class="big">${Q.counts[k]}<small>${Q.counts[k] === 1 ? 'week' : 'weeks'}</small></div></li>`).join('');
+
+  /* ---- the second count, with the sweet spot read as the market thinking war ---- */
+  (function second() {
+    const c2 = Q.counts_sweet_as_think, c = Q.counts;
+    $('#second-count').innerHTML = `<strong>Counted another way.</strong> Adam's grid has four cells and the heuristic has three states, so ${c['are-sweet'] || 0} weeks above sit in a band of their own. If the perpetual war sweet spot is the market thinking we are at war, which is what the phrase says, then "at war, and the market says so" is <strong>${c2['are-think']} of ${full.length} weeks</strong>, not ${c['are-think'] || 0}, and "at war, and the market says peace" stays ${c2['are-not-think']}.`;
+    const m = Q.deaths_moves;
+    if (m && (m.moved.length || m.months_added.length)) {
+      const mv = m.moved.map(x => `${MON[Number(x.month.slice(5)) - 1]} ${x.from.toLocaleString('en-US')} to ${x.to.toLocaleString('en-US')}`);
+      $('#moved').textContent = `The deaths row changed with Uppsala's pull of ${fdy(m.to_pull)}: ${m.months_added.length ? MON.filter((_, i) => m.months_added.some(a => Number(a.slice(5)) - 1 === i)).join(', ') + ' added' : 'no month added'}${mv.length ? '; ' + (mv.length > 1 ? mv.slice(0, -1).join(', ') + ' and ' + mv[mv.length - 1] : mv[0]) + ', as Uppsala re-dated events' : ''}. The strip shows the count as it stands; the moves are kept in data/ucdp_history.json.`;
+    }
+  })();
 
   /* ---- findings, computed ---- */
   (function findings() {

@@ -34,7 +34,6 @@ BNO_LOW, BNO_HIGH = 49.0, 55.0          # the heuristic, as on index.html
 STRAIT_OPEN_SHARE = 0.75                # below this the strait counts as shut
 DEATHS_WAR_MONTH = 84                   # 1,000 a year, UCDP's war line, by month
 DEATHS_CONFLICT_MONTH = 25              # UCDP's conflict line, 25 a year, applied by month
-LEDGER_FROM = dt.date(2026, 8, 24)      # first independent reading in the ledger
 
 
 def load(name):
@@ -80,10 +79,20 @@ def main():
           if r.get("hormuz_tanker_count_index_7d") is not None]
     pw.sort()
     # independent readings: hormuz outbound, a central value, not a single-day print
-    est = [(d(e["estimate_date"]), e) for e in verif["estimates"]
-           if e.get("scope") == "hormuz_outbound" and e.get("value_central") is not None
-           and e.get("period") != "single_day"]
+    # the same family the verification panel uses: all-liquids figures never enter the crude series
+    FAMILY = {"crude", "crude_condensate", "unspecified"}
+    est_all = [e for e in verif["estimates"]
+               if e.get("scope") == "hormuz_outbound" and e.get("value_central") is not None
+               and e.get("period") != "single_day" and (e.get("commodity") or "unspecified") in FAMILY]
+    est = [(d(e["estimate_date"]), e) for e in est_all if e.get("date_precision") != "month"]
     est.sort(key=lambda t: (t[0], t[1].get("entered_date") or ""))
+    # a month-precision reading is the month's average: it covers every week of that month
+    monthly = {}
+    for e in est_all:
+        if e.get("date_precision") == "month":
+            monthly.setdefault(e["estimate_date"][:7], []).append(e)
+    for m in monthly:
+        monthly[m].sort(key=lambda e: (e.get("entered_date") or "", e["estimate_id"]))
 
     gulf = ucdp["entries"]["gulf"]
     month_keys = ucdp["months"]["keys"]
@@ -125,19 +134,29 @@ def main():
             row["days"] = None
             row["bno_carried"] = True
 
-        # are: the strait
-        if cut >= LEDGER_FROM:
-            le = latest(est, cut)
-            if le:
-                day, e = le
-                row["strait"] = {"source": "ledger", "tracker": e["tracker"], "mbd": e["value_central"],
-                                 "date": day.isoformat(), "share": round(e["value_central"] / prewar, 3),
-                                 "estimate_id": e["estimate_id"]}
-        if "strait" not in row:
-            lp = latest(pw, cut)
-            if lp:
-                row["strait"] = {"source": "portwatch", "index": lp[1], "date": lp[0].isoformat(),
-                                 "share": round(lp[1] / 100.0, 3)}
+        # are: the strait. The ledger first: a dated weekly reading as of the week's end if one exists
+        # from the last 21 days, else the month's average if a tracker published one, else the newest
+        # dated reading; ship signals only where the ledger has nothing at all.
+        lp = latest(pw, cut)
+        if lp:
+            row["signals"] = {"index": round(lp[1], 1), "date": lp[0].isoformat(), "share": round(lp[1] / 100.0, 3)}
+        le = latest(est, cut)
+        mk_week = wk.strftime("%Y-%m")
+        if le and (cut - le[0]).days <= 21:
+            day, e = le
+            row["strait"] = {"source": "ledger", "basis": "weekly", "tracker": e["tracker"], "mbd": e["value_central"],
+                             "date": day.isoformat(), "share": round(e["value_central"] / prewar, 3), "estimate_id": e["estimate_id"]}
+        elif mk_week in monthly:
+            e = monthly[mk_week][-1]
+            row["strait"] = {"source": "ledger", "basis": "monthly", "tracker": e["tracker"], "mbd": e["value_central"],
+                             "date": e["estimate_date"], "share": round(e["value_central"] / prewar, 3), "estimate_id": e["estimate_id"]}
+        elif le:
+            day, e = le
+            row["strait"] = {"source": "ledger", "basis": "weekly", "tracker": e["tracker"], "mbd": e["value_central"],
+                             "date": day.isoformat(), "share": round(e["value_central"] / prewar, 3), "estimate_id": e["estimate_id"]}
+        elif lp:
+            row["strait"] = {"source": "portwatch", "basis": "signals", "index": round(lp[1], 1), "date": lp[0].isoformat(),
+                             "share": round(lp[1] / 100.0, 3)}
         if "strait" in row:
             row["are"] = "shut" if row["strait"]["share"] < STRAIT_OPEN_SHARE else "open"
         else:
@@ -169,6 +188,26 @@ def main():
     counts = {}
     for w in full:
         counts[w["cell"]] = counts.get(w["cell"], 0) + 1
+    # the same weeks with the sweet spot read as the market thinking we are at war
+    counts_sweet_as_think = {
+        "are-think": counts.get("are-think", 0) + counts.get("are-sweet", 0),
+        "are-not-think": counts.get("are-not-think", 0),
+        "think-not-are": counts.get("think-not-are", 0) + counts.get("open-sweet", 0),
+        "neither": counts.get("neither", 0),
+    }
+    # what Uppsala moved between its last two pulls, for the Gulf months
+    deaths_moves = None
+    hpath = os.path.join(DATA, "ucdp_history.json")
+    if os.path.exists(hpath):
+        pulls = json.load(open(hpath, encoding="utf-8"))["pulls"]
+        pulls = [p for p in pulls if p.get("month_keys") and p["entries"].get("gulf", {}).get("months")]
+        if len(pulls) >= 2:
+            a, b = pulls[-2], pulls[-1]
+            ma = dict(zip(a["month_keys"], a["entries"]["gulf"]["months"]["best"]))
+            mb = dict(zip(b["month_keys"], b["entries"]["gulf"]["months"]["best"]))
+            moved = [{"month": m, "from": ma[m], "to": mb[m]} for m in mb if m in ma and ma[m] != mb[m]]
+            added = [m for m in mb if m not in ma]
+            deaths_moves = {"from_pull": a["pulled"], "to_pull": b["pulled"], "moved": moved, "months_added": added}
 
     # lags: runs of weeks where the strait is shut and the market says peace
     lags, run = [], None
@@ -191,7 +230,7 @@ def main():
         "war_start": WAR_START.isoformat(),
         "rules": {
             "think": f"The Dean Street Heuristic, as on the front page: BNO's last close of the week. Under ${BNO_LOW:.0f} peace, over ${BNO_HIGH:.0f} war, between them the perpetual war sweet spot.",
-            "are": f"The strait. A week counts as shut when oil leaving through Hormuz is below three quarters of normal. Before {LEDGER_FROM.isoformat()} that is PortWatch's tanker-activity index against a normal late-2025 week, the series on the oilflows page. From then on it is the newest independent tracker reading in the ledger (a seven-day or longer average, never a single day) against a pre-war rate of about {prewar:g} million barrels a day, the figure Kpler's own percentages imply.",
+            "are": f"The strait. A week counts as shut when oil leaving through Hormuz is below three quarters of normal. The reading is the estimates ledger's: a dated weekly tracker figure as of the week's end when one is less than three weeks old, otherwise the tracker's published average for that month, against a pre-war rate of about {prewar:g} million barrels a day, the figure Kpler's own percentages imply. Single-day prints and all-liquids figures never count, the same rule as the verification panel. Where the ledger has nothing for a week, PortWatch's tanker-signal index against a normal late-2025 week stands in, and the week says so.",
             "deaths": f"Uppsala's deaths in the Gulf dyad by the month the event began, UCDP best estimate. {DEATHS_WAR_MONTH} or more in a month is the war line (1,000 a year); {DEATHS_CONFLICT_MONTH} or more is the conflict line. Months from the candidate files are provisional; months Uppsala has not reached are unknown.",
             "cells": {
                 "are-think": "at war, and the market says so",
@@ -216,6 +255,8 @@ def main():
              "provisional": bool(candidate_from and m >= candidate_from)}
             for m in month_keys if m >= WAR_START.strftime("%Y-%m")],
         "counts": counts,
+        "counts_sweet_as_think": counts_sweet_as_think,
+        "deaths_moves": deaths_moves,
         "weeks_full": len(full),
         "lags": lags,
         "current": current,
