@@ -420,5 +420,6 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   $('#quotes').innerHTML = `<tr><th>barrel</th><th>month</th><th>layer</th><th>figure</th><th>quote</th><th>source</th></tr>` + qs.map(q => `<tr><td>${BN[q.barrel] || q.barrel}</td><td>${esc(mn(q.checkpoint))} ${q.checkpoint.slice(0, 4)}</td><td>${esc(q.layer.replace(/_/g, ' '))}</td><td>${q.value != null ? esc(String(q.value)) : (q.value_low != null ? esc(q.value_low + ' to ' + q.value_high) : '–')} ${esc(q.unit.replace(/_/g, ' '))}</td><td class="qt">${esc(q.quote)}</td><td><a href="${esc(q.source_url)}" target="_blank" rel="noopener">${esc(q.as_reported_by)}</a>, ${esc(fd(q.published))}${q.note ? '<br><span style="color:var(--ink-60)">' + esc(q.note) + '</span>' : ''}</td></tr>`).join('');
 })();
 </script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d19fe92168a647a587302167966fb3c7"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

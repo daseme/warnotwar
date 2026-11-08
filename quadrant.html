@@ -448,5 +448,6 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   $('#table').innerHTML = `<tr><th>week of</th><th>BNO</th><th>market</th><th>strait</th><th>deaths</th><th>cell</th></tr>` + W.map(w => `<tr><td>${esc(fd(w.week))}${w.partial ? ' (so far)' : ''}</td><td>${w.bno != null ? w.bno.toFixed(2) : '–'}</td><td>${THINK[w.think] || '–'}</td><td>${w.strait ? pct(w.strait.share) + (w.strait.source === 'ledger' ? ` · ${w.strait.tracker} ${w.strait.mbd}` : ' · ship signals') : '–'}</td><td>${w.deaths.state === 'unknown' ? 'not counted' : w.deaths.best.toLocaleString('en-US') + (w.deaths.provisional ? ' (p)' : '')}</td><td>${esc(CELLS[w.cell] || '–')}</td></tr>`).join('');
 })();
 </script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d19fe92168a647a587302167966fb3c7"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
