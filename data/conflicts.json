@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-02",
+ "as_of": "2026-11-08",
  "status": "entered",
  "rule": "A war is on the map if organized fighting killed roughly 1,000 or more people in the past twelve months, or it is an active war between states, and an outside state fights in it or backs a side.",
  "color_rule": "Five states are colored: those that fight in or back a side in the most wars. The rest are grey and labelled.",
@@ -425,7 +425,7 @@
    ],
    "band": "3",
    "band_source": "UCDP counted 90,535 (87,762 to 96,050) from October 2025 to September 2026, and 94,778 in all of 2025. Ukraine's own claims of Russian dead run higher.",
-   "status": "Full-scale war. Ukraine took back ground in the east in 2026. Talks restarted in October: Steve Witkoff met Zelenskyy in Oslo on 20 October and Putin on 21 October, and Putin said Moscow was ready to resume U.S.-mediated talks in November. Trump declared an energy ceasefire on 11 October; Russia went on striking energy sites, and an attack on 23 October cut power to more than 500,000 people. A local truce around Russian-held Oleshky in Kherson took effect on 27 October and held while an aid convoy went in and residents were taken out. Fighting goes on elsewhere: a Russian strike on the railway station in Dnipro killed fourteen people, by one count fifteen, and Ukraine sent more than 600 drones at Moscow.",
+   "status": "Full-scale war. Ukraine took back ground in the east in 2026. Talks restarted in October: Steve Witkoff met Zelenskyy in Oslo on 20 October and Putin on 21 October. Russian, Ukrainian and U.S. negotiators are to meet in Abu Dhabi on 10 November, and talks on reconstruction and security guarantees ended in Brussels on 5 November. Trump declared an energy ceasefire on 11 October; Russia went on striking energy sites, and an attack on 23 October cut power to more than 500,000 people. A local truce around Russian-held Oleshky in Kherson took effect on 27 October and held while an aid convoy went in and residents were taken out. A Russian strike on the railway station in Dnipro killed fourteen people, by one count fifteen, and Ukraine sent more than 600 drones at Moscow. A Russian strike on 2 November on a former school used to hand out aid at Komyshuvakha in Zaporizhzhia killed at least 50 people, by Ukraine's emergency service, which was still clearing the rubble on 6 November; the UN human rights mission in Ukraine said the strike was likely a breach of international law. Zelenskyy said Russia fired 36 ballistic missiles at Kyiv and the region overnight on 7 November.",
    "summary": "Russia invaded in February 2022 after eight years of fighting in the Donbas.",
    "parties": [
     {
@@ -921,6 +921,10 @@
     {
      "month": "2026-10",
      "what": "Talks restarted. Witkoff met Zelenskyy in Oslo on 20 October and Putin on 21 October."
+    },
+    {
+     "month": "2026-11",
+     "what": "A Russian strike on an aid point at Komyshuvakha in Zaporizhzhia on 2 November killed at least 50 people."
     }
    ],
    "ucdp": {
@@ -948,7 +952,7 @@
    ],
    "band": "3",
    "band_source": "UCDP counted 66,979 (13,220 to 82,746) from October 2025 to September 2026; 75,174 in all of 2025, 62,775 of them civilians killed deliberately, which is why the low is so far below the best. ACLED counted at least 19,000 deaths in fighting in 2025. The UN human rights office documented more than 6,000 killed in three days when el-Fasher fell.",
-   "status": "War between the army and the RSF. The RSF took el-Fasher in October 2025 and holds Darfur. The army holds Khartoum and the centre. The RSF is massing around El Obeid in North Kordofan and striking it with drones. Since early October the army has flown near-daily air strikes on RSF-held towns in Darfur and Kordofan. Famine in Darfur and parts of Kordofan.",
+   "status": "War between the army and the RSF. The RSF took el-Fasher in October 2025 and holds Darfur. The army holds Khartoum and the centre. The RSF is massing around El Obeid in North Kordofan and striking it with drones. Since early October the army has flown near-daily air strikes on RSF-held towns in Darfur and Kordofan. The army said on 1 November that it was advancing on Darfur and Kordofan, and said it took Iyal Bakhit in West Kordofan on 7 November. Fighting west of El Obeid from 5 November left control of several villages disputed: the army's allied movements said they had taken four, and the RSF posted video to say it still held them. Famine in Darfur and parts of Kordofan.",
    "summary": "Two armed forces that once shared power turned on each other in April 2023. The RSF set up a rival government in 2025. The UN counts it the largest displacement in the world.",
    "parties": [
     {
@@ -1966,7 +1970,7 @@
    ],
    "band": "2",
    "band_source": "UCDP counted 5,436 (2,981 to 6,556) from October 2025 to September 2026. The WHO counted 965 killed in Yemen in the Gulf war. The two sides' own counts of fighters killed run into the thousands.",
-   "status": "Full-scale war again. The 2022 truce collapsed in July 2026. The Houthis took the Red Sea coast in September. The government, with Saudi air cover, is pushing back. Houthi missiles hit Saudi airports, and in October the presidential palace, the airport and the coast guard headquarters in Aden. The Houthis say they have also struck Saudi oil sites. The Saudi-led coalition said it shot down two ballistic missiles aimed at Taif and Yanbu on 24 October. Houthi media said Saudi strikes killed sixteen people in Sanaa and Hodeida the same day. The United States ordered non-essential embassy staff out of Saudi Arabia on 23 October.",
+   "status": "Full-scale war again. The 2022 truce collapsed in July 2026. The Houthis took the Red Sea coast in September. The government, with Saudi air cover, is pushing back. Houthi missiles hit Saudi airports, and in October the presidential palace, the airport and the coast guard headquarters in Aden. The Houthis say they have also struck Saudi oil sites. The Saudi-led coalition said it shot down two ballistic missiles aimed at Taif and Yanbu on 24 October. Houthi media said Saudi strikes killed sixteen people in Sanaa and Hodeida the same day. The United States ordered non-essential embassy staff out of Saudi Arabia on 23 October. The Saudi-led coalition said it shot down two ballistic missiles and two cruise missiles aimed at Riyadh on 8 November; the Houthi military spokesman said the group had run six missile and drone operations against targets in Saudi Arabia and Yemen.",
    "summary": "The Houthis hold the north and the capital. The government, backed by Saudi Arabia, crushed its southern rival the STC in January 2026 after the UAE pulled out. The 2022 truce collapsed in July 2026 and the war is back on. Since late 2023 the Houthis have also fired on ships in the Red Sea and at Israel.",
    "parties": [
     {
@@ -2312,6 +2316,10 @@
     {
      "month": "2026-10",
      "what": "Houthi missiles hit Aden airport and the coast guard headquarters on 24 October. The Houthis said they also struck Saudi oil sites and airports."
+    },
+    {
+     "month": "2026-11",
+     "what": "Houthi missiles were fired at Riyadh on 8 November. The Saudi-led coalition said it shot down four."
     }
    ],
    "ucdp": {
@@ -5189,7 +5197,7 @@
    ],
    "band": "2",
    "band_source": "UCDP counted 3,864 (3,862 to 3,947) in the war itself from October 2025 to September 2026. Iran counts 3,528 dead and Israel estimates 6,000; 72 killed in Israel, about two dozen U.S. troops, and dozens across the Gulf states, by those states. Lebanon's dead are counted under Gaza and Lebanon.",
-   "status": "War since 28 February 2026. A ceasefire from 8 April collapsed on 8 July. U.S. strikes again in September. Iran's attacks on shipping in the strait reached a record in October: Iran said seven tankers were hit on 22 October and two more struck mines on 24 October, and attacks on ships about doubled on September. CENTCOM said on 25 October that the strait's main transit routes were clear of Iranian mines and that more than 3,000 commercial vessels had crossed with its support in six months. Kpler put the oil leaving through the strait in the week to 28 October at 7.3 million barrels a day, more than 40 percent below the pre-war rate, after about 14 million in the week to 18 October. The United States and Israel are reported to be planning strikes after the U.S. midterm elections. Talks run through Qatar and Pakistan.",
+   "status": "War since 28 February 2026. A ceasefire from 8 April collapsed on 8 July. U.S. strikes again in September. Iran's attacks on shipping in the strait reached a record in October: Iran said seven tankers were hit on 22 October and two more struck mines on 24 October, and attacks on ships about doubled on September. The attacks went on into November. UKMTO counted eleven ships attacked in the seven days to 4 November, and 325 transits of the strait in the same week against 277 the week before. Iran's Revolutionary Guard said more tankers struck mines and caught fire between 3 and 8 November; no body outside the fight has said so, and CENTCOM said on 28 October that the strait's primary transit routes were clear of Iranian mines. The United States struck Qeshm Island in the strait on 2 November, the day before the midterm elections, and again on 6 November; unnamed U.S. officials said the first answered an Iranian missile that threatened shipping, and Trump said the second knocked out an anti-aircraft system. CENTCOM said on 7 November that it had disabled the cargo ship M/V Huda in the Gulf of Oman, that 147 commercial vessels had been turned around since July, and that it had set up a task force, Iron Gate, against weapons and sanctioned goods reaching Iran by land and across the Caspian Sea. Kpler put the oil leaving through the strait in the week to 28 October at 7.3 million barrels a day, more than 40 percent below the pre-war rate. Vortexa and Kpler both read Gulf exports on every route as lower in October than in September. Talks run through Qatar and Pakistan.",
    "summary": "Israel and the United States struck Iran in June 2025 and again on 28 February 2026, killing Ali Khamenei. Iran shut the Strait of Hormuz on 4 March and fired missiles and drones at Israel, U.S. bases and every Gulf state. Hezbollah joined on 2 March and the Houthis seized the Bab al-Mandab coast in September. A Pakistan-brokered ceasefire held from April to July. U.S. forces cleared Iranian mines by late August, but traffic is still a fraction of normal. This site's other pages follow the oil.",
    "parties": [
     {
@@ -6270,6 +6278,14 @@
     {
      "month": "2026-10",
      "what": "Iran said seven tankers were hit in the strait on 22 October and two more struck mines on 24 October."
+    },
+    {
+     "month": "2026-11",
+     "what": "U.S. strikes on Qeshm Island in the strait on 2 and 6 November. Neither was announced; Trump said afterwards that the second had knocked out an anti-aircraft system."
+    },
+    {
+     "month": "2026-11",
+     "what": "CENTCOM set up Task Force Iron Gate against Iran's land and Caspian supply routes on 7 November and disabled the cargo ship M/V Huda in the Gulf of Oman the same day."
     }
    ],
    "ucdp": {
@@ -6296,7 +6312,7 @@
    ],
    "band": "2",
    "band_source": "UCDP counted 5,278 (3,925 to 14,592) from October 2025 to September 2026. ACLED counted about 1,150 deaths in Amhara, Oromia and Tigray in one quarter of 2025. The September offensive is after both.",
-   "status": "A rebel alliance of Tigray, Amhara and Oromo forces attacked on 23 September 2026. The army retook Mekelle on 3 October and the towns on the Eritrean border on 12 and 13 October. Eritrean troops crossed into Tigray and pulled back over the border; some are reported to be still inside. Ethiopia and Eritrea cut ties on 1 October and their forces have clashed. Abiy Ahmed said on 28 October that Ethiopia had taken delivery of twelve Russian Su-35 fighters and would receive four S-400 air defence batteries; Russia's arms exporter said two jets had been delivered.",
+   "status": "A rebel alliance of Tigray, Amhara and Oromo forces attacked on 23 September 2026. The army retook Mekelle on 3 October and the towns on the Eritrean border on 12 and 13 October. Eritrean troops crossed into Tigray and pulled back over the border; some are reported to be still inside. Ethiopia and Eritrea cut ties on 1 October and their forces have clashed. Abiy Ahmed said on 28 October that Ethiopia had taken delivery of twelve Russian Su-35 fighters and would receive four S-400 air defence batteries; Russia's arms exporter said two jets had been delivered. Ethiopian troops entered Sheraro in north-western Tigray on 5 November and ordered a night curfew in Mekelle from 6 November, by ACLED's record.",
    "summary": "The Tigray war ended in 2022. Fano militias in Amhara and the Oromo Liberation Army then fought the federal army. In September 2026 the Tigray People's Liberation Front joined them in an Alliance for Survival and launched an offensive in the north. Eritrea, once Ethiopia's ally against Tigray, now backs the alliance and has sent troops across the border.",
    "parties": [
     {
