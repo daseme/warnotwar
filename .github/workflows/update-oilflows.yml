@@ -29,6 +29,7 @@ jobs:
             echo "no data changes"
           else
             git commit -m "weekly oilflows refresh: PortWatch, JODI, EIA, market, quadrant"
+            git pull --rebase   # another bot may have pushed while this ran
             git push
             echo "pushed=true" >> "$GITHUB_OUTPUT"
           fi

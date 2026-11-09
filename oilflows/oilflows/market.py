@@ -11,6 +11,7 @@ from .arcgis import create_retrying_session
 
 FRED_BRENT_URL = "https://fred.stlouisfed.org/graph/fredgraph.csv"
 YAHOO_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/BNO"
+EIA_BRENT_XLS_URL = "https://www.eia.gov/dnav/pet/hist_xls/RBRTEd.xls"
 
 
 def pull_market_daily(
@@ -45,12 +46,23 @@ def pull_market_daily(
         else date.today()
     )
 
-    fred_text = fetch_fred_brent(
-        start,
-        end,
-        timeout_seconds=timeout_seconds,
-        session=client,
-    )
+    # FRED's CSV endpoint does not answer from every network (it times out
+    # from GitHub's runners). One short try, then the EIA's own daily workbook,
+    # which is where FRED gets the series.
+    try:
+        fred_text = fetch_fred_brent(
+            start,
+            end,
+            timeout_seconds=20,
+            session=requests.Session(),
+        )
+    except (requests.RequestException, RuntimeError):
+        fred_text = fetch_eia_brent_as_fred_csv(
+            start,
+            end,
+            timeout_seconds=timeout_seconds,
+            session=client,
+        )
     yahoo_json = fetch_bno_yahoo(
         start,
         end,
@@ -98,6 +110,56 @@ def fetch_fred_brent(
         raise RuntimeError("Unexpected FRED Brent response.")
 
     return response.text
+
+
+def fetch_eia_brent_as_fred_csv(
+    start: date,
+    end: date,
+    *,
+    timeout_seconds: int,
+    session: requests.Session,
+) -> str:
+    """Brent spot from the EIA daily workbook (series RBRTE), written out in
+    the same two-column CSV shape FRED returns so one parser serves both."""
+    import xlrd
+
+    response = session.get(
+        EIA_BRENT_XLS_URL,
+        timeout=(15, timeout_seconds),
+        headers={"User-Agent": "Mozilla/5.0"},
+    )
+    response.raise_for_status()
+    book = xlrd.open_workbook(file_contents=response.content)
+    sheet = book.sheet_by_name("Data 1")
+    return eia_brent_rows_to_fred_csv(
+        [sheet.row_values(i) for i in range(sheet.nrows)],
+        book.datemode,
+        start,
+        end,
+    )
+
+
+def eia_brent_rows_to_fred_csv(
+    rows: list[list[object]],
+    datemode: int,
+    start: date,
+    end: date,
+) -> str:
+    import xlrd
+
+    if not any(str(row[1]).strip() == "RBRTE" for row in rows[:5] if len(row) > 1):
+        raise RuntimeError("Unexpected EIA Brent workbook: no RBRTE sourcekey.")
+
+    lines = ["observation_date,DCOILBRENTEU"]
+    for row in rows:
+        if len(row) < 2 or not isinstance(row[0], float) or not isinstance(row[1], float):
+            continue
+        day = xlrd.xldate_as_datetime(row[0], datemode).date()
+        if start <= day <= end:
+            lines.append(f"{day.isoformat()},{row[1]}")
+    if len(lines) == 1:
+        raise RuntimeError("EIA Brent workbook has no rows in the window.")
+    return "\n".join(lines) + "\n"
 
 
 def fetch_bno_yahoo(

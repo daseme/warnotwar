@@ -72,3 +72,21 @@ def test_market_calendar_features_forward_fill_last_close_only():
     assert pd.isna(weekend["bno_close_usd"])
     assert weekend["bno_last_close_usd"] == 30.0
     assert not bool(weekend["bno_observed"])
+
+
+def test_eia_brent_rows_become_fred_shaped_csv():
+    from datetime import date
+
+    from oilflows.market import eia_brent_rows_to_fred_csv, parse_fred_brent
+
+    rows = [
+        ["Back to Contents", "Data 1: Europe Brent Spot Price FOB"],
+        ["Sourcekey", "RBRTE"],
+        ["Date", "Europe Brent Spot Price FOB (Dollars per Barrel)"],
+        [46328.0, 107.39],  # 2026-11-02
+        [46329.0, 107.03],  # 2026-11-03
+        [46330.0, ""],
+    ]
+    text = eia_brent_rows_to_fred_csv(rows, 0, date(2026, 11, 3), date(2026, 11, 9))
+    assert text == "observation_date,DCOILBRENTEU\n2026-11-03,107.03\n"
+    assert len(parse_fred_brent(text)) == 1
