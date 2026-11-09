@@ -1,0 +1,579 @@
+{
+ "note": "Who has called this war a state between war and peace, when, in which words, and who they say wants it kept. One entry per dated statement. Quotes are verbatim; a line marked 'via' is someone else's rendering or a translation. Names of the state: 'neither war nor peace' (Tehran), 'forever war' (the analysts), 'little war' (the White House), 'perpetual war sweet spot' (Dean Street).",
+ "names": {
+  "neither": "neither war nor peace",
+  "forever": "forever war",
+  "little": "little war",
+  "sweet": "perpetual war sweet spot"
+ },
+ "band": {
+  "low": 49,
+  "high": 55
+ },
+ "entries": [
+  {
+   "id": "khamenei-2025-09-07",
+   "date": "2025-09-07",
+   "name": "neither",
+   "side": "Tehran",
+   "speaker": "Ali Khamenei",
+   "role": "Supreme Leader of Iran until his death. Speaking to the cabinet five months before the war began.",
+   "setting": "Cabinet meeting, Tehran, Sunday 7 September 2025.",
+   "lines": [
+    {
+     "text": "Let us overcome the state of neither war nor peace that the enemy wants to impose on us.",
+     "quote": true,
+     "via": "our translation from the Persian"
+    },
+    {
+     "text": "One of the country's losses and dangers is precisely this state of neither war nor peace.",
+     "quote": true,
+     "via": "our translation from the Persian"
+    },
+    {
+     "text": "The phrase is older than this war. Tehran has used it for its standoff with Washington for years, and here the Leader names it as something done to Iran, not chosen by it.",
+     "quote": false
+    }
+   ],
+   "wants": "The enemy, who he said wants to impose it on Iran.",
+   "ends": "Work and results at home, and not waiting for events outside the country.",
+   "source": {
+    "label": "Euronews Persian, 8 September 2025",
+    "url": "https://parsi.euronews.com/2025/09/08/neither-war-nor-peace-khamenei-oil-production-is-low-the-current-atmosphere-is-not-go"
+   },
+   "note": "No English text from his office could be reached, so the lines are our translation of the Persian as Euronews printed it."
+  },
+  {
+   "id": "trump-2026-03-11",
+   "date": "2026-03-11",
+   "name": "little",
+   "side": "Washington",
+   "speaker": "Donald Trump",
+   "role": "President of the United States, eleven days into the war.",
+   "setting": "Touring a pharmaceutical plant in Ohio, asked by Steve Doocy of Fox News whether it was a 'little excursion' or a war.",
+   "lines": [
+    {
+     "text": "Well, it's both.",
+     "quote": true
+    },
+    {
+     "text": "It's an excursion that will keep us out of a war, and the war is going to be — I mean for them, it's a war.",
+     "quote": true
+    },
+    {
+     "text": "The first statement from the American side that the thing is a war for one party and not for the other.",
+     "quote": false
+    }
+   ],
+   "wants": "Not said.",
+   "ends": "Not said.",
+   "source": {
+    "label": "C-SPAN, Word for Word, 11 March 2026",
+    "url": "https://newsletters.c-span.org/its-both"
+   },
+   "note": ""
+  },
+  {
+   "id": "pezeshkian-2026-06-10",
+   "date": "2026-06-10",
+   "name": "neither",
+   "side": "Tehran",
+   "speaker": "Masoud Pezeshkian",
+   "role": "President of Iran, at a memorial for the late Supreme Leader.",
+   "setting": "The third Amin Iran ceremony, Vahdat Hall, Tehran, Wednesday 10 June 2026. Reported by ISNA and IRNA.",
+   "lines": [
+    {
+     "text": "We must get out of the 'neither war nor peace' policy.",
+     "quote": true
+    },
+    {
+     "text": "The martyred Leader repeatedly stated that the situation of 'neither war nor peace' must be resolved.",
+     "quote": true
+    },
+    {
+     "text": "It is impossible to force a country to surrender with aeroplanes and bombing.",
+     "quote": true
+    },
+    {
+     "text": "Iran is definitely not surrenderable.",
+     "quote": true
+    },
+    {
+     "text": "We must move forward with dignity in a way that saves the future of our country from crises and storms.",
+     "quote": true,
+     "via": "Dawn, from IRNA"
+    }
+   ],
+   "wants": "Not said. He presents it as a policy Iran can leave.",
+   "ends": "Leaving the policy with dignity. Not surrender.",
+   "source": {
+    "label": "ANI via NewKerala, from ISNA, 10 June 2026",
+    "url": "https://www.newkerala.com/news/a/must-get-out-neither-war-nor-peace-policy-915.htm"
+   },
+   "note": "Dawn carried IRNA's account of what reads as the same speech, with the dignity line: https://www.dawn.com/news/2006641"
+  },
+  {
+   "id": "vaez-2026-07-16",
+   "date": "2026-07-16",
+   "name": "forever",
+   "side": "the analysts",
+   "speaker": "Ali Vaez",
+   "role": "Director of the Iran project at the International Crisis Group. The day before he had written in The New York Times that this is a forever war in the making.",
+   "setting": "Interview on Democracy Now, 16 July 2026, after the April ceasefire collapsed and Washington walked away from the memorandum of understanding.",
+   "lines": [
+    {
+     "text": "what I meant by saying that this is a forever war in the making",
+     "quote": true
+    },
+    {
+     "text": "there is only one formula that remains, which is the continuation of the conflict in one form or another",
+     "quote": true
+    },
+    {
+     "text": "we are going to end up in cyclical cycles of violence",
+     "quote": true
+    },
+    {
+     "text": "there is really no military solution",
+     "quote": true
+    }
+   ],
+   "wants": "Nobody by design. He blames divisions inside the Trump administration for wrecking the memorandum.",
+   "ends": "Both sides go back to the memorandum of understanding and keep its terms.",
+   "source": {
+    "label": "Democracy Now, 16 July 2026",
+    "url": "https://www.democracynow.org/2026/7/16/ali_vaez_iran_war_hormuz_strait"
+   },
+   "note": "The Times op-ed, 'This Is a Forever War in the Making', 15 July 2026, is behind a paywall and is not quoted here."
+  },
+  {
+   "id": "nyt-2026-07-16",
+   "date": "2026-07-16",
+   "name": "forever",
+   "side": "the analysts",
+   "speaker": "Steven Erlanger, asking the question",
+   "role": "The New York Times, with Vali Nasr of Johns Hopkins, Suzanne Maloney of Brookings, Aaron David Miller of Carnegie and Lawrence Freedman of King's College London.",
+   "setting": "News analysis, 16 July 2026, headlined 'In Iran, Trump risks another American forever war'. Read in the Philadelphia Inquirer's reprint.",
+   "lines": [
+    {
+     "text": "the war has created a new, seemingly intractable problem, bottling up the Strait of Hormuz",
+     "quote": true,
+     "via": "Erlanger"
+    },
+    {
+     "text": "Both sides looked to the memorandum of understanding as the continuation of the war by other means",
+     "quote": true,
+     "via": "Ali Vaez"
+    },
+    {
+     "text": "Washington's stakes in this war are simply smaller than those for Iran",
+     "quote": true,
+     "via": "Vali Nasr"
+    },
+    {
+     "text": "the days of the Strait of Hormuz fully free for transit are probably over",
+     "quote": true,
+     "via": "Suzanne Maloney"
+    },
+    {
+     "text": "set objectives that can be achieved, if at all, only through prolonged struggle",
+     "quote": true,
+     "via": "Lawrence Freedman, on how forever wars start"
+    }
+   ],
+   "wants": "Iran can wait longer than Washington, Nasr says, because it has more at stake.",
+   "ends": "A president who decides the cost is not worth it, declares victory and goes home.",
+   "source": {
+    "label": "The New York Times via The Philadelphia Inquirer, 16 July 2026",
+    "url": "https://www.inquirer.com/news/nation-world/donald-trump-iran-forever-war-20260716.html"
+   },
+   "note": ""
+  },
+  {
+   "id": "azizi-2026-07-30",
+   "date": "2026-07-30",
+   "name": "forever",
+   "side": "the analysts",
+   "speaker": "Hamidreza Azizi",
+   "role": "Senior Iran analyst at the International Crisis Group.",
+   "setting": "Essay in Time, 30 July 2026, 'Why Iran Cannot Fight a Forever War'.",
+   "lines": [
+    {
+     "text": "it is an open-ended campaign: a war of attrition fought over a waterway",
+     "quote": true
+    },
+    {
+     "text": "Neither Iran nor America has a credible military path to a durable settlement that ends the fighting",
+     "quote": true
+    },
+    {
+     "text": "it is not clear how it can remain in a permanent state of confrontation with America and the Gulf states",
+     "quote": true,
+     "via": "of Iran"
+    },
+    {
+     "text": "Washington's problem is the diminishing returns on each additional night of bombing",
+     "quote": true
+    }
+   ],
+   "wants": "Iran treats the outcome so far as a victory and is trying to fix its terms, but he doubts it can live in the state for long.",
+   "ends": "The first agreement. Any new one must say who verifies what, in what order, and what happens when a ship is hit.",
+   "source": {
+    "label": "Time, 30 July 2026",
+    "url": "https://time.com/article/2026/07/30/iran-america-hormuz-forever-war/"
+   },
+   "note": ""
+  },
+  {
+   "id": "pezeshkian-2026-08-08",
+   "date": "2026-08-08",
+   "name": "neither",
+   "side": "Tehran",
+   "speaker": "Masoud Pezeshkian",
+   "role": "President of Iran.",
+   "setting": "Press conference in Tehran for National Journalist Day, Saturday 8 August 2026. Reported by Mehr.",
+   "lines": [
+    {
+     "text": "War cannot continue forever.",
+     "quote": true
+    },
+    {
+     "text": "Iran seeks to move beyond the current state of 'neither war nor peace', and hopes to do it with dignity and pride for the country.",
+     "quote": false,
+     "via": "Tehran Times, reported speech"
+    },
+    {
+     "text": "He said Iran would stand behind whatever the Leader decided on war, and would not accept an agreement imposed through pressure.",
+     "quote": false
+    }
+   ],
+   "wants": "Not said.",
+   "ends": "Not an agreement imposed by pressure.",
+   "source": {
+    "label": "Tehran Times, from Mehr, 8 August 2026",
+    "url": "https://www.tehrantimes.com/news/528959/"
+   },
+   "note": ""
+  },
+  {
+   "id": "adam-2026-08-10",
+   "date": "2026-08-10",
+   "name": "sweet",
+   "side": "Dean Street",
+   "speaker": "Adam",
+   "role": "The friend in the thread. The heuristic is named for Dean Street, where it was found.",
+   "setting": "A text message at 11:58 in the morning, Monday 10 August 2026, two weeks before the site existed. The reply came nineteen minutes later.",
+   "lines": [
+    {
+     "text": "< 49 = peace",
+     "quote": true
+    },
+    {
+     "text": "> 55 = war",
+     "quote": true
+    },
+    {
+     "text": "50 = perpetual war sweet spot",
+     "quote": true
+    },
+    {
+     "text": "I buy that",
+     "quote": true,
+     "via": "Kurt"
+    }
+   ],
+   "wants": "Not said. The band names a state the market can live in.",
+   "ends": "A close under 49.",
+   "source": {
+    "label": "The thread. The heuristic page carries the rule.",
+    "url": "/heuristic.html"
+   },
+   "note": "The rule became the front page. Every other entry on this page is read against it."
+  },
+  {
+   "id": "trump-2026-08-31",
+   "date": "2026-08-31",
+   "name": "little",
+   "side": "Washington",
+   "speaker": "Donald Trump",
+   "role": "President of the United States, six months into the war.",
+   "setting": "The Oval Office, Monday 31 August 2026, the night two tankers were hit in the strait, asked about a Washington Post report that military leaders worried about a long operation.",
+   "lines": [
+    {
+     "text": "a relatively small war",
+     "quote": true,
+     "via": "CBS News, which reported him playing the conflict down in those words"
+    },
+    {
+     "text": "The headline that reached Dean Street the next morning read 'relatively little war', and the heuristic that day called it war for a few minutes before the price fell back.",
+     "quote": false
+    }
+   ],
+   "wants": "Not said.",
+   "ends": "Not said.",
+   "source": {
+    "label": "CBS News live updates, 31 August to 2 September 2026",
+    "url": "https://www.cbsnews.com/live-updates/iran-war-us-strikes-strait-of-hormuz-larak-island/"
+   },
+   "note": "The fuller sentence quoted elsewhere, 'This is a relatively little war for us. This is not a big war', has not been checked against the transcript and is not quoted here."
+  },
+  {
+   "id": "adam-2026-09-01",
+   "date": "2026-09-01",
+   "name": "sweet",
+   "side": "Dean Street",
+   "speaker": "Adam",
+   "role": "The friend in the thread.",
+   "setting": "Text messages at 9:49 and 9:50 in the morning, Tuesday 1 September 2026, as strikes pushed the price over the line and back inside it.",
+   "lines": [
+    {
+     "text": "Point size of WAR could increase with every dollar over 55",
+     "quote": true
+    },
+    {
+     "text": "Never mind, just perpetual war. Back to work",
+     "quote": true
+    },
+    {
+     "text": "Damn it feels real when the website says so.",
+     "quote": true,
+     "via": "Kurt, 9:37"
+    },
+    {
+     "text": "So there were strikes. Before they were reported, markets declared war for a few minutes before retreating.",
+     "quote": true,
+     "via": "Adam, 9:58"
+    }
+   ],
+   "wants": "Not said.",
+   "ends": "Not said. The point is that it did not end; the price went back inside the band.",
+   "source": {
+    "label": "The thread",
+    "url": "/heuristic.html"
+   },
+   "note": ""
+  },
+  {
+   "id": "kurt-2026-10-05",
+   "date": "2026-10-05",
+   "name": "sweet",
+   "side": "Dean Street",
+   "speaker": "Kurt",
+   "role": "Reading Italians reading Deleuze and Guattari reading Clausewitz.",
+   "setting": "A text message at 9:50 in the morning, Monday 5 October 2026.",
+   "lines": [
+    {
+     "text": "when capital controls the war machine clausewitzian theory falls apart which is to say there no longer is a discrete goal that can be achieved. No policy end state. Capital always seeks endless profit. There is no end. Perpetual war sweet spot.",
+     "quote": true
+    },
+    {
+     "text": "It's possible to isolate the Gulf War but after we won the limited war we then spent a dozen years bombing Iraq before the invasion",
+     "quote": true,
+     "via": "Adam, 11:10"
+    },
+    {
+     "text": "you can choose your style and flavor but you can't step away from the table",
+     "quote": true,
+     "via": "Kurt, 11:54, on Bacevich"
+    }
+   ],
+   "wants": "Capital. Profit has no end state, so neither does the war.",
+   "ends": "Nothing, on this reading. Only the style and flavour change.",
+   "source": {
+    "label": "The thread",
+    "url": "/heuristic.html"
+   },
+   "note": "The only entry on the page that answers the question of who wants it with a name."
+  },
+  {
+   "id": "vaez-tabaar-2026-10-12",
+   "date": "2026-10-12",
+   "name": "forever",
+   "side": "the analysts",
+   "speaker": "Ali Vaez and Mohammad Ayatollahi Tabaar",
+   "role": "Vaez of the International Crisis Group, whose essay 'The New Forever War: Why America and Iran Fight On Without Victory' leads the November issue of Foreign Affairs. Tabaar of Texas A&M.",
+   "setting": "Foreign Affairs podcast 'Iran's Long War', recorded 12 October and published 15 October 2026.",
+   "lines": [
+    {
+     "text": "Nearly eight months since it began, the war in Iran has settled into a grim stalemate.",
+     "quote": true,
+     "via": "the editors' introduction"
+    },
+    {
+     "text": "the continuation of this conflict, despite all of its costs, seems less costly than the alternative",
+     "quote": true,
+     "via": "Vaez"
+    },
+    {
+     "text": "it is a war that we cannot find a solution to, which means that it would continue in one form or another",
+     "quote": true,
+     "via": "Vaez"
+    },
+    {
+     "text": "it's very hard to put a floor under tensions between Iran and the United States",
+     "quote": true,
+     "via": "Vaez"
+    },
+    {
+     "text": "it could become another permanent condition similar to the sanctions",
+     "quote": true,
+     "via": "Tabaar"
+    },
+    {
+     "text": "the two sides believe that time is on their side",
+     "quote": true,
+     "via": "Tabaar"
+    }
+   ],
+   "wants": "Both sides, Vaez says: going on costs less than the concessions a deal needs. The magazine's summary of his essay is that Iran prefers deadlock to any compromise on offer.",
+   "ends": "Some understanding between Iran and its neighbours or between Iran and the United States. Tabaar's version is a small deal for a small deal, step by step; without it he sees only escalation.",
+   "source": {
+    "label": "Foreign Affairs, 15 October 2026",
+    "url": "https://www.foreignaffairs.com/podcasts/irans-long-war"
+   },
+   "note": "The essay itself is behind a paywall and is not quoted."
+  },
+  {
+   "id": "mojtaba-2026-10-27",
+   "date": "2026-10-27",
+   "name": "neither",
+   "side": "Tehran",
+   "speaker": "Mojtaba Khamenei, through Mohsen Rezaei",
+   "role": "Supreme Leader of Iran since his father's death. Rezaei is secretary of the Supreme National Security Council and carried the message.",
+   "setting": "A meeting between the Leader and Rezaei, Tuesday 27 October 2026, known from the council's readout and from Rezaei's own account.",
+   "lines": [
+    {
+     "text": "He emphasised measures with the aim of ending the war and the conditions of 'neither war nor peace'.",
+     "quote": false,
+     "via": "the council's readout in Nour News, our translation"
+    },
+    {
+     "text": "Rezaei said the Leader had told him it was time to end the state of 'no war, no peace'.",
+     "quote": false,
+     "via": "Iran International"
+    },
+    {
+     "text": "This is the order Pezeshkian cites from here on. No direct words of the Leader on it exist; every line is a readout or someone's account.",
+     "quote": false
+    }
+   ],
+   "wants": "Not said.",
+   "ends": "The conditions Rezaei set out in September: an end to the war on every front, Lebanon included, and the release of Iran's frozen funds.",
+   "source": {
+    "label": "Nour News, 27 October 2026, in Persian; Iran International, 29 October",
+    "url": "https://www.iranintl.com/en/202610282034"
+   },
+   "note": "Iran International's analyst Khosro Isfahani notes the readout contains no direct quotation. His own reading of who gains from the state: Tehran keeps its grip on Hormuz, its allies stay in place, and Washington concedes."
+  },
+  {
+   "id": "pezeshkian-2026-10-28",
+   "date": "2026-10-28",
+   "name": "neither",
+   "side": "Tehran",
+   "speaker": "Masoud Pezeshkian",
+   "role": "President of Iran, the day after the Leader's order.",
+   "setting": "Cabinet meeting, Tehran, Wednesday 28 October 2026. Reported by Mehr.",
+   "lines": [
+    {
+     "text": "Enemies must not imagine that by increasing pressure and threats, they can weaken the will of the Iranian nation and force the country to surrender",
+     "quote": true
+    },
+    {
+     "text": "But I still believe we should go [to negotiations] and move beyond the neither-war-nor-peace situation",
+     "quote": true,
+     "via": "Iran International, the same week"
+    },
+    {
+     "text": "He pledged to carry out the Leader's wishes and to meet the conditions Iranian officials had set for ending the war.",
+     "quote": false
+    }
+   ],
+   "wants": "Not said.",
+   "ends": "Negotiations, on the conditions already set.",
+   "source": {
+    "label": "Tehran Times, from Mehr, 28 October 2026",
+    "url": "https://www.tehrantimes.com/news/531616/"
+   },
+   "note": "Iran International's account of the factions that week: https://www.iranintl.com/en/202610300238"
+  },
+  {
+   "id": "rferl-2026-11-05",
+   "date": "2026-11-05",
+   "name": "neither",
+   "side": "the analysts",
+   "speaker": "Kian Sharifi",
+   "role": "Radio Free Europe / Radio Liberty, with Radio Farda, the day after the midterm elections.",
+   "setting": "Analysis, 5 November 2026, 'War, Deal, Or Stalemate? What The Midterms Mean For Trump's Iran War'. Its third scenario is headed 'No War, No Peace'.",
+   "lines": [
+    {
+     "text": "Whenever I want it to.",
+     "quote": true,
+     "via": "Trump, asked when the war ends"
+    },
+    {
+     "text": "The reason we lost is the war",
+     "quote": true,
+     "via": "Vice President Vance on X, 4 November"
+    },
+    {
+     "text": "Iran may seek to drag it out in the hopes of raising the political and financial costs for Trump",
+     "quote": true
+    },
+    {
+     "text": "The no war, no peace scenario as he describes it: keep the posture, keep the blockade, keep the escorts through Hormuz, strike when struck. He calls it unstable.",
+     "quote": false
+    }
+   ],
+   "wants": "Iran, if a weakened president can be waited out.",
+   "ends": "Iran's offer: the strait open within two days if its seven conditions are met.",
+   "source": {
+    "label": "RFE/RL, 5 November 2026",
+    "url": "https://www.rferl.org/a/iran-war-us-midterms-trump-options/33891689.html"
+   },
+   "note": ""
+  },
+  {
+   "id": "pezeshkian-2026-11-09",
+   "date": "2026-11-09",
+   "name": "neither",
+   "side": "Tehran",
+   "speaker": "Masoud Pezeshkian",
+   "role": "President of Iran.",
+   "setting": "The 72nd anniversary of the state dairy company, Tehran, Monday 9 November 2026. Carried by Press TV, Tasnim and Anadolu from a statement on the presidency's site.",
+   "lines": [
+    {
+     "text": "The Leader has instructed us to put an end to the current state of neither war nor peace.",
+     "quote": true,
+     "via": "Press TV's rendering"
+    },
+    {
+     "text": "We can engage in dialogue with dignity and bring this matter to a dignified conclusion.",
+     "quote": true,
+     "via": "Press TV's rendering"
+    },
+    {
+     "text": "Logic dictates that if we can secure our rights through dialogue, we should avoid becoming embroiled in war.",
+     "quote": true,
+     "via": "Press TV's rendering"
+    },
+    {
+     "text": "However, we will never surrender in the face of force, intimidation, or bullying.",
+     "quote": true,
+     "via": "Press TV's rendering"
+    },
+    {
+     "text": "Two days earlier, at a meeting on fuel rationing, he said the government was working to leave the state with dignity, and that this must not stop planning for fuel and electricity shortages.",
+     "quote": false,
+     "via": "ISNA, through LaPresse"
+    }
+   ],
+   "wants": "Not said. He presents Tehran as ordered out of it.",
+   "ends": "Talks with dignity. No surrender to force.",
+   "source": {
+    "label": "Press TV, 9 November 2026",
+    "url": "https://www.presstv.co.uk/Detail/2026/11/09/780337/leader-ordered-iran-officials-to-end-state-of-neither-war-nor-peace-president-pezeshkian"
+   },
+   "note": "Anadolu's rendering of the same lines: 'We can negotiate with dignity and resolve the issue with dignity. We favor dialogue and negotiations. However, we will not surrender to force and bullying.' Also on the readings page."
+  }
+ ]
+}
