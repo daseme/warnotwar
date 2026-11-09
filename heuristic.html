@@ -52,6 +52,16 @@
     margin: 14px 0 6px;
   }
   #live-price { font-size: 1.4em; font-weight: 500; }
+  #tally {
+    display: block; text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; line-height: 1.7;
+    color: rgba(240,236,230,0.55);
+    text-decoration: none;
+    margin: 0 0 12px;
+  }
+  #tally:hover { color: rgba(240,236,230,0.9); }
+  #tally:empty { display: none; }
   .live-pulse {
     width: 6px; height: 6px; border-radius: 50%;
     background: #3d9f6b;
@@ -105,12 +115,14 @@
     <span id="price">Loading…</span>
   </div>
 
+  <a id="tally" href="/quadrant.html"></a>
+
   <div id="chart-wrap"></div>
 
   <div class="source" id="note">Loading price history…</div>
 
   <div class="backrow">
-    <a class="back" href="/conflicts.html">the map</a>
+    <a class="back" href="/quadrant.html">are we at war, and do we think we are? &rarr;</a>
     <a class="back" href="/">war not war</a>
   </div>
 </div>
@@ -288,7 +300,24 @@
     buildChart(history, live);
   }
 
+  // the line under the price: days since the war began, and the quadrant's
+  // count of full weeks the strait was shut and the market called it war
+  async function fetchTally() {
+    try {
+      const q = await fetch("/data/quadrant.json").then(r => r.json());
+      const full = q.weeks.filter(w => !w.partial);
+      const shut = full.filter(w => w.are === "shut");
+      const war = shut.filter(w => w.think === "war");
+      if (!full.length) return;
+      const [y, m, d] = q.war_start.split("-").map(Number);
+      const day = Math.floor((Date.now() - Date.UTC(y, m - 1, d)) / 86400000);
+      document.getElementById("tally").textContent =
+        `Day ${day}. Strait shut ${shut.length} of ${full.length} weeks. The market called it war in ${war.length} of them.`;
+    } catch (e) {}
+  }
+
   init();
+  fetchTally();
 </script>
 
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d19fe92168a647a587302167966fb3c7"}'></script><!-- End Cloudflare Web Analytics -->

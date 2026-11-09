@@ -70,3 +70,20 @@ def test_december_crosscheck_accepts_matching_values():
     )
 
     validate_december_against_annual(annual, december)
+
+
+def test_curated_reports_add_periods_and_leave_missing_months_out(tmp_path):
+    from oilflows.somo import periods_to_frame, read_curated_reports, validate_periods
+
+    path = tmp_path / "somo_reports.csv"
+    path.write_text(
+        "period_start,period_end,granularity,basrah_barrels,krg_barrels,total_barrels,source_file,source_url,note\n"
+        "2026-08-01,2026-08-31,month,69754934,2173016,73687617,August report,https://example.org/a.pdf,note\n"
+    )
+    frame = periods_to_frame(read_curated_reports(path))
+    validate_periods(frame)
+    row = frame.iloc[0]
+    assert row["days"] == 31
+    assert round(row["basrah_kbd"], 1) == 2250.2
+    assert round(row["total_kbd"], 1) == 2377.0
+    assert row["source_sheet"] == "export summary"

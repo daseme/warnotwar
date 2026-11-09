@@ -517,7 +517,7 @@
   nav.topnav details.testing summary::after { content: '\25BE'; font-size: 10px; }
   nav.topnav details.testing summary:hover, nav.topnav details.testing[open] summary, nav.topnav details.testing.here summary { opacity: 1; }
   nav.topnav details.testing .menu { position: absolute; top: calc(100% + 14px); left: -14px; min-width: 190px; display: flex; flex-direction: column; gap: 12px; padding: 14px 16px; background: var(--bg-raise, var(--bg)); border: 1px solid var(--ink-18); z-index: 60; }
-  @media (max-width: 720px) {
+  @media (max-width: 1140px) {
     nav.topnav { overflow-x: auto; overflow-y: hidden; }
     nav.topnav details.testing[open] { display: inline-flex; align-items: center; gap: 14px; }
     nav.topnav details.testing .menu { position: static; flex-direction: row; gap: 14px; min-width: 0; padding: 0; border: 0; background: none; }
@@ -529,24 +529,24 @@
 <nav class="topnav">
   <a href="/">warnotwar</a>
   <a href="/heuristic.html">the heuristic</a>
+  <a href="/quadrant.html">the quadrant</a>
+  <a href="/sweetspot.html">the sweet spot</a>
+  <a href="/market.html">the market</a>
   <a href="/moment.html">the moment</a>
   <a href="/conflicts.html">the map</a>
   <a href="/record.html">the word</a>
-  <a href="/readings.html">readings</a>
   <a href="/qa.html">q and a</a>
   <details class="testing here">
     <summary>testing</summary>
     <div class="menu">
-      <a href="/market.html">the market</a>
+      <a href="/readings.html">readings</a>
       <a href="/oilflows.html" class="here">oilflows</a>
       <a href="/lab.html">the lab</a>
       <a href="/teaching-module/index.html">hormuz lab (sim)</a>
       <a href="/spr/">the reserve</a>
       <a href="/methodology.html">methodology</a>
       <a href="/level.html">the level</a>
-      <a href="/quadrant.html">the quadrant</a>
       <a href="/barrel.html">the barrel</a>
-      <a href="/sweetspot.html">the sweet spot</a>
     </div>
   </details>
   <span class="spacer"></span>
@@ -777,7 +777,7 @@
     <a href="/data/us_crude_buffer_weekly.json">JSON</a> &middot;
     <a href="/data/us_crude_buffer_meta.json">metadata</a> &middot;
     <a href="/data/hormuz_verification.json">claims record (JSON)</a> &middot;
-    <a href="/data/us_oil_flow_claims.json">full U.S. statements archive, Mar&ndash;Aug (JSON)</a> &middot;
+    <a href="/data/us_oil_flow_claims.json">full U.S. statements archive (JSON)</a> &middot;
     <a href="/methodology.html">claims-collection methodology</a>
   </div>
 </section>
@@ -1296,14 +1296,14 @@ themeBtn.onclick = () => {
           `Hormuz activity at about ${Math.round(fRow.hormuz_tanker_count_index_7d)}% of its 2025 baseline, ` +
           `the crude cushion at its ${rankLabel} level since 1982${drawing ? ' and being drawn from the strategic side' : ''}, ` +
           `and Brent at $${b.toFixed(2)} — ${cmp} its March 12 level of $${b12.toFixed(2)}. ` +
-          `The flow reading is itself one of the unverified quantities (referee: official export data, ~Oct–Nov 2026) — and if the official flow figures are right, the tension dissolves. ` +
+          `The flow reading is itself one of the unverified quantities (the referee is official export data; August's is in panel 3) — and if the official flow figures are right, the tension dissolves. ` +
           `None of our instruments resolves this alone. Possible explanations, in no order:</p></div>`;
 
         h += `<table class="mono"><tr><th>possible explanation</th><th>explains which observation</th><th>what would settle it, and when</th></tr>`;
         h += `<tr><td>Demand destruction</td><td>the price</td><td>consumption ("products supplied") data — published weekly by EIA; not yet integrated here</td></tr>`;
         h += `<tr><td>Bypass routes carrying more than modeled</td><td>the flow reading</td><td>partially observable now: the Yanbu terminal-activity index runs at multiples of its baseline — an activity signal; index multiples cannot be converted to barrels</td></tr>`;
         h += `<tr><td>Strategic releases bridging supply</td><td>the cushion and the price</td><td>observable now: the U.S. SPR is ${drawing ? 'drawing' : 'moving'} at a rate equivalent to ~${mbdEq} million barrels/day (${Math.abs(sp.spr_weekly_change_avg_mbbl).toFixed(1)}M bbl/week ÷ 7 — EIA); <em>if</em> those barrels reach the market, that is added supply. Allied releases are not tracked here</td></tr>`;
-        h += `<tr><td>The official 8–10 mb/d flow figures being accurate</td><td>the flow reading</td><td>the referee: official export data, ~Oct–Nov 2026 — if right, the tension dissolves</td></tr>`;
+        h += `<tr><td>The official 8–10 mb/d flow figures being accurate</td><td>the flow reading</td><td>official export data. August's figures for Iraq, Kuwait and Saudi Arabia are in panel 3. Iraq has not published July. If the official figures are right, the tension dissolves</td></tr>`;
         h += `<tr><td>Expectations of de-escalation priced in</td><td>the price</td><td>not directly measurable; resolves only in hindsight</td></tr>`;
         h += `</table>`;
 
@@ -1556,7 +1556,7 @@ themeBtn.onclick = () => {
       `<div class="vconn">gap ~${gapTxt} mb/d — currently unverified</div>` +
       `<div class="vlayer"><div class="k">independent estimate</div><div class="v">${consTxt} mb/d</div><div class="u">commercial trackers (range ${range(ep.independent_low_mbd, ep.independent_high_mbd, 0)}), as reported in the press; tries to count ships that hide their signals</div></div>` +
       `<div class="vconn">later reconciliation — loadings, arrivals, official trade data</div>` +
-      `<div class="vlayer"><div class="k">destination confirmation</div><div class="v">pending</div><div class="u">first referee: official Iraq/Kuwait/Saudi export data for Aug 2026, expected ~Oct–Nov — already tracked in panel 3</div></div>`;
+      `<div class="vlayer"><div class="k">destination confirmation</div><div class="v">August in</div><div class="u">first referee: official Iraq, Kuwait and Saudi export data for Aug 2026, now in panel 3. Iraq has not published July</div></div>`;
 
     const fmtLedgerDate = r => r.date_precision === 'month'
       ? fmtDate(r.claim_date || r.estimate_date).replace(/^(\w+) \d+ /, '$1 ')

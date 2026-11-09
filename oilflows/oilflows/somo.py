@@ -53,7 +53,7 @@ class SomoPeriod:
         return self.basrah_barrels / self.days / 1000.0
 
 
-def build_somo_exports(raw_dir: Path) -> pd.DataFrame:
+def build_somo_exports(raw_dir: Path, reports_path: Path | None = None) -> pd.DataFrame:
     """Parse official SOMO workbooks into canonical Iraq export periods.
 
     Canonical policy:
@@ -61,6 +61,10 @@ def build_somo_exports(raw_dir: Path) -> pd.DataFrame:
       * 2026 Jan-Apr come from the individual English monthly sheets.
       * May-Jun 2026 remains one combined official period.
       * December 2025 monthly workbook is used only as a validation cross-check.
+      * From July 2026 SOMO posts PDF export reports instead of workbooks. Their
+        summary figures are kept by hand in data/curated/somo_reports.csv, one
+        row per report. A month with no report has no row, and the daily series
+        shows it as a gap.
     """
     annual_path = raw_dir / "2025_annual.xlsx"
     if not annual_path.exists():
@@ -99,9 +103,32 @@ def build_somo_exports(raw_dir: Path) -> pd.DataFrame:
         )
         validate_december_against_annual(periods, december)
 
+    if reports_path is not None and reports_path.exists():
+        periods.extend(read_curated_reports(reports_path))
+
     frame = periods_to_frame(periods)
     validate_periods(frame)
     return frame
+
+
+def read_curated_reports(path: Path) -> list[SomoPeriod]:
+    """Hand-entered summary figures from SOMO's PDF export reports."""
+    reports = pd.read_csv(path, parse_dates=["period_start", "period_end"])
+    periods = []
+    for row in reports.itertuples(index=False):
+        periods.append(
+            SomoPeriod(
+                period_start=row.period_start,
+                period_end=row.period_end,
+                granularity=row.granularity,
+                basrah_barrels=float(row.basrah_barrels),
+                total_barrels=float(row.total_barrels),
+                krg_barrels=None if pd.isna(row.krg_barrels) else float(row.krg_barrels),
+                source_file=row.source_file,
+                source_sheet="export summary",
+            )
+        )
+    return periods
 
 
 def parse_2025_annual(path: Path) -> list[SomoPeriod]:

@@ -2,7 +2,7 @@
   "schema_version": 1,
   "frequency": "weekly",
   "source": "U.S. Energy Information Administration",
-  "generated_at_utc": "2026-11-05T23:47:36Z",
+  "generated_at_utc": "2026-11-09T22:28:14Z",
   "first_week": "1991-02-08",
   "last_week": "2026-10-30",
   "latest": {

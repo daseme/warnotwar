@@ -8,7 +8,9 @@ def main() -> None:
     raw_dir = project_root / "data" / "raw" / "somo"
     output_path = project_root / "data" / "processed" / "somo_iraq_exports.csv"
 
-    result = build_somo_exports(raw_dir)
+    reports_path = project_root / "data" / "curated" / "somo_reports.csv"
+
+    result = build_somo_exports(raw_dir, reports_path)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     result.to_csv(output_path, index=False)

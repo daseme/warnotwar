@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "generated_at_utc": "2026-11-02T17:02:33Z",
+ "generated_at_utc": "2026-11-09T22:12:45Z",
  "war_start": "2026-02-28",
  "rules": {
   "think": "The Dean Street Heuristic, as on the front page: BNO's last close of the week. Under $49 peace, over $55 war, between them the perpetual war sweet spot.",
@@ -24,8 +24,8 @@
   "deaths_conflict_month": 25
  },
  "sources": {
-  "bno": "data/market_daily.json (Yahoo Finance daily closes), last 2026-10-30",
-  "portwatch": "data/oilflows_daily.json, hormuz_tanker_count_index_7d, last 2026-08-23",
+  "bno": "data/market_daily.json (Yahoo Finance daily closes), last 2026-11-09",
+  "portwatch": "data/oilflows_daily.json, hormuz_tanker_count_index_7d, last 2026-11-01",
   "ledger": "data/hormuz_verification.json estimates, newest independent reading 2026-10-28",
   "ucdp": "data/ucdp.json, GED 26.1, Candidate 26.01 to 26.09, reach 2026-09, pulled 2026-11-02"
  },
@@ -82,11 +82,11 @@
  "counts": {
   "are-not-think": 10,
   "are-sweet": 14,
-  "are-think": 9,
+  "are-think": 10,
   "think-not-are": 2
  },
  "counts_sweet_as_think": {
-  "are-think": 23,
+  "are-think": 24,
   "are-not-think": 10,
   "think-not-are": 2,
   "neither": 0
@@ -130,7 +130,7 @@
    "2026-09"
   ]
  },
- "weeks_full": 35,
+ "weeks_full": 36,
  "lags": [
   {
    "from": "2026-03-02",
@@ -158,18 +158,21 @@
   }
  ],
  "current": {
-  "week": "2026-11-02",
-  "to": "2026-11-08",
+  "week": "2026-11-09",
+  "to": "2026-11-15",
   "partial": true,
-  "bno": 71.39,
-  "bno_date": "2026-10-30",
+  "bno": 58.93,
+  "bno_date": "2026-11-09",
   "think": "war",
-  "days": null,
-  "bno_carried": true,
+  "days": {
+   "peace": 0,
+   "sweet": 0,
+   "war": 1
+  },
   "signals": {
-   "index": 5.2,
-   "date": "2026-08-23",
-   "share": 0.052
+   "index": 3.1,
+   "date": "2026-11-01",
+   "share": 0.031
   },
   "strait": {
    "source": "ledger",
@@ -1078,9 +1081,9 @@
     "war": 0
    },
    "signals": {
-    "index": 5.2,
-    "date": "2026-08-23",
-    "share": 0.052
+    "index": 4.0,
+    "date": "2026-08-30",
+    "share": 0.04
    },
    "strait": {
     "source": "ledger",
@@ -1113,9 +1116,9 @@
     "war": 4
    },
    "signals": {
-    "index": 5.2,
-    "date": "2026-08-23",
-    "share": 0.052
+    "index": 1.9,
+    "date": "2026-09-06",
+    "share": 0.019
    },
    "strait": {
     "source": "ledger",
@@ -1148,9 +1151,9 @@
     "war": 4
    },
    "signals": {
-    "index": 5.2,
-    "date": "2026-08-23",
-    "share": 0.052
+    "index": 3.1,
+    "date": "2026-09-13",
+    "share": 0.031
    },
    "strait": {
     "source": "ledger",
@@ -1183,9 +1186,9 @@
     "war": 5
    },
    "signals": {
-    "index": 5.2,
-    "date": "2026-08-23",
-    "share": 0.052
+    "index": 1.2,
+    "date": "2026-09-20",
+    "share": 0.012
    },
    "strait": {
     "source": "ledger",
@@ -1218,9 +1221,9 @@
     "war": 5
    },
    "signals": {
-    "index": 5.2,
-    "date": "2026-08-23",
-    "share": 0.052
+    "index": 2.8,
+    "date": "2026-09-27",
+    "share": 0.028
    },
    "strait": {
     "source": "ledger",
@@ -1253,9 +1256,9 @@
     "war": 5
    },
    "signals": {
-    "index": 5.2,
-    "date": "2026-08-23",
-    "share": 0.052
+    "index": 1.9,
+    "date": "2026-10-04",
+    "share": 0.019
    },
    "strait": {
     "source": "ledger",
@@ -1288,9 +1291,9 @@
     "war": 5
    },
    "signals": {
-    "index": 5.2,
-    "date": "2026-08-23",
-    "share": 0.052
+    "index": 1.2,
+    "date": "2026-10-11",
+    "share": 0.012
    },
    "strait": {
     "source": "ledger",
@@ -1323,9 +1326,9 @@
     "war": 5
    },
    "signals": {
-    "index": 5.2,
-    "date": "2026-08-23",
-    "share": 0.052
+    "index": 1.2,
+    "date": "2026-10-18",
+    "share": 0.012
    },
    "strait": {
     "source": "ledger",
@@ -1358,9 +1361,9 @@
     "war": 5
    },
    "signals": {
-    "index": 5.2,
-    "date": "2026-08-23",
-    "share": 0.052
+    "index": 1.9,
+    "date": "2026-10-25",
+    "share": 0.019
    },
    "strait": {
     "source": "ledger",
@@ -1393,9 +1396,9 @@
     "war": 5
    },
    "signals": {
-    "index": 5.2,
-    "date": "2026-08-23",
-    "share": 0.052
+    "index": 3.1,
+    "date": "2026-11-01",
+    "share": 0.031
    },
    "strait": {
     "source": "ledger",
@@ -1418,16 +1421,54 @@
   {
    "week": "2026-11-02",
    "to": "2026-11-08",
-   "partial": true,
-   "bno": 71.39,
-   "bno_date": "2026-10-30",
+   "partial": false,
+   "bno": 62.22,
+   "bno_date": "2026-11-06",
    "think": "war",
-   "days": null,
-   "bno_carried": true,
+   "days": {
+    "peace": 0,
+    "sweet": 0,
+    "war": 5
+   },
    "signals": {
-    "index": 5.2,
-    "date": "2026-08-23",
-    "share": 0.052
+    "index": 3.1,
+    "date": "2026-11-01",
+    "share": 0.031
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "weekly",
+    "tracker": "Kpler",
+    "mbd": 7.3,
+    "date": "2026-10-28",
+    "share": 0.429,
+    "estimate_id": "e40"
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-11",
+    "best": null,
+    "state": "unknown",
+    "provisional": true
+   },
+   "cell": "are-think"
+  },
+  {
+   "week": "2026-11-09",
+   "to": "2026-11-15",
+   "partial": true,
+   "bno": 58.93,
+   "bno_date": "2026-11-09",
+   "think": "war",
+   "days": {
+    "peace": 0,
+    "sweet": 0,
+    "war": 1
+   },
+   "signals": {
+    "index": 3.1,
+    "date": "2026-11-01",
+    "share": 0.031
    },
    "strait": {
     "source": "ledger",
