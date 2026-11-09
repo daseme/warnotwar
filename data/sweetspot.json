@@ -1,5 +1,5 @@
 {
- "note": "Who has called this war a state between war and peace, when, in which words, and who they say wants it kept. One entry per dated statement. Quotes are verbatim; a line marked 'via' is someone else's rendering or a translation. Names of the state: 'neither war nor peace' (Tehran), 'forever war' (the analysts), 'little war' (the White House), 'perpetual war sweet spot' (Dean Street).",
+ "note": "Who has called this war a state between war and peace, when, in which words, and who they say wants it kept. One entry per dated statement. Quotes are verbatim; a line marked 'via' is a named outlet's rendering; nothing on this page is translated by us. Names of the state: 'neither war nor peace' (Tehran), 'forever war' (the analysts), 'little war' (the White House), 'perpetual war sweet spot' (Dean Street).",
  "names": {
   "neither": "neither war nor peace",
   "forever": "forever war",
@@ -18,17 +18,22 @@
    "side": "Tehran",
    "speaker": "Ali Khamenei",
    "role": "Supreme Leader of Iran until his death. Speaking to the cabinet five months before the war began.",
-   "setting": "Cabinet meeting, Tehran, Sunday 7 September 2025.",
+   "setting": "Cabinet meeting, Tehran, Sunday 7 September 2025. Iran International's English rendering is quoted; the Middle East Forum gives a second one.",
    "lines": [
     {
-     "text": "Let us overcome the state of neither war nor peace that the enemy wants to impose on us.",
+     "text": "neither war, nor peace state that the enemy wants to impose on us",
      "quote": true,
-     "via": "our translation from the Persian"
+     "via": "Iran International, which says he told the cabinet hope and productivity had to prevail over it, part of the enemy's 'psychological war'"
     },
     {
-     "text": "One of the country's losses and dangers is precisely this state of neither war nor peace.",
+     "text": "don't wait for external developments",
      "quote": true,
-     "via": "our translation from the Persian"
+     "via": "Iran International, as his remedy"
+    },
+    {
+     "text": "The Middle East Forum's rendering of the same remark: the 'neither war, nor peace' condition that 'the enemy has imposed on us' was dangerous for the country.",
+     "quote": false,
+     "via": "Middle East Forum, 29 October 2026"
     },
     {
      "text": "The phrase is older than this war. Tehran has used it for its standoff with Washington for years, and here the Leader names it as something done to Iran, not chosen by it.",
@@ -36,12 +41,12 @@
     }
    ],
    "wants": "The enemy, who he said wants to impose it on Iran.",
-   "ends": "Work and results at home, and not waiting for events outside the country.",
+   "ends": "Self-reliance: hope and work at home, and not waiting for events outside the country.",
    "source": {
-    "label": "Euronews Persian, 8 September 2025",
-    "url": "https://parsi.euronews.com/2025/09/08/neither-war-nor-peace-khamenei-oil-production-is-low-the-current-atmosphere-is-not-go"
+    "label": "Iran International, 29 October 2026, looking back at the 7 September 2025 cabinet address",
+    "url": "https://www.iranintl.com/en/202610280475"
    },
-   "note": "No English text from his office could be reached, so the lines are our translation of the Persian as Euronews printed it."
+   "note": "The underlying report is Euronews Persian, 8 September 2025, which we do not translate: https://parsi.euronews.com/2025/09/08/neither-war-nor-peace-khamenei-oil-production-is-low-the-current-atmosphere-is-not-go. The Middle East Forum piece dates the remark 8 September, the Persian report's publication date; the meeting was Sunday the 7th. No English text from the Leader's office could be reached."
   },
   {
    "id": "trump-2026-03-11",
@@ -440,12 +445,17 @@
    "side": "Tehran",
    "speaker": "Mojtaba Khamenei, through Mohsen Rezaei",
    "role": "Supreme Leader of Iran since his father's death. Rezaei is secretary of the Supreme National Security Council and carried the message.",
-   "setting": "A meeting between the Leader and Rezaei, Tuesday 27 October 2026, known from the council's readout and from Rezaei's own account.",
+   "setting": "A meeting between the Leader and Rezaei, Tuesday 27 October 2026, known from the council's readout as Press TV reported it and from Rezaei's own account.",
    "lines": [
     {
-     "text": "He emphasised measures with the aim of ending the war and the conditions of 'neither war nor peace'.",
+     "text": "Ayatollah Khamenei has placed a premium on the need to secure Iran's conditions for ending the war and the state of 'neither war nor peace.'",
      "quote": false,
-     "via": "the council's readout in Nour News, our translation"
+     "via": "Press TV, reported speech"
+    },
+    {
+     "text": "He called for efforts to secure the rights and interests of the Iranian people and the Resistance Front through the fulfillment of conditions announced by Iranian officials for ending the war and the 'neither war nor peace' situation.",
+     "quote": false,
+     "via": "Press TV, reported speech"
     },
     {
      "text": "Rezaei said the Leader had told him it was time to end the state of 'no war, no peace'.",
@@ -460,10 +470,10 @@
    "wants": "Not said.",
    "ends": "The conditions Rezaei set out in September: an end to the war on every front, Lebanon included, and the release of Iran's frozen funds.",
    "source": {
-    "label": "Nour News, 27 October 2026, in Persian; Iran International, 29 October",
-    "url": "https://www.iranintl.com/en/202610282034"
+    "label": "Press TV, 27 October 2026; Iran International, 29 October",
+    "url": "https://www.presstv.co.uk/Detail/2026/10/27/779319/leader-puts-premium-on-fulfillment-of-iran-conditions-for-ending-war"
    },
-   "note": "Iran International's analyst Khosro Isfahani notes the readout contains no direct quotation. His own reading of who gains from the state: Tehran keeps its grip on Hormuz, its allies stay in place, and Washington concedes."
+   "note": "Rezaei's account: https://www.iranintl.com/en/202610282034. Iran International's analyst Khosro Isfahani notes the readout contains no direct quotation. His own reading of who gains from the state: Tehran keeps its grip on Hormuz, its allies stay in place, and Washington concedes."
   },
   {
    "id": "pezeshkian-2026-10-28",
