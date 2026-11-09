@@ -196,6 +196,53 @@
      ]
     }
    ]
+  },
+  {
+   "id": "pezeshkian-2026-11-09",
+   "added": "2026-11-09",
+   "date": "2026-11-09",
+   "title": "Neither war nor peace, and the order to end it",
+   "source": "Press TV, with Anadolu's rendering of the same remarks",
+   "url": "https://www.presstv.co.uk/Detail/2026/11/09/780337/leader-ordered-iran-officials-to-end-state-of-neither-war-nor-peace-president-pezeshkian",
+   "who": "Masoud Pezeshkian, president of Iran, speaking in Tehran on 9 November 2026 at the 72nd anniversary of the state dairy company. He is a party to the war, and the Supreme Leader's order is known only through his account of it. Press TV is Iranian state television; Anadolu is Turkey's state news agency and carries a second English rendering of the same lines.",
+   "why": "Iran's name for the state this site is built around is 'neither war nor peace'. The site calls it the perpetual war sweet spot and reads it off the oil price: BNO between 49 and 55. Here is the president of the country on the other side of the war saying the same thing, and saying the order has come down to end it. He would agree we are living in perpetual war. The argument is only about the price band: when he spoke, BNO's last close was 62.22, which the heuristic calls war, not the sweet spot.",
+   "points": [
+    {
+     "text": "The Leader has instructed us to put an end to the current state of neither war nor peace.",
+     "quote": true,
+     "tags": [
+      "heuristic"
+     ]
+    },
+    {
+     "text": "We can engage in dialogue with dignity and bring this matter to a dignified conclusion.",
+     "quote": true,
+     "tags": [
+      "heuristic"
+     ]
+    },
+    {
+     "text": "Logic dictates that if we can secure our rights through dialogue, we should avoid becoming embroiled in war.",
+     "quote": true,
+     "tags": [
+      "heuristic",
+      "market"
+     ]
+    },
+    {
+     "text": "However, we will never surrender in the face of force, intimidation, or bullying.",
+     "quote": true,
+     "tags": [
+      "heuristic"
+     ]
+    },
+    {
+     "text": "Not the first time. He said Iran 'must get out of the neither war nor peace policy' on 10 June, at a memorial for the late Supreme Leader, who he said had repeatedly asked for it to be resolved. He said it again at a press conference on 8 August ('war cannot continue forever'), to the cabinet on 28 October, and at a fuel-rationing meeting on 7 November. The 9 November line is the first to say the new Leader has ordered it.",
+     "tags": [
+      "heuristic"
+     ]
+    }
+   ]
   }
  ]
 }
