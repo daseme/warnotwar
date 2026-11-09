@@ -1,8 +1,12 @@
 # oilflows pipeline internals: reproducible, not committed (brief §14)
 oilflows/.venv/
 oilflows/.pytest_cache/
-oilflows/data/raw/
-oilflows/data/processed/
+oilflows/data/raw/*
+oilflows/data/processed/*
+# two hand-kept inputs the weekly job cannot rebuild: SOMO's export workbooks
+# (a manual download) and the list of approved PortWatch terminals
+!oilflows/data/raw/somo/
+!oilflows/data/processed/terminal_candidates.csv
 __pycache__/
 *.pyc
 

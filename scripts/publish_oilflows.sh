@@ -11,7 +11,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT/oilflows"
 
-PY=".venv/bin/python"
+PY="${PYTHON:-.venv/bin/python}"
 if [ ! -x "$PY" ]; then
   PY="python3"
 fi

@@ -28,7 +28,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "no data changes"
           else
-            git commit -m "weekly EIA data refresh"
+            git commit -m "weekly oilflows refresh: PortWatch, JODI, EIA, market, quadrant"
             git push
             echo "pushed=true" >> "$GITHUB_OUTPUT"
           fi

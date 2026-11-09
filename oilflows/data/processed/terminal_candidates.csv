@@ -1,0 +1,74 @@
+seed_country,seed_search_name,role,include_group,candidate_rank,match_score,portid,portname,fullname,LOCODE,lat,lon,vessel_count_tanker,industry_top1,industry_top2,industry_top3,approved
+Saudi Arabia,Ras Tanura,gulf_crude,saudi_gulf,1,1.0,port1091,Ras Tanura,"Ras Tanura, Saudi Arabia",SA RTA,26.67168923,50.12291543,672,Mineral Products,Chemical & Allied Industries,"Plastics, Rubber, Leather",1
+Saudi Arabia,Ras Tanura,gulf_crude,saudi_gulf,2,0.5217,port1089,Ras Al Khafji,"Ras Al Khafji, Saudi Arabia",SA RAZ,27.54005494,49.18719288,97,Mineral Products,Vegetable Products,Prepared Foodstuffs & Beverages,
+Saudi Arabia,Ras Tanura,gulf_crude,saudi_gulf,3,0.5217,port1088,Ras Al Mishab,"Ras Al Mishab, Saudi Arabia",SA RAM,27.88827937,48.81709477,16,Mineral Products,Chemical & Allied Industries,Stone & Glass,
+Saudi Arabia,Ras Tanura,gulf_crude,saudi_gulf,4,0.5217,port2217,Ras Al Khafji,"Ras Al Khafji, Saudi Arabia",SA RAZ,28.4147323996188,48.5244701173789,0,,,,
+Saudi Arabia,Ras Tanura,gulf_crude,saudi_gulf,5,0.4,port2074,Jazan,"Jazan, Saudi Arabia",,16.8797436617626,42.5430314066133,0,,,,
+Saudi Arabia,Juaymah,gulf_crude,saudi_gulf,1,1.0,port526,Juaymah,"Juaymah, Saudi Arabia",,26.80319051,49.97698013,920,Mineral Products,Chemical & Allied Industries,"Plastics, Rubber, Leather",1
+Saudi Arabia,Juaymah,gulf_crude,saudi_gulf,2,0.5,port2074,Jazan,"Jazan, Saudi Arabia",,16.8797436617626,42.5430314066133,0,,,,
+Saudi Arabia,Juaymah,gulf_crude,saudi_gulf,3,0.4615,port24,Jubail,"Jubail, Saudi Arabia",SA JUB,27.05573014,49.6603903,1417,Mineral Products,Chemical & Allied Industries,Vegetable Products,
+Saudi Arabia,Juaymah,gulf_crude,saudi_gulf,4,0.4615,port518,Jeddah,"Jeddah, Saudi Arabia",SA JED,21.46079659,39.16640594,582,Mineral Products,Vegetable Products,Chemical & Allied Industries,
+Saudi Arabia,Juaymah,gulf_crude,saudi_gulf,5,0.4615,port275,Dammam,"Dammam, Saudi Arabia",SA DMM,26.47626701,50.19439715,35,Mineral Products,Metals,Chemical & Allied Industries,
+Saudi Arabia,King Fahd Port,bypass_crude,saudi_bypass,1,0.7778,port570,Yanbu (King Fahd Port),"King Fahd Port, Saudi Arabia",,23.95087468,38.27170365,1323,Mineral Products,Chemical & Allied Industries,"Plastics, Rubber, Leather",1
+Saudi Arabia,King Fahd Port,bypass_crude,saudi_bypass,2,0.75,port2031,King Abdullah Port,"King Abdullah Port, Saudi Arabia",SA KAC,22.5180255857748,39.0951887006265,4,,,,
+Saudi Arabia,King Fahd Port,bypass_crude,saudi_bypass,3,0.303,port304,Duba (Port of Neom),"Duba (Port of Neom), Saudi Arabia",,27.55991231,35.5465967,0,Mineral Products,Vegetable Products,Chemical & Allied Industries,
+Saudi Arabia,King Fahd Port,bypass_crude,saudi_bypass,4,0.3,port1081,Rabigh,"Rabigh, Saudi Arabia",SA RAB,22.63873353,39.05376029,388,Mineral Products,Chemical & Allied Industries,"Plastics, Rubber, Leather",
+Saudi Arabia,King Fahd Port,bypass_crude,saudi_bypass,5,0.2,port518,Jeddah,"Jeddah, Saudi Arabia",SA JED,21.46079659,39.16640594,582,Mineral Products,Vegetable Products,Chemical & Allied Industries,
+Kuwait,Mina Al Ahmadi,gulf_crude,kuwait_gulf,1,1.0,port743,Mina Al Ahmadi,"Mina Al Ahmadi, Kuwait",,29.0455478,48.14514574,481,Mineral Products,Chemical & Allied Industries,Vegetable Products,1
+Kuwait,Mina Al Ahmadi,gulf_crude,kuwait_gulf,2,0.6154,port2493,Mina Al Zour,"Mina Al Zour, Kuwait",,28.709723935656893,48.39148159230054,0,,,,
+Kuwait,Mina Al Ahmadi,gulf_crude,kuwait_gulf,3,0.1905,port2067,Shuaiba,"Shuaiba, Kuwait",KW SAA,29.0394783129701,48.1670519806477,289,,,,
+Kuwait,Mina Al Ahmadi,gulf_crude,kuwait_gulf,4,0.1818,port25,Shuwaikh,"Shuwaikh, Kuwait",KW SWK,29.35210588,47.92389677,14,Mineral Products,Vegetable Products,Prepared Foodstuffs & Beverages,
+United Arab Emirates,Jabal Az Zannah-Ruways,gulf_crude,uae_gulf,1,1.0,port512,Jabal Az Zannah-Ruways,"Jabal Az Zannah-Ruways, United Arab Emirates",AE JED,24.12697586,52.71021364,871,Mineral Products,Chemical & Allied Industries,"Plastics, Rubber, Leather",1
+United Arab Emirates,Jabal Az Zannah-Ruways,gulf_crude,uae_gulf,2,0.4706,port2236,Jebel Dhanna,"Jebel Dhanna, United Arab Emirates",AE JED,24.174505328853,52.5910418293556,0,,,,
+United Arab Emirates,Jabal Az Zannah-Ruways,gulf_crude,uae_gulf,3,0.3913,port22,Al Hamriyah LPG Terminal,"Al Hamriyah LPG Terminal, United Arab Emirates",AE HAM,25.46752849,55.49501172,979,Mineral Products,Chemical & Allied Industries,Vegetable Products,
+United Arab Emirates,Jabal Az Zannah-Ruways,gulf_crude,uae_gulf,4,0.3333,port1340,Umm al Qaiwain,"Umm al Qaiwain, United Arab Emirates",AE QIW,25.58810902,55.58024004,0,Mineral Products,Vegetable Products,Prepared Foodstuffs & Beverages,
+United Arab Emirates,Jabal Az Zannah-Ruways,gulf_crude,uae_gulf,5,0.3226,port744,Jebel Ali,"Jebel Ali, United Arab Emirates",AE JEA,24.99941947,55.07781687,1373,Mineral Products,Metals,Chemical & Allied Industries,
+United Arab Emirates,Das Island,gulf_crude_condensate,uae_gulf,1,1.0,port2237,Das Island,"Das Island, United Arab Emirates",AE DAS,25.1459398379326,52.8754554358407,162,,,,1
+United Arab Emirates,Das Island,gulf_crude_condensate,uae_gulf,2,0.6364,port2235,Zirku Island,"Zirku Island, United Arab Emirates",AE ZUR,24.8851758085943,53.0746754938844,0,,,,
+United Arab Emirates,Das Island,gulf_crude_condensate,uae_gulf,3,0.4167,port1340,Umm al Qaiwain,"Umm al Qaiwain, United Arab Emirates",AE QIW,25.58810902,55.58024004,0,Mineral Products,Vegetable Products,Prepared Foodstuffs & Beverages,
+United Arab Emirates,Das Island,gulf_crude_condensate,uae_gulf,4,0.4,port306,Dubai,"Dubai, United Arab Emirates",AE DXB,25.27337362,55.290821,389,Mineral Products,Chemical & Allied Industries,Vegetable Products,
+United Arab Emirates,Das Island,gulf_crude_condensate,uae_gulf,5,0.4,port13,Ajman,"Ajman, United Arab Emirates",AE AJM,25.41978684,55.45367849,28,Prepared Foodstuffs & Beverages,Vegetable Products,Wood & Wood Products,
+United Arab Emirates,Zirku Island,gulf_crude_candidate,uae_gulf,1,1.0,port2235,Zirku Island,"Zirku Island, United Arab Emirates",AE ZUR,24.8851758085943,53.0746754938844,0,,,,1
+United Arab Emirates,Zirku Island,gulf_crude_candidate,uae_gulf,2,0.6364,port2237,Das Island,"Das Island, United Arab Emirates",AE DAS,25.1459398379326,52.8754554358407,162,,,,
+United Arab Emirates,Zirku Island,gulf_crude_candidate,uae_gulf,3,0.3478,port561,Khor Fakkan,"Khor Fakkan, United Arab Emirates",AE KLF,25.35368858,56.36875484,178,Machinery & Electrical Equipment,Vegetable Products,Textiles & Footwear,
+United Arab Emirates,Zirku Island,gulf_crude_candidate,uae_gulf,4,0.3,port362,Fujairah,"Al Fujayrah, United Arab Emirates",,25.20017278,56.35942059,3165,Mineral Products,Chemical & Allied Industries,"Plastics, Rubber, Leather",
+United Arab Emirates,Zirku Island,gulf_crude_candidate,uae_gulf,5,0.2857,port5,Abu Dhabi,"Abu Dhabi, United Arab Emirates",AE AUH,24.61243288,54.563683,95,Mineral Products,Metals,Vegetable Products,
+United Arab Emirates,Fujairah,bypass_crude_mixed_proxy,uae_bypass,1,1.0,port362,Fujairah,"Al Fujayrah, United Arab Emirates",,25.20017278,56.35942059,3165,Mineral Products,Chemical & Allied Industries,"Plastics, Rubber, Leather",1
+United Arab Emirates,Fujairah,bypass_crude_mixed_proxy,uae_bypass,2,0.4615,port306,Dubai,"Dubai, United Arab Emirates",AE DXB,25.27337362,55.290821,389,Mineral Products,Chemical & Allied Industries,Vegetable Products,
+United Arab Emirates,Fujairah,bypass_crude_mixed_proxy,uae_bypass,3,0.4,port72,Sharjah,"Sharjah, United Arab Emirates",AE SHJ,25.36312735,55.37623329,501,Mineral Products,Vegetable Products,Chemical & Allied Industries,
+United Arab Emirates,Fujairah,bypass_crude_mixed_proxy,uae_bypass,4,0.3636,port1340,Umm al Qaiwain,"Umm al Qaiwain, United Arab Emirates",AE QIW,25.58810902,55.58024004,0,Mineral Products,Vegetable Products,Prepared Foodstuffs & Beverages,
+United Arab Emirates,Fujairah,bypass_crude_mixed_proxy,uae_bypass,5,0.3529,port744,Jebel Ali,"Jebel Ali, United Arab Emirates",AE JEA,24.99941947,55.07781687,1373,Mineral Products,Metals,Chemical & Allied Industries,
+Iraq,Basrah Oil Terminal,gulf_crude_candidate,iraq_gulf,1,1.0,port2479,Basrah Oil Terminal,"Basrah Oil Terminal, Iraq",,29.681608480330027,48.82483738934823,0,,,,1
+Iraq,Basrah Oil Terminal,gulf_crude_candidate,iraq_gulf,2,0.4286,port20,Al Basrah,"Al Basrah, Iraq",IQ BSR,30.55796288,47.79778641,0,Mineral Products,Prepared Foodstuffs & Beverages,Vegetable Products,
+Iraq,Basrah Oil Terminal,gulf_crude_candidate,iraq_gulf,3,0.2222,port1341,Umm Qasr,"Umm Qasr, Iraq",IQ UQR,30.1137845,47.90182168,1033,Mineral Products,Vegetable Products,Prepared Foodstuffs & Beverages,
+Iraq,Al Basrah,diagnostic_portwatch_aggregate,iraq_diagnostic,1,1.0,port20,Al Basrah,"Al Basrah, Iraq",IQ BSR,30.55796288,47.79778641,0,Mineral Products,Prepared Foodstuffs & Beverages,Vegetable Products,1
+Iraq,Al Basrah,diagnostic_portwatch_aggregate,iraq_diagnostic,2,0.4706,port1341,Umm Qasr,"Umm Qasr, Iraq",IQ UQR,30.1137845,47.90182168,1033,Mineral Products,Vegetable Products,Prepared Foodstuffs & Beverages,
+Iraq,Al Basrah,diagnostic_portwatch_aggregate,iraq_diagnostic,3,0.4286,port2479,Basrah Oil Terminal,"Basrah Oil Terminal, Iraq",,29.681608480330027,48.82483738934823,0,,,,
+Iran,Kharg Island,gulf_crude,iran_gulf,1,1.0,port2164,Kharg Island,"Kharg Island, Iran",,29.2430727915583,50.335074434646,75,,,,1
+Iran,Kharg Island,gulf_crude,iran_gulf,2,0.5,port2478,Bahregan,"Bahregan, Iran",,29.832803889581644,50.25193205108165,0,,,,
+Iran,Kharg Island,gulf_crude,iran_gulf,3,0.3529,port2165,Lavan,"Lavan, Iran",IR LVP,26.7905436961137,53.3501575546447,52,,,,
+Iran,Kharg Island,gulf_crude,iran_gulf,4,0.3333,port563,Khorramshahr,"Khorramshahr, Iran",IR KHO,30.44360334,48.15439964,0,Mineral Products,Vegetable Products,Prepared Foodstuffs & Beverages,
+Iran,Kharg Island,gulf_crude,iran_gulf,5,0.3333,port2477,Abadan,"Abadan, Iran",IR ABD,30.332150759313546,48.27775739385089,0,,,,
+Iran,Lavan,gulf_crude_candidate,iran_gulf,1,1.0,port2165,Lavan,"Lavan, Iran",IR LVP,26.7905436961137,53.3501575546447,52,,,,1
+Iran,Lavan,gulf_crude_candidate,iran_gulf,2,0.5455,port2477,Abadan,"Abadan, Iran",IR ABD,30.332150759313546,48.27775739385089,0,,,,
+Iran,Lavan,gulf_crude_candidate,iran_gulf,3,0.4615,port2478,Bahregan,"Bahregan, Iran",,29.832803889581644,50.25193205108165,0,,,,
+Iran,Lavan,gulf_crude_candidate,iran_gulf,4,0.3529,port2164,Kharg Island,"Kharg Island, Iran",,29.2430727915583,50.335074434646,75,,,,
+Iran,Lavan,gulf_crude_candidate,iran_gulf,5,0.3077,port226,Chabahar,"Chabahar, Iran",,25.2960398,60.61107983,23,Vegetable Products,Mineral Products,"Plastics, Rubber, Leather",
+Iran,Bahregan,diagnostic_crude_candidate,iran_diagnostic,1,1.0,port2478,Bahregan,"Bahregan, Iran",,29.832803889581644,50.25193205108165,0,,,,1
+Iran,Bahregan,diagnostic_crude_candidate,iran_diagnostic,2,0.5714,port2477,Abadan,"Abadan, Iran",IR ABD,30.332150759313546,48.27775739385089,0,,,,
+Iran,Bahregan,diagnostic_crude_candidate,iran_diagnostic,3,0.5217,port58,Bandar-e Anzali,"Bandar-e Anzali, Iran",IR BAZ,37.47515153,49.46995908,17,Mineral Products,Vegetable Products,Chemical & Allied Industries,
+Iran,Bahregan,diagnostic_crude_candidate,iran_diagnostic,4,0.5,port2164,Kharg Island,"Kharg Island, Iran",,29.2430727915583,50.335074434646,75,,,,
+Iran,Bahregan,diagnostic_crude_candidate,iran_diagnostic,5,0.5,port226,Chabahar,"Chabahar, Iran",,25.2960398,60.61107983,23,Vegetable Products,Mineral Products,"Plastics, Rubber, Leather",
+Iran,Jask,bypass_crude_candidate,iran_bypass,1,1.0,port2486,Jask,"Jask, Iran",IR JAK,25.65683066460673,57.76856643206519,0,,,,1
+Iran,Jask,bypass_crude_candidate,iran_bypass,2,0.25,port2164,Kharg Island,"Kharg Island, Iran",,29.2430727915583,50.335074434646,75,,,,
+Iran,Jask,bypass_crude_candidate,iran_bypass,3,0.25,port107,Bandar Abbas,"Bandar Abbas, Iran",IR BND,27.14750008,56.20294512,67,Vegetable Products,Mineral Products,Prepared Foodstuffs & Beverages,
+Iran,Jask,bypass_crude_candidate,iran_bypass,4,0.25,port563,Khorramshahr,"Khorramshahr, Iran",IR KHO,30.44360334,48.15439964,0,Mineral Products,Vegetable Products,Prepared Foodstuffs & Beverages,
+Iran,Jask,bypass_crude_candidate,iran_bypass,5,0.2222,port2165,Lavan,"Lavan, Iran",IR LVP,26.7905436961137,53.3501575546447,52,,,,
+Qatar,Doha-Umm Said,low_confidence_crude_mixed,qatar_diagnostic,1,1.0,port1342,Doha-Umm Said,"Doha-Umm Said, Qatar",,24.96358831,51.56713164,406,Mineral Products,Chemical & Allied Industries,Vegetable Products,1
+Qatar,Doha-Umm Said,low_confidence_crude_mixed,qatar_diagnostic,2,0.4545,port1117,Al Ruwais,"Al Ruwais, Qatar",AE RUW,26.14559103,51.20530511,1,Mineral Products,Vegetable Products,Chemical & Allied Industries,
+Qatar,Doha-Umm Said,low_confidence_crude_mixed,qatar_diagnostic,3,0.2609,port1090,Ras Laffan,"Ras Laffan, Qatar",QA RLF,25.90850676,51.59049926,1634,Mineral Products,Chemical & Allied Industries,"Plastics, Rubber, Leather",
+Qatar,Doha-Umm Said,low_confidence_crude_mixed,qatar_diagnostic,4,0.2609,port2026,Hamad Port,"Hamad Port, Qatar",QA HMD,25.0199084210527,51.6189139089543,3,,,,
+Qatar,Ras Laffan,low_confidence_condensate_mixed,qatar_diagnostic,1,1.0,port1090,Ras Laffan,"Ras Laffan, Qatar",QA RLF,25.90850676,51.59049926,1634,Mineral Products,Chemical & Allied Industries,"Plastics, Rubber, Leather",1
+Qatar,Ras Laffan,low_confidence_condensate_mixed,qatar_diagnostic,2,0.3158,port1117,Al Ruwais,"Al Ruwais, Qatar",AE RUW,26.14559103,51.20530511,1,Mineral Products,Vegetable Products,Chemical & Allied Industries,
+Qatar,Ras Laffan,low_confidence_condensate_mixed,qatar_diagnostic,3,0.2609,port1342,Doha-Umm Said,"Doha-Umm Said, Qatar",,24.96358831,51.56713164,406,Mineral Products,Chemical & Allied Industries,Vegetable Products,
+Qatar,Ras Laffan,low_confidence_condensate_mixed,qatar_diagnostic,4,0.1,port2026,Hamad Port,"Hamad Port, Qatar",QA HMD,25.0199084210527,51.6189139089543,3,,,,

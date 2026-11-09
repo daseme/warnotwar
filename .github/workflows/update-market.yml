@@ -23,12 +23,14 @@ jobs:
       - run: python3 scripts/build_market.py
         env:
           FRED_KEY: ${{ secrets.FRED_KEY }}
+      # the quadrant's market axis and the line under the heuristic read this
+      - run: python3 scripts/build_quadrant.py
       - name: commit if changed
         id: commit
         run: |
           git config user.name "market-bot"
           git config user.email "actions@github.com"
-          git add data/market_daily.json data/market_meta.json
+          git add data/market_daily.json data/market_meta.json data/quadrant.json
           if git diff --cached --quiet; then
             echo "no data changes"
           else
