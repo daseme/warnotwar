@@ -98,6 +98,7 @@
   .square text { font-family: var(--mono); fill: var(--ink-60); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; }
   .square text.cell { fill: var(--ink-80); letter-spacing: 0.04em; text-transform: none; font-size: 11px; }
   .square text.cell.n { fill: var(--ink); font-family: var(--serif); font-size: 26px; letter-spacing: -0.01em; }
+  .square text.adam { fill: var(--ink); font-size: 12px; letter-spacing: 0.16em; }
   .square .grid { stroke: var(--ink-18); stroke-width: 1; fill: none; }
   .square .band { fill: var(--ink-06); }
   .square .dot { fill: var(--danger); stroke: var(--bg); stroke-width: 2; }
@@ -296,7 +297,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
   const num = n => n < WORDS.length ? WORDS[n] : String(n);
   let Q;
-  try { Q = await fetch('/data/quadrant.json').then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); }); }
+  try { Q = await fetch('/data/quadrant.json', { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); }); }
   catch (e) { const el = $('#load-error'); el.style.display = 'block'; el.textContent = 'The data did not load: ' + e.message; return; }
 
   const W = Q.weeks, full = W.filter(w => !w.partial && w.cell), cur = Q.current, T = Q.thresholds;
@@ -314,7 +315,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
 
   /* ---- the square: x = strait share of normal, y = BNO ---- */
   (function square() {
-    const S = 520, P = { l: 54, r: 18, t: 18, b: 54 }, w = S - P.l - P.r, h = S - P.t - P.b;
+    const S = 520, P = { l: 54, r: 34, t: 34, b: 54 }, w = S - P.l - P.r, h = S - P.t - P.b;
     const xmax = 1.2, ymin = 30, ymax = 75;
     const X = v => P.l + Math.min(v, xmax) / xmax * w, Y = v => P.t + (1 - (Math.max(ymin, Math.min(ymax, v)) - ymin) / (ymax - ymin)) * h;
     let s = '';
@@ -332,6 +333,10 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     s += lab(P.l + 14, P.t + h - 46, 'we are at war', 'and think we are not', c['are-not-think'] || 0, 'start');
     s += lab(P.l + w - 14, P.t + h - 46, 'we are not at war', 'and think we are not', c['neither'] || 0, 'end');
     s += `<text class="cell" x="${X(T.strait_open_share) - 10}" y="${(Y(T.bno_low) + Y(T.bno_high)) / 2 + 4}" text-anchor="end">perpetual war sweet spot · ${(c['are-sweet'] || 0) + (c['open-sweet'] || 0)} weeks</text>`;
+    // Adam's grid: are / are not across the top, think / think not down the side
+    const xs = X(T.strait_open_share), yh = Y(T.bno_high), yl = Y(T.bno_low), xr = P.l + w + 18;
+    s += `<text class="adam" x="${(P.l + xs) / 2}" y="${P.t - 12}" text-anchor="middle">are</text><text class="adam" x="${(xs + P.l + w) / 2}" y="${P.t - 12}" text-anchor="middle">are not</text>`;
+    s += `<text class="adam" transform="translate(${xr} ${(P.t + yh) / 2}) rotate(90)" text-anchor="middle">think</text><text class="adam" transform="translate(${xr} ${(yl + P.t + h) / 2}) rotate(90)" text-anchor="middle">think not</text>`;
     // axes
     s += `<text x="${P.l + w / 2}" y="${S - 14}" text-anchor="middle">oil leaving through the strait, share of normal →</text>`;
     s += `<text x="${X(0)}" y="${P.t + h + 16}" text-anchor="start">0</text><text x="${X(T.strait_open_share)}" y="${P.t + h + 16}" text-anchor="middle">${pct(T.strait_open_share)} · shut | open</text><text x="${X(1)}" y="${P.t + h + 16}" text-anchor="middle">100%</text>`;
