@@ -252,6 +252,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     nowEl.textContent = `Under ${band.low} peace, over ${band.high} war, between them the perpetual war sweet spot.`;
   }
 
+  const said = t => t && !/^Not said/.test(t);
   const names = D.names || {};
   const entries = (D.entries || []).slice().sort((a, b) => (b.date || '').localeCompare(a.date || ''));
   const counts = {}; for (const e of entries) counts[e.name] = (counts[e.name] || 0) + 1;
@@ -261,13 +262,9 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       <div class="k">${esc(fmt(e.date))} &middot; <span class="side">${esc(e.side)}</span></div>
       <h2 class="sp">${esc(e.speaker)}</h2>
       ${e.role ? `<p class="role">${esc(e.role)}</p>` : ''}
-      ${e.setting ? `<p class="setting">${esc(e.setting)}</p>` : ''}
       <div class="calls">calls it <b>${esc(names[e.name] || e.name)}</b></div>
       <ol class="lines">${(e.lines || []).map(l => `<li><span>${l.quote ? `<q>${esc(l.text)}</q>` : esc(l.text)}${l.via ? `<span class="via">via ${esc(l.via)}</span>` : ''}</span></li>`).join('')}</ol>
-      <dl class="ww">
-        <dt>who wants it kept</dt><dd>${esc(e.wants || 'Not said.')}</dd>
-        <dt>what ends it</dt><dd>${esc(e.ends || 'Not said.')}</dd>
-      </dl>
+      ${said(e.wants) || said(e.ends) ? `<dl class="ww">${said(e.wants) ? `<dt>who wants it kept</dt><dd>${esc(e.wants)}</dd>` : ''}${said(e.ends) ? `<dt>what ends it</dt><dd>${esc(e.ends)}</dd>` : ''}</dl>` : ''}
       ${e.source ? `<div class="src">${e.source.url ? `<a href="${esc(e.source.url)}" target="_blank" rel="noopener">${esc(e.source.label)}</a>` : esc(e.source.label)}</div>` : ''}
       ${e.note ? `<div class="fn">${esc(e.note)}</div>` : ''}
     </article>`).join('');
