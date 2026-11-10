@@ -408,7 +408,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     svg.setAttribute('viewBox', `0 0 ${width} ${H}`);
     svg.innerHTML = s;
     $('#keys').innerHTML = ['are-think', 'are-not-think', 'are-sweet', 'think-not-are', 'open-sweet', 'neither'].map(k => `<span><i class="${k}"></i>${esc(CELLS[k])}</span>`).join('')
-      + (W.some(w => w.strait && w.strait.source === 'portwatch') ? `<span><i style="border-bottom:4px solid var(--bg);background:var(--ink-30)"></i>read from ship signals, no tracker figure</span>` : '') + `<span><i style="background:var(--ink-80)"></i>deaths at the war line</span><span><i style="background:var(--ink-45)"></i>at the conflict line</span><span><i style="background:var(--ink-10)"></i>quiet</span><span><i style="border:1px dashed var(--ink-30)"></i>not yet counted</span>`;
+      + (W.some(w => w.strait && w.strait.source === 'portwatch') ? `<span><i style="border-bottom:4px solid var(--bg);background:var(--ink-30)"></i>read from ship signals, no tracker figure</span>` : '');
     // hover
     const tip = $('#tip');
     const show = (i, ev) => {
