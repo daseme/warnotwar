@@ -375,7 +375,10 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
 
   /* ---- the strip ---- */
   (function strip() {
-    const G = 96, n = W.length, cw = Math.max(16, Math.floor((1110 - G) / n)), width = G + n * cw, h1 = 34, gap = 10, h2 = 18, H = 22 + h1 + gap + h2 + 34;
+    // a gap between months, in both rows, so the weeks read in month groups
+    const MG = 8, brk = W.map((w, i) => i > 0 && w.deaths.month !== W[i - 1].deaths.month), nb = brk.filter(Boolean).length;
+    const before = brk.reduce((a, b, i) => { a.push((a[i - 1] || 0) + (b ? 1 : 0)); return a; }, []);
+    const G = 96, n = W.length, cw = Math.max(16, Math.floor((1110 - G - nb * MG) / n)), width = G + n * cw + nb * MG, X = i => G + i * cw + before[i] * MG, h1 = 34, gap = 10, h2 = 18, H = 22 + h1 + gap + h2 + 34;
     let s = `<defs>
       <pattern id="hatch-danger" patternUnits="userSpaceOnUse" width="5" height="5" patternTransform="rotate(45)"><rect width="5" height="5" fill="var(--bg)"/><rect width="2.2" height="5" fill="var(--danger)"/></pattern>
       <pattern id="hatch-gold" patternUnits="userSpaceOnUse" width="5" height="5" patternTransform="rotate(45)"><rect width="5" height="5" fill="var(--bg)"/><rect width="2.2" height="5" fill="var(--gold)"/></pattern>
@@ -384,9 +387,9 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     s += `<text class="row" x="0" y="${22 + h1 + gap + h2 / 2 + 4}">deaths</text>`;
     let monthSeen = '';
     W.forEach((w, i) => {
-      const x = G + i * cw;
-      const m = w.week.slice(0, 7);
-      if (m !== monthSeen && Number(w.week.slice(8)) <= 7) { monthSeen = m; s += `<text x="${x}" y="12">${MON[Number(m.slice(5)) - 1]}</text>`; }
+      const x = X(i);
+      const m = w.deaths.month;
+      if (i === 0 || brk[i]) { monthSeen = m; s += `<text x="${x}" y="12">${MON[Number(m.slice(5)) - 1]}</text>`; }
       s += `<rect class="w c-${w.cell || 'none'}${w.partial ? ' partial' : ''}" data-i="${i}" x="${x}" y="22" width="${cw}" height="${h1}"/>`;
       if (w.strait && w.strait.basis === 'weekly' && (i === 0 || !W[i - 1].strait || W[i - 1].strait.basis !== 'weekly')) {
         s += `<line class="sep" x1="${x}" x2="${x}" y1="18" y2="${22 + h1 + 4}"/><text x="${x + 3}" y="${22 + h1 + gap + h2 + 26}">weekly tracker readings from here →</text>`;
@@ -397,7 +400,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     const runs = [];
     W.forEach((w, i) => { const last = runs[runs.length - 1]; if (last && (last.d.month === w.deaths.month || (last.d.state === 'unknown' && w.deaths.state === 'unknown'))) last.n++; else runs.push({ i, n: 1, d: w.deaths }); });
     runs.forEach((m, k) => {
-      const x = G + m.i * cw, wd = m.n * cw, y = 22 + h1 + gap, d = m.d;
+      const x = X(m.i), wd = X(m.i + m.n - 1) + cw - x, y = 22 + h1 + gap, d = m.d;
       s += `<rect class="w d-${d.state}${d.provisional && d.state !== 'unknown' ? ' prov' : ''}" data-m="${k}" x="${x}" y="${y}" width="${wd}" height="${h2}"/>`;
       if (wd >= 30) s += `<text class="dm dm-${d.state}" x="${x + wd / 2}" y="${y + h2 / 2 + 3.5}" text-anchor="middle">${d.state === 'unknown' ? 'not counted' : d.best.toLocaleString('en-US')}</text>`;
     });
