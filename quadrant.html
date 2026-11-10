@@ -405,7 +405,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   /* ---- the tally of cells ---- */
   const order = ['are-think', 'are-sweet', 'are-not-think', 'think-not-are', 'open-sweet', 'neither'];
   $('#weeks-h').textContent = `All ${full.length} weeks, since you asked`;
-  $('#weeks-sub').textContent = `${full.length} full weeks from the first Monday of the war, ${fdy(W[0].week)}, each a box: the top row is the cell, the thin row underneath is Uppsala's count of deaths in the Gulf war that month. Hover or tap a week for its readings. The current week is faint until it closes.`;
+  $('#weeks-sub').textContent = `${full.length} full weeks from the first Monday of the war, ${fdy(W[0].week)}, one box each. The colour says which box of the grid we were in. The thin row under it is Uppsala's count of the dead in the Gulf that month. Hover or tap a week for its readings. The current week is faint until it closes.`;
   $('#cells').innerHTML = order.filter(k => Q.counts[k]).map(k => `<li><div class="w"><i class="${k}" style="width:10px;height:10px;display:inline-block;${k === 'are-sweet' ? 'background:repeating-linear-gradient(135deg,var(--danger) 0 2px,transparent 2px 5px)' : k === 'open-sweet' ? 'background:repeating-linear-gradient(135deg,var(--gold) 0 2px,transparent 2px 5px)' : `background:var(--${{ 'are-think': 'danger', 'are-not-think': 'rate', 'think-not-are': 'gold', 'neither': 'ink-18' }[k]})`}"></i>${esc(CELLS[k])}</div><div class="big">${Q.counts[k]}<small>${Q.counts[k] === 1 ? 'week' : 'weeks'}</small></div></li>`).join('');
 
   /* ---- the second count, with the sweet spot read as the market thinking war ---- */
