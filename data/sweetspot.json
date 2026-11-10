@@ -18,7 +18,7 @@
    "side": "Tehran",
    "speaker": "Ali Khamenei",
    "role": "Supreme Leader of Iran until his death. Speaking to the cabinet five months before the war began.",
-   "setting": "Cabinet meeting, Tehran, Sunday 7 September 2025. Iran International's English rendering is quoted; the Middle East Forum gives a second one.",
+   "setting": "Cabinet meeting, Tehran, Sunday 7 September 2025. Iran International's English rendering is quoted. The Middle East Forum gives a second one.",
    "lines": [
     {
      "text": "neither war, nor peace state that the enemy wants to impose on us",
@@ -46,7 +46,7 @@
     "label": "Iran International, 29 October 2026, looking back at the 7 September 2025 cabinet address",
     "url": "https://www.iranintl.com/en/202610280475"
    },
-   "note": "The underlying report is Euronews Persian, 8 September 2025, which we do not translate: https://parsi.euronews.com/2025/09/08/neither-war-nor-peace-khamenei-oil-production-is-low-the-current-atmosphere-is-not-go. The Middle East Forum piece dates the remark 8 September, the Persian report's publication date; the meeting was Sunday the 7th. No English text from the Leader's office could be reached."
+   "note": "The underlying report is Euronews Persian, 8 September 2025, which we do not translate: https://parsi.euronews.com/2025/09/08/neither-war-nor-peace-khamenei-oil-production-is-low-the-current-atmosphere-is-not-go. The Middle East Forum piece dates the remark 8 September, the Persian report's publication date. The meeting was Sunday the 7th. No English text from the Leader's office could be reached."
   },
   {
    "id": "trump-2026-03-11",
@@ -351,7 +351,7 @@
     }
    ],
    "wants": "Not said.",
-   "ends": "Not said. The point is that it did not end; the price went back inside the band.",
+   "ends": "Not said. It did not end. The price went back inside the band.",
    "source": {
     "label": "The thread",
     "url": "/heuristic.html"
@@ -431,12 +431,12 @@
     }
    ],
    "wants": "Both sides, Vaez says: going on costs less than the concessions a deal needs. The magazine's summary of his essay is that Iran prefers deadlock to any compromise on offer.",
-   "ends": "Some understanding between Iran and its neighbours or between Iran and the United States. Tabaar's version is a small deal for a small deal, step by step; without it he sees only escalation.",
+   "ends": "Some understanding between Iran and its neighbours or between Iran and the United States. Tabaar's version is a small deal for a small deal, step by step. Without it he sees only escalation.",
    "source": {
     "label": "Foreign Affairs, 15 October 2026",
     "url": "https://www.foreignaffairs.com/podcasts/irans-long-war"
    },
-   "note": "The essay itself is behind a paywall and is not quoted."
+   "note": "The essay is behind a paywall and is not quoted."
   },
   {
    "id": "mojtaba-2026-10-27",

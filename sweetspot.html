@@ -247,7 +247,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   if (last) {
     const p = last.bno, z = p < band.low ? 'peace' : p > band.high ? 'war' : 'sweet';
     const label = z === 'sweet' ? 'perpetual war sweet spot' : z;
-    nowEl.innerHTML = `BNO's last close in the site's data: <b>${p.toFixed(2)}</b> on ${esc(fmt(last.date))}. Under ${band.low} peace, over ${band.high} war. The heuristic reads<span class="pill ${z}">${esc(label)}</span>`;
+    nowEl.innerHTML = `BNO closed at <b>${p.toFixed(2)}</b> on ${esc(fmt(last.date))}. Under ${band.low} peace, over ${band.high} war. The heuristic says<span class="pill ${z}">${esc(label)}</span>`;
   } else {
     nowEl.textContent = `Under ${band.low} peace, over ${band.high} war, between them the perpetual war sweet spot.`;
   }

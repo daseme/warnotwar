@@ -221,10 +221,10 @@
       // the label needs ~240px of clear space; flip to the band's right when the left side lacks it
       if (firstBandX - PAD_L >= 300) {
         svg += `<line x1="${(firstBandX - 46).toFixed(1)}" y1="${PAD_T + 9}" x2="${(firstBandX - 6).toFixed(1)}" y2="${PAD_T + 9}" stroke="rgba(240,236,230,0.3)" stroke-width="0.8"/>`;
-        svg += `<text x="${(firstBandX - 52).toFixed(1)}" y="${PAD_T + 12}" fill="rgba(240,236,230,0.45)" font-size="${(9.5 * FS).toFixed(1)}" text-anchor="end">${narrow ? 'touched war intraday' : 'touched war intraday · wider = more days in a row'}</text>`;
+        svg += `<text x="${(firstBandX - 52).toFixed(1)}" y="${PAD_T + 12}" fill="rgba(240,236,230,0.45)" font-size="${(9.5 * FS).toFixed(1)}" text-anchor="end">${narrow ? 'touched war during the day' : 'touched war during the day · wider = more days in a row'}</text>`;
       } else {
         svg += `<line x1="${(firstBandX + 6).toFixed(1)}" y1="${PAD_T + 9}" x2="${(firstBandX + 46).toFixed(1)}" y2="${PAD_T + 9}" stroke="rgba(240,236,230,0.3)" stroke-width="0.8"/>`;
-        svg += `<text x="${(firstBandX + 52).toFixed(1)}" y="${PAD_T + 12}" fill="rgba(240,236,230,0.45)" font-size="${(9.5 * FS).toFixed(1)}">${narrow ? 'touched war intraday' : 'touched war intraday · wider = more days in a row'}</text>`;
+        svg += `<text x="${(firstBandX + 52).toFixed(1)}" y="${PAD_T + 12}" fill="rgba(240,236,230,0.45)" font-size="${(9.5 * FS).toFixed(1)}">${narrow ? 'touched war during the day' : 'touched war during the day · wider = more days in a row'}</text>`;
       }
     }
 
@@ -262,7 +262,7 @@
     document.getElementById("chart-wrap").innerHTML = svg;
 
     document.getElementById("note").textContent =
-      "Daily closes, Feb 28 2026 – present — the consensus start of the war. The final point updates live. Source: BNO daily closes; live quote via Finnhub.";
+      "Daily closes since 28 February 2026, the day the war began. The last point is the live price, from Finnhub.";
   }
 
   let resizeTimer = null;
@@ -294,14 +294,14 @@
         (when ? `<span style="opacity:0.5">last trade ${when}</span>` : "");
     } else {
       if (pulse) pulse.style.background = "rgba(240,236,230,0.3)";
-      document.getElementById("price").innerHTML = `<span style="color:${C_WAR}">Error fetching live price</span>`;
+      document.getElementById("price").innerHTML = `<span style="color:${C_WAR}">The live price did not load.</span>`;
     }
 
     buildChart(history, live);
   }
 
   // the line under the price: days since the war began, and the quadrant's
-  // count of full weeks the strait was shut and the market called it war
+  // count of full weeks the strait was shut and the heuristic called it war
   async function fetchTally() {
     try {
       const q = await fetch("/data/quadrant.json").then(r => r.json());
