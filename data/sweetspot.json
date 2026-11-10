@@ -140,6 +140,11 @@
    "setting": "News analysis, 16 July 2026, headlined 'In Iran, Trump risks another American forever war'. Read in the Philadelphia Inquirer's reprint.",
    "lines": [
     {
+     "text": "that could remove the last barrier between episodic confrontation and a forever war",
+     "quote": true,
+     "via": "Ali Vaez, on the two sides failing to keep even a minimal agreement"
+    },
+    {
      "text": "Both sides looked to the memorandum of understanding as the continuation of the war by other means",
      "quote": true,
      "via": "Ali Vaez"
@@ -222,13 +227,13 @@
    "setting": "Press conference in Tehran for National Journalist Day, Saturday 8 August 2026. Reported by Mehr.",
    "lines": [
     {
-     "text": "War cannot continue forever.",
-     "quote": true
+     "text": "Iran was seeking to move beyond the current state of “neither war nor peace”",
+     "quote": true,
+     "via": "Tehran Times, reporting his speech"
     },
     {
-     "text": "Iran seeks to move beyond the current state of 'neither war nor peace', and hopes to do it with dignity and pride for the country.",
-     "quote": false,
-     "via": "Tehran Times, reported speech"
+     "text": "War cannot continue forever.",
+     "quote": true
     }
    ],
    "wants": "Not said.",
@@ -239,6 +244,11 @@
    },
    "note": "",
    "cut": [
+    {
+     "text": "Iran seeks to move beyond the current state of 'neither war nor peace', and hopes to do it with dignity and pride for the country.",
+     "quote": false,
+     "via": "Tehran Times, reported speech"
+    },
     {
      "text": "He said Iran would stand behind whatever the Leader decided on war, and would not accept an agreement imposed through pressure.",
      "quote": false
@@ -280,6 +290,58 @@
     "url": "/heuristic.html"
    },
    "note": "The rule became the front page. Every other entry on this page is read against it."
+  },
+  {
+   "id": "dubowitz-2026-08-28",
+   "date": "2026-08-28",
+   "name": "sweet",
+   "side": "the analysts",
+   "speaker": "Mark Dubowitz",
+   "role": "Chief executive of the Foundation for Defense of Democracies, a Washington group that backs the pressure on Iran.",
+   "setting": "Quoted in The New York Times, 28 August 2026, in a piece headlined 'For Trump, the Iran War is stuck between combat and genuine peace'. Read in the Oman Observer's reprint.",
+   "lines": [
+    {
+     "text": "We are not at peace, and we aren’t in major combat operations",
+     "quote": true
+    },
+    {
+     "text": "President Trump may instead have found the strategic sweet spot between the two: sustained coercive pressure without either a major war or an unacceptable agreement.",
+     "quote": true
+    }
+   ],
+   "wants": "He does. He calls it winning.",
+   "ends": "Iran negotiates seriously, or spends the next two years under relentless pressure. That is the Times's account of what he said, not a quote.",
+   "source": {
+    "label": "The New York Times via Oman Observer, 28 August 2026",
+    "url": "https://www.omanobserver.om/article/1195229/world/region/for-trump-the-iran-war-is-stuck-between-combat-and-genuine-peace"
+   },
+   "note": "Eighteen days after the text of 10 August. The thread's reply, 1 September at 1:17 in the afternoon: 'Infringement!'",
+   "cut": [
+    {
+     "text": "I know this cuts against the conventional wisdom, but I believe President Trump is winning the confrontation with the regime in Iran",
+     "quote": true
+    },
+    {
+     "text": "Will have to find a home for thw strategic sweetspot and its carpetbagging timing",
+     "quote": true,
+     "via": "Kurt, 1 September, 1:23"
+    },
+    {
+     "text": "Unfortunately we're sharing the discourse of shysters",
+     "quote": true,
+     "via": "Adam, 1 September, 1:24"
+    },
+    {
+     "text": "Tho I suppose that's the beauty of the heuristic. It excludes no one",
+     "quote": true,
+     "via": "Adam, 1 September, 1:25"
+    },
+    {
+     "text": "This war, like many, will not have a clean endpoint. It will merely shift advantage in an ongoing contest.",
+     "quote": true,
+     "via": "Brett McGurk, in the same piece"
+    }
+   ]
   },
   {
    "id": "trump-2026-08-31",
@@ -470,9 +532,14 @@
    "setting": "A meeting between the Leader and Rezaei, Tuesday 27 October 2026, known from the council's readout as Press TV reported it and from Rezaei's own account.",
    "lines": [
     {
-     "text": "Rezaei said the Leader had told him it was time to end the state of 'no war, no peace'.",
-     "quote": false,
-     "via": "Iran International"
+     "text": "Ayatollah Khamenei has placed a premium on the need to secure Iran’s conditions for ending the war and the state of “neither war nor peace.”",
+     "quote": true,
+     "via": "Press TV's readout, its words and not his"
+    },
+    {
+     "text": "it was time to end the state of “no war, no peace.”",
+     "quote": true,
+     "via": "Iran International, reporting what Mohsen Rezaei said the Leader told him"
     },
     {
      "text": "This is the order Pezeshkian cites from here on. No direct words of the Leader on it exist. Every line is a readout or someone's account.",
@@ -488,9 +555,9 @@
    "note": "Rezaei's account: https://www.iranintl.com/en/202610282034. Iran International's analyst Khosro Isfahani notes the readout contains no direct quotation. His own reading of who gains from the state: Tehran keeps its grip on Hormuz, its allies stay in place, and Washington concedes.",
    "cut": [
     {
-     "text": "Ayatollah Khamenei has placed a premium on the need to secure Iran's conditions for ending the war and the state of 'neither war nor peace.'",
+     "text": "Rezaei said the Leader had told him it was time to end the state of 'no war, no peace'.",
      "quote": false,
-     "via": "Press TV, reported speech"
+     "via": "Iran International"
     },
     {
      "text": "He called for efforts to secure the rights and interests of the Iranian people and the Resistance Front through the fulfillment of conditions announced by Iranian officials for ending the war and the 'neither war nor peace' situation.",
@@ -544,22 +611,35 @@
    "setting": "Analysis, 5 November 2026, 'War, Deal, Or Stalemate? What The Midterms Mean For Trump's Iran War'. Its third scenario is headed 'No War, No Peace'.",
    "lines": [
     {
-     "text": "Iran may seek to drag it out in the hopes of raising the political and financial costs for Trump",
+     "text": "Scenario 3: No War, No Peace",
+     "quote": true,
+     "via": "the article's own heading"
+    },
+    {
+     "text": "Trump could also simply keep the current posture, launching \"defensive\" strikes, maintaining the naval blockade, and continuing US Navy escorts for shipping through Hormuz.",
      "quote": true
     },
     {
-     "text": "The no war, no peace scenario as he describes it: keep the posture, keep the blockade, keep the escorts through Hormuz, strike when struck. He calls it unstable.",
-     "quote": false
+     "text": "But the status quo is unstable",
+     "quote": true
     }
    ],
-   "wants": "Iran, if a weakened president can be waited out.",
-   "ends": "Iran's offer: the strait open within two days if its seven conditions are met.",
+   "wants": "Not said.",
+   "ends": "The 2028 race, on the account of Shayan Samii, an analyst in the piece: from mid-2027 candidates from both parties will demand a lasting answer on Iran.",
    "source": {
     "label": "RFE/RL, 5 November 2026",
     "url": "https://www.rferl.org/a/iran-war-us-midterms-trump-options/33891689.html"
    },
    "note": "",
    "cut": [
+    {
+     "text": "Iran may seek to drag it out in the hopes of raising the political and financial costs for Trump",
+     "quote": true
+    },
+    {
+     "text": "The no war, no peace scenario as he describes it: keep the posture, keep the blockade, keep the escorts through Hormuz, strike when struck. He calls it unstable.",
+     "quote": false
+    },
     {
      "text": "Whenever I want it to.",
      "quote": true,
@@ -570,7 +650,9 @@
      "quote": true,
      "via": "Vice President Vance on X, 4 November"
     }
-   ]
+   ],
+   "wants_cut": "Iran, if a weakened president can be waited out.",
+   "ends_cut": "Iran's offer: the strait open within two days if its seven conditions are met."
   },
   {
    "id": "pezeshkian-2026-11-09",
