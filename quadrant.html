@@ -317,12 +317,12 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   $('#tally').innerHTML = `This week: <b>${esc(curName)}</b>.`;
   const MONL = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const monl = m => MONL[Number(m.slice(5, 7)) - 1];
-  const WE_THINK = { peace: 'We think peace.', sweet: 'We think it is perpetual war.', war: 'We think war.' };
+  const WE_THINK = { peace: 'The heuristic says peace.', sweet: 'The heuristic says the perpetual war sweet spot.', war: 'The heuristic says war.' };
   const straitNow = !cur.strait ? '' : cur.strait.source === 'ledger'
     ? `${cur.strait.tracker} counts ${cur.strait.mbd} million barrels a day leaving the strait, ${pct(cur.strait.share)} of what left before, ${cur.strait.basis === 'monthly' ? `its ${monl(cur.strait.date)} average` : `as of ${fd(cur.strait.date)}`}. `
     : `Ship signals near the strait are at ${pct(cur.strait.share)} of a normal week. `;
   const deathsNow = cur.deaths.state === 'unknown' ? `Uppsala has not counted ${monl(cur.deaths.month)}.` : `Uppsala counts ${cur.deaths.best.toLocaleString('en-US')} dead in the Gulf in ${monl(cur.deaths.month)}.`;
-  $('#tally-sub').textContent = `BNO closed at ${cur.bno.toFixed(2)} on ${fd(cur.bno_date)}. ${WE_THINK[cur.think]} ${straitNow}${cur.strait ? (cur.are === 'shut' ? 'We are. ' : 'We are not. ') : ''}${deathsNow}`;
+  $('#tally-sub').textContent = `BNO closed at ${cur.bno.toFixed(2)} on ${fd(cur.bno_date)}. ${WE_THINK[cur.think]} ${straitNow}${cur.strait ? (cur.are === 'shut' ? 'That is shut. ' : 'That is open. ') : ''}${deathsNow}`;
 
   /* ---- the square: x = strait share of normal, y = BNO ---- */
   (function square() {
@@ -455,16 +455,16 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     const lastShut = full[full.length - 1].are === 'shut';
     p.push(`<p><strong>The strait has been shut ${shutWeeks} of ${full.length} weeks.</strong>${open.length ? ` The ${open.length === 1 ? 'one open week was' : num(open.length) + ' open weeks were'} ${open.map(w => fd(w.week)).join(' and ')}.${lastShut ? ' Then it shut again.' : ''}` : ''}</p>`);
     const sameWeeks = falseAlarm.length === open.length && falseAlarm.every(w => open.includes(w));
-    p.push(`<p><strong>We have not cried wolf much.</strong> We thought war for ${warCalls} weeks. The strait was shut in ${warCalls - falseAlarm.length} of them.${falseAlarm.length ? (sameWeeks ? ` The other ${num(falseAlarm.length)} ${falseAlarm.length === 1 ? 'was the open week' : 'were the open weeks'}.` : ` The other ${num(falseAlarm.length)}: ${falseAlarm.map(w => fd(w.week)).join(' and ')}.`) : ''}</p>`);
+    p.push(`<p><strong>The heuristic has not cried wolf much.</strong> It said war for ${warCalls} weeks. The strait was shut in ${warCalls - falseAlarm.length} of them.${falseAlarm.length ? (sameWeeks ? ` The other ${num(falseAlarm.length)} ${falseAlarm.length === 1 ? 'was the open week' : 'were the open weeks'}.` : ` The other ${num(falseAlarm.length)}: ${falseAlarm.map(w => fd(w.week)).join(' and ')}.`) : ''}</p>`);
     const backToPeace = full.filter(w => w.think === 'peace' && w.are === 'shut' && w.week > firstWar.week).length;
     const longAfter = lags.filter(l => l.from > firstWar.week).reduce((a, l) => l.weeks > (a ? a.weeks : 0) ? l : a, null);
-    p.push(`<p><strong>We are slow.</strong> The war started ${fd(Q.war_start)}. BNO took ${wks(wk(Q.war_start, firstNotPeace.bno_date))} to leave peace and ${wks(wk(Q.war_start, firstWar.bno_date))} to say war.${backToPeace ? ` Then the strait stayed shut and we went back to thinking peace anyway. ${Cap(num(backToPeace))} ${backToPeace === 1 ? 'week' : 'weeks'} of that.${longAfter && longAfter.weeks > 1 ? ` ${Cap(num(longAfter.weeks))} in a row, from ${fd(longAfter.from)} to ${fd(longAfter.to)}.` : ''}` : ''}</p>`);
+    p.push(`<p><strong>The heuristic is slow.</strong> The war started ${fd(Q.war_start)}. It took ${wks(wk(Q.war_start, firstNotPeace.bno_date))} to leave peace and ${wks(wk(Q.war_start, firstWar.bno_date))} to say war.${backToPeace ? ` Then the strait stayed shut and it went back to peace anyway. ${Cap(num(backToPeace))} ${backToPeace === 1 ? 'week' : 'weeks'} of that.${longAfter && longAfter.weeks > 1 ? ` ${Cap(num(longAfter.weeks))} in a row, from ${fd(longAfter.from)} to ${fd(longAfter.to)}.` : ''}` : ''}</p>`);
     const lastWarIdx = DM.map(m => m.state).lastIndexOf('war');
     const warM = DM.filter(m => m.state === 'war'), afterM = lastWarIdx < 0 ? [] : DM.slice(lastWarIdx + 1);
     const n = v => v.toLocaleString('en-US');
     const lastFull = full[full.length - 1], lastM = DM[DM.length - 1];
     if (warM.length && afterM.length) {
-      p.push(`<p><strong>${warM.map((m, i) => `${monl(m.month)}: ${n(m.best)}${i === 0 ? ' dead' : ''}.`).join(' ')}</strong> The strait shuts. Eventually we think war. Now take away the dying. ${afterM.map(m => `${monl(m.month)}: ${n(m.best)}.`).join(' ')} The strait is still shut.${longAfter && longAfter.weeks > 1 ? ` We think peace for ${num(longAfter.weeks)} weeks running.` : ''}${lastFull.think === 'war' && lastM.state !== 'war' ? ' Then we think war again, with almost nobody dying.' : ''} So what are we counting?</p>`);
+      p.push(`<p><strong>${warM.map((m, i) => `${monl(m.month)}: ${n(m.best)}${i === 0 ? ' dead' : ''}.`).join(' ')}</strong> The strait shuts. Eventually the heuristic says war. Now take away the dying. ${afterM.map(m => `${monl(m.month)}: ${n(m.best)}.`).join(' ')} The strait is still shut.${longAfter && longAfter.weeks > 1 ? ` It says peace for ${num(longAfter.weeks)} weeks running.` : ''}${lastFull.think === 'war' && lastM.state !== 'war' ? ' Then it says war again, with almost nobody dying.' : ''} So what is it counting?</p>`);
     } else {
       p.push(`<p><strong>The dead.</strong> ${DM.map(m => `${monl(m.month)}: ${n(m.best)}.`).join(' ')}</p>`);
     }
