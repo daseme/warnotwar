@@ -315,7 +315,14 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   /* ---- the line at the top ---- */
   const curName = CELLS[cur.cell];
   $('#tally').innerHTML = `This week: <b>${esc(curName)}</b>.`;
-  $('#tally-sub').textContent = `Week of ${fdy(cur.week)}. The market: BNO ${cur.bno.toFixed(2)} at the close of ${fd(cur.bno_date)}, ${THINK[cur.think]}. The strait: ${strait(cur)}. ${deathsLine(cur)}.`;
+  const MONL = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const monl = m => MONL[Number(m.slice(5, 7)) - 1];
+  const WE_THINK = { peace: 'We think peace.', sweet: 'We think it is perpetual war.', war: 'We think war.' };
+  const straitNow = !cur.strait ? '' : cur.strait.source === 'ledger'
+    ? `${cur.strait.tracker} counts ${cur.strait.mbd} million barrels a day leaving the strait, ${pct(cur.strait.share)} of what left before, ${cur.strait.basis === 'monthly' ? `its ${monl(cur.strait.date)} average` : `as of ${fd(cur.strait.date)}`}. `
+    : `Ship signals near the strait are at ${pct(cur.strait.share)} of a normal week. `;
+  const deathsNow = cur.deaths.state === 'unknown' ? `Uppsala has not counted ${monl(cur.deaths.month)}.` : `Uppsala counts ${cur.deaths.best.toLocaleString('en-US')} dead in the Gulf in ${monl(cur.deaths.month)}.`;
+  $('#tally-sub').textContent = `BNO closed at ${cur.bno.toFixed(2)} on ${fd(cur.bno_date)}. ${WE_THINK[cur.think]} ${straitNow}${cur.strait ? (cur.are === 'shut' ? 'We are. ' : 'We are not. ') : ''}${deathsNow}`;
 
   /* ---- the square: x = strait share of normal, y = BNO ---- */
   (function square() {
@@ -356,9 +363,9 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     const first = W[1] || W[0];
     l.innerHTML = `<p class="now">The big red dot is this week. The small marks are every full week since the war began on <b>${esc(fdy(Q.war_start))}</b>.</p>
       <dl>
-        <dt>across</dt><dd>how much oil the trackers see leaving through the strait, against a normal week. Left of the line, below three quarters of normal, the strait counts as shut.</dd>
-        <dt>up</dt><dd>BNO, the oil fund the front page watches. Under ${T.bno_low} peace, over ${T.bno_high} war. The grey band between is the perpetual war sweet spot.</dd>
-        ${(() => { const sig = W.filter(w => w.strait && w.strait.source === 'portwatch'); const mon = W.filter(w => w.strait && w.strait.basis === 'monthly'); return (sig.length ? `<dt>ship signals</dt><dd>${sig.length} ${sig.length === 1 ? 'week has' : 'weeks have'} no tracker figure and ${sig.length === 1 ? 'is' : 'are'} read from ship signals near the strait instead, which fell to a few percent of normal as tankers went dark. That is a different measure from barrels, and those marks sit far left for that reason.</dd>` : '') + (mon.length ? `<dt>months</dt><dd>${mon.length} ${mon.length === 1 ? 'week takes' : 'weeks take'} the tracker's published average for the month, because no weekly reading was published then.</dd>` : ''); })()}
+        <dt>are</dt><dd>Is the oil leaving? Under three quarters of normal, we call it shut.</dd>
+        <dt>think</dt><dd>BNO, the oil fund on the front page. Under ${T.bno_low} peace, over ${T.bno_high} war. The grey band between is the perpetual war sweet spot.</dd>
+        ${(() => { const sig = W.filter(w => w.strait && w.strait.source === 'portwatch'); const mon = W.filter(w => w.strait && w.strait.basis === 'monthly'); return (sig.length ? `<dt>ship signals</dt><dd>${sig.length} ${sig.length === 1 ? 'week has' : 'weeks have'} no tracker figure and ${sig.length === 1 ? 'is' : 'are'} read from ship signals near the strait instead, which fell to a few percent of normal as tankers went dark. That is a different measure from barrels, and those marks sit far left for that reason.</dd>` : '') + (mon.length ? `<dt>months</dt><dd>${mon.length} ${mon.length === 1 ? 'week uses' : 'weeks use'} the tracker's average for the month. Nobody published a weekly figure then.</dd>` : ''); })()}
       </dl>`;
   })();
 
@@ -415,7 +422,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   /* ---- the second count, with the sweet spot read as the market thinking war ---- */
   (function second() {
     const c2 = Q.counts_sweet_as_think, c = Q.counts;
-    $('#second-count').innerHTML = `<strong>Counted another way.</strong> Adam's grid has four cells and the heuristic has three states, so ${c['are-sweet'] || 0} weeks above sit in a band of their own. If the perpetual war sweet spot is the market thinking we are at war, which is what the phrase says, then "${CELLS['are-think']}" is <strong>${c2['are-think']} of ${full.length} weeks</strong>, up from ${c['are-think'] || 0}, and "${CELLS['are-not-think']}" stays ${c2['are-not-think']}.`;
+    $('#second-count').innerHTML = `<strong>Counted another way.</strong> Adam drew four boxes. The heuristic has three answers. So ${(c['are-sweet'] || 0) + (c['open-sweet'] || 0)} weeks land in neither. If the sweet spot means we think we are at war, which is what the phrase says, then ${esc(CELLS['are-think'])} is <strong>${c2['are-think']} of ${full.length} weeks</strong>. Up from ${c['are-think'] || 0}.`;
     const m = Q.deaths_moves;
     if (m && (m.moved.length || m.months_added.length)) {
       const mv = m.moved.map(x => `${MON[Number(x.month.slice(5)) - 1]} ${x.from.toLocaleString('en-US')} to ${x.to.toLocaleString('en-US')}`);
@@ -436,17 +443,31 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     // first war call after the start
     const firstWar = W.find(w => w.think === 'war'), firstNotPeace = W.find(w => w.think !== 'peace');
     const wk = (a, b) => Math.round((new Date(b) - new Date(a)) / 6048e5);
-    const wks = n => `${n} ${n === 1 ? 'week' : 'weeks'}`;
+    const wks = n => `${num(n)} ${n === 1 ? 'week' : 'weeks'}`;
     // deaths vs strait divergence
     const quietShut = full.filter(w => w.are === 'shut' && w.deaths.state === 'quiet').length;
     const DM = Q.deaths_months || [];
     const lastCounted = DM.length ? DM[DM.length - 1].month : null;
     const warMonths = DM.filter(m => m.state === 'war').map(m => MON[Number(m.month.slice(5)) - 1]);
     const p = [];
-    p.push(`<p><strong>The strait has been shut ${shutWeeks} of ${full.length} weeks.</strong> By the rule here, below three quarters of normal, the only ${openWeeks === 1 ? 'week' : 'weeks'} it counted as open ${openWeeks === 1 ? 'was' : 'were'} ${openWeeks ? full.filter(w => w.are === 'open').map(w => 'the week of ' + fd(w.week)).join(' and ') : 'none'}.</p>`);
-    p.push(`<p><strong>The market has not cried wolf much.</strong> Of ${warCalls} weeks the heuristic called war, ${falseAlarm.length === 0 ? 'none' : num(falseAlarm.length)} ${falseAlarm.length === 1 ? 'was' : 'were'} in a week the strait read open${falseAlarm.length ? ` (the ${falseAlarm.length === 1 ? 'week' : 'weeks'} of ${falseAlarm.map(w => fd(w.week)).join(' and ')}, on the one tracker reading near normal)` : ''}.</p>`);
-    p.push(`<p><strong>The lag.</strong> From the first day of the war it took ${wks(wk(Q.war_start, firstNotPeace.bno_date))} for BNO to leave peace, on ${fd(firstNotPeace.bno_date)}, and ${wks(wk(Q.war_start, firstWar.bno_date))} for it to call war, on ${fd(firstWar.bno_date)}. Since then the strait has been shut while the market said peace for ${peaceWhileShut} weeks${longest ? `, the longest stretch ${longest.weeks} weeks from ${fd(longest.from)} to ${fd(longest.to)}` : ''}, and shut while the market sat in the sweet spot for ${sweetWhileShut} more.</p>`);
-    p.push(`<p><strong>The market follows the barrels.</strong> Uppsala's count of deaths in the Gulf war${lastCounted ? `, reaching ${MON[Number(lastCounted.slice(5)) - 1]},` : ''} was at the war line in ${warMonths.length > 1 ? warMonths.slice(0, -1).join(', ') + ' and ' + warMonths[warMonths.length - 1] : warMonths.join('')}${DM.find(m => m.state === 'war') ? ` (${DM.find(m => m.state === 'war').best.toLocaleString('en-US')} in ${MON[Number(DM.find(m => m.state === 'war').month.slice(5)) - 1]} alone)` : ''}, and the strait was shut in ${quietShut} weeks whose month was quiet. If "at war" meant deaths, the market has been calling war over a quiet front since September. If it means the strait, the market and the strait have agreed since then.</p>`);
+    const Cap = s => s[0].toUpperCase() + s.slice(1);
+    const open = full.filter(w => w.are === 'open');
+    const lastShut = full[full.length - 1].are === 'shut';
+    p.push(`<p><strong>The strait has been shut ${shutWeeks} of ${full.length} weeks.</strong>${open.length ? ` The ${open.length === 1 ? 'one open week was' : num(open.length) + ' open weeks were'} ${open.map(w => fd(w.week)).join(' and ')}.${lastShut ? ' Then it shut again.' : ''}` : ''}</p>`);
+    const sameWeeks = falseAlarm.length === open.length && falseAlarm.every(w => open.includes(w));
+    p.push(`<p><strong>We have not cried wolf much.</strong> We thought war for ${warCalls} weeks. The strait was shut in ${warCalls - falseAlarm.length} of them.${falseAlarm.length ? (sameWeeks ? ` The other ${num(falseAlarm.length)} ${falseAlarm.length === 1 ? 'was the open week' : 'were the open weeks'}.` : ` The other ${num(falseAlarm.length)}: ${falseAlarm.map(w => fd(w.week)).join(' and ')}.`) : ''}</p>`);
+    const backToPeace = full.filter(w => w.think === 'peace' && w.are === 'shut' && w.week > firstWar.week).length;
+    const longAfter = lags.filter(l => l.from > firstWar.week).reduce((a, l) => l.weeks > (a ? a.weeks : 0) ? l : a, null);
+    p.push(`<p><strong>We are slow.</strong> The war started ${fd(Q.war_start)}. BNO took ${wks(wk(Q.war_start, firstNotPeace.bno_date))} to leave peace and ${wks(wk(Q.war_start, firstWar.bno_date))} to say war.${backToPeace ? ` Then the strait stayed shut and we went back to thinking peace anyway. ${Cap(num(backToPeace))} ${backToPeace === 1 ? 'week' : 'weeks'} of that.${longAfter && longAfter.weeks > 1 ? ` ${Cap(num(longAfter.weeks))} in a row, from ${fd(longAfter.from)} to ${fd(longAfter.to)}.` : ''}` : ''}</p>`);
+    const lastWarIdx = DM.map(m => m.state).lastIndexOf('war');
+    const warM = DM.filter(m => m.state === 'war'), afterM = lastWarIdx < 0 ? [] : DM.slice(lastWarIdx + 1);
+    const n = v => v.toLocaleString('en-US');
+    const lastFull = full[full.length - 1], lastM = DM[DM.length - 1];
+    if (warM.length && afterM.length) {
+      p.push(`<p><strong>${warM.map((m, i) => `${monl(m.month)}: ${n(m.best)}${i === 0 ? ' dead' : ''}.`).join(' ')}</strong> The strait shuts. Eventually we think war. Now take away the dying. ${afterM.map(m => `${monl(m.month)}: ${n(m.best)}.`).join(' ')} The strait is still shut.${longAfter && longAfter.weeks > 1 ? ` We think peace for ${num(longAfter.weeks)} weeks running.` : ''}${lastFull.think === 'war' && lastM.state !== 'war' ? ' Then we think war again, with almost nobody dying.' : ''} So what are we counting?</p>`);
+    } else {
+      p.push(`<p><strong>The dead.</strong> ${DM.map(m => `${monl(m.month)}: ${n(m.best)}.`).join(' ')}</p>`);
+    }
     $('#findings').innerHTML = p.join('');
   })();
 
