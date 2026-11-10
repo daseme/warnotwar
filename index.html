@@ -19,6 +19,7 @@
     letter-spacing: 0.05em;
     text-align: center;
     transition: opacity 0.8s ease;
+    line-height: 1;
   }
   #info-link {
     position: fixed;
@@ -60,11 +61,19 @@
   const API_KEY = "da68rdhr01qtngrev8kgda68rdhr01qtngrev8l0";
   // --------------------------------------------------------------
 
-  function setMessage(text, color) {
+  // Adam, 1 September 2026: "Point size of WAR could increase with every dollar over 55"
+  const BASE_VW = 6, VW_PER_DOLLAR = 1.45, MAX_VW = 32;
+  function warSize(price) {
+    const vw = Math.min(BASE_VW + (price - HIGH_MIN) * VW_PER_DOLLAR, MAX_VW);
+    return `min(${vw.toFixed(2)}vw, 78vh)`;
+  }
+
+  function setMessage(text, color, size) {
     const el = document.getElementById("message");
     el.style.opacity = 0;
     setTimeout(() => {
       el.textContent = text;
+      el.style.fontSize = size || "";
       document.body.style.backgroundColor = color;
       el.style.opacity = 1;
     }, 400);
@@ -72,11 +81,14 @@
 
   function render(price) {
     if (price < LOW_MAX) setMessage(MSG_LOW, "#173a1e");
-    else if (price > HIGH_MIN) setMessage(MSG_HIGH, "#3a1717");
+    else if (price > HIGH_MIN) setMessage(MSG_HIGH, "#3a1717", warSize(price));
     else setMessage(MSG_MID, "#3a2f17");
   }
 
   async function fetchPrice() {
+    // ?price=71.39 previews a size without waiting for the market
+    const preview = Number(new URLSearchParams(location.search).get("price"));
+    if (preview > 0) { render(preview); return; }
     try {
       const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${TICKER}&token=${API_KEY}`);
       const data = await res.json();
