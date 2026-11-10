@@ -247,7 +247,7 @@
   <div class="keys" id="keys"></div>
   <p class="prose" id="second-count"></p>
   <p class="tally-sub" id="moved"></p>
-  <h3>Four Things, for now.</h3>
+  <h3 id="things-h">Four Things, for now.</h3>
   <div class="prose" id="findings"></div>
 </section>
 
@@ -305,7 +305,8 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const pct = x => Math.round(x * 100) + '%';
   const WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
   const num = n => n < WORDS.length ? WORDS[n] : String(n);
-  let Q;
+  let Q, HIST = null;
+  try { HIST = await fetch('/history.json').then(r => r.ok ? r.json() : null); } catch (e) {}
   try { Q = await fetch('/data/quadrant.json', { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); }); }
   catch (e) { const el = $('#load-error'); el.style.display = 'block'; el.textContent = 'The data did not load: ' + e.message; return; }
 
@@ -491,6 +492,35 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     } else {
       p.push(`<p><strong>The dead.</strong> ${DM.map(m => `${monl(m.month)}: ${n(m.best)}.`).join(' ')}</p>`);
     }
+    // the fifth: every time the heuristic has said war and then stopped, set against the strait
+    if (Array.isArray(HIST)) {
+      const days = HIST.filter(x => x.d >= Q.war_start && x.p != null);
+      const mondayOf = d => { const t = new Date(d + 'T00:00:00Z'); t.setUTCDate(t.getUTCDate() - ((t.getUTCDay() + 6) % 7)); return t.toISOString().slice(0, 10); };
+      const areOf = Object.fromEntries(W.map(w => [w.week, w.are]));
+      const trips = [];
+      days.forEach((x, i) => {
+        if (x.p <= T.bno_high) return;
+        const last = trips[trips.length - 1];
+        if (last && last.end === i - 1) { last.end = i; last.n++; if (x.p > last.hi) last.hi = x.p; }
+        else trips.push({ start: i, end: i, n: 1, hi: x.p });
+      });
+      trips.forEach(t => {
+        t.done = t.end < days.length - 1;
+        t.openWeeks = [...new Set(days.slice(t.start, t.end + 1).map(x => mondayOf(x.d)))].filter(k => areOf[k] === 'open');
+        t.open = t.openWeeks.length;
+      });
+      const back = trips.filter(t => t.done && t.open === 0), cur = trips.find(t => !t.done);
+      const TIMES = ['never', 'once', 'twice', 'three times', 'four times', 'five times', 'six times'], ORD = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh'];
+      if (back.length) {
+        let t5 = `<p><strong>The strait stayed shut.</strong> The heuristic called war and called it off ${TIMES[back.length] || back.length + ' times'} anyway.`;
+        if (cur) {
+          const months = [...new Set(cur.openWeeks.map(k => monl(k)))];
+          t5 += ` It is calling it a ${ORD[trips.indexOf(cur)] || 'further'} time now. This one has lasted ${cur.n} trading days${cur.n > Math.max(...trips.filter(t => t.done).map(t => t.n)) ? ', the longest yet' : ''}.${cur.open ? ` The strait opened for ${num(cur.open)} ${cur.open === 1 ? 'week' : 'weeks'} in ${months.join(' and ')} and shut again.` : ''}`;
+        }
+        p.splice(p.length - 1, 0, t5 + '</p>'); // before the last, so the section still ends on its question
+      }
+    }
+    $('#things-h').textContent = `${Cap(num(p.length))} Things, for now.`;
     $('#findings').innerHTML = p.join('');
   })();
 
