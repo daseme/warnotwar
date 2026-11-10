@@ -220,7 +220,6 @@
 <header class="hero">
   <div class="hero-kicker">warnotwar · the quadrant</div>
   <h1>Are we at war, and do we think we are?</h1>
-  <p class="subtitle">The strait says whether we are at war. The market says whether we think so. Every week since 28 February is placed by both.</p>
 </header>
 
 <div id="load-error"></div>
@@ -346,7 +345,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     $('#square').innerHTML += s;
     const l = $('#legend');
     const first = W[1] || W[0];
-    l.innerHTML = `<p class="now">The dot is this week. The small marks are every full week since the war began on <b>${esc(fdy(Q.war_start))}</b>.</p>
+    l.innerHTML = `<p class="now">The big red dot is this week. The small marks are every full week since the war began on <b>${esc(fdy(Q.war_start))}</b>.</p>
       <dl>
         <dt>across</dt><dd>how much oil the trackers see leaving through the strait, against a normal week. Left of the line, below three quarters of normal, the strait counts as shut.</dd>
         <dt>up</dt><dd>BNO, the oil fund the front page watches. Under ${T.bno_low} peace, over ${T.bno_high} war. The grey band between is the perpetual war sweet spot.</dd>
