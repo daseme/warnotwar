@@ -229,9 +229,9 @@ def main():
         "generated_at_utc": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "war_start": WAR_START.isoformat(),
         "rules": {
-            "think": f"The Dean Street Heuristic, as on the front page: BNO's last close of the week. Under ${BNO_LOW:.0f} peace, over ${BNO_HIGH:.0f} war, between them the perpetual war sweet spot.",
-            "are": f"The strait. A week counts as shut when oil leaving through Hormuz is below three quarters of normal. The reading is the estimates ledger's: a dated weekly tracker figure as of the week's end when one is less than three weeks old, otherwise the tracker's published average for that month, against a pre-war rate of about {prewar:g} million barrels a day, the figure Kpler's own percentages imply. Single-day prints and all-liquids figures never count, the same rule as the verification panel. Where the ledger has nothing for a week, PortWatch's tanker-signal index against a normal late-2025 week stands in, and the week says so.",
-            "deaths": f"Uppsala's deaths in the Gulf dyad by the month the event began, UCDP best estimate. {DEATHS_WAR_MONTH} or more in a month is the war line (1,000 a year); {DEATHS_CONFLICT_MONTH} or more is the conflict line. Months from the candidate files are provisional; months Uppsala has not reached are unknown.",
+            "think": f"BNO's last close of the week, read the way the front page reads it. Under ${BNO_LOW:.0f} we think peace. Over ${BNO_HIGH:.0f} we think war. Between them is the perpetual war sweet spot.",
+            "are": f"Is the oil leaving? Under three quarters of normal, we call the strait shut. Normal is about {prewar:g} million barrels a day, the pre-war rate Kpler's own percentages imply. We take a tracker's weekly figure when it is less than three weeks old, and its average for the month when it is older. Figures for a single day are left out, and so are figures that count refined products with the crude. If no tracker has a figure for a week, we read PortWatch's ship signals near the strait against a normal late-2025 week, and the week says so.",
+            "deaths": f"Uppsala's best estimate of deaths in the Gulf war, by the month the event began. {DEATHS_WAR_MONTH} or more in a month is the war line, which is 1,000 a year. {DEATHS_CONFLICT_MONTH} or more is the conflict line. This year's months are provisional until Uppsala's yearly release. Months Uppsala has not reached are blank.",
             "cells": {
                 "are-think": "we are at war and we think we are",
                 "are-not-think": "we are at war and we think we are not",
@@ -244,10 +244,10 @@ def main():
         "thresholds": {"bno_low": BNO_LOW, "bno_high": BNO_HIGH, "strait_open_share": STRAIT_OPEN_SHARE,
                        "prewar_mbd": prewar, "deaths_war_month": DEATHS_WAR_MONTH, "deaths_conflict_month": DEATHS_CONFLICT_MONTH},
         "sources": {
-            "bno": "data/market_daily.json (Yahoo Finance daily closes), last " + last_bno_day.isoformat(),
-            "portwatch": "data/oilflows_daily.json, hormuz_tanker_count_index_7d, last " + pw[-1][0].isoformat(),
-            "ledger": "data/hormuz_verification.json estimates, newest independent reading " + est[-1][0].isoformat(),
-            "ucdp": f"data/ucdp.json, {ucdp['versions']}, reach {reach}, pulled {ucdp['pulled']}",
+            "bno": "daily closes from Yahoo Finance, last " + last_bno_day.isoformat(),
+            "portwatch": "IMF PortWatch, seven-day tanker count at the strait, last " + pw[-1][0].isoformat(),
+            "ledger": "the tracker figures we keep beside the U.S. statements, newest " + est[-1][0].isoformat(),
+            "ucdp": f"Uppsala, {ucdp['versions']}, reaching {reach}, pulled {ucdp['pulled']}",
         },
         "deaths_months": [
             {"month": m, "best": gulf_months[m],
