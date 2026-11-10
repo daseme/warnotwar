@@ -188,7 +188,7 @@ nav.topnav details.testing summary::-webkit-details-marker { display: none; }
 nav.topnav details.testing summary::after { content: '\25BE'; font-size: 10px; }
 nav.topnav details.testing summary:hover, nav.topnav details.testing[open] summary, nav.topnav details.testing.here summary { opacity: 1; }
 nav.topnav details.testing .menu { position: absolute; top: calc(100% + 14px); left: -14px; min-width: 190px; display: flex; flex-direction: column; gap: 12px; padding: 14px 16px; background: var(--bg-raise, var(--bg)); border: 1px solid var(--ink-18); z-index: 60; }
-@media (max-width: 1140px) {
+@media (max-width: 720px) {
   nav.topnav { overflow-x: auto; overflow-y: hidden; }
   nav.topnav details.testing[open] { display: inline-flex; align-items: center; gap: 14px; }
   nav.topnav details.testing .menu { position: static; flex-direction: row; gap: 14px; min-width: 0; padding: 0; border: 0; background: none; }
