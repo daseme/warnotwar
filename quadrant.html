@@ -327,10 +327,10 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     // cell names and counts
     const c = Q.counts;
     const lab = (x, y, l1, l2, n, anchor) => `<text class="cell n" x="${x}" y="${y}" text-anchor="${anchor}">${n}</text><text class="cell" x="${x}" y="${y + 18}" text-anchor="${anchor}">${esc(l1)}</text><text class="cell" x="${x}" y="${y + 33}" text-anchor="${anchor}">${esc(l2)}</text>`;
-    s += lab(P.l + 14, P.t + 40, 'at war,', 'the market says war', c['are-think'] || 0, 'start');
-    s += lab(P.l + w - 14, P.t + 40, 'strait open,', 'the market says war', c['think-not-are'] || 0, 'end');
-    s += lab(P.l + 14, P.t + h - 46, 'at war,', 'the market says peace', c['are-not-think'] || 0, 'start');
-    s += lab(P.l + w - 14, P.t + h - 46, 'strait open,', 'the market says peace', c['neither'] || 0, 'end');
+    s += lab(P.l + 14, P.t + 40, 'we are at war', 'and think we are', c['are-think'] || 0, 'start');
+    s += lab(P.l + w - 14, P.t + 40, 'we are not at war', 'but think we are', c['think-not-are'] || 0, 'end');
+    s += lab(P.l + 14, P.t + h - 46, 'we are at war', 'and think we are not', c['are-not-think'] || 0, 'start');
+    s += lab(P.l + w - 14, P.t + h - 46, 'we are not at war', 'and think we are not', c['neither'] || 0, 'end');
     s += `<text class="cell" x="${X(T.strait_open_share) - 10}" y="${(Y(T.bno_low) + Y(T.bno_high)) / 2 + 4}" text-anchor="end">perpetual war sweet spot · ${(c['are-sweet'] || 0) + (c['open-sweet'] || 0)} weeks</text>`;
     // axes
     s += `<text x="${P.l + w / 2}" y="${S - 14}" text-anchor="middle">oil leaving through the strait, share of normal →</text>`;
@@ -405,7 +405,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   /* ---- the second count, with the sweet spot read as the market thinking war ---- */
   (function second() {
     const c2 = Q.counts_sweet_as_think, c = Q.counts;
-    $('#second-count').innerHTML = `<strong>Counted another way.</strong> Adam's grid has four cells and the heuristic has three states, so ${c['are-sweet'] || 0} weeks above sit in a band of their own. If the perpetual war sweet spot is the market thinking we are at war, which is what the phrase says, then "at war, and the market says so" is <strong>${c2['are-think']} of ${full.length} weeks</strong>, up from ${c['are-think'] || 0}, and "at war, and the market says peace" stays ${c2['are-not-think']}.`;
+    $('#second-count').innerHTML = `<strong>Counted another way.</strong> Adam's grid has four cells and the heuristic has three states, so ${c['are-sweet'] || 0} weeks above sit in a band of their own. If the perpetual war sweet spot is the market thinking we are at war, which is what the phrase says, then "${CELLS['are-think']}" is <strong>${c2['are-think']} of ${full.length} weeks</strong>, up from ${c['are-think'] || 0}, and "${CELLS['are-not-think']}" stays ${c2['are-not-think']}.`;
     const m = Q.deaths_moves;
     if (m && (m.moved.length || m.months_added.length)) {
       const mv = m.moved.map(x => `${MON[Number(x.month.slice(5)) - 1]} ${x.from.toLocaleString('en-US')} to ${x.to.toLocaleString('en-US')}`);

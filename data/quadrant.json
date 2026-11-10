@@ -1,18 +1,18 @@
 {
  "schema_version": 1,
- "generated_at_utc": "2026-11-09T23:02:45Z",
+ "generated_at_utc": "2026-11-10T00:45:40Z",
  "war_start": "2026-02-28",
  "rules": {
   "think": "The Dean Street Heuristic, as on the front page: BNO's last close of the week. Under $49 peace, over $55 war, between them the perpetual war sweet spot.",
   "are": "The strait. A week counts as shut when oil leaving through Hormuz is below three quarters of normal. The reading is the estimates ledger's: a dated weekly tracker figure as of the week's end when one is less than three weeks old, otherwise the tracker's published average for that month, against a pre-war rate of about 17 million barrels a day, the figure Kpler's own percentages imply. Single-day prints and all-liquids figures never count, the same rule as the verification panel. Where the ledger has nothing for a week, PortWatch's tanker-signal index against a normal late-2025 week stands in, and the week says so.",
   "deaths": "Uppsala's deaths in the Gulf dyad by the month the event began, UCDP best estimate. 84 or more in a month is the war line (1,000 a year); 25 or more is the conflict line. Months from the candidate files are provisional; months Uppsala has not reached are unknown.",
   "cells": {
-   "are-think": "at war, and the market says so",
-   "are-not-think": "at war, and the market says peace",
-   "are-sweet": "at war, and the market says perpetual war",
-   "think-not-are": "the market says war, the strait is open",
-   "open-sweet": "the strait is open, the market says perpetual war",
-   "neither": "the strait is open, and the market says peace"
+   "are-think": "we are at war and think we are",
+   "are-not-think": "we are at war and think we are not",
+   "are-sweet": "we are at war and think it is perpetual war",
+   "think-not-are": "we are not at war but think we are",
+   "open-sweet": "we are not at war and think it is perpetual war",
+   "neither": "we are not at war and think we are not"
   }
  },
  "thresholds": {
