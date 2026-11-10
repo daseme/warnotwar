@@ -328,10 +328,10 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     // cell names and counts
     const c = Q.counts;
     const lab = (x, y, l1, l2, n, anchor) => `<text class="cell n" x="${x}" y="${y}" text-anchor="${anchor}">${n}</text><text class="cell" x="${x}" y="${y + 18}" text-anchor="${anchor}">${esc(l1)}</text><text class="cell" x="${x}" y="${y + 33}" text-anchor="${anchor}">${esc(l2)}</text>`;
-    s += lab(P.l + 14, P.t + 40, 'we are at war', 'and think we are', c['are-think'] || 0, 'start');
-    s += lab(P.l + w - 14, P.t + 40, 'we are not at war', 'but think we are', c['think-not-are'] || 0, 'end');
-    s += lab(P.l + 14, P.t + h - 46, 'we are at war', 'and think we are not', c['are-not-think'] || 0, 'start');
-    s += lab(P.l + w - 14, P.t + h - 46, 'we are not at war', 'and think we are not', c['neither'] || 0, 'end');
+    s += lab(P.l + 14, P.t + 40, 'we are at war', 'and we think we are', c['are-think'] || 0, 'start');
+    s += lab(P.l + w - 14, P.t + 40, 'we are not at war', 'but we think we are', c['think-not-are'] || 0, 'end');
+    s += lab(P.l + 14, P.t + h - 46, 'we are at war', 'and we think we are not', c['are-not-think'] || 0, 'start');
+    s += lab(P.l + w - 14, P.t + h - 46, 'we are not at war', 'and we think we are not', c['neither'] || 0, 'end');
     s += `<text class="cell" x="${X(T.strait_open_share) - 10}" y="${(Y(T.bno_low) + Y(T.bno_high)) / 2 + 4}" text-anchor="end">perpetual war sweet spot · ${(c['are-sweet'] || 0) + (c['open-sweet'] || 0)} weeks</text>`;
     // Adam's grid: are / are not across the top, think / think not down the side
     const xs = X(T.strait_open_share), yh = Y(T.bno_high), yl = Y(T.bno_low), xr = P.l + w + 18;
