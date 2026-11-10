@@ -312,7 +312,7 @@
       const [y, m, d] = q.war_start.split("-").map(Number);
       const day = Math.floor((Date.now() - Date.UTC(y, m - 1, d)) / 86400000);
       document.getElementById("tally").textContent =
-        `Day ${day}. Strait shut ${shut.length} of ${full.length} weeks. The market called it war in ${war.length} of them.`;
+        `Day ${day}. Strait shut ${shut.length} of ${full.length} weeks. The heuristic called it war in ${war.length} of them.`;
     } catch (e) {}
   }
 
