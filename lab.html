@@ -813,11 +813,14 @@ themeBtn.onclick = () => {
   }));
   items.sort((a, b) => a.date < b.date ? -1 : 1);
 
-  const figNum = it => it.lo === it.hi
-    ? (it.lo % 1 ? it.lo : it.lo.toFixed(0))
+  // a tracker sometimes states only a floor or only a ceiling
+  const one = v => (v % 1 ? v : v.toFixed(0));
+  const figNum = it => it.hi == null ? 'at least ' + one(it.lo)
+    : it.lo == null ? 'at most ' + one(it.hi)
+    : it.lo === it.hi ? one(it.lo)
     : it.lo.toFixed(0) + '–' + it.hi.toFixed(0);
   const figText = it => figNum(it) + ' ' + UNIT_PLAIN[it.unit];
-  const rangeNote = it => it.lo === it.hi ? null
+  const rangeNote = it => (it.lo === it.hi || it.lo == null || it.hi == null) ? null
     : it.kind === 'estimate'
       ? `a range, not one number — the tracking firms disagree: the lowest finds ~${it.lo.toFixed(0)}, the highest ~${it.hi.toFixed(0)}`
       : `a range as stated by the speaker: ${it.lo.toFixed(0)} to ${it.hi.toFixed(0)}`;
