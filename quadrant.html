@@ -139,7 +139,7 @@
   .strip text.row { text-transform: uppercase; letter-spacing: 0.1em; fill: var(--ink-45); }
   .strip line.sep { stroke: var(--ink-30); stroke-width: 1; stroke-dasharray: 3 3; }
   /* the key reads like the grid: are on the left, are not on the right; war, sweet spot, peace from the top */
-  .keys { display: grid; grid-template-rows: repeat(3, auto); grid-auto-flow: column; grid-auto-columns: max-content; gap: 8px 48px; font-family: var(--mono); font-size: 10.5px; color: var(--ink-60); margin-top: 18px; padding-left: 96px; }
+  .keys { display: grid; grid-template-rows: repeat(3, auto); grid-auto-flow: column; grid-auto-columns: max-content; gap: 8px 48px; font-family: var(--mono); font-size: 10.5px; color: var(--ink-60); margin: 18px 0 30px; padding-left: 96px; }
   .keys span { display: inline-flex; align-items: center; gap: 7px; }
   .keys i { width: 12px; height: 12px; display: inline-block; border: 1px solid var(--ink-10); }
   .keys i.are-think { background: var(--danger); }
@@ -245,7 +245,6 @@
   <p class="panel-sub" id="weeks-sub"></p>
   <div class="strip-wrap"><svg class="strip" id="strip"></svg></div>
   <div class="keys" id="keys"></div>
-  <ul class="cells" id="cells"></ul>
   <p class="prose" id="second-count"></p>
   <p class="tally-sub" id="moved"></p>
   <h3>Four Things, for now.</h3>
@@ -380,7 +379,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     // a gap between months, in both rows, so the weeks read in month groups
     const MG = 8, brk = W.map((w, i) => i > 0 && w.deaths.month !== W[i - 1].deaths.month), nb = brk.filter(Boolean).length;
     const before = brk.reduce((a, b, i) => { a.push((a[i - 1] || 0) + (b ? 1 : 0)); return a; }, []);
-    const G = 96, n = W.length, cw = Math.max(16, Math.floor((1110 - G - nb * MG) / n)), width = G + n * cw + nb * MG, X = i => G + i * cw + before[i] * MG, h1 = 34, gap = 10, h2 = 18, H = 22 + h1 + gap + h2 + 34;
+    const G = 96, n = W.length, cw = Math.max(16, Math.floor((1110 - G - nb * MG) / n)), width = G + n * cw + nb * MG, X = i => G + i * cw + before[i] * MG, h1 = 34, gap = 10, h2 = 18, H = 22 + h1 + gap + h2 + 4;
     let s = `<defs>
       <pattern id="hatch-danger" patternUnits="userSpaceOnUse" width="5" height="5" patternTransform="rotate(45)"><rect width="5" height="5" fill="var(--bg)"/><rect width="2.2" height="5" fill="var(--danger)"/></pattern>
       <pattern id="hatch-gold" patternUnits="userSpaceOnUse" width="5" height="5" patternTransform="rotate(45)"><rect width="5" height="5" fill="var(--bg)"/><rect width="2.2" height="5" fill="var(--gold)"/></pattern>
@@ -393,9 +392,6 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       const m = w.deaths.month;
       if (i === 0 || brk[i]) { monthSeen = m; s += `<text x="${x}" y="12">${MON[Number(m.slice(5)) - 1]}</text>`; }
       s += `<rect class="w c-${w.cell || 'none'}${w.partial ? ' partial' : ''}" data-i="${i}" x="${x}" y="22" width="${cw}" height="${h1}"/>`;
-      if (w.strait && w.strait.basis === 'weekly' && (i === 0 || !W[i - 1].strait || W[i - 1].strait.basis !== 'weekly')) {
-        s += `<line class="sep" x1="${x}" x2="${x}" y1="18" y2="${22 + h1 + 4}"/><text x="${x + 3}" y="${22 + h1 + gap + h2 + 26}">weekly tracker readings from here →</text>`;
-      }
       if (w.strait && w.strait.source === 'portwatch') s += `<rect class="sig" x="${x}" y="${22 + h1 - 4}" width="${cw}" height="4"/>`;
     });
     // deaths are counted by the month, so one bar runs the length of each month
@@ -409,7 +405,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     const svg = $('#strip');
     svg.setAttribute('viewBox', `0 0 ${width} ${H}`);
     svg.innerHTML = s;
-    $('#keys').innerHTML = ['are-think', 'are-sweet', 'are-not-think', 'think-not-are', 'open-sweet', 'neither'].map(k => `<span><i class="${k}"></i>${esc(CELLS[k])}</span>`).join('')
+    $('#keys').innerHTML = ['are-think', 'are-sweet', 'are-not-think', 'think-not-are', 'open-sweet', 'neither'].map(k => `<span><i class="${k}"></i>${esc(CELLS[k])} · ${Q.counts[k] || 0} ${(Q.counts[k] || 0) === 1 ? 'week' : 'weeks'}</span>`).join('')
       + (W.some(w => w.strait && w.strait.source === 'portwatch') ? `<span><i style="border-bottom:4px solid var(--bg);background:var(--ink-30)"></i>read from ship signals, no tracker figure</span>` : '');
     // hover
     const tip = $('#tip');
@@ -445,7 +441,6 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const order = ['are-think', 'are-sweet', 'are-not-think', 'think-not-are', 'open-sweet', 'neither'];
   $('#weeks-h').textContent = `All ${full.length} weeks, since you asked`;
   $('#weeks-sub').textContent = `${full.length} full weeks from the first Monday of the war, ${fdy(W[0].week)}, one box each. The colour says which box of the grid we were in. The row under it is Uppsala's count of the dead in the Gulf, one bar a month. Hover or tap a week for its readings. The current week is faint until it closes.`;
-  $('#cells').innerHTML = order.filter(k => Q.counts[k]).map(k => `<li><div class="w"><i class="${k}" style="width:10px;height:10px;display:inline-block;${k === 'are-sweet' ? 'background:repeating-linear-gradient(135deg,var(--danger) 0 2px,transparent 2px 5px)' : k === 'open-sweet' ? 'background:repeating-linear-gradient(135deg,var(--gold) 0 2px,transparent 2px 5px)' : `background:var(--${{ 'are-think': 'danger', 'are-not-think': 'rate', 'think-not-are': 'gold', 'neither': 'ink-18' }[k]})`}"></i>${esc(CELLS[k])}</div><div class="big">${Q.counts[k]}<small>${Q.counts[k] === 1 ? 'week' : 'weeks'}</small></div></li>`).join('');
 
   /* ---- the second count, with the sweet spot read as the market thinking war ---- */
   (function second() {
@@ -501,7 +496,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
 
   /* ---- rules and table ---- */
   $('#rule-think').textContent = Q.rules.think + ' Hover a week to see how many of its trading days sat in each.';
-  $('#rule-are').textContent = Q.rules.are + ' Ship signals and barrels are different measures. Ship signals fell to a few percent of normal as tankers switched off their transponders. The trackers count barrels by other means and see more. The strip marks the week the weekly readings begin. Kpler states the pre-war rate as 17 to 18 million barrels a day depending on what is counted, so a share here is approximate.';
+  $('#rule-are').textContent = Q.rules.are + ' Ship signals and barrels are different measures. Ship signals fell to a few percent of normal as tankers switched off their transponders. The trackers count barrels by other means and see more. Kpler states the pre-war rate as 17 to 18 million barrels a day depending on what is counted, so a share here is approximate.';
   $('#rule-deaths').textContent = Q.rules.deaths + ' The site\'s map and the moment page use the same file.';
   $('#rule-sources').textContent = `BNO: ${Q.sources.bno}. Ship signals: ${Q.sources.portwatch}. Tracker readings: ${Q.sources.ledger}. Oilflows reads the same figures. Deaths: ${Q.sources.ucdp}. Built ${Q.generated_at_utc.slice(0, 10)} by scripts/build_quadrant.py.`;
   $('#table').innerHTML = `<tr><th>week of</th><th>BNO</th><th>think</th><th>are</th><th>deaths</th><th>box</th></tr>` + W.map(w => `<tr><td>${esc(fd(w.week))}${w.partial ? ' (so far)' : ''}</td><td>${w.bno != null ? w.bno.toFixed(2) : '–'}</td><td>${THINK[w.think] || '–'}</td><td>${w.strait ? pct(w.strait.share) + (w.strait.source === 'ledger' ? ` · ${w.strait.tracker} ${w.strait.mbd}` : ' · ship signals') : '–'}</td><td>${w.deaths.state === 'unknown' ? 'not counted' : w.deaths.best.toLocaleString('en-US') + (w.deaths.provisional ? ' (p)' : '')}</td><td>${esc(CELLS[w.cell] || '–')}</td></tr>`).join('');
