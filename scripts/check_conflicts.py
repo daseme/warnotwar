@@ -2,7 +2,7 @@
 """Check data/conflicts.json against the rules written on the map page, and
 compute the fields the page should never have to trust by hand.
 
-Usage: scripts/check_conflicts.py [--write] [--quiet]
+Usage: scripts/check_conflicts.py [--write [--keep-date]] [--quiet]
 
 Without --write it reports and exits 1 on any failure. With --write it fills
 the computed fields (evidence_to, single, source_counts, as_of counts) and
@@ -34,6 +34,8 @@ import os
 from datetime import date
 import re
 import sys
+import subprocess
+from pathlib import Path
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PATH = os.path.join(ROOT, 'data', 'conflicts.json')
@@ -52,6 +54,8 @@ def band_for(n):
 def main():
     write = '--write' in sys.argv
     quiet = '--quiet' in sys.argv
+    # as_of says how current the wars and lines are. A wording-only edit keeps it: --write --keep-date
+    keep_date = '--keep-date' in sys.argv
     d = json.load(open(PATH))
     u = json.load(open(UCDP)) if os.path.exists(UCDP) else None
     fails, warns = [], []
@@ -151,7 +155,8 @@ def main():
                 warns.append(f"{c['id']}: no band and no UCDP entry")
     if write:
         d['source_counts'] = counts
-        d['as_of'] = date.today().isoformat()
+        if not keep_date:
+            d['as_of'] = date.today().isoformat()
         json.dump(d, open(PATH, 'w'), indent=1, ensure_ascii=False)
         with open(PATH, 'a') as f:
             f.write('\n')
@@ -162,7 +167,12 @@ def main():
         for w in warns: print('warn:', w)
         for f in fails: print('FAIL:', f)
         print(f"{counts['ties']} ties, {counts['sources']} sources; {len(fails)} failures, {len(warns)} warnings" + (' (written)' if write else ''))
-    sys.exit(1 if fails else 0)
+    # today's wars (wars.html) fills its copy from this file; a lookup that breaks drops a sentence there
+    wars_check = subprocess.run([sys.executable, str(Path(__file__).with_name('check_wars.py')), '--quiet'], capture_output=True, text=True)
+    if wars_check.returncode:
+        print(wars_check.stdout.strip() or wars_check.stderr.strip())
+        print("FAIL: today's wars would lose copy; see scripts/check_wars.py")
+    sys.exit(1 if fails or wars_check.returncode else 0)
 
 
 if __name__ == '__main__':
