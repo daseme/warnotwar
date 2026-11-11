@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="paper">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A guided first look at the wars being fought now: where they are, how big, who fights, who helps, how anyone knows, and whether this level is normal.">
+<title>Today's wars — an introduction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* today's wars: the same paper/ink token set as conflicts.html */
+  :root, [data-theme="paper"] {
+    --bg: #f7f2e7; --bg-raise: #fcfaf3; --bg-sink: #efe8da;
+    --ink: #1a1610;
+    --ink-80: rgba(26,22,16,0.8); --ink-60: rgba(26,22,16,0.6); --ink-45: rgba(26,22,16,0.45);
+    --ink-30: rgba(26,22,16,0.3); --ink-18: rgba(26,22,16,0.18); --ink-10: rgba(26,22,16,0.1); --ink-06: rgba(26,22,16,0.06);
+    --rate: #1d4e89; --gold: #8f6d14; --danger: #a03428;
+    --chip-on-bg: #1a1610; --chip-on-ink: #f7f2e7;
+    /* backer hues: validated all-pairs on the paper surface (see conflicts.html); never add a sixth */
+    --b1: #2a78d6; --b2: #eb6834; --b3: #1baf7a; --b4: #a0308e; --b5: #5634ac;
+    --land: rgba(26,22,16,0.07); --land-line: rgba(26,22,16,0.2); --grat: rgba(26,22,16,0.05);
+  }
+  [data-theme="ink"] {
+    --bg: #17140f; --bg-raise: #1e1a14; --bg-sink: #14110c;
+    --ink: #efe8d8;
+    --ink-80: rgba(239,232,216,0.8); --ink-60: rgba(239,232,216,0.6); --ink-45: rgba(239,232,216,0.45);
+    --ink-30: rgba(239,232,216,0.3); --ink-18: rgba(239,232,216,0.18); --ink-10: rgba(239,232,216,0.1); --ink-06: rgba(239,232,216,0.06);
+    --rate: #7aa8dd; --gold: #c9a94f; --danger: #d06a5c;
+    --chip-on-bg: #efe8d8; --chip-on-ink: #17140f;
+    --b1: #3987e5; --b2: #d95926; --b3: #199e70; --b4: #c454b0; --b5: #724aab;
+    --land: rgba(239,232,216,0.07); --land-line: rgba(239,232,216,0.2); --grat: rgba(239,232,216,0.05);
+  }
+  :root {
+    --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+    --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; min-height: 100%; font-family: var(--serif);
+    background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased;
+    transition: background 0.25s ease, color 0.25s ease; overflow-x: clip;
+  }
+  body { padding: 52px 0 0; }
+  ::selection { background: var(--rate); color: var(--bg); }
+  a { color: var(--ink-80); text-underline-offset: 3px; }
+  a:hover { color: var(--ink); }
+  :focus-visible { outline: 2px solid var(--rate); outline-offset: 2px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* ---- nav (shared) ---- */
+  nav.topnav {
+    position: fixed; inset: 0 0 auto 0; z-index: 50; height: 52px;
+    display: flex; align-items: center; gap: 22px; flex-wrap: nowrap;
+    overflow: hidden; padding: 0 28px;
+    background: color-mix(in srgb, var(--bg) 94%, transparent);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--ink-10);
+    color: var(--ink); transition: background 0.25s ease, color 0.25s ease;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  nav.topnav a { position: relative; color: var(--ink); text-decoration: none; opacity: 0.62; transition: opacity 0.2s ease; white-space: nowrap; flex-shrink: 0; }
+  nav.topnav a::after { content: ''; position: absolute; left: 0; bottom: -3px; width: 0; height: 1px; background: var(--ink); transition: width 0.25s ease; }
+  nav.topnav a:hover { opacity: 1; }
+  nav.topnav a:hover::after, nav.topnav a.here::after { width: 100%; }
+  nav.topnav a.here { opacity: 1; }
+  nav.topnav .spacer { flex: 1; }
+  button.theme-toggle {
+    font: inherit; letter-spacing: inherit; text-transform: inherit;
+    background: none; border: 1px solid var(--ink-30); color: var(--ink);
+    padding: 4px 10px; cursor: pointer; border-radius: 999px; transition: background 0.2s ease;
+  }
+  button.theme-toggle:hover { background: var(--ink-06); }
+  nav.topnav { overflow: visible; }
+  nav.topnav details.testing { position: relative; flex-shrink: 0; }
+  nav.topnav details.testing summary { list-style: none; cursor: pointer; color: var(--ink); opacity: 0.62; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; transition: opacity 0.2s ease; }
+  nav.topnav details.testing summary::-webkit-details-marker { display: none; }
+  nav.topnav details.testing summary::after { content: '\25BE'; font-size: 10px; }
+  nav.topnav details.testing summary:hover, nav.topnav details.testing[open] summary, nav.topnav details.testing.here summary { opacity: 1; }
+  nav.topnav details.testing .menu { position: absolute; top: calc(100% + 14px); left: -14px; min-width: 190px; display: flex; flex-direction: column; gap: 12px; padding: 14px 16px; background: var(--bg-raise, var(--bg)); border: 1px solid var(--ink-18); z-index: 60; }
+  @media (max-width: 720px) {
+    nav.topnav { gap: 14px; padding: 12px 16px; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+    nav.topnav::-webkit-scrollbar { display: none; }
+    nav.topnav details.testing[open] { display: inline-flex; align-items: center; gap: 14px; }
+    nav.topnav details.testing .menu { position: static; flex-direction: row; gap: 14px; min-width: 0; padding: 0; border: 0; background: none; }
+  }
+
+  /* ---- hero ---- */
+  .hero { max-width: 760px; margin: 0 auto; text-align: center; padding: 44px 24px 8px; }
+  .hero-kicker { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2em; }
+  h1 { font-size: clamp(2rem, 4.6vw, 3.1rem); font-weight: 500; letter-spacing: -0.015em; line-height: 1.12; margin: 0 0 0.45em; }
+  .subtitle { color: var(--ink-80); font-size: 1.06rem; line-height: 1.7; margin: 0 auto 0.6em; max-width: 36em; }
+  .asof { font-family: var(--mono); font-size: 10.5px; color: var(--ink-45); letter-spacing: 0.04em; line-height: 1.7; }
+  #load-error { display: none; max-width: 760px; margin: 2em auto; font-family: var(--mono); font-size: 12px; line-height: 1.7; padding: 12px 16px; color: var(--danger); border: 1px solid color-mix(in srgb, var(--danger) 40%, transparent); background: color-mix(in srgb, var(--danger) 6%, transparent); }
+
+  /* ---- the scrolly: a sticky stage and a column of steps ---- */
+  .scrolly { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 0 56px; max-width: 1440px; margin: 24px auto 0; padding: 0 32px; }
+  .stage { position: sticky; top: 64px; height: calc(100vh - 80px); height: calc(100svh - 80px); display: flex; flex-direction: column; justify-content: center; min-width: 0; z-index: 4; }
+  .mapbox { position: relative; flex: 0 1 auto; width: 100%; aspect-ratio: 1000 / 640; max-height: calc(100% - 64px); min-height: 0; background: var(--bg-raise); border: 1px solid var(--ink-10); overflow: hidden; }
+  svg#map { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; transition: opacity 0.5s ease; }
+  svg#map.free { cursor: grab; }
+  svg#map.free:active { cursor: grabbing; }
+  svg#map.faded { opacity: 0; }
+  svg text { font-family: var(--mono); }
+  .land { fill: var(--land); stroke: var(--land-line); stroke-width: 0.5; vector-effect: non-scaling-stroke; }
+  .grat { fill: none; stroke: var(--grat); stroke-width: 0.5; vector-effect: non-scaling-stroke; }
+  .outline { fill: none; stroke: var(--ink-18); stroke-width: 0.7; vector-effect: non-scaling-stroke; }
+  .area { fill: var(--danger); fill-opacity: 0.22; stroke: var(--danger); stroke-opacity: 0.55; stroke-width: 0.5; vector-effect: non-scaling-stroke; pointer-events: none; opacity: 0; transition: opacity 0.6s ease; }
+  .area.on { opacity: 1; }
+  .area.faint { opacity: 0.45; }
+
+  .mark { cursor: default; }
+  .mark .hit { fill: transparent; }
+  .mark .glyph { fill: var(--danger); stroke: var(--bg-raise); stroke-width: 1.5; vector-effect: non-scaling-stroke; transition: r 0.7s cubic-bezier(.3,.7,.3,1), opacity 0.3s ease; }
+  .mark.pressure .glyph { fill: var(--bg-raise); stroke: var(--danger); stroke-width: 1.6; }
+  .mark { opacity: 0; transition: opacity 0.45s ease; pointer-events: none; }
+  .mark.shown { opacity: 1; pointer-events: auto; }
+  .mark.dim .glyph { opacity: 0.32; }
+  .mark.on .glyph { stroke: var(--ink); }
+  .free-on .mark, .mark.tap { cursor: pointer; }
+  /* on touch screens a tap goes to the nearest mark (see the map's click handler), not to whichever hit circle is on top */
+  @media (pointer: coarse) { .mark * { pointer-events: none !important; } }
+  .mark:focus { outline: none; }
+  .mark:focus-visible .glyph { stroke: var(--ink); stroke-width: 2.5; }
+  .mark .lbl { font-size: 10.5px; fill: var(--ink-80); pointer-events: none; letter-spacing: 0.02em; paint-order: stroke; stroke: var(--bg-raise); stroke-width: 3px; stroke-linejoin: round; display: none; }
+  .mark.lab .lbl { display: block; }
+  .mark.on .lbl { fill: var(--ink); font-weight: 500; }
+  .mark.pulse .glyph { animation: pulse 1.1s ease 1; }
+  @keyframes pulse { 0% { stroke-width: 1.6; } 40% { stroke-width: 5; stroke: var(--ink); } 100% { stroke-width: 1.6; } }
+
+  /* lines: the tier is in the line itself, the hue is the backer */
+  .arc { fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; pointer-events: none; transition: opacity 0.3s ease; }
+  .arc.tier-shown { opacity: 0.9; } .arc.tier-reported { opacity: 0.75; } .arc.tier-claimed { opacity: 0.65; }
+  .arc.ended { opacity: 0.4; }
+  .arc.faint { opacity: 0.22; stroke-width: 1.1; }
+  .arc.faint.tier-shown, .arc.faint.tier-reported, .arc.faint.tier-claimed { opacity: 0.17; }
+  .arc.faint.ended { opacity: 0.1; }
+  .arc.mid { opacity: 0.6; stroke-width: 1.3; }
+  .arc.mid.tier-shown { opacity: 0.55; } .arc.mid.tier-reported { opacity: 0.48; } .arc.mid.tier-claimed { opacity: 0.45; } .arc.mid.ended { opacity: 0.22; }
+  .arc.lo { opacity: 0.07 !important; stroke-width: 1; }
+  .arc.hi { opacity: 1 !important; stroke-width: 2.4; }
+  .arc-hit { fill: none; stroke: transparent; stroke-width: 10; pointer-events: stroke; vector-effect: non-scaling-stroke; }
+  .hue-0 { stroke: var(--ink-60); } .hue-1 { stroke: var(--b1); } .hue-2 { stroke: var(--b2); } .hue-3 { stroke: var(--b3); } .hue-4 { stroke: var(--b4); } .hue-5 { stroke: var(--b5); }
+  .fhue-0 { fill: var(--ink-60); } .fhue-1 { fill: var(--b1); } .fhue-2 { fill: var(--b2); } .fhue-3 { fill: var(--b3); } .fhue-4 { fill: var(--b4); } .fhue-5 { fill: var(--b5); }
+  .backer-dot { pointer-events: none; transition: opacity 0.3s ease; }
+  .backer-dot circle { stroke: var(--bg-raise); stroke-width: 1.2; vector-effect: non-scaling-stroke; }
+  .backer-dot text { font-size: 9.5px; fill: var(--ink-80); paint-order: stroke; stroke: var(--bg-raise); stroke-width: 3px; stroke-linejoin: round; }
+  .party { pointer-events: none; }
+  .party rect { fill: var(--bg-raise); stroke: var(--ink-45); stroke-width: 0.8; vector-effect: non-scaling-stroke; }
+  .party text { font-size: 9px; fill: var(--ink); text-anchor: middle; dominant-baseline: central; }
+  .party.pop { animation: pop 0.5s ease 1 backwards; }
+  @keyframes pop { from { opacity: 0; } to { opacity: 1; } }
+
+  /* the time chart that takes the stage at "is this normal" */
+  .chart { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+  .chart.on { opacity: 1; pointer-events: auto; }
+  .chart svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
+  .chart text { font-family: var(--mono); font-size: 10.5px; fill: var(--ink-60); }
+  .chart text.h { fill: var(--ink-80); }
+  .chart text.lab { fill: var(--ink); }
+  .chart .axis { stroke: var(--ink-10); stroke-width: 1; }
+  .chart .nline { fill: none; stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
+  .chart .bar { fill: var(--danger); fill-opacity: 0.5; }
+  .chart .bar.prov { fill: url(#hatch); fill-opacity: 1; }
+  .chart .avg { fill: none; stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  .chart .here { stroke: var(--gold); stroke-width: 1; stroke-dasharray: 3 3; }
+  .chart text.herel { fill: var(--gold); }
+  .chart .hover { stroke: var(--ink-45); stroke-width: 1; }
+  .chart .dot { fill: var(--ink); stroke: var(--bg-raise); stroke-width: 2; }
+  .chart-read { position: absolute; right: 12px; top: 8px; font-family: var(--mono); font-size: 10.5px; color: var(--ink-80); background: color-mix(in srgb, var(--bg-raise) 90%, transparent); padding: 2px 6px; pointer-events: none; }
+
+  /* the legend grows one mark at a time */
+  .legend { display: flex; flex-wrap: wrap; gap: 3px 14px; align-items: center; min-height: 30px; padding: 8px 2px 0; font-family: var(--mono); font-size: 10px; line-height: 1.5; color: var(--ink-80); transition: opacity 0.3s ease; }
+  .legend .k { color: var(--ink-45); text-transform: uppercase; letter-spacing: 0.14em; font-size: 9px; }
+  .legend .it svg { width: 22px; }
+  .keybtn { display: none; align-items: center; flex-shrink: 0; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; background: none; border: 1px solid var(--ink-30); color: var(--ink); padding: 4px 12px; cursor: pointer; }
+  .sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 80; max-height: 60vh; overflow-y: auto; background: var(--bg-raise); border-top: 1px solid var(--ink-30); box-shadow: 0 -8px 24px rgba(0,0,0,0.12); padding: 12px 16px 22px; }
+  .sheet[hidden] { display: none; }
+  .sheet-head { display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-60); margin-bottom: 8px; }
+  .sheet-head .btn { min-height: 40px; }
+  .sheet-body { flex-direction: column; align-items: flex-start; gap: 10px; font-size: 11px; }
+  .sheet-body .it { white-space: normal; flex-wrap: wrap; row-gap: 4px; }
+  .legend .it { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; border-radius: 3px; padding: 1px 3px; }
+  .legend .it.new { animation: lnew 1.4s ease 1; }
+  @keyframes lnew { 0% { background: color-mix(in srgb, var(--gold) 0%, transparent); } 25% { background: color-mix(in srgb, var(--gold) 28%, transparent); } 100% { background: color-mix(in srgb, var(--gold) 0%, transparent); } }
+  .legend svg { width: 30px; height: 8px; overflow: visible; }
+  .legend .arc { opacity: 1 !important; }
+  .g { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--danger); flex-shrink: 0; }
+  .g.s1 { width: 8px; height: 8px; } .g.s2 { width: 11px; height: 11px; } .g.s3 { width: 15px; height: 15px; }
+  .g.fill { width: 13px; height: 9px; border-radius: 0; background: color-mix(in srgb, var(--danger) 22%, transparent); border: 1px solid color-mix(in srgb, var(--danger) 55%, transparent); }
+  .g.sq { width: 10px; height: 10px; border-radius: 0; background: none; border: 1.5px solid var(--danger); }
+  .g.side { width: 24px; height: 11px; border-radius: 6px; background: var(--bg-raise); border: 1px solid var(--ink-45); }
+  .g.sw { width: 9px; height: 9px; }
+  .legend.off { opacity: 0; }
+
+  /* the rail: one dot per step */
+  .rail { position: absolute; right: -32px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 9px; }
+  .rail button { position: relative; width: 14px; height: 14px; padding: 0; border: 0; background: none; cursor: pointer; }
+  .rail button::before { content: ''; position: absolute; left: 3px; top: 3px; width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--ink-45); background: var(--bg); transition: background 0.2s ease, border-color 0.2s ease; }
+  .rail button.seen::before { background: var(--ink-30); border-color: var(--ink-30); }
+  .rail button.on::before { background: var(--ink); border-color: var(--ink); }
+  .rail button::after { content: attr(data-name); position: absolute; right: 22px; top: -2px; white-space: nowrap; font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; color: var(--ink); background: var(--bg-raise); border: 1px solid var(--ink-18); padding: 1px 7px; opacity: 0; pointer-events: none; transition: opacity 0.15s ease; }
+  .rail button:hover::after, .rail button:focus-visible::after { opacity: 1; }
+
+  /* the steps */
+  .steps { min-width: 0; padding-bottom: 28vh; }
+  .step { min-height: 92vh; display: flex; align-items: center; padding: 6vh 0; }
+  .step:first-child { min-height: 70vh; padding-top: 0; align-items: flex-start; }
+  .step.last { min-height: 0; }
+  .card { width: 100%; max-width: 31em; background: var(--bg-raise); border: 1px solid var(--ink-10); padding: 22px 24px 18px; transition: border-color 0.3s ease, box-shadow 0.3s ease; }
+  .step.active .card { border-color: var(--ink-30); }
+  .kicker { font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .card h2 { font-size: 1.55rem; font-weight: 500; letter-spacing: -0.005em; line-height: 1.2; margin: 0 0 0.5em; }
+  .card p { font-size: 1.04rem; line-height: 1.7; color: var(--ink-80); margin: 0 0 0.8em; }
+  .card p.q { color: var(--ink); margin-top: 0.4em; }
+  .reveal { margin-top: 6px; }
+  .reveal[hidden] { display: none; }
+  .reveal.in { animation: rin 0.5s ease 1; }
+  @keyframes rin { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  .ix { margin: 6px 0 10px; }
+  button.term { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: help; text-decoration: underline dotted var(--ink-45); text-underline-offset: 4px; text-decoration-thickness: 1px; }
+  button.term:hover { text-decoration-color: var(--ink); }
+
+  /* controls */
+  .btn, .chip { font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; background: none; border: 1px solid var(--ink-30); color: var(--ink); padding: 6px 11px; cursor: pointer; transition: border-color 0.15s ease, background 0.15s ease; }
+  .btn:hover, .chip:hover { border-color: var(--ink); }
+  .btn.go { background: var(--chip-on-bg); color: var(--chip-on-ink); border-color: var(--chip-on-bg); }
+  .btn.quiet { border-color: transparent; color: var(--ink-60); text-decoration: underline; text-underline-offset: 3px; padding-left: 4px; padding-right: 4px; }
+  .chip.on, .seg button[aria-pressed="true"] { background: var(--chip-on-bg); color: var(--chip-on-ink); border-color: var(--chip-on-bg); }
+  .chip .sw, .row-sw { width: 9px; height: 9px; border-radius: 50%; display: inline-block; margin-right: 6px; vertical-align: -1px; }
+  .chip.on .sw { outline: 1px solid var(--chip-on-ink); outline-offset: 1px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 10px; }
+  .chip.tier:not(.on) { opacity: 0.45; text-decoration: line-through; }
+  .chip.tier.on { background: none; color: var(--ink); border-color: var(--ink-45); }
+  .chip.tier svg { width: 24px; height: 8px; overflow: visible; vertical-align: middle; margin-right: 6px; }
+  .chip.tier .arc { opacity: 1 !important; }
+  .seg { display: inline-flex; margin: 2px 0 10px; }
+  .seg button { font-family: var(--mono); font-size: 11px; background: none; border: 1px solid var(--ink-30); color: var(--ink); padding: 6px 12px; cursor: pointer; }
+  .seg button + button { border-left: 0; }
+  .guess { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: 4px 0 6px; font-family: var(--mono); font-size: 11px; color: var(--ink-60); }
+  .guess input[type=range] { flex: 1 1 160px; min-width: 120px; accent-color: var(--danger); }
+  .guess output { font-family: var(--serif); font-size: 1.5rem; color: var(--ink); min-width: 2.2ch; text-align: right; }
+  .opts { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 6px; }
+  .opts .btn { font-size: 12px; padding: 8px 14px; }
+  .opts .btn[aria-pressed="true"] { background: var(--chip-on-bg); color: var(--chip-on-ink); border-color: var(--chip-on-bg); }
+
+  /* number line for a guess and its answer */
+  .nl { position: relative; height: 64px; margin: 12px 4px 10px; }
+  .nl .track { position: absolute; left: 0; right: 0; top: 30px; height: 1px; background: var(--ink-30); }
+  .nl .tick { position: absolute; top: 25px; width: 1px; height: 11px; background: var(--ink-30); }
+  .nl .tl { position: absolute; top: 40px; font-family: var(--mono); font-size: 9.5px; color: var(--ink-45); transform: translateX(-50%); }
+  .nl .m { position: absolute; top: 24px; transform: translateX(-50%); }
+  .nl .m i { display: block; width: 12px; height: 12px; border-radius: 50%; background: var(--danger); border: 2px solid var(--bg-raise); margin: 0 auto; }
+  .nl .m.you i { background: var(--bg-raise); border: 2px solid var(--ink); }
+  .nl .m.alt i { background: var(--ink-60); }
+  .nl .m span { position: absolute; left: 50%; transform: translateX(-50%); white-space: nowrap; font-family: var(--mono); font-size: 10px; color: var(--ink); }
+  .nl .m.up span { bottom: 16px; } .nl .m.dn span { top: 18px; } .nl .m.dn2 span { top: 32px; }
+  .nl { height: 78px; }
+  .nl .m span b { font-weight: 500; }
+
+  /* ranked bars */
+  .bars { margin: 10px 0 6px; font-family: var(--mono); font-size: 10.5px; color: var(--ink-80); }
+  .bars .cap { color: var(--ink-60); margin-bottom: 8px; line-height: 1.6; }
+  .bars .r { display: grid; grid-template-columns: 9.6em minmax(0, 1fr); align-items: center; gap: 8px; height: 19px; }
+  .bars .r .n { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bars .r.pick .n, .bars .r.top .n { color: var(--ink); font-weight: 500; }
+  .bars .tr { position: relative; height: 100%; }
+  .bars .b { position: absolute; left: 0; top: 5px; height: 9px; background: color-mix(in srgb, var(--danger) 55%, var(--bg-raise)); border-radius: 0 3px 3px 0; min-width: 2px; }
+  .bars .r.opt .b { background: var(--danger); }
+  .bars .w { position: absolute; top: 9px; height: 1px; background: var(--ink-60); }
+  .bars .w::before, .bars .w::after { content: ''; position: absolute; top: -3px; width: 1px; height: 7px; background: var(--ink-60); }
+  .bars .w::before { left: 0; } .bars .w::after { right: 0; }
+  .bars .v { position: absolute; top: 2px; white-space: nowrap; color: var(--ink-60); font-size: 10px; }
+  .bars .v em { font-style: normal; color: var(--ink); margin-left: 6px; }
+
+  /* lists in cards */
+  ul.rows { list-style: none; padding: 0; margin: 8px 0 10px; font-family: var(--mono); font-size: 11px; line-height: 1.55; color: var(--ink-80); }
+  ul.rows li { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 10px; padding: 6px 0; border-top: 1px solid var(--ink-10); }
+  ul.rows li:first-child { border-top: 0; }
+  ul.rows li svg { width: 30px; height: 8px; overflow: visible; margin-top: 5px; }
+  ul.rows li .arc { opacity: 1 !important; }
+  ul.rows li b { color: var(--ink); font-weight: 500; }
+  ul.rows li .s { color: var(--ink-60); }
+  ul.rows li a { color: var(--rate); }
+  ul.rows.arrive li { opacity: 0; transition: opacity 0.35s ease; }
+  ul.rows.arrive li.in { opacity: 1; }
+  ul.rows li.hover, ul.rows li:hover { background: var(--ink-06); }
+  ul.rows.ex li { cursor: pointer; }
+  ul.rows.ex li.on { background: var(--ink-06); box-shadow: inset 2px 0 0 var(--ink); }
+  .sub { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-45); margin: 14px 0 4px; }
+  .card p.line, p.line { font-family: var(--mono); font-size: 12px; line-height: 1.65; color: var(--ink); margin: 6px 0; }
+  p.vetted { border-left: 2px solid var(--ink-18); padding-left: 12px; }
+
+  /* shape cards */
+  .shapes { display: grid; grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); gap: 6px; margin: 10px 0 8px; }
+  .shape { text-align: left; font: inherit; background: var(--bg); border: 1px solid var(--ink-10); padding: 8px 9px 9px; cursor: pointer; color: var(--ink); display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 2px 8px; align-items: center; }
+  .shape:hover { border-color: var(--ink-45); }
+  .shape.on { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+  .shape svg { width: 22px; height: 22px; grid-row: span 2; }
+  .shape svg circle { fill: var(--danger); }
+  .shape .nm { font-family: var(--mono); font-size: 11px; line-height: 1.3; }
+  .shape .ln { font-family: var(--mono); font-size: 9.5px; color: var(--ink-60); }
+  .shape .strip { grid-column: 1 / -1; display: flex; gap: 2px; height: 6px; margin-top: 5px; }
+  .shape .strip i { display: block; height: 100%; min-width: 0; }
+  .s-open { background: color-mix(in srgb, var(--ink) 70%, var(--bg)); }
+  .s-shown { background: color-mix(in srgb, var(--ink) 45%, var(--bg)); }
+  .s-reported { background: color-mix(in srgb, var(--ink) 25%, var(--bg)); }
+  .s-claimed { background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--ink) 40%, var(--bg)) 0 1.5px, transparent 1.5px 4px); }
+  .stripkey { display: flex; flex-wrap: wrap; gap: 4px 12px; font-family: var(--mono); font-size: 10px; color: var(--ink-60); margin: 4px 0 8px; }
+  .stripkey i { display: inline-block; width: 14px; height: 6px; margin-right: 5px; vertical-align: 1px; }
+
+  /* free map */
+  .info { border-top: 1px solid var(--ink-18); margin-top: 12px; padding-top: 12px; }
+  .info h3 { font-size: 1.2rem; font-weight: 500; margin: 0 0 4px; }
+  .info .s { font-family: var(--mono); font-size: 10.5px; color: var(--ink-60); line-height: 1.6; margin-bottom: 8px; }
+  .info p { font-size: 0.98rem; }
+  .info p.line { font-size: 12px; }
+  .hint { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-45); margin: 2px 0 10px; }
+  .hint .ph { display: none; }
+  ul.links { list-style: none; padding: 0; margin: 10px 0; font-size: 0.98rem; line-height: 1.6; }
+  ul.links li { padding: 5px 0; border-top: 1px solid var(--ink-10); }
+  ul.links li a { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.04em; color: var(--ink); }
+  ul.links li span { color: var(--ink-60); }
+  ul.plain { list-style: none; padding: 0; margin: 6px 0 0; font-size: 0.96rem; line-height: 1.6; color: var(--ink-80); }
+  ul.plain li { padding: 6px 0; border-top: 1px solid var(--ink-10); }
+  h3.cs { font-family: var(--mono); font-weight: 500; font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-60); margin: 18px 0 4px; }
+
+  /* where this comes from */
+  details.where { margin-top: 10px; border-top: 1px solid var(--ink-10); padding-top: 8px; }
+  details.where summary { cursor: pointer; font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-45); list-style: none; }
+  details.where summary::-webkit-details-marker { display: none; }
+  details.where summary::after { content: ' \25BE'; }
+  details.where[open] summary::after { content: ' \25B4'; }
+  details.where summary:hover { color: var(--ink); }
+  details.where ul { list-style: none; padding: 0; margin: 8px 0 0; font-family: var(--mono); font-size: 10.5px; line-height: 1.65; color: var(--ink-60); }
+  details.where li { padding: 4px 0; }
+  details.where a { color: var(--rate); overflow-wrap: anywhere; }
+  details.where li b { color: var(--ink-80); font-weight: 500; }
+  .stepnav { display: flex; justify-content: space-between; margin-top: 14px; }
+  .stepnav button { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; background: none; border: 1px solid var(--ink-18); color: var(--ink-60); padding: 5px 10px; cursor: pointer; }
+  .stepnav button:hover { color: var(--ink); border-color: var(--ink-45); }
+  .stepnav button.next { color: var(--ink); border-color: var(--ink-45); }
+  .stepnav button[disabled] { visibility: hidden; }
+
+  .skip { position: absolute; left: 12px; top: -60px; z-index: 100; background: var(--chip-on-bg); color: var(--chip-on-ink); font-family: var(--mono); font-size: 12px; padding: 10px 14px; text-decoration: none; }
+  .skip:focus { top: 8px; }
+  .card h2:focus { outline: none; }
+  .units { margin: 6px 0 10px; }
+  .units .grid { display: grid; grid-template-columns: repeat(13, 12px); gap: 3px; }
+  .units .grid i, .units figcaption i { display: block; width: 12px; height: 12px; border: 1px solid var(--ink-45); background: none; }
+  .units .grid i.f, .units figcaption i.f { background: var(--danger); border-color: var(--danger); }
+  .units figcaption { display: flex; flex-direction: column; gap: 4px; margin-top: 8px; font-family: var(--mono); font-size: 11px; color: var(--ink-80); }
+  .units figcaption span { display: inline-flex; align-items: center; gap: 8px; }
+  .units figcaption .cap { color: var(--ink-45); font-size: 10px; }
+  .card p.cue { font-family: var(--mono); font-size: 11px; color: var(--ink-60); margin: 10px 0 6px; }
+  ul.grades { list-style: none; padding: 0; margin: 6px 0 10px; }
+  ul.grades li { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: 4px 12px; padding: 8px 0; border-top: 1px solid var(--ink-10); align-items: start; }
+  ul.grades .chip { justify-self: start; text-align: left; }
+  ul.grades .def { font-size: 0.95rem; line-height: 1.5; color: var(--ink-80); }
+  ul.grades .ex { margin-top: 6px; font-family: var(--mono); font-size: 10.5px; line-height: 1.55; color: var(--ink-60); cursor: pointer; padding: 4px 6px; margin-left: -6px; }
+  ul.grades .ex:hover, ul.grades .ex.on { background: var(--ink-06); }
+  ul.grades .ex.on { box-shadow: inset 2px 0 0 var(--ink); color: var(--ink-80); }
+  ul.grades .ex a { color: var(--rate); }
+  @media (max-width: 520px) { ul.grades li { grid-template-columns: minmax(0, 1fr); } }
+  .pair { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--ink-18); }
+  .card .pair p.lead { font-size: 1.12rem; color: var(--ink); margin-bottom: 0.6em; }
+  ul.pairrows li { grid-template-columns: 62px minmax(0, 1fr); }
+  ul.pairrows li .pairsw { display: flex; gap: 4px; }
+  ul.pairrows li svg { width: 28px; }
+  details.morectl { margin: 4px 0 8px; }
+  details.morectl summary { cursor: pointer; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; color: var(--ink-60); padding: 8px 0; }
+  details.morectl summary:hover { color: var(--ink); }
+  #cannot li.more { border-top: 1px solid var(--ink-10); }
+  #cannot li.more summary { cursor: pointer; font-family: var(--mono); font-size: 10.5px; color: var(--ink-60); }
+  .tooltip { position: fixed; pointer-events: none; background: var(--bg-sink); border: 1px solid var(--ink-18); font-family: var(--mono); font-size: 11px; line-height: 1.6; color: var(--ink-80); padding: 7px 10px; max-width: min(300px, calc(100vw - 24px)); display: none; z-index: 70; }
+  .tooltip b { color: var(--ink); font-weight: 500; }
+
+  /* after the guide */
+  .after { max-width: 980px; margin: 40px auto 0; padding: 40px 32px 100px; border-top: 1px solid var(--ink-18); }
+  .after h2 { font-size: 1.3rem; font-weight: 500; margin: 0 0 0.5em; }
+  .after .prose { font-size: 0.98rem; line-height: 1.8; color: var(--ink-80); max-width: 48em; }
+  .after .prose a { color: var(--rate); }
+  .stamp { font-family: var(--mono); font-size: 10.5px; color: var(--ink-45); margin-top: 2.5em; line-height: 1.8; }
+  a.back { display: inline-block; margin-top: 3em; color: var(--ink-60); font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; }
+
+  /* ---- phones and narrow windows: the map sits at the top, the cards scroll beneath it ---- */
+  @media (max-width: 900px) {
+    .hero { padding: 30px 16px 4px; }
+    .scrolly { grid-template-columns: minmax(0, 1fr); padding: 0; margin-top: 14px; }
+    .mapbox { flex: 1; aspect-ratio: auto; max-height: none; border-left: 0; border-right: 0; }
+    .stage { top: 52px; height: 46vh; height: 46svh; background: var(--bg); padding: 0 0 2px; border-bottom: 1px solid var(--ink-10); justify-content: flex-start; }
+    #legend { flex-wrap: nowrap; padding: 5px 12px 2px 16px; min-height: 48px; gap: 10px; justify-content: space-between; }
+    #legend .it { min-width: 0; white-space: normal; flex-wrap: wrap; row-gap: 2px; }
+    .keybtn { display: inline-flex; }
+    /* the rail is a progress bar here; the back and next buttons move between steps */
+    .rail { left: 0; right: 0; top: 0; transform: none; flex-direction: row; gap: 2px; padding: 0; pointer-events: none; }
+    .rail button { flex: 1; width: auto; height: 4px; }
+    .rail button::before { left: 0; top: 0; width: 100%; height: 4px; border-radius: 0; border: 0; background: var(--ink-10); }
+    .rail button.seen::before { background: var(--ink-30); }
+    .rail button.on::before { background: var(--ink); }
+    .rail button::after { display: none; }
+    .steps { padding: 0 16px 30vh; }
+    .step { min-height: 64vh; padding: 4vh 0; }
+    .step:first-child { min-height: 50vh; padding-top: 18px; }
+    .card { padding: 18px 16px 14px; max-width: 40em; margin: 0 auto; }
+    .card h2 { font-size: 1.35rem; }
+    .card p { font-size: 1rem; }
+    .hint .dk { display: none; } .hint .ph { display: inline; }
+    .after { padding: 32px 16px 80px; }
+    .shapes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    /* tap targets */
+    .stepnav button, .chip, .seg button, .btn, .opts .btn, .keybtn { min-height: 40px; }
+    .stepnav button { min-width: 88px; }
+    .chart text { font-size: 9.5px; }
+  }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+
+<a class="skip" id="skip" href="#steps">Skip to the lesson</a>
+<nav class="topnav">
+  <a href="/">warnotwar</a>
+  <a href="/heuristic.html">the heuristic</a>
+  <a href="/quadrant.html">the quadrant</a>
+  <details class="testing here">
+    <summary>testing</summary>
+    <div class="menu">
+      <a href="/sweetspot.html">the sweet spot</a>
+      <a href="/market.html">the market</a>
+      <a href="/moment.html">the moment</a>
+      <a href="/conflicts.html">the map</a>
+      <a href="/record.html">the word</a>
+      <a href="/qa.html">q and a</a>
+      <a href="/readings.html">readings</a>
+      <a href="/oilflows.html">oilflows</a>
+      <a href="/lab.html">the lab</a>
+      <a href="/teaching-module/index.html">hormuz lab (sim)</a>
+      <a href="/spr/">the reserve</a>
+      <a href="/methodology.html">methodology</a>
+      <a href="/level.html">the level</a>
+      <a href="/barrel.html">the barrel</a>
+      <a href="/wars.html" class="here">today's wars</a>
+    </div>
+  </details>
+  <span class="spacer"></span>
+  <button class="theme-toggle" id="theme-toggle" title="switch paper / ink">&#9705; ink</button>
+</nav>
+<script>document.addEventListener('click', e => { for (const d of document.querySelectorAll('details.testing[open]')) if (!d.contains(e.target)) d.removeAttribute('open'); });</script>
+
+<header class="hero">
+  <div class="hero-kicker" id="kicker">warnotwar &middot; an introduction</div>
+  <h1 id="title">Today's wars</h1>
+  <p class="subtitle" id="intro"></p>
+  <div class="asof" id="asof"></div>
+</header>
+<div id="load-error" role="alert"></div>
+
+<main class="scrolly" id="scrolly">
+  <div class="stage" id="stage">
+    <div class="mapbox" id="mapbox">
+      <svg id="map" role="img" aria-label="A world map, built up one layer at a time"></svg>
+      <div class="chart" id="chart" aria-hidden="true"></div>
+      <nav class="rail" id="rail" aria-label="steps"></nav>
+    </div>
+    <div class="legend" id="legend" aria-label="what the map shows so far"></div>
+  </div>
+  <div class="steps" id="steps"></div>
+</main>
+
+<section class="after" id="after" hidden>
+  <h2 id="credit-title">Counts and credit</h2>
+  <p class="prose" id="attribution"></p>
+  <h2 id="report-title" style="margin-top:1.6em">Reporting an error</h2>
+  <p class="prose" id="report-error"></p>
+  <div class="stamp" id="stamp"></div>
+  <a class="back" href="/">&larr; warnotwar</a>
+</section>
+
+<div class="sheet" id="sheet" role="dialog" aria-labelledby="sheet-title" hidden><div class="sheet-head"><span id="sheet-title"></span><button type="button" class="btn" id="sheet-close">close</button></div><div class="sheet-body legend" id="sheet-body"></div></div>
+<div class="tooltip" id="tip" role="tooltip"></div>
+<div class="sr-only" id="live" aria-live="polite"></div>
+<div class="sr-only" id="defs"></div>
+
+<script>
+const rootEl = document.documentElement, themeBtn = document.getElementById('theme-toggle');
+function applyTheme(t) { rootEl.dataset.theme = t; themeBtn.textContent = t === 'paper' ? '◑ ink' : '◐ paper'; }
+applyTheme((() => { const q = new URLSearchParams(location.search).get('theme'); if (q === 'ink' || q === 'paper') return q; try { const s = localStorage.getItem('ww-theme'); if (s) return s; } catch (e) {} return matchMedia('(prefers-color-scheme: dark)').matches ? 'ink' : 'paper'; })());
+themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 'paper'; applyTheme(t); try { localStorage.setItem('ww-theme', t); } catch (e) {} };
+</script>
+
+<script src="/vendor/d3.v7.min.js"></script>
+<script src="/vendor/topojson-client.v3.min.js"></script>
+<script>
+(async function () {
+  const $ = (s, root = document) => root.querySelector(s);
+  const $$ = (s, root = document) => [...root.querySelectorAll(s)];
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (tag, attrs = {}, parent) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (parent) parent.appendChild(n); return n; };
+  const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const safeUrl = u => (typeof u === 'string' && (/^https?:\/\//i.test(u) || /^\/[^/]/.test(u))) ? u : null;
+  const errBox = $('#load-error');
+  const fail = msg => { errBox.style.display = 'block'; errBox.textContent = msg; };
+
+  /* ---- data: every number on the page comes from these files; if one fails, nothing is drawn ---- */
+  const get = u => fetch(u).then(r => { if (!r.ok) throw new Error(u + ' answered ' + r.status); return r.json(); });
+  let world, D, AR, U, L, Y, C;
+  try {
+    [world, D, AR, U, L, Y, C] = await Promise.all(['/data/world_110m.json', '/data/conflicts.json', '/data/war_areas.json', '/data/ucdp.json', '/data/level.json', '/data/ucdp_years.json', '/data/wars.json'].map(get));
+  } catch (e) { fail('The page could not load its data, so nothing is shown. ' + e.message + '.'); $('#scrolly').style.display = 'none'; return; }
+  try { main(); } catch (e) { console.error(e); fail('The page could not be drawn from its data. ' + e.message); }
+
+  function main() {
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const fmtN = v => Number(v).toLocaleString('en-US');
+  const fmtMonth = m => { if (!m) return ''; const [y, mo] = String(m).split('-'); return mo ? MONTHS[+mo - 1] + ' ' + y : y; };
+  const fmtDate = d => { const [y, m, dd] = String(d).split('-'); return dd ? (+dd) + ' ' + MONTHS[+m - 1] + ' ' + y : fmtMonth(d); };
+  const listNames = a => a.length <= 1 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
+  const WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty'];
+  const word = n => WORDS[n] || String(n);
+  const BREAK = 900;   /* below this the map sits on top and the cards scroll beneath it */
+  const phone = () => innerWidth <= BREAK;
+
+  /* ---- the data, read once ---- */
+  const backers = Object.fromEntries(D.backers.map(b => [b.id, b]));
+  const byId = Object.fromEntries(D.conflicts.map(c => [c.id, c]));
+  const wars = D.conflicts.filter(c => c.kind !== 'pressure');
+  const squares = D.conflicts.filter(c => c.kind === 'pressure');
+  const hueOf = b => (backers[b] && backers[b].hue) || 0;
+  const tierIds = Object.keys(D.tiers);
+  const liveWarTies = wars.flatMap(c => c.ties.filter(t => !t.ended).map(t => ({ c, t })));
+  const endedWarTies = wars.flatMap(c => c.ties.filter(t => t.ended).map(t => ({ c, t })));
+  const winFrom = (D.window && D.window.from) || U.window.from;
+  const isOld = t => !!t.evidence_to && (t.evidence_to.length > 4 ? t.evidence_to < winFrom : t.evidence_to < winFrom.slice(0, 4));
+  const party = (c, id) => c.parties.find(p => p.id === id);
+  /* "the army", "the RSF", "the government", but "Eritrea", "Ukraine": a side that is a state goes by its name */
+  const partyRef = p => p ? (p.state && /^[A-Z]/.test(p.short) ? p.short : 'the ' + p.short) : '';
+  const sidesOf = c => new Set(c.parties.map(p => p.side)).size;   /* sides, not parties: allies on one side count once */
+  const kindsText = t => t.kinds.map(k => D.kinds[k] || k).join(', ');
+  const years = L.years, lastY = years[years.length - 1];
+  const Yy = Y.years, lastD = Yy[Yy.length - 1];
+  /* UCDP revises its latest two years; neither data file carries that as a field, so the constant matches level.html */
+  const PROV = 2;
+
+  /* a sentence of a data field, quoted as it stands */
+  const sentences = s => String(s || '').split(/(?<=[.?!])\s+(?=[A-Z0-9“"'‘\[{])/);
+  const pick = (text, needle) => needle ? (sentences(text).find(x => x.includes(needle)) || null) : (text || null);
+  function fieldOf(path) {
+    const [file, ...rest] = path.split('.');
+    if (file === 'entry') { const c = byId[rest[0]]; return c ? c[rest[1]] : null; }
+    if (file === 'conflicts' && rest[0] === 'reading') { const s = (D.reading.steps || []).find(x => x.id === rest[1]); return s ? s.text : null; }
+    let v = { conflicts: D, level: L, years: Y, ucdp: U, areas: AR }[file];
+    for (const k of rest) v = v == null ? null : v[k];
+    return v;
+  }
+  const quote = ref => {
+    let s = pick(fieldOf(ref.from), ref.pick);
+    if (s && ref.cut && s.includes(ref.cut)) s = s.slice(0, s.indexOf(ref.cut)).trim() + '.';
+    if (!s) console.warn('wars: nothing found for', ref);
+    return s;
+  };
+
+  /* ---- tokens: every number in the copy is one of these ---- */
+  const sudan = byId.sudan;
+  const T = {};
+  for (const [k, ref] of Object.entries(C.quotes || {})) T[k] = quote(ref);
+  T.as_of = fmtDate(D.as_of);
+  T.ucdp_reach = fmtMonth(U.reach);
+  T.wars = wars.length; T.wars_word = word(wars.length); T.squares = squares.length; T.entries = D.conflicts.length;
+  T.rule = D.rule;
+  T.ucdp_n = lastY.n; T.ucdp_year = lastY.year; T.ucdp_wars = lastY.wars;
+  const bar = (re) => { const m = String(L.rule || '').match(re); return m ? m[1] : null; };
+  T.acd_bar = bar(/with ([\d,]+) or more deaths/);
+  T.war_bar = bar(/war level means ([\d,]+) or more deaths/i);
+  T.acd_version = (L.versions && L.versions.conflicts) || null;
+  const REGION_NAME = { africa: 'Africa', 'middle east': 'the Middle East', europe: 'Europe', asia: 'Asia', americas: 'the Americas' };
+  const regionOrder = [...new Set(wars.map(c => c.region))].sort((a, b) => wars.filter(c => c.region === b).length - wars.filter(c => c.region === a).length || a.localeCompare(b));
+  T.region_counts = listNames(regionOrder.map(r => wars.filter(c => c.region === r).length + ' in ' + (REGION_NAME[r] || r)));
+  T.sudan_start = fmtMonth(sudan.start);
+  T.sudan_prov = sudan.areas.length;
+  T.areas_total = wars.reduce((n, c) => n + (c.areas || []).length, 0);
+  T.areas_wars = wars.filter(c => (c.areas || []).length).length;
+  T.sudan_areas_source = sudan.areas_source || null;
+  T.areas_shapes = AR.source || null;
+  const bandKeys = Object.keys(D.bands).sort();
+  T.win_from = fmtMonth(U.window.from); T.win_to = fmtMonth(U.window.to);
+  const uw = id => U.entries[id] && U.entries[id].window;
+  T.wide_n = wars.filter(c => { const w = uw(c.id); return w && Math.max(w.low, w.high) > 2 * Math.min(w.low, w.high); }).length;
+  T.ucdp_versions = U.versions; T.ucdp_pulled = fmtDate(U.pulled);
+  const [sA, sB] = sudan.parties;
+  T.sudan_a = sA.name; T.sudan_b = sB.name;
+  T.interstate = lastY.interstate; T.intra = lastY.n - lastY.interstate;
+  const sudanLive = sudan.ties.filter(t => !t.ended);
+  T.sudan_backers = new Set(sudanLive.map(t => t.backer)).size;
+  T.lines_n = liveWarTies.length;
+  T.backers_n = new Set(liveWarTies.map(r => r.t.backer)).size;
+  T.tier_words = listNames(tierIds.map(k => D.tiers[k].word));
+  const tierCount = k => liveWarTies.filter(r => r.t.tier === k).length;
+  T.open_n = tierCount('open'); T.shown_n = tierCount('shown'); T.reported_n = tierCount('reported'); T.claimed_n = tierCount('claimed');
+  T.open_tenths = Math.round(T.open_n / T.lines_n * 10);
+  T.ended_n = endedWarTies.length;
+  const hued = D.backers.filter(b => b.hue).sort((a, b) => a.hue - b.hue);
+  T.hued_n = hued.length;
+  const fightsIn = b => wars.filter(c => c.parties.some(p => p.state === b));
+  const backsIn = b => wars.filter(c => c.ties.some(t => t.backer === b && !t.ended));
+  const inWars = b => wars.filter(c => c.parties.some(p => p.state === b) || c.ties.some(t => t.backer === b && !t.ended));
+  T.sq_us = squares.filter(c => c.parties.some(p => p.state === 'usa')).length;
+  T.us_name = backers.usa.name;
+  T.n_first = years[0].year;
+  const prevMax = Math.max(...years.slice(0, -1).map(r => r.n));
+  T.n_above = years.filter(r => r.n > lastY.n).length;
+  T.d_first = Yy[0].year; T.d_last = lastD.year;
+  const avgs = Yy.map((r, i) => i < 4 ? null : { year: r.year, v: Yy.slice(i - 4, i + 1).reduce((a, q) => a + q.best, 0) / 5 }).filter(Boolean);
+  const avgLast = avgs[avgs.length - 1];
+  const avgSorted = avgs.slice().sort((a, b) => b.v - a.v);
+  const avgRank = avgSorted.indexOf(avgLast);
+  T.avg_latest = fmtN(Math.round(avgLast.v)); T.avg_last_year = avgLast.year;
+  if (avgRank <= 1) { const o = avgSorted[avgRank === 0 ? 1 : 0]; T.avg_other_year = o.year; T.avg_other = fmtN(Math.round(o.v)); }
+  T.avg_max_year = avgSorted[0].year; T.avg_max = fmtN(Math.round(avgSorted[0].v));
+  T.prov_word = word(PROV);
+  T.prewindow_n = liveWarTies.filter(r => isOld(r.t)).length;
+  T.flag_pct = Math.round(U.flagged_share * 100) + '%'; T.reach_year = String(U.reach).slice(0, 4);
+  const stepCfg = id => C.steps.find(s => s.id === id) || {};
+  const plainFill = (s, extra = {}) => dropMissing(String(s), extra).replace(/\{(\w+)\}/g, (m, k) => k in extra ? extra[k] : T[k]);
+  const ph = stepCfg('normal').phrases || {};
+  /* the peak year's heaviest country, from the same country-year file (level.json); named only if it holds over half that year's deaths */
+  const peakY = Yy.reduce((a, r) => r.best > a.best ? r : a, Yy[0]);
+  const peakRows = (L.deaths && L.deaths[String(peakY.year)]) || {};
+  const peakTop = Object.entries(peakRows).sort((a, b) => b[1][0] - a[1][0])[0];
+  T.peak_year = peakY.year; T.peak_total = fmtN(peakY.best);
+  if (peakTop && peakTop[1][0] * 2 > peakY.best && L.names && L.names[peakTop[0]]) { T.peak_top_n = fmtN(peakTop[1][0]); T.peak_top_name = L.names[peakTop[0]]; }
+  else { T.peak_top_n = null; T.peak_top_name = null; }
+  T.n_phrase = plainFill(lastY.n > prevMax ? ph.n_max : lastY.n === prevMax ? ph.n_tie : ph.n_else);
+  T.avg_two = plainFill(avgRank <= 1 ? ph.avg_two : ph.avg_else);
+  T.most_open = T.open_n * 2 > T.lines_n ? stepCfg('know').most_open : '';
+
+  /* a sentence whose token has no value is left out, never printed with a hole in it */
+  function dropMissing(s, extra = {}) {
+    const has = k => (k in extra && extra[k] != null) || (k in T && T[k] != null);
+    if (!/\{(\w+)\}/.test(s)) return s;
+    return sentences(s).filter(x => { const ks = [...x.matchAll(/\{(\w+)\}/g)].map(m => m[1]); const ok = ks.every(has); if (!ok) console.warn('wars: sentence left out, no value for', ks.filter(k => !has(k)).join(', ')); return ok; }).join(' ');
+  }
+
+  /* ---- copy: tokens, then glossary words ---- */
+  const GL = {};
+  for (const [k, v] of Object.entries(C.glossary || {})) GL[k] = typeof v === 'string' ? plainFill(v) : quote(v);
+  const defsEl = $('#defs'); let defN = 0; const defIds = {};
+  const termHTML = (k, shown) => {
+    if (!GL[k]) { console.warn('wars: no glossary entry', k); return esc(shown); }
+    if (!defIds[k]) { defIds[k] = 'def-' + (++defN); const s = document.createElement('span'); s.id = defIds[k]; s.textContent = GL[k]; defsEl.appendChild(s); }
+    return `<button type="button" class="term" data-term="${esc(k)}" aria-describedby="${defIds[k]}">${esc(shown)}</button>`;
+  };
+  function fill(s, extra = {}) {
+    let h = esc(dropMissing(String(s), extra));
+    h = h.replace(/\{(\w+)\}/g, (m, k) => esc(k in extra ? extra[k] : T[k])).replace(/\s{2,}/g, ' ').trim();
+    return h.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (m, k, shown) => termHTML(k, shown || k));
+  }
+  const plain = html => { const d = document.createElement('div'); d.innerHTML = html; return d.textContent; };
+
+  /* ---- "where this comes from": quoted fields, token lines, links ---- */
+  const linkTo = (u, inner) => `<a href="${esc(u)}"${u.startsWith('http') ? ' target="_blank" rel="noopener"' : ''}>${inner}</a>`;
+  function sourceItems(list) {
+    const out = [];
+    for (const it of (list || [])) {
+      if (it.from) { const s = quote(it); if (s) out.push(esc(s)); }
+      else if (it.text) { const t = fill(it.text); if (!t) continue; const u = safeUrl(it.url === 'sudan_areas_url' ? sudan.areas_url : it.url); out.push(u ? linkTo(u, t) : t); }
+      else if (it.link) { const u = safeUrl(it.link); if (u) out.push(linkTo(u, esc(it.label || u))); }
+      else if (it.actors) for (const c of squares) if (c.actor_statement) out.push(`<b>${esc(c.name)}.</b> ${esc(c.actor_statement)}`);
+      else if (it.excluded) { const x = (D.excluded || []).find(e => e.name === it.excluded); if (x) out.push(`<b>Left off: ${esc(x.name)}.</b> ${esc(x.why)}`); }
+    }
+    return out.map(x => `<li>${x}</li>`).join('');
+  }
+
+  /* ---- header ---- */
+  $('#kicker').textContent = C.kicker; $('#title').textContent = C.title; document.title = C.title;
+  $('#intro').textContent = C.intro; $('#asof').textContent = plainFill(C.asof);
+  $('#skip').textContent = C.skip || '';
+
+  /* ================= the map ================= */
+  const MAPC = world.map, W = MAPC.viewBox[2], H = MAPC.viewBox[3];
+  const projection = d3.geoEqualEarth().scale(MAPC.k).translate([MAPC.cx, MAPC.cy]).precision(0.3);
+  const geoPath = d3.geoPath(projection);
+  const project = (lon, lat) => projection([lon, lat]);
+  function arcPath(a, b, bow = 0, n = 48) {
+    const dist = d3.geoDistance(a, b); if (dist < 1e-6) return '';
+    const interp = d3.geoInterpolate(a, b);
+    const toV = ([lon, lat]) => { const l = lon * Math.PI / 180, p = lat * Math.PI / 180; return [Math.cos(p) * Math.cos(l), Math.cos(p) * Math.sin(l), Math.sin(p)]; };
+    const va = toV(a), vb = toV(b);
+    let nrm = [va[1] * vb[2] - va[2] * vb[1], va[2] * vb[0] - va[0] * vb[2], va[0] * vb[1] - va[1] * vb[0]];
+    const nl = Math.hypot(...nrm) || 1; nrm = nrm.map(v => v / nl);
+    const bowRad = Math.sign(bow) * Math.min(Math.abs(bow) / MAPC.k, dist / 3);
+    const coords = [];
+    for (let i = 0; i <= n; i++) {
+      const t = i / n, [lon, lat] = interp(t);
+      if (!bowRad) { coords.push([lon, lat]); continue; }
+      const f = Math.sin(Math.PI * t) * bowRad, pv = toV([lon, lat]);
+      const q = [pv[0] * Math.cos(f) + nrm[0] * Math.sin(f), pv[1] * Math.cos(f) + nrm[1] * Math.sin(f), pv[2] * Math.cos(f) + nrm[2] * Math.sin(f)];
+      coords.push([Math.atan2(q[1], q[0]) * 180 / Math.PI, Math.asin(Math.max(-1, Math.min(1, q[2]))) * 180 / Math.PI]);
+    }
+    return geoPath({ type: 'LineString', coordinates: coords }) || '';
+  }
+
+  const svg = $('#map');
+  svg.setAttribute('viewBox', MAPC.viewBox.join(' '));
+  svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+  const gRoot = el('g', { id: 'root' }, svg);
+  el('path', { class: 'outline', d: geoPath({ type: 'Sphere' }) }, gRoot);
+  el('path', { class: 'grat', d: geoPath(d3.geoGraticule().step([30, 30]).extentMajor([[-180, -60], [180, 90]]).extentMinor([[-180, -60], [180, 90]])()) }, gRoot);
+  const gLand = el('g', {}, gRoot);
+  const landByIso = {};
+  function drawLand(topo) { gLand.innerHTML = ''; for (const f of topojson.feature(topo, topo.objects.countries).features) landByIso[f.id] = el('path', { class: 'land', d: geoPath(f) }, gLand); }
+  drawLand(world);
+  /* Sudan's frame is measured once on the base map, so it does not shift when the finer map loads */
+  const sudanLandBox = (() => { const n = landByIso.SDN; if (!n) return []; const f = topojson.feature(world, world.objects.countries).features.find(x => x.id === 'SDN'); const b = geoPath.bounds(f); return [b[0], b[1]]; })();
+  const gAreas = el('g', {}, gRoot), gArcs = el('g', {}, gRoot), gParties = el('g', {}, gRoot), gBackers = el('g', {}, gRoot), gMarks = el('g', {}, gRoot);
+
+  /* screen-sized marks: every mark sits in a group scaled by map units per screen pixel */
+  let U_ = 1, zoomK = 1;
+  const vis = () => { const cw = svg.clientWidth || 1, ch = svg.clientHeight || 1; const s = Math.max(cw / W, ch / H); return { w: cw / s, h: ch / s, s }; };
+  const upp = k => 1 / (vis().s * k);
+  const dashStyle = document.createElement('style'); document.head.appendChild(dashStyle);
+  function setDashes() {
+    const u = upp(zoomK); U_ = u;
+    dashStyle.textContent = `#map .arc.tier-shown{stroke-dasharray:${(7 * u).toFixed(2)} ${(4 * u).toFixed(2)}} #map .arc.tier-reported{stroke-dasharray:${(3 * u).toFixed(2)} ${(4 * u).toFixed(2)}} #map .arc.tier-claimed{stroke-dasharray:${(0.5 * u).toFixed(2)} ${(5 * u).toFixed(2)}} #map .arc.ended{stroke-dasharray:${(1 * u).toFixed(2)} ${(3 * u).toFixed(2)} !important}`;
+    for (const g of svg.querySelectorAll('g[data-scale]')) g.setAttribute('transform', `translate(${g.dataset.x},${g.dataset.y}) scale(${u.toFixed(4)})`);
+  }
+  const scaled = (x, y, parent, attrs = {}, u = U_) => el('g', { ...attrs, 'data-scale': 1, 'data-x': x.toFixed(1), 'data-y': y.toFixed(1), transform: `translate(${x.toFixed(1)},${y.toFixed(1)}) scale(${u.toFixed(4)})` }, parent);
+
+  /* the provinces */
+  const areaNodes = {}, areaBox = {};
+  for (const c of wars) { const a = AR.areas && AR.areas[c.id]; if (a && a.d) areaNodes[c.id] = el('path', { class: 'area', d: a.d }, gAreas); }
+
+  /* the camera */
+  const MAX_K = 10;
+  function boxT(x0, y0, x1, y1, pad = 0.12) {
+    const bw = Math.max(20, x1 - x0), bh = Math.max(12, y1 - y0), v = vis();
+    const k = Math.max(0.25, Math.min(MAX_K, v.w / (bw * (1 + 2 * pad)), v.h / (bh * (1 + 2 * pad))));
+    return d3.zoomIdentity.translate(W / 2 - k * (x0 + x1) / 2, H / 2 - k * (y0 + y1) / 2).scale(k);
+  }
+  const ptsBox = pts => [Math.min(...pts.map(p => p[0])), Math.min(...pts.map(p => p[1])), Math.max(...pts.map(p => p[0])), Math.max(...pts.map(p => p[1]))];
+  const boxOfArea = id => { if (!areaNodes[id]) return []; if (!areaBox[id]) { try { const b = areaNodes[id].getBBox(); if (b.width) areaBox[id] = [[b.x, b.y], [b.x + b.width, b.y + b.height]]; } catch (e) {} } return areaBox[id] || []; };
+  const PAIR = (stepCfg('same').pair || {}).states || [];
+  /* the war where the pair's lines go to opposite sides; its chips are drawn so each line lands on its side */
+  const pairSplit = () => { const w = pairWars().find(c => { const sd = PAIR.map(b => { const t = c.ties.find(t => t.backer === b && !t.ended); const p = t && c.parties.find(p => p.id === t.party); return p && p.side; }); return sd[0] && sd[1] && sd[0] !== sd[1]; }); return w ? w.id : null; };
+  const pairWars = () => wars.filter(c => PAIR.length === 2 && PAIR.every(b => c.ties.some(t => t.backer === b && !t.ended)));
+  function viewT(view) {
+    if (view === 'world') {
+      /* on a phone the world view is the band where the wars and the coloured states sit, so the map fills the frame */
+      if (phone()) { const pts = D.conflicts.map(c => [c.px, c.py]).concat(hued.map(b => project(b.lon, b.lat))); return boxT(...ptsBox(pts), 0.06); }
+      return boxT(0, 8, W, H - 8, 0.01);
+    }
+    if (view === 'pair') {
+      const pts = []; for (const c of pairWars()) { pts.push([c.px, c.py]); pts.push(...boxOfArea(c.id)); } for (const b of PAIR) pts.push(project(backers[b].lon, backers[b].lat));
+      return boxT(...ptsBox(pts), 0.1);
+    }
+    const c = byId[view && view.war ? view.war : 'sudan'];
+    const pts = [[c.px, c.py], ...boxOfArea(c.id)];
+    if (view === 'sudan') { pts.push(...sudanLandBox); return boxT(...ptsBox(pts), 0.42); }
+    const helpers = (view === 'sudanHelp' ? sudan : c).ties.filter(t => !t.ended).map(t => backers[t.backer]);
+    for (const b of helpers) pts.push(project(b.lon, b.lat));
+    return boxT(...ptsBox(pts), 0.1);
+  }
+  let freeMode = false, hiresLoading = null, pendingT = null;
+  const sameT = (a, b) => Math.abs(a.k - b.k) < 1e-3 && Math.abs(a.x - b.x) < 0.5 && Math.abs(a.y - b.y) < 0.5;
+  const zoom = d3.zoom().scaleExtent([0.25, MAX_K])
+    .filter(ev => freeMode && (ev.type === 'wheel' ? (ev.ctrlKey || ev.metaKey) : ev.type.startsWith('touch') ? (ev.touches ? ev.touches.length >= 2 : true) : (!ev.ctrlKey && !ev.button)))
+    .on('zoom', ev => {
+      gRoot.setAttribute('transform', ev.transform.toString()); zoomK = ev.transform.k; setDashes();
+      if (zoomK >= 2.2 && !hiresLoading) hiresLoading = get('/data/world_50m.json').then(t => drawLand(t)).catch(() => {});
+    })
+    .on('end', ev => { if (ev.sourceEvent && freeMode) drawScene(false); });
+  const sel3 = d3.select(svg).call(zoom).on('dblclick.zoom', null);
+  function applyT(t, animate) {
+    /* a move still under way is stopped first, so a quick back-and-forth never strands the camera */
+    if (pendingT) { sel3.interrupt(); pendingT = null; }
+    if (sameT(d3.zoomTransform(svg), t)) return;
+    if (animate && !reduced) {
+      pendingT = t;
+      sel3.transition().duration(700).ease(d3.easeCubicInOut).call(zoom.transform, t);
+      /* headless browsers and hidden tabs may never run the transition: land on the target anyway */
+      setTimeout(() => { if (pendingT === t) { if (!sameT(d3.zoomTransform(svg), t)) sel3.interrupt().call(zoom.transform, t); pendingT = null; } }, 900);
+    } else sel3.call(zoom.transform, t);
+  }
+
+  /* the marks: a dot per war, a hollow square per use of force short of war */
+  const GLYPH_R = { '3': 7.5, '2': 5.5, '1': 4 }, DOT_R = 4.6;
+  const markNodes = {};
+  for (const c of D.conflicts) {
+    const [x, y] = project(c.point[0], c.point[1]); c.px = x; c.py = y;
+    const pr = c.kind === 'pressure';
+    const g = scaled(x, y, gMarks, { class: 'mark' + (pr ? ' pressure' : ''), 'data-id': c.id, role: 'button', 'aria-label': c.name, tabindex: -1 });
+    el('circle', { class: 'hit', r: 13 }, g);
+    if (pr) el('rect', { class: 'glyph', x: -5, y: -5, width: 10, height: 10 }, g);
+    else { const ci = el('circle', { class: 'glyph', r: DOT_R }, g); ci.style.r = DOT_R + 'px'; }
+    const [dx, dy, anchor] = Array.isArray(c.label) ? c.label : [9, 3];
+    const tx = el('text', { class: 'lbl', x: dx, y: dy + 3, 'text-anchor': anchor || 'start' }, g); tx.textContent = c.name;
+    markNodes[c.id] = g;
+    g.addEventListener('mouseenter', ev => showTip(ev, markTip(c)));
+    g.addEventListener('mousemove', placeTip);
+    g.addEventListener('mouseleave', hideTip);
+    g.addEventListener('click', ev => { ev.stopPropagation(); markClick(c, ev); });
+    g.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); markClick(c, null); } });
+  }
+  /* a tap on a touch screen goes to the nearest mark, so dots that sit close together can still each be picked */
+  const coarse = matchMedia('(pointer: coarse)').matches;
+  svg.addEventListener('click', ev => {
+    if (coarse) {
+      let best = null, bd = 30;
+      for (const c of D.conflicts) { const g = markNodes[c.id]; if (!g.classList.contains('shown')) continue; const r = g.querySelector('.glyph').getBoundingClientRect(); const d = Math.hypot(ev.clientX - (r.left + r.width / 2), ev.clientY - (r.top + r.height / 2)); if (d < bd) { bd = d; best = c; } }
+      if (best) { markClick(best, ev); return; }
+    }
+    if (freeMode && (S.free.war || S.free.backer)) { S.free.war = null; S.free.backer = null; drawScene(false); syncFree(); }
+    hideTip();
+  });
+  setDashes();
+
+  /* ---- tooltip ---- */
+  const tip = $('#tip');
+  function showTip(ev, html) { tip.innerHTML = html; tip.style.display = 'block'; placeTip(ev); }
+  function placeTip(ev) {
+    const vw = innerWidth, vh = innerHeight, tw = tip.offsetWidth, th = tip.offsetHeight;
+    let x = ev.clientX + 14, y = ev.clientY + 14;
+    if (x + tw > vw - 8) x = ev.clientX - tw - 14;
+    if (x < 8) x = Math.max(8, Math.min(vw - tw - 8, ev.clientX - tw / 2));
+    if (y + th > vh - 8) y = ev.clientY - th - 14;
+    if (y < 8) y = 8;
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+  }
+  function hideTip() { tip.style.display = 'none'; }
+  const toScreen = (x, y, t) => { const sc0 = vis().s; return [(x * t.k + t.x) * sc0, (y * t.k + t.y) * sc0]; };
+  const atNode = n => { const r = n.getBoundingClientRect(); return { clientX: r.left + r.width / 2, clientY: r.top + r.height }; };
+
+  /* glossary words: hover, focus or tap shows the one-sentence definition */
+  const defTip = b => showTip(atNode(b), `<b>${esc(b.dataset.term)}</b><br>${esc(GL[b.dataset.term])}`);
+  document.addEventListener('mouseover', ev => { const b = ev.target.closest && ev.target.closest('button.term'); if (b) defTip(b); });
+  document.addEventListener('mouseout', ev => { if (ev.target.closest && ev.target.closest('button.term')) hideTip(); });
+  document.addEventListener('focusin', ev => { const b = ev.target.closest && ev.target.closest('button.term'); if (b) defTip(b); });
+  document.addEventListener('focusout', ev => { if (ev.target.closest && ev.target.closest('button.term')) hideTip(); });
+  document.addEventListener('click', ev => { const b = ev.target.closest && ev.target.closest('button.term'); if (b) { ev.stopPropagation(); defTip(b); } else if (!ev.target.closest('#map')) hideTip(); });
+  addEventListener('keydown', ev => { if (ev.key === 'Escape') { hideTip(); closeSheet(); } });
+  addEventListener('scroll', () => { if (tip.style.display === 'block') hideTip(); }, { passive: true });
+
+  /* ================= page state ================= */
+  const STEPS = C.steps;
+  for (const st of STEPS) { st.title = plainFill(st.title); st.name = plainFill(st.name); }   /* titles and rail names may carry tokens */
+  const idx = id => STEPS.findIndex(s => s.id === id);
+  const S = {
+    step: -1, sub: { areas: 'sudan', help: 'sudan' },
+    revealed: { start: false, size: false, know: false },
+    tiers: new Set(tierIds), ex: null, backer: hued[0].id, pair: false, shapeWar: null,
+    free: { areas: true, lines: false, squares: true, war: null, backer: null, viewSet: false }
+  };
+  /* the dots carry their size only once size has been taught */
+  const sizedNow = () => S.step > idx('size') || (S.step === idx('size') && S.revealed.size);
+
+  /* each step's map: what is drawn, where the camera is, which legend keys are learned */
+  function sceneFor(id) {
+    const sc = { view: 'world', marks: true, sized: sizedNow(), areas: 'faint', squares: false, arcs: null, chips: null, focus: null, labels: null, chart: false, legend: [] };
+    const L0 = ['war', 'area', 'size', 'side', 'line', 'tiers', 'hues', 'square'];
+    const upto = k => L0.slice(0, L0.indexOf(k) + 1);
+    const only = ks => L0.filter(k => ks.includes(k));
+    switch (id) {
+      case 'start': Object.assign(sc, { marks: false, areas: 'none', legend: [] }); break;
+      case 'where': Object.assign(sc, { areas: 'none', seq: true, legend: ['war'] }); break;
+      case 'areas': Object.assign(sc, S.sub.areas === 'sudan' ? { view: 'sudan', areas: 'sudan', focus: 'sudan', labels: ['sudan'] } : { areas: 'all' }, { legend: upto('area') }); break;
+      case 'size': Object.assign(sc, { legend: S.revealed.size ? upto('size') : upto('area') }); break;
+      case 'sides': Object.assign(sc, { view: 'sudan', areas: 'sudan', chips: 'sudan', focus: 'sudan', legend: upto('side') }); break;
+      case 'help': Object.assign(sc, S.sub.help === 'sudan' ? { view: 'sudanHelp', areas: 'sudan', chips: 'sudan', focus: 'sudan', arcs: { scope: ['sudan'], draw: true, labels: 'all' } } : { arcs: { scope: 'all', mode: 'mid' } }, { legend: upto('line') }); break;
+      case 'know': Object.assign(sc, S.revealed.know
+        ? { arcs: { scope: 'all', tiers: true, ended: true, mode: 'mid', filter: S.tiers, hi: S.ex } }
+        : { view: 'sudanHelp', areas: 'sudan', chips: 'sudan', focus: 'sudan', arcs: { scope: ['sudan'], tiers: true, ended: true, labels: 'all' } }, { legend: upto('tiers') }); break;
+      case 'same':
+        if (S.pair) { const pw = pairWars().map(c => c.id); Object.assign(sc, { view: 'pair', labels: pw, focusWars: pw, arcs: { scope: pw, only: PAIR, tiers: true, ended: false, hues: true, labels: 'all' }, legend: upto('hues') }); }
+        else Object.assign(sc, { arcs: { scope: 'all', tiers: true, ended: true, hues: true, backer: S.backer, labels: 'backer' }, focusWars: inWars(S.backer).map(c => c.id), legend: upto('hues') });
+        break;
+      case 'force': Object.assign(sc, { squares: true, pulseSquares: true, labels: squares.map(c => c.id), legend: upto('square') }); break;
+      case 'normal': Object.assign(sc, { chart: true, squares: true, legend: [] }); break;
+      case 'shape': Object.assign(sc, { squares: true, legend: only(['war', 'area', 'size', 'square'].concat(S.shapeWar ? ['side', 'tiers', 'hues'] : [])) }, S.shapeWar ? { view: { war: S.shapeWar }, chips: S.shapeWar, focus: S.shapeWar, labels: [S.shapeWar], arcs: { scope: [S.shapeWar], tiers: true, ended: true, hues: true, labels: 'all' } } : {}); break;
+      case 'free': {
+        const f = S.free;
+        Object.assign(sc, { view: f.viewSet ? null : 'world', free: true, squares: f.squares, areas: f.areas ? 'faint' : 'none', labels: 'all', legend: upto('square'), chips: f.war && byId[f.war].kind !== 'pressure' ? f.war : null, focus: f.war });
+        if (f.lines || f.war || f.backer) sc.arcs = { scope: f.war ? [f.war] : 'all', backer: f.backer, tiers: true, ended: true, hues: true, filter: S.tiers, mode: f.war || f.backer ? null : 'faint', labels: f.war ? 'all' : f.backer ? 'backer' : 'hued' };
+        /* the key names only what is drawn now */
+        sc.legend = only(['war', 'size'].concat(f.areas ? ['area'] : [], sc.chips ? ['side'] : [], sc.arcs ? ['tiers', 'hues'] : [], f.squares ? ['square'] : []));
+        if (f.backer) sc.focusWars = inWars(f.backer).map(c => c.id).concat(squares.filter(c => c.ties.some(t => t.backer === f.backer) || c.parties.some(p => p.state === f.backer)).map(c => c.id));
+        break;
+      }
+    }
+    return sc;
+  }
+
+  let lastLegend = new Set(), lastViewKey = null, prevStepId = null;
+  function drawScene(animate) {
+    const id = STEPS[S.step].id, sc = sceneFor(id);
+    freeMode = !!sc.free;
+    svg.classList.toggle('free', freeMode);
+    /* camera first, so marks placed in screen pixels use the zoom they will land at */
+    let target = pendingT || d3.zoomTransform(svg);
+    if (sc.view) {
+      const key = JSON.stringify(sc.view) + '|' + svg.clientWidth + 'x' + svg.clientHeight;
+      target = viewT(sc.view);
+      if (key !== lastViewKey) { lastViewKey = key; applyT(target, animate); }
+    } else lastViewKey = null;
+    if (target.k >= 2.2 && !hiresLoading) hiresLoading = get('/data/world_50m.json').then(t => drawLand(t)).catch(() => {});
+    const uT = upp(target.k);
+    svg.classList.toggle('faded', sc.chart);
+    const ch = $('#chart'); ch.classList.toggle('on', sc.chart); ch.setAttribute('aria-hidden', sc.chart ? 'false' : 'true');
+    svg.setAttribute('aria-hidden', sc.chart ? 'true' : 'false');
+    if (sc.chart) drawChart();
+
+    /* marks; a war's name is left off where it would sit on another name (the tooltip still gives it) */
+    const order = regionOrder, nameBoxes = [];
+    const nameFits = c => {
+      const [dx, dy, anchor] = Array.isArray(c.label) ? c.label : [9, 3, 'start'];
+      const [sx, sy] = toScreen(c.px, c.py, target), wpx = c.name.length * 6.3;
+      const x0 = anchor === 'end' ? sx + dx - wpx : anchor === 'middle' ? sx + dx - wpx / 2 : sx + dx;
+      const box = [x0 - 3, sy + dy - 7, x0 + wpx + 3, sy + dy + 7];
+      if (nameBoxes.some(q => box[0] < q[2] && box[2] > q[0] && box[1] < q[3] && box[3] > q[1])) return false;
+      nameBoxes.push(box); return true;
+    };
+    const inF = c => c.id === sc.focus || (sc.focusWars || []).includes(c.id);
+    const byWeight = D.conflicts.slice().sort((a, b) => (b.id === sc.focus) - (a.id === sc.focus) || inF(b) - inF(a) || (b.kind !== 'pressure') - (a.kind !== 'pressure') || (+b.band || 0) - (+a.band || 0));
+    const labelOK = {}, interactive = id === 'shape' || freeMode;
+    const worldK = viewT('world').k;
+    for (const c of D.conflicts) {
+      const g = markNodes[c.id], pr = c.kind === 'pressure';
+      const shown = sc.marks && (!pr || sc.squares);
+      g.style.transitionDelay = (sc.seq && animate && !pr && !g.classList.contains('shown')) ? (order.indexOf(c.region) * 0.45) + 's' : '0s';
+      g.classList.toggle('shown', shown);
+      /* marks take focus only where tapping one does something */
+      g.setAttribute('tabindex', shown && interactive && !(id === 'shape' && pr) ? 0 : -1);
+      g.setAttribute('aria-hidden', shown ? 'false' : 'true');
+      if (!pr) { const r = sc.sized && c.band ? GLYPH_R[c.band] : DOT_R; g.querySelector('.glyph').style.r = r + 'px'; }
+      labelOK[c.id] = (sc.labels === 'all' && (sc.free ? (inF(c) || (!phone() && target.k >= worldK * 2)) : !pr)) || (Array.isArray(sc.labels) && sc.labels.includes(c.id));
+      g.classList.remove('lab');
+      g.classList.toggle('on', inF(c));
+      g.classList.toggle('dim', !!(sc.focusWars && !sc.focusWars.includes(c.id)) || !!(sc.focus && sc.focus !== c.id && id !== 'free'));
+      g.classList.toggle('tap', interactive);
+      if (pr && sc.pulseSquares && animate && prevStepId !== id) { g.classList.remove('pulse'); void g.getBBox(); g.classList.add('pulse'); }
+    }
+    for (const c of byWeight) if (labelOK[c.id] && markNodes[c.id].classList.contains('shown') && nameFits(c)) markNodes[c.id].classList.add('lab');
+    /* provinces */
+    for (const cid in areaNodes) {
+      const n = areaNodes[cid];
+      const on = sc.areas === 'all' || (sc.areas === 'sudan' && cid === 'sudan') || (sc.areas === 'faint' && sc.focus === cid);
+      n.classList.toggle('on', on);
+      n.classList.toggle('faint', !on && sc.areas === 'faint' && (!sc.focusWars || sc.focusWars.includes(cid)));
+    }
+    /* the sides, as chips beside the war */
+    gParties.innerHTML = '';
+    const anchor = {}, placed = nameBoxes.slice();
+    if (sc.chips) {
+      const c = byId[sc.chips], n = c.parties.length;
+      c.parties.forEach((p, i) => {
+        const off = n === 1 ? [[0, -26]] : n === 2 ? [[-66, -26], [66, -26]] : [[-66, -26], [66, -26], [0, 32]];
+        const [dx, dy] = off[i] || [0, 32 + 18 * (i - 2)];
+        const x = c.px + dx * uT, y = c.py + dy * uT;
+        anchor[c.id + '/' + p.id] = [x, y];
+        const label = p.name.length <= 22 ? p.name : (p.short || p.name.slice(0, 20) + '…');
+        const w = Math.max(44, label.length * 5.2 + 14);
+        const [sx, sy] = toScreen(x, y, target); placed.push([sx - w / 2, sy - 8, sx + w / 2, sy + 8]);
+        const g = scaled(x, y, gParties, { class: 'party' + (animate && prevStepId !== id ? ' pop' : '') }, uT);
+        el('line', { x1: (c.px - x) / uT, y1: (c.py - y) / uT, x2: 0, y2: 0, stroke: 'var(--ink-30)', 'stroke-width': 0.6, 'vector-effect': 'non-scaling-stroke' }, g);
+        el('rect', { x: -w / 2, y: -8, width: w, height: 16, rx: 8 }, g);
+        el('text', { x: 0, y: 0.5 }, g).textContent = label;
+      });
+    }
+    drawArcs(sc, anchor, uT, animate && prevStepId !== id, placed, target);
+    drawLegend(sc.legend, !sc.chart);
+    svg.setAttribute('aria-label', 'Map, ' + STEPS[S.step].title + '. The step text beside it states what the map shows.');
+    prevStepId = id;
+    S.free.viewSet = id === 'free';
+  }
+
+  /* lines from a backer to the side it helps */
+  let arcAnims = [];
+  function drawArcs(sc, anchor, uT, fresh, placed = [], target = d3.zoomTransform(svg)) {
+    for (const a of arcAnims) { try { a.cancel(); } catch (e) {} } arcAnims = [];
+    gArcs.innerHTML = ''; gBackers.innerHTML = '';
+    const A = sc.arcs; if (!A) return;
+    const rows = [];
+    const pool = A.scope === 'all' ? wars : A.scope.map(id => byId[id]);
+    for (const c of pool) { if (!c || c.kind === 'pressure') continue; for (const t of c.ties) { if (t.ended && !A.ended) continue; if (A.filter && !A.filter.has(t.tier)) continue; if (A.only && !A.only.includes(t.backer)) continue; rows.push({ c, t, key: c.id + '|' + c.ties.indexOf(t) }); } }
+    const perConf = {}; for (const r of rows) (perConf[r.c.id] = perConf[r.c.id] || []).push(r);
+    const dots = new Map();
+    rows.forEach((r, n) => {
+      const { c, t } = r, b = backers[t.backer];
+      const sib = perConf[c.id], i = sib.indexOf(r), bow = (i - (sib.length - 1) / 2) * 7;
+      const an = anchor[c.id + '/' + t.party];
+      const end = an ? (projection.invert(an) || c.point) : c.point;
+      const d = arcPath([b.lon, b.lat], end, bow);
+      if (!d) return;
+      const emph = A.hi ? (A.hi === r.key ? 'hi' : 'lo') : A.backer ? (t.backer === A.backer ? 'hi' : 'lo') : (A.mode || '');
+      const cls = ['arc', A.tiers ? 'tier-' + t.tier : 'tier-open', 'hue-' + (A.hues ? hueOf(t.backer) : 0), t.ended ? 'ended' : '', emph].join(' ');
+      const p = el('path', { class: cls, d, 'data-key': r.key }, gArcs);
+      if (A.draw && fresh && !reduced && !t.ended) {
+        const len = p.getTotalLength();
+        p.style.strokeDasharray = len + ' ' + len;
+        const an2 = p.animate([{ strokeDashoffset: len }, { strokeDashoffset: 0 }], { duration: 650, delay: 250 + n * 420, easing: 'ease-out', fill: 'backwards' });
+        an2.onfinish = () => { p.style.strokeDasharray = ''; };
+        arcAnims.push(an2);
+      }
+      if (A.tiers) {
+        const hit = el('path', { class: 'arc-hit', d }, gArcs);
+        hit.addEventListener('mouseenter', ev => showTip(ev, lineTip(c, t)));
+        hit.addEventListener('mousemove', placeTip); hit.addEventListener('mouseleave', hideTip);
+      }
+      if (emph !== 'lo' && !dots.has(t.backer)) dots.set(t.backer, n);
+    });
+    for (const [bid, n] of dots) {
+      const b = backers[bid], [x, y] = project(b.lon, b.lat);
+      const g = scaled(x, y, gBackers, { class: 'backer-dot' }, uT);
+      el('circle', { class: 'fhue-' + (A.hues ? hueOf(bid) : 0), r: 3.2 }, g);
+      const lab = A.labels === 'all' || (A.labels === 'backer' && bid === A.backer) || (A.labels === 'hued' && b.hue);
+      if (lab) {
+        /* a label that would sit on another label is left off; the dot and the tooltip still name it */
+        const [sx, sy] = toScreen(x, y, target), box = [sx + 4, sy - 7, sx + 8 + b.short.length * 6, sy + 6];
+        if (!placed.some(q => box[0] < q[2] && box[2] > q[0] && box[1] < q[3] && box[3] > q[1])) { placed.push(box); el('text', { x: 6, y: 3 }, g).textContent = b.short; }
+      }
+      if (A.draw && fresh && !reduced) arcAnims.push(g.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300, delay: 250 + n * 420, fill: 'backwards' }));
+    }
+    if (arcAnims.length) {
+      const all = arcAnims.slice();
+      const total = 250 + rows.length * 420 + 700;
+      setTimeout(() => { for (const a of all) { try { if (a.playState !== 'finished') a.finish(); } catch (e) {} } }, total + 300);
+    }
+    if (A.draw) helpListArrive(fresh && !reduced, rows.filter(r => !r.t.ended));
+  }
+  const lineTip = (c, t) => { const b = backers[t.backer], p = party(c, t.party); return `<b>${esc(b.short)} → ${esc(p ? p.short : t.party)}</b> · ${esc(c.name)}<br>${esc(kindsText(t))}<br>${esc(D.tiers[t.tier].word)}${t.stance ? ' · ' + esc(b.short) + ' ' + esc(t.stance) : ''}${t.ended ? ' · ended ' + esc(fmtMonth(t.ended)) : ''}`; };
+  const markTip = c => {
+    const sc = S.step >= 0 ? sceneFor(STEPS[S.step].id) : {};
+    if (!sc.free && !sc.sized) return `<b>${esc(c.name)}</b>`;
+    return `<b>${esc(c.name)}</b>${c.kind === 'pressure' ? '<br>' + esc(LG.square) : c.band ? '<br>deaths: ' + esc(D.bands[c.band]) : ''}`;
+  };
+  function markClick(c, ev) {
+    const id = STEPS[S.step].id;
+    if (id === 'shape' && c.kind !== 'pressure') { S.shapeWar = S.shapeWar === c.id ? null : c.id; syncShapes(); drawScene(true); return; }
+    if (freeMode) {
+      S.free.war = S.free.war === c.id ? null : c.id; S.free.backer = null;
+      /* a tapped war comes into view with its lines; tapping it again goes back to the whole map */
+      if (S.free.war && c.kind !== 'pressure') applyT(viewT({ war: c.id }), true); else if (!S.free.war) applyT(viewT('world'), true);
+      setTimeout(() => drawScene(false), reduced ? 0 : 760); drawScene(false); syncFree(); return;
+    }
+    showTip(ev && ev.clientX ? ev : atNode(markNodes[c.id]), markTip(c));
+  }
+
+  /* ---- the legend grows; on a phone only the newest mark shows, the rest is one tap away ---- */
+  const tierSample = (tier, hue = 'hue-0', w = 30, extra = '') => `<svg viewBox="0 0 ${w} 8" aria-hidden="true"><path class="arc tier-${tier} ${hue} ${extra}" d="M1,4 L${w - 1},4" style="${tier === 'shown' ? 'stroke-dasharray:7 4' : tier === 'reported' ? 'stroke-dasharray:3 4' : tier === 'claimed' ? 'stroke-dasharray:0.5 5' : ''}${extra === 'ended' ? ';stroke-dasharray:1 3' : ''}"/></svg>`;
+  const LG = C.legend || {};
+  const legendItem = {
+    war: () => `<span class="it" data-k="war"><i class="g"></i>${esc(LG.war)}</span>`,
+    area: () => `<span class="it" data-k="area"><i class="g fill"></i>${esc(LG.area)}</span>`,
+    size: () => `<span class="it" data-k="size">${esc(LG.size)}: ${bandKeys.map(k => `<i class="g s${k}"></i>${esc(D.bands[k].replace(/ a year$/, ''))}`).join(' ')}</span>`,
+    side: () => `<span class="it" data-k="side"><i class="g side"></i>${esc(LG.side)}</span>`,
+    line: () => `<span class="it" data-k="line">${tierSample('open')}${esc(LG.line)}</span>`,
+    tiers: () => `<span class="it" data-k="tiers">${tierIds.map(k => tierSample(k, 'hue-0', 22) + esc(D.tiers[k].word)).join(' ')} ${tierSample('open', 'hue-0', 22, 'ended')}${esc(LG.ended)}</span>`,
+    hues: () => `<span class="it" data-k="hues">${hued.map(b => `<i class="g sw" style="background:var(--b${b.hue})"></i>${esc(b.short)}`).join(' ')} <i class="g sw" style="background:var(--ink-60)"></i>${esc(LG.others)}</span>`,
+    square: () => `<span class="it" data-k="square"><i class="g sq"></i>${esc(LG.square)}</span>`
+  };
+  let legendKeys = [];
+  function drawLegend(keys, show) {
+    /* once the grades are learned, the plain line sample is one of them */
+    keys = keys.includes('tiers') ? keys.filter(k => k !== 'line') : keys;
+    legendKeys = keys;
+    const box = $('#legend');
+    box.classList.toggle('off', !show || !keys.length);
+    const fresh = keys.filter(k => !lastLegend.has(k));
+    if (phone()) {
+      const newest = keys[keys.length - 1];
+      box.innerHTML = keys.length ? `${legendItem[newest]()}<button type="button" class="keybtn" id="key-open" aria-haspopup="dialog">${esc(C.legend_key || 'key')} · ${keys.length}</button>` : '';
+      const kb = $('#key-open'); if (kb) kb.onclick = openSheet;
+    } else box.innerHTML = (keys.length ? `<span class="k">${esc(C.legend_title)}</span>` : '') + keys.map(k => legendItem[k]()).join('');
+    if (show && !reduced) for (const k of fresh) { const n = box.querySelector(`[data-k="${k}"]`); if (n) n.classList.add('new'); }
+    if (show) lastLegend = new Set(keys);
+    if (!$('#sheet').hidden) fillSheet();
+  }
+  const fillSheet = () => { $('#sheet-body').innerHTML = legendKeys.map(k => legendItem[k]()).join(''); };
+  function openSheet() { fillSheet(); const s = $('#sheet'); s.hidden = false; $('#sheet-close').focus(); }
+  function closeSheet() { const s = $('#sheet'); if (s.hidden) return; s.hidden = true; const kb = $('#key-open'); if (kb) kb.focus(); }
+  $('#sheet-title').textContent = C.legend_title || ''; $('#sheet-close').textContent = C.legend_close || 'close';
+  $('#sheet-close').onclick = closeSheet;
+
+  /* ================= the steps ================= */
+  const stepsEl = $('#steps'), N = STEPS.length;
+  const NAV = C.nav || {};
+  STEPS.forEach((s, i) => {
+    const sec = document.createElement('section');
+    sec.className = 'step' + (i === N - 1 ? ' last' : ''); sec.id = 'step-' + s.id; sec.dataset.i = i;
+    sec.setAttribute('aria-labelledby', 'h-' + s.id);
+    sec.innerHTML = `<div class="card">
+      <div class="kicker">${i === 0 ? 'start' : 'step ' + i + ' of ' + (N - 1)} · ${esc(s.name)}</div>
+      <h2 id="h-${s.id}" tabindex="-1">${esc(s.title)}</h2>
+      <p class="body">${fill(s.body)}</p>
+      <div class="ix" id="ix-${s.id}"></div>
+      <div class="reveal" id="rv-${s.id}" hidden></div>
+      ${(s.sources || []).length ? `<details class="where"><summary>${esc(NAV.where || 'where this comes from')}</summary><ul>${sourceItems(s.sources)}</ul></details>` : ''}
+      <div class="stepnav"><button type="button" class="back"${i === 0 ? ' disabled' : ''}>&lsaquo; ${esc(NAV.back || 'back')}</button><button type="button" class="next"${i === N - 1 ? ' disabled' : ''}>${esc(NAV.next || 'next')} &rsaquo;</button></div>
+    </div>`;
+    sec.querySelector('.back').onclick = () => go(i - 1);
+    sec.querySelector('.next').onclick = () => go(i + 1);
+    stepsEl.appendChild(sec);
+  });
+  const live = $('#live');
+  const say = text => { live.textContent = ''; setTimeout(() => { live.textContent = text; }, 30); };
+  const ix = id => $('#ix-' + id), rv = id => $('#rv-' + id);
+  /* the reveal's words are announced; its chart labels are not */
+  const showReveal = (id, html, spoken) => { const r = rv(id); r.innerHTML = html; r.hidden = false; r.classList.remove('in'); void r.offsetWidth; if (!reduced) r.classList.add('in'); if (spoken) say(plain(spoken)); };
+
+  /* a number line: the reader's guess beside the answers */
+  function numberLine(max, marks, ticks) {
+    const pos = v => Math.max(0, Math.min(100, v / max * 100));
+    const sorted = marks.slice().sort((a, b) => a.v - b.v);
+    let lastUp = -1e9, lastDn = -1e9;
+    for (const m of sorted) { const p = pos(m.v); if (p - lastUp >= 22) { m.dir = 'up'; lastUp = p; } else if (p - lastDn >= 22) { m.dir = 'dn'; lastDn = p; } else { m.dir = 'dn2'; } }
+    return `<div class="nl" aria-hidden="true"><div class="track"></div>${ticks.map(t => `<div class="tick" style="left:${pos(t)}%"></div><div class="tl" style="left:${pos(t)}%">${t}</div>`).join('')}${sorted.map(m => `<div class="m ${m.cls || ''} ${m.dir}" style="left:${pos(m.v)}%"><i></i><span><b>${esc(m.v)}</b> ${esc(m.label)}</span></div>`).join('')}</div>`;
+  }
+
+  /* step: how many */
+  (function () {
+    const s = stepCfg('start'), g = s.guess;
+    ix('start').innerHTML = `<div class="guess"><label for="g-start">${esc(g.label)}</label><input type="range" id="g-start" min="${g.min}" max="${g.max}" value="${g.start}" aria-describedby="h-start"><output id="o-start">${g.start}</output></div><button type="button" class="btn go" id="b-start">${esc(g.button)}</button>`;
+    const inp = $('#g-start'), out = $('#o-start');
+    const line = () => { const v = +inp.value, max = Math.max(g.max, T.ucdp_n, v); return numberLine(max, [{ v, label: s.marks.guess, cls: 'you' }, { v: T.wars, label: s.marks.map }, { v: T.ucdp_wars, label: s.marks.ucdp_wars, cls: 'alt' }, { v: T.ucdp_n, label: plainFill(s.marks.ucdp), cls: 'alt' }], [0, max / 2, max].map(Math.round)); };
+    const answer = () => { S.revealed.start = true; const p = `<p>${fill(s.reveal)}</p>`; showReveal('start', `<div id="nl-start">${line()}</div>` + p, p); };
+    inp.oninput = () => { out.textContent = inp.value; if (S.revealed.start) $('#nl-start').innerHTML = line(); };
+    $('#b-start').onclick = answer;
+  })();
+
+  /* toggles: Sudan, then every war */
+  function segToggle(id, key) {
+    const s = stepCfg(id);
+    ix(id).innerHTML = `<div class="seg" role="group">${s.toggle.map((t, i) => `<button type="button" data-v="${i ? 'all' : 'sudan'}" aria-pressed="${i === 0}">${esc(t)}</button>`).join('')}</div>` + (id === 'help' ? `<ul class="rows" id="help-list"></ul>` : '');
+    for (const b of $$('.seg button', ix(id))) b.onclick = () => {
+      S.sub[key] = b.dataset.v;
+      for (const x of $$('.seg button', ix(id))) x.setAttribute('aria-pressed', String(x === b));
+      if (b.dataset.v === 'all') { const p = `<p>${fill(s.toggle_text)}</p>`; showReveal(id, p, p); } else rv(id).hidden = true;
+      if (id === 'help') $('#help-list').style.display = b.dataset.v === 'sudan' ? '' : 'none';
+      if (S.step === idx(id)) drawScene(true);
+    };
+  }
+  segToggle('areas', 'areas');
+  segToggle('help', 'help');
+  /* Sudan's lines, listed as they arrive */
+  const helpList = $('#help-list');
+  helpList.innerHTML = sudanLive.map(t => { const b = backers[t.backer], p = party(sudan, t.party); return `<li data-key="sudan|${sudan.ties.indexOf(t)}">${tierSample('open')}<span><b>${esc(b.short)}</b> → ${esc(p.short)} <span class="s">${esc(kindsText(t))}</span></span></li>`; }).join('');
+  let helpTimers = [];
+  function helpListArrive(animate, rows) {
+    for (const t of helpTimers) clearTimeout(t); helpTimers = [];
+    const items = $$('li', helpList);
+    helpList.classList.toggle('arrive', animate);
+    if (!animate) { for (const li of items) li.classList.add('in'); return; }
+    for (const li of items) li.classList.remove('in');
+    items.forEach(li => { const n = rows.findIndex(r => r.key === li.dataset.key); helpTimers.push(setTimeout(() => li.classList.add('in'), 250 + Math.max(0, n) * 420)); });
+    helpTimers.push(setTimeout(() => { for (const li of items) li.classList.add('in'); }, 250 + rows.length * 420 + 900));
+  }
+  for (const li of $$('li', helpList)) {
+    li.onmouseenter = () => { for (const p of $$('#map .arc')) p.classList.toggle('lo', p.dataset.key !== li.dataset.key); };
+    li.onmouseleave = () => { for (const p of $$('#map .arc')) p.classList.remove('lo'); };
+  }
+
+  /* step: how big */
+  (function () {
+    const s = stepCfg('size'), g = s.guess;
+    const opts = g.options.filter(id => byId[id] && uw(id));
+    ix('size').innerHTML = `<p class="q">${esc(g.question)}</p><div class="opts" role="group">${opts.map(id => `<button type="button" class="btn" data-id="${id}" aria-pressed="false">${esc(byId[id].name)}</button>`).join('')}</div><button type="button" class="btn quiet" id="skip-size">${esc(NAV.skip || 'skip the guess')}</button>`;
+    const optsDesc = opts.slice().sort((a, b) => uw(b).best - uw(a).best);
+    const top = optsDesc[0];
+    const ranked = wars.filter(c => uw(c.id)).sort((a, b) => uw(b.id).best - uw(a.id).best);
+    const max = Math.max(...ranked.map(c => Math.max(uw(c.id).high, uw(c.id).best)));
+    const pc = v => (v / max * 70).toFixed(2) + '%';
+    let all = false, choice = null;
+    const bars = () => (all ? ranked : ranked.filter(c => opts.includes(c.id))).map(c => { const w = uw(c.id), lo = Math.min(w.low, w.high), hi = Math.max(w.low, w.high); return `<div class="r${opts.includes(c.id) ? ' opt' : ''}${c.id === choice ? ' pick' : ''}${c.id === top ? ' top' : ''}"><span class="n">${esc(c.short || c.name)}</span><span class="tr"><i class="b" style="width:${pc(w.best)}"></i><i class="w" style="left:${pc(lo)};width:calc(${pc(hi)} - ${pc(lo)})"></i><span class="v" style="left:calc(${pc(Math.max(hi, w.best))} + 6px)">${fmtN(w.best)}${c.id === choice ? `<em>${esc(s.pick_label)}</em>` : ''}</span></span></div>`; }).join('');
+    const chart = () => {
+      const shown = all ? ranked : ranked.filter(c => opts.includes(c.id));
+      $('#bars-size').innerHTML = `<div class="cap">${fill(s.chart_caption)}</div><div role="img" aria-label="${esc(plain(fill(s.chart_caption)))}: ${esc(shown.map(c => c.name + ' ' + fmtN(uw(c.id).best) + ', from ' + fmtN(Math.min(uw(c.id).low, uw(c.id).high)) + ' to ' + fmtN(Math.max(uw(c.id).low, uw(c.id).high))).join('; '))}">${bars()}</div><button type="button" class="btn quiet" id="bars-more" aria-expanded="${all}">${esc(plainFill(all ? s.show_fewer : s.show_all))}</button>`;
+      $('#bars-more').onclick = () => { all = !all; chart(); $('#bars-more').focus(); };
+    };
+    const answer = ch => {
+      choice = ch; S.revealed.size = true; $('#skip-size').hidden = true;
+      for (const b of $$('.opts .btn', ix('size'))) b.setAttribute('aria-pressed', String(b.dataset.id === ch));
+      const p = `<p>${fill(s.reveal, { opt_counts: listNames(optsDesc.map(id => fmtN(uw(id).best) + ' in ' + byId[id].name)) })}</p>`;
+      showReveal('size', p + `<div class="bars" id="bars-size"></div>`, p);
+      chart();
+      if (S.step === idx('size')) drawScene(true);
+    };
+    for (const b of $$('.opts .btn', ix('size'))) b.onclick = () => answer(b.dataset.id);
+    $('#skip-size').onclick = () => answer(null);
+  })();
+
+  /* step: who fights, one square per conflict */
+  (function () {
+    const u = stepCfg('sides').units; if (!u) return;
+    const sq = Array.from({ length: T.ucdp_n }, (_, i) => `<i class="${i < T.interstate ? 'f' : ''}"></i>`).join('');
+    ix('sides').innerHTML = `<figure class="units" role="img" aria-label="${esc(plainFill(u.caption))}: ${esc(plainFill(u.filled))}, ${esc(plainFill(u.rest))}"><div class="grid" aria-hidden="true">${sq}</div><figcaption aria-hidden="true"><span><i class="f"></i>${esc(plainFill(u.filled))}</span><span><i></i>${esc(plainFill(u.rest))}</span><span class="cap">${esc(plainFill(u.caption))}</span></figcaption></figure>`;
+  })();
+
+  /* step: how anyone knows */
+  (function () {
+    const s = stepCfg('know'), g = s.guess;
+    ix('know').innerHTML = `<p class="q">${esc(g.question)}</p><div class="guess"><label for="g-know">${esc(g.label)}</label><input type="range" id="g-know" min="${g.min}" max="${g.max}" value="${g.start}"><output id="o-know">${g.start}</output></div><button type="button" class="btn go" id="b-know">${esc(g.button)}</button>`;
+    const inp = $('#g-know'), out = $('#o-know');
+    const exRows = {};
+    for (const x of (s.examples || [])) { const c = byId[x.war]; if (!c) continue; const t = c.ties.find(t => t.backer === x.backer && t.party === x.party && (!x.tier || t.tier === x.tier)); if (t) exRows[t.tier] = { c, t, key: c.id + '|' + c.ties.indexOf(t) }; }
+    const PREF = { open: ['backer', 'recipient'], shown: ['document'], reported: ['press', 'research', 'government'], claimed: ['opponent', 'press'] };
+    const srcFor = t => { const ok = t.sources.filter(x => x.counts !== false && safeUrl(x.url)); return ok.find(x => (PREF[t.tier] || []).includes(x.class)) || ok[0] || null; };
+    const defs = Object.fromEntries(tierIds.map(k => [k, s.tier_defs && s.tier_defs[k] ? quote(s.tier_defs[k]) : null]));
+    const line = () => numberLine(10, [{ v: +inp.value, label: s.marks.guess, cls: 'you' }, { v: T.open_tenths, label: s.marks.answer }], [0, 5, 10]);
+    const sync = () => {
+      for (const b of $$('#grades .chip')) { const on = S.tiers.has(b.dataset.t); b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); }
+      for (const x of $$('#grades .ex')) { const on = x.dataset.key === S.ex; x.classList.toggle('on', on); x.setAttribute('aria-pressed', String(on)); }
+    };
+    const answer = () => {
+      const first = !S.revealed.know; S.revealed.know = true;
+      const rows = tierIds.map(k => { const r = exRows[k]; let ex = ''; if (r) { const b = backers[r.t.backer], p = party(r.c, r.t.party), src = srcFor(r.t); ex = `<div class="ex" data-key="${r.key}" data-t="${k}" tabindex="0" role="button" aria-pressed="false">${esc(b.short)} → ${esc(p.short)} in ${esc(r.c.name)}: ${esc(kindsText(r.t))}.${r.t.stance ? ' ' + esc(b.short) + ' ' + esc(r.t.stance) + '.' : ''}${src ? ` <span class="s">Source: <a href="${esc(safeUrl(src.url))}" target="_blank" rel="noopener">${esc(src.publisher || src.text)}</a>${src.date ? ', ' + esc(fmtMonth(src.date)) : ''}.</span>` : ''}</div>`; } return `<li><button type="button" class="chip tier" data-t="${k}">${tierSample(k)}${esc(D.tiers[k].word)}</button><div class="def">${esc(defs[k] || '')}${ex}</div></li>`; }).join('');
+      const p = `<p>${fill(s.reveal)}</p>`;
+      showReveal('know', `<div id="nl-know">${line()}</div>` + p + `<p class="cue">${esc(s.chips_cue)}</p><ul class="grades" id="grades">${rows}</ul>`, p);
+      for (const b of $$('#grades .chip')) b.onclick = () => { const k = b.dataset.t; if (S.tiers.has(k)) { if (S.tiers.size > 1) S.tiers.delete(k); } else S.tiers.add(k); if (S.ex) { const ex = $$('#grades .ex').find(x => x.dataset.key === S.ex); if (ex && !S.tiers.has(ex.dataset.t)) S.ex = null; } sync(); drawScene(false); };
+      for (const x of $$('#grades .ex')) { const act = () => { S.ex = S.ex === x.dataset.key ? null : x.dataset.key; if (S.ex) S.tiers.add(x.dataset.t); sync(); drawScene(false); }; x.onclick = ev => { if (ev.target.closest('a')) return; act(); }; x.onkeydown = ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); act(); } }; }
+      sync();
+      if (S.step === idx('know')) drawScene(first);
+    };
+    inp.oninput = () => { out.textContent = inp.value; if (S.revealed.know) $('#nl-know').innerHTML = line(); };
+    $('#b-know').onclick = answer;
+  })();
+
+  /* step: the same states */
+  /* "the United States", "the UAE": the article where English needs one */
+  const theName = (s, cap) => /^(United |U\.S\.|UAE)/.test(s) ? (cap ? 'The ' : 'the ') + s : s;
+  function stateLines(bid, cfg) {
+    const b = backers[bid];
+    const lines = [plainFill(fightsIn(bid).length ? cfg.pick_line : cfg.pick_line_backs, { state_name: theName(b.name, true), state_in: inWars(bid).length, state_fights: fightsIn(bid).length, state_backs: backsIn(bid).length })];
+    for (const c of wars) {
+      const ts = c.ties.filter(t => t.backer === bid);
+      const sides = new Set(ts.map(t => (party(c, t.party) || {}).side));
+      if (sides.size < 2) continue;
+      const liveT = ts.filter(t => !t.ended), endT = ts.filter(t => t.ended);
+      if (endT.length && liveT.length && !liveT.some(t => endT.some(e => party(c, e.party).side === party(c, t.party).side))) lines.push(plainFill(cfg.both_ended, { war_name: c.name, live_party: partyRef(party(c, liveT[0].party)), ended_party: partyRef(party(c, endT[0].party)), ended_month: fmtMonth(endT[0].ended) }));
+      else if (!endT.length) lines.push(plainFill(cfg.both_live, { war_name: c.name }));
+    }
+    return lines;
+  }
+  (function () {
+    const s = stepCfg('same'), pr = s.pair || {};
+    const v = s.vetted ? quote(s.vetted) : null;
+    const pw = pairWars();
+    const [pa, pb] = PAIR.map(id => backers[id]);
+    const pairRows = pa && pb ? pw.map(c => { const ta = c.ties.find(t => t.backer === pa.id && !t.ended), tb = c.ties.find(t => t.backer === pb.id && !t.ended); return `<li><span class="pairsw">${tierSample('open', 'hue-' + hueOf(pa.id))}${tierSample('open', 'hue-' + hueOf(pb.id))}</span><span>${esc(plainFill(pr.row, { war_name: c.name, a_name: pa.short, b_name: pb.short, a_party: partyRef(party(c, ta.party)), b_party: partyRef(party(c, tb.party)) }))}</span></li>`; }).join('') : '';
+    ix('same').innerHTML = `<div class="chips" id="state-chips" role="group">${hued.map(b => `<button type="button" class="chip" data-b="${b.id}" aria-pressed="false"><i class="sw" style="background:var(--b${b.hue})"></i>${esc(b.short)}</button>`).join('')}</div><div id="same-lines"></div>`
+      + (pa && pb && pw.length ? `<div class="pair"><p class="lead">${esc(pr.lead)}</p><button type="button" class="btn go" id="pair-btn" aria-pressed="false">${esc(plainFill(pr.button, { pair_a: pa.short, pair_b: pb.short }))}</button><ul class="rows pairrows" id="pair-rows" hidden>${pairRows}</ul>${v ? `<p class="vetted">${esc(v)}</p>` : ''}</div>` : '');
+    for (const b of $$('#state-chips .chip')) b.onclick = () => { S.backer = b.dataset.b; S.pair = false; syncSame(); if (S.step === idx('same')) { drawScene(true); writeHash(); } };
+    const pbtn = $('#pair-btn');
+    if (pbtn) pbtn.onclick = () => { S.pair = !S.pair; syncSame(); if (S.step === idx('same')) { drawScene(true); writeHash(); } if (S.pair) say(plain($('#pair-rows').textContent)); };
+  })();
+  function syncSame() {
+    for (const b of $$('#state-chips .chip')) { const on = !S.pair && b.dataset.b === S.backer; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); }
+    $('#same-lines').innerHTML = S.pair ? '' : stateLines(S.backer, stepCfg('same')).map(x => `<p class="line">${esc(x)}</p>`).join('');
+    const pbtn = $('#pair-btn'), pr = stepCfg('same').pair || {};
+    if (pbtn) { pbtn.setAttribute('aria-pressed', String(S.pair)); pbtn.textContent = S.pair ? pr.off : plainFill(pr.button, { pair_a: backers[PAIR[0]].short, pair_b: backers[PAIR[1]].short }); $('#pair-rows').hidden = !S.pair; }
+  }
+  syncSame();
+
+  /* step: is this normal (the chart is drawn on the stage) */
+  const chartEl = $('#chart');
+  function drawChart() {
+    const cfg = stepCfg('normal').chart, w = chartEl.clientWidth, h = chartEl.clientHeight;
+    if (!w || !h) return;
+    const narrow = w < 560, LM = narrow ? 34 : 54, RM = narrow ? 66 : 118, Y0 = years[0].year, Y1 = Math.max(lastY.year, lastD.year), D1 = lastD.year;
+    const x = d3.scaleLinear([Y0, Y1 + 1], [LM, w - RM]);
+    const bw = Math.max(1, x(Y0 + 1) - x(Y0) - (narrow ? 0.6 : 1.4));
+    const cx = yr => x(yr) + bw / 2;
+    const tA = narrow ? 50 : 30, hA = Math.max(56, h * 0.28), tB = tA + hA + (narrow ? 58 : 66), hB = Math.max(80, h - tB - 30);
+    const yN = d3.scaleLinear([0, Math.max(...years.map(r => r.n)) * 1.1], [tA + hA, tA]);
+    /* the axis is set by the years below the highest; any year above it is drawn to the top and labelled */
+    const sortedBest = Yy.map(r => r.best).sort((a, b) => b - a);
+    const dMax = (sortedBest[1] || sortedBest[0]) * 1.12;
+    const yD = d3.scaleLinear([0, dMax], [tB + hB, tB]).clamp(true);
+    let s = `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(plainFill(cfg.top))}. ${esc(plainFill(cfg.bottom))}"><defs><pattern id="hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="4" fill="var(--bg-raise)"/><rect width="2" height="4" fill="var(--danger)" fill-opacity="0.6"/></pattern></defs>`;
+    s += `<text class="h" x="${narrow ? 8 : LM}" y="${tA - 12}">${esc(plainFill(cfg.top))}</text>`;
+    for (const v of yN.ticks(3).filter(v => v > 0)) s += `<line class="axis" x1="${LM}" x2="${w - RM}" y1="${yN(v)}" y2="${yN(v)}"/><text x="${LM - 6}" y="${yN(v) + 3.5}" text-anchor="end">${v}</text>`;
+    s += `<path class="nline" d="${d3.line().x(r => cx(r.year)).y(r => yN(r.n))(years)}"/>`;
+    s += `<circle class="dot" cx="${cx(lastY.year)}" cy="${yN(lastY.n)}" r="4"/><text class="lab" x="${cx(lastY.year) + 8}" y="${yN(lastY.n) + 4}">${esc(plainFill(cfg.end_n))}</text>`;
+    const bLines = wrapWords(plainFill(cfg.bottom), Math.floor((w - LM - RM) / 6.4));
+    bLines.forEach((ln, i) => { s += `<text class="h" x="${LM}" y="${tB - 14 - (bLines.length - 1 - i) * 13}">${esc(ln)}</text>`; });
+    for (const v of yD.ticks(4).filter(v => v > 0)) s += `<line class="axis" x1="${LM}" x2="${w - RM}" y1="${yD(v)}" y2="${yD(v)}"/><text x="${LM - 6}" y="${yD(v) + 3.5}" text-anchor="end">${v / 1000}k</text>`;
+    for (const r of Yy) {
+      const prov = r.year > D1 - PROV;
+      s += `<rect class="bar${prov ? ' prov' : ''}" x="${x(r.year).toFixed(1)}" y="${yD(r.best).toFixed(1)}" width="${bw.toFixed(1)}" height="${(yD(0) - yD(r.best)).toFixed(1)}" rx="${Math.min(2, bw / 2).toFixed(1)}"/>`;
+      if (r.best > dMax) s += `<text x="${(x(r.year) + bw + 4).toFixed(1)}" y="${tB + 10}">${esc(plainFill(cfg.peak, { peak_year: r.year, peak_best: fmtN(r.best) }))}</text>`;
+    }
+    s += `<text x="${x(T.d_first) - 5}" y="${tB + hB - 4}" text-anchor="end">${esc(plainFill(cfg.from))}</text>`;
+    s += `<polyline class="avg" points="${avgs.map(a => `${cx(a.year).toFixed(1)},${yD(a.v).toFixed(1)}`).join(' ')}"/>`;
+    const avgLines = [T.avg_latest].concat(narrow ? cfg.avg.split(/[ ]/) : [cfg.avg]);
+    avgLines.forEach((t, j) => { s += `<text${j ? '' : ' class="lab"'} x="${cx(avgLast.year) + 7}" y="${yD(avgLast.v) - 4 + j * 12}">${esc(t)}</text>`; });
+    s += `<line class="here" x1="${cx(Y1)}" x2="${cx(Y1)}" y1="${tA - 4}" y2="${tB + hB + 4}"/><text class="herel" x="${narrow ? cx(Y1) - 4 : cx(Y1) + 6}" y="${narrow ? tA - 12 : tB + hB + 14}"${narrow ? ' text-anchor="end"' : ''}>${esc(cfg.here)}</text>`;
+    for (let yr = Math.ceil(Y0 / 10) * 10; yr <= Y1 - (narrow ? 14 : 4); yr += narrow ? 20 : 10) s += `<text x="${cx(yr)}" y="${tB + hB + 14}" text-anchor="middle">${yr}</text>`;
+    s += `<line class="hover" id="ch-hover" x1="0" x2="0" y1="${tA}" y2="${tB + hB}" style="display:none"/><rect id="ch-catch" x="${LM}" y="${tA - 10}" width="${w - LM - RM}" height="${tB + hB - tA + 10}" fill="transparent"/></svg><div class="chart-read" id="ch-read" style="display:none"></div>`;
+    chartEl.innerHTML = s;
+    const catchEl = $('#ch-catch'), hov = $('#ch-hover'), read = $('#ch-read');
+    const byY = Object.fromEntries(years.map(r => [r.year, r])), byD = Object.fromEntries(Yy.map(r => [r.year, r]));
+    catchEl.addEventListener('pointermove', ev => {
+      const r = chartEl.getBoundingClientRect(); const yr = Math.max(Y0, Math.min(Y1, Math.floor(x.invert(ev.clientX - r.left))));
+      hov.style.display = ''; hov.setAttribute('x1', cx(yr)); hov.setAttribute('x2', cx(yr));
+      read.style.display = ''; read.textContent = yr + (byY[yr] ? ' · ' + byY[yr].n + ' conflicts' : '') + (byD[yr] ? ' · ' + fmtN(byD[yr].best) + ' deaths' : '');
+    });
+    catchEl.addEventListener('pointerleave', () => { hov.style.display = 'none'; read.style.display = 'none'; });
+  }
+  function wrapWords(text, n) { const out = []; let cur = ''; for (const w of text.split(' ')) { if ((cur + ' ' + w).trim().length > n) { out.push(cur.trim()); cur = w; } else cur += ' ' + w; } if (cur.trim()) out.push(cur.trim()); return out; }
+
+  /* step: the wars, one card each */
+  (function () {
+    const s = stepCfg('shape');
+    const strip = c => { const live = c.ties.filter(t => !t.ended); return tierIds.map(k => { const n = live.filter(t => t.tier === k).length; return n ? `<i class="s-${k}" style="flex:${n}" title="${esc(D.tiers[k].word)} ${n}"></i>` : ''; }).join(''); };
+    const label = c => { const live = c.ties.filter(t => !t.ended); return tierIds.map(k => D.tiers[k].word + ' ' + live.filter(t => t.tier === k).length).join(', '); };
+    ix('shape').innerHTML = `<div class="stripkey" aria-hidden="true">${tierIds.map(k => `<span><i class="s-${k}"></i>${esc(D.tiers[k].word)}</span>`).join('')}</div><div class="shapes" id="shapes">${wars.map(c => { const r = c.band ? GLYPH_R[c.band] : DOT_R; const helpers = new Set(c.ties.filter(t => !t.ended).map(t => t.backer)).size, sides = sidesOf(c); return `<button type="button" class="shape" data-id="${c.id}" aria-pressed="false" aria-label="${esc(c.name)}: ${esc(c.band ? D.bands[c.band] : '')}, ${sides} sides, ${helpers} ${helpers === 1 ? 'backer' : 'backers'}; lines ${esc(label(c))}"><svg viewBox="-11 -11 22 22" aria-hidden="true"><circle r="${r}"/></svg><span class="nm">${esc(c.name)}</span><span class="ln">${fill(helpers === 1 ? s.card_line_one : s.card_line, { sides, helpers })}</span><span class="strip" aria-hidden="true">${strip(c)}</span></button>`; }).join('')}</div>`;
+    for (const b of $$('#shapes .shape')) b.onclick = () => { S.shapeWar = S.shapeWar === b.dataset.id ? null : b.dataset.id; syncShapes(); if (S.step === idx('shape')) drawScene(true); };
+  })();
+  function syncShapes() { for (const b of $$('#shapes .shape')) { const on = b.dataset.id === S.shapeWar; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); } }
+
+  /* step: now it is yours */
+  let grid = null, gridLoading = null;
+  /* the event grid is fetched only when the last step needs its one number */
+  function loadGrid() {
+    if (gridLoading) return gridLoading;
+    gridLoading = get('/data/ucdp_grid.json').then(g => {
+      grid = g;
+      const placed = g.cells.filter(x => x.entry === 'ukraine').reduce((a, x) => a + x.best, 0);
+      T.ukr_unplaced = g.unplaced && g.unplaced.ukraine != null ? fmtN(g.unplaced.ukraine) : null;
+      T.ukr_total = uw('ukraine') ? fmtN(uw('ukraine').best) : (T.ukr_unplaced ? fmtN(g.unplaced.ukraine + placed) : null);
+      renderCannot();
+    }).catch(() => renderCannot());
+    return gridLoading;
+  }
+  function renderCannot() {
+    const items = C.cannot_show.filter(it => !it.needs || grid).map(it => it.from ? esc(quote(it) || '') : fill(it.text)).filter(Boolean);
+    const sf = stepCfg('free');
+    $('#cannot').innerHTML = items.slice(0, 3).map(h => `<li>${h}</li>`).join('') + (items.length > 3 ? `<li class="more"><details><summary>${esc(sf.cannot_more || 'more')}</summary><ul class="plain">${items.slice(3).map(h => `<li>${h}</li>`).join('')}</ul></details></li>` : '');
+  }
+  (function () {
+    const s = stepCfg('free');
+    const others = D.backers.filter(b => !b.hue && D.conflicts.some(c => c.ties.some(t => t.backer === b.id))).sort((a, b) => a.short.localeCompare(b.short));
+    ix('free').innerHTML = `<div class="hint"><span class="dk">${esc(s.hint_desktop)}</span><span class="ph">${esc(s.hint_phone)}</span></div>
+      <div class="chips" id="free-layers"><button type="button" class="chip" data-l="areas">${esc(s.layers.areas)}</button><button type="button" class="chip" data-l="lines">${esc(s.layers.lines)}</button><button type="button" class="chip" data-l="squares">${esc(s.layers.squares)}</button><button type="button" class="chip" id="free-reset">${esc(s.layers.reset)}</button></div>
+      <details class="morectl"><summary>${esc(s.more_controls)}</summary>
+      <div class="chips" id="free-tiers">${tierIds.map(k => `<button type="button" class="chip tier" data-t="${k}">${tierSample(k)}${esc(D.tiers[k].word)}</button>`).join('')}</div>
+      <div class="chips" id="free-states">${hued.map(b => `<button type="button" class="chip" data-b="${b.id}"><i class="sw" style="background:var(--b${b.hue})"></i>${esc(b.short)}</button>`).join('')}<select class="chip" id="free-other" aria-label="other states">${'<option value="">' + esc(LG.others) + '…</option>' + others.map(b => `<option value="${b.id}">${esc(b.short)}</option>`).join('')}</select></div>
+      </details>
+      <div class="info" id="free-info" aria-live="polite" hidden></div>
+      <ul class="links">${s.links.map(l => `<li><a href="${esc(l.url)}">${esc(l.label)}</a> <span>${fill(l.text)}</span></li>`).join('')}</ul>
+      <h3 class="cs">${esc(s.cannot_title)}</h3><ul class="plain" id="cannot"></ul>`;
+    renderCannot();
+    for (const b of $$('#free-layers .chip[data-l]')) b.onclick = () => { S.free[b.dataset.l] = !S.free[b.dataset.l]; syncFree(); drawScene(false); };
+    $('#free-reset').onclick = () => { S.free.war = null; S.free.backer = null; applyT(viewT('world'), true); syncFree(); drawScene(false); setTimeout(() => drawScene(false), reduced ? 0 : 760); };
+    for (const b of $$('#free-tiers .chip')) b.onclick = () => { const k = b.dataset.t; if (S.tiers.has(k)) { if (S.tiers.size > 1) S.tiers.delete(k); } else S.tiers.add(k); syncFree(); drawScene(false); };
+    for (const b of $$('#free-states .chip[data-b]')) b.onclick = () => { S.free.backer = S.free.backer === b.dataset.b ? null : b.dataset.b; S.free.war = null; syncFree(); drawScene(false); };
+    $('#free-other').onchange = ev => { S.free.backer = ev.target.value || null; S.free.war = null; syncFree(); drawScene(false); };
+  })();
+  function syncFree() {
+    const f = S.free, s = stepCfg('free');
+    for (const b of $$('#free-layers .chip[data-l]')) { const on = !!f[b.dataset.l]; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); }
+    for (const b of $$('#free-tiers .chip')) { const on = S.tiers.has(b.dataset.t); b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); }
+    for (const b of $$('#free-states .chip[data-b]')) { const on = f.backer === b.dataset.b; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); }
+    $('#free-other').value = f.backer && !backers[f.backer].hue ? f.backer : '';
+    const info = $('#free-info');
+    if (f.war) {
+      const c = byId[f.war];
+      const rows = c.ties.map(t => { const b = backers[t.backer], p = party(c, t.party); return `<li>${tierSample(t.tier, 'hue-' + hueOf(t.backer), 30, t.ended ? 'ended' : '')}<span><b>${esc(b.short)}</b> → ${esc(p ? p.short : t.party)} <span class="s">${esc(kindsText(t))} · ${esc(D.tiers[t.tier].word)}${t.stance ? ' · ' + esc(b.short) + ' ' + esc(t.stance) : ''}${t.ended ? ' · ended ' + esc(fmtMonth(t.ended)) : ''}</span></span></li>`; }).join('');
+      info.innerHTML = `<h3>${esc(c.name)}</h3><div class="s">${esc(c.since || '')}${c.kind === 'pressure' ? ' · ' + esc(LG.square) : c.band ? ' · ' + esc(D.bands[c.band]) : ''}</div><p>${esc(c.summary || '')}</p><ul class="rows">${rows}</ul><a href="/conflicts.html#c=${esc(c.id)}">${esc(c.name)} ${esc(s.info_link)} &rsaquo;</a>`;
+      info.hidden = false;
+    } else if (f.backer) {
+      const b = backers[f.backer];
+      info.innerHTML = `<h3>${esc(b.name)}</h3>${stateLines(f.backer, stepCfg('same')).map(x => `<p class="line">${esc(x)}</p>`).join('')}<a href="/conflicts.html#b=${esc(b.id)}">${esc(b.short)} ${esc(s.info_link)} &rsaquo;</a>`;
+      info.hidden = false;
+    } else info.hidden = true;
+  }
+  syncFree();
+
+  /* ================= moving between steps ================= */
+  const rail = $('#rail');
+  rail.innerHTML = STEPS.map((s, i) => `<button type="button" data-i="${i}" data-name="${esc(s.name)}" aria-label="${esc((i === 0 ? 'start' : 'step ' + i) + ': ' + s.name)}"></button>`).join('');
+  for (const b of $$('button', rail)) b.onclick = () => go(+b.dataset.i);
+  const secs = $$('.step', stepsEl);
+  const stageBottom = () => $('#stage').getBoundingClientRect().bottom;
+  const lineY = () => phone() ? (stageBottom() + innerHeight) / 2 : innerHeight * 0.5;
+  let ioLock = 0;
+  function go(i, instant) {
+    if (i < 0 || i >= N) return;
+    const card = secs[i].querySelector('.card'), r = card.getBoundingClientRect();
+    /* on a phone the card's top sits just under the map; on a wide screen the card is centred, or its top shown if it is tall */
+    const target = phone() ? scrollY + r.top - (52 + $('#stage').offsetHeight + 14)
+      : r.height < innerHeight * 0.8 ? scrollY + r.top + r.height / 2 - lineY() : scrollY + r.top - 80;
+    ioLock = Date.now() + (instant || reduced ? 300 : 1000);
+    scrollTo({ top: Math.max(0, target), behavior: instant || reduced ? 'auto' : 'smooth' });
+    activate(i, !!instant);
+  }
+  function writeHash() {
+    const id = STEPS[S.step].id;
+    history.replaceState(null, '', location.pathname + location.search + '#s=' + id + (id === 'same' ? (S.pair ? '&pair' : '&b=' + S.backer) : ''));
+  }
+  function activate(i, instant) {
+    if (i === S.step) return;
+    S.step = i;
+    secs.forEach((s, j) => s.classList.toggle('active', j === i));
+    for (const b of $$('button', rail)) { const j = +b.dataset.i; b.classList.toggle('on', j === i); b.classList.toggle('seen', j < i); if (j === i) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current'); }
+    const id = STEPS[i].id;
+    if (id === 'help' && S.sub.help === 'sudan') $('#help-list').style.display = '';
+    if (id === 'free') { syncFree(); loadGrid(); }
+    writeHash();
+    drawScene(!instant);
+    say((i === 0 ? 'start' : 'step ' + i + ' of ' + (N - 1)) + ': ' + STEPS[i].title);
+  }
+  /* the step whose box crosses the reading line sets the map; after a jump, wait for the scroll to land, then look again */
+  let io = null, lockTimer = null;
+  function syncToLine() {
+    if (Date.now() < ioLock) { clearTimeout(lockTimer); lockTimer = setTimeout(syncToLine, ioLock - Date.now() + 20); return; }
+    const y = lineY();
+    const i = secs.findIndex(sec => { const r = sec.getBoundingClientRect(); return r.top <= y && r.bottom > y; });
+    if (i >= 0) activate(i, false);
+  }
+  function buildIO() {
+    if (io) io.disconnect();
+    const y = lineY(), hgt = innerHeight;
+    io = new IntersectionObserver(() => syncToLine(), { rootMargin: `-${Math.round(y)}px 0px -${Math.max(0, Math.round(hgt - y - 1))}px 0px` });
+    for (const s of secs) io.observe(s);
+  }
+  let scrollT = null;
+  addEventListener('scroll', () => { clearTimeout(scrollT); scrollT = setTimeout(syncToLine, 80); }, { passive: true });
+  addEventListener('keydown', ev => {
+    if (ev.target.closest && ev.target.closest('input, select, textarea, [contenteditable]')) return;
+    if (ev.altKey || ev.ctrlKey || ev.metaKey) return;
+    if (ev.key === 'ArrowRight') { ev.preventDefault(); go(Math.min(N - 1, S.step + 1)); }
+    if (ev.key === 'ArrowLeft') { ev.preventDefault(); go(Math.max(0, S.step - 1)); }
+  });
+  /* a resize redraws; a change of width (a turned phone, a resized window) also brings the active card back into place.
+     Height-only changes are a phone's address bar and are left alone. */
+  let rz = null, lastW = innerWidth;
+  addEventListener('resize', () => { setDashes(); clearTimeout(rz); rz = setTimeout(() => {
+    buildIO(); lastViewKey = null; for (const k in areaBox) delete areaBox[k];
+    if (S.step >= 0) { drawScene(false); if (innerWidth !== lastW) { const i = S.step; S.step = -1; go(i, true); } }
+    lastW = innerWidth;
+  }, 160); });
+  $('#skip').addEventListener('click', ev => { ev.preventDefault(); go(Math.max(0, S.step), true); const h = secs[Math.max(0, S.step)].querySelector('h2'); h.focus({ preventScroll: true }); });
+
+  /* credit: what this page uses, with the citations UCDP asks for */
+  const a = (u, t) => `<a href="${u}" target="_blank" rel="noopener">${t}</a>`;
+  $('#attribution').innerHTML = 'Wars, sides and lines of help are this site\'s own record, data/conflicts.json, with every source on ' + '<a href="/conflicts.html">the full map</a>. '
+    + 'UCDP figures are from the Uppsala Conflict Data Program, ' + a('https://ucdp.uu.se', 'ucdp.uu.se') + ', used under ' + a('https://creativecommons.org/licenses/by/4.0/', 'CC BY 4.0') + '. '
+    + 'Deaths by war: UCDP Georeferenced Event Dataset and Candidate Events Dataset, ' + esc(U.versions || '') + ': Sundberg and Melander, Introducing the UCDP Georeferenced Event Dataset, Journal of Peace Research 50(4), 2013; Hegre, Croicu, Eck and Högbladh, Introducing the UCDP Candidate Events Dataset, Research &amp; Politics 7(3), 2020. '
+    + 'Armed conflicts by year, ' + esc(T.n_first) + ' to ' + esc(T.ucdp_year) + ': UCDP/PRIO Armed Conflict Dataset, version ' + esc(T.acd_version || '') + ': Gleditsch, Wallensteen, Eriksson, Sollenberg and Strand, Armed Conflict 1946–2001: A New Dataset, Journal of Peace Research 39(5), 2002. '
+    + 'Deaths by year, ' + esc(T.d_first) + ' to ' + esc(T.d_last) + ': UCDP Organized Violence Country-Year Dataset, version ' + esc(Y.version || '') + '. '
+    + 'The current UCDP versions are described in Davies, Pettersson and Öberg, Organized violence 1989–2025, and violent political protests, Journal of Peace Research, 2026, doi 10.1093/jopres/xjag046. '
+    + 'UCDP is part of and funded by DEMSCORE, national research infrastructure grant 2021-00162 from the Swedish Research Council. '
+    + 'Base map and province shapes: Natural Earth (public domain), Equal Earth projection. Drawn with ' + a('https://d3js.org', 'd3') + '.';
+  $('#report-error').innerHTML = esc(D.report_error || '') + ' ' + a('https://github.com/daseme/warnotwar/issues', 'github.com/daseme/warnotwar/issues') + '.';
+  $('#credit-title').textContent = C.credit_title || ''; $('#report-title').textContent = C.report_title || '';
+  $('#stamp').innerHTML = 'Wars and lines as of ' + esc(T.as_of) + ' &middot; UCDP ' + esc(U.versions) + ', pulled ' + esc(T.ucdp_pulled) + ' &middot; data/conflicts.json, data/war_areas.json, data/ucdp.json, data/level.json, data/ucdp_years.json, data/ucdp_grid.json, data/wars.json';
+  $('#after').hidden = false;
+
+  /* ---- start: a deep link #s=<id> lands on that step ---- */
+  const q = new URLSearchParams(location.hash.replace(/^#/, ''));
+  if (q.get('b') && backers[q.get('b')] && backers[q.get('b')].hue) S.backer = q.get('b');
+  if (q.has('pair')) S.pair = true;
+  syncSame();
+  const start = Math.max(0, idx(q.get('s') || ''));
+  requestAnimationFrame(() => { buildIO(); if (start > 0) go(start, true); else activate(0, true); });
+  setTimeout(() => { if (S.step < 0) activate(start, true); }, 400);
+  }
+})();
+</script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d19fe92168a647a587302167966fb3c7"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
