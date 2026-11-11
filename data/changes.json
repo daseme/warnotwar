@@ -1,7 +1,7 @@
 {
  "rule": "Computed from every saved version of the data file, one line per change a reader would care about, dated by the save. Hand-written reasons are in the corrections log; this list has none.",
  "first": "2026-10-11",
- "built": "2026-11-02",
+ "built": "2026-11-11",
  "changes": [
   {
    "date": "2026-10-11",

@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-08",
+ "as_of": "2026-11-11",
  "status": "entered",
  "rule": "A war is on the map if organized fighting killed roughly 1,000 or more people in the past twelve months, or it is an active war between states, and an outside state fights in it or backs a side.",
  "color_rule": "Five states are colored: those that fight in or back a side in the most wars. The rest are grey and labelled.",
@@ -7910,7 +7910,7 @@
   }
  ],
  "areas_rule": "The colored view shades provinces that saw ground fighting, sieges or an air campaign in the past twelve months. A province struck only by the occasional long-range drone or missile is not shaded. Provinces are the unit the conflict trackers report, so the shading follows their borders, not front lines.",
- "tier_note": "The line answers one question: how do we know? The more broken the line, the less the backer has acknowledged. These words grade the evidence for a line, never a speaker; the Word keeps one verb for everyone.",
+ "tier_note": "The line answers one question: how do we know? The more broken the line, the weaker the public evidence for it. These words grade the evidence for a line, never a speaker; the Word keeps one verb for everyone.",
  "naming_rule": "A state is named as it registers itself at the United Nations, in the short English form: Türkiye, Myanmar, Czechia, Eswatini. Armed groups keep their common name, with their own name beside it.",
  "pressure_rule": "A state is also on the map where it uses military force or a blockade against another state, or on its territory, without sustained fighting: strikes, raids, seizures, sinkings. These are drawn as hollow squares, with no lines and no death band; who helps whom is on the card. One is entered only when the acting state says so itself.",
  "participants_rule": "The participants view shades whole countries by their part: darkest where there is fighting on its own soil, lighter for a state in a war or using force from outside its borders, lightest for a state that backs a side. A country takes its darkest shade. Pick a state and only its wars are shaded, those it fights in or backs now, with its own country outlined. A tie that has ended does not count here; its line still shows, dotted. Pick a war and only that war is shaded. The colored view narrows the same way.",
