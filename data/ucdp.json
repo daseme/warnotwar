@@ -2750,15 +2750,9 @@
    },
    "sudan": {
     "ucdp": [],
-    "ours": [
-     "E. Libya",
-     "UAE"
-    ],
+    "ours": [],
     "only_ucdp": [],
-    "only_ours": [
-     "E. Libya",
-     "UAE"
-    ]
+    "only_ours": []
    },
    "gaza": {
     "ucdp": [],

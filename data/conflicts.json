@@ -27,6 +27,7 @@
   "parts": "parts for weapons",
   "money": "money",
   "troops": "troops",
+  "fighters": "hired fighters",
   "police": "police",
   "training": "training",
   "intel": "intelligence",
@@ -975,7 +976,7 @@
      "kinds": [
       "arms",
       "money",
-      "troops"
+      "fighters"
      ],
      "tier": "shown",
      "stance": "denies it all",
@@ -1066,8 +1067,7 @@
      "party": "rsf",
      "kinds": [
       "transit",
-      "arms",
-      "troops"
+      "arms"
      ],
      "tier": "shown",
      "stance": "denies it",
@@ -1192,10 +1192,11 @@
      "sources": [
       {
        "class": "backer",
-       "text": "Egyptian government statements; Sisi's call with Burhan to activate the 1976 joint defence pact, December 2025",
-       "date": "2025-12",
+       "text": "Egyptian Foreign Minister Badr Abdelatty, 14 January 2026: Egypt \"will not stand idly by and will not hesitate to take the necessary measures\" to preserve Sudan's unity. The same report says Sisi's office had said Cairo could activate a joint defence agreement after his meeting with Burhan the month before. AFP, carried by The Peninsula",
+       "date": "2026-01",
        "url": "https://thepeninsulaqatar.com/article/14/01/2026/egypt-says-wont-hesitate-to-take-necessary-measures-to-preserve-sudan-unity",
-       "publisher": "Egyptian presidency"
+       "publisher": "Egyptian foreign ministry",
+       "via": "AFP"
       },
       {
        "class": "recipient",
@@ -1253,14 +1254,14 @@
        "text": "New York Times investigation of the East Oweinat drone base, early 2026",
        "date": "2026",
        "url": null,
-       "publisher": "Egyptian presidency"
+       "publisher": "New York Times"
       },
       {
        "class": "press",
        "text": "Middle East Eye, 6 November 2025",
        "date": "2025-11",
        "url": "https://www.middleeasteye.net/news/egypt-and-turkey-move-support-saf-following-fall-el-fasher",
-       "publisher": "Sudanese government"
+       "publisher": "Middle East Eye"
       }
      ],
      "note": "Turkish-made Akinci drones fly against the RSF from an Egyptian desert base at East Oweinat, the New York Times found in early 2026 from satellite images and flight data.",
@@ -1603,7 +1604,7 @@
    "ucdp": {
     "against": "same band",
     "note": "12,269 killed in fighting, the army against the RSF and its partner force, and 62,775 civilians killed deliberately, most at el-Fasher. The band counts both.",
-    "troops_note": "UCDP codes no troops in Sudan; our UAE and eastern Libya lines carry hired fighters and transit, not state troops."
+    "troops_note": "UCDP codes no troops in Sudan, and no line here carries troops. The UAE's line carries hired fighters."
    },
    "counted_by": [
     "tracker",
@@ -2424,7 +2425,7 @@
        "text": "UN Special Rapporteur on Myanmar, The Billion Dollar Death Trade, May 2023",
        "date": "2023-05",
        "url": "https://www.ohchr.org/en/documents/thematic-reports/ahrc53crp2-billion-dollar-death-trade-international-arms-networks-enable",
-       "publisher": "Chinese foreign ministry"
+       "publisher": "UN Special Rapporteur"
       },
       {
        "class": "research",
@@ -4455,7 +4456,7 @@
        "text": "Reuters, 17 September 2025, citing two senior Druze officials and a Western intelligence source",
        "date": "2025-09",
        "url": "https://www.haaretz.com/israel-news/2025-09-17/ty-article/.premium/israel-reportedly-supplying-weapons-and-salaries-to-druze-in-southern-syria/00000199-53d6-dc75-a1d9-57deec260000",
-       "publisher": "Israel Defense Forces"
+       "publisher": "Reuters"
       },
       {
        "class": "press",
@@ -5462,7 +5463,7 @@
        "text": "Wall Street Journal, 16 May 2026, on secret Saudi and UAE strikes on Iran",
        "date": "2026-05",
        "url": null,
-       "publisher": "UAE Ministry of Defence"
+       "publisher": "The Wall Street Journal"
       },
       {
        "class": "reference",
@@ -5517,7 +5518,7 @@
        "text": "Times of Israel, 1 March 2026, Saudi air defences intercept Iranian missiles aimed at Riyadh airport and Prince Sultan Air Base",
        "date": "2026-03",
        "url": "https://www.timesofisrael.com/liveblog_entry/saudi-arabia-intercepts-missile-attacks-on-airport-base-report/",
-       "publisher": "Saudi Ministry of Defense"
+       "publisher": "Times of Israel"
       },
       {
        "class": "press",
@@ -8121,6 +8122,18 @@
    "entry": "us-boats",
    "what": "Two source texts corrected on the El Salvador tie: the first now says El Mundo carries it, and the New York Times item no longer carries El Mundo's link.",
    "why": "A source named one publisher and linked another."
+  },
+  {
+   "date": "2026-11-11",
+   "entry": "sudan",
+   "what": "The UAE's line to the RSF now says hired fighters where it said troops, and eastern Libya's line no longer says troops. Egypt's on-the-record source now names the statement its link carries: the foreign minister on 14 January 2026, by AFP.",
+   "why": "The UN mission found hired Colombian fighters reaching the RSF through networks linked to the UAE, not the UAE's own soldiers. The Egyptian source was dated December 2025 and linked a January 2026 report."
+  },
+  {
+   "date": "2026-11-11",
+   "entry": "sudan, syria, gulf, myanmar",
+   "what": "Six sources now name the outlet that published them: the New York Times and Middle East Eye on Egypt's drones for Sudan's army, Reuters on Israel's arms and pay for Druze fighters, the Wall Street Journal on the UAE's strikes on Iran, the Times of Israel on Saudi interceptions, and the UN Special Rapporteur on China's arms to Myanmar's army.",
+   "why": "Each carried the publisher of a neighbouring source: a government's name on a press report or a UN report."
   }
  ],
  "ucdp_note": "UCDP counts deaths in fighting between a state and an opponent, deaths in fighting between armed groups, and civilians killed deliberately, each with a low, best and high. UCDP calls a conflict a war at 1,000 battle deaths in a year, and minor below that. The figures here are our own sums from data/ucdp.json, built by scripts/build_ucdp.py from the yearly file and the monthly candidate files, pulled after the 20th of each month. A few UCDP rows carry a high below their best; they are summed as given. A flag is UCDP's own mark that a row still needs a check on its deaths, its sides, its place or its source.",
