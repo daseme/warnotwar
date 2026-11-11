@@ -404,8 +404,8 @@
   },
   {
    "id": "britain",
-   "name": "Britain",
-   "short": "Britain",
+   "name": "United Kingdom",
+   "short": "U.K.",
    "lon": -0.1,
    "lat": 51.5,
    "iso": "GBR"
@@ -2326,7 +2326,7 @@
    "ucdp": {
     "against": "same band",
     "note": "UCDP treats the Houthis as the government, since they hold the capital, and the Presidential Leadership Council as the rebel. Saudi Arabia, the UAE and Bahrain send troops on the council's side.",
-    "troops_note": "UCDP's extra names are the states in the shipping coalition that struck the Houthis with the U.S. and Britain; UCDP counts the U.S. as a party to that war, not a backer."
+    "troops_note": "UCDP's extra names are the states in the shipping coalition that struck the Houthis with the U.S. and the United Kingdom; UCDP counts the U.S. as a party to that war, not a backer."
    },
    "counted_by": [
     "tracker",
@@ -2666,7 +2666,7 @@
      "id": "drc",
      "name": "Congolese government and allied militias",
      "side": "A",
-     "short": "Congo"
+     "short": "government"
     },
     {
      "id": "m23",
@@ -2954,7 +2954,7 @@
    "areas_source": "Wikipedia Timeline of the M23 campaign (2026); 2026 in the DRC",
    "areas_url": "https://en.wikipedia.org/wiki/Timeline_of_the_M23_campaign_(2026)",
    "start": "2022-03",
-   "short": "Congo",
+   "short": "E. Congo",
    "turns": [],
    "ucdp": {
     "against": "same band",
@@ -7452,7 +7452,7 @@
       },
       {
        "class": "backer",
-       "text": "U.K. Ministry of Defence, via Reuters, 7 January 2026: Britain supported the U.S. mission to seize the tanker Marinera",
+       "text": "U.K. Ministry of Defence, via Reuters, 7 January 2026: the United Kingdom supported the U.S. mission to seize the tanker Marinera",
        "date": "2026-01",
        "url": "https://www.bairdmaritime.com/security/naval/britain-confirms-role-in-us-led-seizure-of-russian-flagged-tanker",
        "publisher": "U.K. Ministry of Defence",
@@ -7912,7 +7912,7 @@
  ],
  "areas_rule": "The colored view shades provinces that saw ground fighting, sieges or an air campaign in the past twelve months. A province struck only by the occasional long-range drone or missile is not shaded. Provinces are the unit the conflict trackers report, so the shading follows their borders, not front lines.",
  "tier_note": "The line answers one question: how do we know? The more broken the line, the weaker the public evidence for it. These words grade the evidence for a line, never a speaker; the Word keeps one verb for everyone.",
- "naming_rule": "A state is named as it registers itself at the United Nations, in the short English form: Türkiye, Myanmar, Czechia, Eswatini. Armed groups keep their common name, with their own name beside it.",
+ "naming_rule": "A state goes by its common English name, and by its own name where it has changed it: Türkiye, Myanmar, Czechia, Eswatini. Armed groups keep their common name, with their own name beside it.",
  "pressure_rule": "A state is also on the map where it uses military force or a blockade against another state, or on its territory, without sustained fighting: strikes, raids, seizures, sinkings. These are drawn as hollow squares, with no lines and no death band; who helps whom is on the card. One is entered only when the acting state says so itself.",
  "participants_rule": "The participants view shades whole countries by their part: darkest where there is fighting on its own soil, lighter for a state in a war or using force from outside its borders, lightest for a state that backs a side. A country takes its darkest shade. Pick a state and only its wars are shaded, those it fights in or backs now, with its own country outlined. A tie that has ended does not count here; its line still shows, dotted. Pick a war and only that war is shaded. The colored view narrows the same way.",
  "motion_rule": "Step back through the year. A war appears in the month its fighting began; a line in the month the help began. A line with no start month is older than this year and is there from the first frame, faint. A ring marks a war with something new that month; wars with nothing new are dimmed. A heavy line begins that month; a medium line began earlier in the year. Lines are drawn as they are known today, not as they were known at the time. Circle size is the year's deaths and does not change with the month. One thing after another is not one thing because of another.",
@@ -8134,6 +8134,12 @@
    "entry": "sudan, syria, gulf, myanmar",
    "what": "Six sources now name the outlet that published them: the New York Times and Middle East Eye on Egypt's drones for Sudan's army, Reuters on Israel's arms and pay for Druze fighters, the Wall Street Journal on the UAE's strikes on Iran, the Times of Israel on Saudi interceptions, and the UN Special Rapporteur on China's arms to Myanmar's army.",
    "why": "Each carried the publisher of a neighbouring source: a government's name on a press report or a UN report."
+  },
+  {
+   "date": "2026-11-11",
+   "entry": "names",
+   "what": "The naming rule now says what the file does: a state goes by its common English name, and by its own name where it has changed it. Britain is entered as the United Kingdom. In Eastern Congo the government's side is labelled government, not Congo.",
+   "why": "The rule said states were named as registered at the United Nations, which the file did not follow for Russia, Iran or North Korea. Congo alone can mean either of two states."
   }
  ],
  "ucdp_note": "UCDP counts deaths in fighting between a state and an opponent, deaths in fighting between armed groups, and civilians killed deliberately, each with a low, best and high. UCDP calls a conflict a war at 1,000 battle deaths in a year, and minor below that. The figures here are our own sums from data/ucdp.json, built by scripts/build_ucdp.py from the yearly file and the monthly candidate files, pulled after the 20th of each month. A few UCDP rows carry a high below their best; they are summed as given. A flag is UCDP's own mark that a row still needs a check on its deaths, its sides, its place or its source.",

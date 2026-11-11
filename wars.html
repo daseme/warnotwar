@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="A guided first look at the wars being fought now: where they are, how big, who fights, who helps, how anyone knows, and whether this level is normal.">
+<meta name="description" content="A first look at the wars being fought now: how many, where, how big, who fights, who helps, and how this year compares with earlier years.">
 <title>Today's wars — an introduction</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,7 +29,7 @@
     --rate: #7aa8dd; --gold: #c9a94f; --danger: #d06a5c;
     --chip-on-bg: #efe8d8; --chip-on-ink: #17140f;
     --b1: #3987e5; --b2: #d95926; --b3: #199e70; --b4: #c454b0; --b5: #724aab;
-    --land: rgba(239,232,216,0.07); --land-line: rgba(239,232,216,0.2); --grat: rgba(239,232,216,0.05);
+    --land: rgba(239,232,216,0.13); --land-line: rgba(239,232,216,0.3); --grat: rgba(239,232,216,0.05);
   }
   :root {
     --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
@@ -41,7 +41,7 @@
     background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased;
     transition: background 0.25s ease, color 0.25s ease; overflow-x: clip;
   }
-  body { padding: 52px 0 0; }
+  body { padding: 52px 0 0; -webkit-tap-highlight-color: transparent; }
   ::selection { background: var(--rate); color: var(--bg); }
   a { color: var(--ink-80); text-underline-offset: 3px; }
   a:hover { color: var(--ink); }
@@ -86,17 +86,17 @@
   }
 
   /* ---- hero ---- */
-  .hero { max-width: 760px; margin: 0 auto; text-align: center; padding: 44px 24px 8px; }
-  .hero-kicker { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2em; }
-  h1 { font-size: clamp(2rem, 4.6vw, 3.1rem); font-weight: 500; letter-spacing: -0.015em; line-height: 1.12; margin: 0 0 0.45em; }
-  .subtitle { color: var(--ink-80); font-size: 1.06rem; line-height: 1.7; margin: 0 auto 0.6em; max-width: 36em; }
+  .hero { max-width: 760px; margin: 0 auto; text-align: center; padding: 26px 24px 4px; }
+  .hero-kicker { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8em; }
+  h1 { font-size: clamp(1.9rem, 4vw, 2.7rem); font-weight: 500; letter-spacing: -0.015em; line-height: 1.12; margin: 0 0 0.35em; }
+  .subtitle { color: var(--ink-80); font-size: 1.02rem; line-height: 1.6; margin: 0 auto 0.4em; max-width: 38em; }
   .asof { font-family: var(--mono); font-size: 10.5px; color: var(--ink-45); letter-spacing: 0.04em; line-height: 1.7; }
   #load-error { display: none; max-width: 760px; margin: 2em auto; font-family: var(--mono); font-size: 12px; line-height: 1.7; padding: 12px 16px; color: var(--danger); border: 1px solid color-mix(in srgb, var(--danger) 40%, transparent); background: color-mix(in srgb, var(--danger) 6%, transparent); }
 
   /* ---- the scrolly: a sticky stage and a column of steps ---- */
-  .scrolly { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 0 56px; max-width: 1440px; margin: 24px auto 0; padding: 0 32px; }
-  .stage { position: sticky; top: 64px; height: calc(100vh - 80px); height: calc(100svh - 80px); display: flex; flex-direction: column; justify-content: center; min-width: 0; z-index: 4; }
-  .mapbox { position: relative; flex: 0 1 auto; width: 100%; aspect-ratio: 1000 / 640; max-height: calc(100% - 64px); min-height: 0; background: var(--bg-raise); border: 1px solid var(--ink-10); overflow: hidden; }
+  .scrolly { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 0 56px; max-width: 1440px; margin: 18px auto 0; padding: 0 32px; align-items: start; }
+  .stage { position: sticky; top: 64px; display: flex; flex-direction: column; justify-content: flex-start; min-width: 0; z-index: 4; }
+  .mapbox { position: relative; flex: 0 1 auto; width: 100%; aspect-ratio: 1000 / 560; max-height: calc(100vh - 150px); max-height: calc(100svh - 150px); min-height: 0; background: var(--bg-raise); border: 1px solid var(--ink-10); overflow: hidden; }
   svg#map { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; transition: opacity 0.5s ease; }
   svg#map.free { cursor: grab; }
   svg#map.free:active { cursor: grabbing; }
@@ -107,6 +107,7 @@
   .outline { fill: none; stroke: var(--ink-18); stroke-width: 0.7; vector-effect: non-scaling-stroke; }
   .area { fill: var(--danger); fill-opacity: 0.22; stroke: var(--danger); stroke-opacity: 0.55; stroke-width: 0.5; vector-effect: non-scaling-stroke; pointer-events: none; opacity: 0; transition: opacity 0.6s ease; }
   .area.on { opacity: 1; }
+  [data-theme="ink"] .area { stroke-opacity: 0.9; fill-opacity: 0.28; }
   .area.faint { opacity: 0.45; }
 
   .mark { cursor: default; }
@@ -129,16 +130,16 @@
   @keyframes pulse { 0% { stroke-width: 1.6; } 40% { stroke-width: 5; stroke: var(--ink); } 100% { stroke-width: 1.6; } }
 
   /* lines: the tier is in the line itself, the hue is the backer */
-  .arc { fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; pointer-events: none; transition: opacity 0.3s ease; }
-  .arc.tier-shown { opacity: 0.9; } .arc.tier-reported { opacity: 0.75; } .arc.tier-claimed { opacity: 0.65; }
-  .arc.ended { opacity: 0.4; }
-  .arc.faint { opacity: 0.22; stroke-width: 1.1; }
+  .arc { fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; pointer-events: none; transition: opacity 0.3s ease; }
+  .arc.tier-open { stroke-width: 2.4; } .arc.tier-shown { stroke-width: 1.9; stroke-linecap: butt; opacity: 0.95; } .arc.tier-reported { stroke-width: 1.5; stroke-linecap: butt; opacity: 0.9; } .arc.tier-claimed { stroke-width: 1.2; opacity: 0.9; }
+  .arc.ended { opacity: 0.3; }
+  .arc.faint { opacity: 0.22; }
   .arc.faint.tier-shown, .arc.faint.tier-reported, .arc.faint.tier-claimed { opacity: 0.17; }
   .arc.faint.ended { opacity: 0.1; }
-  .arc.mid { opacity: 0.6; stroke-width: 1.3; }
+  .arc.mid { opacity: 0.6; }
   .arc.mid.tier-shown { opacity: 0.55; } .arc.mid.tier-reported { opacity: 0.48; } .arc.mid.tier-claimed { opacity: 0.45; } .arc.mid.ended { opacity: 0.22; }
-  .arc.lo { opacity: 0.07 !important; stroke-width: 1; }
-  .arc.hi { opacity: 1 !important; stroke-width: 2.4; }
+  .arc.lo { opacity: 0.15 !important; }
+  .arc.hi { opacity: 1 !important; }
   .arc-hit { fill: none; stroke: transparent; stroke-width: 10; pointer-events: stroke; vector-effect: non-scaling-stroke; }
   .hue-0 { stroke: var(--ink-60); } .hue-1 { stroke: var(--b1); } .hue-2 { stroke: var(--b2); } .hue-3 { stroke: var(--b3); } .hue-4 { stroke: var(--b4); } .hue-5 { stroke: var(--b5); }
   .fhue-0 { fill: var(--ink-60); } .fhue-1 { fill: var(--b1); } .fhue-2 { fill: var(--b2); } .fhue-3 { fill: var(--b3); } .fhue-4 { fill: var(--b4); } .fhue-5 { fill: var(--b5); }
@@ -164,13 +165,15 @@
   .chart .bar.prov { fill: url(#hatch); fill-opacity: 1; }
   .chart .avg { fill: none; stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
   .chart .here { stroke: var(--gold); stroke-width: 1; stroke-dasharray: 3 3; }
+  .chart .avgref { stroke: var(--ink-45); stroke-width: 1; stroke-dasharray: 2 3; }
+  .chart text.avgref-l { fill: var(--ink-60); font-size: 9.5px; }
   .chart text.herel { fill: var(--gold); }
   .chart .hover { stroke: var(--ink-45); stroke-width: 1; }
   .chart .dot { fill: var(--ink); stroke: var(--bg-raise); stroke-width: 2; }
   .chart-read { position: absolute; right: 12px; top: 8px; font-family: var(--mono); font-size: 10.5px; color: var(--ink-80); background: color-mix(in srgb, var(--bg-raise) 90%, transparent); padding: 2px 6px; pointer-events: none; }
 
   /* the legend grows one mark at a time */
-  .legend { display: flex; flex-wrap: wrap; gap: 3px 14px; align-items: center; min-height: 30px; padding: 8px 2px 0; font-family: var(--mono); font-size: 10px; line-height: 1.5; color: var(--ink-80); transition: opacity 0.3s ease; }
+  .legend { display: flex; flex-wrap: wrap; gap: 3px 12px; align-items: center; min-height: 28px; padding: 7px 2px 0; font-family: var(--mono); font-size: 10px; line-height: 1.5; color: var(--ink-80); transition: opacity 0.3s ease; }
   .legend .k { color: var(--ink-45); text-transform: uppercase; letter-spacing: 0.14em; font-size: 9px; }
   .legend .it svg { width: 22px; }
   .keybtn { display: none; align-items: center; flex-shrink: 0; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; background: none; border: 1px solid var(--ink-30); color: var(--ink); padding: 4px 12px; cursor: pointer; }
@@ -186,7 +189,7 @@
   .legend svg { width: 30px; height: 8px; overflow: visible; }
   .legend .arc { opacity: 1 !important; }
   .g { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--danger); flex-shrink: 0; }
-  .g.s1 { width: 8px; height: 8px; } .g.s2 { width: 11px; height: 11px; } .g.s3 { width: 15px; height: 15px; }
+  .g.s1 { width: 6px; height: 6px; } .g.s2 { width: 10px; height: 10px; } .g.s3 { width: 16px; height: 16px; }
   .g.fill { width: 13px; height: 9px; border-radius: 0; background: color-mix(in srgb, var(--danger) 22%, transparent); border: 1px solid color-mix(in srgb, var(--danger) 55%, transparent); }
   .g.sq { width: 10px; height: 10px; border-radius: 0; background: none; border: 1.5px solid var(--danger); }
   .g.side { width: 24px; height: 11px; border-radius: 6px; background: var(--bg-raise); border: 1px solid var(--ink-45); }
@@ -203,15 +206,15 @@
   .rail button:hover::after, .rail button:focus-visible::after { opacity: 1; }
 
   /* the steps */
-  .steps { min-width: 0; padding-bottom: 28vh; }
-  .step { min-height: 92vh; display: flex; align-items: center; padding: 6vh 0; }
-  .step:first-child { min-height: 70vh; padding-top: 0; align-items: flex-start; }
+  .steps { min-width: 0; padding-bottom: 40vh; }
+  .step { min-height: 100vh; display: flex; align-items: flex-start; padding: 0 0 8vh; }
+  .step .card { position: sticky; top: 64px; }
   .step.last { min-height: 0; }
-  .card { width: 100%; max-width: 31em; background: var(--bg-raise); border: 1px solid var(--ink-10); padding: 22px 24px 18px; transition: border-color 0.3s ease, box-shadow 0.3s ease; }
+  .card { width: 100%; max-width: 31em; background: var(--bg-raise); border: 1px solid var(--ink-10); padding: 18px 22px 14px; transition: border-color 0.3s ease, box-shadow 0.3s ease; }
   .step.active .card { border-color: var(--ink-30); }
-  .kicker { font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .kicker { font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
   .card h2 { font-size: 1.55rem; font-weight: 500; letter-spacing: -0.005em; line-height: 1.2; margin: 0 0 0.5em; }
-  .card p { font-size: 1.04rem; line-height: 1.7; color: var(--ink-80); margin: 0 0 0.8em; }
+  .card p { font-size: 1.02rem; line-height: 1.62; color: var(--ink-80); margin: 0 0 0.7em; }
   .card p.q { color: var(--ink); margin-top: 0.4em; }
   .reveal { margin-top: 6px; }
   .reveal[hidden] { display: none; }
@@ -226,9 +229,9 @@
   .btn:hover, .chip:hover { border-color: var(--ink); }
   .btn.go { background: var(--chip-on-bg); color: var(--chip-on-ink); border-color: var(--chip-on-bg); }
   .btn.quiet { border-color: transparent; color: var(--ink-60); text-decoration: underline; text-underline-offset: 3px; padding-left: 4px; padding-right: 4px; }
-  .chip.on, .seg button[aria-pressed="true"] { background: var(--chip-on-bg); color: var(--chip-on-ink); border-color: var(--chip-on-bg); }
+  .chip.on, .seg button[aria-pressed="true"] { background: var(--ink-10); color: var(--ink); border-color: var(--ink); box-shadow: inset 0 0 0 0.5px var(--ink); }
   .chip .sw, .row-sw { width: 9px; height: 9px; border-radius: 50%; display: inline-block; margin-right: 6px; vertical-align: -1px; }
-  .chip.on .sw { outline: 1px solid var(--chip-on-ink); outline-offset: 1px; }
+
   .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 10px; }
   .chip.tier:not(.on) { opacity: 0.45; text-decoration: line-through; }
   .chip.tier.on { background: none; color: var(--ink); border-color: var(--ink-45); }
@@ -242,27 +245,29 @@
   .guess output { font-family: var(--serif); font-size: 1.5rem; color: var(--ink); min-width: 2.2ch; text-align: right; }
   .opts { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 6px; }
   .opts .btn { font-size: 12px; padding: 8px 14px; }
-  .opts .btn[aria-pressed="true"] { background: var(--chip-on-bg); color: var(--chip-on-ink); border-color: var(--chip-on-bg); }
+  .opts .btn[aria-pressed="true"] { background: var(--ink-10); color: var(--ink); border-color: var(--ink); }
 
   /* number line for a guess and its answer */
-  .nl { position: relative; height: 64px; margin: 12px 4px 10px; }
-  .nl .track { position: absolute; left: 0; right: 0; top: 30px; height: 1px; background: var(--ink-30); }
-  .nl .tick { position: absolute; top: 25px; width: 1px; height: 11px; background: var(--ink-30); }
-  .nl .tl { position: absolute; top: 40px; font-family: var(--mono); font-size: 9.5px; color: var(--ink-45); transform: translateX(-50%); }
-  .nl .m { position: absolute; top: 24px; transform: translateX(-50%); }
+  .nl { position: relative; height: 104px; margin: 10px 0 8px; }
+  .nl .track { position: absolute; left: 0; right: 0; height: 1px; background: var(--ink-30); }
+  .nl .ld { position: absolute; width: 1px; background: var(--ink-18); }
+  .nl .ml { position: absolute; font-family: var(--mono); font-size: 10px; color: var(--ink); white-space: nowrap; text-align: center; line-height: 14px; }
+  .nl .ml b { font-weight: 500; }
+  .nl .tl.r { left: auto; transform: none; }
+  .nl .tick { position: absolute; width: 1px; height: 9px; background: var(--ink-30); }
+  .nl .tl { position: absolute; font-family: var(--mono); font-size: 9.5px; color: var(--ink-45); }
+  .nl .m { position: absolute; transform: translateX(-50%); }
   .nl .m i { display: block; width: 12px; height: 12px; border-radius: 50%; background: var(--danger); border: 2px solid var(--bg-raise); margin: 0 auto; }
   .nl .m.you i { background: var(--bg-raise); border: 2px solid var(--ink); }
   .nl .m.alt i { background: var(--ink-60); }
-  .nl .m span { position: absolute; left: 50%; transform: translateX(-50%); white-space: nowrap; font-family: var(--mono); font-size: 10px; color: var(--ink); }
-  .nl .m.up span { bottom: 16px; } .nl .m.dn span { top: 18px; } .nl .m.dn2 span { top: 32px; }
-  .nl { height: 78px; }
-  .nl .m span b { font-weight: 500; }
 
   /* ranked bars */
   .bars { margin: 10px 0 6px; font-family: var(--mono); font-size: 10.5px; color: var(--ink-80); }
   .bars .cap { color: var(--ink-60); margin-bottom: 8px; line-height: 1.6; }
-  .bars .r { display: grid; grid-template-columns: 9.6em minmax(0, 1fr); align-items: center; gap: 8px; height: 19px; }
-  .bars .r .n { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bars .r { display: grid; grid-template-columns: 11.5em minmax(0, 1fr); align-items: center; gap: 8px; min-height: 19px; padding: 1px 0; }
+  .bars .r .n { line-height: 1.25; }
+  .bars .tr { min-height: 18px; }
+  .bars + .btn, .bars .btn { margin-top: 8px; }
   .bars .r.pick .n, .bars .r.top .n { color: var(--ink); font-weight: 500; }
   .bars .tr { position: relative; height: 100%; }
   .bars .b { position: absolute; left: 0; top: 5px; height: 9px; background: color-mix(in srgb, var(--danger) 55%, var(--bg-raise)); border-radius: 0 3px 3px 0; min-width: 2px; }
@@ -272,6 +277,7 @@
   .bars .w::before { left: 0; } .bars .w::after { right: 0; }
   .bars .v { position: absolute; top: 2px; white-space: nowrap; color: var(--ink-60); font-size: 10px; }
   .bars .v em { font-style: normal; color: var(--ink); margin-left: 6px; }
+  .bars .v em.most { border: 1px solid var(--ink-45); padding: 0 4px; font-size: 9.5px; letter-spacing: 0.06em; }
 
   /* lists in cards */
   ul.rows { list-style: none; padding: 0; margin: 8px 0 10px; font-family: var(--mono); font-size: 11px; line-height: 1.55; color: var(--ink-80); }
@@ -288,7 +294,7 @@
   ul.rows.ex li { cursor: pointer; }
   ul.rows.ex li.on { background: var(--ink-06); box-shadow: inset 2px 0 0 var(--ink); }
   .sub { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-45); margin: 14px 0 4px; }
-  .card p.line, p.line { font-family: var(--mono); font-size: 12px; line-height: 1.65; color: var(--ink); margin: 6px 0; }
+  .card p.line, p.line { font-family: var(--serif); font-size: 1.02rem; line-height: 1.55; color: var(--ink); margin: 6px 0; }
   p.vetted { border-left: 2px solid var(--ink-18); padding-left: 12px; }
 
   /* shape cards */
@@ -314,13 +320,13 @@
   .info h3 { font-size: 1.2rem; font-weight: 500; margin: 0 0 4px; }
   .info .s { font-family: var(--mono); font-size: 10.5px; color: var(--ink-60); line-height: 1.6; margin-bottom: 8px; }
   .info p { font-size: 0.98rem; }
-  .info p.line { font-size: 12px; }
+  .info p.line { font-size: 0.98rem; }
   .hint { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-45); margin: 2px 0 10px; }
   .hint .ph { display: none; }
   ul.links { list-style: none; padding: 0; margin: 10px 0; font-size: 0.98rem; line-height: 1.6; }
-  ul.links li { padding: 5px 0; border-top: 1px solid var(--ink-10); }
-  ul.links li a { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.04em; color: var(--ink); }
-  ul.links li span { color: var(--ink-60); }
+  ul.links li { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; padding: 7px 0; border-top: 1px solid var(--ink-10); }
+  ul.links li a.btn { text-decoration: none; display: inline-flex; align-items: center; }
+  ul.links li span { color: var(--ink-60); font-size: 0.95rem; }
   ul.plain { list-style: none; padding: 0; margin: 6px 0 0; font-size: 0.96rem; line-height: 1.6; color: var(--ink-80); }
   ul.plain li { padding: 6px 0; border-top: 1px solid var(--ink-10); }
   h3.cs { font-family: var(--mono); font-weight: 500; font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-60); margin: 18px 0 4px; }
@@ -339,7 +345,7 @@
   .stepnav { display: flex; justify-content: space-between; margin-top: 14px; }
   .stepnav button { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; background: none; border: 1px solid var(--ink-18); color: var(--ink-60); padding: 5px 10px; cursor: pointer; }
   .stepnav button:hover { color: var(--ink); border-color: var(--ink-45); }
-  .stepnav button.next { color: var(--ink); border-color: var(--ink-45); }
+  .stepnav button.next { color: var(--ink-80); border-color: var(--ink-30); }
   .stepnav button[disabled] { visibility: hidden; }
 
   .skip { position: absolute; left: 12px; top: -60px; z-index: 100; background: var(--chip-on-bg); color: var(--chip-on-ink); font-family: var(--mono); font-size: 12px; padding: 10px 14px; text-decoration: none; }
@@ -348,25 +354,51 @@
   .units { margin: 6px 0 10px; }
   .units .grid { display: grid; grid-template-columns: repeat(13, 12px); gap: 3px; }
   .units .grid i, .units figcaption i { display: block; width: 12px; height: 12px; border: 1px solid var(--ink-45); background: none; }
-  .units .grid i.f, .units figcaption i.f { background: var(--danger); border-color: var(--danger); }
-  .units figcaption { display: flex; flex-direction: column; gap: 4px; margin-top: 8px; font-family: var(--mono); font-size: 11px; color: var(--ink-80); }
+  .units .grid i.f, .units figcaption i.f { background: var(--ink-80); border-color: var(--ink-80); }
+  .units figcaption { display: flex; flex-direction: column; gap: 4px; margin-top: 8px; font-family: var(--serif); font-size: 0.95rem; color: var(--ink-80); }
+  .units.lines .grid { grid-template-columns: repeat(30, 9px); gap: 3px; }
+  .units.lines .grid i, .units.lines figcaption i { width: 9px; height: 9px; box-sizing: border-box; }
+  @media (max-width: 520px) { .units.lines .grid { grid-template-columns: repeat(18, 11px); } .units.lines .grid i { width: 11px; height: 11px; } }
+  .units.lines figcaption { flex-direction: row; flex-wrap: wrap; gap: 4px 14px; }
+  .units i.u-open { background: var(--ink-80); border: 0; }
+  .units i.u-shown { background: none; border: 1.6px dashed var(--ink-80); }
+  .units i.u-reported { background: none; border: 1.3px dashed var(--ink-60); }
+  .units i.u-claimed { background: none; border: 1.2px dotted var(--ink-60); }
+  .units i.g { outline: 2px solid var(--gold); outline-offset: 1px; }
+  .units i.g-key { background: none; border: 0; outline: 2px solid var(--gold); outline-offset: -2px; }
+  .units.lines figcaption .cap { flex-basis: 100%; }
   .units figcaption span { display: inline-flex; align-items: center; gap: 8px; }
   .units figcaption .cap { color: var(--ink-45); font-size: 10px; }
   .card p.cue { font-family: var(--mono); font-size: 11px; color: var(--ink-60); margin: 10px 0 6px; }
   ul.grades { list-style: none; padding: 0; margin: 6px 0 10px; }
-  ul.grades li { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: 4px 12px; padding: 8px 0; border-top: 1px solid var(--ink-10); align-items: start; }
+  ul.grades li { padding: 6px 0; border-top: 1px solid var(--ink-10); }
+  ul.grades .gh { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: 4px 12px; align-items: start; }
+  ul.grades .exb { font-family: var(--mono); font-size: 10px; color: var(--ink-60); background: none; border: 0; border-bottom: 1px dotted var(--ink-45); padding: 0; cursor: pointer; white-space: nowrap; }
+  ul.grades .exb::after { content: ' \25BE'; } ul.grades .exb.on::after { content: ' \25B4'; }
+  ul.grades .exb:hover, ul.grades .exb.on { color: var(--ink); }
+  ul.grades .exl { font-size: 0.92rem !important; line-height: 1.5 !important; margin: 6px 0 2px calc(9.5em + 12px) !important; padding-left: 8px; border-left: 2px solid var(--ink-30); }
+  ul.grades .exl .s { color: var(--ink-60); font-family: var(--mono); font-size: 10px; }
+  ul.grades .exl a { color: var(--rate); }
   ul.grades .chip { justify-self: start; text-align: left; }
-  ul.grades .def { font-size: 0.95rem; line-height: 1.5; color: var(--ink-80); }
+  ul.grades .def { font-size: 0.9rem; line-height: 1.4; color: var(--ink-80); }
   ul.grades .ex { margin-top: 6px; font-family: var(--mono); font-size: 10.5px; line-height: 1.55; color: var(--ink-60); cursor: pointer; padding: 4px 6px; margin-left: -6px; }
   ul.grades .ex:hover, ul.grades .ex.on { background: var(--ink-06); }
   ul.grades .ex.on { box-shadow: inset 2px 0 0 var(--ink); color: var(--ink-80); }
   ul.grades .ex a { color: var(--rate); }
-  @media (max-width: 520px) { ul.grades li { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 520px) { ul.grades .gh { grid-template-columns: minmax(0, 1fr); } ul.grades .exl { margin-left: 0 !important; } }
   .pair { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--ink-18); }
   .card .pair p.lead { font-size: 1.12rem; color: var(--ink); margin-bottom: 0.6em; }
-  ul.pairrows li { grid-template-columns: 62px minmax(0, 1fr); }
+  ul.pairrows li { grid-template-columns: 62px minmax(0, 1fr); font-family: var(--serif); font-size: 0.98rem; color: var(--ink-80); }
   ul.pairrows li .pairsw { display: flex; gap: 4px; }
   ul.pairrows li svg { width: 28px; }
+  ul.sqlist { list-style: none; padding: 0; margin: 4px 0 10px; }
+  ul.sqlist li { border-top: 1px solid var(--ink-10); }
+  .sqb { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; font-family: var(--serif); font-size: 0.98rem; color: var(--ink-80); background: none; border: 0; padding: 7px 4px; cursor: pointer; }
+  .sqb:hover, .sqb.on { background: var(--ink-06); color: var(--ink); }
+  .sqb.on { box-shadow: inset 2px 0 0 var(--ink); }
+  .card p.guessed { font-size: 0.98rem; color: var(--ink); border-left: 2px solid var(--gold); padding-left: 10px; }
+  .layerrow { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 6px 12px; }
+  .btn.reset { border-style: dashed; color: var(--ink-60); margin: 4px 0 10px; }
   details.morectl { margin: 4px 0 8px; }
   details.morectl summary { cursor: pointer; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; color: var(--ink-60); padding: 8px 0; }
   details.morectl summary:hover { color: var(--ink); }
@@ -388,8 +420,8 @@
     .hero { padding: 30px 16px 4px; }
     .scrolly { grid-template-columns: minmax(0, 1fr); padding: 0; margin-top: 14px; }
     .mapbox { flex: 1; aspect-ratio: auto; max-height: none; border-left: 0; border-right: 0; }
-    .stage { top: 52px; height: 46vh; height: 46svh; background: var(--bg); padding: 0 0 2px; border-bottom: 1px solid var(--ink-10); justify-content: flex-start; }
-    #legend { flex-wrap: nowrap; padding: 5px 12px 2px 16px; min-height: 48px; gap: 10px; justify-content: space-between; }
+    .stage { top: 52px; height: min(46svh, calc(60vw + 52px)); background: var(--bg); padding: 0 0 2px; border-bottom: 1px solid var(--ink-10); justify-content: flex-start; }
+    #legend { flex-wrap: nowrap; padding: 4px 12px 2px 16px; height: 48px; min-height: 48px; overflow: hidden; gap: 10px; justify-content: space-between; }
     #legend .it { min-width: 0; white-space: normal; flex-wrap: wrap; row-gap: 2px; }
     .keybtn { display: inline-flex; }
     /* the rail is a progress bar here; the back and next buttons move between steps */
@@ -399,9 +431,12 @@
     .rail button.seen::before { background: var(--ink-30); }
     .rail button.on::before { background: var(--ink); }
     .rail button::after { display: none; }
-    .steps { padding: 0 16px 30vh; }
-    .step { min-height: 64vh; padding: 4vh 0; }
-    .step:first-child { min-height: 50vh; padding-top: 18px; }
+    .steps { padding: 0 16px 40vh; }
+    .step { min-height: 70vh; padding: 14px 0 6vh; }
+    .step .card { position: static; }
+    .guess label { flex-basis: 100%; }
+    .guess { flex-wrap: wrap; }
+    .guess input[type=range] { flex: 1 1 0; }
     .card { padding: 18px 16px 14px; max-width: 40em; margin: 0 auto; }
     .card h2 { font-size: 1.35rem; }
     .card p { font-size: 1rem; }
@@ -535,6 +570,8 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const isOld = t => !!t.evidence_to && (t.evidence_to.length > 4 ? t.evidence_to < winFrom : t.evidence_to < winFrom.slice(0, 4));
   const party = (c, id) => c.parties.find(p => p.id === id);
   /* "the army", "the RSF", "the government", but "Eritrea", "Ukraine": a side that is a state goes by its name */
+  /* "the United States", "the UAE": the article where English needs one */
+  const theName = (s, cap) => /^(United |U\.S\.|UAE)/.test(s) ? (cap ? 'The ' : 'the ') + s : s;
   const partyRef = p => p ? (p.state && /^[A-Z]/.test(p.short) ? p.short : 'the ' + p.short) : '';
   const sidesOf = c => new Set(c.parties.map(p => p.side)).size;   /* sides, not parties: allies on one side count once */
   const kindsText = t => t.kinds.map(k => D.kinds[k] || k).join(', ');
@@ -567,6 +604,9 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   for (const [k, ref] of Object.entries(C.quotes || {})) T[k] = quote(ref);
   T.as_of = fmtDate(D.as_of);
   T.ucdp_reach = fmtMonth(U.reach);
+  /* instructions say click to a mouse and tap to a finger */
+  const coarseP = matchMedia('(pointer: coarse)').matches;
+  T.tap = coarseP ? 'tap' : 'click'; T.Tap = coarseP ? 'Tap' : 'Click';
   T.wars = wars.length; T.wars_word = word(wars.length); T.squares = squares.length; T.entries = D.conflicts.length;
   T.rule = D.rule;
   T.ucdp_n = lastY.n; T.ucdp_year = lastY.year; T.ucdp_wars = lastY.wars;
@@ -603,7 +643,8 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const hued = D.backers.filter(b => b.hue).sort((a, b) => a.hue - b.hue);
   T.hued_n = hued.length;
   const fightsIn = b => wars.filter(c => c.parties.some(p => p.state === b));
-  const backsIn = b => wars.filter(c => c.ties.some(t => t.backer === b && !t.ended));
+  const isSide = (c, b) => c.parties.some(p => p.state === b);
+  const backsIn = b => wars.filter(c => !isSide(c, b) && c.ties.some(t => t.backer === b && !t.ended));
   const inWars = b => wars.filter(c => c.parties.some(p => p.state === b) || c.ties.some(t => t.backer === b && !t.ended));
   T.sq_us = squares.filter(c => c.parties.some(p => p.state === 'usa')).length;
   T.us_name = backers.usa.name;
@@ -633,7 +674,14 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   else { T.peak_top_n = null; T.peak_top_name = null; }
   T.n_phrase = plainFill(lastY.n > prevMax ? ph.n_max : lastY.n === prevMax ? ph.n_tie : ph.n_else);
   T.avg_two = plainFill(avgRank <= 1 ? ph.avg_two : ph.avg_else);
-  T.most_open = T.open_n * 2 > T.lines_n ? stepCfg('know').most_open : '';
+  /* summed records can put a war's best count outside UCDP's own low-to-high range; the caption says how often */
+  const outsideRange = w => !!w && (w.best < Math.min(w.low, w.high) || w.best > Math.max(w.low, w.high));
+  T.outside_n = wars.filter(c => outsideRange(uw(c.id))).length || null;
+  /* a backer with more than one line in Sudan: one line per kind of help, said once */
+  T.sudan_multi = (() => {
+    const by = {}; for (const t of sudanLive) (by[t.backer] = by[t.backer] || []).push(t);
+    return Object.entries(by).filter(([, ts]) => ts.length > 1).map(([b, ts]) => plainFill(stepCfg('help').multi || '', { name: theName(backers[b].short, true), count: word(ts.length) })).join(' ');
+  })();
 
   /* a sentence whose token has no value is left out, never printed with a hole in it */
   function dropMissing(s, extra = {}) {
@@ -666,7 +714,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       if (it.from) { const s = quote(it); if (s) out.push(esc(s)); }
       else if (it.text) { const t = fill(it.text); if (!t) continue; const u = safeUrl(it.url === 'sudan_areas_url' ? sudan.areas_url : it.url); out.push(u ? linkTo(u, t) : t); }
       else if (it.link) { const u = safeUrl(it.link); if (u) out.push(linkTo(u, esc(it.label || u))); }
-      else if (it.actors) for (const c of squares) if (c.actor_statement) out.push(`<b>${esc(c.name)}.</b> ${esc(c.actor_statement)}`);
+      else if (it.actors) { for (const c of squares) if (c.actor_statement) out.push(`<b>${esc(c.name)}.</b> ${esc(c.actor_statement)}`); }
       else if (it.excluded) { const x = (D.excluded || []).find(e => e.name === it.excluded); if (x) out.push(`<b>Left off: ${esc(x.name)}.</b> ${esc(x.why)}`); }
     }
     return out.map(x => `<li>${x}</li>`).join('');
@@ -722,7 +770,8 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const dashStyle = document.createElement('style'); document.head.appendChild(dashStyle);
   function setDashes() {
     const u = upp(zoomK); U_ = u;
-    dashStyle.textContent = `#map .arc.tier-shown{stroke-dasharray:${(7 * u).toFixed(2)} ${(4 * u).toFixed(2)}} #map .arc.tier-reported{stroke-dasharray:${(3 * u).toFixed(2)} ${(4 * u).toFixed(2)}} #map .arc.tier-claimed{stroke-dasharray:${(0.5 * u).toFixed(2)} ${(5 * u).toFixed(2)}} #map .arc.ended{stroke-dasharray:${(1 * u).toFixed(2)} ${(3 * u).toFixed(2)} !important}`;
+    const d = (a, b) => `${(a * u).toFixed(2)} ${(b * u).toFixed(2)}`;
+    dashStyle.textContent = `#map .arc.tier-shown{stroke-dasharray:${d(8, 4)}} #map .arc.tier-reported{stroke-dasharray:${d(3, 3.5)}} #map .arc.tier-claimed{stroke-dasharray:${d(0.1, 4)}}`;
     for (const g of svg.querySelectorAll('g[data-scale]')) g.setAttribute('transform', `translate(${g.dataset.x},${g.dataset.y}) scale(${u.toFixed(4)})`);
   }
   const scaled = (x, y, parent, attrs = {}, u = U_) => el('g', { ...attrs, 'data-scale': 1, 'data-x': x.toFixed(1), 'data-y': y.toFixed(1), transform: `translate(${x.toFixed(1)},${y.toFixed(1)}) scale(${u.toFixed(4)})` }, parent);
@@ -741,29 +790,31 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const ptsBox = pts => [Math.min(...pts.map(p => p[0])), Math.min(...pts.map(p => p[1])), Math.max(...pts.map(p => p[0])), Math.max(...pts.map(p => p[1]))];
   const boxOfArea = id => { if (!areaNodes[id]) return []; if (!areaBox[id]) { try { const b = areaNodes[id].getBBox(); if (b.width) areaBox[id] = [[b.x, b.y], [b.x + b.width, b.y + b.height]]; } catch (e) {} } return areaBox[id] || []; };
   const PAIR = (stepCfg('same').pair || {}).states || [];
-  /* the war where the pair's lines go to opposite sides; its chips are drawn so each line lands on its side */
-  const pairSplit = () => { const w = pairWars().find(c => { const sd = PAIR.map(b => { const t = c.ties.find(t => t.backer === b && !t.ended); const p = t && c.parties.find(p => p.id === t.party); return p && p.side; }); return sd[0] && sd[1] && sd[0] !== sd[1]; }); return w ? w.id : null; };
   const pairWars = () => wars.filter(c => PAIR.length === 2 && PAIR.every(b => c.ties.some(t => t.backer === b && !t.ended)));
+  /* the world view is the band from the Americas to the Pacific and from the far north to the south of Africa,
+     where every war and every backer sits; empty ocean and the poles are cropped so the land is larger */
+  const WORLD_BOX = (() => { const pts = []; for (let i = 0; i <= 24; i++) { const f = i / 24, lon = -125 + 275 * f, lat = -38 + 106 * f; pts.push(project(lon, -38), project(lon, 68), project(-125, lat), project(150, lat)); } return ptsBox(pts); })();
   function viewT(view) {
-    if (view === 'world') {
-      /* on a phone the world view is the band where the wars and the coloured states sit, so the map fills the frame */
-      if (phone()) { const pts = D.conflicts.map(c => [c.px, c.py]).concat(hued.map(b => project(b.lon, b.lat))); return boxT(...ptsBox(pts), 0.06); }
-      return boxT(0, 8, W, H - 8, 0.01);
-    }
+    if (view === 'world') return boxT(...WORLD_BOX, 0.015);
+    if (view && view.sq) { const c = byId[view.sq]; return boxT(c.px - 70, c.py - 40, c.px + 70, c.py + 40, 0.05); }
     if (view === 'pair') {
       const pts = []; for (const c of pairWars()) { pts.push([c.px, c.py]); pts.push(...boxOfArea(c.id)); } for (const b of PAIR) pts.push(project(backers[b].lon, backers[b].lat));
       return boxT(...ptsBox(pts), 0.1);
     }
     const c = byId[view && view.war ? view.war : 'sudan'];
     const pts = [[c.px, c.py], ...boxOfArea(c.id)];
-    if (view === 'sudan') { pts.push(...sudanLandBox); return boxT(...ptsBox(pts), 0.42); }
-    const helpers = (view === 'sudanHelp' ? sudan : c).ties.filter(t => !t.ended).map(t => backers[t.backer]);
-    for (const b of helpers) pts.push(project(b.lon, b.lat));
-    return boxT(...ptsBox(pts), 0.1);
+    let pad = 0.16;
+    if (view === 'sudan') { pts.push(...sudanLandBox); pad = 0.42; }
+    else { const helpers = (view === 'sudanHelp' ? sudan : c).ties.filter(t => !t.ended).map(t => backers[t.backer]); for (const b of helpers) pts.push(project(b.lon, b.lat)); }
+    /* the side chips sit at fixed pixel offsets from the war's dot; fit once, then again with the chips' reach at that zoom */
+    const t0 = boxT(...ptsBox(pts), pad), u = upp(t0.k);
+    pts.push([c.px - 130 * u, c.py - 40 * u], [c.px + 130 * u, c.py + 48 * u]);
+    return boxT(...ptsBox(pts), pad);
   }
   let freeMode = false, hiresLoading = null, pendingT = null;
   const sameT = (a, b) => Math.abs(a.k - b.k) < 1e-3 && Math.abs(a.x - b.x) < 0.5 && Math.abs(a.y - b.y) < 0.5;
   const zoom = d3.zoom().scaleExtent([0.25, MAX_K])
+    .wheelDelta(ev => Math.max(-0.3, Math.min(0.3, -ev.deltaY * (ev.deltaMode === 1 ? 0.05 : ev.deltaMode ? 1 : 0.002))))
     .filter(ev => freeMode && (ev.type === 'wheel' ? (ev.ctrlKey || ev.metaKey) : ev.type.startsWith('touch') ? (ev.touches ? ev.touches.length >= 2 : true) : (!ev.ctrlKey && !ev.button)))
     .on('zoom', ev => {
       gRoot.setAttribute('transform', ev.transform.toString()); zoomK = ev.transform.k; setDashes();
@@ -784,7 +835,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   }
 
   /* the marks: a dot per war, a hollow square per use of force short of war */
-  const GLYPH_R = { '3': 7.5, '2': 5.5, '1': 4 }, DOT_R = 4.6;
+  const GLYPH_R = { '3': 8, '2': 5, '1': 3 }, DOT_R = 4;
   const markNodes = {};
   for (const c of D.conflicts) {
     const [x, y] = project(c.point[0], c.point[1]); c.px = x; c.py = y;
@@ -828,11 +879,18 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     tip.style.left = x + 'px'; tip.style.top = y + 'px';
   }
   function hideTip() { tip.style.display = 'none'; }
-  const toScreen = (x, y, t) => { const sc0 = vis().s; return [(x * t.k + t.x) * sc0, (y * t.k + t.y) * sc0]; };
+  /* map units to pixels inside the svg; the svg is cropped to fill its box (slice), so the crop's offset comes off */
+  const toScreen = (x, y, t) => { const sc0 = vis().s, ox = (W * sc0 - svg.clientWidth) / 2, oy = (H * sc0 - svg.clientHeight) / 2; return [(x * t.k + t.x) * sc0 - ox, (y * t.k + t.y) * sc0 - oy]; };
   const atNode = n => { const r = n.getBoundingClientRect(); return { clientX: r.left + r.width / 2, clientY: r.top + r.height }; };
 
   /* glossary words: hover, focus or tap shows the one-sentence definition */
-  const defTip = b => showTip(atNode(b), `<b>${esc(b.dataset.term)}</b><br>${esc(GL[b.dataset.term])}`);
+  /* the definition opens just below its word, left-aligned with it, so the sentence stays readable */
+  const defTip = b => {
+    tip.innerHTML = `<b>${esc(b.dataset.term)}</b><br>${esc(GL[b.dataset.term])}`; tip.style.display = 'block';
+    const r = b.getBoundingClientRect(), tw = tip.offsetWidth, th = tip.offsetHeight;
+    const x = Math.max(8, Math.min(innerWidth - tw - 8, r.left)), y = r.bottom + 6 + th > innerHeight - 8 ? r.top - th - 6 : r.bottom + 6;
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+  };
   document.addEventListener('mouseover', ev => { const b = ev.target.closest && ev.target.closest('button.term'); if (b) defTip(b); });
   document.addEventListener('mouseout', ev => { if (ev.target.closest && ev.target.closest('button.term')) hideTip(); });
   document.addEventListener('focusin', ev => { const b = ev.target.closest && ev.target.closest('button.term'); if (b) defTip(b); });
@@ -846,48 +904,63 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   for (const st of STEPS) { st.title = plainFill(st.title); st.name = plainFill(st.name); }   /* titles and rail names may carry tokens */
   const idx = id => STEPS.findIndex(s => s.id === id);
   const S = {
-    step: -1, sub: { areas: 'sudan', help: 'sudan' },
-    revealed: { start: false, size: false, know: false },
-    tiers: new Set(tierIds), ex: null, backer: hued[0].id, pair: false, shapeWar: null,
-    free: { areas: true, lines: false, squares: true, war: null, backer: null, viewSet: false }
+    step: -1, sub: { areas: 'sudan', help: 'sudan', know: 'sudan' },
+    revealed: { start: false, size: false, know: false }, startGuess: null,
+    tiers: new Set(tierIds), ex: null, backer: hued[0].id, pair: false, shapeWar: null, sq: null,
+    free: { areas: true, lines: true, squares: true, war: null, backer: null, viewSet: false }
   };
+  const exByKey = {};   /* the example line of each grade at step 6, filled when that step is built */
   /* the dots carry their size only once size has been taught */
   const sizedNow = () => S.step > idx('size') || (S.step === idx('size') && S.revealed.size);
 
-  /* each step's map: what is drawn, where the camera is, which legend keys are learned */
+  /* each step's map: what is drawn and where the camera is */
   function sceneFor(id) {
-    const sc = { view: 'world', marks: true, sized: sizedNow(), areas: 'faint', squares: false, arcs: null, chips: null, focus: null, labels: null, chart: false, legend: [] };
-    const L0 = ['war', 'area', 'size', 'side', 'line', 'tiers', 'hues', 'square'];
-    const upto = k => L0.slice(0, L0.indexOf(k) + 1);
-    const only = ks => L0.filter(k => ks.includes(k));
+    const sc = { view: 'world', marks: true, sized: sizedNow(), areas: 'faint', squares: false, arcs: null, chips: null, focus: null, labels: null, chart: false };
     switch (id) {
-      case 'start': Object.assign(sc, { marks: false, areas: 'none', legend: [] }); break;
-      case 'where': Object.assign(sc, { areas: 'none', seq: true, legend: ['war'] }); break;
-      case 'areas': Object.assign(sc, S.sub.areas === 'sudan' ? { view: 'sudan', areas: 'sudan', focus: 'sudan', labels: ['sudan'] } : { areas: 'all' }, { legend: upto('area') }); break;
-      case 'size': Object.assign(sc, { legend: S.revealed.size ? upto('size') : upto('area') }); break;
-      case 'sides': Object.assign(sc, { view: 'sudan', areas: 'sudan', chips: 'sudan', focus: 'sudan', legend: upto('side') }); break;
-      case 'help': Object.assign(sc, S.sub.help === 'sudan' ? { view: 'sudanHelp', areas: 'sudan', chips: 'sudan', focus: 'sudan', arcs: { scope: ['sudan'], draw: true, labels: 'all' } } : { arcs: { scope: 'all', mode: 'mid' } }, { legend: upto('line') }); break;
-      case 'know': Object.assign(sc, S.revealed.know
-        ? { arcs: { scope: 'all', tiers: true, ended: true, mode: 'mid', filter: S.tiers, hi: S.ex } }
-        : { view: 'sudanHelp', areas: 'sudan', chips: 'sudan', focus: 'sudan', arcs: { scope: ['sudan'], tiers: true, ended: true, labels: 'all' } }, { legend: upto('tiers') }); break;
-      case 'same':
-        if (S.pair) { const pw = pairWars().map(c => c.id); Object.assign(sc, { view: 'pair', labels: pw, focusWars: pw, arcs: { scope: pw, only: PAIR, tiers: true, ended: false, hues: true, labels: 'all' }, legend: upto('hues') }); }
-        else Object.assign(sc, { arcs: { scope: 'all', tiers: true, ended: true, hues: true, backer: S.backer, labels: 'backer' }, focusWars: inWars(S.backer).map(c => c.id), legend: upto('hues') });
+      case 'start': Object.assign(sc, { marks: false, areas: 'none' }); break;
+      case 'where': Object.assign(sc, { areas: 'none', seq: true }); break;
+      case 'areas': Object.assign(sc, S.sub.areas === 'sudan' ? { view: 'sudan', areas: 'sudan', focus: 'sudan', labels: ['sudan'] } : { areas: 'all' }); break;
+      case 'size': break;
+      case 'sides': Object.assign(sc, { view: 'sudan', areas: 'sudan', chips: 'sudan', focus: 'sudan' }); break;
+      case 'help': Object.assign(sc, S.sub.help === 'sudan' ? { view: 'sudanHelp', areas: 'sudan', chips: 'sudan', focus: 'sudan', arcs: { scope: ['sudan'], draw: true, labels: 'all' } } : { arcs: { scope: 'all', mode: 'mid' } }); break;
+      case 'know': {
+        /* the worked example stays on Sudan; an opened example frames its own war and dims every other line */
+        const ex = S.ex && exByKey[S.ex];
+        if (ex) Object.assign(sc, { view: ex.c.id === 'sudan' ? 'sudanHelp' : { war: ex.c.id }, areas: ex.c.id === 'sudan' ? 'sudan' : 'faint', chips: ex.c.id, focus: ex.c.id, labels: [ex.c.id], arcs: { scope: [ex.c.id], tiers: true, ended: true, filter: S.tiers, hi: S.ex, labels: 'all' } });
+        else if (S.sub.know === 'sudan') Object.assign(sc, { view: 'sudanHelp', areas: 'sudan', chips: 'sudan', focus: 'sudan', arcs: { scope: ['sudan'], tiers: true, ended: true, filter: S.tiers, labels: 'all' } });
+        else Object.assign(sc, { arcs: { scope: 'all', tiers: true, ended: true, mode: 'mid', filter: S.tiers } });
         break;
-      case 'force': Object.assign(sc, { squares: true, pulseSquares: true, labels: squares.map(c => c.id), legend: upto('square') }); break;
-      case 'normal': Object.assign(sc, { chart: true, squares: true, legend: [] }); break;
-      case 'shape': Object.assign(sc, { squares: true, legend: only(['war', 'area', 'size', 'square'].concat(S.shapeWar ? ['side', 'tiers', 'hues'] : [])) }, S.shapeWar ? { view: { war: S.shapeWar }, chips: S.shapeWar, focus: S.shapeWar, labels: [S.shapeWar], arcs: { scope: [S.shapeWar], tiers: true, ended: true, hues: true, labels: 'all' } } : {}); break;
+      }
+      case 'same':
+        if (S.pair) { const pw = pairWars().map(c => c.id); Object.assign(sc, { view: 'pair', labels: pw, focusWars: pw, arcs: { scope: pw, only: PAIR, tiers: true, ended: false, hues: true, labels: 'all' } }); }
+        else Object.assign(sc, { arcs: { scope: 'all', tiers: true, ended: true, hues: true, backer: S.backer, labels: 'backer' }, focusWars: inWars(S.backer).map(c => c.id) });
+        break;
+      case 'force': Object.assign(sc, { squares: true, pulseSquares: true }, S.sq ? { view: { sq: S.sq }, labels: [S.sq], focus: S.sq } : { labels: squares.map(c => c.id) }); break;
+      case 'normal': Object.assign(sc, { chart: true, squares: true }); break;
+      case 'shape': Object.assign(sc, { squares: true }, S.shapeWar ? { view: { war: S.shapeWar }, chips: S.shapeWar, focus: S.shapeWar, labels: [S.shapeWar], arcs: { scope: [S.shapeWar], tiers: true, ended: true, hues: true, labels: 'all' } } : {}); break;
       case 'free': {
         const f = S.free;
-        Object.assign(sc, { view: f.viewSet ? null : 'world', free: true, squares: f.squares, areas: f.areas ? 'faint' : 'none', labels: 'all', legend: upto('square'), chips: f.war && byId[f.war].kind !== 'pressure' ? f.war : null, focus: f.war });
+        Object.assign(sc, { view: f.viewSet ? null : 'world', free: true, squares: f.squares, areas: f.areas ? 'faint' : 'none', labels: 'all', chips: f.war && byId[f.war].kind !== 'pressure' ? f.war : null, focus: f.war });
         if (f.lines || f.war || f.backer) sc.arcs = { scope: f.war ? [f.war] : 'all', backer: f.backer, tiers: true, ended: true, hues: true, filter: S.tiers, mode: f.war || f.backer ? null : 'faint', labels: f.war ? 'all' : f.backer ? 'backer' : 'hued' };
-        /* the key names only what is drawn now */
-        sc.legend = only(['war', 'size'].concat(f.areas ? ['area'] : [], sc.chips ? ['side'] : [], sc.arcs ? ['tiers', 'hues'] : [], f.squares ? ['square'] : []));
         if (f.backer) sc.focusWars = inWars(f.backer).map(c => c.id).concat(squares.filter(c => c.ties.some(t => t.backer === f.backer) || c.parties.some(p => p.state === f.backer)).map(c => c.id));
         break;
       }
     }
+    sc.legend = keyFor(sc);
     return sc;
+  }
+  /* the key names only what is drawn now, in the order it was taught */
+  function keyFor(sc) {
+    if (sc.chart) return [];
+    const k = [];
+    if (sc.marks) k.push('war');
+    if (sc.marks && sc.areas !== 'none') k.push('area');
+    if (sc.marks && sc.sized) k.push('size');
+    if (sc.chips) k.push('side');
+    if (sc.arcs) k.push(sc.arcs.tiers ? 'tiers' : 'line');
+    if (sc.arcs && sc.arcs.hues) k.push('hues');
+    if (sc.marks && sc.squares) k.push('square');
+    return k;
   }
 
   let lastLegend = new Set(), lastViewKey = null, prevStepId = null;
@@ -916,6 +989,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       const [sx, sy] = toScreen(c.px, c.py, target), wpx = c.name.length * 6.3;
       const x0 = anchor === 'end' ? sx + dx - wpx : anchor === 'middle' ? sx + dx - wpx / 2 : sx + dx;
       const box = [x0 - 3, sy + dy - 7, x0 + wpx + 3, sy + dy + 7];
+      if (box[0] < 2 || box[2] > svg.clientWidth - 2 || box[1] < 2 || box[3] > svg.clientHeight - 2) return false;
       if (nameBoxes.some(q => box[0] < q[2] && box[2] > q[0] && box[1] < q[3] && box[3] > q[1])) return false;
       nameBoxes.push(box); return true;
     };
@@ -984,6 +1058,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     for (const c of pool) { if (!c || c.kind === 'pressure') continue; for (const t of c.ties) { if (t.ended && !A.ended) continue; if (A.filter && !A.filter.has(t.tier)) continue; if (A.only && !A.only.includes(t.backer)) continue; rows.push({ c, t, key: c.id + '|' + c.ties.indexOf(t) }); } }
     const perConf = {}; for (const r of rows) (perConf[r.c.id] = perConf[r.c.id] || []).push(r);
     const dots = new Map();
+    const STAG = Math.min(420, Math.round(950 / Math.max(1, rows.length)));   /* the last line starts within about a second */
     rows.forEach((r, n) => {
       const { c, t } = r, b = backers[t.backer];
       const sib = perConf[c.id], i = sib.indexOf(r), bow = (i - (sib.length - 1) / 2) * 7;
@@ -997,7 +1072,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       if (A.draw && fresh && !reduced && !t.ended) {
         const len = p.getTotalLength();
         p.style.strokeDasharray = len + ' ' + len;
-        const an2 = p.animate([{ strokeDashoffset: len }, { strokeDashoffset: 0 }], { duration: 650, delay: 250 + n * 420, easing: 'ease-out', fill: 'backwards' });
+        const an2 = p.animate([{ strokeDashoffset: len }, { strokeDashoffset: 0 }], { duration: 600, delay: 150 + n * STAG, easing: 'ease-out', fill: 'backwards' });
         an2.onfinish = () => { p.style.strokeDasharray = ''; };
         arcAnims.push(an2);
       }
@@ -1018,14 +1093,14 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
         const [sx, sy] = toScreen(x, y, target), box = [sx + 4, sy - 7, sx + 8 + b.short.length * 6, sy + 6];
         if (!placed.some(q => box[0] < q[2] && box[2] > q[0] && box[1] < q[3] && box[3] > q[1])) { placed.push(box); el('text', { x: 6, y: 3 }, g).textContent = b.short; }
       }
-      if (A.draw && fresh && !reduced) arcAnims.push(g.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300, delay: 250 + n * 420, fill: 'backwards' }));
+      if (A.draw && fresh && !reduced) arcAnims.push(g.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300, delay: 150 + n * STAG, fill: 'backwards' }));
     }
     if (arcAnims.length) {
       const all = arcAnims.slice();
-      const total = 250 + rows.length * 420 + 700;
+      const total = 150 + rows.length * STAG + 650;
       setTimeout(() => { for (const a of all) { try { if (a.playState !== 'finished') a.finish(); } catch (e) {} } }, total + 300);
     }
-    if (A.draw) helpListArrive(fresh && !reduced, rows.filter(r => !r.t.ended));
+    if (A.draw) helpListArrive(fresh && !reduced, rows.filter(r => !r.t.ended), STAG);
   }
   const lineTip = (c, t) => { const b = backers[t.backer], p = party(c, t.party); return `<b>${esc(b.short)} → ${esc(p ? p.short : t.party)}</b> · ${esc(c.name)}<br>${esc(kindsText(t))}<br>${esc(D.tiers[t.tier].word)}${t.stance ? ' · ' + esc(b.short) + ' ' + esc(t.stance) : ''}${t.ended ? ' · ended ' + esc(fmtMonth(t.ended)) : ''}`; };
   const markTip = c => {
@@ -1046,7 +1121,9 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   }
 
   /* ---- the legend grows; on a phone only the newest mark shows, the rest is one tap away ---- */
-  const tierSample = (tier, hue = 'hue-0', w = 30, extra = '') => `<svg viewBox="0 0 ${w} 8" aria-hidden="true"><path class="arc tier-${tier} ${hue} ${extra}" d="M1,4 L${w - 1},4" style="${tier === 'shown' ? 'stroke-dasharray:7 4' : tier === 'reported' ? 'stroke-dasharray:3 4' : tier === 'claimed' ? 'stroke-dasharray:0.5 5' : ''}${extra === 'ended' ? ';stroke-dasharray:1 3' : ''}"/></svg>`;
+  /* each grade: a width and a dash in screen pixels, as on the map; an ended line is its grade's line, faint */
+  const TS = { open: [2.4, ''], shown: [1.9, '8 4'], reported: [1.5, '3 3.5'], claimed: [1.2, '0.1 4'] };
+  const tierSample = (tier, hue = 'hue-0', w = 30, extra = '') => `<svg viewBox="0 0 ${w} 8" aria-hidden="true"><path class="arc tier-${tier} ${hue}" d="M2,4 L${w - 2},4" style="stroke-width:${TS[tier][0]}px;${TS[tier][1] ? 'stroke-dasharray:' + TS[tier][1] + ';' : ''}${extra === 'ended' ? 'opacity:0.3 !important;' : ''}"/></svg>`;
   const LG = C.legend || {};
   const legendItem = {
     war: () => `<span class="it" data-k="war"><i class="g"></i>${esc(LG.war)}</span>`,
@@ -1107,13 +1184,27 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   /* the reveal's words are announced; its chart labels are not */
   const showReveal = (id, html, spoken) => { const r = rv(id); r.innerHTML = html; r.hidden = false; r.classList.remove('in'); void r.offsetWidth; if (!reduced) r.classList.add('in'); if (spoken) say(plain(spoken)); };
 
-  /* a number line: the reader's guess beside the answers */
-  function numberLine(max, marks, ticks) {
-    const pos = v => Math.max(0, Math.min(100, v / max * 100));
-    const sorted = marks.slice().sort((a, b) => a.v - b.v);
-    let lastUp = -1e9, lastDn = -1e9;
-    for (const m of sorted) { const p = pos(m.v); if (p - lastUp >= 22) { m.dir = 'up'; lastUp = p; } else if (p - lastDn >= 22) { m.dir = 'dn'; lastDn = p; } else { m.dir = 'dn2'; } }
-    return `<div class="nl" aria-hidden="true"><div class="track"></div>${ticks.map(t => `<div class="tick" style="left:${pos(t)}%"></div><div class="tl" style="left:${pos(t)}%">${t}</div>`).join('')}${sorted.map(m => `<div class="m ${m.cls || ''} ${m.dir}" style="left:${pos(m.v)}%"><i></i><span><b>${esc(m.v)}</b> ${esc(m.label)}</span></div>`).join('')}</div>`;
+  /* a number line: the reader's guess beside the answers. Labels take one of four rows, two above the line
+     and two below, and are kept inside the card; a thin leader joins each label to its mark. */
+  function numberLine(box, max, marks, ticks) {
+    const Wd = box.clientWidth || 300, X = v => Math.max(0, Math.min(1, v / max)) * Wd;
+    const TRACK = 52, ROWS = [{ y: 26, up: true }, { y: 68, up: false }, { y: 6, up: true }, { y: 86, up: false }];
+    const used = ROWS.map(() => []);
+    let h = `<div class="track" style="top:${TRACK}px"></div>`;
+    for (const t of ticks) h += `<div class="tick" style="left:${X(t)}px;top:${TRACK - 4}px"></div>`;
+    h += `<div class="tl" style="left:0;top:${TRACK + 6}px">${ticks[0]}</div><div class="tl r" style="right:0;top:${TRACK + 6}px">${ticks[ticks.length - 1]}</div>`;
+    for (const m of marks.slice().sort((a, b) => a.v - b.v)) {
+      const x = X(m.v), lw = (String(m.v).length + 1 + m.label.length) * 6.3 + 8;
+      const lx = Math.max(0, Math.min(Wd - lw, x - lw / 2));
+      let r = ROWS.findIndex((row, i) => used[i].every(([a, b]) => lx + lw + 6 < a || lx > b + 6));
+      if (r < 0) r = 3;
+      used[r].push([lx, lx + lw]);
+      const row = ROWS[r], top = row.up ? row.y + 14 : TRACK + 6, bottom = row.up ? TRACK - 6 : row.y;
+      h += `<div class="ld" style="left:${x}px;top:${top}px;height:${Math.max(0, bottom - top)}px"></div>`;
+      h += `<div class="m ${m.cls || ''}" style="left:${x}px;top:${TRACK - 6}px"><i></i></div>`;
+      h += `<div class="ml" style="left:${lx}px;top:${row.y}px;width:${lw}px"><b>${esc(m.v)}</b> ${esc(m.label)}</div>`;
+    }
+    box.innerHTML = h;
   }
 
   /* step: how many */
@@ -1121,10 +1212,11 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     const s = stepCfg('start'), g = s.guess;
     ix('start').innerHTML = `<div class="guess"><label for="g-start">${esc(g.label)}</label><input type="range" id="g-start" min="${g.min}" max="${g.max}" value="${g.start}" aria-describedby="h-start"><output id="o-start">${g.start}</output></div><button type="button" class="btn go" id="b-start">${esc(g.button)}</button>`;
     const inp = $('#g-start'), out = $('#o-start');
-    const line = () => { const v = +inp.value, max = Math.max(g.max, T.ucdp_n, v); return numberLine(max, [{ v, label: s.marks.guess, cls: 'you' }, { v: T.wars, label: s.marks.map }, { v: T.ucdp_wars, label: s.marks.ucdp_wars, cls: 'alt' }, { v: T.ucdp_n, label: plainFill(s.marks.ucdp), cls: 'alt' }], [0, max / 2, max].map(Math.round)); };
-    const answer = () => { S.revealed.start = true; const p = `<p>${fill(s.reveal)}</p>`; showReveal('start', `<div id="nl-start">${line()}</div>` + p, p); };
-    inp.oninput = () => { out.textContent = inp.value; if (S.revealed.start) $('#nl-start').innerHTML = line(); };
+    const line = () => { const box = $('#nl-start'); if (!box) return; const v = +inp.value, max = Math.max(g.max, T.ucdp_n, v); numberLine(box, max, [{ v, label: s.marks.guess, cls: 'you' }, { v: T.wars, label: s.marks.map }, { v: T.ucdp_wars, label: s.marks.ucdp_wars, cls: 'alt' }, { v: T.ucdp_n, label: plainFill(s.marks.ucdp), cls: 'alt' }], [0, max]); };
+    const answer = () => { S.revealed.start = true; S.startGuess = +inp.value; const p = `<p>${fill(s.reveal)}</p>`; showReveal('start', `<div class="nl" id="nl-start" aria-hidden="true"></div>` + p, p); line(); };
+    inp.oninput = () => { out.textContent = inp.value; if (S.revealed.start) { S.startGuess = +inp.value; line(); } };
     $('#b-start').onclick = answer;
+    addEventListener('resize', () => { if (S.revealed.start) line(); });
   })();
 
   /* toggles: Sudan, then every war */
@@ -1145,21 +1237,21 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const helpList = $('#help-list');
   helpList.innerHTML = sudanLive.map(t => { const b = backers[t.backer], p = party(sudan, t.party); return `<li data-key="sudan|${sudan.ties.indexOf(t)}">${tierSample('open')}<span><b>${esc(b.short)}</b> → ${esc(p.short)} <span class="s">${esc(kindsText(t))}</span></span></li>`; }).join('');
   let helpTimers = [];
-  function helpListArrive(animate, rows) {
+  function helpListArrive(animate, rows, stag = 100) {
     for (const t of helpTimers) clearTimeout(t); helpTimers = [];
     const items = $$('li', helpList);
     helpList.classList.toggle('arrive', animate);
     if (!animate) { for (const li of items) li.classList.add('in'); return; }
     for (const li of items) li.classList.remove('in');
-    items.forEach(li => { const n = rows.findIndex(r => r.key === li.dataset.key); helpTimers.push(setTimeout(() => li.classList.add('in'), 250 + Math.max(0, n) * 420)); });
-    helpTimers.push(setTimeout(() => { for (const li of items) li.classList.add('in'); }, 250 + rows.length * 420 + 900));
+    items.forEach(li => { const n = rows.findIndex(r => r.key === li.dataset.key); helpTimers.push(setTimeout(() => li.classList.add('in'), 150 + Math.max(0, n) * stag)); });
+    helpTimers.push(setTimeout(() => { for (const li of items) li.classList.add('in'); }, 1200));
   }
   for (const li of $$('li', helpList)) {
     li.onmouseenter = () => { for (const p of $$('#map .arc')) p.classList.toggle('lo', p.dataset.key !== li.dataset.key); };
     li.onmouseleave = () => { for (const p of $$('#map .arc')) p.classList.remove('lo'); };
   }
 
-  /* step: how big */
+  /* step: how many died */
   (function () {
     const s = stepCfg('size'), g = s.guess;
     const opts = g.options.filter(id => byId[id] && uw(id));
@@ -1168,18 +1260,19 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     const top = optsDesc[0];
     const ranked = wars.filter(c => uw(c.id)).sort((a, b) => uw(b.id).best - uw(a.id).best);
     const max = Math.max(...ranked.map(c => Math.max(uw(c.id).high, uw(c.id).best)));
-    const pc = v => (v / max * 70).toFixed(2) + '%';
+    const pc = v => (v / max * 62).toFixed(2) + '%';
     let all = false, choice = null;
-    const bars = () => (all ? ranked : ranked.filter(c => opts.includes(c.id))).map(c => { const w = uw(c.id), lo = Math.min(w.low, w.high), hi = Math.max(w.low, w.high); return `<div class="r${opts.includes(c.id) ? ' opt' : ''}${c.id === choice ? ' pick' : ''}${c.id === top ? ' top' : ''}"><span class="n">${esc(c.short || c.name)}</span><span class="tr"><i class="b" style="width:${pc(w.best)}"></i><i class="w" style="left:${pc(lo)};width:calc(${pc(hi)} - ${pc(lo)})"></i><span class="v" style="left:calc(${pc(Math.max(hi, w.best))} + 6px)">${fmtN(w.best)}${c.id === choice ? `<em>${esc(s.pick_label)}</em>` : ''}</span></span></div>`; }).join('');
+    const bars = () => (all ? ranked : ranked.filter(c => opts.includes(c.id))).map(c => { const w = uw(c.id), lo = Math.min(w.low, w.high), hi = Math.max(w.low, w.high); const tags = (c.id === top ? `<em class="most">${esc(s.top_label)}</em>` : '') + (c.id === choice ? `<em>${esc(s.pick_label)}</em>` : ''); return `<div class="r${opts.includes(c.id) ? ' opt' : ''}${c.id === choice ? ' pick' : ''}${c.id === top ? ' top' : ''}"><span class="n">${esc(c.name)}</span><span class="tr"><i class="b" style="width:${pc(w.best)}"></i><i class="w" style="left:${pc(lo)};width:calc(${pc(hi)} - ${pc(lo)})"></i><span class="v" style="left:calc(${pc(Math.max(hi, w.best))} + 6px)">${fmtN(w.best)}${tags}</span></span></div>`; }).join('');
     const chart = () => {
       const shown = all ? ranked : ranked.filter(c => opts.includes(c.id));
-      $('#bars-size').innerHTML = `<div class="cap">${fill(s.chart_caption)}</div><div role="img" aria-label="${esc(plain(fill(s.chart_caption)))}: ${esc(shown.map(c => c.name + ' ' + fmtN(uw(c.id).best) + ', from ' + fmtN(Math.min(uw(c.id).low, uw(c.id).high)) + ' to ' + fmtN(Math.max(uw(c.id).low, uw(c.id).high))).join('; '))}">${bars()}</div><button type="button" class="btn quiet" id="bars-more" aria-expanded="${all}">${esc(plainFill(all ? s.show_fewer : s.show_all))}</button>`;
-      $('#bars-more').onclick = () => { all = !all; chart(); $('#bars-more').focus(); };
+      $('#bars-size').innerHTML = `<div class="cap">${fill(s.chart_caption)}</div><div role="img" aria-label="${esc(plain(fill(s.chart_caption)))}: ${esc(shown.map(c => c.name + ' ' + fmtN(uw(c.id).best) + ', from ' + fmtN(Math.min(uw(c.id).low, uw(c.id).high)) + ' to ' + fmtN(Math.max(uw(c.id).low, uw(c.id).high))).join('; '))}">${bars()}</div><button type="button" class="btn" id="bars-more" aria-expanded="${all}">${esc(plainFill(all ? s.show_fewer : s.show_all))}</button>`;
+      $('#bars-more').onclick = () => { all = !all; chart(); $('#bars-more').focus({ preventScroll: true }); };
     };
     const answer = ch => {
       choice = ch; S.revealed.size = true; $('#skip-size').hidden = true;
       for (const b of $$('.opts .btn', ix('size'))) b.setAttribute('aria-pressed', String(b.dataset.id === ch));
-      const p = `<p>${fill(s.reveal, { opt_counts: listNames(optsDesc.map(id => fmtN(uw(id).best) + ' in ' + byId[id].name)) })}</p>`;
+      const [o1, o2] = optsDesc.slice(1);
+      const p = `<p>${fill(s.reveal, { top_name: byId[top].name, top_n: fmtN(uw(top).best), o1_n: o1 ? fmtN(uw(o1).best) : null, o1_name: o1 ? byId[o1].name : null, o2_n: o2 ? fmtN(uw(o2).best) : null, o2_name: o2 ? byId[o2].name : null })}</p>`;
       showReveal('size', p + `<div class="bars" id="bars-size"></div>`, p);
       chart();
       if (S.step === idx('size')) drawScene(true);
@@ -1195,47 +1288,64 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     ix('sides').innerHTML = `<figure class="units" role="img" aria-label="${esc(plainFill(u.caption))}: ${esc(plainFill(u.filled))}, ${esc(plainFill(u.rest))}"><div class="grid" aria-hidden="true">${sq}</div><figcaption aria-hidden="true"><span><i class="f"></i>${esc(plainFill(u.filled))}</span><span><i></i>${esc(plainFill(u.rest))}</span><span class="cap">${esc(plainFill(u.caption))}</span></figcaption></figure>`;
   })();
 
-  /* step: how anyone knows */
+  /* step: how do we know */
   (function () {
-    const s = stepCfg('know'), g = s.guess;
-    ix('know').innerHTML = `<p class="q">${esc(g.question)}</p><div class="guess"><label for="g-know">${esc(g.label)}</label><input type="range" id="g-know" min="${g.min}" max="${g.max}" value="${g.start}"><output id="o-know">${g.start}</output></div><button type="button" class="btn go" id="b-know">${esc(g.button)}</button>`;
+    const s = stepCfg('know'), g = s.guess, N0 = T.lines_n;
+    ix('know').innerHTML = `<div class="seg" role="group">${(s.toggle || []).map((t, i) => `<button type="button" data-v="${i ? 'all' : 'sudan'}" aria-pressed="${i === 0}">${esc(t)}</button>`).join('')}</div>`
+      + `<div id="know-guess"><p class="q">${fill(g.question)}</p><div class="guess"><label for="g-know">${esc(g.label)}</label><input type="range" id="g-know" min="0" max="${N0}" value="${Math.round(N0 / 2)}"><output id="o-know">${Math.round(N0 / 2)}</output></div><button type="button" class="btn go" id="b-know">${esc(g.button)}</button></div>`;
+    for (const b of $$('.seg button', ix('know'))) b.onclick = () => { S.sub.know = b.dataset.v; S.ex = null; for (const x of $$('.seg button', ix('know'))) x.setAttribute('aria-pressed', String(x === b)); for (const x of $$('#grades .exb')) { x.setAttribute('aria-expanded', 'false'); x.classList.remove('on'); const p = $('#ex-' + x.dataset.t); if (p) p.hidden = true; } if (S.step === idx('know')) drawScene(true); };
     const inp = $('#g-know'), out = $('#o-know');
-    const exRows = {};
-    for (const x of (s.examples || [])) { const c = byId[x.war]; if (!c) continue; const t = c.ties.find(t => t.backer === x.backer && t.party === x.party && (!x.tier || t.tier === x.tier)); if (t) exRows[t.tier] = { c, t, key: c.id + '|' + c.ties.indexOf(t) }; }
+    for (const x of (s.examples || [])) { const c = byId[x.war]; if (!c) continue; const t = c.ties.find(t => t.backer === x.backer && t.party === x.party && (!x.tier || t.tier === x.tier)); if (t) exByKey[c.id + '|' + c.ties.indexOf(t)] = { c, t, tier: t.tier }; }
+    const exOf = k => Object.entries(exByKey).find(([, v]) => v.tier === k);
     const PREF = { open: ['backer', 'recipient'], shown: ['document'], reported: ['press', 'research', 'government'], claimed: ['opponent', 'press'] };
     const srcFor = t => { const ok = t.sources.filter(x => x.counts !== false && safeUrl(x.url)); return ok.find(x => (PREF[t.tier] || []).includes(x.class)) || ok[0] || null; };
     const defs = Object.fromEntries(tierIds.map(k => [k, s.tier_defs && s.tier_defs[k] ? quote(s.tier_defs[k]) : null]));
-    const line = () => numberLine(10, [{ v: +inp.value, label: s.marks.guess, cls: 'you' }, { v: T.open_tenths, label: s.marks.answer }], [0, 5, 10]);
+    /* the lines as small boxes, one per line, in their grades; the reader's guess is ringed */
+    const units = () => {
+      const order = liveWarTies.slice().sort((a, b) => tierIds.indexOf(a.t.tier) - tierIds.indexOf(b.t.tier));
+      const gv = +inp.value;
+      const boxes = order.map((r, i) => `<i class="u-${r.t.tier}${i === gv - 1 ? ' g' : ''}"></i>`).join('');
+      const key = tierIds.map(k => `<span><i class="u-${k}"></i>${T[{ open: 'open_n', shown: 'shown_n', reported: 'reported_n', claimed: 'claimed_n' }[k]]} ${esc(D.tiers[k].word)}</span>`).join('');
+      return `<figure class="units lines" role="img" aria-label="${esc(plainFill(s.units_caption))}: ${esc(tierIds.map(k => T[{ open: 'open_n', shown: 'shown_n', reported: 'reported_n', claimed: 'claimed_n' }[k]] + ' ' + D.tiers[k].word).join(', '))}; ${esc(s.guess_mark)} ${gv}"><div class="grid" aria-hidden="true">${boxes}</div><figcaption aria-hidden="true">${key}<span><i class="g-key"></i>${esc(s.guess_mark)}: ${gv}</span></figcaption></figure>`;
+    };
     const sync = () => {
       for (const b of $$('#grades .chip')) { const on = S.tiers.has(b.dataset.t); b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); }
-      for (const x of $$('#grades .ex')) { const on = x.dataset.key === S.ex; x.classList.toggle('on', on); x.setAttribute('aria-pressed', String(on)); }
+      for (const x of $$('#grades .exb')) { const on = x.dataset.key === S.ex; x.setAttribute('aria-expanded', String(on)); x.classList.toggle('on', on); const p = $('#ex-' + x.dataset.t); if (p) p.hidden = !on; }
     };
     const answer = () => {
-      const first = !S.revealed.know; S.revealed.know = true;
-      const rows = tierIds.map(k => { const r = exRows[k]; let ex = ''; if (r) { const b = backers[r.t.backer], p = party(r.c, r.t.party), src = srcFor(r.t); ex = `<div class="ex" data-key="${r.key}" data-t="${k}" tabindex="0" role="button" aria-pressed="false">${esc(b.short)} → ${esc(p.short)} in ${esc(r.c.name)}: ${esc(kindsText(r.t))}.${r.t.stance ? ' ' + esc(b.short) + ' ' + esc(r.t.stance) + '.' : ''}${src ? ` <span class="s">Source: <a href="${esc(safeUrl(src.url))}" target="_blank" rel="noopener">${esc(src.publisher || src.text)}</a>${src.date ? ', ' + esc(fmtMonth(src.date)) : ''}.</span>` : ''}</div>`; } return `<li><button type="button" class="chip tier" data-t="${k}">${tierSample(k)}${esc(D.tiers[k].word)}</button><div class="def">${esc(defs[k] || '')}${ex}</div></li>`; }).join('');
+      S.revealed.know = true;
+      const rows = tierIds.map(k => {
+        const e = exOf(k); let ex = '';
+        let tog = '';
+        if (e) { const [key, r] = e, b = backers[r.t.backer], p = party(r.c, r.t.party), src = srcFor(r.t); tog = ` <button type="button" class="exb" data-key="${key}" data-t="${k}" aria-expanded="false" aria-controls="ex-${k}">${esc(s.example_open)}</button>`; ex = `<p class="exl" id="ex-${k}" hidden>${esc(b.short)} → ${esc(p.short)} in ${esc(r.c.name)}: ${esc(kindsText(r.t))}.${r.t.stance ? ' ' + esc(b.short) + ' ' + esc(r.t.stance) + '.' : ''}${src ? ` <span class="s">Source: <a href="${esc(safeUrl(src.url))}" target="_blank" rel="noopener">${esc(src.publisher || src.text)}</a>${src.date ? ', ' + esc(fmtMonth(src.date)) : ''}.</span>` : ''}</p>`; }
+        return `<li><div class="gh"><button type="button" class="chip tier on" data-t="${k}" aria-pressed="true">${tierSample(k)}${esc(D.tiers[k].word)}</button><span class="def">${esc(defs[k] || '')}${tog}</span></div>${ex}</li>`;
+      }).join('');
       const p = `<p>${fill(s.reveal)}</p>`;
-      showReveal('know', `<div id="nl-know">${line()}</div>` + p + `<p class="cue">${esc(s.chips_cue)}</p><ul class="grades" id="grades">${rows}</ul>`, p);
-      for (const b of $$('#grades .chip')) b.onclick = () => { const k = b.dataset.t; if (S.tiers.has(k)) { if (S.tiers.size > 1) S.tiers.delete(k); } else S.tiers.add(k); if (S.ex) { const ex = $$('#grades .ex').find(x => x.dataset.key === S.ex); if (ex && !S.tiers.has(ex.dataset.t)) S.ex = null; } sync(); drawScene(false); };
-      for (const x of $$('#grades .ex')) { const act = () => { S.ex = S.ex === x.dataset.key ? null : x.dataset.key; if (S.ex) S.tiers.add(x.dataset.t); sync(); drawScene(false); }; x.onclick = ev => { if (ev.target.closest('a')) return; act(); }; x.onkeydown = ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); act(); } }; }
+      $('#know-guess').hidden = true;
+      showReveal('know', `<div id="units-know"></div>` + p + `<p class="cue">${fill(s.chips_cue)}</p><ul class="grades" id="grades">${rows}</ul>`, p);
+      $('#units-know').innerHTML = units();
+      for (const b of $$('#grades .chip')) b.onclick = () => { const k = b.dataset.t; if (S.tiers.has(k)) { if (S.tiers.size > 1) S.tiers.delete(k); } else S.tiers.add(k); if (S.ex && exByKey[S.ex] && !S.tiers.has(exByKey[S.ex].tier)) S.ex = null; sync(); drawScene(false); };
+      for (const x of $$('#grades .exb')) x.onclick = () => { S.ex = S.ex === x.dataset.key ? null : x.dataset.key; if (S.ex) S.tiers.add(x.dataset.t); sync(); if (S.step === idx('know')) drawScene(true); };
       sync();
-      if (S.step === idx('know')) drawScene(first);
     };
-    inp.oninput = () => { out.textContent = inp.value; if (S.revealed.know) $('#nl-know').innerHTML = line(); };
+    inp.oninput = () => { out.textContent = inp.value; };
     $('#b-know').onclick = answer;
   })();
 
-  /* step: the same states */
-  /* "the United States", "the UAE": the article where English needs one */
-  const theName = (s, cap) => /^(United |U\.S\.|UAE)/.test(s) ? (cap ? 'The ' : 'the ') + s : s;
+  /* step: states in many wars */
   function stateLines(bid, cfg) {
     const b = backers[bid];
-    const lines = [plainFill(fightsIn(bid).length ? cfg.pick_line : cfg.pick_line_backs, { state_name: theName(b.name, true), state_in: inWars(bid).length, state_fights: fightsIn(bid).length, state_backs: backsIn(bid).length })];
+    const x = fightsIn(bid).length, y = backsIn(bid).length;   /* a side in x wars, backer in y others: x + y is every war it is in */
+    const lines = [plainFill(x ? cfg.pick_line : cfg.pick_line_backs, { state_name: theName(b.name, true), state_in: inWars(bid).length, state_sides: x, state_backs: y })];
     for (const c of wars) {
+      if (isSide(c, bid)) continue;
       const ts = c.ties.filter(t => t.backer === bid);
       const sides = new Set(ts.map(t => (party(c, t.party) || {}).side));
       if (sides.size < 2) continue;
       const liveT = ts.filter(t => !t.ended), endT = ts.filter(t => t.ended);
-      if (endT.length && liveT.length && !liveT.some(t => endT.some(e => party(c, e.party).side === party(c, t.party).side))) lines.push(plainFill(cfg.both_ended, { war_name: c.name, live_party: partyRef(party(c, liveT[0].party)), ended_party: partyRef(party(c, endT[0].party)), ended_month: fmtMonth(endT[0].ended) }));
+      /* an ended line is told only when it was on the record */
+      const endOpen = endT.filter(t => t.tier === 'open');
+      if (endOpen.length && liveT.length && !liveT.some(t => endOpen.some(e => party(c, e.party).side === party(c, t.party).side))) lines.push(plainFill(cfg.both_ended, { war_name: c.name, live_party: partyRef(party(c, liveT[0].party)), ended_party: partyRef(party(c, endOpen[0].party)), ended_month: fmtMonth(endOpen[0].ended) }));
       else if (!endT.length) lines.push(plainFill(cfg.both_live, { war_name: c.name }));
     }
     return lines;
@@ -1247,18 +1357,26 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     const [pa, pb] = PAIR.map(id => backers[id]);
     const pairRows = pa && pb ? pw.map(c => { const ta = c.ties.find(t => t.backer === pa.id && !t.ended), tb = c.ties.find(t => t.backer === pb.id && !t.ended); return `<li><span class="pairsw">${tierSample('open', 'hue-' + hueOf(pa.id))}${tierSample('open', 'hue-' + hueOf(pb.id))}</span><span>${esc(plainFill(pr.row, { war_name: c.name, a_name: pa.short, b_name: pb.short, a_party: partyRef(party(c, ta.party)), b_party: partyRef(party(c, tb.party)) }))}</span></li>`; }).join('') : '';
     ix('same').innerHTML = `<div class="chips" id="state-chips" role="group">${hued.map(b => `<button type="button" class="chip" data-b="${b.id}" aria-pressed="false"><i class="sw" style="background:var(--b${b.hue})"></i>${esc(b.short)}</button>`).join('')}</div><div id="same-lines"></div>`
-      + (pa && pb && pw.length ? `<div class="pair"><p class="lead">${esc(pr.lead)}</p><button type="button" class="btn go" id="pair-btn" aria-pressed="false">${esc(plainFill(pr.button, { pair_a: pa.short, pair_b: pb.short }))}</button><ul class="rows pairrows" id="pair-rows" hidden>${pairRows}</ul>${v ? `<p class="vetted">${esc(v)}</p>` : ''}</div>` : '');
+      + (pa && pb && pw.length ? `<div class="pair"><p class="lead">${esc(pr.lead)}</p><button type="button" class="btn go" id="pair-btn" aria-pressed="false">${esc(plainFill(pr.button, { pair_a: pa.short, pair_b: pb.short }))}</button><div id="pair-more" hidden><ul class="rows pairrows" id="pair-rows">${pairRows}</ul>${v ? `<p class="vetted">${esc(v)}</p>` : ''}</div></div>` : '');
     for (const b of $$('#state-chips .chip')) b.onclick = () => { S.backer = b.dataset.b; S.pair = false; syncSame(); if (S.step === idx('same')) { drawScene(true); writeHash(); } };
     const pbtn = $('#pair-btn');
-    if (pbtn) pbtn.onclick = () => { S.pair = !S.pair; syncSame(); if (S.step === idx('same')) { drawScene(true); writeHash(); } if (S.pair) say(plain($('#pair-rows').textContent)); };
+    if (pbtn) pbtn.onclick = () => { S.pair = !S.pair; syncSame(); if (S.step === idx('same')) { drawScene(true); writeHash(); } if (S.pair) say(plain($('#pair-more').textContent)); };
   })();
   function syncSame() {
     for (const b of $$('#state-chips .chip')) { const on = !S.pair && b.dataset.b === S.backer; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); }
     $('#same-lines').innerHTML = S.pair ? '' : stateLines(S.backer, stepCfg('same')).map(x => `<p class="line">${esc(x)}</p>`).join('');
     const pbtn = $('#pair-btn'), pr = stepCfg('same').pair || {};
-    if (pbtn) { pbtn.setAttribute('aria-pressed', String(S.pair)); pbtn.textContent = S.pair ? pr.off : plainFill(pr.button, { pair_a: backers[PAIR[0]].short, pair_b: backers[PAIR[1]].short }); $('#pair-rows').hidden = !S.pair; }
+    if (pbtn) { pbtn.setAttribute('aria-pressed', String(S.pair)); pbtn.textContent = S.pair ? pr.off : plainFill(pr.button, { pair_a: backers[PAIR[0]].short, pair_b: backers[PAIR[1]].short }); $('#pair-more').hidden = !S.pair; }
   }
   syncSame();
+
+  /* step: force short of war, the squares by name; picking one frames it */
+  (function () {
+    const s = stepCfg('force');
+    ix('force').innerHTML = `<p class="cue">${fill(s.list_cue || '')}</p><ul class="sqlist" id="sq-list">${squares.map(c => `<li><button type="button" class="sqb" data-id="${c.id}" aria-pressed="false"><i class="g sq"></i>${esc(c.name)}</button></li>`).join('')}</ul>`;
+    for (const b of $$('#sq-list .sqb')) b.onclick = () => { S.sq = S.sq === b.dataset.id ? null : b.dataset.id; syncSq(); if (S.step === idx('force')) drawScene(true); };
+  })();
+  function syncSq() { for (const b of $$('#sq-list .sqb')) { const on = b.dataset.id === S.sq; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); } }
 
   /* step: is this normal (the chart is drawn on the stage) */
   const chartEl = $('#chart');
@@ -1269,13 +1387,14 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     const x = d3.scaleLinear([Y0, Y1 + 1], [LM, w - RM]);
     const bw = Math.max(1, x(Y0 + 1) - x(Y0) - (narrow ? 0.6 : 1.4));
     const cx = yr => x(yr) + bw / 2;
-    const tA = narrow ? 50 : 30, hA = Math.max(56, h * 0.28), tB = tA + hA + (narrow ? 58 : 66), hB = Math.max(80, h - tB - 30);
+    /* on a phone the stage is short: smaller top panel, tighter gaps */
+    const tA = narrow ? 40 : 30, hA = narrow ? Math.max(36, h * 0.18) : Math.max(56, h * 0.28), tB = tA + hA + (narrow ? 44 : 66), hB = Math.max(narrow ? 50 : 80, h - tB - (narrow ? 22 : 30));
     const yN = d3.scaleLinear([0, Math.max(...years.map(r => r.n)) * 1.1], [tA + hA, tA]);
     /* the axis is set by the years below the highest; any year above it is drawn to the top and labelled */
     const sortedBest = Yy.map(r => r.best).sort((a, b) => b - a);
     const dMax = (sortedBest[1] || sortedBest[0]) * 1.12;
     const yD = d3.scaleLinear([0, dMax], [tB + hB, tB]).clamp(true);
-    let s = `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(plainFill(cfg.top))}. ${esc(plainFill(cfg.bottom))}"><defs><pattern id="hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="4" fill="var(--bg-raise)"/><rect width="2" height="4" fill="var(--danger)" fill-opacity="0.6"/></pattern></defs>`;
+    let s = `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(plainFill(cfg.top))}. ${esc(plainFill(cfg.bottom))}"><defs><pattern id="hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="4" fill="var(--bg-raise)"/><rect width="2.2" height="4" fill="var(--danger)" fill-opacity="0.95"/></pattern></defs>`;
     s += `<text class="h" x="${narrow ? 8 : LM}" y="${tA - 12}">${esc(plainFill(cfg.top))}</text>`;
     for (const v of yN.ticks(3).filter(v => v > 0)) s += `<line class="axis" x1="${LM}" x2="${w - RM}" y1="${yN(v)}" y2="${yN(v)}"/><text x="${LM - 6}" y="${yN(v) + 3.5}" text-anchor="end">${v}</text>`;
     s += `<path class="nline" d="${d3.line().x(r => cx(r.year)).y(r => yN(r.n))(years)}"/>`;
@@ -1289,6 +1408,8 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       if (r.best > dMax) s += `<text x="${(x(r.year) + bw + 4).toFixed(1)}" y="${tB + 10}">${esc(plainFill(cfg.peak, { peak_year: r.year, peak_best: fmtN(r.best) }))}</text>`;
     }
     s += `<text x="${x(T.d_first) - 5}" y="${tB + hB - 4}" text-anchor="end">${esc(plainFill(cfg.from))}</text>`;
+    /* the latest five-year average, carried back across the chart so it can be read against the early 1990s */
+    s += `<line class="avgref" x1="${LM}" x2="${cx(avgLast.year)}" y1="${yD(avgLast.v).toFixed(1)}" y2="${yD(avgLast.v).toFixed(1)}"/><text class="avgref-l" x="${LM + 4}" y="${(yD(avgLast.v) - 5).toFixed(1)}">${esc(plainFill(cfg.avg_line || ''))}</text>`;
     s += `<polyline class="avg" points="${avgs.map(a => `${cx(a.year).toFixed(1)},${yD(a.v).toFixed(1)}`).join(' ')}"/>`;
     const avgLines = [T.avg_latest].concat(narrow ? cfg.avg.split(/[ ]/) : [cfg.avg]);
     avgLines.forEach((t, j) => { s += `<text${j ? '' : ' class="lab"'} x="${cx(avgLast.year) + 7}" y="${yD(avgLast.v) - 4 + j * 12}">${esc(t)}</text>`; });
@@ -1312,12 +1433,13 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     const s = stepCfg('shape');
     const strip = c => { const live = c.ties.filter(t => !t.ended); return tierIds.map(k => { const n = live.filter(t => t.tier === k).length; return n ? `<i class="s-${k}" style="flex:${n}" title="${esc(D.tiers[k].word)} ${n}"></i>` : ''; }).join(''); };
     const label = c => { const live = c.ties.filter(t => !t.ended); return tierIds.map(k => D.tiers[k].word + ' ' + live.filter(t => t.tier === k).length).join(', '); };
-    ix('shape').innerHTML = `<div class="stripkey" aria-hidden="true">${tierIds.map(k => `<span><i class="s-${k}"></i>${esc(D.tiers[k].word)}</span>`).join('')}</div><div class="shapes" id="shapes">${wars.map(c => { const r = c.band ? GLYPH_R[c.band] : DOT_R; const helpers = new Set(c.ties.filter(t => !t.ended).map(t => t.backer)).size, sides = sidesOf(c); return `<button type="button" class="shape" data-id="${c.id}" aria-pressed="false" aria-label="${esc(c.name)}: ${esc(c.band ? D.bands[c.band] : '')}, ${sides} sides, ${helpers} ${helpers === 1 ? 'backer' : 'backers'}; lines ${esc(label(c))}"><svg viewBox="-11 -11 22 22" aria-hidden="true"><circle r="${r}"/></svg><span class="nm">${esc(c.name)}</span><span class="ln">${fill(helpers === 1 ? s.card_line_one : s.card_line, { sides, helpers })}</span><span class="strip" aria-hidden="true">${strip(c)}</span></button>`; }).join('')}</div>`;
+    ix('shape').innerHTML = `<div class="stripkey" aria-hidden="true">${tierIds.map(k => `<span><i class="s-${k}"></i>${esc(D.tiers[k].word)}</span>`).join('')}</div><div class="shapes" id="shapes">${wars.map(c => { const r = c.band ? GLYPH_R[c.band] : DOT_R; const helpers = new Set(c.ties.filter(t => !t.ended && !isSide(c, t.backer)).map(t => t.backer)).size, sides = sidesOf(c); return `<button type="button" class="shape" data-id="${c.id}" aria-pressed="false" aria-label="${esc(c.name)}: ${esc(c.band ? D.bands[c.band] : '')}, ${sides} sides, ${helpers} ${helpers === 1 ? 'backer' : 'backers'}; lines ${esc(label(c))}"><svg viewBox="-11 -11 22 22" aria-hidden="true"><circle r="${r}"/></svg><span class="nm">${esc(c.name)}</span><span class="ln">${fill(helpers === 1 ? s.card_line_one : s.card_line, { sides, helpers })}</span><span class="strip" aria-hidden="true">${strip(c)}</span></button>`; }).join('')}</div>`;
     for (const b of $$('#shapes .shape')) b.onclick = () => { S.shapeWar = S.shapeWar === b.dataset.id ? null : b.dataset.id; syncShapes(); if (S.step === idx('shape')) drawScene(true); };
   })();
   function syncShapes() { for (const b of $$('#shapes .shape')) { const on = b.dataset.id === S.shapeWar; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); } }
 
-  /* step: now it is yours */
+  /* step: use the map */
+  const secs0 = () => $$('.step', $('#steps'));
   let grid = null, gridLoading = null;
   /* the event grid is fetched only when the last step needs its one number */
   function loadGrid() {
@@ -1340,14 +1462,17 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     const s = stepCfg('free');
     const others = D.backers.filter(b => !b.hue && D.conflicts.some(c => c.ties.some(t => t.backer === b.id))).sort((a, b) => a.short.localeCompare(b.short));
     ix('free').innerHTML = `<div class="hint"><span class="dk">${esc(s.hint_desktop)}</span><span class="ph">${esc(s.hint_phone)}</span></div>
-      <div class="chips" id="free-layers"><button type="button" class="chip" data-l="areas">${esc(s.layers.areas)}</button><button type="button" class="chip" data-l="lines">${esc(s.layers.lines)}</button><button type="button" class="chip" data-l="squares">${esc(s.layers.squares)}</button><button type="button" class="chip" id="free-reset">${esc(s.layers.reset)}</button></div>
+      <div class="layerrow"><div class="chips" id="free-layers"><button type="button" class="chip" data-l="areas">${esc(s.layers.areas)}</button><button type="button" class="chip" data-l="lines">${esc(s.layers.lines)}</button><button type="button" class="chip" data-l="squares">${esc(s.layers.squares)}</button></div><button type="button" class="btn reset" id="free-reset">&#8634; ${esc(s.layers.reset)}</button></div>
       <details class="morectl"><summary>${esc(s.more_controls)}</summary>
       <div class="chips" id="free-tiers">${tierIds.map(k => `<button type="button" class="chip tier" data-t="${k}">${tierSample(k)}${esc(D.tiers[k].word)}</button>`).join('')}</div>
       <div class="chips" id="free-states">${hued.map(b => `<button type="button" class="chip" data-b="${b.id}"><i class="sw" style="background:var(--b${b.hue})"></i>${esc(b.short)}</button>`).join('')}<select class="chip" id="free-other" aria-label="other states">${'<option value="">' + esc(LG.others) + '…</option>' + others.map(b => `<option value="${b.id}">${esc(b.short)}</option>`).join('')}</select></div>
       </details>
       <div class="info" id="free-info" aria-live="polite" hidden></div>
-      <ul class="links">${s.links.map(l => `<li><a href="${esc(l.url)}">${esc(l.label)}</a> <span>${fill(l.text)}</span></li>`).join('')}</ul>
+      <ul class="links">${s.links.map((l, i) => `<li><a class="btn${i ? '' : ' go'}" href="${esc(l.url)}">${esc(l.label)}</a><span>${fill(l.text)}</span></li>`).join('')}</ul>
       <h3 class="cs">${esc(s.cannot_title)}</h3><ul class="plain" id="cannot"></ul>`;
+    /* the reader's opening guess, set beside the counts, above the step's text */
+    const card = secs0()[idx('free')].querySelector('.card'), gp = document.createElement('p');
+    gp.className = 'guessed'; gp.id = 'free-guess'; gp.hidden = true; card.querySelector('.body').before(gp);
     renderCannot();
     for (const b of $$('#free-layers .chip[data-l]')) b.onclick = () => { S.free[b.dataset.l] = !S.free[b.dataset.l]; syncFree(); drawScene(false); };
     $('#free-reset').onclick = () => { S.free.war = null; S.free.backer = null; applyT(viewT('world'), true); syncFree(); drawScene(false); setTimeout(() => drawScene(false), reduced ? 0 : 760); };
@@ -1357,6 +1482,8 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   })();
   function syncFree() {
     const f = S.free, s = stepCfg('free');
+    const gp = $('#free-guess');
+    if (gp) { gp.hidden = S.startGuess == null; if (S.startGuess != null) gp.textContent = plainFill(s.guessed || '', { g: S.startGuess }); }
     for (const b of $$('#free-layers .chip[data-l]')) { const on = !!f[b.dataset.l]; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); }
     for (const b of $$('#free-tiers .chip')) { const on = S.tiers.has(b.dataset.t); b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); }
     for (const b of $$('#free-states .chip[data-b]')) { const on = f.backer === b.dataset.b; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); }
@@ -1377,18 +1504,20 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
 
   /* ================= moving between steps ================= */
   const rail = $('#rail');
-  rail.innerHTML = STEPS.map((s, i) => `<button type="button" data-i="${i}" data-name="${esc(s.name)}" aria-label="${esc((i === 0 ? 'start' : 'step ' + i) + ': ' + s.name)}"></button>`).join('');
+  /* the rail is for the mouse; the keyboard has back, next and the arrow keys */
+  rail.innerHTML = STEPS.map((s, i) => `<button type="button" tabindex="-1" data-i="${i}" data-name="${esc(s.name)}" aria-label="${esc((i === 0 ? 'start' : 'step ' + i) + ': ' + s.name)}"></button>`).join('');
   for (const b of $$('button', rail)) b.onclick = () => go(+b.dataset.i);
   const secs = $$('.step', stepsEl);
-  const stageBottom = () => $('#stage').getBoundingClientRect().bottom;
-  const lineY = () => phone() ? (stageBottom() + innerHeight) / 2 : innerHeight * 0.5;
+  const stage = $('#stage');
+  /* where a step's heading must be for the step to take over: half way down the screen, or on a phone half way down the area below the map and its key */
+  const readY = () => { if (!phone()) return innerHeight * 0.5; const b = 52 + stage.offsetHeight; return b + (innerHeight - b) * 0.4; };
+  /* where a heading lands after next or back: level with the top of the map, or on a phone just under the key */
+  const landY = () => phone() ? 52 + stage.offsetHeight + 12 : (parseFloat(getComputedStyle(stage).top) || 64) + 1;
   let ioLock = 0;
   function go(i, instant) {
     if (i < 0 || i >= N) return;
     const card = secs[i].querySelector('.card'), r = card.getBoundingClientRect();
-    /* on a phone the card's top sits just under the map; on a wide screen the card is centred, or its top shown if it is tall */
-    const target = phone() ? scrollY + r.top - (52 + $('#stage').offsetHeight + 14)
-      : r.height < innerHeight * 0.8 ? scrollY + r.top + r.height / 2 - lineY() : scrollY + r.top - 80;
+    const target = scrollY + r.top - landY();
     ioLock = Date.now() + (instant || reduced ? 300 : 1000);
     scrollTo({ top: Math.max(0, target), behavior: instant || reduced ? 'auto' : 'smooth' });
     activate(i, !!instant);
@@ -1399,7 +1528,12 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   }
   function activate(i, instant) {
     if (i === S.step) return;
+    const leaving = S.step >= 0 ? STEPS[S.step].id : null;
     S.step = i;
+    hideTip();
+    /* a pick made inside a step belongs to that step */
+    if (leaving === 'shape' && S.shapeWar) { S.shapeWar = null; syncShapes(); }
+    if (leaving === 'force' && S.sq) { S.sq = null; syncSq(); }
     secs.forEach((s, j) => s.classList.toggle('active', j === i));
     for (const b of $$('button', rail)) { const j = +b.dataset.i; b.classList.toggle('on', j === i); b.classList.toggle('seen', j < i); if (j === i) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current'); }
     const id = STEPS[i].id;
@@ -1409,18 +1543,18 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     drawScene(!instant);
     say((i === 0 ? 'start' : 'step ' + i + ' of ' + (N - 1)) + ': ' + STEPS[i].title);
   }
-  /* the step whose box crosses the reading line sets the map; after a jump, wait for the scroll to land, then look again */
+  /* the last step whose heading has passed the reading line sets the map; after a jump, wait for the scroll to land */
   let io = null, lockTimer = null;
   function syncToLine() {
     if (Date.now() < ioLock) { clearTimeout(lockTimer); lockTimer = setTimeout(syncToLine, ioLock - Date.now() + 20); return; }
-    const y = lineY();
-    const i = secs.findIndex(sec => { const r = sec.getBoundingClientRect(); return r.top <= y && r.bottom > y; });
-    if (i >= 0) activate(i, false);
+    const y = readY();
+    let i = -1;
+    secs.forEach((sec, j) => { if (sec.querySelector('h2').getBoundingClientRect().top <= y) i = j; });
+    activate(Math.max(0, i), false);
   }
   function buildIO() {
     if (io) io.disconnect();
-    const y = lineY(), hgt = innerHeight;
-    io = new IntersectionObserver(() => syncToLine(), { rootMargin: `-${Math.round(y)}px 0px -${Math.max(0, Math.round(hgt - y - 1))}px 0px` });
+    io = new IntersectionObserver(() => syncToLine(), { threshold: [0, 0.25, 0.5, 0.75, 1] });
     for (const s of secs) io.observe(s);
   }
   let scrollT = null;
@@ -1431,6 +1565,8 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     if (ev.key === 'ArrowRight') { ev.preventDefault(); go(Math.min(N - 1, S.step + 1)); }
     if (ev.key === 'ArrowLeft') { ev.preventDefault(); go(Math.max(0, S.step - 1)); }
   });
+  /* a typed #s=<step>, or Back to such an address, moves the lesson */
+  addEventListener('hashchange', () => { const q2 = new URLSearchParams(location.hash.replace(/^#/, '')); const i = idx(q2.get('s') || ''); if (i >= 0 && i !== S.step) go(i); });
   /* a resize redraws; a change of width (a turned phone, a resized window) also brings the active card back into place.
      Height-only changes are a phone's address bar and are left alone. */
   let rz = null, lastW = innerWidth;
@@ -1453,7 +1589,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     + 'Base map and province shapes: Natural Earth (public domain), Equal Earth projection. Drawn with ' + a('https://d3js.org', 'd3') + '.';
   $('#report-error').innerHTML = esc(D.report_error || '') + ' ' + a('https://github.com/daseme/warnotwar/issues', 'github.com/daseme/warnotwar/issues') + '.';
   $('#credit-title').textContent = C.credit_title || ''; $('#report-title').textContent = C.report_title || '';
-  $('#stamp').innerHTML = 'Wars and lines as of ' + esc(T.as_of) + ' &middot; UCDP ' + esc(U.versions) + ', pulled ' + esc(T.ucdp_pulled) + ' &middot; data/conflicts.json, data/war_areas.json, data/ucdp.json, data/level.json, data/ucdp_years.json, data/ucdp_grid.json, data/wars.json';
+  $('#stamp').innerHTML = 'UCDP ' + esc(U.versions) + ', pulled ' + esc(T.ucdp_pulled) + ' &middot; data/conflicts.json, data/war_areas.json, data/ucdp.json, data/level.json, data/ucdp_years.json, data/ucdp_grid.json, data/wars.json';
   $('#after').hidden = false;
 
   /* ---- start: a deep link #s=<id> lands on that step ---- */

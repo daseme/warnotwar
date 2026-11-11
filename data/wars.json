@@ -1,9 +1,9 @@
 {
-  "note": "Copy for wars.html. Braces are filled by the page from the data files at load; a sentence whose brace has no value is left out. Double brackets mark a word with a definition from the glossary ([[word]] or [[glossary key|shown text]]). A quoted item is {\"from\": \"file.field\", \"pick\": \"text inside one sentence\"} and shows that sentence of the data as it stands; \"cut\" ends it at that character. Every number shown is a token; none is typed here.",
+  "note": "Copy for wars.html. Braces are filled by the page from the data files at load; a sentence whose brace has no value is left out. Double brackets mark a word with a definition from the glossary ([[word]] or [[glossary key|shown text]]). A quoted item is {\"from\": \"file.field\", \"pick\": \"text inside one sentence\"} and shows that sentence of the data as it stands; \"cut\" ends it at that character. {tap} and {Tap} read click or tap by the reader's pointer. Every number shown is a token; none is typed here.",
   "title": "Today's wars",
   "kicker": "warnotwar · an introduction",
-  "intro": "A first look at the wars being fought now, one idea at a time. The map is built up as you scroll.",
-  "asof": "Wars and lines as of {as_of}. Deaths counted by UCDP to {ucdp_reach}.",
+  "intro": "The wars being fought now, with one layer added to the map at each step. Dotted words open a definition.",
+  "asof": "Wars and their backers as of {as_of}. Deaths counted by the Uppsala Conflict Data Program from {win_from} to {win_to}.",
   "skip": "Skip to the lesson",
   "quotes": {
     "areas_drone": {"from": "conflicts.areas_rule", "pick": "long-range drone"},
@@ -30,7 +30,6 @@
     "state": "A country and its government.",
     "armed group": "A fighting force that is not the army of a state: a rebel movement, a militia, a gang, a jihadist group.",
     "backer": "A state, a group of states, or a force that runs part of a state, that helps one side from outside the war.",
-    "attribution": "Saying who did something, and on what evidence.",
     "province": "The first level of division inside a country. Some countries call them states or regions.",
     "provisional": "Not final. UCDP revises its latest years as more reports come in."
   },
@@ -39,64 +38,65 @@
     {
       "id": "start",
       "name": "how many",
-      "title": "How many wars are there right now?",
-      "body": "This page builds a map of the wars of the past year, one layer at a time. Start with a guess.",
+      "title": "How many wars?",
+      "body": "Guess how many wars were fought in the past year.",
       "guess": {"type": "slider", "min": 0, "max": 100, "start": 20, "label": "your guess", "button": "show the answer"},
-      "marks": {"guess": "your guess", "map": "this map", "ucdp": "UCDP, {ucdp_year}", "ucdp_wars": "UCDP, at war level"},
-      "reveal": "The Uppsala Conflict Data Program (UCDP), a university project in Sweden, counted {ucdp_n} [[armed conflict|armed conflicts]] in {ucdp_year}. Its bar is {acd_bar} deaths in a year. {ucdp_wars} of them reached {war_bar} deaths, the level it calls war. This map holds {wars} wars from the past twelve months. Its rule: {rule} The number depends on the rule.",
+      "marks": {"guess": "your guess", "map": "this map", "ucdp": "UCDP conflicts", "ucdp_wars": "UCDP wars"},
+      "reveal": "The Uppsala Conflict Data Program (UCDP), a university project in Sweden, counted {ucdp_n} [[armed conflict|armed conflicts]] in {ucdp_year}. It counts one government against one opposing side as one conflict, from {acd_bar} deaths in a year. {ucdp_wars} of them reached {war_bar} deaths, which it calls war. This map holds {wars} wars. One war here can hold several of UCDP's conflicts. The number depends on the rule.",
       "sources": [
         {"from": "conflicts.rule"},
         {"text": "UCDP/PRIO Armed Conflict Dataset, version {acd_version}, {n_first} to {ucdp_year}."},
         {"link": "https://ucdp.uu.se", "label": "Uppsala Conflict Data Program, ucdp.uu.se"},
-        {"text": "Every year since {n_first}, on one axis, is on the level page.", "url": "/level.html"}
+        {"text": "Every year since {n_first}, on one chart, is on the level page.", "url": "/level.html"}
       ]
     },
     {
       "id": "where",
       "name": "where",
       "title": "Where they are",
-      "body": "Each dot is one war. They arrive one region at a time: {region_counts}. Hover or tap a dot for its name.",
+      "body": "Each dot is one war. They appear one region at a time: {region_counts}. Hover or {tap} a dot for its name.",
       "sources": [
         {"from": "conflicts.rule"},
-        {"text": "Each war, its point and its region are kept by hand in data/conflicts.json, as of {as_of}.", "url": "/data/conflicts.json"}
+        {"text": "Each war, with its sides, backers and sources, is on the full map, as of {as_of}.", "url": "/conflicts.html"}
       ]
     },
     {
       "id": "areas",
-      "name": "a war is not a country",
-      "title": "A war is not a country",
-      "body": "Sudan's war began in {sudan_start}. The shaded provinces are where the fighting was in the past year, {sudan_prov} of them. A [[province]] is shaded for ground fighting, sieges or an air campaign. {areas_drone}",
+      "name": "provinces",
+      "title": "Where the fighting is",
+      "body": "Shaded provinces show where the fighting was in the past year. In Sudan, {sudan_prov} are shaded. Sudan's war began in {sudan_start}. A [[province]] is shaded for ground fighting, sieges or an air campaign. {areas_drone}",
       "toggle": ["Sudan", "every war"],
       "toggle_text": "Across the map, {areas_total} provinces are shaded in {areas_wars} wars. {areas_border}",
       "sources": [
         {"text": "Sudan's provinces: {sudan_areas_source}.", "url": "sudan_areas_url"},
-        {"text": "Province shapes: {areas_shapes}."}
+        {"text": "Province borders: Natural Earth, a public-domain map."}
       ]
     },
     {
       "id": "size",
-      "name": "how big",
-      "title": "How big",
-      "body": "So far every dot is the same size. Before they take their size, a second guess.",
+      "name": "deaths",
+      "title": "How many died",
+      "body": "The dots are all one size so far. Next they show deaths in the past year.",
       "guess": {"type": "pick", "question": "Which of these three killed the most people in the past year?", "options": ["ukraine", "sudan", "myanmar"]},
-      "reveal": "The dots now take their size, for deaths in the past year, in three [[band|bands]]. [[UCDP]] counted {opt_counts} from {win_from} to {win_to}. Counts differ. For {wide_n} of the {wars} wars UCDP's own high is more than twice its low.",
-      "chart_caption": "Deaths by war, {win_from} to {win_to}, UCDP's best count. The thin line runs from its low to its high.",
-      "show_all": "show all {wars}",
-      "show_fewer": "show the three",
+      "reveal": "{top_name} had the most: {top_n}. UCDP counted {o1_n} in {o1_name} and {o2_n} in {o2_name}, from {win_from} to {win_to}. The dots now show deaths in three [[band|bands]]. For {wide_n} of the {wars} wars, UCDP's high count is more than twice its low count.",
+      "chart_caption": "Deaths by war, {win_from} to {win_to}, UCDP's best count. The thin line runs from its low to its high. For {outside_n} of them UCDP's best count sits outside its own low-to-high range.",
+      "show_all": "show all {wars} wars",
+      "show_fewer": "show only the three",
       "pick_label": "your pick",
+      "top_label": "most",
       "sources": [
         {"from": "conflicts.band_note", "pick": "Deaths are shown as a band"},
         {"from": "conflicts.ucdp_note", "pick": "UCDP counts deaths in fighting"},
-        {"text": "Each war's count adds up UCDP's records for the countries it covers, or for its named conflicts. Recent months are UCDP's candidate records, which it has not fully reviewed."},
-        {"text": "UCDP {ucdp_versions}, pulled {ucdp_pulled}."}
+        {"text": "Each war's count adds up UCDP's counts for the countries it covers, or for its named conflicts. The latest months are UCDP's early figures, which it has not yet fully reviewed."},
+        {"text": "UCDP data: {ucdp_versions}, downloaded {ucdp_pulled}."}
       ]
     },
     {
       "id": "sides",
       "name": "who fights",
       "title": "Who fights",
-      "body": "In Sudan two sides fight: the {sudan_a} and the {sudan_b}. The first is the army of a [[state]]. The second is an [[armed group]]. Most conflicts have that shape. Of the {ucdp_n} UCDP counted in {ucdp_year}, {interstate} were between states. In the other {intra}, a government fought an armed group.",
-      "units": {"filled": "{interstate} between states", "rest": "{intra} a government against an armed group", "caption": "UCDP's {ucdp_n} armed conflicts in {ucdp_year}, one square each"},
+      "body": "In Sudan two sides fight: the {sudan_a} and the {sudan_b}. The first is the army of a [[state]]. The second is an [[armed group]]. Of the {ucdp_n} armed conflicts UCDP counted in {ucdp_year}, {interstate} were between states. In the other {intra}, a government fought an armed group.",
+      "units": {"filled": "{interstate} between states", "rest": "{intra} a government against an armed group", "caption": "UCDP's {ucdp_n} armed conflicts in {ucdp_year}, one small box each"},
       "sources": [
         {"from": "entry.sudan.summary"},
         {"text": "UCDP/PRIO Armed Conflict Dataset, version {acd_version}.", "url": "/level.html"}
@@ -106,9 +106,10 @@
       "id": "help",
       "name": "who helps",
       "title": "Who helps from outside",
-      "body": "Each line is a [[backer]] helping one side from outside the war. {sudan_backers} backers help a side in Sudan now. The list names the help each one gives. Some of this help is announced by the backer. Some is denied.",
+      "body": "Each line runs from a [[backer]] to the side it helps from outside the war. {sudan_backers} backers help a side in Sudan. {sudan_multi} The list says what each one gives.",
+      "multi": "{name} has {count} lines because it gives {count} kinds of help.",
       "toggle": ["Sudan", "every war"],
-      "toggle_text": "A war is on this map only if an outside state fights in it or backs a side. Across the {wars} wars on the map, {lines_n} lines run from {backers_n} backers.",
+      "toggle_text": "Every war on this map has an outside state that fights in it or backs a side. Across the {wars} wars, {lines_n} lines run from {backers_n} backers.",
       "sources": [
         {"text": "Every line, with its sources, is in the table on the full map.", "url": "/conflicts.html#all"}
       ]
@@ -116,13 +117,15 @@
     {
       "id": "know",
       "name": "how do we know",
-      "title": "How anyone knows",
-      "body": "Some help is announced. Some is denied and found anyway. Each line is graded on a ladder of [[attribution]], and the grade is drawn in the line: {tier_words}. The more broken the line, the weaker the public evidence for it.",
-      "guess": {"type": "slider", "min": 0, "max": 10, "start": 5, "label": "of every ten lines", "question": "Out of every ten lines, how many are on the record?", "button": "show the answer"},
-      "marks": {"guess": "your guess", "answer": "the map"},
-      "reveal": "{open_n} of the {lines_n} lines are on the record, about {open_tenths} in ten. {most_open} {shown_n} are documented, {reported_n} reported and {claimed_n} alleged. {ended_n} more have ended and are drawn faint and dotted.",
-      "most_open": "Most help is given in the open.",
-      "chips_cue": "Tap a grade to hide its lines. Tap an example to find it on the map.",
+      "title": "How do we know?",
+      "body": "Each line has a grade, drawn in the line: {tier_words}. The more broken the line, the weaker the public evidence for it.",
+      "guess": {"type": "slider", "label": "your guess", "question": "Of the {lines_n} lines, how many are on the record?", "button": "show the answer"},
+      "toggle": ["Sudan", "every war"],
+      "reveal": "{open_n} of the {lines_n} lines are on the record, about {open_tenths} in ten. {shown_n} are documented, {reported_n} reported and {claimed_n} alleged. {ended_n} more have ended and are drawn faint.",
+      "units_caption": "the {lines_n} lines, one small box each, by grade",
+      "guess_mark": "your guess",
+      "chips_cue": "{Tap} a grade to hide or show its lines. Open a row for one example and its source.",
+      "example_open": "one line of this grade",
       "tier_defs": {
         "open": {"from": "conflicts.tiers.open.note", "pick": "The backer says so itself"},
         "shown": {"from": "conflicts.tiers.shown.note", "pick": "The evidence is in a public document", "cut": ":"},
@@ -142,11 +145,11 @@
     },
     {
       "id": "same",
-      "name": "the same states",
-      "title": "The same states, war after war",
-      "body": "Some states turn up in war after war. From here the {hued_n} states in the most wars each get a color. Pick one to light its lines.",
-      "pick_line": "{state_name} is in {state_in} of the {wars} wars. It fights in {state_fights} and backs a side in {state_backs}.",
-      "pick_line_backs": "{state_name} is in {state_in} of the {wars} wars. It backs a side in each and fights in none.",
+      "name": "same states",
+      "title": "States in many wars",
+      "body": "{hued_n} states are in more wars than any others. Each now has a color. Pick one to show its lines.",
+      "pick_line": "{state_name} is in {state_in} of the {wars} wars. It is a side in {state_sides} and backs a side in {state_backs}.",
+      "pick_line_backs": "{state_name} is in {state_in} of the {wars} wars. It backs a side in each.",
       "both_live": "In {war_name} it has lines to both sides.",
       "both_ended": "In {war_name} it backs {live_party}. It backed {ended_party} until {ended_month}.",
       "pair": {
@@ -166,7 +169,8 @@
       "id": "force",
       "name": "force short of war",
       "title": "Force short of war",
-      "body": "Some force stops short of war: strikes, raids, seizures, a blockade. None has sustained fighting, so none is on the map as a war. Each hollow square is one. There are {squares}, {sq_us} of them by the {us_name}. A square is on the map only if the state doing it has said so. The squares have their own lines of help, listed on the full map.",
+      "body": "A hollow square marks force without sustained fighting: strikes, raids, seizures, a blockade. There are {squares} squares. {sq_us} are by the {us_name}. The squares carry no lines. Who helps each one is on its card on the full map. A square is shown when the state doing it has said so.",
+      "list_cue": "{Tap} one to find it on the map.",
       "sources": [
         {"from": "conflicts.pressure_rule", "pick": "A state is also on the map"},
         {"actors": true},
@@ -175,35 +179,36 @@
     },
     {
       "id": "normal",
-      "name": "is this normal",
-      "title": "Is this level normal?",
-      "body": "The map shows {wars} wars from one year. To look back, this chart uses UCDP's wider count of armed conflicts, which goes back to {n_first}. In {ucdp_year} it counted {ucdp_n}, {n_phrase}. On UCDP's best count the five years to {avg_last_year} average {avg_latest} deaths a year. {avg_two} The last {prov_word} years are [[provisional]].",
+      "name": "every year",
+      "title": "Every year since {n_first}",
+      "body": "To look back, this chart uses UCDP's wider count of armed conflicts, back to {n_first}. In {ucdp_year} it counted {ucdp_n}, {n_phrase}. The five years to {avg_last_year} average {avg_latest} deaths a year on UCDP's best count. {avg_two} The last {prov_word} years are [[provisional]].",
       "phrases": {
         "n_max": "the most of any year",
         "n_tie": "as many as the highest year before it",
         "n_else": "more than in all but {n_above} years",
-        "avg_two": "The five years to {avg_other_year} average {avg_other}. Those are the two highest in the series. In {peak_year}, {peak_top_n} of that year's {peak_total} deaths were in {peak_top_name}.",
-        "avg_else": "The highest five years in the series end in {avg_max_year}, at {avg_max} a year."
+        "avg_two": "The five years to {avg_other_year} average {avg_other}. Those are the two highest of any five years since {d_first}. Of the {peak_total} deaths in {peak_year}, UCDP's best count puts {peak_top_n} in {peak_top_name}.",
+        "avg_else": "The highest five years since {d_first} end in {avg_max_year}, at {avg_max} a year."
       },
       "chart": {
         "top": "Armed conflicts a year, {n_first} to {ucdp_year}",
-        "bottom": "Deaths a year in organized violence, {d_first} to {d_last}. Bars: UCDP's best count. Line: five-year average.",
+        "bottom": "Deaths a year, {d_first} to {d_last}. Bars: UCDP's best count. Line: five-year average.",
         "end_n": "{ucdp_n} in {ucdp_year}",
         "avg": "five-year average",
-        "peak": "{peak_year}: {peak_best}, off the top",
+        "avg_line": "the five years to {avg_last_year}",
+        "peak": "{peak_year}: {peak_best}, above the chart",
         "here": "you are here",
         "from": "deaths counted from {d_first}"
       },
       "sources": [
         {"from": "years.rule", "pick": "UCDP's best, low and high estimates"},
-        {"text": "Every year on one axis, with the oil price and what each peak was, is on the level page.", "url": "/level.html"}
+        {"text": "Every year on one chart, with the oil price and what each peak was, is on the level page.", "url": "/level.html"}
       ]
     },
     {
       "id": "shape",
       "name": "the {wars_word} wars",
       "title": "The {wars_word} wars",
-      "body": "One card for each war. The dot is its size. Next to it, how many sides fight and how many backers help. The strip is its lines, from on the record to alleged. Tap a card and the map goes there.",
+      "body": "One card for each war. The dot is its size. Next to it, how many sides fight and how many backers help. The strip shows the grade of its lines, from on the record to alleged. {Tap} a card and the map goes there.",
       "card_line": "{sides} sides · {helpers} backers",
       "card_line_one": "{sides} sides · {helpers} backer",
       "sources": [
@@ -212,29 +217,30 @@
     },
     {
       "id": "free",
-      "name": "now it is yours",
-      "title": "Now it is yours",
-      "body": "The map is free. Drag it, zoom it, tap any war. The switches below turn layers on and off.",
-      "hint_desktop": "drag to move · ctrl + scroll or pinch to zoom · tap a war",
+      "name": "the map",
+      "title": "Use the map",
+      "guessed": "You guessed {g}. UCDP counted {ucdp_n} conflicts and called {ucdp_wars} of them wars. This map holds {wars}.",
+      "body": "{Tap} any war. Who fights? Who helps? How do we know? The switches turn layers on and off.",
+      "hint_desktop": "drag to move · ctrl + scroll to zoom · click a war",
       "hint_phone": "two fingers to move and zoom · tap a war",
-      "layers": {"areas": "provinces", "lines": "lines", "squares": "force short of war", "reset": "whole map"},
-      "more_controls": "more controls: grades and states",
+      "layers": {"areas": "provinces", "lines": "lines", "squares": "force short of war", "reset": "reset view"},
+      "more_controls": "more switches: grades and states",
       "info_link": "on the full map",
       "links": [
         {"url": "/conflicts.html", "label": "the full map", "text": "every line with its sources, the table, the rules"},
-        {"url": "/level.html", "label": "the level", "text": "every year since {n_first} on one axis"},
-        {"url": "/moment.html", "label": "the moment", "text": "this year against every year on record"}
+        {"url": "/level.html", "label": "the level", "text": "every year since {n_first}, on one chart"},
+        {"url": "/moment.html", "label": "the moment", "text": "this year against every earlier year"}
       ],
-      "cannot_title": "What this map cannot show",
+      "cannot_title": "What the map leaves out",
       "cannot_more": "more",
       "sources": []
     }
   ],
   "cannot_show": [
-    {"text": "A line says help exists. It does not say how much help."},
+    {"text": "A line shows that help exists. The amount of help is not recorded."},
     {"text": "UCDP could place {ukr_unplaced} of the {ukr_total} deaths it counted for Ukraine from {win_from} to {win_to} only to a country, not to a province.", "needs": "grid"},
     {"text": "{prewindow_n} of the {lines_n} lines rest on evidence from before {win_from}."},
-    {"text": "UCDP marks {flag_pct} of its {reach_year} records as still needing a check on deaths, sides, place or source."}
+    {"text": "UCDP marks {flag_pct} of its {reach_year} records worldwide as still needing a check on deaths, sides, place or source."}
   ],
   "credit_title": "Counts and credit",
   "report_title": "Reporting an error"

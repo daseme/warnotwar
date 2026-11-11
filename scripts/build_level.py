@@ -55,7 +55,7 @@ SKIP = {'Grenada', 'Bahrain', 'Comoros', 'Malta', 'Andorra', 'Dominica', 'Federa
 PLAIN = {'DR Congo (Zaire)': 'DR Congo', 'Yemen (North Yemen)': 'Yemen', 'Russia (Soviet Union)': 'Russia', 'Myanmar (Burma)': 'Myanmar', 'Cambodia (Kampuchea)': 'Cambodia',
          'Madagascar (Malagasy)': 'Madagascar', 'Zimbabwe (Rhodesia)': 'Zimbabwe', 'Serbia (Yugoslavia)': 'Serbia', 'Vietnam (North Vietnam)': 'Vietnam',
          'United States of America': 'United States', 'Bosnia-Herzegovina': 'Bosnia', 'Central African Republic': 'Central African Rep.', 'Turkey': 'Türkiye',
-         'Kingdom of eSwatini (Swaziland)': 'Eswatini', 'Macedonia, FYR': 'North Macedonia', 'United Kingdom': 'Britain', 'Israel': 'Israel and Palestine'}
+         'Kingdom of eSwatini (Swaziland)': 'Eswatini', 'Macedonia, FYR': 'North Macedonia', 'Israel': 'Israel and Palestine'}
 
 
 def one(path_glob):

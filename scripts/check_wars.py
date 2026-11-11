@@ -212,11 +212,28 @@ def main():
         top = max(rows.items(), key=lambda kv: kv[1][0]) if rows else None
         if not top or top[1][0] * 2 <= peak['best'] or top[0] not in (L.get('names') or {}):
             notes.append(f"step 9: no one country holds over half of {peak['year']}'s deaths (or it has no name); the page drops that sentence")
-        live = [t for c in wars for t in c['ties'] if not t.get('ended')]
-        if sum(t['tier'] == 'open' for t in live) * 2 <= len(live):
-            notes.append('step 6: on-the-record lines are no longer most of the lines; the page drops "Most help is given in the open."')
     except Exception as e:
         fails.append(f'step 9 series: {type(e).__name__} {e}')
+
+    # ---- the data's own wrinkles the page handles: say where they are ----
+    for c in wars:
+        sides = {p.get('state') for p in c['parties'] if p.get('state')}
+        also = sorted({t['backer'] for t in c['ties'] if not t.get('ended') and t['backer'] in sides})
+        if also:
+            notes.append(f"{c['id']}: {', '.join(also)} is a side and also has a line to another side; "
+                         "the page counts it as a side only (step 7's sentence, step 10's backer count)")
+        w = (U.get('entries', {}).get(c['id']) or {}).get('window')
+        if w and not (min(w['low'], w['high']) <= w['best'] <= max(w['low'], w['high'])):
+            notes.append(f"{c['id']}: UCDP's best count {w['best']:,} sits outside its own low-to-high range "
+                         f"({w['low']:,} to {w['high']:,}); step 3's caption counts these")
+    if sudan:
+        by = {}
+        for t in sudan['ties']:
+            if not t.get('ended'):
+                by.setdefault(t['backer'], 0)
+                by[t['backer']] += 1
+        if any(n > 1 for n in by.values()) and not steps.get('help', {}).get('multi'):
+            fails.append('step 5: a backer has more than one line in Sudan but data/wars.json has no "multi" sentence for it')
 
     # ---- every {token} in the copy must be one the page knows ----
     defined = set(re.findall(r'\bT\.(\w+)\s*=', page)) | set(C.get('quotes', {}))
