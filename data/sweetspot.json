@@ -700,6 +700,106 @@
    ],
    "ends_cut": "Talks with dignity. No surrender to force.",
    "note_cut": "Anadolu's rendering of the same lines: 'We can negotiate with dignity and resolve the issue with dignity. We favor dialogue and negotiations. However, we will not surrender to force and bullying.' Also on the readings page."
+  },
+  {
+   "id": "nyt-2026-11-10",
+   "date": "2026-11-10",
+   "name": "neither",
+   "side": "the analysts",
+   "speaker": "David E. Sanger and Eric Schmitt",
+   "role": "The New York Times, six days after the midterm elections. Of the four options they list for Trump, the last is headed 'Muddle Along Until the U.S. Can Leave'.",
+   "setting": "News analysis, print edition of Tuesday 10 November 2026, page A10, 'The Tough Options Trump Is Weighing to Resolve the War in Iran'.",
+   "lines": [
+    {
+     "text": "Muddle Along Until the U.S. Can Leave",
+     "quote": true,
+     "via": "the article's own heading"
+    },
+    {
+     "text": "In this scenario, the United States would live with the status quo",
+     "quote": true
+    },
+    {
+     "text": "there would be no timeline to the end game, meaning the conflict could drag on for the remaining years of Mr. Trump's presidency and into that of his successor",
+     "quote": true
+    }
+   ],
+   "wants": "Not said.",
+   "ends": "Not said.",
+   "source": {
+    "label": "The New York Times, 10 November 2026, print edition, page A10",
+    "url": ""
+   },
+   "note": "Quoted from a photograph of the printed page. No link to the Times' own page yet.",
+   "cut": [
+    {
+     "text": "if there is no war but not peace, European and Arab allies are not likely to participate",
+     "quote": true,
+     "via": "the option's list of cons; the photograph is soft here, check against the paper before showing"
+    },
+    {
+     "text": "This would effectively allow Mr. Trump to avoid making a decision, in the hopes of a longer-term resolution.",
+     "quote": true
+    },
+    {
+     "text": "The long game requires patience",
+     "quote": true,
+     "via": "the option's list of pros"
+    },
+    {
+     "text": "The other three options: a brief, intense resumption of war; a pared-back military strike; let Vance negotiate.",
+     "quote": false
+    }
+   ]
+  },
+  {
+   "id": "bousso-2026-11-11",
+   "date": "2026-11-11",
+   "name": "neither",
+   "side": "the analysts",
+   "speaker": "Ron Bousso",
+   "role": "Energy columnist at Reuters. He uses the phrase twice, as the plain name for where the Gulf's oil producers now work.",
+   "setting": "Column, London, 11 November 2026, 'Trump's Iran war pause is as costly as new strikes'.",
+   "lines": [
+    {
+     "text": "Gulf energy producers have adapted to a no-war, no-peace reality",
+     "quote": true
+    },
+    {
+     "text": "Low-intensity conflict is becoming the Middle East's new normal",
+     "quote": true
+    },
+    {
+     "text": "a conflict intense enough to keep shipping dangerous, insurance expensive and energy infrastructure vulnerable, but contained enough for the world to learn to live with it",
+     "quote": true
+    }
+   ],
+   "wants": "Not said.",
+   "ends": "A durable agreement between Washington and Tehran.",
+   "source": {
+    "label": "Reuters, 11 November 2026",
+    "url": "https://www.reuters.com/commentary/reuters-open-interest/trumps-iran-war-pause-is-costly-new-strikes-2026-11-11/"
+   },
+   "note": "A column. The opinions are the columnist's.",
+   "cut": [
+    {
+     "text": "The question is how long this uneasy equilibrium can last.",
+     "quote": true
+    },
+    {
+     "text": "But adapting to a crisis is not the same as resolving it.",
+     "quote": true
+    },
+    {
+     "text": "Iran currently has every incentive to continue attacking vessels crossing Hormuz.",
+     "quote": true
+    },
+    {
+     "text": "Tehran likely believes it can outlast Washington",
+     "quote": true
+    }
+   ],
+   "wants_cut": "Iran, on his account, which has every incentive to keep attacking ships and likely believes it can outlast Washington."
   }
  ],
  "set_aside": [

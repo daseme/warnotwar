@@ -24,6 +24,14 @@
   "spr": {
    "label": "the salt caverns",
    "href": "/spr/"
+  },
+  "quadrant": {
+   "label": "the quadrant",
+   "href": "/quadrant.html"
+  },
+  "sweet": {
+   "label": "the sweet spot",
+   "href": "/sweetspot.html"
   }
  },
  "entries": [
@@ -240,6 +248,132 @@
      "text": "Not the first time. He said Iran 'must get out of the neither war nor peace policy' on 10 June, at a memorial for the late Supreme Leader, who he said had repeatedly asked for it to be resolved. He said it again at a press conference on 8 August ('war cannot continue forever'), to the cabinet on 28 October, and at a fuel-rationing meeting on 7 November. The 9 November line is the first to say the new Leader has ordered it.",
      "tags": [
       "heuristic"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "nyt-options-2026-11-10",
+   "added": "2026-11-11",
+   "date": "2026-11-10",
+   "title": "Four options, and the fourth is to muddle along",
+   "source": "The New York Times, print edition, page A10: 'The Tough Options Trump Is Weighing to Resolve the War in Iran'",
+   "url": "",
+   "who": "David E. Sanger and Eric Schmitt, reporters for The New York Times, with Jonathan Swan, Tuesday 10 November 2026. News reporting on the choices in front of the president, sourced in part to unnamed U.S. officials. Read from the printed page.",
+   "why": "The Times lists four ways forward for Trump, six days after his party lost the midterms. Three are ways to end the war. The fourth is to keep it: live with the blockade and the escorts, decide nothing, and leave slowly. That is the state this site calls the perpetual war sweet spot, written down as a policy choice, with its cost stated: no timeline, and a war that outlasts this presidency.",
+   "points": [
+    {
+     "text": "How does the Trump administration get out?",
+     "quote": true,
+     "tags": [
+      "word"
+     ]
+    },
+    {
+     "text": "The four options: a brief, intense resumption of war; a pared-back military strike; let Vance negotiate; muddle along until the U.S. can leave.",
+     "tags": [
+      "sweet"
+     ]
+    },
+    {
+     "text": "In this scenario, the United States would live with the status quo: a naval blockade that prevents Iran from exporting oil, while U.S. escorts and patrols ensure that 11 to 18 million barrels of non-Iranian oil get through each day.",
+     "quote": true,
+     "tags": [
+      "sweet",
+      "quadrant"
+     ]
+    },
+    {
+     "text": "there would be no timeline to the end game, meaning the conflict could drag on for the remaining years of Mr. Trump's presidency and into that of his successor",
+     "quote": true,
+     "tags": [
+      "sweet"
+     ]
+    },
+    {
+     "text": "Vice President Vance, the day after the midterms: 'The reason we lost is the war.' Trump, the same day, said that was 'largely true' and that he would make the same decision again: 'The Iran thing, we had to do, and we continue to do it.'",
+     "tags": [
+      "word"
+     ]
+    },
+    {
+     "text": "The Pentagon's own conservative estimate of the war's cost so far is $47 billion. Congress has authorized no extra money for it. That does not count what higher gas and oil prices have cost.",
+     "tags": [
+      "market"
+     ]
+    },
+    {
+     "text": "Mr. Trump and his aides still cannot agree on what they are trying to accomplish.",
+     "quote": true,
+     "tags": [
+      "word"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "bousso-2026-11-11",
+   "added": "2026-11-11",
+   "date": "2026-11-11",
+   "title": "No war, no peace, and what it costs",
+   "source": "Reuters, Ron Bousso: 'Trump's Iran war pause is as costly as new strikes'",
+   "url": "https://www.reuters.com/commentary/reuters-open-interest/trumps-iran-war-pause-is-costly-new-strikes-2026-11-11/",
+   "who": "Ron Bousso, energy columnist at Reuters, writing from London on 11 November 2026. A column, so the opinions are his. The barrel counts are Kpler's, the attack counts are the International Maritime Organization's, the prices are LSEG's.",
+   "why": "A Reuters columnist uses Tehran's phrase, no war and no peace, as the plain name for where the Gulf now lives, and puts numbers on it. The oil is moving again, almost all of it once the routes around the strait are counted, and Brent is back under $90. Moving it still costs about ten times what it did. His point is the site's: the danger is not the next big strike but a war the world learns to live with.",
+   "points": [
+    {
+     "text": "Gulf energy producers have adapted to a no-war, no-peace reality that is making their operations more expensive and risky.",
+     "quote": true,
+     "tags": [
+      "sweet"
+     ]
+    },
+    {
+     "text": "Crude through the Strait of Hormuz has averaged 10.5 million barrels a day since the start of October. Before the war it was 13.5 million. (Kpler)",
+     "tags": [
+      "quadrant",
+      "hormuz"
+     ]
+    },
+    {
+     "text": "Counting the routes that go around the strait, Gulf crude exports are 16.7 million barrels a day, against 17 million before the war. (Kpler)",
+     "tags": [
+      "quadrant",
+      "hormuz"
+     ]
+    },
+    {
+     "text": "Brent fell below $90 on Tuesday 10 November for the first time since late August, down more than 20% from $118 on 30 October.",
+     "tags": [
+      "market",
+      "heuristic"
+     ]
+    },
+    {
+     "text": "131 confirmed incidents near the strait from 28 February to 9 November, by the International Maritime Organization's count. October had 35, the most of any month.",
+     "tags": [
+      "hormuz"
+     ]
+    },
+    {
+     "text": "Freight and insurance costs remain about 10 times pre-war levels.",
+     "quote": true,
+     "tags": [
+      "hormuz"
+     ]
+    },
+    {
+     "text": "the risk of another full-scale war has declined, but the cost of living with the existing conflict has not",
+     "quote": true,
+     "tags": [
+      "heuristic"
+     ]
+    },
+    {
+     "text": "a conflict intense enough to keep shipping dangerous, insurance expensive and energy infrastructure vulnerable, but contained enough for the world to learn to live with it",
+     "quote": true,
+     "tags": [
+      "sweet"
      ]
     }
    ]
