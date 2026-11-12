@@ -10,7 +10,8 @@ instead of on the page.
   python3 scripts/check_wars.py          # print what it found; exit 1 on a failure
   python3 scripts/check_wars.py --quiet  # print failures only
 
-FAIL: a sentence, number or example would be missing from the page.
+FAIL: a sentence, number or example would be missing from the page, a number
+      cannot be true, or the page computes a number this script does not know.
 note: the data moved and the page switches to its other wording or drops a
       sentence by design (for example the latest year is no longer the record).
       Read the step once; nothing is broken.
@@ -28,6 +29,19 @@ load = lambda p: json.load(open(R / p, encoding='utf-8'))
 
 SENT = re.compile(r'(?<=[.?!])\s+(?=[A-Z0-9“"\'‘\[{])')
 TOKEN = re.compile(r'\{(\w+)\}')
+
+# Every number the page computes (each `T.name =` in wars.html) is listed here. A name the page computes that is not in
+# this list fails the check: a new number comes with its test, in the same commit. Add the test below, then the name here.
+PAGE_TOKENS = {
+    'Tap', 'acd_bar', 'acd_version', 'areas_shapes', 'areas_total', 'areas_wars', 'as_of', 'avg_last_year', 'avg_latest', 'avg_max', 'avg_max_year',
+    'avg_other', 'avg_other_year', 'avg_two', 'backers_n', 'claimed_n', 'd_first', 'd_last', 'eg_a_name', 'eg_areas_source', 'eg_backers',
+    'eg_countries', 'eg_left_n', 'eg_multi', 'eg_n', 'eg_name', 'eg_parties_word', 'eg_prov', 'eg_side_a', 'eg_side_b', 'eg_sides_word', 'eg_start',
+    'ended_n', 'entries', 'flag_pct', 'hued_n', 'interstate', 'intra', 'lines_n', 'n_above', 'n_first', 'n_phrase', 'newest_name', 'newest_year',
+    'old_n', 'oldest_name', 'oldest_year', 'oldest_years', 'open_n', 'open_tenths', 'os_n', 'os_name', 'os_total', 'peak_top_n', 'peak_top_name',
+    'peak_total', 'peak_year', 'prewindow_n', 'prov_word', 'reach_year', 'region_counts', 'reported_n', 'rule', 'shown_n', 'sq_us', 'squares', 'tap',
+    'tier_words', 'ucdp_n', 'ucdp_pulled', 'ucdp_reach', 'ucdp_versions', 'ucdp_wars', 'ucdp_year', 'ukr_total', 'ukr_unplaced', 'us_name',
+    'war_bar', 'wars', 'wars_word', 'whole_to', 'whole_top_n', 'whole_top_name', 'win_from', 'win_to',
+}
 
 
 def sentences(s):
@@ -259,12 +273,14 @@ def main():
         if also:
             notes.append(f"{c['id']}: {', '.join(also)} is a side and also has a line to another side; "
                          "the page counts it as a side only (step 7's sentence, step 10's backer count)")
-        w = (U.get('entries', {}).get(c['id']) or {}).get('window')
-        if w and not (min(w['low'], w['high']) <= w['best'] <= max(w['low'], w['high'])):
-            notes.append(f"{c['id']}: UCDP's best count {w['best']:,} sits outside its own low-to-high range "
-                         f"({w['low']:,} to {w['high']:,}); step 3's caption counts these")
     # ---- every {token} in the copy must be one the page knows ----
-    defined = set(re.findall(r'\bT\.(\w+)\s*=', page)) | set(C.get('quotes', {}))
+    computed = set(re.findall(r'\bT\.(\w+)\s*=', page))
+    for k in sorted(computed - PAGE_TOKENS):
+        fails.append(f'wars.html computes {{{k}}} and scripts/check_wars.py has no test for it. A new number comes with its test: '
+                     'add the test here and the name to PAGE_TOKENS in the same commit.')
+    for k in sorted(PAGE_TOKENS - computed):
+        fails.append(f'scripts/check_wars.py lists {{{k}}} but wars.html no longer computes it; take it out of PAGE_TOKENS')
+    defined = computed | set(C.get('quotes', {}))
     used = {}
 
     def strings(o, where):

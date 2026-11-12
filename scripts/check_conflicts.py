@@ -151,6 +151,9 @@ def main():
                 m = re.match(r'UCDP counted ([\d,]+)', c.get('band_source', ''))
                 if m and int(m.group(1).replace(',', '')) != best:
                     fails.append(f"{c['id']}: band_source says UCDP counted {m.group(1)}, data/ucdp.json says {best:,} for the window")
+                # the sentence gives UCDP's best count only; its low and high are shown on no page
+                if re.match(r'UCDP counted [\d,]+ \([\d,]+ to [\d,]+\)', c.get('band_source', '')):
+                    fails.append(f"{c['id']}: band_source gives a low and a high after UCDP's count; the pages show the best count only")
             elif not c.get('band'):
                 warns.append(f"{c['id']}: no band and no UCDP entry")
     if write:
@@ -172,7 +175,12 @@ def main():
     if wars_check.returncode:
         print(wars_check.stdout.strip() or wars_check.stderr.strip())
         print("FAIL: today's wars would lose copy; see scripts/check_wars.py")
-    sys.exit(1 if fails or wars_check.returncode else 0)
+    # numbers that cannot be true (a high below its best count, parts that do not add up) stop everything
+    numbers_check = subprocess.run([sys.executable, str(Path(__file__).with_name('check_numbers.py')), '--quiet'], capture_output=True, text=True)
+    if numbers_check.returncode:
+        print(numbers_check.stdout.strip() or numbers_check.stderr.strip())
+        print('FAIL: the data holds a number that cannot be true; see scripts/check_numbers.py')
+    sys.exit(1 if fails or wars_check.returncode or numbers_check.returncode else 0)
 
 
 if __name__ == '__main__':

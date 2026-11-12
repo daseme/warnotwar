@@ -12,6 +12,17 @@ Each map entry is summed over the UCDP countries it covers, except entries
 listed in BY_CONFLICT, which are summed over named UCDP conflicts because a
 country sum would mix in other wars. EXCLUDE drops single rows by id, with the
 reason written into the output so the reader can see it.
+
+UCDP's low and high are kept in the data files exactly as UCDP gives them and
+are shown on no page. They do not reliably hold the best count between them:
+some rows carry a high below the best count or a low above it (aggregate rows
+carry a high of 0), UCDP sums them as they stand, and its own published totals
+show the same. The rows are counted in data/ucdp_anomalies.json.
+
+Two gates run before any file is written. reconcile() sums the reviewed rows by
+country and year and compares best, low and high with UCDP's own published
+country-year file; one difference stops the build. Then the output must pass
+scripts/check_numbers.py.
 """
 import glob
 import json
@@ -22,8 +33,11 @@ from datetime import date
 
 import pandas as pd
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import check_numbers
+
 COLS = ['id', 'year', 'type_of_violence', 'conflict_new_id', 'conflict_name', 'dyad_new_id', 'dyad_name',
-        'side_a', 'side_b', 'country', 'best', 'low', 'high', 'date_start', 'code_status', 'where_prec', 'latitude', 'longitude']
+        'side_a', 'side_b', 'country', 'country_id', 'best', 'low', 'high', 'date_start', 'date_end', 'code_status', 'where_prec', 'latitude', 'longitude']
 
 # map entry id -> UCDP country names (as spelled in the country column)
 BY_COUNTRY = {
@@ -144,6 +158,32 @@ def load(d):
     return df, versions, cand_versions
 
 
+RANGE_NOTE = ('UCDP also gives a low and a high for each event. This site shows the best count only. Added up over a war, the low and the high '
+              'do not always hold the best count between them, and UCDP\'s own yearly totals show the same.')
+ROW_GAP = 10   # rows whose range misses the best count by this many deaths or more are kept in full; the rest are counted
+
+
+def reconcile(df, d):
+    """Our sums of the reviewed rows by country and year must equal UCDP's own published country-year totals."""
+    files = glob.glob(os.path.join(d, 'OrganizedViolenceCYDataSet*.csv'))
+    if not files:
+        sys.exit('build stopped, nothing written: the UCDP country-year file (OrganizedViolenceCYDataSet*.csv) is not in ' + d
+                 + '. The build checks its sums against it and does not run without it.')
+    c = pd.read_csv(sorted(files)[-1], low_memory=False)
+    cols = {'cumulative_total_deaths_in_orgvio_best': 'best', 'cumulative_total_deaths_in_orgvio_low': 'low', 'cumulative_total_deaths_in_orgvio_high': 'high'}
+    theirs = c.rename(columns=cols).groupby(['country_id', 'year'])[['best', 'low', 'high']].sum()
+    rows = df[(df['_cand'] != True) & (df.year >= c.year.min()) & (df.year <= c.year.max())]
+    ours = rows.groupby(['country_id', 'year'])[['best', 'low', 'high']].sum()
+    both = ours.join(theirs, how='outer', lsuffix='_ours', rsuffix='_ucdp').fillna(0).astype(int)
+    off = both[(both.best_ours != both.best_ucdp) | (both.low_ours != both.low_ucdp) | (both.high_ours != both.high_ucdp)]
+    if len(off):
+        sys.exit('build stopped, nothing written. Our sums differ from UCDP\'s own country-year totals in ' + str(len(off)) + ' country-years:\n'
+                 + off.head(20).to_string())
+    return {'against': os.path.basename(sorted(files)[-1]), 'years': [int(c.year.min()), int(c.year.max())],
+            'country_years': int((both.best_ucdp > 0).sum()), 'differences': 0,
+            'rule': 'Before any file is written, the reviewed rows are summed by country and year and compared with UCDP\'s own published country-year totals: best, low and high. One difference stops the build.'}
+
+
 def sums(x):
     return {'low': int(x.low.sum()), 'best': int(x.best.sum()), 'high': int(x.high.sum())}
 
@@ -171,6 +211,9 @@ def main():
     win_from, win_to = conf['window']['from'], conf['window']['to']
     df, versions, cand_versions = load(d)
     df = df[~df.id.isin(list(map(int, EXCLUDE)))]
+    reconciled = reconcile(df, d)
+    df['_bad'] = (df.high < df.best) | (df.low > df.best)
+    touched = {}   # UCDP row id -> the entries whose published sums it enters
     this_year = int(df.year.max())
     last_year = this_year - 1
     cand = df[df['_cand'] == True]
@@ -184,6 +227,8 @@ def main():
         'window': {'from': win_from, 'to': min(win_to, reach)},
         'flagged_share': flagged,
         'rule': 'Sums of UCDP best, low and high estimates by entry: by the countries each entry covers, or by named conflicts where a country sum would mix in other wars. The window is the months of the map\'s twelve that UCDP has reached. Candidate rows are not fully reviewed.',
+        'range_note': RANGE_NOTE,
+        'reconciled': reconciled,
         'entries': {},
         'not_on_map': [],
     }
@@ -225,6 +270,12 @@ def main():
             'dyad_ids': dyads,
             'excluded': excluded,
         }
+        start = cmeta[cid].get('start')
+        parts = {'last_year': x[x.year == last_year], 'this_year': x[x.year == this_year], 'window': w,
+                 'whole': x[(x.month >= start) & (x.month <= reach)] if start else x.iloc[0:0]}
+        for v in parts.values():
+            for i in v[v['_bad']].id:
+                touched.setdefault(int(i), set()).add(cid)
     sec, sec_version = secondary_audit(d, conf, last_year)
     if sec:
         out['secondary'] = {'year': last_year, 'source': sec_version, 'rule': 'UCDP names a state that sends troops to fight on a side as a secondary warring party. Our ties with troops, air strikes or police are the same thing. The two lists should match; where they do not, both are shown.', 'entries': sec}
@@ -257,6 +308,38 @@ def main():
     cand_months = sorted(set(df[df['_cand'] == True].month))
     out['months'] = {'keys': months, 'map': by_month(on_map), 'world': by_month(world), 'candidate_from': cand_months[0] if cand_months else None,
                      'rule': 'UCDP\'s best, low and high estimates of deaths by the month the event began, summed over the wars on this map (by each entry\'s basis) and over the whole dataset, less the rows the page says it leaves out. Months from the candidate files are provisional: about six weeks behind, and a share of their rows still carry a check flag.'}
+    # a number that cannot be true stops the build here, before any file is written
+    fails = check_numbers.ucdp_fails(out, {c['id']: c.get('start') for c in conf['conflicts']})
+    if fails:
+        sys.exit('build stopped, nothing written. These numbers cannot be true:\n  ' + '\n  '.join(fails))
+    # the rows whose range does not hold its best count: every one that enters a published sum is counted, the larger ones are kept in full
+    for i in world[world['_bad']].id:
+        touched.setdefault(int(i), set())
+    bad = df[df['_bad'] & df.id.isin(list(touched))].copy()
+    bad['gap'] = (bad.low - bad.best).clip(lower=0) + (bad.best - bad.high).clip(lower=0)
+    tally = {}
+    for r in bad.itertuples():
+        for cid in touched[int(r.id)]:
+            t = tally.setdefault(cid, {'rows': 0, 'low_above_best': 0, 'high_below_best': 0})
+            t['rows'] += 1; t['low_above_best'] += max(0, int(r.low - r.best)); t['high_below_best'] += max(0, int(r.best - r.high))
+    anomalies = {
+        'rule': RANGE_NOTE + ' Kept here: every row whose high is below its best count or whose low is above it and that enters a sum the pages show, counted by entry; and in full, each row whose range misses its best count by ' + str(ROW_GAP) + ' deaths or more.',
+        'pulled': pulled, 'versions': out['versions'],
+        'in_the_files': {'reviewed_rows': int((~df['_cand']).sum()), 'reviewed_broken': int((df['_bad'] & ~df['_cand']).sum()),
+                         'candidate_rows': int(df['_cand'].sum()), 'candidate_broken': int((df['_bad'] & df['_cand']).sum())},
+        'entries': {k: tally[k] for k in sorted(tally)},
+        'rows': [{'id': int(r['id']), 'candidate': bool(r['_cand']), 'country': r['country'], 'dyad': r['dyad_name'], 'from': str(r['date_start'])[:10], 'to': str(r['date_end'])[:10],
+                  'low': int(r['low']), 'best': int(r['best']), 'high': int(r['high']), 'code_status': None if pd.isna(r['code_status']) else str(r['code_status']),
+                  'entries': sorted(touched[int(r['id'])])}
+                 for r in bad[bad.gap >= ROW_GAP].sort_values(['gap', 'id'], ascending=[False, True]).to_dict('records')],
+    }
+    fails = check_numbers.anomalies_fails(anomalies, out)
+    if fails:
+        sys.exit('build stopped, nothing written:\n  ' + '\n  '.join(fails))
+    with open(os.path.join(root, 'data', 'ucdp_anomalies.json'), 'w') as f:
+        f.write(json.dumps({k: v for k, v in anomalies.items() if k != 'rows'}, indent=1, ensure_ascii=False)[:-2] + ',\n "rows": [\n  '
+                + ',\n  '.join(json.dumps(r, ensure_ascii=False) for r in anomalies['rows']) + '\n ]\n}\n')
+    print('wrote data/ucdp_anomalies.json:', len(bad), 'rows with a broken range in the sums,', len(anomalies['rows']), 'kept in full')
     # where Uppsala counted: one-degree cells over the window, from events placed to a province or better (where_prec 1 to 4);
     # events placed only to a country are not drawn, and their deaths are given per entry so the reader knows what is missing
     placed = world[world.where_prec <= 4].copy()
@@ -291,7 +374,10 @@ def main():
                                   sb=('sb_total_deaths_best', 'sum'), ns=('ns_total_deaths_best', 'sum'), os=('os_total_deaths_best', 'sum'))
         wars = c[c.cumulative_total_deaths_in_orgvio_best >= 1000].groupby('year').country.nunique()
         years = [{'year': int(yr), 'best': int(r.best), 'low': int(r.low), 'high': int(r.high), 'state': int(r.sb), 'nonstate': int(r.ns), 'onesided': int(r.os), 'countries_over_1000': int(wars.get(yr, 0))} for yr, r in g.iterrows()]
-        json.dump({'rule': 'UCDP\'s best, low and high estimates of deaths in organized violence by year, summed over every country, from the UCDP Organized Violence Country-Year Dataset; deaths in fighting, deaths in fighting between armed groups, and civilians killed on purpose, shown apart. Countries over 1,000 is the number of countries with a thousand or more deaths that year.',
+        fails = check_numbers.years_fails({'years': years})
+        if fails:
+            sys.exit('build stopped before data/ucdp_years.json and data/ucdp.json were written. These numbers cannot be true:\n  ' + '\n  '.join(fails))
+        json.dump({'rule': 'UCDP\'s best estimate of deaths in organized violence by year, summed over every country, from the UCDP Organized Violence Country-Year Dataset; deaths in fighting, deaths in fighting between armed groups, and civilians killed on purpose, shown apart. Countries over 1,000 is the number of countries with a thousand or more deaths that year.',
                    'version': str(c.Version.iloc[0]), 'years': years}, open(os.path.join(root, 'data', 'ucdp_years.json'), 'w'), indent=1)
         print('wrote data/ucdp_years.json:', len(years), 'years')
     json.dump(out, open(os.path.join(root, 'data', 'ucdp.json'), 'w'), indent=1, ensure_ascii=False)   # again, now with the months

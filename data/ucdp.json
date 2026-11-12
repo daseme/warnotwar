@@ -1,6 +1,6 @@
 {
  "versions": "GED 26.1, Candidate 26.01 to 26.09",
- "pulled": "2026-11-11",
+ "pulled": "2026-11-12",
  "reach": "2026-09",
  "window": {
   "from": "2025-10",
@@ -8,6 +8,17 @@
  },
  "flagged_share": 0.343,
  "rule": "Sums of UCDP best, low and high estimates by entry: by the countries each entry covers, or by named conflicts where a country sum would mix in other wars. The window is the months of the map's twelve that UCDP has reached. Candidate rows are not fully reviewed.",
+ "range_note": "UCDP also gives a low and a high for each event. This site shows the best count only. Added up over a war, the low and the high do not always hold the best count between them, and UCDP's own yearly totals show the same.",
+ "reconciled": {
+  "against": "OrganizedViolenceCYDataSet26_1.csv",
+  "years": [
+   1989,
+   2025
+  ],
+  "country_years": 2067,
+  "differences": 0,
+  "rule": "Before any file is written, the reviewed rows are summed by country and year and compared with UCDP's own published country-year totals: best, low and high. One difference stops the build."
+ },
  "entries": {
   "ukraine": {
    "basis": "countries: Ukraine, Russia (Soviet Union)",

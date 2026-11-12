@@ -459,7 +459,6 @@
   .years svg { width: 100%; height: auto; display: block; overflow: visible; }
   .years .bar { fill: var(--danger); fill-opacity: 0.55; }
   .years .bar:hover, .years .bar.on { fill-opacity: 1; }
-  .years .range { stroke: var(--ink-45); stroke-width: 1; }
   .years .axis { stroke: var(--ink-18); stroke-width: 1; }
   .years text { font-family: var(--mono); font-size: 9px; fill: var(--ink-60); }
   .years text.v { fill: var(--ink-45); }
@@ -788,15 +787,15 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   $('#excluded').innerHTML = (D.excluded || []).map(x => `<li><b>${esc(x.name)}.</b> ${esc(x.why)}</li>`).join('');
   /* the UCDP comparison */
   const ucdpNum = v => (v == null ? '—' : Number(v).toLocaleString('en-US'));
-  const ucdpRange = x => x ? `${ucdpNum(x.best)}${x.low != null && x.high != null ? ' (' + ucdpNum(x.low) + ' to ' + ucdpNum(x.high) + ')' : ''}` : '—';
+  const ucdpRange = x => x ? ucdpNum(x.best) : '—';
   const uOf = c => (U && U.entries && U.entries[c.id]) || null;
   const pct = v => (v == null ? '—' : Math.round(v * 100) + '%');
   const monthWord = m => m ? fmtMonth(m) : '';
   const nextPull = () => { if (!U || !U.pulled) return ''; const [y, mo] = U.pulled.split('-').map(Number); const d = new Date(Date.UTC(y, mo - 1, 21)); if (d <= new Date(U.pulled + 'T00:00:00Z')) d.setUTCMonth(d.getUTCMonth() + 1); return 'next pull after 20 ' + MONTHS[d.getUTCMonth()] + ' ' + d.getUTCFullYear(); };
   if (U && U.entries && Object.keys(U.entries).length) {
     const ly = Object.values(U.entries)[0].last_year.year, ty = Object.values(U.entries)[0].this_year.year;
-    $('#ucdp-sub').textContent = (D.ucdp_note || '') + ' ' + (U.rule || '') + ' Versions: ' + U.versions + '. Data to ' + monthWord(U.reach) + '. Pulled ' + U.pulled + '; ' + nextPull() + '. ' + pct(U.flagged_share) + ' of the ' + ty + ' rows carry a check flag.';
-    $('#ucdp-table thead').innerHTML = `<tr><th>war</th><th>our band</th><th>UCDP ${ly}, best (low to high)</th><th>January to ${esc(monthWord(U.reach))}</th><th>${esc(monthWord(U.window.from))} to ${esc(monthWord(U.window.to))}, best (low to high)</th><th>rows flagged</th><th>UCDP against the other counter</th><th>what UCDP counts</th></tr>`;
+    $('#ucdp-sub').textContent = (D.ucdp_note || '') + ' ' + (U.rule || '') + ' ' + (U.range_note || '') + ' Versions: ' + U.versions + '. Data to ' + monthWord(U.reach) + '. Pulled ' + U.pulled + '; ' + nextPull() + '. ' + pct(U.flagged_share) + ' of the ' + ty + ' rows carry a check flag.';
+    $('#ucdp-table thead').innerHTML = `<tr><th>war</th><th>our band</th><th>UCDP ${ly}, best</th><th>January to ${esc(monthWord(U.reach))}</th><th>${esc(monthWord(U.window.from))} to ${esc(monthWord(U.window.to))}, best</th><th>rows flagged</th><th>UCDP against the other counter</th><th>what UCDP counts</th></tr>`;
     $('#ucdp-table tbody').innerHTML = D.conflicts.filter(c => uOf(c)).map(c => { const u = uOf(c); const top = (u.conflicts || []).filter(k => k.best_window > 0).slice(0, 4); return `<tr><td>${esc(c.name)}</td><td>${esc(D.bands[c.band] || 'not entered')}</td><td>${ucdpRange(u.last_year)}</td><td>${ucdpNum(u.this_year.best)}</td><td>${ucdpRange(u.window)}</td><td>${pct(u.flagged_share_window)}</td><td>${esc((c.ucdp && c.ucdp.against) || '')}</td><td class="src">${esc((c.ucdp && c.ucdp.note) || '')}<span class="n">${esc(u.basis)}. In the window: ${top.map(k => esc(k.name) + ' ' + ucdpNum(k.best_window)).join('; ')}${(u.conflicts || []).filter(k => k.best_window > 0).length > top.length ? '; and ' + ((u.conflicts || []).filter(k => k.best_window > 0).length - top.length) + ' more' : ''}.${(u.excluded || []).map(x => ' Not in this sum: ' + esc(x.dyad) + ', ' + ucdpNum(x.best_this_year) + ' in ' + ty + '; ' + esc(x.why) + '.').join('')}</span></td></tr>`; }).join('');
     $('#ucdp-missing').textContent = D.ucdp_missing || '';
     $('#ucdp-fold-count').textContent = `${D.conflicts.filter(c => uOf(c)).length} wars, our band beside UCDP's count`;
@@ -992,7 +991,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   mNow.onclick = () => setMonth(monthsIn.length);
   /* the level: UCDP's deaths by month as bars under the map; a war picked shows its own months */
   const LV = (U && U.months) || null;
-  const levelFor = () => { if (!LV) return null; const c = state.kind === 'conflict' && conflicts[state.id]; const e = c && uOf(c); const m = e && e.months ? e.months : LV.map; return { keys: LV.keys, best: m.best, low: m.low || [], high: m.high || [], scope: c ? c.name : 'the wars on this map' }; };
+  const levelFor = () => { if (!LV) return null; const c = state.kind === 'conflict' && conflicts[state.id]; const e = c && uOf(c); const m = e && e.months ? e.months : LV.map; return { keys: LV.keys, best: m.best, scope: c ? c.name : 'the wars on this map' }; };
   const turnsByMonth = {}; for (const c of D.conflicts) { if (c.start && monthsIn.includes(c.start)) (turnsByMonth[c.start] = turnsByMonth[c.start] || []).push(c.short + ': begins'); for (const t of (c.turns || [])) (turnsByMonth[t.month] = turnsByMonth[t.month] || []).push(c.short + ': ' + t.what); }
   const MSHORT = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
   let stripKey = null;
@@ -1009,8 +1008,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       const h = v == null ? 0 : Math.max(1.5, 100 * v / max);
       const on = (m === state.month) || (!m && !state.month);
       const turns = m ? (turnsByMonth[m] || []) : [];
-      const lh = k >= 0 && lv.low[k] != null ? ' (low ' + lv.low[k].toLocaleString('en-US') + ', high ' + lv.high[k].toLocaleString('en-US') + ')' : '';
-      const title = !m ? 'today' : fmtMonth(m) + (v != null ? ' · ' + v.toLocaleString('en-US') + ' deaths, UCDP best' + lh + (prov ? ', provisional' : '') : ' · not yet counted by UCDP') + (turns.length ? ' · ' + turns.join('; ') : '');
+      const title = !m ? 'today' : fmtMonth(m) + (v != null ? ' · ' + v.toLocaleString('en-US') + ' deaths, UCDP best' + (prov ? ', provisional' : '') : ' · not yet counted by UCDP') + (turns.length ? ' · ' + turns.join('; ') : '');
       const bar = !m ? '' : v == null ? `<div class="bar none" style="height:1px"></div>` : `<div class="bar${prov ? ' prov' : ''}" style="height:${h.toFixed(1)}%"></div>`;
       const top = (m && v != null && v === max && lv.best.filter(x => x > 0).length > 1) ? `<span class="top">${v < 1000 ? v : (v / 1000).toFixed(v < 10000 ? 1 : 0) + 'k'}</span>` : '';
       return `<button data-m="${m || ''}" class="${on ? 'on' : ''}" title="${esc(title)}" aria-label="${esc(title)}" aria-pressed="${on}">${turns.length ? '<i class="tk"></i>' : ''}${top}${bar}<span class="ml">${!m ? 'now' : (m.endsWith('-01') || i === 0 ? MSHORT[+m.slice(5) - 1] + '<br>' + m.slice(2, 4) : MSHORT[+m.slice(5) - 1])}</span></button>`;
@@ -1025,7 +1023,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     const key = `<span class="m-level-key"><i class="solid"></i> UCDP's count <i class="prov"></i> provisional</span>`;
     if (!m) mLabel.innerHTML = `today <span>· bars are UCDP's best estimate of deaths by month in ${esc(lv.scope)}; hover a bar for its range; UCDP's data reaches ${esc(fmtMonth(U.reach))}</span>${key}`;
     else if (v == null) mLabel.innerHTML = `${esc(fmtMonth(m))} <span>· not yet counted by UCDP</span>${key}`;
-    else mLabel.innerHTML = `${esc(fmtMonth(m))} <span>· ${v.toLocaleString('en-US')} deaths counted by UCDP in ${esc(lv.scope)}, best estimate, within a range of ${(lv.low[k] || 0).toLocaleString('en-US')} to ${(lv.high[k] || 0).toLocaleString('en-US')}${prov ? '; provisional' : ''}${k > 0 ? (v > lv.best[k - 1] ? ', up from ' : v < lv.best[k - 1] ? ', down from ' : ', the same as ') + lv.best[k - 1].toLocaleString('en-US') + ' the month before' : ''}</span>${key}`;
+    else mLabel.innerHTML = `${esc(fmtMonth(m))} <span>· ${v.toLocaleString('en-US')} deaths counted by UCDP in ${esc(lv.scope)}, best estimate${prov ? '; provisional' : ''}${k > 0 ? (v > lv.best[k - 1] ? ', up from ' : v < lv.best[k - 1] ? ', down from ' : ', the same as ') + lv.best[k - 1].toLocaleString('en-US') + ' the month before' : ''}</span>${key}`;
   }
   $('#grid-all').onclick = () => { state.gridAll = !state.gridAll; writeHash(); buildGrid(); syncGrid(); };
   allBtn.onclick = () => { state.all = !state.all; writeHash(); render(); };
@@ -1480,7 +1478,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     const ys = Y.years, W = 760, H = 150, L = 44, R = 10, T = 14, B = 22;
     /* one year (1994, Rwanda) is several times every other; it runs off the top and says so, rather than flattening the rest */
     const peak = ys.reduce((a, r) => r.best > a.best ? r : a, ys[0]);
-    const max = Math.max(...ys.filter(r => r !== peak).map(r => r.high)) * 1.08;
+    const max = Math.max(...ys.filter(r => r !== peak).map(r => r.best)) * 1.08;
     const x = i => L + (W - L - R) * (i / ys.length), bw = (W - L - R) / ys.length - 2;
     const y = v => T + (H - T - B) * (1 - Math.min(v, max) / max);
     const last = ys[ys.length - 1];
@@ -1491,9 +1489,9 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     for (const v of ticks) s += `<line class="axis" x1="${L}" x2="${W - R}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}"/><text class="v" x="${L - 6}" y="${(y(v) + 3).toFixed(1)}" text-anchor="end">${v ? (v / 1000) + 'k' : '0'}</text>`;
     s += `<line class="ref" x1="${L}" x2="${W - R}" y1="${y(median).toFixed(1)}" y2="${y(median).toFixed(1)}"/><text class="v" x="${(L + (W - L - R) * 0.45).toFixed(1)}" y="${(y(median) - 5).toFixed(1)}" text-anchor="middle">median year ${Math.round(median / 1000)}k</text>`;
     ys.forEach((r, i) => {
-      const title = `${r.year}: ${r.best.toLocaleString('en-US')} deaths, UCDP best (${r.low.toLocaleString('en-US')} to ${r.high.toLocaleString('en-US')}); in fighting ${r.state.toLocaleString('en-US')}, between armed groups ${r.nonstate.toLocaleString('en-US')}, civilians killed deliberately ${r.onesided.toLocaleString('en-US')}; ${r.countries_over_1000} countries over a thousand`;
+      const title = `${r.year}: ${r.best.toLocaleString('en-US')} deaths, UCDP best; in fighting ${r.state.toLocaleString('en-US')}, between armed groups ${r.nonstate.toLocaleString('en-US')}, civilians killed deliberately ${r.onesided.toLocaleString('en-US')}; ${r.countries_over_1000} countries over a thousand`;
       const off = r === peak && r.best > max;
-      s += `<g><title>${esc(title)}</title><rect class="bar${r === last ? ' on' : ''}" x="${x(i).toFixed(1)}" y="${y(r.best).toFixed(1)}" width="${bw.toFixed(1)}" height="${(y(0) - y(r.best)).toFixed(1)}" rx="1"/>${off ? '' : `<line class="range" x1="${(x(i) + bw / 2).toFixed(1)}" x2="${(x(i) + bw / 2).toFixed(1)}" y1="${y(r.low).toFixed(1)}" y2="${y(r.high).toFixed(1)}"/>`}</g>`;
+      s += `<g><title>${esc(title)}</title><rect class="bar${r === last ? ' on' : ''}" x="${x(i).toFixed(1)}" y="${y(r.best).toFixed(1)}" width="${bw.toFixed(1)}" height="${(y(0) - y(r.best)).toFixed(1)}" rx="1"/></g>`;
       if (off) s += `<text x="${(x(i) + bw + 4).toFixed(1)}" y="${T + 8}">${r.year}: ${r.best.toLocaleString('en-US')}, off the chart</text>`;
       if (r.year % 5 === 0 || r === last) s += `<text x="${(x(i) + bw / 2).toFixed(1)}" y="${H - 6}" text-anchor="middle">${r.year}</text>`;
     });

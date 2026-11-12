@@ -127,7 +127,6 @@
   .spine .bar { fill: var(--danger); fill-opacity: 0.55; }
   .spine .bar.prov { fill: url(#hatch); fill-opacity: 1; }
   .spine .bar.on { fill-opacity: 1; stroke: var(--ink); stroke-width: 1; }
-  .spine .range { stroke: var(--ink-45); stroke-width: 1; }
   .spine .ref { stroke: var(--ink-60); stroke-width: 1; stroke-dasharray: 3 3; }
   .spine .avg { fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
   .spine .n { fill: none; stroke: var(--ink); stroke-width: 1.4; stroke-linejoin: round; }
@@ -363,7 +362,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const xm = m => x(+m.slice(0, 4) + (+m.slice(5, 7) - 1) / 12 + 1 / 24);
   const yN = d3.scaleLinear([0, d3.max(years, r => r.n) * 1.08], [P.n.top + P.n.h, P.n.top]);
   const peak = Y.years.reduce((a, r) => r.best > a.best ? r : a, Y.years[0]);
-  const dMax = d3.max(Y.years.filter(r => r !== peak), r => r.high) * 1.08;
+  const dMax = d3.max(Y.years.filter(r => r !== peak), r => r.best) * 1.08;
   const yD = d3.scaleLinear([0, dMax], [P.d.top + P.d.h, P.d.top]).clamp(true);
   const oMax = d3.max(O.brent.concat(O.wti), r => r[1]) * 1.06;
   const yO = d3.scaleLinear([0, oMax], [P.o.top + P.o.h, P.o.top]);
@@ -382,7 +381,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     s += `<path class="inter" d="${d3.line().x(r => x(r.year) + bw / 2 + 0.6).y(r => yN(r.interstate)).curve(d3.curveStep)(years)}"/>`;
     s += `<path class="n" d="${d3.line().x(r => x(r.year) + bw / 2 + 0.6).y(r => yN(r.n)).curve(d3.curveStep)(years)}"/>`;
     /* deaths per year, 1989 on */
-    s += `<text class="h" x="${LM}" y="${P.d.top - 5}">Deaths in organized violence a year, UCDP best estimate with its range. Solid line: five-year average. Dashed: median year.</text>`;
+    s += `<text class="h" x="${LM}" y="${P.d.top - 5}">Deaths in organized violence a year, UCDP best estimate. Solid line: five-year average. Dashed: median year.</text>`;
     const step = dMax > 400000 ? 200000 : 100000;
     for (let v = 0; v <= dMax; v += step) s += `<line class="axis" x1="${LM}" x2="${W - RM}" y1="${yD(v).toFixed(1)}" y2="${yD(v).toFixed(1)}"/><text class="v" x="${LM - 6}" y="${(yD(v) + 3).toFixed(1)}" text-anchor="end">${v ? v / 1000 + 'k' : '0'}</text>`;
     s += `<line class="bound" x1="${x(D0)}" x2="${x(D0)}" y1="${P.n.top}" y2="${P.d.top + P.d.h}"/><text class="v" x="${x(D0) - 4}" y="${P.d.top + 10}" text-anchor="end">deaths counted from ${D0}</text>`;
@@ -390,8 +389,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     for (const r of Y.years) {
       const off = r === peak && r.best > dMax, prov = r.year > D1 - PROV;
       s += `<rect class="bar${prov ? ' prov' : ''}${r.year === state.year ? ' on' : ''}" data-y="${r.year}" x="${x(r.year).toFixed(1)}" y="${yD(r.best).toFixed(1)}" width="${bw.toFixed(1)}" height="${(yD(0) - yD(r.best)).toFixed(1)}"/>`;
-      if (!off) s += `<line class="range" x1="${(x(r.year) + bw / 2).toFixed(1)}" x2="${(x(r.year) + bw / 2).toFixed(1)}" y1="${yD(r.low).toFixed(1)}" y2="${yD(r.high).toFixed(1)}"/>`;
-      else s += `<text x="${(x(r.year) + bw + 4).toFixed(1)}" y="${P.d.top + 9}">${r.year}: ${fmt(r.best)}, off the chart</text>`;
+      if (off) s += `<text x="${(x(r.year) + bw + 4).toFixed(1)}" y="${P.d.top + 9}">${r.year}: ${fmt(r.best)}, off the chart</text>`;
     }
     s += `<polyline class="avg" points="${avgs.filter(Boolean).map(a => `${(x(a.year) + bw / 2).toFixed(1)},${yD(a.v).toFixed(1)}`).join(' ')}"/>`;
     const la = avgs[avgs.length - 1]; s += `<text x="${(x(la.year) + bw / 2 + 4).toFixed(1)}" y="${(yD(la.v) + 3).toFixed(1)}">${Math.round(la.v / 1000)}k</text>`;
@@ -438,7 +436,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     const r = byYear[y], d = dy[y], a = avgOf(y), b = brentOf(y);
     let s = `<b>${y}</b>${hover ? ' <span class="dim">hover; click to set</span>' : ''}${y > D1 - PROV ? ' <span class="dim">provisional: UCDP revises recent years</span>' : ''}<br>`;
     s += `Conflicts: ${r.n} active, ${r.wars} at war level, ${r.interstate} between states${r.is ? `, ${r.is} with Islamic State as a party` : ''}.`;
-    if (d) s += ` Deaths: <b>${fmt(d.best)}</b>, within a range of ${fmt(d.low)} to ${fmt(d.high)}; ${fmt(d.state)} in fighting between a state and an opponent, ${fmt(d.nonstate)} between armed groups, ${fmt(d.onesided)} civilians killed deliberately. Countries with more than 1,000 deaths: ${d.countries_over_1000}.`;
+    if (d) s += ` Deaths: <b>${fmt(d.best)}</b>; ${fmt(d.state)} in fighting between a state and an opponent, ${fmt(d.nonstate)} between armed groups, ${fmt(d.onesided)} civilians killed deliberately. Countries with more than 1,000 deaths: ${d.countries_over_1000}.`;
     else s += ` <span class="dim">Deaths by country not counted before ${D0}.</span>`;
     s += '<br>';
     if (a) s += `Five-year average of deaths to ${y}: <b>${fmt(Math.round(a))}</b>. `;
@@ -458,7 +456,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   function titleFor(id) {
     const y = state.year, row = byYear[y], deaths = L.deaths[y] || null, name = nameOf.get(id);
     if (state.month) return `${name}: the cells show ${monthWord(state.month)}`;
-    if (deaths) { const v = deaths[id]; return v ? `${name}: ${fmt(v[0])} deaths in ${y}, within a range of ${fmt(v[1])} to ${fmt(v[2])}; ${fmt(v[3])} in fighting between a state and an opponent, ${fmt(v[4])} between armed groups, ${fmt(v[5])} civilians killed deliberately${v[0] < STEPS[0] ? '; fewer than 25, not shaded' : ''}` : `${name}: no deaths counted in ${y}`; }
+    if (deaths) { const v = deaths[id]; return v ? `${name}: ${fmt(v[0])} deaths in ${y}; ${fmt(v[3])} in fighting between a state and an opponent, ${fmt(v[4])} between armed groups, ${fmt(v[5])} civilians killed deliberately${v[0] < STEPS[0] ? '; fewer than 25, not shaded' : ''}` : `${name}: no deaths counted in ${y}`; }
     const a = row.active[id]; return a ? `${name}: a conflict ${a === 2 ? 'at war level' : 'active'} in ${y}, ${a === 2 ? '1,000 or more deaths' : '25 or more deaths'}` : `${name}: no conflict counted in ${y}`;
   }
   function drawMap() {
@@ -529,7 +527,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     const keys = U.months.keys || G.months, w = U.months.world, from = U.months.candidate_from || null;
     $('#month-sub').textContent = `Deaths by month, all countries, ${monthWord(keys[0])} to ${monthWord(keys[keys.length - 1])}, UCDP's best estimate; the range is in each bar's label. Click a month to see where on the map, by one-degree cell. ${from ? 'Hatched months, from ' + monthWord(from) + ', are UCDP\'s candidate data, not yet fully reviewed.' : ''}`;
     const max = Math.max(...w.best);
-    $('#m-strip').innerHTML = keys.map((m, i) => `<button data-m="${m}" class="${state.month === m ? 'on' : ''}" title="${monthWord(m)}: ${fmt(w.best[i])} deaths, ${fmt(w.low[i])} to ${fmt(w.high[i])}"><div class="bar${from && m >= from ? ' prov' : ''}" style="height:${Math.max(2, 56 * w.best[i] / max).toFixed(0)}px"></div><div class="l">${m.slice(5)}</div></button>`).join('');
+    $('#m-strip').innerHTML = keys.map((m, i) => `<button data-m="${m}" class="${state.month === m ? 'on' : ''}" title="${monthWord(m)}: ${fmt(w.best[i])} deaths"><div class="bar${from && m >= from ? ' prov' : ''}" style="height:${Math.max(2, 56 * w.best[i] / max).toFixed(0)}px"></div><div class="l">${m.slice(5)}</div></button>`).join('');
     $('#m-strip').onclick = ev => { const b = ev.target.closest('button'); if (!b) return; stopPlay(); state.month = state.month === b.dataset.m ? null : b.dataset.m; syncStrip(); writeHash(); paintMap(); if (state.month) $('#map-wrap').scrollIntoView({ behavior: 'smooth', block: 'center' }); };
     $('#month-note').textContent = `${G.rule || ''} ${G.unplaced_total ? fmt(G.unplaced_total) + ' of ' + fmt(G.unplaced_total + G.placed_total) + ' deaths in the period are located only to a country or less precisely, and are not drawn as cells.' : ''}`;
     readHash(); syncStrip(); if (state.month) paintMap();
