@@ -236,14 +236,16 @@ def pages_fails():
             m = SHOWS_RANGE.search(line)
             if m:
                 fails.append(f"{name}:{i}: reads or names UCDP's low or high ({m.group(0)!r}). The pages show the best count only.")
-    for name, keys in (('data/conflicts.json', ('ucdp_note', 'band_note', 'years_note')), ('data/level.json', ('rule',)), ('data/ucdp_years.json', ('rule',)), ('data/wars.json', None)):
+    for name, keys in (('data/conflicts.json', ('ucdp_note', 'band_note', 'years_note', 'level_note')), ('data/level.json', ('rule',)), ('data/ucdp_years.json', ('rule',)), ('data/wars.json', None)):
         try:
             text = open(R / name, encoding='utf-8').read()
         except FileNotFoundError:
             continue
         J = json.loads(text)
         blob = text if keys is None else ' '.join(str(J.get(k) or '') for k in keys)
-        m = re.search(r'low and (?:the )?high|low, best|best, low|high count|low count|low-to-high|\{\w*(?:low|high|range)\w*\}', blob)
+        if name == 'data/conflicts.json':   # each war's count sentence and its UCDP note are reader-facing too
+            blob += ' ' + ' '.join(str(c.get('band_source') or '') + ' ' + str((c.get('ucdp') or {}).get('note') or '') for c in J.get('conflicts') or [])
+        m = re.search(r'low and (?:the )?high|high (?:here )?(?:reads )?below|high reads low|its low is|low, best|best, low|high count|low count|low-to-high|\{\w*(?:low|high|range)\w*\}', blob)
         if m and not (name == 'data/wars.json' and m.group(0) == '{band_ranges}'):
             fails.append(f"{name}: its reader-facing text names UCDP's low or high ({m.group(0)!r}). The pages show the best count only.")
     return fails

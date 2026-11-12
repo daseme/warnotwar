@@ -34,8 +34,8 @@ TOKEN = re.compile(r'\{(\w+)\}')
 # this list fails the check: a new number comes with its test, in the same commit. Add the test below, then the name here.
 PAGE_TOKENS = {
     'Tap', 'acd_bar', 'acd_version', 'areas_total', 'areas_wars', 'as_of', 'avg_last_year', 'avg_latest', 'avg_max', 'avg_max_year', 'avg_other',
-    'avg_other_year', 'avg_two', 'backers_n', 'claimed_n', 'd_first', 'd_last', 'eg_a_name', 'eg_areas_source', 'eg_backers', 'eg_before_n',
-    'eg_countries', 'eg_left_n', 'eg_multi', 'eg_n', 'eg_name', 'eg_parties_word', 'eg_prov', 'eg_side_a', 'eg_side_b', 'eg_sides_word', 'eg_start',
+    'avg_other_year', 'avg_two', 'backers_n', 'claimed_n', 'd_first', 'd_last', 'eg_areas_source', 'eg_backers', 'eg_before_n',
+    'eg_countries', 'eg_left_n', 'eg_multi', 'eg_n', 'eg_parties_word', 'eg_prov', 'eg_side_a', 'eg_side_b', 'eg_sides_word', 'eg_start',
     'ended_n', 'flag_pct', 'hued_n', 'interstate', 'intra', 'lines_n', 'n_above', 'n_first', 'n_phrase', 'old_n', 'oldest_name', 'oldest_years',
     'open_n', 'open_tenths', 'os_n', 'os_name', 'os_total', 'peak_top_n', 'peak_top_name', 'peak_total', 'peak_year', 'prewindow_n', 'prov_word',
     'reach_year', 'region_counts', 'reported_n', 'shown_n', 'sq_us', 'squares', 'tap', 'tier_words', 'ucdp_n', 'ucdp_pulled', 'ucdp_versions',
@@ -148,7 +148,6 @@ def main():
         live = [t for t in eg['ties'] if not t.get('ended')]
         sides = sorted({p.get('side') for p in eg.get('parties', [])})
         need('eg_start', lambda: eg['start'])
-        need('eg_name', lambda: eg['name'])
         need('eg_prov', lambda: len(eg['areas']) or None)
         need('eg_countries', lambda: len({a['country'] for a in eg['areas']}) or None)
         need('eg_areas_source', lambda: eg['areas_source'])
@@ -173,14 +172,13 @@ def main():
         need('eg_side_b', lambda: sides[1])
         need('eg_parties_word', lambda: len(eg['parties']) if all(p.get('state') for p in eg['parties']) else None)
         T['eg_sides_word'] = len(sides)
-        T['eg_a_name'] = next(p['name'] for p in eg['parties'] if p['side'] == sides[0])
         if len(sides) != 2:
             fails.append(f"the example has {len(sides)} sides; step 4 sets one side against the other")
         if len({a['country'] for a in eg['areas']}) < 2:
             fails.append('the example is shaded in one country; step 2 says "countries"')
         first = [p for p in eg['parties'] if p['side'] == sides[0]]
         if len(first) != 1 or 'allied groups' not in first[0]['name']:
-            fails.append("step 4 calls the first side's allies armed groups; that side's name no longer says \"allied groups\"")
+            fails.append("step 4 says the first side has allies that are armed groups; that side's name no longer says \"allied groups\"")
         # step 5: a backer with two lines has one on the record and one reported, as the sentence says
         by = {}
         for t in live:
@@ -205,7 +203,9 @@ def main():
             fails.append(f"{c['id']}: no start month, so step 10 cannot say when it began")
         e = U.get('entries', {}).get(c['id']) or {}
         if not (e.get('whole') or {}).get('best'):
-            fails.append(f"{c['id']}: data/ucdp.json has no count since the war began, so its card in step 10 has none")
+            fails.append(f"{c['id']}: data/ucdp.json has no count since the war began, so its card in step 10 and its bar in step 3 have none")
+        elif e['whole'].get('from') != c.get('start'):
+            fails.append(f"{c['id']}: UCDP's count since the war began starts {e['whole'].get('from')}, but the war's start is {c.get('start')}; step 3 says 'since' that month")
         if e.get('window') and set((e['window'].get('by_type') or {})) != {'state-based', 'non-state', 'one-sided'}:
             fails.append(f"{c['id']}: data/ucdp.json has no split of the past year's count into UCDP's three kinds; step 3's bars need it")
         if not c.get('band'):

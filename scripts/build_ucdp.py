@@ -274,6 +274,11 @@ def main():
         if cid in BY_COUNTRY:
             x = df[df.country.isin(BY_COUNTRY[cid]) | df.conflict_new_id.isin(ALSO_CONFLICT.get(cid, []))]
             basis = 'countries: ' + ', '.join(BY_COUNTRY[cid])
+            # a conflict that is another entry's whole basis is counted there only, wherever its events fall
+            for other, ids in BY_CONFLICT.items():
+                if len(x[x.conflict_new_id.isin(ids)]):
+                    x = x[~x.conflict_new_id.isin(ids)]
+                    basis += '; less the conflicts counted under ' + cmeta[other]['name']
             if cid in ALSO_CONFLICT:
                 basis += '; and these conflicts wherever they are fought: ' + ', '.join(sorted(set(df[df.conflict_new_id.isin(ALSO_CONFLICT[cid])].conflict_name)))
         elif cid in BY_CONFLICT:

@@ -317,7 +317,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const strait = w => w.strait ? (w.strait.source === 'ledger'
       ? `${w.strait.tracker} ${w.strait.mbd} million barrels a day, ${pct(w.strait.share)} of the pre-war rate, ${w.strait.basis === 'monthly' ? `the ${MON[Number(w.strait.date.slice(5, 7)) - 1]} average` : `reading of ${fd(w.strait.date)}`}`
       : `ship signals near the strait at ${pct(w.strait.share)} of a normal week, ${fd(w.strait.date)}; no tracker figure for this week`) : 'no strait reading';
-  const deathsLine = w => w.deaths.state === 'unknown' ? `Uppsala has not reached ${MON[Number(w.deaths.month.slice(5)) - 1]}` : `Uppsala: ${w.deaths.best.toLocaleString('en-US')} deaths in the Gulf war in ${MON[Number(w.deaths.month.slice(5)) - 1]}${w.deaths.provisional ? ', provisional' : ''}`;
+  const deathsLine = w => w.deaths.state === 'unknown' ? `Uppsala has not reached ${MON[Number(w.deaths.month.slice(5)) - 1]}` : `Uppsala: ${w.deaths.best.toLocaleString('en-US')} deaths in the Iran war in ${MON[Number(w.deaths.month.slice(5)) - 1]}${w.deaths.provisional ? ', provisional' : ''}`;
 
   /* ---- the line at the top ---- */
   const curName = CELLS[cur.cell];
@@ -328,7 +328,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const straitNow = !cur.strait ? '' : cur.strait.source === 'ledger'
     ? `${cur.strait.tracker} counts ${cur.strait.mbd} million barrels a day leaving the strait, ${pct(cur.strait.share)} of what left before, ${cur.strait.basis === 'monthly' ? `its ${monl(cur.strait.date)} average` : `as of ${fd(cur.strait.date)}`}. `
     : `Ship signals near the strait are at ${pct(cur.strait.share)} of a normal week. `;
-  const deathsNow = cur.deaths.state === 'unknown' ? `Uppsala has not counted ${monl(cur.deaths.month)}.` : `Uppsala counts ${cur.deaths.best.toLocaleString('en-US')} dead in the Gulf in ${monl(cur.deaths.month)}.`;
+  const deathsNow = cur.deaths.state === 'unknown' ? `Uppsala has not counted ${monl(cur.deaths.month)}.` : `Uppsala counts ${cur.deaths.best.toLocaleString('en-US')} dead in the Iran war in ${monl(cur.deaths.month)}.`;
   $('#tally-sub').textContent = `BNO closed at ${cur.bno.toFixed(2)} on ${fd(cur.bno_date)}. ${WE_THINK[cur.think]} ${straitNow}${cur.strait ? (cur.are === 'shut' ? 'That is shut. ' : 'That is open. ') : ''}${deathsNow}`;
 
   /* ---- the square: x = strait share of normal, y = BNO ---- */
@@ -422,7 +422,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     for (const el of document.querySelectorAll('[data-m]')) {
       const d = runs[Number(el.dataset.m)].d;
       const showM = ev => {
-        tip.innerHTML = d.state === 'unknown' ? `<b>From ${esc(monl(d.month))} ${d.month.slice(0, 4)}</b><br>Uppsala has not counted these weeks yet.` : `<b>${esc(monl(d.month))} ${d.month.slice(0, 4)}</b><br>${false ? '' : `Uppsala counts ${d.best.toLocaleString('en-US')} dead in the Gulf war${d.provisional ? ', provisional' : ''}.`}`;
+        tip.innerHTML = d.state === 'unknown' ? `<b>From ${esc(monl(d.month))} ${d.month.slice(0, 4)}</b><br>Uppsala has not counted these weeks yet.` : `<b>${esc(monl(d.month))} ${d.month.slice(0, 4)}</b><br>${false ? '' : `Uppsala counts ${d.best.toLocaleString('en-US')} dead in the Iran war${d.provisional ? ', provisional' : ''}.`}`;
         tip.style.display = 'block';
         const r = tip.getBoundingClientRect();
         tip.style.left = Math.min(ev.clientX + 14, innerWidth - r.width - 12) + 'px';
@@ -442,7 +442,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   /* ---- the tally of cells ---- */
   const order = ['are-think', 'are-sweet', 'are-not-think', 'think-not-are', 'open-sweet', 'neither'];
   $('#weeks-h').textContent = `All ${full.length} weeks, since you asked`;
-  $('#weeks-sub').textContent = `${full.length} full weeks from the first Monday of the war, ${fdy(W[0].week)}, one box each. The colour says which box of the grid we were in. The row under it is Uppsala's count of the dead in the Gulf, one bar a month. Hover or tap a week for its readings. The current week is faint until it closes.`;
+  $('#weeks-sub').textContent = `${full.length} full weeks from the first Monday of the war, ${fdy(W[0].week)}, one box each. The colour says which box of the grid we were in. The row under it is Uppsala's count of the dead in the Iran war, one bar a month. Hover or tap a week for its readings. The current week is faint until it closes.`;
 
   /* ---- the second count, with the sweet spot read as the market thinking war ---- */
   (function second() {

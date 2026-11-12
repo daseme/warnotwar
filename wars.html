@@ -98,6 +98,10 @@
   .stage { position: sticky; top: 64px; display: flex; flex-direction: column; justify-content: flex-start; min-width: 0; z-index: 4; }
   .mapbox { position: relative; flex: 0 1 auto; width: 100%; aspect-ratio: 1000 / 560; max-height: calc(100vh - 150px); max-height: calc(100svh - 150px); min-height: 0; background: var(--bg-raise); border: 1px solid var(--ink-10); overflow: hidden; }
   svg#map { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; transition: opacity 0.5s ease; }
+  .zoomctl { position: absolute; right: 8px; bottom: 8px; display: flex; gap: 4px; z-index: 3; }
+  .zoomctl[hidden] { display: none; }
+  .zoomctl button { font-family: var(--mono); font-size: 13px; line-height: 1; min-width: 32px; height: 32px; padding: 0 8px; background: var(--bg-raise); border: 1px solid var(--ink-30); color: var(--ink); cursor: pointer; }
+  .zoomctl button[data-z=reset] { font-size: 10.5px; letter-spacing: 0.04em; }
   svg#map.free { cursor: grab; }
   svg#map.free:active { cursor: grabbing; }
   svg#map.faded { opacity: 0; }
@@ -267,6 +271,7 @@
   .bars .r { display: grid; grid-template-columns: 11.5em minmax(0, 1fr); align-items: center; gap: 8px; min-height: 19px; padding: 1px 0; }
   .bars .r .n { line-height: 1.25; }
   .bars .tr { min-height: 18px; }
+  .bars .r .w { grid-column: 2; color: var(--ink-60); font-size: 9.5px; line-height: 1.2; margin: -1px 0 4px; }
   .bars + .btn, .bars .btn { margin-top: 8px; }
   .bars .r.pick .n, .bars .r.top .n { color: var(--ink); font-weight: 500; }
   .bars .tr { position: relative; height: 100%; }
@@ -573,6 +578,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const party = (c, id) => c.parties.find(p => p.id === id);
   /* "the army", "the RSF", "the government", but "Eritrea", "Ukraine": a side that is a state goes by its name */
   /* "the United States", "the UAE": the article where English needs one */
+  const midName = s => String(s).replace(/^The /, 'the ');   /* a war's name inside a sentence */
   const theName = (s, cap) => /^(United |U\.S\.|UAE)/.test(s) ? (cap ? 'The ' : 'the ') + s : s;
   const partyRef = p => p ? (p.state && /^[A-Z]/.test(p.short) ? p.short : 'the ' + p.short) : '';
   const sidesOf = c => new Set(c.parties.map(p => p.side)).size;   /* sides, not parties: allies on one side count once */
@@ -637,8 +643,6 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   T.eg_side_a = listNames(egSides[0].map(p => theName(p.short)));
   T.eg_side_b = egSides[1] ? listNames(egSides[1].map(p => theName(p.short))) : null;
   T.eg_parties_word = eg.parties.every(p => p.state) ? word(eg.parties.length) : null;
-  T.eg_a_name = egSides[0][0].name;
-  T.eg_name = eg.name;
   T.eg_countries = word(new Set(eg.areas.map(a => a.country)).size);
   T.eg_n = uw(EG) ? fmtN(uw(EG).best) : null;
   /* UCDP's three kinds of death, and each war's count since it began */
@@ -646,7 +650,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const kindsOf = id => (uw(id) && uw(id).by_type) || null;
   const whole = id => (U.entries[id] && U.entries[id].whole) || null;
   const osTop = wars.filter(c => kindsOf(c.id) && uw(c.id).best).sort((a, b) => kindsOf(b.id)['one-sided'] / uw(b.id).best - kindsOf(a.id)['one-sided'] / uw(a.id).best)[0];
-  T.os_name = osTop ? osTop.name : null; T.os_n = osTop ? fmtN(kindsOf(osTop.id)['one-sided']) : null; T.os_total = osTop ? fmtN(uw(osTop.id).best) : null;
+  T.os_name = osTop ? midName(osTop.name) : null; T.os_n = osTop ? fmtN(kindsOf(osTop.id)['one-sided']) : null; T.os_total = osTop ? fmtN(uw(osTop.id).best) : null;
   T.whole_to = (whole(EG) && fmtMonth(whole(EG).to)) || null;
   /* the example began inside the past year, so the past year's count holds a few deaths from before it began; step 3's fold says how many, so its two counts square */
   T.eg_before_n = (uw(EG) && whole(EG) && String(eg.start) > U.window.from && uw(EG).best > whole(EG).best) ? fmtN(uw(EG).best - whole(EG).best) : null;
@@ -836,17 +840,31 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     pts.push([c.px - 130 * u, c.py - 40 * u], [c.px + 130 * u, c.py + 48 * u]);
     return boxT(...ptsBox(pts), pad);
   }
-  let freeMode = false, hiresLoading = null, pendingT = null;
+  let freeMode = false, zoomOK = false, userCam = null, curView = null, hiresLoading = null, pendingT = null;
   const sameT = (a, b) => Math.abs(a.k - b.k) < 1e-3 && Math.abs(a.x - b.x) < 0.5 && Math.abs(a.y - b.y) < 0.5;
   const zoom = d3.zoom().scaleExtent([0.25, MAX_K])
     .wheelDelta(ev => Math.max(-0.3, Math.min(0.3, -ev.deltaY * (ev.deltaMode === 1 ? 0.05 : ev.deltaMode ? 1 : 0.002))))
-    .filter(ev => freeMode && (ev.type === 'wheel' ? (ev.ctrlKey || ev.metaKey) : ev.type.startsWith('touch') ? (ev.touches ? ev.touches.length >= 2 : true) : (!ev.ctrlKey && !ev.button)))
+    .filter(ev => zoomOK && (ev.type === 'wheel' ? (ev.ctrlKey || ev.metaKey) : ev.type.startsWith('touch') ? (ev.touches ? ev.touches.length >= 2 : true) : (!ev.ctrlKey && !ev.button)))
     .on('zoom', ev => {
       gRoot.setAttribute('transform', ev.transform.toString()); zoomK = ev.transform.k; setDashes();
       if (zoomK >= 2.2 && !hiresLoading) hiresLoading = get('/data/world_50m.json').then(t => drawLand(t)).catch(() => {});
     })
-    .on('end', ev => { if (ev.sourceEvent && freeMode) drawScene(false); });
+    .on('end', ev => { if (ev.sourceEvent && zoomOK) userMoved(); });
+  /* once the reader has moved the map, a step that allows it leaves the camera where they put it, and the labels are placed again for that view */
+  function userMoved() { if (!freeMode) userCam = curView; drawScene(false); }
   const sel3 = d3.select(svg).call(zoom).on('dblclick.zoom', null);
+  const MC = C.map_controls || {};
+  const zc = document.createElement('div'); zc.className = 'zoomctl'; zc.id = 'zoomctl'; zc.hidden = true;
+  zc.innerHTML = `<button type="button" data-z="in" aria-label="${esc(MC.in || 'zoom in')}">+</button><button type="button" data-z="out" aria-label="${esc(MC.out || 'zoom out')}">−</button><button type="button" data-z="reset">${esc(MC.reset || 'reset')}</button>`;
+  $('#mapbox').appendChild(zc);
+  zc.addEventListener('click', ev => {
+    const b = ev.target.closest('button'); if (!b || !zoomOK) return;
+    if (pendingT) { sel3.interrupt(); pendingT = null; }
+    if (b.dataset.z === 'reset') { userCam = null; lastViewKey = null; if (freeMode) S.free.viewSet = false; drawScene(true); return; }
+    const k = b.dataset.z === 'in' ? 1.6 : 1 / 1.6;
+    if (reduced) sel3.call(zoom.scaleBy, k); else sel3.transition().duration(250).call(zoom.scaleBy, k);
+    setTimeout(userMoved, reduced ? 0 : 320);
+  });
   function applyT(t, animate) {
     /* a move still under way is stopped first, so a quick back-and-forth never strands the camera */
     if (pendingT) { sel3.interrupt(); pendingT = null; }
@@ -971,6 +989,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
         break;
       }
     }
+    sc.zoom = id === 'help' || id === 'know';   /* the steps with lines to far-off backers: the reader may zoom and move the map */
     sc.legend = keyFor(sc);
     return sc;
   }
@@ -991,11 +1010,15 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   let lastLegend = new Set(), lastViewKey = null, prevStepId = null;
   function drawScene(animate) {
     const id = STEPS[S.step].id, sc = sceneFor(id);
-    freeMode = !!sc.free;
-    svg.classList.toggle('free', freeMode);
+    freeMode = !!sc.free; zoomOK = freeMode || !!sc.zoom;
+    svg.classList.toggle('free', zoomOK);
+    $('#zoomctl').hidden = !zoomOK || !!sc.chart;
+    curView = sc.view ? JSON.stringify(sc.view) : null;
     /* camera first, so marks placed in screen pixels use the zoom they will land at */
     let target = pendingT || d3.zoomTransform(svg);
-    if (sc.view) {
+    if (sc.view && zoomOK && userCam !== null && userCam === curView) lastViewKey = null;
+    else if (sc.view) {
+      userCam = null;
       const key = JSON.stringify(sc.view) + '|' + svg.clientWidth + 'x' + svg.clientHeight;
       target = viewT(sc.view);
       if (key !== lastViewKey) { lastViewKey = key; applyT(target, animate); }
@@ -1054,9 +1077,10 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       c.parties.forEach((p, i) => {
         const off = n === 1 ? [[0, -26]] : n === 2 ? [[-66, -26], [66, -26]] : [[-66, -26], [66, -26], [0, 32]];
         const [dx, dy] = (c.id === EG && C.example_chips && C.example_chips[p.id]) || off[i] || [0, 32 + 18 * (i - 2)];   /* the example's sides can be placed by hand, so a state's chip does not sit on its enemy's land */
-        const x = c.px + dx * uT, y = c.py + dy * uT;
+        const at = phone() && c.id === EG && C.example_chips_phone && C.example_chips_phone[p.id];   /* on a phone the map is too small for chips beside the dot: each side sits at its own place */
+        const [x, y] = at ? project(at[0], at[1]) : [c.px + dx * uT, c.py + dy * uT];
         anchor[c.id + '/' + p.id] = [x, y];
-        const label = p.name.length <= 22 ? p.name : (p.short || p.name.slice(0, 20) + '…');
+        const label = at && p.short ? p.short : p.name.length <= 22 ? p.name : (p.short || p.name.slice(0, 20) + '…');
         const w = Math.max(44, label.length * 5.2 + 14);
         const [sx, sy] = toScreen(x, y, target); placed.push([sx - w / 2, sy - 8, sx + w / 2, sy + 8]);
         const g = scaled(x, y, gParties, { class: 'party' + (animate && prevStepId !== id ? ' pop' : '') }, uT);
@@ -1260,6 +1284,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   segToggle('help', 'help');
   /* the example's lines, listed as they arrive */
   const helpList = $('#help-list');
+  if (MC.hint_desktop) helpList.insertAdjacentHTML('beforebegin', `<div class="hint"><span class="dk">${esc(MC.hint_desktop)}</span><span class="ph">${esc(MC.hint_phone || MC.hint_desktop)}</span></div>`);
   helpList.innerHTML = egLive.map(t => { const b = backers[t.backer], p = party(eg, t.party); return `<li data-key="${EG}|${eg.ties.indexOf(t)}">${tierSample('open')}<span><b>${esc(b.short)}</b> → ${esc(p.short)} <span class="s">${esc(kindsText(t))}</span></span></li>`; }).join('');
   let helpTimers = [];
   function helpListArrive(animate, rows, stag = 100) {
@@ -1291,17 +1316,18 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     const KCOL = ['var(--danger)', 'color-mix(in srgb, var(--danger) 45%, var(--bg-raise))', 'var(--ink)'];
     const kindBg = w => { const k = w.by_type; if (!k || !w.best) return ''; let a = 0; const stops = KINDS.map((key, i) => { const from = a; a += k[key] / w.best * 100; return `${KCOL[i]} ${from.toFixed(2)}% ${a.toFixed(2)}%`; }); return `;background:linear-gradient(90deg, ${stops.join(', ')})`; };
     const kindKey = () => s.kinds ? `<div class="kkey" aria-hidden="true">${KINDS.map((key, i) => `<span><i style="background:${KCOL[i]}"></i>${esc(s.kinds[key])}</span>`).join('')}</div>` : '';
-    const bars = () => (all ? ranked : ranked.filter(c => opts.includes(c.id))).map(c => { const w = uw(c.id); const tags = (c.id === top ? `<em class="most">${esc(s.top_label)}</em>` : '') + (c.id === choice ? `<em>${esc(s.pick_label)}</em>` : ''); return `<div class="r${opts.includes(c.id) ? ' opt' : ''}${c.id === choice ? ' pick' : ''}${c.id === top ? ' top' : ''}"><span class="n">${esc(c.name)}</span><span class="tr"><i class="b" style="width:${pc(w.best)}${kindBg(w)}"></i><span class="v" style="left:calc(${pc(w.best)} + 6px)">${fmtN(w.best)}${tags}</span></span></div>`; }).join('');
+    const wholeLine = c => s.whole_line && whole(c.id) ? plainFill(s.whole_line, { whole_n: fmtN(whole(c.id).best), whole_from: fmtMonth(whole(c.id).from) }) : '';
+    const bars = () => (all ? ranked : ranked.filter(c => opts.includes(c.id))).map(c => { const w = uw(c.id); const tags = (c.id === top ? `<em class="most">${esc(s.top_label)}</em>` : '') + (c.id === choice ? `<em>${esc(s.pick_label)}</em>` : ''); return `<div class="r${opts.includes(c.id) ? ' opt' : ''}${c.id === choice ? ' pick' : ''}${c.id === top ? ' top' : ''}"><span class="n">${esc(c.name)}</span><span class="tr"><i class="b" style="width:${pc(w.best)}${kindBg(w)}"></i><span class="v" style="left:calc(${pc(w.best)} + 6px)">${fmtN(w.best)}${tags}</span></span>${wholeLine(c) ? `<span class="w">${esc(wholeLine(c))}</span>` : ''}</div>`; }).join('');
     const chart = () => {
       const shown = all ? ranked : ranked.filter(c => opts.includes(c.id));
-      $('#bars-size').innerHTML = `<div class="cap">${fill(s.chart_caption)}</div>${kindKey()}<div role="img" aria-label="${esc(plain(fill(s.chart_caption)))}: ${esc(shown.map(c => c.name + ' ' + fmtN(uw(c.id).best) + (kindsOf(c.id) && s.kinds ? ' (' + KINDS.map(k => fmtN(kindsOf(c.id)[k]) + ' ' + s.kinds[k]).join(', ') + ')' : '')).join('; '))}">${bars()}</div><button type="button" class="btn" id="bars-more" aria-expanded="${all}">${esc(plainFill(all ? s.show_fewer : s.show_all))}</button>`;
+      $('#bars-size').innerHTML = `<div class="cap">${fill(s.chart_caption)}</div>${kindKey()}<div role="img" aria-label="${esc(plain(fill(s.chart_caption)))}: ${esc(shown.map(c => c.name + ' ' + fmtN(uw(c.id).best) + (wholeLine(c) ? ', ' + wholeLine(c) : '') + (kindsOf(c.id) && s.kinds ? ' (' + KINDS.map(k => fmtN(kindsOf(c.id)[k]) + ' ' + s.kinds[k]).join(', ') + ')' : '')).join('; '))}">${bars()}</div><button type="button" class="btn" id="bars-more" aria-expanded="${all}">${esc(plainFill(all ? s.show_fewer : s.show_all))}</button>`;
       $('#bars-more').onclick = () => { all = !all; chart(); $('#bars-more').focus({ preventScroll: true }); };
     };
     const answer = ch => {
       choice = ch; S.revealed.size = true; $('#skip-size').hidden = true;
       for (const b of $$('.opts .btn', ix('size'))) b.setAttribute('aria-pressed', String(b.dataset.id === ch));
       const [o1, o2] = optsDesc.slice(1);
-      const p = `<p>${fill(s.reveal, { top_name: byId[top].name, top_n: fmtN(uw(top).best), o1_n: o1 ? fmtN(uw(o1).best) : null, o1_name: o1 ? byId[o1].name : null, o2_n: o2 ? fmtN(uw(o2).best) : null, o2_name: o2 ? byId[o2].name : null })}</p>` + (s.reveal_eg && fill(s.reveal_eg) ? `<p>${fill(s.reveal_eg)}</p>` : '');
+      const p = `<p>${fill(s.reveal, { top_name: byId[top].name, top_n: fmtN(uw(top).best), o1_n: o1 ? fmtN(uw(o1).best) : null, o1_name: o1 ? midName(byId[o1].name) : null, o2_n: o2 ? fmtN(uw(o2).best) : null, o2_name: o2 ? midName(byId[o2].name) : null })}</p>` + (s.reveal_eg && fill(s.reveal_eg) ? `<p>${fill(s.reveal_eg)}</p>` : '');
       showReveal('size', p + `<div class="bars" id="bars-size"></div>`, p);
       chart();
       if (S.step === idx('size')) drawScene(true);

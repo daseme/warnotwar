@@ -231,7 +231,7 @@ def main():
         "rules": {
             "think": f"BNO's last close of the week, read the way the front page reads it. Under ${BNO_LOW:.0f} it says peace. Over ${BNO_HIGH:.0f} it says war. Between them is the perpetual war sweet spot.",
             "are": f"Is the oil leaving? Under three quarters of normal, we call the strait shut. Normal is about {prewar:g} million barrels a day, the pre-war rate Kpler's own percentages imply. We take a tracker's weekly figure when it is less than three weeks old, and its average for the month when it is older. Figures for a single day are left out, and so are figures that count refined products with the crude. If no tracker has a figure for a week, we read PortWatch's ship signals near the strait against a normal late-2025 week, and the week says so.",
-            "deaths": f"Uppsala's best estimate of deaths in the Gulf war, by the month the event began. {DEATHS_WAR_MONTH} or more in a month is the war line, which is 1,000 a year. {DEATHS_CONFLICT_MONTH} or more is the conflict line. This year's months are provisional until Uppsala's yearly release. Months Uppsala has not reached are blank.",
+            "deaths": f"Uppsala's best estimate of deaths in the Iran war, by the month the event began. {DEATHS_WAR_MONTH} or more in a month is the war line, which is 1,000 a year. {DEATHS_CONFLICT_MONTH} or more is the conflict line. This year's months are provisional until Uppsala's yearly release. Months Uppsala has not reached are blank.",
             "cells": {
                 "are-think": "we are at war and we think we are",
                 "are-not-think": "we are at war and we think we are not",

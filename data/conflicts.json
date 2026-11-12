@@ -1625,7 +1625,7 @@
     "end"
    ],
    "band": "2",
-   "band_source": "UCDP counted 6,777 from October 2025 to September 2026, and 14,910 in all of 2025. Gaza's health ministry counts about 1,500 killed since the October 2025 ceasefire and Lebanon's more than 4,000 since March 2026; both are parties. UCDP's high here reads below its best because six of its rows carry one.",
+   "band_source": "UCDP counted 6,732 from October 2025 to September 2026, and 14,878 in all of 2025. Gaza's health ministry counts about 1,500 killed since the October 2025 ceasefire and Lebanon's more than 4,000 since March 2026; both are parties.",
    "status": "Ceasefire in Gaza since October 2025, on paper. Israel holds most of Gaza and keeps striking. A new war with Hezbollah from March 2026; a shaky truce in Lebanon since April, with Israeli strikes in the south through October.",
    "summary": "Hamas attacked Israel on 7 October 2023. Israel's war in Gaza followed, with a second front against Hezbollah in Lebanon. A ceasefire took hold in Gaza in October 2025, but Israel still holds most of the strip and strikes continue. After the U.S. and Israel struck Iran in February 2026, Hezbollah fired again and Israel invaded south Lebanon.",
    "parties": [
@@ -1947,7 +1947,7 @@
    ],
    "ucdp": {
     "against": "same band",
-    "note": "Two conflicts: Israel and the Palestinian groups, over a thousand battle deaths a year; Israel and Hezbollah, under a thousand in 2025 and 4,434 so far in 2026. Six rows carry a high below their best, so the window's high reads low.",
+    "note": "Two conflicts: Israel and the Palestinian groups, over a thousand battle deaths a year; Israel and Hezbollah, under a thousand in 2025 and 4,434 so far in 2026.",
     "troops_note": "Our U.S. line carries the THAAD crew of about a hundred soldiers; UCDP does not code an air-defence crew as fighting."
    },
    "counted_by": [
@@ -1969,7 +1969,7 @@
     2
    ],
    "band": "2",
-   "band_source": "UCDP counted 5,436 from October 2025 to September 2026. The WHO counted 965 killed in Yemen in the Gulf war. The two sides' own counts of fighters killed run into the thousands.",
+   "band_source": "UCDP counted 5,436 from October 2025 to September 2026. The WHO counted 965 killed in Yemen in the Iran war. The two sides' own counts of fighters killed run into the thousands.",
    "status": "Full-scale war again. The 2022 truce collapsed in July 2026. The Houthis took the Red Sea coast in September. The government, with Saudi air cover, is pushing back. Houthi missiles hit Saudi airports, and in October the presidential palace, the airport and the coast guard headquarters in Aden. The Houthis say they have also struck Saudi oil sites. The Saudi-led coalition said it shot down two ballistic missiles aimed at Taif and Yanbu on 24 October. Houthi media said Saudi strikes killed sixteen people in Sanaa and Hodeida the same day. The United States ordered non-essential embassy staff out of Saudi Arabia on 23 October. The Saudi-led coalition said it shot down two ballistic missiles and two cruise missiles aimed at Riyadh on 8 November; the Houthi military spokesman said the group had run six missile and drone operations against targets in Saudi Arabia and Yemen.",
    "summary": "The Houthis hold the north and the capital. The government, backed by Saudi Arabia, crushed its southern rival the STC in January 2026 after the UAE pulled out. The 2022 truce collapsed in July 2026 and the war is back on. Since late 2023 the Houthis have also fired on ships in the Red Sea and at Israel.",
    "parties": [
@@ -4002,7 +4002,7 @@
     -5
    ],
    "band": "1",
-   "band_source": "UCDP counted 677 from October 2025 to September 2026. ACLED counted about 1,300 deaths from October 2025 to February 2026, most of them in the January offensive. Most of UCDP's rows for Syria still carry a check flag.",
+   "band_source": "UCDP counted 672 from October 2025 to September 2026. ACLED counted about 1,300 deaths from October 2025 to February 2026, most of them in the January offensive. Most of UCDP's rows for Syria still carry a check flag.",
    "status": "Assad gone since December 2024. The Kurdish-led forces folded into the army in 2026 and U.S. troops left. Small fights go on with Assad loyalists on the coast, Islamic State in the east and Druze militias in Sweida. Syria moved troops to the Sweida front line on 22 October and says it expects an Israeli-backed Druze attack. Israeli strikes.",
    "summary": "The rebels who toppled Assad now govern. They fought the Kurdish-led forces in January 2026 and absorbed them by August. Druze militias in the south and Assad loyalists on the coast still resist.",
    "parties": [
@@ -5144,7 +5144,7 @@
   },
   {
    "id": "gulf",
-   "name": "The Gulf and Hormuz",
+   "name": "The Iran war",
    "since": "2026 (strikes since June 2025)",
    "point": [
     56.3,
@@ -5155,13 +5155,13 @@
     4
    ],
    "band": "2",
-   "band_source": "UCDP counted 3,864 in the war itself from October 2025 to September 2026. Iran counts 3,528 dead and Israel estimates 6,000; 72 killed in Israel, about two dozen U.S. troops, and dozens across the Gulf states, by those states. Lebanon's dead are counted under Gaza and Lebanon.",
+   "band_source": "UCDP counted 3,864 in the war itself from October 2025 to September 2026. Iran counts 3,528 dead and Israel estimates 6,000; 72 killed in Israel, about two dozen U.S. troops, and dozens across the Gulf states, by those states. Lebanon's dead are counted under Gaza and Lebanon, and the dead of this war in Israel are counted here only.",
    "status": "War since 28 February 2026. A ceasefire from 8 April collapsed on 8 July. U.S. strikes again in September. Iran's attacks on shipping in the strait reached a record in October: Iran said seven tankers were hit on 22 October and two more struck mines on 24 October, and attacks on ships about doubled on September. The attacks went on into November. UKMTO counted eleven ships attacked in the seven days to 4 November, and 325 transits of the strait in the same week against 277 the week before. Iran's Revolutionary Guard said more tankers struck mines and caught fire between 3 and 8 November; no body outside the fight has said so, and CENTCOM said on 28 October that the strait's primary transit routes were clear of Iranian mines. The United States struck Qeshm Island in the strait on 2 November, the day before the midterm elections, and again on 6 November; unnamed U.S. officials said the first answered an Iranian missile that threatened shipping, and Trump said the second knocked out an anti-aircraft system. CENTCOM said on 7 November that it had disabled the cargo ship M/V Huda in the Gulf of Oman, that 147 commercial vessels had been turned around since July, and that it had set up a task force, Iron Gate, against weapons and sanctioned goods reaching Iran by land and across the Caspian Sea. Kpler put the oil leaving through the strait in the week to 28 October at 7.3 million barrels a day, more than 40 percent below the pre-war rate. Vortexa and Kpler both read Gulf exports on every route as lower in October than in September. Talks run through Qatar and Pakistan.",
-   "summary": "Israel and the United States struck Iran in June 2025 and again on 28 February 2026, killing Ali Khamenei. Iran shut the Strait of Hormuz on 4 March and fired missiles and drones at Israel, U.S. bases and every Gulf state. Hezbollah joined on 2 March and the Houthis seized the Bab al-Mandab coast in September. A Pakistan-brokered ceasefire held from April to July. U.S. forces cleared Iranian mines by late August, but traffic is still a fraction of normal. This site's other pages follow the oil.",
+   "summary": "Israel and the United States struck Iran in June 2025 and again on 28 February 2026, killing Ali Khamenei. Iran shut the Strait of Hormuz on 4 March and fired missiles and drones at Israel, U.S. bases and every Gulf state. Hezbollah joined on 2 March and the Houthis seized the Bab al-Mandab coast in September; their wars are entered under Gaza and Lebanon and under Yemen. A Pakistan-brokered ceasefire held from April to July. U.S. forces cleared Iranian mines by late August, but traffic is still a fraction of normal. This site's other pages follow the oil.",
    "parties": [
     {
      "id": "irn",
-     "name": "Iran and allied groups (Hezbollah, Houthis, Iraqi militias)",
+     "name": "Iran and allied groups",
      "state": "iran",
      "side": "A",
      "short": "Iran"
@@ -6109,27 +6109,27 @@
     {
      "country": "ISR",
      "name": "Tel Aviv",
-     "why": "Iranian missiles; Ramat Gan"
+     "why": "Iranian missiles: Ramat Gan"
     },
     {
      "country": "ISR",
      "name": "HaMerkaz",
-     "why": "Yehud, Petah Tikva hits"
+     "why": "Iranian missiles: Yehud, Petah Tikva"
     },
     {
      "country": "ISR",
      "name": "Jerusalem",
-     "why": "Beit Shemesh, Old City"
+     "why": "Iranian missiles: Beit Shemesh, Old City"
     },
     {
      "country": "ISR",
      "name": "HaDarom",
-     "why": "Dimona, Arad, Eilat"
+     "why": "Iranian missiles: Dimona, Arad, Eilat"
     },
     {
      "country": "ISR",
      "name": "Haifa",
-     "why": "Refinery struck"
+     "why": "Iranian missiles: refinery struck"
     },
     {
      "country": "SAU",
@@ -6220,7 +6220,7 @@
    "areas_source": "Wikipedia 2026 Iranian strikes on Arab countries; 2026 Israeli–United States strikes on Iran; 2026 Iranian strikes on Israel; 2026 in Iran; Critical Threats Iran Updates Oct 2026",
    "areas_url": "https://en.wikipedia.org/wiki/2026_Iranian_strikes_on_Arab_countries",
    "start": "2026-02",
-   "short": "Gulf",
+   "short": "Iran war",
    "turns": [
     {
      "month": "2026-03",
@@ -6249,7 +6249,7 @@
    ],
    "ucdp": {
     "against": "same band",
-    "note": "Iran and Israel in 2025; a new conflict in 2026, Iran against Israel and the United States, with events in ten countries. UCDP also carries about 19,900 civilians killed by Iran in 2026 as a separate one-sided conflict, most of it in rows flagged for review; the Gulf sum is by the two state conflicts and leaves it out."
+    "note": "Iran and Israel in 2025; a new conflict in 2026, Iran against Israel and the United States, with events in ten countries. UCDP also carries about 19,900 civilians killed by Iran in 2026 as a separate one-sided conflict, most of it in rows flagged for review; the sum here is by the two state conflicts and leaves it out."
    },
    "counted_by": [
     "tracker",
@@ -7857,7 +7857,7 @@
   },
   {
    "name": "Iraq",
-   "why": "A front of the Gulf war, counted there."
+   "why": "A front of the Iran war, counted there."
   },
   {
    "name": "Mozambique, Colombia, Cameroon, Libya",
@@ -8191,7 +8191,7 @@
     "why": "Only SIPRI on arms; NPR is about hosting talks; SIPRI might count as a tracker."
    },
    {
-    "tie": "Saudi Arabia to United States in Gulf",
+    "tie": "Saudi Arabia to United States in Iran war",
     "ours": "reported",
     "reader": "on the record",
     "why": "A backer-class item on joint strikes is listed with no denial, but the backer 'has not said so'; WSJ and Washington Times would carry reported."
@@ -8276,7 +8276,7 @@
    }
   ]
  },
- "level_note": "The level is UCDP's best estimate of deaths by the month the event began, summed over the wars on this map, with its low and high beside it. It is not the world, and it is not a count of ours. October 2025 is el-Fasher: UCDP coded the fall of the city as tens of thousands killed in days. Months from the candidate files are provisional, about six weeks behind, and a share of their rows still carry a check flag. UCDP counts only what it can source, so where reporters cannot go it counts less; for el-Fasher its low is far below its best, and the bar shows the best.",
+ "level_note": "The level is UCDP's best estimate of deaths by the month the event began, summed over the wars on this map. It is not the world, and it is not a count of ours. October 2025 is el-Fasher: UCDP coded the fall of the city as tens of thousands killed in days. Months from the candidate files are provisional, about six weeks behind, and a share of their rows still carry a check flag. UCDP counts only what it can source, so where reporters cannot go it counts less.",
  "grid_note": "Where Uppsala counted: UCDP's events for the period in one-degree cells, drawn as squares whose area is deaths, beneath the provinces we shade. Only events UCDP could place to a province or better are drawn. Deaths it could place only to a country are listed, not drawn; for Ukraine that is most of them. A grey cell is violence UCDP counted that is not on this map.",
  "years_note": "The level since 1989: UCDP's deaths in organized violence by year, all countries. The line shows where the past year sits against {years} years of counting. A high year is not a world war; the question is whether the level is settling, and where. The whole run, with the conflicts counted since 1946 and the price of oil, is on the level page.",
  "years_1994": "1994 is Rwanda. Of the 824,177 deaths UCDP counts that year, 772,463 were in Rwanda, almost all of them civilians killed deliberately in the genocide, in about a hundred days from April. UCDP's range for Rwanda that year is 347,614 to 1,612,663. It was one event in one country. The five-year average carries it from 1994 to 1998, so the plateau in the line over those years is a single event spread across five. The five years to 2025 contain no event of that size. On UCDP's best estimate each of them had more than 170,000 deaths, 2023 narrowly, and the heaviest wars changed: Ethiopia in 2021 and 2022, Ukraine from 2022, Gaza from 2023, Sudan from 2023, second only to Ukraine in 2025 and the site of most of that year's deliberate killings of civilians. That is what the average above the Rwanda years means, by a small margin and with the last two years still provisional: not a worse single year, but a level sustained for five. The figures are from UCDP's country-year file, version 26.1."

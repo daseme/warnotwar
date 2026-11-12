@@ -3295,39 +3295,39 @@
      "window": {
       "from": "2025-10",
       "to": "2026-09",
-      "low": 6724,
-      "best": 6777,
-      "high": 6643,
+      "low": 6679,
+      "best": 6732,
+      "high": 6598,
       "by_type": {
-       "state-based": 6717,
+       "state-based": 6672,
        "non-state": 5,
        "one-sided": 55
       }
      },
      "last_year": {
       "year": 2025,
-      "low": 14294,
-      "best": 14910,
-      "high": 15593
+      "low": 14262,
+      "best": 14878,
+      "high": 15561
      },
      "this_year": {
       "year": 2026,
       "to": "2026-09",
-      "low": 5812,
-      "best": 5830,
-      "high": 5642
+      "low": 5769,
+      "best": 5787,
+      "high": 5599
      },
-     "basis": "countries: Israel, Lebanon, Palestine",
+     "basis": "countries: Israel, Lebanon, Palestine; less the conflicts counted under The Iran war",
      "months": {
       "best": [
        696,
        170,
-       81,
+       79,
        182,
-       148,
-       3225,
-       872,
-       475,
+       147,
+       3192,
+       866,
+       472,
        430,
        199,
        128,
@@ -3336,12 +3336,12 @@
       "low": [
        671,
        162,
-       79,
+       77,
        180,
-       148,
-       3222,
-       867,
-       472,
+       147,
+       3189,
+       861,
+       469,
        428,
        198,
        127,
@@ -3350,12 +3350,12 @@
       "high": [
        729,
        186,
-       86,
+       84,
        186,
-       150,
-       2934,
-       930,
-       479,
+       149,
+       2901,
+       924,
+       476,
        438,
        199,
        153,
@@ -3389,7 +3389,7 @@
       "best": 5096,
       "high": 6210
      },
-     "basis": "countries: Yemen (North Yemen)",
+     "basis": "countries: Yemen (North Yemen); less the conflicts counted under The Iran war",
      "months": {
       "best": [
        48,
@@ -3727,11 +3727,11 @@
      "window": {
       "from": "2025-10",
       "to": "2026-09",
-      "low": 676,
-      "best": 677,
-      "high": 679,
+      "low": 671,
+      "best": 672,
+      "high": 674,
       "by_type": {
-       "state-based": 286,
+       "state-based": 281,
        "non-state": 89,
        "one-sided": 302
       }
@@ -3745,18 +3745,18 @@
      "this_year": {
       "year": 2026,
       "to": "2026-09",
-      "low": 603,
-      "best": 604,
-      "high": 605
+      "low": 598,
+      "best": 599,
+      "high": 600
      },
-     "basis": "countries: Syria",
+     "basis": "countries: Syria; less the conflicts counted under The Iran war",
      "months": {
       "best": [
        21,
        10,
        42,
        122,
-       79,
+       74,
        54,
        59,
        54,
@@ -3770,7 +3770,7 @@
        10,
        42,
        122,
-       79,
+       74,
        54,
        59,
        53,
@@ -3784,7 +3784,7 @@
        10,
        43,
        123,
-       79,
+       74,
        54,
        59,
        54,
