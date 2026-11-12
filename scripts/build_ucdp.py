@@ -37,7 +37,7 @@ BY_COUNTRY = {
     'somalia': ['Somalia'],
     'syria': ['Syria'],
     'haiti': ['Haiti'],
-    'pakistan': ['Pakistan', 'Afghanistan'],
+    'pakistan': ['Pakistan'],
     'ethiopia': ['Ethiopia', 'Eritrea'],
     'southsudan': ['South Sudan'],
     'nigeria': ['Nigeria'],
@@ -45,6 +45,11 @@ BY_COUNTRY = {
 # map entry id -> UCDP conflict_new_id list (summed across every country the events fall in)
 BY_CONFLICT = {
     'gulf': [14609, 16905],  # Iran - Israel; Iran - Israel, United States of America
+}
+# a country entry also takes these UCDP conflicts wherever their events fall. Pakistan's war crosses into
+# Afghanistan; Afghanistan's own conflicts (its government against its opponents) are another war and stay out.
+ALSO_CONFLICT = {
+    'pakistan': [404, 325, 11639],  # Pakistan: Government; Pakistan: Balochistan; Afghanistan - Pakistan
 }
 # rows left out of the sums, by UCDP event id, with the reason shown on the page
 EXCLUDE = {}
@@ -143,6 +148,19 @@ def sums(x):
     return {'low': int(x.low.sum()), 'best': int(x.best.sum()), 'high': int(x.high.sum())}
 
 
+def by_type(x):
+    g = x.groupby('type_of_violence').best.sum()
+    return {TYPES[k]: int(g.get(k, 0)) for k in TYPES}
+
+
+def whole(x, start, reach):
+    """UCDP's sums for an entry from the month the map says the war began to the last month UCDP has reached."""
+    if not start:
+        return None
+    y = x[(x.month >= start) & (x.month <= reach)]
+    return {'from': start, 'to': reach, **sums(y), 'by_type': by_type(y)}
+
+
 def main():
     if len(sys.argv) < 2:
         sys.exit(__doc__)
@@ -170,10 +188,13 @@ def main():
         'not_on_map': [],
     }
     win_by_entry = {}
+    cmeta = {c['id']: c for c in conf['conflicts']}
     for cid in [c['id'] for c in conf['conflicts']]:
         if cid in BY_COUNTRY:
-            x = df[df.country.isin(BY_COUNTRY[cid])]
+            x = df[df.country.isin(BY_COUNTRY[cid]) | df.conflict_new_id.isin(ALSO_CONFLICT.get(cid, []))]
             basis = 'countries: ' + ', '.join(BY_COUNTRY[cid])
+            if cid in ALSO_CONFLICT:
+                basis += '; and these conflicts wherever they are fought: ' + ', '.join(sorted(set(df[df.conflict_new_id.isin(ALSO_CONFLICT[cid])].conflict_name)))
         elif cid in BY_CONFLICT:
             x = df[df.conflict_new_id.isin(BY_CONFLICT[cid])]
             basis = 'conflicts: ' + ', '.join(sorted(set(x.conflict_name)))
@@ -197,7 +218,8 @@ def main():
             'basis': basis,
             'last_year': {'year': last_year, **sums(x[x.year == last_year])},
             'this_year': {'year': this_year, 'to': reach, **sums(x[x.year == this_year])},
-            'window': {'from': win_from, 'to': min(win_to, reach), **sums(w)},
+            'window': {'from': win_from, 'to': min(win_to, reach), **sums(w), 'by_type': by_type(w)},
+            'whole': whole(x, cmeta[cid].get('start'), reach),
             'flagged_share_window': round(float((w[w['_cand'] == True].code_status != 'Clear').mean()), 3) if len(w[w['_cand'] == True]) else None,
             'conflicts': conflicts[:12],
             'dyad_ids': dyads,

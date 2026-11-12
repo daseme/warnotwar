@@ -81,9 +81,10 @@
       "title": "How many died",
       "body": "The dots are all one size so far. Next they show deaths in the past year.",
       "guess": {"type": "pick", "question": "Which of these three killed the most people in the past year?", "options": ["ukraine", "sudan", "myanmar"]},
-      "reveal": "{top_name} had the most: {top_n}. UCDP counted {o1_n} in {o1_name} and {o2_n} in {o2_name}, from {win_from} to {win_to}. The dots now show deaths in three [[band|bands]]. For {wide_n} of the {wars} wars, UCDP's high count is more than twice its low count.",
+      "reveal": "{top_name} had the most: {top_n}. UCDP counted {o1_n} in {o1_name} and {o2_n} in {o2_name}, from {win_from} to {win_to}. UCDP sorts deaths into three kinds, and each bar shows them. In {os_name}, {os_n} of the {os_total} were civilians killed deliberately. The dots now show deaths in three [[band|bands]]. For {wide_n} of the {wars} wars, UCDP's high count is more than twice its low count.",
       "reveal_eg": "In the Iran war UCDP counted {eg_n} killed in the fighting. The states involved give their own counts. {eg_others} UCDP also lists {eg_left_n} civilians killed by Iran's government in January 2026, before the war began. It has marked that row for review, and it is not in the {eg_n}.",
       "chart_caption": "Deaths by war, {win_from} to {win_to}, UCDP's best count. The thin line runs from its low to its high. For {outside_n} of them UCDP's best count sits outside its own low-to-high range.",
+      "kinds": {"state-based": "fighting that involves a state", "non-state": "fighting between armed groups", "one-sided": "civilians killed deliberately"},
       "show_all": "show all {wars} wars",
       "show_fewer": "show only the three",
       "pick_label": "your pick",
@@ -213,11 +214,13 @@
       "id": "shape",
       "name": "the {wars_word} wars",
       "title": "The {wars_word} wars",
-      "body": "One card for each war. The dot is its size. Next to it: the year it began, how many sides fight and how many backers help. {old_n} of the {wars} began more than ten years ago. The oldest, {oldest_name}, has run {oldest_years} years. The newest, {newest_name}, began in {newest_year}. The strip shows the grade of its lines, from on the record to alleged. {Tap} a card and the map goes there.",
+      "body": "One card for each war. The dot is its size. Next to it: the year it began and UCDP's count of the dead from then to {whole_to}, then how many sides fight and how many backers help. {old_n} of the {wars} began more than ten years ago. The oldest, {oldest_name}, has run {oldest_years} years. The largest count is {whole_top_name}, {whole_top_n}. The strip shows the grade of its lines, from on the record to alleged. {Tap} a card and the map goes there.",
       "card_since": "since {year}",
+      "card_total": "{total} dead",
       "card_line": "{sides} sides · {helpers} backers",
       "card_line_one": "{sides} sides · {helpers} backer",
       "sources": [
+        {"text": "The count since a war began adds UCDP's best count for every month from the war's first to {whole_to}, by the same rule as the past year's count and with all three kinds of death. The start month is this map's. UCDP dates several of these conflicts from decades earlier."},
         {"text": "Each war's full card, with every line and source, is on the full map.", "url": "/conflicts.html"}
       ]
     },

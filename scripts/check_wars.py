@@ -180,6 +180,11 @@ def main():
             fails.append(f"{c['id']}: no region, so step 1's count by region is short")
         if not re.match(r'\d{4}-\d{2}$', str(c.get('start') or '')):
             fails.append(f"{c['id']}: no start month, so step 10 cannot say when it began")
+        e = U.get('entries', {}).get(c['id']) or {}
+        if not (e.get('whole') or {}).get('best'):
+            fails.append(f"{c['id']}: data/ucdp.json has no count since the war began, so its card in step 10 has none")
+        if e.get('window') and set((e['window'].get('by_type') or {})) != {'state-based', 'non-state', 'one-sided'}:
+            fails.append(f"{c['id']}: data/ucdp.json has no split of the past year's count into UCDP's three kinds; step 3's bars need it")
         if not c.get('band'):
             fails.append(f"{c['id']}: no band, so its dot has no size")
         if not (U.get('entries', {}).get(c['id']) or {}).get('window'):

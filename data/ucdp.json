@@ -1,6 +1,6 @@
 {
  "versions": "GED 26.1, Candidate 26.01 to 26.09",
- "pulled": "2026-11-02",
+ "pulled": "2026-11-11",
  "reach": "2026-09",
  "window": {
   "from": "2025-10",
@@ -29,7 +29,24 @@
     "to": "2026-09",
     "low": 87762,
     "best": 90535,
-    "high": 96050
+    "high": 96050,
+    "by_type": {
+     "state-based": 90490,
+     "non-state": 0,
+     "one-sided": 45
+    }
+   },
+   "whole": {
+    "from": "2022-02",
+    "to": "2026-09",
+    "low": 375908,
+    "best": 438967,
+    "high": 645591,
+    "by_type": {
+     "state-based": 437308,
+     "non-state": 0,
+     "one-sided": 1659
+    }
    },
    "flagged_share_window": 0.034,
    "conflicts": [
@@ -168,7 +185,24 @@
     "to": "2026-09",
     "low": 13220,
     "best": 66979,
-    "high": 82746
+    "high": 82746,
+    "by_type": {
+     "state-based": 5824,
+     "non-state": 306,
+     "one-sided": 60849
+    }
+   },
+   "whole": {
+    "from": "2023-04",
+    "to": "2026-09",
+    "low": 45738,
+    "best": 101247,
+    "high": 124965,
+    "by_type": {
+     "state-based": 31956,
+     "non-state": 1208,
+     "one-sided": 68083
+    }
    },
    "flagged_share_window": 0.064,
    "conflicts": [
@@ -268,15 +302,9 @@
    "excluded": [],
    "secondary": {
     "ucdp": [],
-    "ours": [
-     "E. Libya",
-     "UAE"
-    ],
+    "ours": [],
     "only_ucdp": [],
-    "only_ours": [
-     "E. Libya",
-     "UAE"
-    ]
+    "only_ours": []
    },
    "months": {
     "best": [
@@ -343,7 +371,24 @@
     "to": "2026-09",
     "low": 6724,
     "best": 6777,
-    "high": 6643
+    "high": 6643,
+    "by_type": {
+     "state-based": 6717,
+     "non-state": 5,
+     "one-sided": 55
+    }
+   },
+   "whole": {
+    "from": "2023-10",
+    "to": "2026-09",
+    "low": 73000,
+    "best": 74186,
+    "high": 75890,
+    "by_type": {
+     "state-based": 73294,
+     "non-state": 5,
+     "one-sided": 887
+    }
    },
    "flagged_share_window": 0.026,
    "conflicts": [
@@ -502,7 +547,24 @@
     "to": "2026-09",
     "low": 2981,
     "best": 5436,
-    "high": 6556
+    "high": 6556,
+    "by_type": {
+     "state-based": 4903,
+     "non-state": 463,
+     "one-sided": 70
+    }
+   },
+   "whole": {
+    "from": "2014-09",
+    "to": "2026-09",
+    "low": 57321,
+    "best": 67358,
+    "high": 98834,
+    "by_type": {
+     "state-based": 62501,
+     "non-state": 4567,
+     "one-sided": 290
+    }
    },
    "flagged_share_window": 0.247,
    "conflicts": [
@@ -708,7 +770,24 @@
     "to": "2026-09",
     "low": 1896,
     "best": 1932,
-    "high": 2547
+    "high": 2547,
+    "by_type": {
+     "state-based": 1748,
+     "non-state": 5,
+     "one-sided": 179
+    }
+   },
+   "whole": {
+    "from": "2021-02",
+    "to": "2026-09",
+    "low": 13720,
+    "best": 14270,
+    "high": 38189,
+    "by_type": {
+     "state-based": 11350,
+     "non-state": 10,
+     "one-sided": 2910
+    }
    },
    "flagged_share_window": 0.07,
    "conflicts": [
@@ -873,7 +952,24 @@
     "to": "2026-09",
     "low": 3019,
     "best": 3810,
-    "high": 11318
+    "high": 11318,
+    "by_type": {
+     "state-based": 1317,
+     "non-state": 676,
+     "one-sided": 1817
+    }
+   },
+   "whole": {
+    "from": "2022-03",
+    "to": "2026-09",
+    "low": 23848,
+    "best": 26490,
+    "high": 55970,
+    "by_type": {
+     "state-based": 8633,
+     "non-state": 3121,
+     "one-sided": 14736
+    }
    },
    "flagged_share_window": 0.369,
    "conflicts": [
@@ -1083,7 +1179,24 @@
     "to": "2026-09",
     "low": 5512,
     "best": 5885,
-    "high": 9396
+    "high": 9396,
+    "by_type": {
+     "state-based": 4675,
+     "non-state": 372,
+     "one-sided": 838
+    }
+   },
+   "whole": {
+    "from": "2012-01",
+    "to": "2026-09",
+    "low": 47584,
+    "best": 51597,
+    "high": 66366,
+    "by_type": {
+     "state-based": 32025,
+     "non-state": 4483,
+     "one-sided": 15089
+    }
    },
    "flagged_share_window": 0.396,
    "conflicts": [
@@ -1277,7 +1390,24 @@
     "to": "2026-09",
     "low": 3737,
     "best": 3757,
-    "high": 4355
+    "high": 4355,
+    "by_type": {
+     "state-based": 3533,
+     "non-state": 171,
+     "one-sided": 53
+    }
+   },
+   "whole": {
+    "from": "2006-12",
+    "to": "2026-09",
+    "low": 43525,
+    "best": 47389,
+    "high": 61283,
+    "by_type": {
+     "state-based": 42239,
+     "non-state": 3629,
+     "one-sided": 1521
+    }
    },
    "flagged_share_window": 0.026,
    "conflicts": [
@@ -1459,7 +1589,24 @@
     "to": "2026-09",
     "low": 676,
     "best": 677,
-    "high": 679
+    "high": 679,
+    "by_type": {
+     "state-based": 286,
+     "non-state": 89,
+     "one-sided": 302
+    }
+   },
+   "whole": {
+    "from": "2011-03",
+    "to": "2026-09",
+    "low": 399402,
+    "best": 417464,
+    "high": 446829,
+    "by_type": {
+     "state-based": 344504,
+     "non-state": 53526,
+     "one-sided": 19434
+    }
    },
    "flagged_share_window": 0.891,
    "conflicts": [
@@ -1633,7 +1780,24 @@
     "to": "2026-09",
     "low": 786,
     "best": 868,
-    "high": 923
+    "high": 923,
+    "by_type": {
+     "state-based": 300,
+     "non-state": 99,
+     "one-sided": 469
+    }
+   },
+   "whole": {
+    "from": "2021-07",
+    "to": "2026-09",
+    "low": 4710,
+    "best": 5005,
+    "high": 5219,
+    "by_type": {
+     "state-based": 1607,
+     "non-state": 469,
+     "one-sided": 2929
+    }
    },
    "flagged_share_window": 0.565,
    "conflicts": [
@@ -1791,28 +1955,45 @@
    }
   },
   "pakistan": {
-   "basis": "countries: Pakistan, Afghanistan",
+   "basis": "countries: Pakistan; and these conflicts wherever they are fought: Afghanistan - Pakistan, Pakistan: Balochistan, Pakistan: Government",
    "last_year": {
     "year": 2025,
-    "low": 3270,
-    "best": 3663,
-    "high": 5888
+    "low": 3212,
+    "best": 3554,
+    "high": 5540
    },
    "this_year": {
     "year": 2026,
     "to": "2026-09",
-    "low": 4019,
-    "best": 4607,
-    "high": 8014
+    "low": 3907,
+    "best": 4466,
+    "high": 7644
    },
    "window": {
     "from": "2025-10",
     "to": "2026-09",
-    "low": 5046,
-    "best": 5793,
-    "high": 9912
+    "low": 4934,
+    "best": 5652,
+    "high": 9501,
+    "by_type": {
+     "state-based": 5360,
+     "non-state": 42,
+     "one-sided": 250
+    }
    },
-   "flagged_share_window": 0.031,
+   "whole": {
+    "from": "2007-12",
+    "to": "2026-09",
+    "low": 48173,
+    "best": 51516,
+    "high": 62905,
+    "by_type": {
+     "state-based": 43717,
+     "non-state": 2898,
+     "one-sided": 4901
+    }
+   },
+   "flagged_share_window": 0.029,
    "conflicts": [
     {
      "id": 404,
@@ -1839,28 +2020,16 @@
      "best_window": 118
     },
     {
-     "id": 333,
-     "name": "Afghanistan: Government",
+     "id": 13936,
+     "name": "Pakistan: Islamic State",
      "type": "state-based",
-     "best_window": 106
+     "best_window": 34
     },
     {
      "id": 506,
      "name": "IS - Civilians",
      "type": "one-sided",
-     "best_window": 87
-    },
-    {
-     "id": 13637,
-     "name": "Afghanistan: Islamic State",
-     "type": "state-based",
-     "best_window": 34
-    },
-    {
-     "id": 13936,
-     "name": "Pakistan: Islamic State",
-     "type": "state-based",
-     "best_window": 34
+     "best_window": 75
     },
     {
      "id": 530,
@@ -1885,17 +2054,27 @@
      "name": "India: Kashmir",
      "type": "state-based",
      "best_window": 0
+    },
+    {
+     "id": 16952,
+     "name": "Jamaat-ul-Ahrar - TTP",
+     "type": "non-state",
+     "best_window": 24
+    },
+    {
+     "id": 13637,
+     "name": "Afghanistan: Islamic State",
+     "type": "state-based",
+     "best_window": 19
     }
    ],
    "dyad_ids": [
     243,
     857,
-    951,
     973,
     997,
     1197,
     5522,
-    10744,
     11295,
     12291,
     14227,
@@ -1905,17 +2084,10 @@
     16177,
     16202,
     16456,
-    16825,
-    17083,
     17442,
-    18068,
     18458,
     18761,
     18933,
-    19010,
-    19023,
-    19024,
-    19089,
     19090
    ],
    "excluded": [],
@@ -1930,43 +2102,43 @@
      602,
      355,
      229,
-     425,
-     495,
+     413,
+     494,
      579,
-     240,
+     227,
      349,
-     481,
-     671,
-     566,
-     801
+     479,
+     662,
+     535,
+     728
     ],
     "low": [
      484,
      322,
      221,
-     318,
-     425,
+     311,
+     424,
      396,
-     201,
+     189,
      281,
-     468,
-     648,
-     573,
-     709
+     466,
+     643,
+     531,
+     666
     ],
     "high": [
-     970,
-     517,
-     411,
-     1236,
-     1565,
-     1031,
-     409,
-     608,
-     700,
-     831,
-     712,
-     922
+     958,
+     512,
+     387,
+     1218,
+     1556,
+     1027,
+     380,
+     595,
+     682,
+     784,
+     588,
+     814
     ]
    }
   },
@@ -1990,7 +2162,24 @@
     "to": "2026-09",
     "low": 3862,
     "best": 3864,
-    "high": 3947
+    "high": 3947,
+    "by_type": {
+     "state-based": 3864,
+     "non-state": 0,
+     "one-sided": 0
+    }
+   },
+   "whole": {
+    "from": "2026-02",
+    "to": "2026-09",
+    "low": 3860,
+    "best": 3862,
+    "high": 3945,
+    "by_type": {
+     "state-based": 3862,
+     "non-state": 0,
+     "one-sided": 0
+    }
    },
    "flagged_share_window": 0.091,
    "conflicts": [
@@ -2089,7 +2278,24 @@
     "to": "2026-09",
     "low": 3925,
     "best": 5278,
-    "high": 14592
+    "high": 14592,
+    "by_type": {
+     "state-based": 4504,
+     "non-state": 257,
+     "one-sided": 517
+    }
+   },
+   "whole": {
+    "from": "2023-04",
+    "to": "2026-09",
+    "low": 12005,
+    "best": 15280,
+    "high": 48449,
+    "by_type": {
+     "state-based": 11845,
+     "non-state": 803,
+     "one-sided": 2632
+    }
    },
    "flagged_share_window": 0.429,
    "conflicts": [
@@ -2271,7 +2477,24 @@
     "to": "2026-09",
     "low": 702,
     "best": 731,
-    "high": 924
+    "high": 924,
+    "by_type": {
+     "state-based": 194,
+     "non-state": 323,
+     "one-sided": 214
+    }
+   },
+   "whole": {
+    "from": "2025-03",
+    "to": "2026-09",
+    "low": 1173,
+    "best": 1211,
+    "high": 1461,
+    "by_type": {
+     "state-based": 421,
+     "non-state": 574,
+     "one-sided": 216
+    }
    },
    "flagged_share_window": 0.643,
    "conflicts": [
@@ -2444,7 +2667,24 @@
     "to": "2026-09",
     "low": 6952,
     "best": 7734,
-    "high": 10545
+    "high": 10545,
+    "by_type": {
+     "state-based": 4040,
+     "non-state": 1770,
+     "one-sided": 1924
+    }
+   },
+   "whole": {
+    "from": "2009-07",
+    "to": "2026-09",
+    "low": 63391,
+    "best": 69042,
+    "high": 88982,
+    "by_type": {
+     "state-based": 32988,
+     "non-state": 18733,
+     "one-sided": 17321
+    }
    },
    "flagged_share_window": 0.721,
    "conflicts": [
@@ -2982,43 +3222,43 @@
     70067,
     14494,
     13526,
-    18713,
-    13542,
+    18701,
+    13541,
     16418,
-    11661,
+    11648,
     11371,
-    8543,
-    8831,
-    10487,
-    12353
+    8541,
+    8822,
+    10456,
+    12280
    ],
    "low": [
     15388,
     13541,
     12757,
-    18139,
-    13307,
+    18132,
+    13306,
     15706,
-    11238,
+    11226,
     10802,
-    7906,
-    8218,
-    9249,
-    10499
+    7904,
+    8213,
+    9207,
+    10456
    ],
    "high": [
-    89828,
-    15532,
-    16322,
-    22099,
-    16497,
-    18693,
-    15541,
-    14159,
-    10675,
-    13064,
-    13564,
-    15109
+    89816,
+    15527,
+    16298,
+    22081,
+    16488,
+    18689,
+    15512,
+    14146,
+    10657,
+    13017,
+    13440,
+    15001
    ]
   },
   "world": {
