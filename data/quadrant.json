@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "generated_at_utc": "2026-11-11T09:49:45Z",
+ "generated_at_utc": "2026-11-12T02:31:26Z",
  "war_start": "2026-02-28",
  "rules": {
   "think": "BNO's last close of the week, read the way the front page reads it. Under $49 it says peace. Over $55 it says war. Between them is the perpetual war sweet spot.",
@@ -27,7 +27,7 @@
   "bno": "daily closes from Yahoo Finance, last 2026-11-10",
   "portwatch": "IMF PortWatch, seven-day tanker count at the strait, last 2026-11-01",
   "ledger": "the tracker figures we keep beside the U.S. statements, newest 2026-10-28",
-  "ucdp": "Uppsala, GED 26.1, Candidate 26.01 to 26.09, reaching 2026-09, pulled 2026-11-02"
+  "ucdp": "Uppsala, GED 26.1, Candidate 26.01 to 26.09, reaching 2026-09, pulled 2026-11-11"
  },
  "deaths_months": [
   {
@@ -92,43 +92,10 @@
   "neither": 0
  },
  "deaths_moves": {
-  "from_pull": "2026-10-11",
-  "to_pull": "2026-11-02",
-  "moved": [
-   {
-    "month": "2026-02",
-    "from": 3275,
-    "to": 2431
-   },
-   {
-    "month": "2026-03",
-    "from": 331,
-    "to": 1048
-   },
-   {
-    "month": "2026-04",
-    "from": 129,
-    "to": 255
-   },
-   {
-    "month": "2026-06",
-    "from": 6,
-    "to": 12
-   },
-   {
-    "month": "2026-07",
-    "from": 64,
-    "to": 68
-   },
-   {
-    "month": "2026-08",
-    "from": 2,
-    "to": 4
-   }
-  ],
-  "months_added": [
-   "2026-09"
-  ]
+  "from_pull": "2026-11-02",
+  "to_pull": "2026-11-11",
+  "moved": [],
+  "months_added": []
  },
  "weeks_full": 36,
  "lags": [
