@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "generated_at_utc": "2026-11-09T23:02:45Z",
+  "generated_at_utc": "2026-11-12T23:48:32Z",
   "note": "Real dated checkpoints from the record, for the teaching module's real-tape mode. Selection is rule-derived from events statable without knowing the future: pre-shock anchor, first and last Hormuz threshold crossings, month-firsts snapped to observed market days, latest observation. Every value is the latest figure PUBLISHED by the checkpoint date, per field, with its own as-of date. Peak markers are hindsight and ship as reveal-time annotations only.",
   "revision_note": "Archive values: activity indices are revised after first publication, so the reading a checkpoint shows is today's archive of that date, not a screenshot of what a reader saw then.",
   "sources": {
@@ -162,7 +162,7 @@
       "bno_asof": "2026-06-01",
       "hormuz": 1.9,
       "hormuz_asof": "2026-05-29",
-      "yanbu": 509.3,
+      "yanbu": 509.2,
       "yanbu_asof": "2026-05-29",
       "fujairah": 17.0,
       "fujairah_asof": "2026-05-29",
@@ -218,7 +218,7 @@
       "hormuz_asof": "2026-08-29",
       "yanbu": 0.1,
       "yanbu_asof": "2026-08-28",
-      "fujairah": 81.6,
+      "fujairah": 81.7,
       "fujairah_asof": "2026-08-29",
       "buffer": 41.3,
       "buffer_week_end": "2026-08-21"
@@ -245,7 +245,7 @@
       "id": "2026-11-02",
       "date": "2026-11-02",
       "why": "first market day of November",
-      "days_to_next": 1,
+      "days_to_next": 9,
       "brent": 107.39,
       "brent_asof": "2026-11-02",
       "bno": 65.95,
@@ -254,28 +254,28 @@
       "hormuz_asof": "2026-10-30",
       "yanbu": 1.3,
       "yanbu_asof": "2026-10-15",
-      "fujairah": 67.3,
+      "fujairah": 65.2,
       "fujairah_asof": "2026-10-30",
       "buffer": 42.0,
       "buffer_week_end": "2026-10-23"
     },
     {
-      "id": "2026-11-03",
-      "date": "2026-11-03",
+      "id": "2026-11-11",
+      "date": "2026-11-11",
       "why": "latest observation",
       "days_to_next": null,
-      "brent": 107.03,
-      "brent_asof": "2026-11-03",
-      "bno": 66.11,
-      "bno_asof": "2026-11-03",
-      "hormuz": 3.1,
-      "hormuz_asof": "2026-10-31",
+      "brent": 92.14,
+      "brent_asof": "2026-11-11",
+      "bno": 58.75,
+      "bno_asof": "2026-11-11",
+      "hormuz": 2.2,
+      "hormuz_asof": "2026-11-08",
       "yanbu": 1.3,
       "yanbu_asof": "2026-10-15",
-      "fujairah": 67.3,
-      "fujairah_asof": "2026-10-30",
-      "buffer": 42.0,
-      "buffer_week_end": "2026-10-23"
+      "fujairah": 110.1,
+      "fujairah_asof": "2026-11-06",
+      "buffer": 41.4,
+      "buffer_week_end": "2026-10-30"
     }
   ]
 }

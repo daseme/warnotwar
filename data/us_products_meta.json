@@ -2,25 +2,25 @@
   "schema_version": 1,
   "frequency": "weekly",
   "source": "U.S. Energy Information Administration",
-  "generated_at_utc": "2026-11-09T23:02:45Z",
+  "generated_at_utc": "2026-11-12T23:48:31Z",
   "first_week": "1991-02-08",
-  "last_week": "2026-10-30",
+  "last_week": "2026-11-06",
   "latest": {
-    "gasoline_stocks_mbbl": 209.0,
-    "distillate_stocks_mbbl": 99.3,
-    "products_supplied_mbd": 21.96,
-    "gasoline_supplied_mbd": 8.81,
-    "distillate_supplied_mbd": 4.44
+    "gasoline_stocks_mbbl": 210.8,
+    "distillate_stocks_mbbl": 103.3,
+    "products_supplied_mbd": 19.76,
+    "gasoline_supplied_mbd": 8.77,
+    "distillate_supplied_mbd": 3.41
   },
   "gasoline_days_cover": {
-    "latest": 23.7,
-    "rank_from_low": 602,
-    "weeks_observed": 1864
+    "latest": 24.0,
+    "rank_from_low": 717,
+    "weeks_observed": 1865
   },
   "distillate_days_cover": {
-    "latest": 22.4,
-    "rank_from_low": 6,
-    "weeks_observed": 1864
+    "latest": 30.3,
+    "rank_from_low": 497,
+    "weeks_observed": 1865
   },
   "definitions": {
     "days_cover": "Product stocks divided by that week's product supplied (EIA's consumption proxy). A cushion ratio, not a countdown — refineries keep producing.",
