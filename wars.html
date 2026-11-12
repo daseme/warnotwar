@@ -658,6 +658,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   T.whole_to = (whole(EG) && fmtMonth(whole(EG).to)) || null;
   const wholeTop = wars.filter(c => whole(c.id)).sort((a, b) => whole(b.id).best - whole(a.id).best)[0];
   T.whole_wide_n = wars.filter(c => whole(c.id) && Math.max(whole(c.id).low, whole(c.id).high) > 2 * Math.min(whole(c.id).low, whole(c.id).high)).length;
+  T.whole_ranges = wars.filter(c => whole(c.id)).map(c => c.name + ', ' + fmtN(Math.min(whole(c.id).low, whole(c.id).high)) + ' to ' + fmtN(Math.max(whole(c.id).low, whole(c.id).high))).join('; ');
   T.whole_top_name = wholeTop ? wholeTop.name : null; T.whole_top_n = wholeTop ? fmtN(whole(wholeTop.id).best) : null;
   /* a UCDP row the example's sum leaves out, with the reason in data/ucdp.json */
   const egOut = ((U.entries[EG] || {}).excluded || [])[0];
