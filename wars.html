@@ -307,6 +307,7 @@
   .shape .nm { font-family: var(--mono); font-size: 11px; line-height: 1.3; }
   .shape .ln { font-family: var(--mono); font-size: 9.5px; color: var(--ink-60); }
   .shape .ln .yr { display: block; color: var(--ink); }
+  .shape .ln .pt { display: block; }   /* sides and backers each take a line, so a narrow card never breaks one in two */
   .shape .strip { grid-column: 1 / -1; display: flex; gap: 2px; height: 6px; margin-top: 5px; }
   .shape .strip i { display: block; height: 100%; min-width: 0; }
   .s-open { background: color-mix(in srgb, var(--ink) 70%, var(--bg)); }
@@ -604,12 +605,10 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const T = {};
   for (const [k, ref] of Object.entries(C.quotes || {})) T[k] = quote(ref);
   T.as_of = fmtDate(D.as_of);
-  T.ucdp_reach = fmtMonth(U.reach);
   /* instructions say click to a mouse and tap to a finger */
   const coarseP = matchMedia('(pointer: coarse)').matches;
   T.tap = coarseP ? 'tap' : 'click'; T.Tap = coarseP ? 'Tap' : 'Click';
-  T.wars = wars.length; T.wars_word = word(wars.length); T.squares = squares.length; T.entries = D.conflicts.length;
-  T.rule = D.rule;
+  T.wars = wars.length; T.wars_word = word(wars.length); T.squares = squares.length;
   T.ucdp_n = lastY.n; T.ucdp_year = lastY.year; T.ucdp_wars = lastY.wars;
   const bar = (re) => { const m = String(L.rule || '').match(re); return m ? m[1] : null; };
   T.acd_bar = bar(/with ([\d,]+) or more deaths/);
@@ -623,13 +622,11 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const monthsRun = c => { const [y, m] = String(c.start).split('-').map(Number), [ay, am] = String(D.as_of).split('-').map(Number); return (ay - y) * 12 + (am - (m || 1)); };
   const byStart = wars.filter(c => c.start).slice().sort((a, b) => String(a.start).localeCompare(String(b.start)));
   T.old_n = wars.filter(c => c.start && monthsRun(c) > 120).length;
-  T.oldest_name = byStart[0].name; T.oldest_year = String(byStart[0].start).slice(0, 4); T.oldest_years = Math.floor(monthsRun(byStart[0]) / 12);
-  T.newest_name = byStart[byStart.length - 1].name; T.newest_year = String(byStart[byStart.length - 1].start).slice(0, 4);
+  T.oldest_name = byStart[0].name; T.oldest_years = Math.floor(monthsRun(byStart[0]) / 12);
   T.eg_prov = eg.areas.length;
   T.areas_total = wars.reduce((n, c) => n + (c.areas || []).length, 0);
   T.areas_wars = wars.filter(c => (c.areas || []).length).length;
   T.eg_areas_source = eg.areas_source || null;
-  T.areas_shapes = AR.source || null;
   const bandKeys = Object.keys(D.bands).sort();
   T.win_from = fmtMonth(U.window.from); T.win_to = fmtMonth(U.window.to);
   const uw = id => U.entries[id] && U.entries[id].window;
@@ -651,8 +648,8 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const osTop = wars.filter(c => kindsOf(c.id) && uw(c.id).best).sort((a, b) => kindsOf(b.id)['one-sided'] / uw(b.id).best - kindsOf(a.id)['one-sided'] / uw(a.id).best)[0];
   T.os_name = osTop ? osTop.name : null; T.os_n = osTop ? fmtN(kindsOf(osTop.id)['one-sided']) : null; T.os_total = osTop ? fmtN(uw(osTop.id).best) : null;
   T.whole_to = (whole(EG) && fmtMonth(whole(EG).to)) || null;
-  const wholeTop = wars.filter(c => whole(c.id)).sort((a, b) => whole(b.id).best - whole(a.id).best)[0];
-  T.whole_top_name = wholeTop ? wholeTop.name : null; T.whole_top_n = wholeTop ? fmtN(whole(wholeTop.id).best) : null;
+  /* the example began inside the past year, so the past year's count holds a few deaths from before it began; step 3's fold says how many, so its two counts square */
+  T.eg_before_n = (uw(EG) && whole(EG) && String(eg.start) > U.window.from && uw(EG).best > whole(EG).best) ? fmtN(uw(EG).best - whole(EG).best) : null;
   /* a UCDP row the example's sum leaves out, with the reason in data/ucdp.json */
   const egOut = ((U.entries[EG] || {}).excluded || [])[0];
   T.eg_left_n = egOut ? fmtN(egOut.best_this_year) : null;
@@ -1104,9 +1101,9 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
         an2.onfinish = () => { p.style.strokeDasharray = ''; };
         arcAnims.push(an2);
       }
-      if (A.tiers) {
+      if (A.tiers || A.draw) {   /* a line names itself on hover from the step that first draws it; its grade joins once grades are taught */
         const hit = el('path', { class: 'arc-hit', d }, gArcs);
-        hit.addEventListener('mouseenter', ev => showTip(ev, lineTip(c, t)));
+        hit.addEventListener('mouseenter', ev => showTip(ev, lineTip(c, t, !!A.tiers)));
         hit.addEventListener('mousemove', placeTip); hit.addEventListener('mouseleave', hideTip);
       }
       if (emph !== 'lo' && !dots.has(t.backer)) dots.set(t.backer, n);
@@ -1130,7 +1127,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     }
     if (A.draw) helpListArrive(fresh && !reduced, rows.filter(r => !r.t.ended), STAG);
   }
-  const lineTip = (c, t) => { const b = backers[t.backer], p = party(c, t.party); return `<b>${esc(b.short)} → ${esc(p ? p.short : t.party)}</b> · ${esc(c.name)}<br>${esc(kindsText(t))}<br>${esc(D.tiers[t.tier].word)}${t.stance ? ' · ' + esc(b.short) + ' ' + esc(t.stance) : ''}${t.ended ? ' · ended ' + esc(fmtMonth(t.ended)) : ''}`; };
+  const lineTip = (c, t, graded = true) => { const b = backers[t.backer], p = party(c, t.party); return `<b>${esc(b.short)} → ${esc(p ? p.short : t.party)}</b> · ${esc(c.name)}<br>${esc(kindsText(t))}${graded ? '<br>' + esc(D.tiers[t.tier].word) + (t.stance ? ' · ' + esc(b.short) + ' ' + esc(t.stance) : '') : ''}${t.ended ? ' · ended ' + esc(fmtMonth(t.ended)) : ''}`; };
   const markTip = c => {
     const sc = S.step >= 0 ? sceneFor(STEPS[S.step].id) : {};
     if (!sc.free && !sc.sized) return `<b>${esc(c.name)}</b>`;
@@ -1437,7 +1434,8 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     for (const r of Yy) {
       const prov = r.year > D1 - PROV;
       s += `<rect class="bar${prov ? ' prov' : ''}" x="${x(r.year).toFixed(1)}" y="${yD(r.best).toFixed(1)}" width="${bw.toFixed(1)}" height="${(yD(0) - yD(r.best)).toFixed(1)}" rx="${Math.min(2, bw / 2).toFixed(1)}"/>`;
-      if (r.best > dMax) s += `<text x="${(x(r.year) + bw + 4).toFixed(1)}" y="${tB + 10}">${esc(plainFill(cfg.peak, { peak_year: r.year, peak_best: fmtN(r.best) }))}</text>`;
+      /* the label of a year above the chart; where the full words would run off the edge, the year and its count alone */
+      if (r.best > dMax) { const full = plainFill(cfg.peak, { peak_year: r.year, peak_best: fmtN(r.best) }), at = x(r.year) + bw + 4, lab = at + full.length * (narrow ? 5.8 : 6.4) < w - 4 ? full : full.split(', ')[0]; s += `<text x="${at.toFixed(1)}" y="${tB + 10}">${esc(lab)}</text>`; }
     }
     s += `<text x="${x(T.d_first) - 5}" y="${tB + hB - 4}" text-anchor="end">${esc(plainFill(cfg.from))}</text>`;
     /* the latest five-year average, carried back across the chart so it can be read against the early 1990s */
@@ -1465,7 +1463,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     const s = stepCfg('shape');
     const strip = c => { const live = c.ties.filter(t => !t.ended); return tierIds.map(k => { const n = live.filter(t => t.tier === k).length; return n ? `<i class="s-${k}" style="flex:${n}" title="${esc(D.tiers[k].word)} ${n}"></i>` : ''; }).join(''); };
     const label = c => { const live = c.ties.filter(t => !t.ended); return tierIds.map(k => D.tiers[k].word + ' ' + live.filter(t => t.tier === k).length).join(', '); };
-    ix('shape').innerHTML = `<div class="stripkey" aria-hidden="true">${tierIds.map(k => `<span><i class="s-${k}"></i>${esc(D.tiers[k].word)}</span>`).join('')}</div><div class="shapes" id="shapes">${wars.map(c => { const r = c.band ? GLYPH_R[c.band] : DOT_R; const helpers = new Set(c.ties.filter(t => !t.ended && !isSide(c, t.backer)).map(t => t.backer)).size, sides = sidesOf(c); return `<button type="button" class="shape" data-id="${c.id}" aria-pressed="false" aria-label="${esc(c.name)}: ${esc(c.band ? D.bands[c.band] : '')}, ${sides} sides, ${helpers} ${helpers === 1 ? 'backer' : 'backers'}; began ${esc(String(c.start).slice(0, 4))}${whole(c.id) ? ', ' + fmtN(whole(c.id).best) + ' dead since' : ''}; lines ${esc(label(c))}"><svg viewBox="-11 -11 22 22" aria-hidden="true"><circle r="${r}"/></svg><span class="nm">${esc(c.name)}</span><span class="ln"><span class="yr">${fill(s.card_since, { year: String(c.start).slice(0, 4) })}</span>${whole(c.id) && s.card_total ? `<span class="yr">${fill(s.card_total, { total: fmtN(whole(c.id).best) })}</span>` : ''}${fill(helpers === 1 ? s.card_line_one : s.card_line, { sides, helpers })}</span><span class="strip" aria-hidden="true">${strip(c)}</span></button>`; }).join('')}</div>`;
+    ix('shape').innerHTML = `<div class="stripkey" aria-hidden="true">${tierIds.map(k => `<span><i class="s-${k}"></i>${esc(D.tiers[k].word)}</span>`).join('')}</div><div class="shapes" id="shapes">${wars.map(c => { const r = c.band ? GLYPH_R[c.band] : DOT_R; const helpers = new Set(c.ties.filter(t => !t.ended && !isSide(c, t.backer)).map(t => t.backer)).size, sides = sidesOf(c); return `<button type="button" class="shape" data-id="${c.id}" aria-pressed="false" aria-label="${esc(c.name)}: ${esc(c.band ? D.bands[c.band] : '')}, ${sides} sides, ${helpers} ${helpers === 1 ? 'backer' : 'backers'}; began ${esc(String(c.start).slice(0, 4))}${whole(c.id) ? ', ' + fmtN(whole(c.id).best) + ' dead since' : ''}; lines ${esc(label(c))}"><svg viewBox="-11 -11 22 22" aria-hidden="true"><circle r="${r}"/></svg><span class="nm">${esc(c.name)}</span><span class="ln"><span class="yr">${fill(s.card_since, { year: String(c.start).slice(0, 4) })}</span>${whole(c.id) && s.card_total ? `<span class="yr">${fill(s.card_total, { total: fmtN(whole(c.id).best) })}</span>` : ''}${fill(helpers === 1 ? s.card_line_one : s.card_line, { sides, helpers }).split(' · ').map(x => `<span class="pt">${x}</span>`).join('')}</span><span class="strip" aria-hidden="true">${strip(c)}</span></button>`; }).join('')}</div>`;
     for (const b of $$('#shapes .shape')) b.onclick = () => { S.shapeWar = S.shapeWar === b.dataset.id ? null : b.dataset.id; syncShapes(); if (S.step === idx('shape')) drawScene(true); };
   })();
   function syncShapes() { for (const b of $$('#shapes .shape')) { const on = b.dataset.id === S.shapeWar; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); } }
@@ -1507,7 +1505,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     gp.className = 'guessed'; gp.id = 'free-guess'; gp.hidden = true; card.querySelector('.body').before(gp);
     renderCannot();
     for (const b of $$('#free-layers .chip[data-l]')) b.onclick = () => { S.free[b.dataset.l] = !S.free[b.dataset.l]; syncFree(); drawScene(false); };
-    $('#free-reset').onclick = () => { S.free.war = null; S.free.backer = null; applyT(viewT('world'), true); syncFree(); drawScene(false); setTimeout(() => drawScene(false), reduced ? 0 : 760); };
+    $('#free-reset').onclick = () => { S.free.war = null; S.free.backer = null; S.free.areas = S.free.lines = S.free.squares = true; S.tiers = new Set(tierIds); applyT(viewT('world'), true); syncFree(); drawScene(false); setTimeout(() => drawScene(false), reduced ? 0 : 760); };
     for (const b of $$('#free-tiers .chip')) b.onclick = () => { const k = b.dataset.t; if (S.tiers.has(k)) { if (S.tiers.size > 1) S.tiers.delete(k); } else S.tiers.add(k); syncFree(); drawScene(false); };
     for (const b of $$('#free-states .chip[data-b]')) b.onclick = () => { S.free.backer = S.free.backer === b.dataset.b ? null : b.dataset.b; S.free.war = null; syncFree(); drawScene(false); };
     $('#free-other').onchange = ev => { S.free.backer = ev.target.value || null; S.free.war = null; syncFree(); drawScene(false); };
@@ -1566,6 +1564,8 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     /* a pick made inside a step belongs to that step */
     if (leaving === 'shape' && S.shapeWar) { S.shapeWar = null; syncShapes(); }
     if (leaving === 'force' && S.sq) { S.sq = null; syncSq(); }
+    /* grades switched off in one step come back on in the next, so no later map is missing lines without saying so */
+    if ((leaving === 'know' || leaving === 'free') && S.tiers.size < tierIds.length) { S.tiers = new Set(tierIds); for (const b of $$('#grades .chip')) { b.classList.add('on'); b.setAttribute('aria-pressed', 'true'); } }
     secs.forEach((s, j) => s.classList.toggle('active', j === i));
     for (const b of $$('button', rail)) { const j = +b.dataset.i; b.classList.toggle('on', j === i); b.classList.toggle('seen', j < i); if (j === i) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current'); }
     const id = STEPS[i].id;

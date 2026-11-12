@@ -33,14 +33,13 @@ TOKEN = re.compile(r'\{(\w+)\}')
 # Every number the page computes (each `T.name =` in wars.html) is listed here. A name the page computes that is not in
 # this list fails the check: a new number comes with its test, in the same commit. Add the test below, then the name here.
 PAGE_TOKENS = {
-    'Tap', 'acd_bar', 'acd_version', 'areas_shapes', 'areas_total', 'areas_wars', 'as_of', 'avg_last_year', 'avg_latest', 'avg_max', 'avg_max_year',
-    'avg_other', 'avg_other_year', 'avg_two', 'backers_n', 'claimed_n', 'd_first', 'd_last', 'eg_a_name', 'eg_areas_source', 'eg_backers',
+    'Tap', 'acd_bar', 'acd_version', 'areas_total', 'areas_wars', 'as_of', 'avg_last_year', 'avg_latest', 'avg_max', 'avg_max_year', 'avg_other',
+    'avg_other_year', 'avg_two', 'backers_n', 'claimed_n', 'd_first', 'd_last', 'eg_a_name', 'eg_areas_source', 'eg_backers', 'eg_before_n',
     'eg_countries', 'eg_left_n', 'eg_multi', 'eg_n', 'eg_name', 'eg_parties_word', 'eg_prov', 'eg_side_a', 'eg_side_b', 'eg_sides_word', 'eg_start',
-    'ended_n', 'entries', 'flag_pct', 'hued_n', 'interstate', 'intra', 'lines_n', 'n_above', 'n_first', 'n_phrase', 'newest_name', 'newest_year',
-    'old_n', 'oldest_name', 'oldest_year', 'oldest_years', 'open_n', 'open_tenths', 'os_n', 'os_name', 'os_total', 'peak_top_n', 'peak_top_name',
-    'peak_total', 'peak_year', 'prewindow_n', 'prov_word', 'reach_year', 'region_counts', 'reported_n', 'rule', 'shown_n', 'sq_us', 'squares', 'tap',
-    'tier_words', 'ucdp_n', 'ucdp_pulled', 'ucdp_reach', 'ucdp_versions', 'ucdp_wars', 'ucdp_year', 'ukr_total', 'ukr_unplaced', 'us_name',
-    'war_bar', 'wars', 'wars_word', 'whole_to', 'whole_top_n', 'whole_top_name', 'win_from', 'win_to',
+    'ended_n', 'flag_pct', 'hued_n', 'interstate', 'intra', 'lines_n', 'n_above', 'n_first', 'n_phrase', 'old_n', 'oldest_name', 'oldest_years',
+    'open_n', 'open_tenths', 'os_n', 'os_name', 'os_total', 'peak_top_n', 'peak_top_name', 'peak_total', 'peak_year', 'prewindow_n', 'prov_word',
+    'reach_year', 'region_counts', 'reported_n', 'shown_n', 'sq_us', 'squares', 'tap', 'tier_words', 'ucdp_n', 'ucdp_pulled', 'ucdp_versions',
+    'ucdp_wars', 'ucdp_year', 'ukr_total', 'ukr_unplaced', 'us_name', 'war_bar', 'wars', 'wars_word', 'whole_to', 'win_from', 'win_to',
 }
 
 
@@ -122,8 +121,6 @@ def main():
     years, yy = L.get('years') or [], Y.get('years') or []
     last_y = years[-1] if years else {}
     need('as_of', lambda: D['as_of'])
-    need('rule', lambda: D['rule'])
-    need('ucdp_reach', lambda: U['reach'])
     need('ucdp_pulled', lambda: U['pulled'])
     need('ucdp_versions', lambda: U['versions'])
     need('win_from', lambda: U['window']['from'])
@@ -161,6 +158,17 @@ def main():
         if 'January 2026' not in out.get('why', '') or 'flagged for review' not in out.get('why', '') or eg['start'] <= '2026-01':
             fails.append("step 3 says the row UCDP's sum leaves out is from January 2026, before the war, and marked for review; data/ucdp.json no longer says so")
         need('eg_backers', lambda: len({t['backer'] for t in live}) or None)
+        # step 3's fold: the past year's count for the example holds the deaths from before it began. Counted two ways, they must agree.
+        ue = U.get('entries', {}).get(eg['id']) or {}
+        if ue.get('months') and ue.get('whole') and ue.get('window'):
+            before = sum(v for k, v in zip(U['months']['keys'], ue['months']['best']) if k < eg['start'])
+            gap = ue['window']['best'] - ue['whole']['best'] if eg['start'] > U['window']['from'] else 0
+            if before != gap:
+                fails.append(f"step 3 fold: the months before the example began add to {before}, but its past year less its whole war is {gap}")
+            elif before:
+                T['eg_before_n'] = before
+            else:
+                notes.append("step 3 fold: nothing was counted before the example began; the page drops that sentence")
         need('eg_side_a', lambda: sides[0])
         need('eg_side_b', lambda: sides[1])
         need('eg_parties_word', lambda: len(eg['parties']) if all(p.get('state') for p in eg['parties']) else None)
@@ -180,8 +188,9 @@ def main():
         multi = {b: sorted(v) for b, v in by.items() if len(v) > 1}
         T['eg_multi'] = ''
         for b, v in multi.items():
-            if v != ['open', 'reported']:
-                fails.append(f"step 5: {b} has lines graded {v} in the example; the sentence says one on the record and one reported")
+            if len(set(v)) < 2:
+                fails.append(f"step 5: {b} has more than one line of the same grade ({v}) in the example; "
+                             "the sentence says the next step, on grades, tells them apart")
         hs = steps.get('help', {})
         if multi and not (hs.get('multi') if len(multi) == 1 else hs.get('multi_many')):
             fails.append('step 5: a backer has more than one line in the example but data/wars.json has no sentence for it')

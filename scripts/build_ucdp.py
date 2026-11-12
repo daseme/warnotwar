@@ -160,6 +160,39 @@ def load(d):
 
 RANGE_NOTE = ('UCDP also gives a low and a high for each event. This site shows the best count only. Added up over a war, the low and the high '
               'do not always hold the best count between them, and UCDP\'s own yearly totals show the same.')
+EARLY_LINE = 1000   # an early (candidate) row of this many deaths or more must be read and logged in data/ucdp_early_rows.json before a build
+EARLY_RULE = ('UCDP publishes yearly totals for finished years only, so its early monthly rows cannot be compared with anything. '
+              'Each early row of ' + f'{EARLY_LINE:,}' + ' deaths or more is read by hand before it is counted, and logged in data/ucdp_early_rows.json '
+              'with a verdict: keep, or leave out with the reason. A large early row that is not in the log, or has changed since it was read, stops the build. '
+              'Smaller early rows are not read one by one.')
+
+
+def early_rows(df, root):
+    """Stop unless every large early row has been read and logged, and the build does what its verdict says."""
+    log_path = os.path.join(root, 'data', 'ucdp_early_rows.json')
+    log = {int(r['id']): r for r in json.load(open(log_path, encoding='utf-8'))['rows']} if os.path.exists(log_path) else {}
+    left_out = lambda r: int(r['id']) in set(map(int, EXCLUDE)) or any(
+        r['dyad_name'] in dyads and r['country'] in BY_COUNTRY.get(cid, DYAD_COUNTRIES.get(cid, [])) for cid, dyads in EXCLUDE_DYAD.items())
+    big = df[(df['_cand'] == True) & (df.best >= EARLY_LINE)].sort_values(['best', 'id'], ascending=[False, True]).to_dict('records')
+    new, wrong, rows = [], [], []
+    for r in big:
+        status = None if pd.isna(r['code_status']) else str(r['code_status'])
+        now = {'id': int(r['id']), 'country': r['country'], 'dyad': r['dyad_name'], 'from': str(r['date_start'])[:10], 'to': str(r['date_end'])[:10],
+               'best': int(r['best']), 'code_status': status}
+        e = log.get(now['id'])
+        if not e or any(e.get(k) != v for k, v in now.items()):
+            new.append(json.dumps({**now, 'verdict': '', 'why': '', 'read': '', 'by': ''}, ensure_ascii=False) + ('   <- changed since it was read' if e else ''))
+        elif (e['verdict'] == 'leave out') != left_out(r):
+            wrong.append(f"row {now['id']}: the log says {e['verdict']!r} but the build " + ('leaves it out' if left_out(r) else 'counts it') + ' (EXCLUDE, EXCLUDE_DYAD)')
+        else:
+            rows.append({'id': now['id'], 'best': now['best'], 'verdict': e['verdict']})
+    if new or wrong:
+        sys.exit('build stopped, nothing written. Early rows of ' + f'{EARLY_LINE:,}' + ' deaths or more must be read before they are counted.\n'
+                 + ('Read each of these in the candidate file, then add it to data/ucdp_early_rows.json with a verdict (keep, or leave out), the reason, the date and who read it:\n  '
+                    + ',\n  '.join(new) + '\n' if new else '') + '\n'.join(wrong))
+    return {'line': EARLY_LINE, 'rows': rows, 'rule': EARLY_RULE}
+
+
 ROW_GAP = 10   # rows whose range misses the best count by this many deaths or more are kept in full; the rest are counted
 
 
@@ -181,7 +214,8 @@ def reconcile(df, d):
                  + off.head(20).to_string())
     return {'against': os.path.basename(sorted(files)[-1]), 'years': [int(c.year.min()), int(c.year.max())],
             'country_years': int((both.best_ucdp > 0).sum()), 'differences': 0,
-            'rule': 'Before any file is written, the reviewed rows are summed by country and year and compared with UCDP\'s own published country-year totals: best, low and high. One difference stops the build.'}
+            'rule': 'Before any file is written, the reviewed rows are summed by country and year and compared with UCDP\'s own published country-year totals: best, low and high. One difference stops the build. UCDP publishes those totals for finished years only, so this proves the adding-up and the years to '
+                    + str(int(c.year.max())) + '. The months since then come from UCDP\'s early monthly files, which have no published totals to compare with; they are not verified this way.'}
 
 
 def sums(x):
@@ -210,6 +244,7 @@ def main():
     conf = json.load(open(os.path.join(root, 'data', 'conflicts.json')))
     win_from, win_to = conf['window']['from'], conf['window']['to']
     df, versions, cand_versions = load(d)
+    early = early_rows(df, root)
     df = df[~df.id.isin(list(map(int, EXCLUDE)))]
     reconciled = reconcile(df, d)
     df['_bad'] = (df.high < df.best) | (df.low > df.best)
@@ -229,6 +264,7 @@ def main():
         'rule': 'Sums of UCDP best, low and high estimates by entry: by the countries each entry covers, or by named conflicts where a country sum would mix in other wars. The window is the months of the map\'s twelve that UCDP has reached. Candidate rows are not fully reviewed.',
         'range_note': RANGE_NOTE,
         'reconciled': reconciled,
+        'early_rows': early,
         'entries': {},
         'not_on_map': [],
     }

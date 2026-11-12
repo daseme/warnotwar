@@ -95,6 +95,7 @@
         {"text": "Each war's count adds up UCDP's counts for the countries it covers, or for its named conflicts. The latest months are UCDP's early figures, which it has not yet fully reviewed."},
         {"from": "ucdp.range_note"},
         {"text": "The Iran war's {eg_n} leaves out one UCDP row: {eg_left_n} civilians killed by Iran's government in January 2026, before the war began. UCDP has marked that row for review."},
+        {"text": "The Iran war's {eg_n} includes {eg_before_n} deaths UCDP counted before the war began in {eg_start}, so its card in step 10, which counts from {eg_start}, is lower."},
         {"text": "UCDP data: {ucdp_versions}, downloaded {ucdp_pulled}."}
       ]
     },
@@ -114,8 +115,8 @@
       "name": "who helps",
       "title": "Who helps from outside",
       "body": "Each line runs from a [[backer]] to the side it helps from outside the war. {eg_backers} backers help a side in the Iran war. {eg_multi} The list says what each one gives.",
-      "multi": "{name} has {count} lines: one for help that is on the record, one for help that is reported.",
-      "multi_many": "{names} have {per}: one for help that is on the record, one for help that is reported.",
+      "multi": "{name} has {count} lines. The next step says why.",
+      "multi_many": "{names} have {per}. The next step says why.",
       "toggle": ["the Iran war", "every war"],
       "toggle_text": "Every war on this map has an outside state that fights in it or backs a side. Across the {wars} wars, {lines_n} lines run from {backers_n} backers.",
       "sources": [
@@ -144,7 +145,7 @@
         {"war": "gulf", "backer": "britain", "party": "us", "tier": "open"},
         {"war": "sudan", "backer": "uae", "party": "rsf", "tier": "shown"},
         {"war": "gulf", "backer": "russia", "party": "irn", "tier": "reported"},
-        {"war": "yemen", "backer": "russia", "party": "houthi", "tier": "claimed"}
+        {"war": "pakistan", "backer": "india", "party": "ttp", "tier": "claimed"}
       ],
       "sources": [
         {"from": "conflicts.finding_rule", "pick": "A finding by a state that fights"},
@@ -216,7 +217,7 @@
       "id": "shape",
       "name": "the {wars_word} wars",
       "title": "The {wars_word} wars",
-      "body": "One card for each war. The dot is its size. Next to it: the year it began and UCDP's count of the dead from then to {whole_to}, then how many sides fight and how many backers help. {old_n} of the {wars} began more than ten years ago. The oldest, {oldest_name}, has run {oldest_years} years. The strip shows the grade of its lines, from on the record to alleged. {Tap} a card and the map goes there.",
+      "body": "One card for each war. The dot shows its deaths in the past year. Next to it: the year it began and UCDP's count of the dead from then to {whole_to}, then how many sides fight and how many backers help. {old_n} of the {wars} began more than ten years ago. The oldest, {oldest_name}, has run {oldest_years} years. The strip shows the grade of its lines, from on the record to alleged. {Tap} a card and the map goes there.",
       "card_since": "since {year}",
       "card_total": "{total} dead",
       "card_line": "{sides} sides · {helpers} backers",
@@ -234,7 +235,7 @@
       "body": "{Tap} any war. Who fights? Who helps? How do we know? The switches turn layers on and off.",
       "hint_desktop": "drag to move · ctrl + scroll to zoom · click a war",
       "hint_phone": "two fingers to move and zoom · tap a war",
-      "layers": {"areas": "provinces", "lines": "lines", "squares": "force short of war", "reset": "reset view"},
+      "layers": {"areas": "provinces", "lines": "lines", "squares": "force short of war", "reset": "reset"},
       "more_controls": "more switches: grades and states",
       "info_link": "on the full map",
       "links": [

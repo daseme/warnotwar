@@ -36,7 +36,7 @@ R = Path(__file__).resolve().parent.parent
 KINDS = {'state-based', 'non-state', 'one-sided'}
 
 # every field the rules below know. A field that is not here has no test, and that is a failure (rule 3).
-TOP_KEYS = {'versions', 'pulled', 'reach', 'window', 'flagged_share', 'rule', 'entries', 'not_on_map', 'secondary', 'months', 'range_note', 'reconciled'}
+TOP_KEYS = {'versions', 'pulled', 'reach', 'window', 'flagged_share', 'rule', 'entries', 'not_on_map', 'secondary', 'months', 'range_note', 'reconciled', 'early_rows'}
 ENTRY_KEYS = {'basis', 'last_year', 'this_year', 'window', 'whole', 'flagged_share_window', 'conflicts', 'dyad_ids', 'excluded',
               'secondary', 'months'}
 SUM_KEYS = {'low', 'best', 'high', 'year', 'from', 'to', 'by_type'}
@@ -181,6 +181,30 @@ def grid_fails(G, U):
     return fails
 
 
+def early_fails(E, U):
+    """Every large early row this pull counted or left out has been read and logged, with a verdict and a reason."""
+    fails = []
+    log = {r.get('id'): r for r in E.get('rows') or []}
+    for i, r in log.items():
+        if r.get('verdict') not in ('keep', 'leave out'):
+            fails.append(f"ucdp_early_rows.json: row {i} has no verdict (keep, or leave out)")
+        for k in ('why', 'read', 'by'):
+            if not str(r.get(k) or '').strip():
+                fails.append(f"ucdp_early_rows.json: row {i} has no '{k}'")
+    er = U.get('early_rows')
+    if not isinstance(er, dict) or not isinstance(er.get('rows'), list) or not er.get('line'):
+        return fails + ['ucdp.json: no record that the large early rows were read (early_rows); rebuild with scripts/build_ucdp.py']
+    if E.get('line') != er['line']:
+        fails.append(f"ucdp_early_rows.json: its line ({E.get('line')}) is not the build's ({er['line']})")
+    for r in er['rows']:
+        e = log.get(r.get('id'))
+        if not e or e.get('best') != r.get('best') or e.get('verdict') != r.get('verdict'):
+            fails.append(f"ucdp.json: early row {r.get('id')} ({r.get('best'):,} deaths) is in the build but not in ucdp_early_rows.json as read, or differs from it")
+        if r.get('best', 0) < er['line']:
+            fails.append(f"ucdp.json: early row {r.get('id')} is listed as large but is under the line")
+    return fails
+
+
 def anomalies_fails(A, U):
     """The rows behind every repair are on file, and they are the rows of this pull."""
     fails = []
@@ -240,7 +264,8 @@ def all_fails():
     fails += ucdp_fails(U, starts)
     fails += pages_fails()
     for name, fn in (('ucdp_years.json', lambda d: years_fails(d)), ('ucdp_grid.json', lambda d: grid_fails(d, U)),
-                     ('ucdp_anomalies.json', lambda d: anomalies_fails(d, U))):
+                     ('ucdp_anomalies.json', lambda d: anomalies_fails(d, U)),
+                     ('ucdp_early_rows.json', lambda d: early_fails(d, U))):
         try:
             fails += fn(load(name))
         except FileNotFoundError:

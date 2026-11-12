@@ -17,7 +17,83 @@
   ],
   "country_years": 2067,
   "differences": 0,
-  "rule": "Before any file is written, the reviewed rows are summed by country and year and compared with UCDP's own published country-year totals: best, low and high. One difference stops the build."
+  "rule": "Before any file is written, the reviewed rows are summed by country and year and compared with UCDP's own published country-year totals: best, low and high. One difference stops the build. UCDP publishes those totals for finished years only, so this proves the adding-up and the years to 2025. The months since then come from UCDP's early monthly files, which have no published totals to compare with; they are not verified this way."
+ },
+ "early_rows": {
+  "line": 1000,
+  "rows": [
+   {
+    "id": 615905,
+    "best": 13280,
+    "verdict": "leave out"
+   },
+   {
+    "id": 615725,
+    "best": 8002,
+    "verdict": "keep"
+   },
+   {
+    "id": 621141,
+    "best": 7206,
+    "verdict": "keep"
+   },
+   {
+    "id": 625387,
+    "best": 7117,
+    "verdict": "keep"
+   },
+   {
+    "id": 628987,
+    "best": 6234,
+    "verdict": "keep"
+   },
+   {
+    "id": 632018,
+    "best": 6109,
+    "verdict": "keep"
+   },
+   {
+    "id": 643870,
+    "best": 5714,
+    "verdict": "keep"
+   },
+   {
+    "id": 640738,
+    "best": 5017,
+    "verdict": "keep"
+   },
+   {
+    "id": 635467,
+    "best": 4909,
+    "verdict": "keep"
+   },
+   {
+    "id": 615845,
+    "best": 4393,
+    "verdict": "leave out"
+   },
+   {
+    "id": 637384,
+    "best": 4135,
+    "verdict": "keep"
+   },
+   {
+    "id": 635277,
+    "best": 3848,
+    "verdict": "keep"
+   },
+   {
+    "id": 624231,
+    "best": 2236,
+    "verdict": "keep"
+   },
+   {
+    "id": 625182,
+    "best": 1769,
+    "verdict": "keep"
+   }
+  ],
+  "rule": "UCDP publishes yearly totals for finished years only, so its early monthly rows cannot be compared with anything. Each early row of 1,000 deaths or more is read by hand before it is counted, and logged in data/ucdp_early_rows.json with a verdict: keep, or leave out with the reason. A large early row that is not in the log, or has changed since it was read, stops the build. Smaller early rows are not read one by one."
  },
  "entries": {
   "ukraine": {
