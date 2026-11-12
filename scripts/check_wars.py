@@ -129,18 +129,44 @@ def main():
             fails.append(f"{{{name}}}: level.json's rule no longer has the wording the page reads the number from (/{rx}/). "
                          'The opening step and the glossary lose their threshold sentences.')
 
-    # Sudan is the worked example
-    sudan = by_id.get('sudan')
-    if not sudan:
-        fails.append('no entry with id "sudan": the worked example is gone and the page will not draw')
+    # the worked example: one war the lesson stays on (data/wars.json "example")
+    eg = by_id.get(C.get('example'))
+    if not eg:
+        fails.append(f'no entry with id "{C.get("example")}": the worked example is gone and the page will not draw')
     else:
-        need('sudan_start', lambda: sudan['start'])
-        need('sudan_prov', lambda: len(sudan['areas']) or None)
-        if len(sudan.get('parties', [])) != 2:
-            fails.append(f"sudan has {len(sudan.get('parties', []))} parties; step 4 names exactly two")
-        if len({p.get('side') for p in sudan.get('parties', [])}) != 2:
-            fails.append('sudan no longer has two sides; step 4 says two sides fight')
-        need('sudan_backers', lambda: len({t['backer'] for t in sudan['ties'] if not t.get('ended')}) or None)
+        live = [t for t in eg['ties'] if not t.get('ended')]
+        sides = sorted({p.get('side') for p in eg.get('parties', [])})
+        need('eg_start', lambda: eg['start'])
+        need('eg_name', lambda: eg['name'])
+        need('eg_prov', lambda: len(eg['areas']) or None)
+        need('eg_countries', lambda: len({a['country'] for a in eg['areas']}) or None)
+        need('eg_areas_source', lambda: eg['areas_source'])
+        need('eg_n', lambda: U['entries'][eg['id']]['window']['best'])
+        need('eg_backers', lambda: len({t['backer'] for t in live}) or None)
+        need('eg_side_a', lambda: sides[0])
+        need('eg_side_b', lambda: sides[1])
+        need('eg_parties_word', lambda: len(eg['parties']) if all(p.get('state') for p in eg['parties']) else None)
+        T['eg_sides_word'] = len(sides)
+        T['eg_a_name'] = next(p['name'] for p in eg['parties'] if p['side'] == sides[0])
+        if len(sides) != 2:
+            fails.append(f"the example has {len(sides)} sides; step 4 sets one side against the other")
+        if len({a['country'] for a in eg['areas']}) < 2:
+            fails.append('the example is shaded in one country; step 2 says "countries"')
+        first = [p for p in eg['parties'] if p['side'] == sides[0]]
+        if len(first) != 1 or 'allied groups' not in first[0]['name']:
+            fails.append("step 4 calls the first side's allies armed groups; that side's name no longer says \"allied groups\"")
+        # step 5: a backer with two lines has one on the record and one reported, as the sentence says
+        by = {}
+        for t in live:
+            by.setdefault(t['backer'], []).append(t['tier'])
+        multi = {b: sorted(v) for b, v in by.items() if len(v) > 1}
+        T['eg_multi'] = ''
+        for b, v in multi.items():
+            if v != ['open', 'reported']:
+                fails.append(f"step 5: {b} has lines graded {v} in the example; the sentence says one on the record and one reported")
+        hs = steps.get('help', {})
+        if multi and not (hs.get('multi') if len(multi) == 1 else hs.get('multi_many')):
+            fails.append('step 5: a backer has more than one line in the example but data/wars.json has no sentence for it')
     if 'usa' not in backers:
         fails.append('no backer with id "usa": step 7 and step 8 name the United States')
     if not any(b.get('hue') for b in D['backers']):
@@ -148,6 +174,8 @@ def main():
     for c in wars:
         if not c.get('region'):
             fails.append(f"{c['id']}: no region, so step 1's count by region is short")
+        if not re.match(r'\d{4}-\d{2}$', str(c.get('start') or '')):
+            fails.append(f"{c['id']}: no start month, so step 10 cannot say when it began")
         if not c.get('band'):
             fails.append(f"{c['id']}: no band, so its dot has no size")
         if not (U.get('entries', {}).get(c['id']) or {}).get('window'):
@@ -226,15 +254,6 @@ def main():
         if w and not (min(w['low'], w['high']) <= w['best'] <= max(w['low'], w['high'])):
             notes.append(f"{c['id']}: UCDP's best count {w['best']:,} sits outside its own low-to-high range "
                          f"({w['low']:,} to {w['high']:,}); step 3's caption counts these")
-    if sudan:
-        by = {}
-        for t in sudan['ties']:
-            if not t.get('ended'):
-                by.setdefault(t['backer'], 0)
-                by[t['backer']] += 1
-        if any(n > 1 for n in by.values()) and not steps.get('help', {}).get('multi'):
-            fails.append('step 5: a backer has more than one line in Sudan but data/wars.json has no "multi" sentence for it')
-
     # ---- every {token} in the copy must be one the page knows ----
     defined = set(re.findall(r'\bT\.(\w+)\s*=', page)) | set(C.get('quotes', {}))
     used = {}

@@ -1,6 +1,8 @@
 {
   "note": "Copy for wars.html. Braces are filled by the page from the data files at load; a sentence whose brace has no value is left out. Double brackets mark a word with a definition from the glossary ([[word]] or [[glossary key|shown text]]). A quoted item is {\"from\": \"file.field\", \"pick\": \"text inside one sentence\"} and shows that sentence of the data as it stands; \"cut\" ends it at that character. {tap} and {Tap} read click or tap by the reader's pointer. Every number shown is a token; none is typed here.",
   "title": "Today's wars",
+  "example": "gulf",
+  "example_chips": {"irn": [26, -40], "us": [84, 26], "isr": [84, 48]},
   "kicker": "warnotwar · an introduction",
   "intro": "The wars being fought now, with one layer added to the map at each step. Dotted words open a definition.",
   "asof": "Wars and their backers as of {as_of}. Deaths counted by the Uppsala Conflict Data Program from {win_from} to {win_to}.",
@@ -64,11 +66,11 @@
       "id": "areas",
       "name": "provinces",
       "title": "Where the fighting is",
-      "body": "Shaded provinces show where the fighting was in the past year. In Sudan, {sudan_prov} are shaded. Sudan's war began in {sudan_start}. A [[province]] is shaded for ground fighting, sieges or an air campaign. {areas_drone}",
-      "toggle": ["Sudan", "every war"],
+      "body": "Shaded provinces show where the fighting was in the past year. In the Iran war, {eg_prov} are shaded, in {eg_countries} countries. The war began in {eg_start}. This map's name for it is {eg_name}. A [[province]] is shaded for ground fighting, sieges or an air campaign. {areas_drone}",
+      "toggle": ["the Iran war", "every war"],
       "toggle_text": "Across the map, {areas_total} provinces are shaded in {areas_wars} wars. {areas_border}",
       "sources": [
-        {"text": "Sudan's provinces: {sudan_areas_source}.", "url": "sudan_areas_url"},
+        {"text": "The Iran war's provinces: {eg_areas_source}.", "url": "eg_areas_url"},
         {"text": "Province borders: Natural Earth, a public-domain map."}
       ]
     },
@@ -78,7 +80,7 @@
       "title": "How many died",
       "body": "The dots are all one size so far. Next they show deaths in the past year.",
       "guess": {"type": "pick", "question": "Which of these three killed the most people in the past year?", "options": ["ukraine", "sudan", "myanmar"]},
-      "reveal": "{top_name} had the most: {top_n}. UCDP counted {o1_n} in {o1_name} and {o2_n} in {o2_name}, from {win_from} to {win_to}. The dots now show deaths in three [[band|bands]]. For {wide_n} of the {wars} wars, UCDP's high count is more than twice its low count.",
+      "reveal": "{top_name} had the most: {top_n}. UCDP counted {o1_n} in {o1_name} and {o2_n} in {o2_name}, from {win_from} to {win_to}. In the Iran war it counted {eg_n}. The dots now show deaths in three [[band|bands]]. For {wide_n} of the {wars} wars, UCDP's high count is more than twice its low count.",
       "chart_caption": "Deaths by war, {win_from} to {win_to}, UCDP's best count. The thin line runs from its low to its high. For {outside_n} of them UCDP's best count sits outside its own low-to-high range.",
       "show_all": "show all {wars} wars",
       "show_fewer": "show only the three",
@@ -95,10 +97,10 @@
       "id": "sides",
       "name": "who fights",
       "title": "Who fights",
-      "body": "In Sudan two sides fight: the {sudan_a} and the {sudan_b}. The first is the army of a [[state]]. The second is an [[armed group]]. Of the {ucdp_n} armed conflicts UCDP counted in {ucdp_year}, {interstate} were between states. In the other {intra}, a government fought an armed group.",
+      "body": "In the Iran war {eg_sides_word} sides fight: {eg_side_a} against {eg_side_b}. All {eg_parties_word} are [[state|states]]. The map enters the first side as {eg_a_name}. Those allies are [[armed group|armed groups]]. Of the {ucdp_n} armed conflicts UCDP counted in {ucdp_year}, {interstate} were between states. In the other {intra}, a government fought an armed group.",
       "units": {"filled": "{interstate} between states", "rest": "{intra} a government against an armed group", "caption": "UCDP's {ucdp_n} armed conflicts in {ucdp_year}, one small box each"},
       "sources": [
-        {"from": "entry.sudan.summary"},
+        {"from": "entry.gulf.summary"},
         {"text": "UCDP/PRIO Armed Conflict Dataset, version {acd_version}.", "url": "/level.html"}
       ]
     },
@@ -106,9 +108,10 @@
       "id": "help",
       "name": "who helps",
       "title": "Who helps from outside",
-      "body": "Each line runs from a [[backer]] to the side it helps from outside the war. {sudan_backers} backers help a side in Sudan. {sudan_multi} The list says what each one gives.",
-      "multi": "{name} has {count} lines because it gives {count} kinds of help.",
-      "toggle": ["Sudan", "every war"],
+      "body": "Each line runs from a [[backer]] to the side it helps from outside the war. {eg_backers} backers help a side in the Iran war. {eg_multi} The list says what each one gives.",
+      "multi": "{name} has {count} lines: one for help that is on the record, one for help that is reported.",
+      "multi_many": "{names} have {per}: one for help that is on the record, one for help that is reported.",
+      "toggle": ["the Iran war", "every war"],
       "toggle_text": "Every war on this map has an outside state that fights in it or backs a side. Across the {wars} wars, {lines_n} lines run from {backers_n} backers.",
       "sources": [
         {"text": "Every line, with its sources, is in the table on the full map.", "url": "/conflicts.html#all"}
@@ -120,7 +123,7 @@
       "title": "How do we know?",
       "body": "Each line has a grade, drawn in the line: {tier_words}. The more broken the line, the weaker the public evidence for it.",
       "guess": {"type": "slider", "label": "your guess", "question": "Of the {lines_n} lines, how many are on the record?", "button": "show the answer"},
-      "toggle": ["Sudan", "every war"],
+      "toggle": ["the Iran war", "every war"],
       "reveal": "{open_n} of the {lines_n} lines are on the record, about {open_tenths} in ten. {shown_n} are documented, {reported_n} reported and {claimed_n} alleged. {ended_n} more have ended and are drawn faint.",
       "units_caption": "the {lines_n} lines, one small box each, by grade",
       "guess_mark": "your guess",
@@ -133,9 +136,9 @@
         "claimed": {"from": "conflicts.tiers.claimed.note", "pick": "Only a side in the fight says so"}
       },
       "examples": [
-        {"war": "sudan", "backer": "egypt", "party": "saf", "tier": "open"},
+        {"war": "gulf", "backer": "britain", "party": "us", "tier": "open"},
         {"war": "sudan", "backer": "uae", "party": "rsf", "tier": "shown"},
-        {"war": "sudan", "backer": "turkey", "party": "saf", "tier": "reported"},
+        {"war": "gulf", "backer": "russia", "party": "irn", "tier": "reported"},
         {"war": "yemen", "backer": "russia", "party": "houthi", "tier": "claimed"}
       ],
       "sources": [
@@ -208,7 +211,8 @@
       "id": "shape",
       "name": "the {wars_word} wars",
       "title": "The {wars_word} wars",
-      "body": "One card for each war. The dot is its size. Next to it, how many sides fight and how many backers help. The strip shows the grade of its lines, from on the record to alleged. {Tap} a card and the map goes there.",
+      "body": "One card for each war. The dot is its size. Next to it: the year it began, how many sides fight and how many backers help. {old_n} of the {wars} began more than ten years ago. The oldest, {oldest_name}, has run {oldest_years} years. The newest, {newest_name}, began in {newest_year}. The strip shows the grade of its lines, from on the record to alleged. {Tap} a card and the map goes there.",
+      "card_since": "since {year}",
       "card_line": "{sides} sides · {helpers} backers",
       "card_line_one": "{sides} sides · {helpers} backer",
       "sources": [

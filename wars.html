@@ -306,6 +306,7 @@
   .shape svg circle { fill: var(--danger); }
   .shape .nm { font-family: var(--mono); font-size: 11px; line-height: 1.3; }
   .shape .ln { font-family: var(--mono); font-size: 9.5px; color: var(--ink-60); }
+  .shape .ln .yr { display: block; color: var(--ink); }
   .shape .strip { grid-column: 1 / -1; display: flex; gap: 2px; height: 6px; margin-top: 5px; }
   .shape .strip i { display: block; height: 100%; min-width: 0; }
   .s-open { background: color-mix(in srgb, var(--ink) 70%, var(--bg)); }
@@ -599,7 +600,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   };
 
   /* ---- tokens: every number in the copy is one of these ---- */
-  const sudan = byId.sudan;
+  const eg = byId[C.example], EG = eg.id;   /* the worked example: the one war the lesson stays on */
   const T = {};
   for (const [k, ref] of Object.entries(C.quotes || {})) T[k] = quote(ref);
   T.as_of = fmtDate(D.as_of);
@@ -617,22 +618,36 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const REGION_NAME = { africa: 'Africa', 'middle east': 'the Middle East', europe: 'Europe', asia: 'Asia', americas: 'the Americas' };
   const regionOrder = [...new Set(wars.map(c => c.region))].sort((a, b) => wars.filter(c => c.region === b).length - wars.filter(c => c.region === a).length || a.localeCompare(b));
   T.region_counts = listNames(regionOrder.map(r => wars.filter(c => c.region === r).length + ' in ' + (REGION_NAME[r] || r)));
-  T.sudan_start = fmtMonth(sudan.start);
-  T.sudan_prov = sudan.areas.length;
+  T.eg_start = fmtMonth(eg.start);
+  /* how long each war has run: from its start month to the map's date */
+  const monthsRun = c => { const [y, m] = String(c.start).split('-').map(Number), [ay, am] = String(D.as_of).split('-').map(Number); return (ay - y) * 12 + (am - (m || 1)); };
+  const byStart = wars.filter(c => c.start).slice().sort((a, b) => String(a.start).localeCompare(String(b.start)));
+  T.old_n = wars.filter(c => c.start && monthsRun(c) > 120).length;
+  T.oldest_name = byStart[0].name; T.oldest_year = String(byStart[0].start).slice(0, 4); T.oldest_years = Math.floor(monthsRun(byStart[0]) / 12);
+  T.newest_name = byStart[byStart.length - 1].name; T.newest_year = String(byStart[byStart.length - 1].start).slice(0, 4);
+  T.eg_prov = eg.areas.length;
   T.areas_total = wars.reduce((n, c) => n + (c.areas || []).length, 0);
   T.areas_wars = wars.filter(c => (c.areas || []).length).length;
-  T.sudan_areas_source = sudan.areas_source || null;
+  T.eg_areas_source = eg.areas_source || null;
   T.areas_shapes = AR.source || null;
   const bandKeys = Object.keys(D.bands).sort();
   T.win_from = fmtMonth(U.window.from); T.win_to = fmtMonth(U.window.to);
   const uw = id => U.entries[id] && U.entries[id].window;
   T.wide_n = wars.filter(c => { const w = uw(c.id); return w && Math.max(w.low, w.high) > 2 * Math.min(w.low, w.high); }).length;
   T.ucdp_versions = U.versions; T.ucdp_pulled = fmtDate(U.pulled);
-  const [sA, sB] = sudan.parties;
-  T.sudan_a = sA.name; T.sudan_b = sB.name;
+  /* the example's sides: the parties on each, and whether every party is a state */
+  const egSides = [...new Set(eg.parties.map(p => p.side))].map(k => eg.parties.filter(p => p.side === k));
+  T.eg_sides_word = word(egSides.length);
+  T.eg_side_a = listNames(egSides[0].map(p => theName(p.short)));
+  T.eg_side_b = egSides[1] ? listNames(egSides[1].map(p => theName(p.short))) : null;
+  T.eg_parties_word = eg.parties.every(p => p.state) ? word(eg.parties.length) : null;
+  T.eg_a_name = egSides[0][0].name;
+  T.eg_name = eg.name;
+  T.eg_countries = word(new Set(eg.areas.map(a => a.country)).size);
+  T.eg_n = uw(EG) ? fmtN(uw(EG).best) : null;
   T.interstate = lastY.interstate; T.intra = lastY.n - lastY.interstate;
-  const sudanLive = sudan.ties.filter(t => !t.ended);
-  T.sudan_backers = new Set(sudanLive.map(t => t.backer)).size;
+  const egLive = eg.ties.filter(t => !t.ended);
+  T.eg_backers = new Set(egLive.map(t => t.backer)).size;
   T.lines_n = liveWarTies.length;
   T.backers_n = new Set(liveWarTies.map(r => r.t.backer)).size;
   T.tier_words = listNames(tierIds.map(k => D.tiers[k].word));
@@ -677,10 +692,13 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   /* summed records can put a war's best count outside UCDP's own low-to-high range; the caption says how often */
   const outsideRange = w => !!w && (w.best < Math.min(w.low, w.high) || w.best > Math.max(w.low, w.high));
   T.outside_n = wars.filter(c => outsideRange(uw(c.id))).length || null;
-  /* a backer with more than one line in Sudan: one line per kind of help, said once */
-  T.sudan_multi = (() => {
-    const by = {}; for (const t of sudanLive) (by[t.backer] = by[t.backer] || []).push(t);
-    return Object.entries(by).filter(([, ts]) => ts.length > 1).map(([b, ts]) => plainFill(stepCfg('help').multi || '', { name: theName(backers[b].short, true), count: word(ts.length) })).join(' ');
+  /* backers with more than one line in the example, said once */
+  T.eg_multi = (() => {
+    const by = {}; for (const t of egLive) (by[t.backer] = by[t.backer] || []).push(t);
+    const m = Object.entries(by).filter(([, ts]) => ts.length > 1); if (!m.length) return '';
+    const h = stepCfg('help'), n0 = m[0][1].length, same = m.every(([, ts]) => ts.length === n0);
+    const names = listNames(m.map(([b], i) => theName(backers[b].short, i === 0)));
+    return plainFill((m.length === 1 ? h.multi : h.multi_many) || '', { name: names, names, count: word(n0), per: same ? word(n0) + ' lines each' : 'more than one line each' });
   })();
 
   /* a sentence whose token has no value is left out, never printed with a hole in it */
@@ -712,7 +730,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     const out = [];
     for (const it of (list || [])) {
       if (it.from) { const s = quote(it); if (s) out.push(esc(s)); }
-      else if (it.text) { const t = fill(it.text); if (!t) continue; const u = safeUrl(it.url === 'sudan_areas_url' ? sudan.areas_url : it.url); out.push(u ? linkTo(u, t) : t); }
+      else if (it.text) { const t = fill(it.text); if (!t) continue; const u = safeUrl(it.url === 'eg_areas_url' ? eg.areas_url : it.url); out.push(u ? linkTo(u, t) : t); }
       else if (it.link) { const u = safeUrl(it.link); if (u) out.push(linkTo(u, esc(it.label || u))); }
       else if (it.actors) { for (const c of squares) if (c.actor_statement) out.push(`<b>${esc(c.name)}.</b> ${esc(c.actor_statement)}`); }
       else if (it.excluded) { const x = (D.excluded || []).find(e => e.name === it.excluded); if (x) out.push(`<b>Left off: ${esc(x.name)}.</b> ${esc(x.why)}`); }
@@ -759,8 +777,10 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const landByIso = {};
   function drawLand(topo) { gLand.innerHTML = ''; for (const f of topojson.feature(topo, topo.objects.countries).features) landByIso[f.id] = el('path', { class: 'land', d: geoPath(f) }, gLand); }
   drawLand(world);
-  /* Sudan's frame is measured once on the base map, so it does not shift when the finer map loads */
-  const sudanLandBox = (() => { const n = landByIso.SDN; if (!n) return []; const f = topojson.feature(world, world.objects.countries).features.find(x => x.id === 'SDN'); const b = geoPath.bounds(f); return [b[0], b[1]]; })();
+  /* the example's frame is the countries its provinces are in, measured once on the base map, so it does not shift when the finer map loads */
+  const egIso = new Set(eg.areas.map(a => a.country));
+  const egLandBox = (() => { const pts = []; for (const f of topojson.feature(world, world.objects.countries).features) if (egIso.has(f.id)) { const b = geoPath.bounds(f); pts.push(b[0], b[1]); } return pts; })();
+  const egPad = egIso.size > 1 ? 0.08 : 0.42;
   const gAreas = el('g', {}, gRoot), gArcs = el('g', {}, gRoot), gParties = el('g', {}, gRoot), gBackers = el('g', {}, gRoot), gMarks = el('g', {}, gRoot);
 
   /* screen-sized marks: every mark sits in a group scaled by map units per screen pixel */
@@ -801,11 +821,11 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       const pts = []; for (const c of pairWars()) { pts.push([c.px, c.py]); pts.push(...boxOfArea(c.id)); } for (const b of PAIR) pts.push(project(backers[b].lon, backers[b].lat));
       return boxT(...ptsBox(pts), 0.1);
     }
-    const c = byId[view && view.war ? view.war : 'sudan'];
+    const c = byId[view && view.war ? view.war : EG];
     const pts = [[c.px, c.py], ...boxOfArea(c.id)];
     let pad = 0.16;
-    if (view === 'sudan') { pts.push(...sudanLandBox); pad = 0.42; }
-    else { const helpers = (view === 'sudanHelp' ? sudan : c).ties.filter(t => !t.ended).map(t => backers[t.backer]); for (const b of helpers) pts.push(project(b.lon, b.lat)); }
+    if (view === 'eg') { pts.push(...egLandBox); pad = egPad; }
+    else { const helpers = (view === 'egHelp' ? eg : c).ties.filter(t => !t.ended).map(t => backers[t.backer]); for (const b of helpers) pts.push(project(b.lon, b.lat)); }
     /* the side chips sit at fixed pixel offsets from the war's dot; fit once, then again with the chips' reach at that zoom */
     const t0 = boxT(...ptsBox(pts), pad), u = upp(t0.k);
     pts.push([c.px - 130 * u, c.py - 40 * u], [c.px + 130 * u, c.py + 48 * u]);
@@ -904,7 +924,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   for (const st of STEPS) { st.title = plainFill(st.title); st.name = plainFill(st.name); }   /* titles and rail names may carry tokens */
   const idx = id => STEPS.findIndex(s => s.id === id);
   const S = {
-    step: -1, sub: { areas: 'sudan', help: 'sudan', know: 'sudan' },
+    step: -1, sub: { areas: 'eg', help: 'eg', know: 'eg' },
     revealed: { start: false, size: false, know: false }, startGuess: null,
     tiers: new Set(tierIds), ex: null, backer: hued[0].id, pair: false, shapeWar: null, sq: null,
     free: { areas: true, lines: true, squares: true, war: null, backer: null, viewSet: false }
@@ -919,15 +939,15 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     switch (id) {
       case 'start': Object.assign(sc, { marks: false, areas: 'none' }); break;
       case 'where': Object.assign(sc, { areas: 'none', seq: true }); break;
-      case 'areas': Object.assign(sc, S.sub.areas === 'sudan' ? { view: 'sudan', areas: 'sudan', focus: 'sudan', labels: ['sudan'] } : { areas: 'all' }); break;
+      case 'areas': Object.assign(sc, S.sub.areas === 'eg' ? { view: 'eg', areas: 'eg', focus: EG, labels: [EG] } : { areas: 'all' }); break;
       case 'size': break;
-      case 'sides': Object.assign(sc, { view: 'sudan', areas: 'sudan', chips: 'sudan', focus: 'sudan' }); break;
-      case 'help': Object.assign(sc, S.sub.help === 'sudan' ? { view: 'sudanHelp', areas: 'sudan', chips: 'sudan', focus: 'sudan', arcs: { scope: ['sudan'], draw: true, labels: 'all' } } : { arcs: { scope: 'all', mode: 'mid' } }); break;
+      case 'sides': Object.assign(sc, { view: 'eg', areas: 'eg', chips: EG, focus: EG }); break;
+      case 'help': Object.assign(sc, S.sub.help === 'eg' ? { view: 'egHelp', areas: 'eg', chips: EG, focus: EG, arcs: { scope: [EG], draw: true, labels: 'all' } } : { arcs: { scope: 'all', mode: 'mid' } }); break;
       case 'know': {
-        /* the worked example stays on Sudan; an opened example frames its own war and dims every other line */
+        /* the worked example stays on its war; an opened example frames its own war and dims every other line */
         const ex = S.ex && exByKey[S.ex];
-        if (ex) Object.assign(sc, { view: ex.c.id === 'sudan' ? 'sudanHelp' : { war: ex.c.id }, areas: ex.c.id === 'sudan' ? 'sudan' : 'faint', chips: ex.c.id, focus: ex.c.id, labels: [ex.c.id], arcs: { scope: [ex.c.id], tiers: true, ended: true, filter: S.tiers, hi: S.ex, labels: 'all' } });
-        else if (S.sub.know === 'sudan') Object.assign(sc, { view: 'sudanHelp', areas: 'sudan', chips: 'sudan', focus: 'sudan', arcs: { scope: ['sudan'], tiers: true, ended: true, filter: S.tiers, labels: 'all' } });
+        if (ex) Object.assign(sc, { view: ex.c.id === EG ? 'egHelp' : { war: ex.c.id }, areas: ex.c.id === EG ? 'eg' : 'faint', chips: ex.c.id, focus: ex.c.id, labels: [ex.c.id], arcs: { scope: [ex.c.id], tiers: true, ended: true, filter: S.tiers, hi: S.ex, labels: 'all' } });
+        else if (S.sub.know === 'eg') Object.assign(sc, { view: 'egHelp', areas: 'eg', chips: EG, focus: EG, arcs: { scope: [EG], tiers: true, ended: true, filter: S.tiers, labels: 'all' } });
         else Object.assign(sc, { arcs: { scope: 'all', tiers: true, ended: true, mode: 'mid', filter: S.tiers } });
         break;
       }
@@ -1017,7 +1037,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     /* provinces */
     for (const cid in areaNodes) {
       const n = areaNodes[cid];
-      const on = sc.areas === 'all' || (sc.areas === 'sudan' && cid === 'sudan') || (sc.areas === 'faint' && sc.focus === cid);
+      const on = sc.areas === 'all' || (sc.areas === 'eg' && cid === EG) || (sc.areas === 'faint' && sc.focus === cid);
       n.classList.toggle('on', on);
       n.classList.toggle('faint', !on && sc.areas === 'faint' && (!sc.focusWars || sc.focusWars.includes(cid)));
     }
@@ -1028,7 +1048,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       const c = byId[sc.chips], n = c.parties.length;
       c.parties.forEach((p, i) => {
         const off = n === 1 ? [[0, -26]] : n === 2 ? [[-66, -26], [66, -26]] : [[-66, -26], [66, -26], [0, 32]];
-        const [dx, dy] = off[i] || [0, 32 + 18 * (i - 2)];
+        const [dx, dy] = (c.id === EG && C.example_chips && C.example_chips[p.id]) || off[i] || [0, 32 + 18 * (i - 2)];   /* the example's sides can be placed by hand, so a state's chip does not sit on its enemy's land */
         const x = c.px + dx * uT, y = c.py + dy * uT;
         anchor[c.id + '/' + p.id] = [x, y];
         const label = p.name.length <= 22 ? p.name : (p.short || p.name.slice(0, 20) + '…');
@@ -1219,23 +1239,23 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     addEventListener('resize', () => { if (S.revealed.start) line(); });
   })();
 
-  /* toggles: Sudan, then every war */
+  /* toggles: the example, then every war */
   function segToggle(id, key) {
     const s = stepCfg(id);
-    ix(id).innerHTML = `<div class="seg" role="group">${s.toggle.map((t, i) => `<button type="button" data-v="${i ? 'all' : 'sudan'}" aria-pressed="${i === 0}">${esc(t)}</button>`).join('')}</div>` + (id === 'help' ? `<ul class="rows" id="help-list"></ul>` : '');
+    ix(id).innerHTML = `<div class="seg" role="group">${s.toggle.map((t, i) => `<button type="button" data-v="${i ? 'all' : 'eg'}" aria-pressed="${i === 0}">${esc(t)}</button>`).join('')}</div>` + (id === 'help' ? `<ul class="rows" id="help-list"></ul>` : '');
     for (const b of $$('.seg button', ix(id))) b.onclick = () => {
       S.sub[key] = b.dataset.v;
       for (const x of $$('.seg button', ix(id))) x.setAttribute('aria-pressed', String(x === b));
       if (b.dataset.v === 'all') { const p = `<p>${fill(s.toggle_text)}</p>`; showReveal(id, p, p); } else rv(id).hidden = true;
-      if (id === 'help') $('#help-list').style.display = b.dataset.v === 'sudan' ? '' : 'none';
+      if (id === 'help') $('#help-list').style.display = b.dataset.v === 'eg' ? '' : 'none';
       if (S.step === idx(id)) drawScene(true);
     };
   }
   segToggle('areas', 'areas');
   segToggle('help', 'help');
-  /* Sudan's lines, listed as they arrive */
+  /* the example's lines, listed as they arrive */
   const helpList = $('#help-list');
-  helpList.innerHTML = sudanLive.map(t => { const b = backers[t.backer], p = party(sudan, t.party); return `<li data-key="sudan|${sudan.ties.indexOf(t)}">${tierSample('open')}<span><b>${esc(b.short)}</b> → ${esc(p.short)} <span class="s">${esc(kindsText(t))}</span></span></li>`; }).join('');
+  helpList.innerHTML = egLive.map(t => { const b = backers[t.backer], p = party(eg, t.party); return `<li data-key="${EG}|${eg.ties.indexOf(t)}">${tierSample('open')}<span><b>${esc(b.short)}</b> → ${esc(p.short)} <span class="s">${esc(kindsText(t))}</span></span></li>`; }).join('');
   let helpTimers = [];
   function helpListArrive(animate, rows, stag = 100) {
     for (const t of helpTimers) clearTimeout(t); helpTimers = [];
@@ -1291,7 +1311,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   /* step: how do we know */
   (function () {
     const s = stepCfg('know'), g = s.guess, N0 = T.lines_n;
-    ix('know').innerHTML = `<div class="seg" role="group">${(s.toggle || []).map((t, i) => `<button type="button" data-v="${i ? 'all' : 'sudan'}" aria-pressed="${i === 0}">${esc(t)}</button>`).join('')}</div>`
+    ix('know').innerHTML = `<div class="seg" role="group">${(s.toggle || []).map((t, i) => `<button type="button" data-v="${i ? 'all' : 'eg'}" aria-pressed="${i === 0}">${esc(t)}</button>`).join('')}</div>`
       + `<div id="know-guess"><p class="q">${fill(g.question)}</p><div class="guess"><label for="g-know">${esc(g.label)}</label><input type="range" id="g-know" min="0" max="${N0}" value="${Math.round(N0 / 2)}"><output id="o-know">${Math.round(N0 / 2)}</output></div><button type="button" class="btn go" id="b-know">${esc(g.button)}</button></div>`;
     for (const b of $$('.seg button', ix('know'))) b.onclick = () => { S.sub.know = b.dataset.v; S.ex = null; for (const x of $$('.seg button', ix('know'))) x.setAttribute('aria-pressed', String(x === b)); for (const x of $$('#grades .exb')) { x.setAttribute('aria-expanded', 'false'); x.classList.remove('on'); const p = $('#ex-' + x.dataset.t); if (p) p.hidden = true; } if (S.step === idx('know')) drawScene(true); };
     const inp = $('#g-know'), out = $('#o-know');
@@ -1433,7 +1453,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     const s = stepCfg('shape');
     const strip = c => { const live = c.ties.filter(t => !t.ended); return tierIds.map(k => { const n = live.filter(t => t.tier === k).length; return n ? `<i class="s-${k}" style="flex:${n}" title="${esc(D.tiers[k].word)} ${n}"></i>` : ''; }).join(''); };
     const label = c => { const live = c.ties.filter(t => !t.ended); return tierIds.map(k => D.tiers[k].word + ' ' + live.filter(t => t.tier === k).length).join(', '); };
-    ix('shape').innerHTML = `<div class="stripkey" aria-hidden="true">${tierIds.map(k => `<span><i class="s-${k}"></i>${esc(D.tiers[k].word)}</span>`).join('')}</div><div class="shapes" id="shapes">${wars.map(c => { const r = c.band ? GLYPH_R[c.band] : DOT_R; const helpers = new Set(c.ties.filter(t => !t.ended && !isSide(c, t.backer)).map(t => t.backer)).size, sides = sidesOf(c); return `<button type="button" class="shape" data-id="${c.id}" aria-pressed="false" aria-label="${esc(c.name)}: ${esc(c.band ? D.bands[c.band] : '')}, ${sides} sides, ${helpers} ${helpers === 1 ? 'backer' : 'backers'}; lines ${esc(label(c))}"><svg viewBox="-11 -11 22 22" aria-hidden="true"><circle r="${r}"/></svg><span class="nm">${esc(c.name)}</span><span class="ln">${fill(helpers === 1 ? s.card_line_one : s.card_line, { sides, helpers })}</span><span class="strip" aria-hidden="true">${strip(c)}</span></button>`; }).join('')}</div>`;
+    ix('shape').innerHTML = `<div class="stripkey" aria-hidden="true">${tierIds.map(k => `<span><i class="s-${k}"></i>${esc(D.tiers[k].word)}</span>`).join('')}</div><div class="shapes" id="shapes">${wars.map(c => { const r = c.band ? GLYPH_R[c.band] : DOT_R; const helpers = new Set(c.ties.filter(t => !t.ended && !isSide(c, t.backer)).map(t => t.backer)).size, sides = sidesOf(c); return `<button type="button" class="shape" data-id="${c.id}" aria-pressed="false" aria-label="${esc(c.name)}: ${esc(c.band ? D.bands[c.band] : '')}, ${sides} sides, ${helpers} ${helpers === 1 ? 'backer' : 'backers'}; began ${esc(String(c.start).slice(0, 4))}; lines ${esc(label(c))}"><svg viewBox="-11 -11 22 22" aria-hidden="true"><circle r="${r}"/></svg><span class="nm">${esc(c.name)}</span><span class="ln"><span class="yr">${fill(s.card_since, { year: String(c.start).slice(0, 4) })}</span>${fill(helpers === 1 ? s.card_line_one : s.card_line, { sides, helpers })}</span><span class="strip" aria-hidden="true">${strip(c)}</span></button>`; }).join('')}</div>`;
     for (const b of $$('#shapes .shape')) b.onclick = () => { S.shapeWar = S.shapeWar === b.dataset.id ? null : b.dataset.id; syncShapes(); if (S.step === idx('shape')) drawScene(true); };
   })();
   function syncShapes() { for (const b of $$('#shapes .shape')) { const on = b.dataset.id === S.shapeWar; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); } }
@@ -1537,7 +1557,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     secs.forEach((s, j) => s.classList.toggle('active', j === i));
     for (const b of $$('button', rail)) { const j = +b.dataset.i; b.classList.toggle('on', j === i); b.classList.toggle('seen', j < i); if (j === i) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current'); }
     const id = STEPS[i].id;
-    if (id === 'help' && S.sub.help === 'sudan') $('#help-list').style.display = '';
+    if (id === 'help' && S.sub.help === 'eg') $('#help-list').style.display = '';
     if (id === 'free') { syncFree(); loadGrid(); }
     writeHash();
     drawScene(!instant);
