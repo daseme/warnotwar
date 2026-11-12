@@ -3345,6 +3345,14 @@
    "tie": "ethiopia/russia/egov",
    "kind": "tie",
    "what": "Russia to government in Ethiopia: entered, on the record"
+  },
+  {
+   "date": "2026-11-11",
+   "commit": "1aa50dc",
+   "entry": "myanmar",
+   "tie": "myanmar/china/resist",
+   "kind": "tie",
+   "what": "China to resistance in Myanmar: removed"
   }
  ]
 }
