@@ -2525,47 +2525,6 @@
      "note": "Indian state firms sold the army weapons after the coup.",
      "entered": "2026-10-11",
      "checked": null
-    },
-    {
-     "backer": "china",
-     "party": "resist",
-     "kinds": [
-      "arms"
-     ],
-     "tier": "reported",
-     "stance": "says nothing",
-     "since": null,
-     "since_precision": null,
-     "ended": null,
-     "evidence_to": "2025-06",
-     "sources": [
-      {
-       "class": "press",
-       "text": "Press and think-tank reporting on supply through the United Wa State Army",
-       "date": null,
-       "url": null,
-       "publisher": null
-      },
-      {
-       "class": "press",
-       "text": "The Diplomat, June 2025",
-       "date": "2025-06",
-       "url": "https://thediplomat.com/2025/06/china-pressuring-two-major-myanmar-armed-groups-to-halt-offensives/",
-       "publisher": "The Diplomat"
-      },
-      {
-       "class": "press",
-       "text": "Al Jazeera, Air raids, conscripts and China: Beijing pressed the Wa to stop selling weapons to opposition groups, 30 August 2026",
-       "date": "2026-08",
-       "url": "https://www.aljazeera.com/news/2026/8/30/air-raids-conscripts-and-china-how-myanmars-military-is-regaining-ground",
-       "counts": false,
-       "publisher": "Al Jazeera"
-      }
-     ],
-     "note": "Chinese-made arms reach some border armies through the Wa. It does not reach the wider resistance. In August 2026 Al Jazeera reported that Beijing pressed the Wa to stop selling weapons to opposition groups.",
-     "entered": "2026-10-11",
-     "checked": null,
-     "single": true
     }
    ],
    "areas": [
@@ -8145,6 +8104,12 @@
    "entry": "sudan, myanmar",
    "what": "Kenya's line to the RSF now carries hosting only; \"backs it in public and at the UN\" is removed. China's line to Myanmar's resistance is no longer marked as ended in August 2026.",
    "why": "The sources on Kenya's line show it hosted the RSF's charter meeting in Nairobi; none shows Kenya speaking for the RSF in public or at the UN, and Kenya says it is not a side. The August 2026 date was the date of an Al Jazeera report that Beijing pressed the Wa to stop selling weapons; the report does not say the supply stopped."
+  },
+  {
+   "date": "2026-11-11",
+   "entry": "myanmar",
+   "what": "The line from China to Myanmar's resistance, for weapons, is removed.",
+   "why": "No source on the line says China supplies the resistance. The line's note described the Wa army selling weapons to other armed groups, which is the Wa's act. The one report that could be opened, Al Jazeera on 30 August 2026, says Beijing pressed the Wa to stop. One source had no publisher, date or link."
   }
  ],
  "ucdp_note": "UCDP counts deaths in fighting between a state and an opponent, deaths in fighting between armed groups, and civilians killed deliberately, each with a low, best and high. UCDP calls a conflict a war at 1,000 battle deaths in a year, and minor below that. The figures here are our own sums from data/ucdp.json, built by scripts/build_ucdp.py from the yearly file and the monthly candidate files, pulled after the 20th of each month. A few UCDP rows carry a high below their best; they are summed as given. A flag is UCDP's own mark that a row still needs a check on its deaths, its sides, its place or its source.",
@@ -8247,28 +8212,28 @@
  },
  "esd_note": "The ties are also published as data/ties_esd.csv, one row per backer, side and year, in the shape of UCDP's External Support Dataset, which stops at 2017, so the two can be read end to end. Our sixteen kinds of help fold into its eight: troops, air strikes, air defence and police count as troops, since the state's own forces engage; bases, transit, shelter and hosting as access to territory; weapons, drones and parts as weapons; oil as materiel; backing in public and at the UN as other. Alleged is our fourth tier.",
  "source_counts": {
-  "ties": 112,
-  "live": 102,
+  "ties": 111,
+  "live": 101,
   "open": 75,
   "shown": 11,
-  "reported": 23,
+  "reported": 22,
   "claimed": 3,
   "ended": 10,
   "reference_only": 0,
   "open_on_tracker": 1,
-  "no_outlet": 2,
+  "no_outlet": 1,
   "document_unlinked": 1,
-  "single_publisher": 1,
-  "prewindow": 10,
+  "single_publisher": 0,
+  "prewindow": 9,
   "undated": 0,
-  "weapons": 49,
+  "weapons": 48,
   "weapons_sipri": 4,
-  "sources": 421,
-  "sources_unlinked": 35,
-  "sources_undated": 57,
+  "sources": 418,
+  "sources_unlinked": 34,
+  "sources_undated": 56,
   "sources_unopened": 57,
   "checked": 0,
-  "one_class": 9
+  "one_class": 8
  },
  "reading": {
   "note": "A reading of the map in five steps. Each step sets the map and says what to look at. Braces are filled from the data by the page.",
