@@ -1076,11 +1076,11 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       const c = byId[sc.chips], n = c.parties.length;
       c.parties.forEach((p, i) => {
         const off = n === 1 ? [[0, -26]] : n === 2 ? [[-66, -26], [66, -26]] : [[-66, -26], [66, -26], [0, 32]];
-        const [dx, dy] = (c.id === EG && C.example_chips && C.example_chips[p.id]) || off[i] || [0, 32 + 18 * (i - 2)];   /* the example's sides can be placed by hand, so a state's chip does not sit on its enemy's land */
-        const at = phone() && c.id === EG && C.example_chips_phone && C.example_chips_phone[p.id];   /* on a phone the map is too small for chips beside the dot: each side sits at its own place */
+        const [dx, dy] = off[i] || [0, 32 + 18 * (i - 2)];
+        const at = c.id === EG && C.example_chips_at && C.example_chips_at[p.id];   /* the example's sides sit at their own places on the map, so no side's name lands on another country */
         const [x, y] = at ? project(at[0], at[1]) : [c.px + dx * uT, c.py + dy * uT];
         anchor[c.id + '/' + p.id] = [x, y];
-        const label = at && p.short ? p.short : p.name.length <= 22 ? p.name : (p.short || p.name.slice(0, 20) + '…');
+        const label = at && phone() && p.short ? p.short : p.name.length <= 22 ? p.name : (p.short || p.name.slice(0, 20) + '…');
         const w = Math.max(44, label.length * 5.2 + 14);
         const [sx, sy] = toScreen(x, y, target); placed.push([sx - w / 2, sy - 8, sx + w / 2, sy + 8]);
         const g = scaled(x, y, gParties, { class: 'party' + (animate && prevStepId !== id ? ' pop' : '') }, uT);
