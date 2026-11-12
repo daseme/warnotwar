@@ -142,6 +142,10 @@ def main():
         need('eg_countries', lambda: len({a['country'] for a in eg['areas']}) or None)
         need('eg_areas_source', lambda: eg['areas_source'])
         need('eg_n', lambda: U['entries'][eg['id']]['window']['best'])
+        out = (U['entries'][eg['id']].get('excluded') or [{}])[0]
+        need('eg_left_n', lambda: out['best_this_year'])
+        if 'January 2026' not in out.get('why', '') or 'flagged for review' not in out.get('why', '') or eg['start'] <= '2026-01':
+            fails.append("step 3 says the row UCDP's sum leaves out is from January 2026, before the war, and marked for review; data/ucdp.json no longer says so")
         need('eg_backers', lambda: len({t['backer'] for t in live}) or None)
         need('eg_side_a', lambda: sides[0])
         need('eg_side_b', lambda: sides[1])

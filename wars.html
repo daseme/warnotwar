@@ -645,6 +645,9 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   T.eg_name = eg.name;
   T.eg_countries = word(new Set(eg.areas.map(a => a.country)).size);
   T.eg_n = uw(EG) ? fmtN(uw(EG).best) : null;
+  /* a UCDP row the example's sum leaves out, with the reason in data/ucdp.json */
+  const egOut = ((U.entries[EG] || {}).excluded || [])[0];
+  T.eg_left_n = egOut ? fmtN(egOut.best_this_year) : null;
   T.interstate = lastY.interstate; T.intra = lastY.n - lastY.interstate;
   const egLive = eg.ties.filter(t => !t.ended);
   T.eg_backers = new Set(egLive.map(t => t.backer)).size;
@@ -1292,7 +1295,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       choice = ch; S.revealed.size = true; $('#skip-size').hidden = true;
       for (const b of $$('.opts .btn', ix('size'))) b.setAttribute('aria-pressed', String(b.dataset.id === ch));
       const [o1, o2] = optsDesc.slice(1);
-      const p = `<p>${fill(s.reveal, { top_name: byId[top].name, top_n: fmtN(uw(top).best), o1_n: o1 ? fmtN(uw(o1).best) : null, o1_name: o1 ? byId[o1].name : null, o2_n: o2 ? fmtN(uw(o2).best) : null, o2_name: o2 ? byId[o2].name : null })}</p>`;
+      const p = `<p>${fill(s.reveal, { top_name: byId[top].name, top_n: fmtN(uw(top).best), o1_n: o1 ? fmtN(uw(o1).best) : null, o1_name: o1 ? byId[o1].name : null, o2_n: o2 ? fmtN(uw(o2).best) : null, o2_name: o2 ? byId[o2].name : null })}</p>` + (s.reveal_eg && fill(s.reveal_eg) ? `<p>${fill(s.reveal_eg)}</p>` : '');
       showReveal('size', p + `<div class="bars" id="bars-size"></div>`, p);
       chart();
       if (S.step === idx('size')) drawScene(true);
