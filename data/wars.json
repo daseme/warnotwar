@@ -214,9 +214,10 @@
       "id": "shape",
       "name": "the {wars_word} wars",
       "title": "The {wars_word} wars",
-      "body": "One card for each war. The dot is its size. Next to it: the year it began and UCDP's count of the dead from then to {whole_to}, then how many sides fight and how many backers help. {old_n} of the {wars} began more than ten years ago. The oldest, {oldest_name}, has run {oldest_years} years. The largest count is {whole_top_name}, {whole_top_n}. The strip shows the grade of its lines, from on the record to alleged. {Tap} a card and the map goes there.",
+      "body": "One card for each war. The dot is its size. Next to it: the year it began and UCDP's count of the dead from then to {whole_to}, then how many sides fight and how many backers help. {old_n} of the {wars} began more than ten years ago. The oldest, {oldest_name}, has run {oldest_years} years. Under each count is UCDP's low and its high. For {whole_wide_n} of the {wars}, the high is more than twice the low. The strip shows the grade of its lines, from on the record to alleged. {Tap} a card and the map goes there.",
       "card_since": "since {year}",
       "card_total": "{total} dead",
+      "card_range": "{low} to {high}",
       "card_line": "{sides} sides · {helpers} backers",
       "card_line_one": "{sides} sides · {helpers} backer",
       "sources": [
