@@ -5,15 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>warnotwar.com</title>
 <style>
-  html, body { margin: 0; min-height: 100%; }
-  body {
-    min-height: 100vh;
-    min-height: 100svh;
+  /* Same field as the front page: the page is black, and the state colour
+     is a full-height band only as wide as the text it sits behind. */
+  html, body {
+    margin: 0;
     display: flex; align-items: center; justify-content: center;
     font-family: Georgia, 'Times New Roman', serif;
     transition: background-color 1.2s ease;
     background: #1a1a1a;
   }
+  html { height: 100%; }
+  body { box-sizing: border-box; min-height: 100%; max-width: 100%; }
+  /* the sweet spot's words fill the front page edge to edge, so the colour does here too */
+  body.full { width: 100%; }
   #message {
     box-sizing: border-box;
     max-width: 21em;
@@ -26,6 +30,10 @@
   }
   #message p { margin: 0; }
   #message p + p { margin-top: 0.9em; }
+  /* phones: keep the block narrow in war and peace so the black field shows beside the band */
+  @media (max-width: 600px) {
+    body:not(.full) #message { max-width: 76vw; padding-left: 16px; padding-right: 16px; }
+  }
   #info-link {
     position: fixed;
     bottom: 24px; left: 0; right: 0;
@@ -53,7 +61,7 @@
 
 <!-- KURT'S WORDS (13 November 2026): do not edit -->
 <div id="message">
-  <p>We have entered an era of endless wars, forever wars, times of not peace, not war.</p>
+  <p>We have entered an era of endless wars, forever wars, times of &ldquo;not peace, not war.&rdquo;</p>
   <p>Is the Iran war one of these?</p>
 </div>
 <!-- END KURT'S WORDS -->
@@ -70,8 +78,10 @@
   const API_KEY = "da68rdhr01qtngrev8kgda68rdhr01qtngrev8l0";
 
   function render(price) {
+    const mid = price >= LOW_MAX && price <= HIGH_MIN;
     document.body.style.backgroundColor =
       price < LOW_MAX ? "#173a1e" : price > HIGH_MIN ? "#3a1717" : "#3a2f17";
+    document.body.classList.toggle("full", mid);
   }
 
   async function fetchPrice() {
