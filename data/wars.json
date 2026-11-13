@@ -5,8 +5,8 @@
   "example_chips_at": {"note": "each side of the example sits at a place on the map, as [east, north]: Iran on Iran, Israel in the sea off its coast, the U.S. in the Arabian Sea where its fleet is", "irn": [59.5, 33.5], "us": [62, 20], "isr": [29.5, 32.9]},
   "map_controls": {"in": "zoom in", "out": "zoom out", "reset": "reset view", "hint_desktop": "drag the map to move · + and − to zoom", "hint_phone": "+ and − to zoom · two fingers to move"},
   "kicker": "warnotwar · an introduction",
-  "intro": "The wars being fought now. Each step adds a layer to the map. {Tap} a dotted word to see what it means.",
-  "asof": "Wars and their backers as of {as_of}. Deaths counted by the Uppsala Conflict Data Program from {win_from} to {win_to}.",
+  "intro": "A map of the wars now being fought, built one step at a time.",
+  "asof": "Current to {as_of}. Deaths are the Uppsala Conflict Data Program's count for the year to {win_to}.",
   "skip": "Skip to the lesson",
   "quotes": {
     "areas_drone": {"from": "conflicts.areas_rule", "pick": "long-range drone"},
@@ -68,6 +68,7 @@
       "id": "areas",
       "name": "provinces",
       "title": "Where the fighting is",
+      "places": [{"name": "Strait of Hormuz", "at": [57.8, 24.1]}],
       "body": "Shaded provinces show where the fighting was in the past year. A [[province]] is shaded for ground fighting, sieges or an air campaign. {areas_drone} In the Iran war, which began in {eg_start}, {eg_prov} provinces are shaded, in {eg_countries} countries.",
       "toggle": ["the Iran war", "every war"],
       "toggle_text": "Across the map, {areas_total} provinces are shaded in {areas_wars} wars. {areas_border}",

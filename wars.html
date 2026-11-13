@@ -149,6 +149,8 @@
   .fhue-0 { fill: var(--ink-60); } .fhue-1 { fill: var(--b1); } .fhue-2 { fill: var(--b2); } .fhue-3 { fill: var(--b3); } .fhue-4 { fill: var(--b4); } .fhue-5 { fill: var(--b5); }
   .backer-dot { pointer-events: none; transition: opacity 0.3s ease; }
   .backer-dot circle { stroke: var(--bg-raise); stroke-width: 1.2; vector-effect: non-scaling-stroke; }
+  .cname text { font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; fill: var(--ink-45); opacity: 0.75; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+  .cname.place text { font-size: 8.5px; letter-spacing: 0.02em; text-transform: none; font-style: italic; fill: var(--ink-60); opacity: 1; text-anchor: start; }
   .backer-dot text { font-size: 9.5px; fill: var(--ink-80); paint-order: stroke; stroke: var(--bg-raise); stroke-width: 3px; stroke-linejoin: round; }
   .party { pointer-events: none; }
   .party rect { fill: var(--bg-raise); stroke: var(--ink-45); stroke-width: 0.8; vector-effect: non-scaling-stroke; }
@@ -790,8 +792,11 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   /* the example's frame is the countries its provinces are in, measured once on the base map, so it does not shift when the finer map loads */
   const egIso = new Set(eg.areas.map(a => a.country));
   const egLandBox = (() => { const pts = []; for (const f of topojson.feature(world, world.objects.countries).features) if (egIso.has(f.id)) { const b = geoPath.bounds(f); pts.push(b[0], b[1]); } return pts; })();
+  /* country names for the steps that ask for them: the site's own name for a state where it has one, the base map's otherwise; */
+  const isoName = {}; for (const b of D.backers) if (typeof b.iso === 'string') isoName[b.iso] = b.name.length <= 14 ? b.name : b.short;
+  const cnames = topojson.feature(world, world.objects.countries).features.map(f => { const [x, y] = geoPath.centroid(f); return { name: isoName[f.id] || (f.properties || {}).name, x, y, a: geoPath.area(f), eg: egIso.has(f.id) }; }).filter(n => n.name && isFinite(n.x)).sort((a, b) => b.eg - a.eg || b.a - a.a);   /* the example's own countries first, then the rest, each by size */
   const egPad = egIso.size > 1 ? 0.08 : 0.42;
-  const gAreas = el('g', {}, gRoot), gArcs = el('g', {}, gRoot), gParties = el('g', {}, gRoot), gBackers = el('g', {}, gRoot), gMarks = el('g', {}, gRoot);
+  const gAreas = el('g', {}, gRoot), gNames = el('g', {}, gRoot), gArcs = el('g', {}, gRoot), gParties = el('g', {}, gRoot), gBackers = el('g', {}, gRoot), gMarks = el('g', {}, gRoot);
 
   /* screen-sized marks: every mark sits in a group scaled by map units per screen pixel */
   let U_ = 1, zoomK = 1;
@@ -963,7 +968,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     switch (id) {
       case 'start': Object.assign(sc, { marks: false, areas: 'none' }); break;
       case 'where': Object.assign(sc, { areas: 'none', seq: true }); break;
-      case 'areas': Object.assign(sc, S.sub.areas === 'eg' ? { view: 'eg', areas: 'eg', focus: EG, labels: [EG] } : { areas: 'all' }); break;
+      case 'areas': Object.assign(sc, S.sub.areas === 'eg' ? { view: 'eg', areas: 'eg', focus: EG, labels: [EG], names: { places: stepCfg('areas').places || [] } } : { areas: 'all' }); break;
       case 'size': break;
       case 'sides': Object.assign(sc, { view: 'eg', areas: 'eg', chips: EG, focus: EG }); break;
       case 'help': Object.assign(sc, S.sub.help === 'eg' ? { view: 'egHelp', areas: 'eg', chips: EG, focus: EG, arcs: { scope: [EG], draw: true, labels: 'all' } } : { arcs: { scope: 'all', mode: 'mid' } }); break;
@@ -1069,6 +1074,13 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       const on = sc.areas === 'all' || (sc.areas === 'eg' && cid === EG) || (sc.areas === 'faint' && sc.focus === cid);
       n.classList.toggle('on', on);
       n.classList.toggle('faint', !on && sc.areas === 'faint' && (!sc.focusWars || sc.focusWars.includes(cid)));
+    }
+    /* light names: places the step names first, then countries, each left off where it would sit on another name or run off the map */
+    gNames.innerHTML = '';
+    if (sc.names) {
+      const fit = (sx, sy, w, start) => { const box = start ? [sx - 2, sy - 6, sx + w + 2, sy + 6] : [sx - w / 2 - 2, sy - 6, sx + w / 2 + 2, sy + 6]; if (box[0] < 2 || box[2] > svg.clientWidth - 2 || box[1] < 2 || box[3] > svg.clientHeight - 2 || nameBoxes.some(q => box[0] < q[2] && box[2] > q[0] && box[1] < q[3] && box[3] > q[1])) return false; nameBoxes.push(box); return true; };
+      for (const pl of sc.names.places || []) { const [x, y] = project(pl.at[0], pl.at[1]), [sx, sy] = toScreen(x, y, target); if (fit(sx, sy, pl.name.length * 4.9, true)) el('text', {}, scaled(x, y, gNames, { class: 'cname place' }, uT)).textContent = pl.name; }
+      for (const n of cnames) { const [sx, sy] = toScreen(n.x, n.y, target); if (fit(sx, sy, n.name.length * 6.2)) el('text', {}, scaled(n.x, n.y, gNames, { class: 'cname' }, uT)).textContent = n.name; }
     }
     /* the sides, as chips beside the war */
     gParties.innerHTML = '';
