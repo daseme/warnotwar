@@ -45,8 +45,8 @@
       "body": "Guess how many wars were fought in the past year.",
       "guess": {"type": "slider", "min": 0, "max": 100, "start": 20, "label": "your guess", "button": "show the answer"},
       "marks": {"guess": "your guess", "map": "this map", "ucdp": "UCDP conflicts", "ucdp_wars": "UCDP wars"},
-      "reveal_note": "KURT'S WORDS (2026-11-12). Do not edit the reveal, even on a language pass. He asked for \"(UCDP)\" after the full name. The numbers are tokens so they stay true to the data.",
-      "reveal": "How many wars are there? It depends who’s counting. The Uppsala Conflict Data Program (UCDP), a research group at a Swedish university, counted {ucdp_n} [[armed conflict|armed conflicts]] in {ucdp_year}. To make that list, a fight between a government and an opposing side has to cause at least {acd_bar} battle deaths in a year. {Ucdp_wars_word} of them reached {war_bar} battle deaths, which is UCDP’s line for calling something a war. This map shows {wars} wars, partly because it sometimes treats several of UCDP’s conflicts as one war.",
+      "reveal_note": "KURT'S WORDS (2026-11-12). Do not edit the reveal, even on a language pass. The last three sentences are a wording he approved the same day, replacing his 'partly because' sentence. He asked for \"(UCDP)\" after the full name. The numbers are tokens so they stay true to the data.",
+      "reveal": "How many wars are there? It depends who’s counting. The Uppsala Conflict Data Program (UCDP), a research group at a Swedish university, counted {ucdp_n} [[armed conflict|armed conflicts]] in {ucdp_year}. To make that list, a fight between a government and an opposing side has to cause at least {acd_bar} battle deaths in a year. {Ucdp_wars_word} of them reached {war_bar} battle deaths, which is UCDP’s line for calling something a war. This map shows {wars} wars. It looks at the past twelve months, counts deaths of every kind, and uses other counts where UCDP’s is low. It also sometimes treats several of UCDP’s conflicts as one war.",
       "sources": [
         {"from": "conflicts.rule"},
         {"text": "UCDP/PRIO Armed Conflict Dataset, version {acd_version}, {n_first} to {ucdp_year}."},
@@ -68,7 +68,7 @@
       "id": "areas",
       "name": "provinces",
       "title": "Where the fighting is",
-      "body": "Shaded provinces show where the fighting was in the past year. A [[province]] is shaded for ground fighting, sieges or an air campaign. {areas_drone} In the Iran war, {eg_prov} provinces are shaded, in {eg_countries} countries.",
+      "body": "Shaded provinces show where the fighting was in the past year. A [[province]] is shaded for ground fighting, sieges or an air campaign. {areas_drone} In the Iran war, which began in {eg_start}, {eg_prov} provinces are shaded, in {eg_countries} countries.",
       "toggle": ["the Iran war", "every war"],
       "toggle_text": "Across the map, {areas_total} provinces are shaded in {areas_wars} wars. {areas_border}",
       "sources": [
