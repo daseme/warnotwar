@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>warnotwar.com</title>
+<style>
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex; align-items: center; justify-content: center;
+    font-family: Georgia, 'Times New Roman', serif;
+    transition: background-color 1.2s ease;
+    background: #1a1a1a;
+  }
+  #message {
+    box-sizing: border-box;
+    max-width: 21em;
+    padding: 32px 24px 84px;
+    font-size: clamp(22px, 3.6vw, 44px);
+    line-height: 1.35;
+    color: #fff;
+    text-align: center;
+    text-wrap: balance;
+  }
+  #message p { margin: 0; }
+  #message p + p { margin-top: 0.9em; }
+  #info-link {
+    position: fixed;
+    bottom: 24px; left: 0; right: 0;
+    text-align: center;
+  }
+  #info-link a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px; height: 20px;
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 50%;
+    color: rgba(255,255,255,0.5);
+    font-family: monospace;
+    font-size: 12px;
+    text-decoration: none;
+  }
+  #info-link a:hover {
+    color: rgba(255,255,255,0.9);
+    border-color: rgba(255,255,255,0.9);
+  }
+</style>
+</head>
+<body>
+
+<!-- KURT'S WORDS (13 November 2026): do not edit -->
+<div id="message">
+  <p>We have entered an era of endless wars, forever wars, times of not peace, not war.</p>
+  <p>Is the Iran war one of these?</p>
+</div>
+<!-- END KURT'S WORDS -->
+<div id="info-link"><a href="/heuristic.html" aria-label="The heuristic">?</a></div>
+
+<script>
+  // The background carries the front page's answer onto this page:
+  // same ticker, same thresholds, same three colours as index.html.
+  // Change them there and here together.
+  const TICKER = "BNO";
+  const LOW_MAX = 49;      // below this = peace
+  const HIGH_MIN = 55;     // above this = war
+  const REFRESH_MS = 60000;
+  const API_KEY = "da68rdhr01qtngrev8kgda68rdhr01qtngrev8l0";
+
+  function render(price) {
+    document.body.style.backgroundColor =
+      price < LOW_MAX ? "#173a1e" : price > HIGH_MIN ? "#3a1717" : "#3a2f17";
+  }
+
+  async function fetchPrice() {
+    // ?price=71.39 previews a colour without waiting for the market
+    const preview = Number(new URLSearchParams(location.search).get("price"));
+    if (preview > 0) { render(preview); return; }
+    try {
+      const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${TICKER}&token=${API_KEY}`);
+      const data = await res.json();
+      if (!data.c) throw new Error("no price");
+      render(data.c);
+    } catch (e) {
+      // live quote unavailable: fall back to the last stored daily close
+      try {
+        const hist = await fetch("/history.json").then(r => r.json());
+        const last = hist[hist.length - 1];
+        if (last && last.p) render(last.p);
+      } catch (e2) { /* stay on the neutral background */ }
+    }
+  }
+
+  fetchPrice();
+  setInterval(fetchPrice, REFRESH_MS);
+</script>
+
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d19fe92168a647a587302167966fb3c7"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
