@@ -430,18 +430,18 @@
    "summary": "Russia invaded in February 2022 after eight years of fighting in the Donbas.",
    "parties": [
     {
-     "id": "ukr",
-     "name": "Ukraine",
-     "state": "ukraine",
-     "side": "A",
-     "short": "Ukraine"
-    },
-    {
      "id": "rus",
      "name": "Russia",
      "state": "russia",
-     "side": "B",
+     "side": "A",
      "short": "Russia"
+    },
+    {
+     "id": "ukr",
+     "name": "Ukraine",
+     "state": "ukraine",
+     "side": "B",
+     "short": "Ukraine"
     }
    ],
    "ties": [
