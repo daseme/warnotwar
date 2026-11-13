@@ -2,8 +2,8 @@
   "note": "Copy for wars.html. Braces are filled by the page from the data files at load; a sentence whose brace has no value is left out. Double brackets mark a word with a definition from the glossary ([[word]] or [[glossary key|shown text]]). A quoted item is {\"from\": \"file.field\", \"pick\": \"text inside one sentence\"} and shows that sentence of the data as it stands; \"cut\" ends it at that character. {tap} and {Tap} read click or tap by the reader's pointer. Every number shown is a token; none is typed here.",
   "title": "Today's wars",
   "example": "gulf",
-  "example_chips_at": {"note": "each side of the example sits at a place on the map, as [east, north]: Iran on Iran, Israel in the sea off its coast, the U.S. in the Arabian Sea where its fleet is", "irn": [56, 33.5], "us": [62, 20], "isr": [33, 32.6]},
-  "map_controls": {"in": "zoom in", "out": "zoom out", "reset": "reset", "hint_desktop": "drag the map to move · + and − to zoom", "hint_phone": "+ and − to zoom · two fingers to move"},
+  "example_chips_at": {"note": "each side of the example sits at a place on the map, as [east, north]: Iran on Iran, Israel in the sea off its coast, the U.S. in the Arabian Sea where its fleet is", "irn": [59.5, 33.5], "us": [62, 20], "isr": [29.5, 32.9]},
+  "map_controls": {"in": "zoom in", "out": "zoom out", "reset": "reset view", "hint_desktop": "drag the map to move · + and − to zoom", "hint_phone": "+ and − to zoom · two fingers to move"},
   "kicker": "warnotwar · an introduction",
   "intro": "The wars being fought now, with one layer added to the map at each step. Dotted words open a definition.",
   "asof": "Wars and their backers as of {as_of}. Deaths counted by the Uppsala Conflict Data Program from {win_from} to {win_to}.",
@@ -84,7 +84,7 @@
       "guess": {"type": "pick", "question": "Which of these three killed the most people in the past year?", "options": ["ukraine", "sudan", "gulf"]},
       "reveal": "{top_name} had the most: {top_n}. UCDP counted {o1_n} in {o1_name} and {o2_n} in {o2_name}, from {win_from} to {win_to}. UCDP sorts deaths into three kinds, and each bar shows them. In {os_name}, {os_n} of the {os_total} were civilians killed deliberately. The dots now show deaths in three [[band|bands]].",
       "reveal_eg": "In the Iran war the states involved give their own counts. {eg_others}",
-      "chart_caption": "Deaths by war, {win_from} to {win_to}, UCDP's best count. Under each bar: its count since the war began.",
+      "chart_caption": "Deaths by war, {win_from} to {win_to}, UCDP's best count. Under each war that began before {win_from}: its count since it began.",
       "whole_line": "{whole_n} since {whole_from}",
       "kinds": {"state-based": "fighting that involves a state", "non-state": "fighting between armed groups", "one-sided": "civilians killed deliberately"},
       "show_all": "show all {wars} wars",
@@ -133,10 +133,10 @@
       "guess": {"type": "slider", "label": "your guess", "question": "Of the {lines_n} lines, how many are on the record?", "button": "show the answer"},
       "toggle": ["the Iran war", "every war"],
       "reveal": "{open_n} of the {lines_n} lines are on the record, about {open_tenths} in ten. {shown_n} are documented, {reported_n} reported and {claimed_n} alleged. {ended_n} more have ended and are drawn faint.",
-      "units_caption": "the {lines_n} lines, one small box each, by grade",
+      "units_caption": "the {lines_n} lines, one small box each, by kind of line",
       "guess_mark": "your guess",
-      "chips_cue": "{Tap} a grade to hide or show its lines. Open a row for one example and its source.",
-      "example_open": "one line of this grade",
+      "chips_cue": "{Tap} a kind of line to hide or show it. Open a row for one example and its source.",
+      "example_open": "one line of this kind",
       "tier_defs": {
         "open": {"from": "conflicts.tiers.open.note", "pick": "The backer says so itself"},
         "shown": {"from": "conflicts.tiers.shown.note", "pick": "The evidence is in a public document", "cut": ":"},
@@ -151,7 +151,7 @@
       ],
       "sources": [
         {"from": "conflicts.finding_rule", "pick": "A finding by a state that fights"},
-        {"text": "The full rules for each grade are on the full map.", "url": "/conflicts.html#rules"}
+        {"text": "The full rules for each kind of line are on the full map.", "url": "/conflicts.html#rules"}
       ]
     },
     {
@@ -219,7 +219,7 @@
       "id": "shape",
       "name": "the {wars_word} wars",
       "title": "The {wars_word} wars",
-      "body": "One card for each war. The dot shows its deaths in the past year. Next to it: the year it began and UCDP's count of the dead from then to {whole_to}, then how many sides fight and how many backers help. {old_n} of the {wars} began more than ten years ago. The oldest, {oldest_name}, has run {oldest_years} years. The strip shows the grade of its lines, from on the record to alleged. {Tap} a card and the map goes there.",
+      "body": "One card for each war. The dot shows its deaths in the past year. Next to it: the year it began and UCDP's count of the dead from then to {whole_to}, then how many sides fight and how many backers help. {old_n} of the {wars} began more than ten years ago. The oldest, {oldest_name}, has run {oldest_years} years. The strip shows how its lines are drawn, from on the record to alleged. {Tap} a card and the map goes there.",
       "card_since": "since {year}",
       "card_total": "{total} dead",
       "card_line": "{sides} sides · {helpers} backers",
@@ -235,10 +235,10 @@
       "title": "Use the map",
       "guessed": "You guessed {g}. UCDP counted {ucdp_n} conflicts and called {ucdp_wars} of them wars. This map holds {wars}.",
       "body": "{Tap} any war. Who fights? Who helps? How do we know? The switches turn layers on and off.",
-      "hint_desktop": "drag to move · ctrl + scroll to zoom · click a war",
-      "hint_phone": "two fingers to move and zoom · tap a war",
-      "layers": {"areas": "provinces", "lines": "lines", "squares": "force short of war", "reset": "reset"},
-      "more_controls": "more switches: grades and states",
+      "hint_desktop": "drag to move · + and − to zoom · click a war",
+      "hint_phone": "two fingers to move · + and − to zoom · tap a war",
+      "layers": {"areas": "provinces", "lines": "lines", "squares": "force short of war", "reset": "reset all"},
+      "more_controls": "more switches: kinds of line and states",
       "info_link": "on the full map",
       "links": [
         {"url": "/conflicts.html", "label": "the full map", "text": "every line with its sources, the table, the rules"},

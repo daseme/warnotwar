@@ -268,10 +268,10 @@
   /* ranked bars */
   .bars { margin: 10px 0 6px; font-family: var(--mono); font-size: 10.5px; color: var(--ink-80); }
   .bars .cap { color: var(--ink-60); margin-bottom: 8px; line-height: 1.6; }
-  .bars .r { display: grid; grid-template-columns: 11.5em minmax(0, 1fr); align-items: center; gap: 8px; min-height: 19px; padding: 1px 0; }
+  .bars .r { display: grid; grid-template-columns: 11.5em minmax(0, 1fr); align-items: center; gap: 0 8px; min-height: 19px; padding: 1px 0; }
   .bars .r .n { line-height: 1.25; }
   .bars .tr { min-height: 18px; }
-  .bars .r .w { grid-column: 2; color: var(--ink-60); font-size: 9.5px; line-height: 1.2; margin: -1px 0 4px; }
+  .bars .r .w { grid-column: 2; color: var(--ink-60); font-size: 9.5px; line-height: 1.2; margin: -3px 0 8px; }
   .bars + .btn, .bars .btn { margin-top: 8px; }
   .bars .r.pick .n, .bars .r.top .n { color: var(--ink); font-weight: 500; }
   .bars .tr { position: relative; height: 100%; }
@@ -452,6 +452,7 @@
     .shapes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     /* tap targets */
     .stepnav button, .chip, .seg button, .btn, .opts .btn, .keybtn { min-height: 40px; }
+    .zoomctl button { min-width: 40px; height: 40px; }
     .stepnav button { min-width: 88px; }
     .chart text { font-size: 9.5px; }
   }
@@ -1316,7 +1317,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     const KCOL = ['var(--danger)', 'color-mix(in srgb, var(--danger) 45%, var(--bg-raise))', 'var(--ink)'];
     const kindBg = w => { const k = w.by_type; if (!k || !w.best) return ''; let a = 0; const stops = KINDS.map((key, i) => { const from = a; a += k[key] / w.best * 100; return `${KCOL[i]} ${from.toFixed(2)}% ${a.toFixed(2)}%`; }); return `;background:linear-gradient(90deg, ${stops.join(', ')})`; };
     const kindKey = () => s.kinds ? `<div class="kkey" aria-hidden="true">${KINDS.map((key, i) => `<span><i style="background:${KCOL[i]}"></i>${esc(s.kinds[key])}</span>`).join('')}</div>` : '';
-    const wholeLine = c => s.whole_line && whole(c.id) ? plainFill(s.whole_line, { whole_n: fmtN(whole(c.id).best), whole_from: fmtMonth(whole(c.id).from) }) : '';
+    const wholeLine = c => s.whole_line && whole(c.id) && whole(c.id).from < U.window.from ?   /* a war that began inside the past year has no second count to show */ plainFill(s.whole_line, { whole_n: fmtN(whole(c.id).best), whole_from: fmtMonth(whole(c.id).from) }) : '';
     const bars = () => (all ? ranked : ranked.filter(c => opts.includes(c.id))).map(c => { const w = uw(c.id); const tags = (c.id === top ? `<em class="most">${esc(s.top_label)}</em>` : '') + (c.id === choice ? `<em>${esc(s.pick_label)}</em>` : ''); return `<div class="r${opts.includes(c.id) ? ' opt' : ''}${c.id === choice ? ' pick' : ''}${c.id === top ? ' top' : ''}"><span class="n">${esc(c.name)}</span><span class="tr"><i class="b" style="width:${pc(w.best)}${kindBg(w)}"></i><span class="v" style="left:calc(${pc(w.best)} + 6px)">${fmtN(w.best)}${tags}</span></span>${wholeLine(c) ? `<span class="w">${esc(wholeLine(c))}</span>` : ''}</div>`; }).join('');
     const chart = () => {
       const shown = all ? ranked : ranked.filter(c => opts.includes(c.id));
