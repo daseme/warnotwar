@@ -750,7 +750,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
 
   /* ---- header ---- */
   $('#kicker').textContent = C.kicker; $('#title').textContent = C.title; document.title = C.title;
-  $('#intro').textContent = C.intro; $('#asof').textContent = plainFill(C.asof);
+  $('#intro').textContent = plainFill(C.intro); $('#asof').textContent = plainFill(C.asof);
   $('#skip').textContent = C.skip || '';
 
   /* ================= the map ================= */

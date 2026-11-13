@@ -170,6 +170,8 @@ def main():
                 notes.append("step 3 fold: nothing was counted before the example began; the page drops that sentence")
         need('eg_side_a', lambda: sides[0])
         need('eg_side_b', lambda: sides[1])
+        if sum(1 for c in D['conflicts'] if c.get('kind') == 'pressure' and any(p.get('state') == 'usa' for p in c['parties'])) == 1:
+            fails.append("step 8 says '{sq_us} are by the United States', which reads wrong for one; the body needs a singular wording")
         need('eg_parties_word', lambda: len(eg['parties']) if all(p.get('state') for p in eg['parties']) else None)
         T['eg_sides_word'] = len(sides)
         if len(sides) != 2:

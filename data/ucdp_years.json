@@ -1,5 +1,5 @@
 {
- "rule": "UCDP's best estimate of deaths in organized violence by year, summed over every country, from the UCDP Organized Violence Country-Year Dataset; deaths in fighting, deaths in fighting between armed groups, and civilians killed on purpose, shown apart. Countries over 1,000 is the number of countries with a thousand or more deaths that year.",
+ "rule": "UCDP's best estimate of deaths in organized violence by year, summed over every country, from the UCDP Organized Violence Country-Year Dataset; fighting that involves a state, fighting between armed groups, and civilians killed deliberately, shown apart. Countries over 1,000 is the number of countries with a thousand or more deaths that year.",
  "version": "26.1",
  "years": [
   {

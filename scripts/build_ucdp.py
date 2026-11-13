@@ -418,7 +418,7 @@ def main():
         fails = check_numbers.years_fails({'years': years})
         if fails:
             sys.exit('build stopped before data/ucdp_years.json and data/ucdp.json were written. These numbers cannot be true:\n  ' + '\n  '.join(fails))
-        json.dump({'rule': 'UCDP\'s best estimate of deaths in organized violence by year, summed over every country, from the UCDP Organized Violence Country-Year Dataset; deaths in fighting, deaths in fighting between armed groups, and civilians killed on purpose, shown apart. Countries over 1,000 is the number of countries with a thousand or more deaths that year.',
+        json.dump({'rule': 'UCDP\'s best estimate of deaths in organized violence by year, summed over every country, from the UCDP Organized Violence Country-Year Dataset; fighting that involves a state, fighting between armed groups, and civilians killed deliberately, shown apart. Countries over 1,000 is the number of countries with a thousand or more deaths that year.',
                    'version': str(c.Version.iloc[0]), 'years': years}, open(os.path.join(root, 'data', 'ucdp_years.json'), 'w'), indent=1)
         print('wrote data/ucdp_years.json:', len(years), 'years')
     json.dump(out, open(os.path.join(root, 'data', 'ucdp.json'), 'w'), indent=1, ensure_ascii=False)   # again, now with the months
