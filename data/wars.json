@@ -45,7 +45,8 @@
       "body": "Guess how many wars were fought in the past year.",
       "guess": {"type": "slider", "min": 0, "max": 100, "start": 20, "label": "your guess", "button": "show the answer"},
       "marks": {"guess": "your guess", "map": "this map", "ucdp": "UCDP conflicts", "ucdp_wars": "UCDP wars"},
-      "reveal": "The Uppsala Conflict Data Program (UCDP), a university project in Sweden, counted {ucdp_n} [[armed conflict|armed conflicts]] in {ucdp_year}. It counts one government against one opposing side as one conflict, from {acd_bar} deaths in a year. {ucdp_wars} of them reached {war_bar} deaths, which it calls war. This map holds {wars} wars. One war here can hold several of UCDP's conflicts. The number depends on the rule.",
+      "reveal_note": "KURT'S WORDS (2026-11-12). Do not edit the reveal, even on a language pass. He asked for \"(UCDP)\" after the full name. The numbers are tokens so they stay true to the data.",
+      "reveal": "How many wars are there? It depends who’s counting. The Uppsala Conflict Data Program (UCDP), a research group at a Swedish university, counted {ucdp_n} [[armed conflict|armed conflicts]] in {ucdp_year}. To make that list, a fight between a government and an opposing side has to cause at least {acd_bar} battle deaths in a year. {Ucdp_wars_word} of them reached {war_bar} battle deaths, which is UCDP’s line for calling something a war. This map shows {wars} wars, partly because it sometimes treats several of UCDP’s conflicts as one war.",
       "sources": [
         {"from": "conflicts.rule"},
         {"text": "UCDP/PRIO Armed Conflict Dataset, version {acd_version}, {n_first} to {ucdp_year}."},

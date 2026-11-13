@@ -616,7 +616,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const coarseP = matchMedia('(pointer: coarse)').matches;
   T.tap = coarseP ? 'tap' : 'click'; T.Tap = coarseP ? 'Tap' : 'Click';
   T.wars = wars.length; T.wars_word = word(wars.length); T.squares = squares.length;
-  T.ucdp_n = lastY.n; T.ucdp_year = lastY.year; T.ucdp_wars = lastY.wars;
+  T.ucdp_n = lastY.n; T.ucdp_year = lastY.year; T.ucdp_wars = lastY.wars; T.Ucdp_wars_word = word(lastY.wars).replace(/^./, m => m.toUpperCase());
   const bar = (re) => { const m = String(L.rule || '').match(re); return m ? m[1] : null; };
   T.acd_bar = bar(/with ([\d,]+) or more deaths/);
   T.war_bar = bar(/war level means ([\d,]+) or more deaths/i);

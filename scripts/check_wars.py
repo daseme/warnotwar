@@ -39,7 +39,7 @@ PAGE_TOKENS = {
     'ended_n', 'flag_pct', 'hued_n', 'interstate', 'intra', 'lines_n', 'n_above', 'n_first', 'n_phrase', 'old_n', 'oldest_name', 'oldest_years',
     'open_n', 'open_tenths', 'os_n', 'os_name', 'os_total', 'peak_top_n', 'peak_top_name', 'peak_total', 'peak_year', 'prewindow_n', 'prov_word',
     'reach_year', 'region_counts', 'reported_n', 'shown_n', 'sq_us', 'squares', 'tap', 'tier_words', 'ucdp_n', 'ucdp_pulled', 'ucdp_versions',
-    'ucdp_wars', 'ucdp_year', 'ukr_total', 'ukr_unplaced', 'us_name', 'war_bar', 'wars', 'wars_word', 'whole_to', 'win_from', 'win_to',
+    'Ucdp_wars_word', 'ucdp_wars', 'ucdp_year', 'ukr_total', 'ukr_unplaced', 'us_name', 'war_bar', 'wars', 'wars_word', 'whole_to', 'win_from', 'win_to',
 }
 
 
