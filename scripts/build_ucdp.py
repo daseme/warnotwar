@@ -43,7 +43,8 @@ COLS = ['id', 'year', 'type_of_violence', 'conflict_new_id', 'conflict_name', 'd
 BY_COUNTRY = {
     'ukraine': ['Ukraine', 'Russia (Soviet Union)'],
     'sudan': ['Sudan'],
-    'gaza': ['Israel', 'Lebanon', 'Palestine'],
+    'gaza': ['Israel', 'Palestine'],
+    'lebanon': ['Lebanon'],
     'yemen': ['Yemen (North Yemen)'],
     'myanmar': ['Myanmar (Burma)'],
     'congo': ['DR Congo (Zaire)'],

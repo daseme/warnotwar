@@ -1613,7 +1613,7 @@
   },
   {
    "id": "gaza",
-   "name": "Gaza and Lebanon",
+   "name": "Gaza",
    "since": "2023",
    "point": [
     34.5,
@@ -1621,13 +1621,13 @@
    ],
    "label": [
     -9,
-    1,
+    5,
     "end"
    ],
    "band": "2",
-   "band_source": "UCDP counted 6,732 from October 2025 to September 2026, and 14,878 in all of 2025. Gaza's health ministry counts about 1,500 killed since the October 2025 ceasefire and Lebanon's more than 4,000 since March 2026; both are parties.",
-   "status": "Ceasefire in Gaza since October 2025, on paper. Israel holds most of Gaza and keeps striking. A new war with Hezbollah from March 2026; a shaky truce in Lebanon since April, with Israeli strikes in the south through October.",
-   "summary": "Hamas attacked Israel on 7 October 2023. Israel's war in Gaza followed, with a second front against Hezbollah in Lebanon. A ceasefire took hold in Gaza in October 2025, but Israel still holds most of the strip and strikes continue. After the U.S. and Israel struck Iran in February 2026, Hezbollah fired again and Israel invaded south Lebanon.",
+   "band_source": "UCDP counted 2,040 from October 2025 to September 2026, and 14,533 in all of 2025. Gaza's health ministry counts about 1,500 killed since the October 2025 ceasefire; it is a party.",
+   "status": "Ceasefire in Gaza since October 2025, on paper. Israel holds most of Gaza and keeps striking.",
+   "summary": "Hamas attacked Israel on 7 October 2023. Israel's war in Gaza followed. A ceasefire took hold in Gaza in October 2025, but Israel still holds most of the strip and strikes continue. The fighting with Hezbollah is entered under Lebanon.",
    "parties": [
     {
      "id": "isr",
@@ -1641,12 +1641,6 @@
      "name": "Hamas",
      "side": "B",
      "short": "Hamas"
-    },
-    {
-     "id": "hezb",
-     "name": "Hezbollah",
-     "side": "B",
-     "short": "Hezbollah"
     }
    ],
    "ties": [
@@ -1736,47 +1730,6 @@
       }
      ],
      "note": "Berlin paused approvals for weapons that could be used in Gaza from August to November 2025, then resumed after the ceasefire.",
-     "entered": "2026-10-11",
-     "checked": null
-    },
-    {
-     "backer": "iran",
-     "party": "hezb",
-     "kinds": [
-      "arms",
-      "money",
-      "training"
-     ],
-     "tier": "open",
-     "stance": null,
-     "since": null,
-     "since_precision": null,
-     "ended": null,
-     "evidence_to": "2026-08",
-     "sources": [
-      {
-       "class": "backer",
-       "text": "Statements by Iranian and Hezbollah leaders",
-       "date": null,
-       "url": null,
-       "publisher": "Iranian government"
-      },
-      {
-       "class": "opponent",
-       "text": "U.S. Treasury designation of Hezbollah as an Iranian proxy, August 2026",
-       "date": "2026-08",
-       "url": "https://home.treasury.gov/news/press-releases/sb0611",
-       "publisher": "U.S. Treasury"
-      },
-      {
-       "class": "press",
-       "text": "Al Jazeera, the page linked here",
-       "date": null,
-       "url": "https://www.aljazeera.com/news/2026/8/21/us-designates-hezbollah-an-iranian-proxy-sanctions-funding-network",
-       "publisher": "Al Jazeera"
-      }
-     ],
-     "note": "Hezbollah fired on Israel again in March 2026 after the U.S. and Israel struck Iran. In August 2026 the U.S. Treasury named Hezbollah an Iranian proxy and sanctioned a cash courier network.",
      "entered": "2026-10-11",
      "checked": null
     },
@@ -1913,7 +1866,171 @@
      "country": "PSE",
      "name": "West Bank",
      "why": "IDF raids, settler attacks"
+    }
+   ],
+   "areas_source": "Wikipedia 2026 in the State of Palestine; Portal current events Aug–Sep 2026",
+   "areas_url": "https://en.wikipedia.org/wiki/2026_in_the_State_of_Palestine",
+   "start": "2023-10",
+   "short": "Gaza",
+   "turns": [],
+   "ucdp": {
+    "against": "same band",
+    "note": "One conflict: Israel and the Palestinian groups, over a thousand battle deaths a year.",
+    "troops_note": "Our U.S. line carries the THAAD crew of about a hundred soldiers; UCDP does not code an air-defence crew as fighting."
+   },
+   "counted_by": [
+    "tracker",
+    "party"
+   ],
+   "region": "middle east"
+  },
+  {
+   "id": "lebanon",
+   "name": "Lebanon",
+   "since": "2023",
+   "point": [
+    35.5,
+    33.4
+   ],
+   "label": [
+    -9,
+    -5,
+    "end"
+   ],
+   "band": "2",
+   "band_source": "UCDP counted 4,692 from October 2025 to September 2026, and 345 in all of 2025. Lebanon's health ministry counts more than 4,000 since March 2026; it is a party.",
+   "status": "A new war with Hezbollah from March 2026; a shaky truce in Lebanon since April, with Israeli strikes in the south through October.",
+   "summary": "Israel's war in Gaza from October 2023 came with a second front against Hezbollah in Lebanon. After the U.S. and Israel struck Iran in February 2026, Hezbollah fired again and Israel invaded south Lebanon.",
+   "parties": [
+    {
+     "id": "isr",
+     "name": "Israel",
+     "state": "israel",
+     "side": "A",
+     "short": "Israel"
     },
+    {
+     "id": "hezb",
+     "name": "Hezbollah",
+     "side": "B",
+     "short": "Hezbollah"
+    }
+   ],
+   "ties": [
+    {
+     "backer": "usa",
+     "party": "isr",
+     "kinds": [
+      "arms",
+      "money"
+     ],
+     "tier": "open",
+     "stance": null,
+     "since": null,
+     "since_precision": null,
+     "ended": null,
+     "evidence_to": "2026-03",
+     "sources": [
+      {
+       "class": "backer",
+       "text": "Congressional Research Service, U.S. Foreign Aid to Israel (RL33222)",
+       "date": null,
+       "url": "https://www.congress.gov/crs-product/RL33222",
+       "publisher": "Congressional Research Service"
+      },
+      {
+       "class": "backer",
+       "publisher": "Defense Security Cooperation Agency",
+       "text": "Defense Security Cooperation Agency notice to Congress, transmittal 25-94, published in the Federal Register 17 March 2026: Israel asks to buy thirty AH-64E Apache attack helicopters, 3.8 billion dollars; the report reached Congress on 30 January 2026",
+       "date": "2026-03",
+       "url": "https://www.govinfo.gov/content/pkg/FR-2026-03-17/html/2026-05142.htm",
+       "entered": "2026-10-12"
+      }
+     ],
+     "entered": "2026-11-13",
+     "checked": null
+    },
+    {
+     "backer": "germany",
+     "party": "isr",
+     "kinds": [
+      "arms"
+     ],
+     "tier": "open",
+     "stance": null,
+     "since": null,
+     "since_precision": null,
+     "ended": null,
+     "evidence_to": "2026-03",
+     "sources": [
+      {
+       "class": "research",
+       "text": "SIPRI Arms Transfers Database",
+       "date": "2026-03",
+       "url": "https://www.sipri.org/databases/armstransfers",
+       "publisher": "SIPRI Arms Transfers Database"
+      },
+      {
+       "class": "backer",
+       "text": "German government export figures, 2026",
+       "date": "2026",
+       "url": null,
+       "publisher": "German Federal Ministry for Economic Affairs"
+      },
+      {
+       "class": "press",
+       "text": "Al Jazeera, the page linked here",
+       "date": null,
+       "url": "https://www.aljazeera.com/news/2026/7/27/german-arms-export-licences-for-israel-surge-with-focus-on-sub-project",
+       "publisher": "Al Jazeera"
+      }
+     ],
+     "entered": "2026-11-13",
+     "checked": null
+    },
+    {
+     "backer": "iran",
+     "party": "hezb",
+     "kinds": [
+      "arms",
+      "money",
+      "training"
+     ],
+     "tier": "open",
+     "stance": null,
+     "since": null,
+     "since_precision": null,
+     "ended": null,
+     "evidence_to": "2026-08",
+     "sources": [
+      {
+       "class": "backer",
+       "text": "Statements by Iranian and Hezbollah leaders",
+       "date": null,
+       "url": null,
+       "publisher": "Iranian government"
+      },
+      {
+       "class": "opponent",
+       "text": "U.S. Treasury designation of Hezbollah as an Iranian proxy, August 2026",
+       "date": "2026-08",
+       "url": "https://home.treasury.gov/news/press-releases/sb0611",
+       "publisher": "U.S. Treasury"
+      },
+      {
+       "class": "press",
+       "text": "Al Jazeera, the page linked here",
+       "date": null,
+       "url": "https://www.aljazeera.com/news/2026/8/21/us-designates-hezbollah-an-iranian-proxy-sanctions-funding-network",
+       "publisher": "Al Jazeera"
+      }
+     ],
+     "note": "Hezbollah fired on Israel again in March 2026 after the U.S. and Israel struck Iran. In August 2026 the U.S. Treasury named Hezbollah an Iranian proxy and sanctioned a cash courier network.",
+     "entered": "2026-10-11",
+     "checked": null
+    }
+   ],
+   "areas": [
     {
      "country": "LBN",
      "name": "South Lebanon",
@@ -1935,10 +2052,10 @@
      "why": "Hezbollah rockets, Golan, Meron"
     }
    ],
-   "areas_source": "Wikipedia 2026 Lebanon war; 2026 Israel–Lebanon ceasefire; 2026 in the State of Palestine; Portal current events Aug–Sep 2026",
+   "areas_source": "Wikipedia 2026 Lebanon war; 2026 Israel–Lebanon ceasefire; Portal current events Aug–Sep 2026",
    "areas_url": "https://en.wikipedia.org/wiki/2026_Lebanon_war",
    "start": "2023-10",
-   "short": "Gaza & Lebanon",
+   "short": "Lebanon",
    "turns": [
     {
      "month": "2026-03",
@@ -1947,8 +2064,7 @@
    ],
    "ucdp": {
     "against": "same band",
-    "note": "Two conflicts: Israel and the Palestinian groups, over a thousand battle deaths a year; Israel and Hezbollah, under a thousand in 2025 and 4,434 so far in 2026.",
-    "troops_note": "Our U.S. line carries the THAAD crew of about a hundred soldiers; UCDP does not code an air-defence crew as fighting."
+    "note": "One conflict: Israel and Hezbollah, under a thousand in 2025 and 4,593 so far in 2026."
    },
    "counted_by": [
     "tracker",
@@ -5155,9 +5271,9 @@
     4
    ],
    "band": "2",
-   "band_source": "UCDP counted 3,864 in the war itself from October 2025 to September 2026. By those states' own counts, 72 were killed in Israel, about two dozen U.S. troops, and dozens across the Gulf states. Lebanon's dead are counted under Gaza and Lebanon, and the dead of this war in Israel are counted here only.",
+   "band_source": "UCDP counted 3,864 in the war itself from October 2025 to September 2026. By those states' own counts, 72 were killed in Israel, about two dozen U.S. troops, and dozens across the Gulf states. Lebanon's dead are counted under Lebanon, and the dead of this war in Israel are counted here only.",
    "status": "War since 28 February 2026. A ceasefire from 8 April collapsed on 8 July. U.S. strikes again in September. Iran's attacks on shipping in the strait reached a record in October: Iran said seven tankers were hit on 22 October and two more struck mines on 24 October, and attacks on ships about doubled on September. The attacks went on into November. UKMTO counted eleven ships attacked in the seven days to 4 November, and 325 transits of the strait in the same week against 277 the week before. Iran's Revolutionary Guard said more tankers struck mines and caught fire between 3 and 8 November; no body outside the fight has said so, and CENTCOM said on 28 October that the strait's primary transit routes were clear of Iranian mines. The United States struck Qeshm Island in the strait on 2 November, the day before the midterm elections, and again on 6 November; unnamed U.S. officials said the first answered an Iranian missile that threatened shipping, and Trump said the second knocked out an anti-aircraft system. CENTCOM said on 7 November that it had disabled the cargo ship M/V Huda in the Gulf of Oman, that 147 commercial vessels had been turned around since July, and that it had set up a task force, Iron Gate, against weapons and sanctioned goods reaching Iran by land and across the Caspian Sea. Kpler put the oil leaving through the strait in the week to 28 October at 7.3 million barrels a day, more than 40 percent below the pre-war rate. Vortexa and Kpler both read Gulf exports on every route as lower in October than in September. Talks run through Qatar and Pakistan.",
-   "summary": "Israel and the United States struck Iran in June 2025 and again on 28 February 2026, killing Ali Khamenei. Iran shut the Strait of Hormuz on 4 March and fired missiles and drones at Israel, U.S. bases and every Gulf state. Hezbollah joined on 2 March and the Houthis seized the Bab al-Mandab coast in September; their wars are entered under Gaza and Lebanon and under Yemen. A Pakistan-brokered ceasefire held from April to July. U.S. forces cleared Iranian mines by late August, but traffic is still a fraction of normal. This site's other pages follow the oil.",
+   "summary": "Israel and the United States struck Iran in June 2025 and again on 28 February 2026, killing Ali Khamenei. Iran shut the Strait of Hormuz on 4 March and fired missiles and drones at Israel, U.S. bases and every Gulf state. Hezbollah joined on 2 March and the Houthis seized the Bab al-Mandab coast in September; their wars are entered under Lebanon and under Yemen. A Pakistan-brokered ceasefire held from April to July. U.S. forces cleared Iranian mines by late August, but traffic is still a fraction of normal. This site's other pages follow the oil.",
    "parties": [
     {
      "id": "us",
@@ -8116,6 +8232,12 @@
    "entry": "pakistan",
    "what": "UCDP's count for Pakistan and Afghanistan is now 5,652 for the past year, down from 5,793.",
    "why": "The count summed every death in both countries, which took in Afghanistan's own conflicts: its government against the Islamic State and other opponents. It now sums deaths in Pakistan, plus Pakistan's three conflicts wherever they are fought: against the Pakistani Taliban, against the Baloch groups, and against Afghanistan."
+  },
+  {
+   "date": "2026-11-13",
+   "entry": "gaza",
+   "what": "Gaza and Lebanon, one entry until now, is two wars: Gaza and Lebanon.",
+   "why": "UCDP counts two conflicts, Israel against the Palestinian groups and Israel against Hezbollah, and the fighting in Lebanon since March 2026 followed the strikes on Iran. Each war keeps the lines to its own sides. The U.S. and German lines to Israel are on both, on the same sources, without the air-defence crew in Lebanon."
   }
  ],
  "ucdp_note": "UCDP counts deaths in fighting between a state and an opponent, deaths in fighting between armed groups, and civilians killed deliberately. UCDP calls a conflict a war at 1,000 battle deaths in a year, and minor below that. The figures here are our own sums from data/ucdp.json, built by scripts/build_ucdp.py from the yearly file and the monthly candidate files, pulled after the 20th of each month. A flag is UCDP's own mark that a row still needs a check on its deaths, its sides, its place or its source.",
@@ -8218,9 +8340,9 @@
  },
  "esd_note": "The ties are also published as data/ties_esd.csv, one row per backer, side and year, in the shape of UCDP's External Support Dataset, which stops at 2017, so the two can be read end to end. Our sixteen kinds of help fold into its eight: troops, air strikes, air defence and police count as troops, since the state's own forces engage; bases, transit, shelter and hosting as access to territory; weapons, drones and parts as weapons; oil as materiel; backing in public and at the UN as other. Alleged is our fourth tier.",
  "source_counts": {
-  "ties": 111,
-  "live": 101,
-  "open": 75,
+  "ties": 113,
+  "live": 103,
+  "open": 77,
   "shown": 11,
   "reported": 22,
   "claimed": 3,
@@ -8232,11 +8354,11 @@
   "single_publisher": 0,
   "prewindow": 9,
   "undated": 0,
-  "weapons": 48,
-  "weapons_sipri": 4,
-  "sources": 418,
-  "sources_unlinked": 34,
-  "sources_undated": 56,
+  "weapons": 50,
+  "weapons_sipri": 5,
+  "sources": 423,
+  "sources_unlinked": 35,
+  "sources_undated": 58,
   "sources_unopened": 57,
   "checked": 0,
   "one_class": 8

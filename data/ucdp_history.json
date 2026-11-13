@@ -3295,71 +3295,143 @@
      "window": {
       "from": "2025-10",
       "to": "2026-09",
-      "low": 6679,
-      "best": 6732,
-      "high": 6598,
+      "low": 1985,
+      "best": 2040,
+      "high": 2153,
       "by_type": {
-       "state-based": 6672,
-       "non-state": 5,
+       "state-based": 1981,
+       "non-state": 4,
        "one-sided": 55
       }
      },
      "last_year": {
       "year": 2025,
-      "low": 14262,
-      "best": 14878,
-      "high": 15561
+      "low": 13917,
+      "best": 14533,
+      "high": 15214
      },
      "this_year": {
       "year": 2026,
       "to": "2026-09",
-      "low": 5769,
-      "best": 5787,
-      "high": 5599
+      "low": 1159,
+      "best": 1179,
+      "high": 1238
      },
-     "basis": "countries: Israel, Lebanon, Palestine; less the conflicts counted under The Iran war",
+     "basis": "countries: Israel, Palestine; less the conflicts counted under The Iran war",
      "months": {
       "best": [
-       696,
-       170,
-       79,
-       182,
-       147,
-       3192,
-       866,
-       472,
-       430,
-       199,
-       128,
-       171
+       666,
+       129,
+       66,
+       160,
+       120,
+       99,
+       133,
+       126,
+       130,
+       178,
+       103,
+       130
       ],
       "low": [
-       671,
-       162,
-       77,
-       180,
-       147,
-       3189,
-       861,
-       469,
-       428,
-       198,
-       127,
-       170
+       641,
+       121,
+       64,
+       158,
+       120,
+       94,
+       128,
+       123,
+       128,
+       177,
+       102,
+       129
       ],
       "high": [
-       729,
-       186,
-       84,
-       186,
-       149,
-       2901,
-       924,
-       476,
-       438,
-       199,
-       153,
-       173
+       699,
+       145,
+       71,
+       164,
+       122,
+       106,
+       140,
+       130,
+       138,
+       178,
+       128,
+       132
+      ]
+     }
+    },
+    "lebanon": {
+     "window": {
+      "from": "2025-10",
+      "to": "2026-09",
+      "low": 4694,
+      "best": 4692,
+      "high": 4445,
+      "by_type": {
+       "state-based": 4691,
+       "non-state": 1,
+       "one-sided": 0
+      }
+     },
+     "last_year": {
+      "year": 2025,
+      "low": 345,
+      "best": 345,
+      "high": 347
+     },
+     "this_year": {
+      "year": 2026,
+      "to": "2026-09",
+      "low": 4610,
+      "best": 4608,
+      "high": 4361
+     },
+     "basis": "countries: Lebanon; less the conflicts counted under The Iran war",
+     "months": {
+      "best": [
+       30,
+       41,
+       13,
+       22,
+       27,
+       3093,
+       733,
+       346,
+       300,
+       21,
+       25,
+       41
+      ],
+      "low": [
+       30,
+       41,
+       13,
+       22,
+       27,
+       3095,
+       733,
+       346,
+       300,
+       21,
+       25,
+       41
+      ],
+      "high": [
+       30,
+       41,
+       13,
+       22,
+       27,
+       2795,
+       784,
+       346,
+       300,
+       21,
+       25,
+       41
       ]
      }
     },

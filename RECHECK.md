@@ -50,7 +50,7 @@ Nothing dated October 2025 or later was found on Indian arms reaching the Myanma
 
 Blocked: Web search budget ran out after four searches on this tie; none returned 2025 or 2026 reporting.
 
-## Iran to Hamas in Gaza & Lebanon
+## Iran to Hamas in Gaza
 
 `gaza/iran/hamas` · holds: **unknown** · in the queue for: pre-window evidence to 2021-01; unlinked source: U.S. Treasury designations
 
@@ -66,7 +66,7 @@ The UN document system shows a symbol page for S/2024/731 but its viewer returne
 
 Blocked: docs.un.org/undocs.org viewer returned no document text; digitallibrary.un.org search returned 403 · dia.mil page returned 403 on re-fetch · no in-window source checked for lack of search budget
 
-## Qatar to Hamas in Gaza & Lebanon
+## Qatar to Hamas in Gaza
 
 `gaza/qatar/hamas` · holds: **unknown** · in the queue for: unlinked source: Qatari government statements; Hamas political office in Doha
 
@@ -90,7 +90,7 @@ Brig. Gen. Ogeleka of the Army Space Command announced the 43 TB2s under Project
 
 Blocked: search budget ran out before army.mil.ng or Baykar delivery statements could be sought
 
-## U.S. to Israel in Gaza & Lebanon
+## U.S. to Israel in Gaza
 
 `gaza/usa/isr` · holds: **unknown** · in the queue for: pre-window evidence to 2024-12; unlinked source: Congressional Research Service on the THAAD system (IF12645)
 
@@ -360,7 +360,7 @@ EU states agreed on 25 September 2026 the terms for releasing 6.6 billion euros 
 
 Blocked: consilium.europa.eu press releases return 403 to the fetcher, so the Council's own page on the package was not read
 
-## Germany to Israel in Gaza & Lebanon
+## Germany to Israel in Gaza
 
 `gaza/germany/isr` · holds: **yes** · in the queue for: unlinked source: SIPRI Arms Transfers Database; German government export figures, 2026
 
@@ -384,9 +384,9 @@ Pakistan's deputy permanent representative Usman Jadoon told the General Assembl
 
 Blocked: No press.un.org meetings-coverage page and no pakun.org text for the October 2026 statement surfaced before the search budget ran out.
 
-## Iran to Hezbollah in Gaza & Lebanon
+## Iran to Hezbollah in Lebanon
 
-`gaza/iran/hezb` · holds: **yes** · in the queue for: unlinked source: Statements by Iranian and Hezbollah leaders; U.S. Treasury designation of Hezbollah as an Iranian proxy, 
+`lebanon/iran/hezb` · holds: **yes** · in the queue for: unlinked source: Statements by Iranian and Hezbollah leaders; U.S. Treasury designation of Hezbollah as an Iranian proxy, 
 
 The Treasury release is dated 20 August 2026: OFAC re-designated Hezbollah citing the IRGC-Qods Force's coordination of its attacks and role in its decisions, and sanctioned ten people moving cash to Hezbollah by courier between Lebanon, Turkey, the UAE and Iran. No statement by Iranian or Hezbollah leaders was found.
 
@@ -598,7 +598,7 @@ Fana reported the 18 August 2021 signing of water and military financial coopera
 
 Blocked: the pmo.gov.et PDF returned only its title to the fetcher; the list of four agreements comes from the search snippet · no Ethiopian military statement on drone use was found before the search budget ran out
 
-## Türkiye to Hamas in Gaza & Lebanon
+## Türkiye to Hamas in Gaza
 
 `gaza/turkey/hamas` · holds: **yes** · in the queue for: unlinked source: Turkish government statements; Erdogan received Hamas leaders in Istanbul, April 2026
 
@@ -747,3 +747,11 @@ Blocked: allafrica.com copy of the UPDF statement (202503130037) returned 403
 The CNN story by Ivana Kottasova ran on 11 September 2026 (CNN Newsource copy on KEYT): about 15 Ukrainian specialists in Mali train and guide the Azawad Liberation Front's drone operations, and one said they helped take Kidal; Ukraine's intelligence service referred CNN to earlier comments. Russia's Defence Ministry accused Kyiv of a role in the Kidal attack.
 
 Blocked: No cnn.com URL for the story came up in search; the KEYT copy carries the CNN byline.
+
+## U.S. to Israel in Lebanon
+
+`lebanon/usa/isr` · holds: **unknown** · in the queue for: entered 2026-11-13 when Gaza and Lebanon became two wars. The line copies the Gaza line's general sources (CRS on U.S. aid to Israel, the March 2026 Apache notice); neither names Lebanon. Find a source that ties U.S. arms to the fighting in Lebanon, or decide the general sources are enough.
+
+## Germany to Israel in Lebanon
+
+`lebanon/germany/isr` · holds: **unknown** · in the queue for: entered 2026-11-13 on the same split. The sources (SIPRI, German export figures, Al Jazeera 27 July 2026) are about German arms to Israel in general; none names Lebanon.

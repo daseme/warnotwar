@@ -20,9 +20,9 @@
    "high_below_best": 53
   },
   "gaza": {
-   "rows": 30,
-   "low_above_best": 932,
-   "high_below_best": 2162
+   "rows": 23,
+   "low_above_best": 927,
+   "high_below_best": 1859
   },
   "gulf": {
    "rows": 1,
@@ -33,6 +33,11 @@
    "rows": 1,
    "low_above_best": 0,
    "high_below_best": 1
+  },
+  "lebanon": {
+   "rows": 7,
+   "low_above_best": 5,
+   "high_below_best": 303
   },
   "myanmar": {
    "rows": 2,
@@ -129,7 +134,7 @@
   {"id": 570576, "candidate": false, "country": "Russia (Soviet Union)", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2025-02-01", "to": "2025-02-28", "low": 488, "best": 488, "high": 51, "code_status": "Clear", "entries": ["ukraine"]},
   {"id": 551367, "candidate": false, "country": "Russia (Soviet Union)", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2024-08-01", "to": "2024-08-31", "low": 409, "best": 586, "high": 185, "code_status": "Clear", "entries": ["ukraine"]},
   {"id": 512763, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2023-12-01", "to": "2023-12-31", "low": 395, "best": 395, "high": 90, "code_status": "Clear", "entries": ["ukraine"]},
-  {"id": 624231, "candidate": true, "country": "Lebanon", "dyad": "Government of Israel - Hezbollah", "from": "2026-03-02", "to": "2026-07-31", "low": 2240, "best": 2236, "high": 1938, "code_status": "Check deaths", "entries": ["gaza"]},
+  {"id": 624231, "candidate": true, "country": "Lebanon", "dyad": "Government of Israel - Hezbollah", "from": "2026-03-02", "to": "2026-07-31", "low": 2240, "best": 2236, "high": 1938, "code_status": "Check deaths", "entries": ["lebanon"]},
   {"id": 467187, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2023-01-24", "to": "2023-02-06", "low": 0, "best": 299, "high": 0, "code_status": "Clear", "entries": ["ukraine"]},
   {"id": 625182, "candidate": true, "country": "Iran", "dyad": "Government of Iran - Government of Israel, Government of United States of America", "from": "2026-02-28", "to": "2026-04-07", "low": 1781, "best": 1769, "high": 1533, "code_status": "Check deaths", "entries": ["gulf"]},
   {"id": 509388, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2023-06-01", "to": "2023-06-30", "low": 974, "best": 974, "high": 729, "code_status": "Clear", "entries": ["ukraine"]},
