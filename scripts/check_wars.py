@@ -178,9 +178,9 @@ def main():
             fails.append(f"the example has {len(sides)} sides; step 4 sets one side against the other")
         if len({a['country'] for a in eg['areas']}) < 2:
             fails.append('the example is shaded in one country; step 2 says "countries"')
-        first = [p for p in eg['parties'] if p['side'] == sides[0]]
-        if len(first) != 1 or 'allied groups' not in first[0]['name']:
-            fails.append("step 4 says the first side has allies that are armed groups; that side's name no longer says \"allied groups\"")
+        allied = [p for p in eg['parties'] if 'allied groups' in p['name']]
+        if len(allied) != 1 or sum(1 for p in eg['parties'] if p['side'] == allied[0]['side']) != 1:
+            fails.append("step 4 says one state has allies that are armed groups; no side of one party is named \"... and allied groups\" any more")
         # step 5: a backer with two lines has one on the record and one reported, as the sentence says
         by = {}
         for t in live:

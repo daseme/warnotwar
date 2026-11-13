@@ -5160,25 +5160,25 @@
    "summary": "Israel and the United States struck Iran in June 2025 and again on 28 February 2026, killing Ali Khamenei. Iran shut the Strait of Hormuz on 4 March and fired missiles and drones at Israel, U.S. bases and every Gulf state. Hezbollah joined on 2 March and the Houthis seized the Bab al-Mandab coast in September; their wars are entered under Gaza and Lebanon and under Yemen. A Pakistan-brokered ceasefire held from April to July. U.S. forces cleared Iranian mines by late August, but traffic is still a fraction of normal. This site's other pages follow the oil.",
    "parties": [
     {
-     "id": "irn",
-     "name": "Iran and allied groups",
-     "state": "iran",
-     "side": "A",
-     "short": "Iran"
-    },
-    {
      "id": "us",
      "name": "United States",
      "state": "usa",
-     "side": "B",
+     "side": "A",
      "short": "U.S."
     },
     {
      "id": "isr",
      "name": "Israel",
      "state": "israel",
-     "side": "B",
+     "side": "A",
      "short": "Israel"
+    },
+    {
+     "id": "irn",
+     "name": "Iran and allied groups",
+     "state": "iran",
+     "side": "B",
+     "short": "Iran"
     }
    ],
    "ties": [
