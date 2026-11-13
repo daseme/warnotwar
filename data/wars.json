@@ -105,7 +105,7 @@
       "id": "sides",
       "name": "who fights",
       "title": "Who fights",
-      "body": "In the Iran war {eg_sides_word} sides fight: {eg_side_a} against {eg_side_b}. All {eg_parties_word} countries are [[state|states]]. Iran also has allies that are not states, such as Hezbollah and the Houthis. They are [[armed group|armed groups]]. Of the {ucdp_n} armed conflicts UCDP counted in {ucdp_year}, {interstate} were between states. In the other {intra}, a government fought an armed group.",
+      "body": "In the Iran war {eg_sides_word} sides fight: {eg_side_b} against {eg_side_a}. All {eg_parties_word} countries are [[state|states]]. Iran also has allies that are not states, such as Hezbollah and the Houthis. They are [[armed group|armed groups]]. Of the {ucdp_n} armed conflicts UCDP counted in {ucdp_year}, {interstate} were between states. In the other {intra}, a government fought an armed group.",
       "units": {"filled": "{interstate} between states", "rest": "{intra} a government against an armed group", "caption": "UCDP's {ucdp_n} armed conflicts in {ucdp_year}, one small box each"},
       "sources": [
         {"from": "entry.gulf.summary"},
