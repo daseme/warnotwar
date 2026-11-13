@@ -11,7 +11,6 @@
   "quotes": {
     "areas_drone": {"from": "conflicts.areas_rule", "pick": "long-range drone"},
     "areas_border": {"from": "conflicts.areas_rule", "pick": "not front lines"},
-    "eg_others": {"from": "entry.gulf.band_source", "pick": "Iran counts"},
     "band_ranges": {"from": "conflicts.band_note", "pick": " means "}
   },
   "legend_title": "key",
@@ -83,7 +82,6 @@
       "body": "The dots are all one size so far. Next they show deaths in the past year.",
       "guess": {"type": "pick", "question": "Which of these three killed the most people in the past year?", "options": ["ukraine", "sudan", "gulf"]},
       "reveal": "{top_name} had the most: {top_n}. UCDP counted {o1_n} in {o1_name} and {o2_n} in {o2_name}, from {win_from} to {win_to}. UCDP sorts deaths into three kinds, and each bar shows them. In {os_name}, {os_n} of the {os_total} were civilians killed deliberately. The dots now show deaths in three [[band|bands]].",
-      "reveal_eg": "In the Iran war the states involved give their own counts. {eg_others}",
       "chart_caption": "Deaths by war, {win_from} to {win_to}, UCDP's best count. Under each war that began before {win_from}: its count since it began.",
       "whole_line": "{whole_n} since {whole_from}",
       "kinds": {"state-based": "fighting that involves a state", "non-state": "fighting between armed groups", "one-sided": "civilians killed deliberately"},
