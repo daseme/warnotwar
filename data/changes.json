@@ -3353,6 +3353,45 @@
    "tie": "myanmar/china/resist",
    "kind": "tie",
    "what": "China to resistance in Myanmar: removed"
+  },
+  {
+   "date": "2026-11-13",
+   "commit": "07daf08",
+   "entry": "lebanon",
+   "kind": "entry",
+   "what": "Lebanon entered"
+  },
+  {
+   "date": "2026-11-13",
+   "commit": "07daf08",
+   "entry": "lebanon",
+   "tie": "lebanon/usa/isr",
+   "kind": "tie",
+   "what": "U.S. to Israel in Lebanon: entered, on the record"
+  },
+  {
+   "date": "2026-11-13",
+   "commit": "07daf08",
+   "entry": "lebanon",
+   "tie": "lebanon/germany/isr",
+   "kind": "tie",
+   "what": "Germany to Israel in Lebanon: entered, on the record"
+  },
+  {
+   "date": "2026-11-13",
+   "commit": "07daf08",
+   "entry": "lebanon",
+   "tie": "lebanon/iran/hezb",
+   "kind": "tie",
+   "what": "Iran to Hezbollah in Lebanon: entered, on the record"
+  },
+  {
+   "date": "2026-11-13",
+   "commit": "07daf08",
+   "entry": "gaza",
+   "tie": "gaza/iran/hezb",
+   "kind": "tie",
+   "what": "Iran to Hezbollah in Gaza & Lebanon: removed"
   }
  ]
 }
