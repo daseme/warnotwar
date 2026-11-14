@@ -793,8 +793,9 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const egIso = new Set(eg.areas.map(a => a.country));
   const egLandBox = (() => { const pts = []; for (const f of topojson.feature(world, world.objects.countries).features) if (egIso.has(f.id)) { const b = geoPath.bounds(f); pts.push(b[0], b[1]); } return pts; })();
   /* country names for the steps that ask for them: the site's own name for a state where it has one, the base map's otherwise; */
+  const warIso = new Set(); for (const c of D.conflicts) for (const a of c.areas || []) warIso.add(a.country);
   const isoName = {}; for (const b of D.backers) if (typeof b.iso === 'string') isoName[b.iso] = b.name.length <= 14 ? b.name : b.short;
-  const cnames = topojson.feature(world, world.objects.countries).features.map(f => { const [x, y] = geoPath.centroid(f); return { name: isoName[f.id] || (f.properties || {}).name, x, y, a: geoPath.area(f), eg: egIso.has(f.id) }; }).filter(n => n.name && isFinite(n.x)).sort((a, b) => b.eg - a.eg || b.a - a.a);   /* the example's own countries first, then the rest, each by size */
+  const cnames = topojson.feature(world, world.objects.countries).features.map(f => { const [x, y] = geoPath.centroid(f); return { name: isoName[f.id] || (f.properties || {}).name, x, y, a: geoPath.area(f), eg: egIso.has(f.id), war: warIso.has(f.id) }; }).filter(n => n.name && isFinite(n.x) && !/Antarctic|Falkland/.test(n.name)).sort((a, b) => b.eg - a.eg || b.war - a.war || b.a - a.a);   /* the example's own countries first, then every country with a war in it, then the rest, each by size */
   const egPad = egIso.size > 1 ? 0.08 : 0.42;
   const gAreas = el('g', {}, gRoot), gNames = el('g', {}, gRoot), gArcs = el('g', {}, gRoot), gParties = el('g', {}, gRoot), gBackers = el('g', {}, gRoot), gMarks = el('g', {}, gRoot);
 
@@ -964,7 +965,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
 
   /* each step's map: what is drawn and where the camera is */
   function sceneFor(id) {
-    const sc = { view: 'world', marks: true, sized: sizedNow(), areas: 'faint', squares: false, arcs: null, chips: null, focus: null, labels: null, chart: false };
+    const sc = { view: 'world', marks: true, sized: sizedNow(), areas: 'faint', squares: false, arcs: null, chips: null, focus: null, labels: null, chart: false, names: {} };   /* every map names its countries */
     switch (id) {
       case 'start': Object.assign(sc, { marks: false, areas: 'none' }); break;
       case 'where': Object.assign(sc, { areas: 'none', seq: true }); break;
@@ -1080,7 +1081,10 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     if (sc.names) {
       const fit = (sx, sy, w, start) => { const box = start ? [sx - 2, sy - 6, sx + w + 2, sy + 6] : [sx - w / 2 - 2, sy - 6, sx + w / 2 + 2, sy + 6]; if (box[0] < 2 || box[2] > svg.clientWidth - 2 || box[1] < 2 || box[3] > svg.clientHeight - 2 || nameBoxes.some(q => box[0] < q[2] && box[2] > q[0] && box[1] < q[3] && box[3] > q[1])) return false; nameBoxes.push(box); return true; };
       for (const pl of sc.names.places || []) { const [x, y] = project(pl.at[0], pl.at[1]), [sx, sy] = toScreen(x, y, target); if (fit(sx, sy, pl.name.length * 4.9, true)) el('text', {}, scaled(x, y, gNames, { class: 'cname place' }, uT)).textContent = pl.name; }
-      for (const n of cnames) { const [sx, sy] = toScreen(n.x, n.y, target); if (fit(sx, sy, n.name.length * 6.2)) el('text', {}, scaled(n.x, n.y, gNames, { class: 'cname' }, uT)).textContent = n.name; }
+      /* a country's name moves below or above a war's dot before it is dropped, so the countries at war keep their names */
+      const dots = sc.marks ? D.conflicts.filter(c => markNodes[c.id] && markNodes[c.id].classList.contains('shown')).map(c => { const [mx, my] = toScreen(c.px, c.py, target); return [mx - 7, my - 7, mx + 7, my + 7]; }) : [];
+      const clear = (sx, sy, w) => !dots.some(q => sx - w / 2 - 2 < q[2] && sx + w / 2 + 2 > q[0] && sy - 6 < q[3] && sy + 6 > q[1]);
+      for (const n of cnames) { const [sx, sy] = toScreen(n.x, n.y, target), w = n.name.length * 6.2; for (const dy of [0, 15, -15]) { if (clear(sx, sy + dy, w) && fit(sx, sy + dy, w)) { el('text', dy ? { y: dy } : {}, scaled(n.x, n.y, gNames, { class: 'cname' }, uT)).textContent = n.name; break; } } }
     }
     /* the sides, as chips beside the war */
     gParties.innerHTML = '';

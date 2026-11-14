@@ -787,6 +787,8 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   $('#excluded').innerHTML = (D.excluded || []).map(x => `<li><b>${esc(x.name)}.</b> ${esc(x.why)}</li>`).join('');
   /* the UCDP comparison */
   const ucdpNum = v => (v == null ? '—' : Number(v).toLocaleString('en-US'));
+  /* the rule puts a war on the map: its largest named conflict, by UCDP's battle deaths in the window */
+  const ruleLine = c => { const u = uOf(c); const k = u && (u.conflicts || []).filter(k => k.type === 'state-based' && !/^unnamed groups/.test(k.name)).sort((a, b) => b.best_window - a.best_window)[0]; return k ? `<div class="s" style="margin-top:8px">On the map: UCDP counted ${ucdpNum(k.best_window)} killed in battle in this war's main conflict from ${esc(monthWord(u.window.from))} to ${esc(monthWord(u.window.to))}. Its rule for a war is 1,000. The deaths below are all of the war's dead.</div>` : ''; };
   const ucdpRange = x => x ? ucdpNum(x.best) : '—';
   const uOf = c => (U && U.entries && U.entries[c.id]) || null;
   const pct = v => (v == null ? '—' : Math.round(v * 100) + '%');
@@ -1314,6 +1316,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
         <div class="s">${esc(c.status)}${c.band ? ' &middot; ' + esc(D.bands[c.band]) : c.kind === 'pressure' ? '' : ' &middot; deaths not entered'}</div>
         <div class="s" style="margin-top:6px">${esc(tieSummary(c))}.</div>
         <p>${esc(c.summary)}</p>
+        ${ruleLine(c)}
         ${c.band_source ? `<div class="s" style="margin-top:8px">Deaths: ${esc(c.band_source)}${Array.isArray(c.counted_by) && D.band_classes ? ' Counted by ' + esc(listNames(c.counted_by.map(k => D.band_classes[k] || k))) + '.' : ''}</div>` : ''}
         ${uOf(c) ? `<div class="s" style="margin-top:6px">UCDP: ${ucdpRange(uOf(c).last_year)} in ${uOf(c).last_year.year}; ${ucdpNum(uOf(c).this_year.best)} from January to ${esc(monthWord(uOf(c).this_year.to))}; ${ucdpRange(uOf(c).window)} from ${esc(monthWord(uOf(c).window.from))} to ${esc(monthWord(uOf(c).window.to))}. ${esc((c.ucdp && c.ucdp.note) || '')}</div>` : ''}
         ${c.actor_statement ? `<div class="s" style="margin-top:8px">What the acting state says: ${esc(c.actor_statement)}</div>` : ''}

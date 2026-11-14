@@ -1,7 +1,7 @@
 {
  "as_of": "2026-11-08",
  "status": "entered",
- "rule": "A war is on the map if the Uppsala Conflict Data Program counted 1,000 or more people killed in battle in it in the past twelve months. That is UCDP's rule for calling a conflict a war. UCDP applies it by calendar year; the map applies it to the twelve months its counts cover.",
+ "rule": "A war is on the map if the Uppsala Conflict Data Program counted 1,000 or more people killed in battle in it in the past twelve months. That is UCDP's rule for calling a conflict a war. UCDP applies it by calendar year; the map applies it to the twelve months its counts cover. The rule puts a war on the map. The dot then shows all of that war's dead on UCDP's count: those killed in battle, in fighting between armed groups, and civilians killed deliberately, in the main conflict and the smaller ones fought beside it.",
  "color_rule": "Five states are colored: those that fight in or back a side in the most wars. The rest are gray and labeled.",
  "tiers": {
   "open": {
@@ -46,7 +46,7 @@
   "2": "thousands a year",
   "1": "about a thousand a year"
  },
- "band_note": "Deaths are shown as a band for the past year, because the counters disagree. Every war's band is set from UCDP's count for the same period, October 2025 to the last month UCDP has reached, so the bands can be compared; each entry gives the other counts beside it, each with its own period. About 1,000 means 500 to 1,500 deaths; thousands, 1,500 to 10,000; tens of thousands, more than 10,000. Where another counter lands below UCDP, the map draws the lower band and the card says so. A party's own figure is a claim and never sets the band on its own. Where two counts differ by more than a factor of two, the card gives both.",
+ "band_note": "Deaths are shown as a band for the past year, because every count is an estimate. Every war's band is set from UCDP's count for the same period, October 2025 to the last month UCDP has reached, so the bands can be compared. About 1,000 means 500 to 1,500 deaths; thousands, 1,500 to 10,000; tens of thousands, more than 10,000. A card may give another counter's figure beside UCDP's, with its own period. It does not change the band. A party's own figure is a claim.",
  "label_note": "label: [dx, dy, anchor] offset of the war's name from its glyph, in map units; anchor is start, middle or end",
  "backers": [
   {
@@ -2463,7 +2463,7 @@
     2
    ],
    "band": "2",
-   "band_source": "UCDP counted 1,932 from October 2025 to September 2026. ACLED counted about 15,000 deaths in 2025; UCDP counted 2,317 for that year. The band follows the lower count.",
+   "band_source": "UCDP counted 1,932 from October 2025 to September 2026. ACLED counted about 15,000 deaths in 2025; UCDP counted 2,317 for that year. The band follows UCDP's count.",
    "status": "Civil war since the coup. Min Aung Hlaing became president in April 2026 after a staged election. The army has taken back some towns. Resistance still holds much of the border regions.",
    "summary": "The army took power in February 2021. Ethnic armies and new resistance forces fight it across most of the country. The Arakan Army holds almost all of Rakhine. China has pressed the northern armies to stop and give towns back.",
    "parties": [
@@ -3354,7 +3354,7 @@
    ],
    "ucdp": {
     "against": "same band",
-    "note": "UCDP counts Mali against JNIM as a war in 2025, with other conflicts beside it: Islamic State, the Tuareg rebels, and groups killing civilians."
+    "note": "One war on UCDP's count, Mali against JNIM, with smaller conflicts beside it: Islamic State, the Tuareg rebels, and groups killing civilians."
    },
    "counted_by": [
     "tracker"
@@ -3665,7 +3665,7 @@
    "turns": [],
    "ucdp": {
     "against": "same band",
-    "note": "UCDP counts Burkina Faso against JNIM as a war in 2025 and again so far in 2026."
+    "note": "One war on UCDP's count, Burkina Faso against JNIM."
    },
    "counted_by": [
     "tracker"
@@ -6072,7 +6072,7 @@
     "end"
    ],
    "band": "2",
-   "band_source": "UCDP counted 7,734 from October 2025 to September 2026. ACLED counted about 12,000 conflict deaths in 2025. The band follows the lower count.",
+   "band_source": "UCDP counted 7,734 from October 2025 to September 2026. ACLED counted about 12,000 conflict deaths in 2025. The band follows UCDP's count.",
    "status": "Jihadists in the northeast, armed bandit groups in the northwest, and Sahel jihadists now raiding across the Niger border. U.S. drone strikes in Sokoto since December 2025.",
    "summary": "Boko Haram and Islamic State West Africa fight the army in the northeast. In the northwest, bandit groups kill and kidnap on a similar scale.",
    "parties": [

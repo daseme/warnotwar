@@ -83,7 +83,7 @@
       "title": "How many died",
       "body": "The dots are all one size so far. Next they show deaths in the past year.",
       "guess": {"type": "pick", "question": "Which of these three killed the most people in the past year?", "options": ["ukraine", "sudan", "gulf"]},
-      "reveal": "{top_name} had the most deaths: {top_n}. UCDP counted {o1_n} in {o1_name} and {o2_n} in {o2_name}, from {win_from} to {win_to}. Each bar splits the deaths into UCDP's three kinds. In {os_name}, {os_n} of the {os_total} were civilians killed deliberately. The dots now show deaths in three [[band|bands]].",
+      "reveal": "{top_name} had the most deaths: {top_n}. UCDP counted {o1_n} in {o1_name} and {o2_n} in {o2_name}, from {win_from} to {win_to}. The rule that puts a war on the map counts only deaths in battle. The dots count all of a war's dead. Each bar splits the deaths into UCDP's three kinds. In {os_name}, {os_n} of the {os_total} were civilians killed deliberately. The dots now show deaths in three [[band|bands]].",
       "chart_caption": "Deaths by war, {win_from} to {win_to}, UCDP's best count. Below each war that began earlier: its total since it began.",
       "whole_line": "{whole_n} since {whole_from}",
       "kinds": {"state-based": "fighting that involves a state", "non-state": "fighting between armed groups", "one-sided": "civilians killed deliberately"},
@@ -120,7 +120,7 @@
       "multi": "{name} has {count} lines. The next step says why.",
       "multi_many": "{names} have {per}. The next step says why.",
       "toggle": ["the Iran war", "every war"],
-      "toggle_text": "Every war on this map has an outside state that fights in it or backs a side. Across the {wars} wars, {lines_n} lines run from {backers_n} backers.",
+      "toggle_text": "Across the {wars} wars, {lines_n} lines run from {backers_n} backers.",
       "sources": [
         {"text": "Every line, with its sources, is in the table on the full map.", "url": "/conflicts.html#all"}
       ]
