@@ -3674,6 +3674,45 @@
    "tie": "southsudan/uganda/ssgov",
    "kind": "tie",
    "what": "Uganda to government in South Sudan: removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "12f2177",
+   "entry": "balochistan",
+   "kind": "entry",
+   "what": "Balochistan entered"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "12f2177",
+   "entry": "balochistan",
+   "tie": "balochistan/china/pak",
+   "kind": "tie",
+   "what": "China to Pakistan in Balochistan: entered, reported"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "12f2177",
+   "entry": "balochistan",
+   "tie": "balochistan/usa/pak",
+   "kind": "tie",
+   "what": "U.S. to Pakistan in Balochistan: entered, on the record"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "12f2177",
+   "entry": "balochistan",
+   "tie": "balochistan/india/baloch",
+   "kind": "tie",
+   "what": "India to Baloch in Balochistan: entered, alleged"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "12f2177",
+   "entry": "pakistan",
+   "tie": "pakistan/india/afg",
+   "kind": "tie",
+   "what": "India to Afghanistan in Pakistan: removed"
   }
  ]
 }
