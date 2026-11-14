@@ -130,6 +130,15 @@ def main():
     need('ucdp_year', lambda: last_y['year'])
     need('ucdp_wars', lambda: last_y['wars'])
     need('interstate', lambda: last_y['interstate'])
+    # the map's rule: every war has a conflict with 1,000 or more battle deaths in the window on UCDP's count,
+    # and no country off the map has that many
+    for c in wars:
+        top = max([k['best_window'] for k in (U['entries'].get(c['id']) or {}).get('conflicts') or [] if k.get('type') == 'state-based'] or [0])
+        if top < 1000:
+            fails.append(f"{c['id']}: no conflict with 1,000 battle deaths in the window on UCDP's count (highest {top}); the map's rule takes it off")
+    for x in U.get('not_on_map') or []:
+        if (x.get('by_type') or {}).get('state-based', 0) >= 1000:
+            fails.append(f"{x['country']}: {x['by_type']['state-based']} battle deaths in the window and not on the map; check its conflicts against the map's rule")
     need('acd_version', lambda: L['versions']['conflicts'])
 
     rule = str(L.get('rule') or '')

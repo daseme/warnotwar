@@ -9,6 +9,11 @@
   "candidate_broken": 64
  },
  "entries": {
+  "burkinafaso": {
+   "rows": 58,
+   "low_above_best": 60,
+   "high_below_best": 80
+  },
   "congo": {
    "rows": 33,
    "low_above_best": 76,
@@ -29,15 +34,15 @@
    "low_above_best": 12,
    "high_below_best": 236
   },
-  "haiti": {
-   "rows": 1,
-   "low_above_best": 0,
-   "high_below_best": 1
-  },
   "lebanon": {
    "rows": 7,
    "low_above_best": 5,
    "high_below_best": 303
+  },
+  "mali": {
+   "rows": 33,
+   "low_above_best": 7,
+   "high_below_best": 38
   },
   "myanmar": {
    "rows": 2,
@@ -54,20 +59,10 @@
    "low_above_best": 62,
    "high_below_best": 154
   },
-  "sahel": {
-   "rows": 105,
-   "low_above_best": 69,
-   "high_below_best": 130
-  },
   "somalia": {
    "rows": 15,
    "low_above_best": 5,
    "high_below_best": 10
-  },
-  "syria": {
-   "rows": 507,
-   "low_above_best": 164,
-   "high_below_best": 414
   },
   "ukraine": {
    "rows": 487,
@@ -275,7 +270,7 @@
   {"id": 490113, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2023-08-10", "to": "2023-08-10", "low": 47, "best": 47, "high": 0, "code_status": "Clear", "entries": ["ukraine"]},
   {"id": 499090, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2023-10-03", "to": "2023-10-03", "low": 47, "best": 47, "high": 0, "code_status": "Clear", "entries": ["ukraine"]},
   {"id": 512228, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2023-12-15", "to": "2023-12-15", "low": 47, "best": 47, "high": 0, "code_status": "Clear", "entries": ["ukraine"]},
-  {"id": 285444, "candidate": false, "country": "Burkina Faso", "dyad": "Koglweogo - Civilians", "from": "2019-01-01", "to": "2019-01-03", "low": 46, "best": 0, "high": 0, "code_status": "Clear", "entries": ["sahel"]},
+  {"id": 285444, "candidate": false, "country": "Burkina Faso", "dyad": "Koglweogo - Civilians", "from": "2019-01-01", "to": "2019-01-03", "low": 46, "best": 0, "high": 0, "code_status": "Clear", "entries": ["burkinafaso"]},
   {"id": 453555, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2022-09-28", "to": "2022-09-28", "low": 46, "best": 46, "high": 0, "code_status": "Clear", "entries": ["ukraine"]},
   {"id": 480726, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2023-06-01", "to": "2023-06-01", "low": 46, "best": 46, "high": 0, "code_status": "Clear", "entries": ["ukraine"]},
   {"id": 485325, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2023-07-13", "to": "2023-07-13", "low": 46, "best": 46, "high": 0, "code_status": "Clear", "entries": ["ukraine"]},
@@ -421,7 +416,6 @@
   {"id": 474602, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2023-04-15", "to": "2023-04-15", "low": 24, "best": 24, "high": 0, "code_status": "Clear", "entries": ["ukraine"]},
   {"id": 474607, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2023-04-05", "to": "2023-04-05", "low": 24, "best": 24, "high": 0, "code_status": "Clear", "entries": ["ukraine"]},
   {"id": 508453, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2023-12-08", "to": "2023-12-08", "low": 93, "best": 93, "high": 69, "code_status": "Clear", "entries": ["ukraine"]},
-  {"id": 254393, "candidate": false, "country": "Syria", "dyad": "IS - SDF", "from": "2017-10-04", "to": "2017-10-07", "low": 107, "best": 107, "high": 84, "code_status": "Clear", "entries": ["syria"]},
   {"id": 453564, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2022-09-08", "to": "2022-09-08", "low": 23, "best": 23, "high": 0, "code_status": "Clear", "entries": ["ukraine"]},
   {"id": 453589, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2022-10-12", "to": "2022-10-12", "low": 38, "best": 38, "high": 15, "code_status": "Clear", "entries": ["ukraine"]},
   {"id": 457189, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2022-11-22", "to": "2022-11-22", "low": 23, "best": 23, "high": 0, "code_status": "Clear", "entries": ["ukraine"]},
@@ -488,20 +482,19 @@
   {"id": 499103, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2023-09-30", "to": "2023-09-30", "low": 13, "best": 13, "high": 0, "code_status": "Clear", "entries": ["ukraine"]},
   {"id": 512221, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2023-12-28", "to": "2023-12-28", "low": 13, "best": 13, "high": 0, "code_status": "Clear", "entries": ["ukraine"]},
   {"id": 512608, "candidate": false, "country": "Israel", "dyad": "Government of Israel - Hamas", "from": "2023-11-02", "to": "2023-11-02", "low": 29, "best": 16, "high": 16, "code_status": "Clear", "entries": ["gaza"]},
-  {"id": 230349, "candidate": false, "country": "Mali", "dyad": "CMA - GATIA", "from": "2016-07-21", "to": "2016-07-22", "low": 12, "best": 12, "high": 0, "code_status": "Clear", "entries": ["sahel"]},
+  {"id": 230349, "candidate": false, "country": "Mali", "dyad": "CMA - GATIA", "from": "2016-07-21", "to": "2016-07-22", "low": 12, "best": 12, "high": 0, "code_status": "Clear", "entries": ["mali"]},
   {"id": 460573, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2022-12-02", "to": "2022-12-02", "low": 69, "best": 69, "high": 57, "code_status": "Clear", "entries": ["ukraine"]},
   {"id": 460576, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2022-12-05", "to": "2022-12-05", "low": 46, "best": 46, "high": 34, "code_status": "Clear", "entries": ["ukraine"]},
   {"id": 490114, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2023-08-16", "to": "2023-08-16", "low": 12, "best": 12, "high": 0, "code_status": "Clear", "entries": ["ukraine"]},
   {"id": 508437, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2023-12-01", "to": "2023-12-01", "low": 90, "best": 90, "high": 78, "code_status": "Clear", "entries": ["ukraine"]},
   {"id": 512214, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2023-12-19", "to": "2023-12-19", "low": 12, "best": 12, "high": 0, "code_status": "Clear", "entries": ["ukraine"]},
   {"id": 563293, "candidate": false, "country": "DR Congo (Zaire)", "dyad": "IS - Civilians", "from": "2024-01-01", "to": "2024-12-31", "low": 932, "best": 932, "high": 920, "code_status": "Clear", "entries": ["congo"]},
-  {"id": 246495, "candidate": false, "country": "Syria", "dyad": "Government of Syria - Syrian insurgents", "from": "2017-08-10", "to": "2017-08-14", "low": 13, "best": 13, "high": 2, "code_status": "Clear", "entries": ["syria"]},
   {"id": 453613, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2022-10-05", "to": "2022-10-05", "low": 76, "best": 76, "high": 65, "code_status": "Clear", "entries": ["ukraine"]},
   {"id": 460596, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2022-12-17", "to": "2022-12-17", "low": 18, "best": 18, "high": 7, "code_status": "Clear", "entries": ["ukraine"]},
   {"id": 470969, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2023-02-23", "to": "2023-02-23", "low": 72, "best": 72, "high": 61, "code_status": "Clear", "entries": ["ukraine"]},
   {"id": 508435, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2023-11-26", "to": "2023-11-26", "low": 59, "best": 59, "high": 48, "code_status": "Clear", "entries": ["ukraine"]},
   {"id": 567772, "candidate": false, "country": "Israel", "dyad": "Government of Israel - Hamas", "from": "2024-04-01", "to": "2024-04-30", "low": 479, "best": 475, "high": 468, "code_status": "Clear", "entries": ["gaza"]},
-  {"id": 636627, "candidate": true, "country": "Burkina Faso", "dyad": "Government of Burkina Faso - JNIM", "from": "2026-07-04", "to": "2026-07-04", "low": 28, "best": 28, "high": 17, "code_status": "Clear", "entries": ["sahel"]},
+  {"id": 636627, "candidate": true, "country": "Burkina Faso", "dyad": "Government of Burkina Faso - JNIM", "from": "2026-07-04", "to": "2026-07-04", "low": 28, "best": 28, "high": 17, "code_status": "Clear", "entries": ["burkinafaso"]},
   {"id": 445062, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2022-03-01", "to": "2022-03-01", "low": 10, "best": 10, "high": 0, "code_status": "Clear", "entries": ["ukraine"]},
   {"id": 460579, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2022-12-08", "to": "2022-12-08", "low": 50, "best": 50, "high": 40, "code_status": "Clear", "entries": ["ukraine"]},
   {"id": 462307, "candidate": false, "country": "Ukraine", "dyad": "Government of Russia (Soviet Union) - Government of Ukraine", "from": "2023-01-16", "to": "2023-01-16", "low": 65, "best": 65, "high": 55, "code_status": "Clear", "entries": ["ukraine"]},

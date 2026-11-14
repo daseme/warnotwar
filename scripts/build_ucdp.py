@@ -48,13 +48,11 @@ BY_COUNTRY = {
     'yemen': ['Yemen (North Yemen)'],
     'myanmar': ['Myanmar (Burma)'],
     'congo': ['DR Congo (Zaire)'],
-    'sahel': ['Burkina Faso', 'Mali', 'Niger'],
+    'mali': ['Mali'],
+    'burkinafaso': ['Burkina Faso'],
     'somalia': ['Somalia'],
-    'syria': ['Syria'],
-    'haiti': ['Haiti'],
     'pakistan': ['Pakistan'],
     'ethiopia': ['Ethiopia', 'Eritrea'],
-    'southsudan': ['South Sudan'],
     'nigeria': ['Nigeria'],
 }
 # map entry id -> UCDP conflict_new_id list (summed across every country the events fall in)

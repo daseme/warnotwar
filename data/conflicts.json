@@ -1,7 +1,7 @@
 {
  "as_of": "2026-11-08",
  "status": "entered",
- "rule": "A war is on the map if organized fighting killed roughly 1,000 or more people in the past twelve months, or it is an active war between states, and an outside state fights in it or backs a side.",
+ "rule": "A war is on the map if the Uppsala Conflict Data Program counted 1,000 or more people killed in battle in it in the past twelve months. That is UCDP's line for a war. UCDP applies it by calendar year; the map applies it to the twelve months its counts cover.",
  "color_rule": "Five states are colored: those that fight in or back a side in the most wars. The rest are gray and labeled.",
  "tiers": {
   "open": {
@@ -3042,12 +3042,12 @@
    "region": "africa"
   },
   {
-   "id": "sahel",
-   "name": "The Sahel",
+   "id": "mali",
+   "name": "Mali",
    "since": "2012",
    "point": [
-    -1.5,
-    15.5
+    -3.5,
+    17.0
    ],
    "label": [
     -9,
@@ -3055,15 +3055,15 @@
     "end"
    ],
    "band": "2",
-   "band_source": "UCDP counted 5,885 from October 2025 to September 2026. The Africa Center for Strategic Studies, from ACLED data, counted just under 10,000 deaths linked to militant Islamist groups in the past twelve months. Both say thousands.",
-   "status": "Jihadists and Tuareg rebels struck across Mali in April 2026, killed the defence minister and took Kidal. Mali and Russian forces retook Kidal in October. Military governments in all three states.",
-   "summary": "Mali, Burkina Faso and Niger fight al-Qaeda and Islamic State affiliates, and Mali also fights Tuareg separatists, who now attack together with the jihadists. French and UN forces are gone. Russian forces took their place.",
+   "band_source": "UCDP counted 2,052 from October 2025 to September 2026. The Africa Center for Strategic Studies, from ACLED data, counted just under 10,000 deaths linked to militant Islamist groups across the Sahel in the past twelve months.",
+   "status": "Jihadists and Tuareg rebels struck across Mali in April 2026, killed the defence minister and took Kidal. Mali and Russian forces retook Kidal in October.",
+   "summary": "Mali fights al-Qaeda and Islamic State affiliates and Tuareg separatists, who now attack together. French and UN forces are gone. Russian forces took their place. The war across the border is entered under Burkina Faso.",
    "parties": [
     {
-     "id": "aes",
-     "name": "Mali, Burkina Faso and Niger (military governments)",
+     "id": "gov",
+     "name": "Mali (military government)",
      "side": "A",
-     "short": "juntas"
+     "short": "junta"
     },
     {
      "id": "jihad",
@@ -3081,7 +3081,7 @@
    "ties": [
     {
      "backer": "russia",
-     "party": "aes",
+     "party": "gov",
      "kinds": [
       "troops",
       "arms",
@@ -3128,22 +3128,15 @@
        "date": "2026-08",
        "url": "https://www.hrw.org/news/2026/08/20/mali-russias-africa-corps-massacres-villagers",
        "publisher": "Human Rights Watch"
-      },
-      {
-       "class": "press",
-       "text": "Al Jazeera, Niger mutiny exposes reliance on Russia: about 200 Africa Corps soldiers helped retake the airbase, 14 September 2026",
-       "date": "2026-09",
-       "url": "https://www.aljazeera.com/news/2026/9/14/niger-mutiny-exposes-growing-reliance-on-russia",
-       "publisher": "Al Jazeera"
       }
      ],
-     "note": "About 2,500 Russian troops are in Mali. Russian jets and helicopters fly Mali's air war from Bamako. Smaller units are in Burkina Faso and Niger.",
+     "note": "About 2,500 Russian troops are in Mali. Russian jets and helicopters fly Mali's air war from Bamako.",
      "entered": "2026-10-11",
      "checked": null
     },
     {
      "backer": "turkey",
-     "party": "aes",
+     "party": "gov",
      "kinds": [
       "drones",
       "training"
@@ -3163,27 +3156,6 @@
        "publisher": "Malian presidency"
       },
       {
-       "class": "recipient",
-       "text": "Burkinabe and Nigerien announcements",
-       "date": null,
-       "url": null,
-       "publisher": "Burkinabe and Nigerien governments"
-      },
-      {
-       "class": "recipient",
-       "text": "AIB (Burkina Faso state news agency), President Traore receives twelve Bayraktar TB2 and Akinci drones from Turkey, 8 April 2024",
-       "date": "2024-04",
-       "url": "https://www.aib.media/?p=80773",
-       "publisher": "AIB"
-      },
-      {
-       "class": "press",
-       "text": "The Defense Post, Turkey delivers six Bayraktar TB2 drones to Niger under a November 2021 deal, 1 June 2022",
-       "date": "2022-06",
-       "url": "https://thedefensepost.com/2022/06/01/turkey-bayraktar-drones-niger/",
-       "publisher": "The Defense Post"
-      },
-      {
        "class": "press",
        "text": "defenceWeb, Turkiye builds ties through training: Malian and Nigerien soldiers finish special forces training in Isparta, 7 September 2026",
        "date": "2026-09",
@@ -3191,13 +3163,13 @@
        "publisher": "defenceWeb"
       }
      ],
-     "note": "All three states have shown off Turkish TB2 drones. Mali and Burkina Faso also fly the larger Akinci.",
+     "note": "Mali has shown off Turkish TB2 drones and flies the larger Akinci.",
      "entered": "2026-10-11",
      "checked": null
     },
     {
      "backer": "china",
-     "party": "aes",
+     "party": "gov",
      "kinds": [
       "arms"
      ],
@@ -3222,15 +3194,6 @@
        "date": "2026-04",
        "url": "https://www.military.africa/2026/04/mali-receives-yitian-l-air-defence-armoured-vehicles-from-china/",
        "entered": "2026-10-12"
-      },
-      {
-       "class": "press",
-       "publisher": "Military Africa",
-       "text": "Military Africa, Burkina Faso receives more Chinese armoured vehicles (Norinco CS/VP14 and VN22), January 2025",
-       "date": "2025-01",
-       "url": "https://military.africa/2025/01/burkina-faso-receives-more-chinese-armoured-vehicles",
-       "seen": "search listing only, not opened",
-       "entered": "2026-10-12"
       }
      ],
      "note": "SIPRI's database records the transfers; no document or statement is entered.",
@@ -3240,7 +3203,7 @@
     },
     {
      "backer": "iran",
-     "party": "aes",
+     "party": "gov",
      "kinds": [
       "drones",
       "training"
@@ -3250,7 +3213,7 @@
      "since": "2026-01",
      "since_precision": "year",
      "ended": null,
-     "evidence_to": "2026-02",
+     "evidence_to": "2026-01",
      "sources": [
       {
        "class": "research",
@@ -3258,54 +3221,12 @@
        "date": "2026-01",
        "url": "https://agsi.org/analysis/iran-ups-its-engagement-with-the-sahel/",
        "publisher": "Arab Gulf States Institute"
-      },
-      {
-       "class": "backer",
-       "text": "Iranian government statement on the defence ministers' meeting, 23 February 2026",
-       "date": "2026-02",
-       "url": "https://x.com/Iran_GOV/status/2025846263539699877",
-       "publisher": "Iranian government",
-       "seen": "search listing only, not opened"
-      },
-      {
-       "class": "press",
-       "publisher": "Xinhua",
-       "text": "Xinhua, Iran seeks stronger ties with Burkina Faso: Pezeshkian meets Burkina Faso's defence minister in Tehran and offers to share expertise in science, industry and defence, 24 February 2026",
-       "date": "2026-02",
-       "url": "https://english.news.cn/20260224/16d9871ba0814e2f9a1c8060a72595b9/c.html",
-       "entered": "2026-10-12"
       }
      ],
-     "note": "Think-tank and press reports say Iran has sent combat drones and trainers to Mali, Burkina Faso and Niger. Iran's defence minister met Burkina Faso's in February 2026.",
+     "note": "A think-tank report says Iran has sent combat drones and trainers to Mali.",
      "entered": "2026-10-11",
      "checked": null,
-     "single": false
-    },
-    {
-     "backer": "usa",
-     "party": "aes",
-     "kinds": [
-      "training",
-      "intel"
-     ],
-     "tier": "open",
-     "stance": null,
-     "since": null,
-     "since_precision": null,
-     "ended": "2024-08",
-     "evidence_to": "2024-08",
-     "sources": [
-      {
-       "class": "backer",
-       "text": "U.S. Air Force, US completes withdrawal from AB 201, August 2024",
-       "date": "2024-08",
-       "url": "https://www.af.mil/News/Article-Display/Article/3863464/us-completes-withdrawal-from-ab-201/",
-       "publisher": "U.S. Air Force"
-      }
-     ],
-     "note": "U.S. forces trained Nigerien troops and flew drones from Agadez until Niger's junta ordered them out. The last left in August 2024.",
-     "entered": "2026-10-11",
-     "checked": null
+     "single": true
     },
     {
      "backer": "ukraine",
@@ -3419,7 +3340,198 @@
      "country": "MLI",
      "name": "Bamako",
      "why": "April assault, blockade"
+    }
+   ],
+   "areas_source": "Wikipedia 2026 Mali offensives; Critical Threats Africa File 8 Oct 2026",
+   "areas_url": "https://en.wikipedia.org/wiki/2026_Mali_offensives",
+   "start": "2012-01",
+   "short": "Mali",
+   "turns": [
+    {
+     "month": "2026-04",
+     "what": "Kidal taken. The defence minister killed."
+    }
+   ],
+   "ucdp": {
+    "against": "same band",
+    "note": "UCDP counts Mali against JNIM as a war in 2025, with other conflicts beside it: Islamic State, the Tuareg rebels, and groups killing civilians."
+   },
+   "counted_by": [
+    "tracker"
+   ],
+   "region": "africa"
+  },
+  {
+   "id": "burkinafaso",
+   "name": "Burkina Faso",
+   "since": "2018",
+   "point": [
+    -1.6,
+    12.4
+   ],
+   "label": [
+    -9,
+    5,
+    "end"
+   ],
+   "band": "2",
+   "band_source": "UCDP counted 2,686 from October 2025 to September 2026. The Africa Center for Strategic Studies, from ACLED data, counted just under 10,000 deaths linked to militant Islamist groups across the Sahel in the past twelve months.",
+   "status": "JNIM attacked army and police posts across the north and east in 2026, among them Titao in February.",
+   "summary": "Burkina Faso fights al-Qaeda and Islamic State affiliates. French forces are gone. A military government rules. The war across the border is entered under Mali.",
+   "parties": [
+    {
+     "id": "gov",
+     "name": "Burkina Faso (military government)",
+     "side": "A",
+     "short": "junta"
     },
+    {
+     "id": "jihad",
+     "name": "JNIM and Islamic State Sahel",
+     "side": "B",
+     "short": "jihadists"
+    }
+   ],
+   "ties": [
+    {
+     "backer": "russia",
+     "party": "gov",
+     "kinds": [
+      "troops"
+     ],
+     "tier": "open",
+     "stance": null,
+     "since": "2024-01",
+     "since_precision": "month",
+     "ended": null,
+     "sources": [
+      {
+       "class": "government",
+       "text": "Congressional Research Service, Russia's Security Operations in Africa (IF12389)",
+       "date": null,
+       "url": "https://www.congress.gov/crs-product/IF12389",
+       "publisher": "Congressional Research Service"
+      },
+      {
+       "class": "backer",
+       "text": "Africa Corps on Telegram: 100 servicemen flew to Burkina Faso and 200 more would follow, to protect the country's leader, reported by Reuters, 25 January 2024",
+       "date": "2024-01",
+       "url": "https://www.dailymaverick.co.za/article/2024-01-25-russian-troops-deploy-to-burkina-faso",
+       "publisher": "Africa Corps",
+       "entered": "2026-11-14"
+      }
+     ],
+     "note": "About 100 Russian soldiers flew to Ouagadougou in January 2024 to guard the country's leader. The Africa Corps said 200 more would follow.",
+     "entered": "2026-11-14",
+     "checked": null,
+     "evidence_to": "2024-01"
+    },
+    {
+     "backer": "turkey",
+     "party": "gov",
+     "kinds": [
+      "drones"
+     ],
+     "tier": "open",
+     "stance": null,
+     "since": null,
+     "since_precision": null,
+     "ended": null,
+     "sources": [
+      {
+       "class": "recipient",
+       "text": "AIB (Burkina Faso state news agency), President Traore receives twelve Bayraktar TB2 and Akinci drones from Turkey, 8 April 2024",
+       "date": "2024-04",
+       "url": "https://www.aib.media/?p=80773",
+       "publisher": "AIB"
+      }
+     ],
+     "note": "Burkina Faso flies Turkish TB2 and Akinci drones.",
+     "entered": "2026-11-14",
+     "checked": null,
+     "evidence_to": "2024-04"
+    },
+    {
+     "backer": "china",
+     "party": "gov",
+     "kinds": [
+      "arms"
+     ],
+     "tier": "reported",
+     "stance": "says nothing",
+     "since": null,
+     "since_precision": null,
+     "ended": null,
+     "sources": [
+      {
+       "class": "research",
+       "text": "SIPRI Arms Transfers Database, March 2026 release, deliveries to 2025",
+       "date": "2026-03",
+       "url": "https://www.sipri.org/databases/armstransfers",
+       "publisher": "SIPRI Arms Transfers Database"
+      },
+      {
+       "class": "press",
+       "publisher": "Military Africa",
+       "text": "Military Africa, Burkina Faso receives more Chinese armoured vehicles (Norinco CS/VP14 and VN22), January 2025",
+       "date": "2025-01",
+       "url": "https://military.africa/2025/01/burkina-faso-receives-more-chinese-armoured-vehicles",
+       "seen": "search listing only, not opened",
+       "entered": "2026-10-12"
+      }
+     ],
+     "note": "SIPRI's database records the transfers; no document or statement is entered.",
+     "entered": "2026-11-14",
+     "checked": null,
+     "evidence_to": "2026-03",
+     "single": false
+    },
+    {
+     "backer": "iran",
+     "party": "gov",
+     "kinds": [
+      "drones",
+      "training"
+     ],
+     "tier": "reported",
+     "stance": "says nothing about deliveries",
+     "since": "2026-01",
+     "since_precision": "year",
+     "ended": null,
+     "sources": [
+      {
+       "class": "research",
+       "text": "Arab Gulf States Institute, Iran Ups Its Engagement With the Sahel, January 2026",
+       "date": "2026-01",
+       "url": "https://agsi.org/analysis/iran-ups-its-engagement-with-the-sahel/",
+       "publisher": "Arab Gulf States Institute"
+      },
+      {
+       "class": "backer",
+       "text": "Iranian government statement on the defence ministers' meeting, 23 February 2026",
+       "date": "2026-02",
+       "url": "https://x.com/Iran_GOV/status/2025846263539699877",
+       "publisher": "Iranian government",
+       "seen": "search listing only, not opened"
+      },
+      {
+       "class": "press",
+       "publisher": "Xinhua",
+       "text": "Xinhua, Iran seeks stronger ties with Burkina Faso: Pezeshkian meets Burkina Faso's defence minister in Tehran and offers to share expertise in science, industry and defence, 24 February 2026",
+       "date": "2026-02",
+       "url": "https://english.news.cn/20260224/16d9871ba0814e2f9a1c8060a72595b9/c.html",
+       "entered": "2026-10-12"
+      }
+     ],
+     "note": "Think-tank and press reports say Iran has sent combat drones and trainers to Burkina Faso. Iran's defence minister met Burkina Faso's in February 2026.",
+     "entered": "2026-11-14",
+     "checked": null,
+     "evidence_to": "2026-02",
+     "single": false
+    }
+   ],
+   "none_note": "No state is known to back JNIM or Islamic State Sahel.",
+   "areas": [
     {
      "country": "BFA",
      "name": "Oudalan",
@@ -3544,47 +3656,16 @@
      "country": "BFA",
      "name": "Kouritenga",
      "why": "Bagmoussa base attacked (Centre-Est region)"
-    },
-    {
-     "country": "NER",
-     "name": "Tillabéri",
-     "why": "Torodi, Gorouol, Garbougna attacks"
-    },
-    {
-     "country": "NER",
-     "name": "Tahoua",
-     "why": "Airport attack, March"
-    },
-    {
-     "country": "NER",
-     "name": "Diffa",
-     "why": "ISWAP, Boko Haram attacks"
-    },
-    {
-     "country": "NER",
-     "name": "Dosso",
-     "why": "Makalondi base attack"
-    },
-    {
-     "country": "NER",
-     "name": "Niamey",
-     "why": "Airport attacks Jan, June"
     }
    ],
-   "areas_source": "Wikipedia 2026 Mali offensives; 2026 in Burkina Faso; 2026 in Niger; Critical Threats Africa File 8 Oct 2026",
-   "areas_url": "https://en.wikipedia.org/wiki/2026_Mali_offensives",
-   "start": "2012-01",
-   "short": "Sahel",
-   "turns": [
-    {
-     "month": "2026-04",
-     "what": "Kidal taken. The defence minister killed."
-    }
-   ],
+   "areas_source": "Wikipedia 2026 in Burkina Faso; Critical Threats Africa File 8 Oct 2026",
+   "areas_url": "https://en.wikipedia.org/wiki/2026_in_Burkina_Faso",
+   "start": "2018-05",
+   "short": "Burkina Faso",
+   "turns": [],
    "ucdp": {
     "against": "same band",
-    "note": "Seven conflicts across the three states, plus three groups killing civilians. ACLED and UCDP both land in the thousands.",
-    "troops_note": "UCDP names the three juntas as parties to each other's wars, which we draw as one side, and Nigeria beside Niger against Islamic State."
+    "note": "UCDP counts Burkina Faso against JNIM as a war in 2025 and again so far in 2026."
    },
    "counted_by": [
     "tracker"
@@ -4104,829 +4185,6 @@
     "tracker"
    ],
    "region": "africa"
-  },
-  {
-   "id": "syria",
-   "name": "Syria",
-   "since": "2011",
-   "point": [
-    38.0,
-    35.0
-   ],
-   "label": [
-    9,
-    -5
-   ],
-   "band": "1",
-   "band_source": "UCDP counted 672 from October 2025 to September 2026. ACLED counted about 1,300 deaths from October 2025 to February 2026, most of them in the January offensive. Most of UCDP's rows for Syria still carry a check flag.",
-   "status": "Assad gone since December 2024. The Kurdish-led forces folded into the army in 2026 and U.S. troops left. Small fights go on with Assad loyalists on the coast, Islamic State in the east and Druze militias in Sweida. Syria moved troops to the Sweida front line on 22 October and says it expects an Israeli-backed Druze attack. Israeli strikes.",
-   "summary": "The rebels who toppled Assad now govern. They fought the Kurdish-led forces in January 2026 and absorbed them by August. Druze militias in the south and Assad loyalists on the coast still resist.",
-   "parties": [
-    {
-     "id": "sgov2",
-     "name": "Transitional government",
-     "side": "A",
-     "short": "government"
-    },
-    {
-     "id": "sdf",
-     "name": "Syrian Democratic Forces (Kurdish-led, dissolved August 2026)",
-     "side": "B",
-     "short": "SDF"
-    },
-    {
-     "id": "local",
-     "name": "Druze militias in Sweida and Assad loyalists on the coast",
-     "side": "C",
-     "short": "Druze, loyalists"
-    }
-   ],
-   "ties": [
-    {
-     "backer": "turkey",
-     "party": "sgov2",
-     "kinds": [
-      "training",
-      "arms",
-      "cover"
-     ],
-     "tier": "open",
-     "stance": null,
-     "since": null,
-     "since_precision": null,
-     "ended": null,
-     "evidence_to": "2026-01",
-     "sources": [
-      {
-       "class": "backer",
-       "text": "Türkiye-Syria military training memorandum, 13 August 2025",
-       "date": "2025-08",
-       "url": "https://www.dailysabah.com/politics/turkiye-syria-sign-military-cooperation-training-deal/news",
-       "publisher": "Turkish Ministry of National Defence"
-      },
-      {
-       "class": "backer",
-       "text": "Turkish armoured vehicle deliveries",
-       "date": "2025-07",
-       "url": "https://militarnyi.com/en/news/turkey-supplies-cobra-and-cadillac-gage-commando-armored-vehicles-to-syrian-military/",
-       "publisher": "Turkish Ministry of National Defence"
-      },
-      {
-       "class": "press",
-       "text": "Long War Journal, the page linked here",
-       "date": null,
-       "url": "https://www.longwarjournal.org/archives/2025/08/turkey-ramps-up-military-support-for-syria.php",
-       "publisher": "Long War Journal"
-      },
-      {
-       "class": "backer",
-       "text": "Anadolu Agency, 23 July 2025, Turkish defence ministry says it will give Syria training, consultancy and technical support",
-       "date": "2025-07",
-       "url": "https://www.aa.com.tr/en/politics/syrian-government-officially-requests-turkiye-to-help-strengthen-defense-combat-terrorism/3639472",
-       "publisher": "Anadolu Agency"
-      },
-      {
-       "class": "press",
-       "text": "Sky News Arabia, 13 August 2025, Turkish defence ministry: Güler and his Syrian counterpart sign a training and consultancy memorandum",
-       "date": "2025-08",
-       "url": "https://www.skynewsarabia.com/middle-east/1813650",
-       "publisher": "Sky News Arabia"
-      },
-      {
-       "class": "backer",
-       "text": "Turkish deputy foreign minister, via SANA, 26 January 2026: full support for the Syrian government against security challenges",
-       "date": "2026-01",
-       "url": "https://sana.sy/en/politics/2292514/",
-       "publisher": "Turkish foreign ministry"
-      },
-      {
-       "class": "recipient",
-       "publisher": "Syrian Ministry of Foreign Affairs",
-       "text": "Syrian foreign ministry, Foreign Minister al-Shaibani and Defence Minister Abu Qasra in Ankara as a memorandum on military training and consultation is signed with Türkiye's defence minister, 13 August 2025",
-       "date": "2025-08",
-       "url": "https://mofaex.gov.sy/en/news/وزير-الخارجية-والمغتربين-السيد-أسعد-حسن-الشيباني-برفقة-وزير-الدفاع-اللواء-المهندس-مرهف-أبو-قصرة",
-       "entered": "2026-10-12"
-      },
-      {
-       "class": "press",
-       "publisher": "Al-Monitor",
-       "text": "Al-Monitor, a Turkish defence ministry source says Türkiye will give Syria weapon systems and logistical tools under the new accord and train the army on them, 14 August 2025",
-       "date": "2025-08",
-       "url": "https://www.al-monitor.com/originals/2025/08/turkey-help-syria-weapon-systems-equipment-under-new-accord-source-says",
-       "entered": "2026-10-12"
-      }
-     ],
-     "note": "Türkiye signed a training deal in August 2025, delivered armoured vehicles, and backed the government's January 2026 offensive on the Kurdish-led forces.",
-     "entered": "2026-10-11",
-     "checked": null
-    },
-    {
-     "backer": "qatar",
-     "party": "sgov2",
-     "kinds": [
-      "money"
-     ],
-     "tier": "open",
-     "stance": null,
-     "since": null,
-     "since_precision": null,
-     "ended": null,
-     "evidence_to": "2025-10",
-     "sources": [
-      {
-       "class": "backer",
-       "text": "Qatari grant of $29 million a month for state salaries from May 2025; gas deliveries via Jordan and Türkiye",
-       "date": "2025-05",
-       "url": "https://npasyria.com/en/125530/",
-       "publisher": "Qatari government"
-      },
-      {
-       "class": "press",
-       "text": "Al Jazeera, the page linked here",
-       "date": null,
-       "url": "https://www.aljazeera.com/news/2025/5/31/saudi-arabia-says-it-will-jointly-fund-syria-state-salaries-with-qatar",
-       "publisher": "Al Jazeera"
-      },
-      {
-       "class": "recipient",
-       "text": "SANA, 1 August 2025, Barrack thanks Qatar for funding gas supplies to Syria via Türkiye from 2 August",
-       "date": "2025-08",
-       "url": "https://sana.sy/en/syria/2261033/",
-       "publisher": "SANA"
-      },
-      {
-       "class": "recipient",
-       "text": "SANA, 28 October 2025, Syria signs a $28m-a-month Qatar-Saudi grant deal for public sector salaries, three months renewable",
-       "date": "2025-10",
-       "url": "https://sana.sy/en/economic/2274550/",
-       "publisher": "SANA"
-      },
-      {
-       "class": "recipient",
-       "text": "SANA, 25 March 2026, finance minister says salaries are now fully funded from state resources; Saudi-Qatari grants totalled $86m",
-       "date": "2026-03",
-       "url": "https://sana.sy/en/economic/2305175/",
-       "counts": false,
-       "publisher": "SANA"
-      }
-     ],
-     "note": "Qatar pays part of the state payroll and sends gas for power plants. In March 2026 SANA quoted the finance minister that salaries were now funded from state resources and described the grants in the past tense; the gas is not re-checked.",
-     "entered": "2026-10-11",
-     "checked": null
-    },
-    {
-     "backer": "saudi",
-     "party": "sgov2",
-     "kinds": [
-      "money",
-      "cover"
-     ],
-     "tier": "open",
-     "stance": null,
-     "since": null,
-     "since_precision": null,
-     "ended": null,
-     "evidence_to": "2025-10",
-     "sources": [
-      {
-       "class": "backer",
-       "text": "Saudi and Qatari payment of Syria's World Bank arrears, April 2025; joint salary funding, May and September 2025",
-       "date": "2025-09",
-       "url": "https://gulftoday.ae/news/2025/04/27/saudi-arabia-qatar-to-clear-syrias-15-million-world-bank-debt",
-       "publisher": "Saudi government"
-      },
-      {
-       "class": "press",
-       "text": "Al Jazeera, the page linked here",
-       "date": null,
-       "url": "https://www.aljazeera.com/news/2025/4/27/saudi-arabia-qatar-to-settle-syrias-outstanding-debt-to-world-bank",
-       "publisher": "Al Jazeera"
-      },
-      {
-       "class": "recipient",
-       "text": "SANA, 28 October 2025, Syria signs a $28m-a-month Qatar-Saudi grant deal for public sector salaries, three months renewable",
-       "date": "2025-10",
-       "url": "https://sana.sy/en/economic/2274550/",
-       "publisher": "SANA"
-      },
-      {
-       "class": "recipient",
-       "text": "SANA, 7 February 2026, Saudi delegation led by the investment minister arrives in Damascus to sign economic agreements",
-       "date": "2026-02",
-       "url": "https://www.sana.sy/en/economic/2294929/",
-       "counts": false,
-       "publisher": "SANA"
-      },
-      {
-       "class": "recipient",
-       "text": "SANA, 25 March 2026, finance minister says salaries are now fully funded from state resources; Saudi-Qatari grants totalled $86m",
-       "date": "2026-03",
-       "url": "https://sana.sy/en/economic/2305175/",
-       "counts": false,
-       "publisher": "SANA"
-      },
-      {
-       "class": "press",
-       "publisher": "Rudaw",
-       "text": "Rudaw, the World Bank says Syria's arrears of about $15.5 million were cleared effective 12 May 2025 by Saudi Arabia and Qatar, 16 May 2025",
-       "date": "2025-05",
-       "url": "https://www.rudaw.net/english/business/16052025",
-       "seen": "search listing only, not opened",
-       "entered": "2026-10-12"
-      }
-     ],
-     "note": "Saudi Arabia paid Syria's World Bank debt with Qatar and shared the salary grant. In March 2026 SANA quoted the finance minister that salaries were now funded from state resources and described the grants in the past tense; Saudi help shown in 2026 is investment agreements.",
-     "entered": "2026-10-11",
-     "checked": null
-    },
-    {
-     "backer": "usa",
-     "party": "sgov2",
-     "kinds": [
-      "cover"
-     ],
-     "tier": "open",
-     "stance": null,
-     "since": "2025-11",
-     "since_precision": "month",
-     "ended": null,
-     "evidence_to": "2026-01",
-     "sources": [
-      {
-       "class": "backer",
-       "text": "Syria joined the U.S.-led anti-ISIS coalition, 10 November 2025; sanctions suspended; U.S. brokered the January 2026 SDF deal",
-       "date": "2026-01",
-       "url": "https://www.al-monitor.com/originals/2025/11/syria-joins-alliance-against-islamic-state-after-white-house-talks",
-       "publisher": "U.S. State Department"
-      },
-      {
-       "class": "press",
-       "text": "Al Jazeera, the page linked here",
-       "date": null,
-       "url": "https://www.aljazeera.com/news/2025/11/11/syria-signs-up-to-us-led-coalition-against-isil",
-       "publisher": "Al Jazeera"
-      },
-      {
-       "class": "backer",
-       "publisher": "U.S. Embassy in Syria via North Press",
-       "text": "North Press, U.S. embassy diplomats in a recorded statement on the embassy's Facebook page call Syria's coalition accession a defining moment in its history and in the global war on terrorism, 11 November 2025",
-       "date": "2025-11",
-       "url": "https://npasyria.com/en/132028/",
-       "entered": "2026-10-12"
-      },
-      {
-       "class": "backer",
-       "publisher": "U.S. Department of State",
-       "text": "State Department, determination suspending Caesar Act sanctions on Syria for 180 days, excluding dealings with Russia and Iran, November 2025",
-       "date": "2025-11",
-       "url": "https://www.state.gov/releases/2025/11/determination-to-suspend-the-imposition-of-sanctions-pursuant-to-the-caesar-syria-civilian-protection-act-of-2019/",
-       "seen": "search listing only, not opened",
-       "entered": "2026-10-12"
-      },
-      {
-       "class": "press",
-       "publisher": "The Algemeiner",
-       "text": "The Algemeiner, U.S. envoy Tom Barrack calls the Syrian government-SDF integration accord a profound and historic milestone, 30 January 2026",
-       "date": "2026-01",
-       "url": "https://www.algemeiner.com/2026/01/30/syrian-government-kurds-agree-integration-deal-us-hails-historic-milestone/",
-       "entered": "2026-10-12"
-      }
-     ],
-     "note": "Washington took the new government off its terror lists, suspended sanctions, and brokered the deal that folded the Kurdish-led forces into the army.",
-     "entered": "2026-10-11",
-     "checked": null
-    },
-    {
-     "backer": "usa",
-     "party": "sdf",
-     "kinds": [
-      "troops",
-      "arms",
-      "training"
-     ],
-     "tier": "open",
-     "stance": null,
-     "since": null,
-     "since_precision": null,
-     "ended": "2026-04",
-     "evidence_to": "2026-08",
-     "sources": [
-      {
-       "class": "backer",
-       "text": "U.S. withdrawal order, February 2026; last troops left the Qasrak base on 16 April 2026",
-       "date": "2026-04",
-       "url": null,
-       "publisher": "U.S. Department of Defense"
-      },
-      {
-       "class": "recipient",
-       "text": "SDF dissolved 25 August 2026",
-       "date": "2026-08",
-       "url": null,
-       "publisher": "SDF"
-      },
-      {
-       "class": "press",
-       "text": "Al Jazeera, the page linked here",
-       "date": null,
-       "url": "https://www.aljazeera.com/news/2026/2/18/us-is-withdrawing-all-1000-troops-from-syria-wsj-report",
-       "publisher": "Al Jazeera"
-      }
-     ],
-     "note": "The U.S. pushed the SDF into a deal with Damascus in January 2026, then pulled its last troops out in April. The SDF dissolved in August.",
-     "entered": "2026-10-11",
-     "checked": null
-    },
-    {
-     "backer": "israel",
-     "party": "local",
-     "kinds": [
-      "air"
-     ],
-     "tier": "open",
-     "stance": null,
-     "since": null,
-     "since_precision": null,
-     "ended": null,
-     "evidence_to": "2026-10",
-     "sources": [
-      {
-       "class": "backer",
-       "text": "Israeli military statements on strikes against Syrian army sites to protect the Druze, July 2025 and 20 March 2026",
-       "date": "2026-03",
-       "url": "https://www.aljazeera.com/news/2026/3/20/israel-says-it-hit-syrian-army-camps-in-the-south-after-druze-attacked",
-       "publisher": "Israel Defense Forces"
-      },
-      {
-       "class": "press",
-       "text": "Washington Times, the page linked here",
-       "date": null,
-       "url": "https://www.washingtontimes.com/news/2026/mar/20/israel-launches-strikes-syria-alleged-attacks-druze-minority-members/",
-       "publisher": "Washington Times"
-      },
-      {
-       "class": "press",
-       "publisher": "Ynet",
-       "text": "Ynet, an IDF spokesperson says Israel will not allow harm to the Druze in Syria and will continue to act for their protection, March 2026",
-       "date": "2026-03",
-       "url": "https://www.ynetnews.com/article/pnwiqs6c5",
-       "entered": "2026-10-12"
-      },
-      {
-       "class": "press",
-       "publisher": "The New Arab",
-       "text": "The New Arab, relaying the Washington Post: Israel channelled money to the Sweida Military Council through the SDF and, with the SDF, provided weapons including anti-tank missiles, citing Israeli officials, 24 December 2025",
-       "date": "2025-12",
-       "url": "https://www.newarab.com/news/israel-and-sdf-financially-backing-syrian-druze-militias-report",
-       "entered": "2026-10-12"
-      },
-      {
-       "class": "press",
-       "publisher": "Ynet",
-       "text": "Ynet, relaying the Washington Post: Israel airdropped 500 rifles, ammunition and vests to the Druze Military Council, pays about 3,000 fighters $100 to $200 a month, and continues airdrops of vests and medical supplies; weapons flow stopped in May and aid tapered in August 2025, December 2025",
-       "date": "2025-12",
-       "url": "https://ynetnews.com/article/sjzeqwo7zg",
-       "entered": "2026-10-12"
-      },
-      {
-       "class": "press",
-       "publisher": "Middle East Monitor",
-       "text": "Middle East Monitor, U.S. report says Israel secretly armed Druze factions in southern Syria, 24 December 2025",
-       "date": "2025-12",
-       "url": "https://www.middleeastmonitor.com/20251224-us-report-says-israel-secretly-armed-druze-factions-in-southern-syria/",
-       "seen": "search listing only, not opened",
-       "entered": "2026-10-12"
-      },
-      {
-       "class": "press",
-       "publisher": "The Jerusalem Post",
-       "text": "The Jerusalem Post, relaying Walla: Israel is monitoring Syria around the clock and will keep acting to protect the Druze against attacks, citing Israeli officials, October 2026",
-       "date": "2026-10",
-       "url": "http://www.jpost.com/middle-east/article-912755",
-       "seen": "search listing only, not opened",
-       "entered": "2026-10-25"
-      }
-     ],
-     "note": "Israel struck Syrian army camps again on 20 March 2026 and says it will keep acting for the Druze.",
-     "entered": "2026-10-11",
-     "checked": null
-    },
-    {
-     "backer": "israel",
-     "party": "local",
-     "kinds": [
-      "arms",
-      "money"
-     ],
-     "tier": "reported",
-     "stance": "says nothing",
-     "since": null,
-     "since_precision": null,
-     "ended": null,
-     "evidence_to": "2026-10",
-     "sources": [
-      {
-       "class": "press",
-       "text": "Reuters, 17 September 2025, citing two senior Druze officials and a Western intelligence source",
-       "date": "2025-09",
-       "url": "https://www.haaretz.com/israel-news/2025-09-17/ty-article/.premium/israel-reportedly-supplying-weapons-and-salaries-to-druze-in-southern-syria/00000199-53d6-dc75-a1d9-57deec260000",
-       "publisher": "Reuters"
-      },
-      {
-       "class": "press",
-       "text": "Times of Israel, 16 September 2025, citing Reuters: Israel arming and paying salaries of about 3,000 Druze fighters in Sweida",
-       "date": "2025-09",
-       "url": "https://www.timesofisrael.com/israel-said-arming-paying-salaries-of-druze-militia-in-syrias-sweida-area/",
-       "publisher": "Times of Israel",
-       "via": "Reuters"
-      },
-      {
-       "class": "opponent",
-       "publisher": "The National",
-       "text": "The National, a senior Syrian official says communication devices, night-vision systems and sniper rifles have reached the Sweida National Guard and that an Israeli helicopter delivered weapons to the province, 22 October 2026",
-       "date": "2026-10",
-       "url": "https://www.thenationalnews.com/news/mena/2026/10/22/syria-druze-israel/",
-       "seen": "search listing only, not opened",
-       "entered": "2026-10-25"
-      }
-     ],
-     "note": "Druze officials say Israel sends rifles and pays salaries to about 3,000 fighters of the Sweida National Guard. A Syrian official said in October 2026 that communication devices, night-vision systems and sniper rifles had reached the Sweida National Guard; Syria fights there, so its account does not carry the tier on its own.",
-     "entered": "2026-10-11",
-     "checked": null,
-     "single": false
-    }
-   ],
-   "areas": [
-    {
-     "country": "SYR",
-     "name": "Aleppo",
-     "why": "January offensive vs SDF; Manbij"
-    },
-    {
-     "country": "SYR",
-     "name": "Ar Raqqah",
-     "why": "SDF fighting; IS attacks"
-    },
-    {
-     "country": "SYR",
-     "name": "Hasaka (Al Haksa)",
-     "why": "Prison clashes, drone strike"
-    },
-    {
-     "country": "SYR",
-     "name": "Dayr Az Zawr",
-     "why": "Al-Omar retaken; IS"
-    },
-    {
-     "country": "SYR",
-     "name": "Lattakia",
-     "why": "Assad loyalist fighting"
-    },
-    {
-     "country": "SYR",
-     "name": "Tartus",
-     "why": "Assad loyalist fighting"
-    },
-    {
-     "country": "SYR",
-     "name": "Homs",
-     "why": "Palmyra strikes; bus attack"
-    },
-    {
-     "country": "SYR",
-     "name": "Rif Dimashq",
-     "why": "Beit Jinn Israeli attack"
-    },
-    {
-     "country": "SYR",
-     "name": "As Suwayda'",
-     "why": "Druze clashes; Israeli strikes"
-    },
-    {
-     "country": "SYR",
-     "name": "Quneitra",
-     "why": "Israeli ground presence, raids"
-    }
-   ],
-   "areas_source": "Wikipedia 2026 in Syria; conflicts.json status",
-   "areas_url": "https://en.wikipedia.org/wiki/2026_in_Syria",
-   "start": "2011-03",
-   "short": "Syria",
-   "turns": [
-    {
-     "month": "2026-01",
-     "what": "The government fought the Kurdish-led forces."
-    }
-   ],
-   "ucdp": {
-    "against": "same band",
-    "note": "Half of 2025 is civilians killed deliberately, on the coast and in Sweida. 564 so far in 2026. Nearly nine in ten of the 2026 rows carry a check flag.",
-    "troops_note": "UCDP names Türkiye against the Kurdish-led forces in 2025; our Türkiye line carries training and vehicles. UCDP's U.S. is beside the Syrian government against Islamic State; ours was with the Kurdish-led forces. Israel's strikes are not a secondary party in UCDP's coding."
-   },
-   "counted_by": [
-    "tracker"
-   ],
-   "region": "middle east"
-  },
-  {
-   "id": "haiti",
-   "name": "Haiti",
-   "since": "2021",
-   "point": [
-    -72.3,
-    18.5
-   ],
-   "label": [
-    -9,
-    2,
-    "end"
-   ],
-   "band": "1",
-   "band_source": "UCDP counted 868 from October 2025 to September 2026. The UN human rights office counted 5,519 killed from March 2025 to January 2026 and 1,408 from April to June 2026, most of them in police and army operations. The band follows the lower count.",
-   "status": "Gangs hold most of the capital and are spreading into the provinces. A UN-backed Gang Suppression Force replaced the Kenya-led mission in April 2026 but is far below strength, with about 2,000 troops against the 5,500 authorised. Gangs ambushed one of its vehicles at Croix-des-Bouquets in mid-October and four Salvadoran soldiers are missing. Elections were postponed in October 2026.",
-   "summary": "Armed gangs joined forces in 2023 and control most of Port-au-Prince. The Haitian police and a UN-backed foreign force fight them, and vigilante groups fight too.",
-   "parties": [
-    {
-     "id": "hstate",
-     "name": "Haitian government and the foreign force",
-     "side": "A",
-     "short": "state"
-    },
-    {
-     "id": "gangs",
-     "name": "Viv Ansanm gang coalition",
-     "side": "B",
-     "short": "gangs"
-    }
-   ],
-   "ties": [
-    {
-     "backer": "usa",
-     "party": "hstate",
-     "kinds": [
-      "money",
-      "arms",
-      "cover"
-     ],
-     "tier": "open",
-     "stance": null,
-     "since": null,
-     "since_precision": null,
-     "ended": null,
-     "evidence_to": "2026-09",
-     "sources": [
-      {
-       "class": "backer",
-       "text": "U.S. State Department report to Congress on the security situation in Haiti, September 2026",
-       "date": "2026-09",
-       "url": "https://www.state.gov/wp-content/uploads/2026/09/Report-to-Congress-on-The-Security-Situation-in-Haiti-2026-HRC1519287-Accessible-9.11.2026.pdf",
-       "publisher": "U.S. State Department"
-      },
-      {
-       "class": "press",
-       "publisher": "Associated Press",
-       "text": "Associated Press, Haiti's new UN-backed force exceeds pledges, with more than $200 million promised by 13 Security Council states and $59 million disbursed, per a BINUH report; the U.S. and Panama proposed the force, 23 April 2026",
-       "date": "2026-04",
-       "url": "https://wtop.com/world/2026/04/haitis-new-un-backed-gang-fighting-force-exceeds-funding-expectations/",
-       "entered": "2026-10-12"
-      },
-      {
-       "class": "research",
-       "publisher": "Carnegie Endowment for International Peace",
-       "text": "Carnegie Endowment, Christopher Shell: the Gang Suppression Force has received significant financial and material support from the United States; the U.S. and Canada provided the bulk of the earlier MSS mission's financial and logistical support, 9 July 2026",
-       "date": "2026-07",
-       "url": "https://carnegieendowment.org/research/2026/07/recalibrating-us-policy-toward-haiti",
-       "entered": "2026-10-12"
-      }
-     ],
-     "note": "The U.S. says it has put close to a billion dollars into the two foreign missions and the Haitian police. It also wrote the UN resolution for the new force.",
-     "entered": "2026-10-11",
-     "checked": null
-    },
-    {
-     "backer": "canada",
-     "party": "hstate",
-     "kinds": [
-      "money"
-     ],
-     "tier": "open",
-     "stance": null,
-     "since": null,
-     "since_precision": null,
-     "ended": null,
-     "evidence_to": "2026-09",
-     "sources": [
-      {
-       "class": "backer",
-       "text": "Government of Canada, Canada-Haiti relations, page dated 14 September 2026",
-       "date": "2026-09",
-       "url": "https://www.international.gc.ca/country-pays/haiti/relations.aspx?lang=eng",
-       "publisher": "Government of Canada"
-      },
-      {
-       "class": "press",
-       "publisher": "Le Nouvelliste",
-       "text": "Le Nouvelliste, Canada announces CAD 26.3 million for Haiti security, mainly to strengthen the Gang Suppression Force, after the OAS General Assembly, 29 June 2026",
-       "date": "2026-06",
-       "url": "https://lenouvelliste.com/en/article/269080/securite-le-canada-annonce-263-millions-de-dollars-pour-haiti",
-       "entered": "2026-10-12"
-      },
-      {
-       "class": "research",
-       "publisher": "Carnegie Endowment for International Peace",
-       "text": "Carnegie Endowment, the United States and Canada provided the bulk of the MSS mission's financial and logistical support, 9 July 2026",
-       "date": "2026-07",
-       "url": "https://carnegieendowment.org/research/2026/07/recalibrating-us-policy-toward-haiti",
-       "entered": "2026-10-12"
-      }
-     ],
-     "note": "Canada is one of the two biggest donors to the foreign force and trains and equips the Haitian police.",
-     "entered": "2026-10-11",
-     "checked": null
-    },
-    {
-     "backer": "chad",
-     "party": "hstate",
-     "kinds": [
-      "police"
-     ],
-     "tier": "reported",
-     "stance": "has announced the deployment; its statement is not entered yet",
-     "since": "2026-04",
-     "since_precision": "month",
-     "ended": null,
-     "evidence_to": "2026-10",
-     "sources": [
-      {
-       "class": "press",
-       "text": "PassBlue on the first Chadian contingent, arrived 1 April 2026, and the 1,500 pledged for the Gang Suppression Force",
-       "date": "2026-04",
-       "url": "https://passblue.com/2026/05/21/the-new-un-backed-anti-gang-force-is-finally-arriving-in-haiti-as-violence-surges/",
-       "publisher": "PassBlue"
-      },
-      {
-       "class": "press",
-       "publisher": "Le Nouvelliste",
-       "text": "Le Nouvelliste, about fifty Chadian police officers reach Port-au-Prince as a pre-deployment of the 1,500 Chad will send to the Gang Suppression Force, citing a government source, 1 April 2026",
-       "date": "2026-04",
-       "url": "https://lenouvelliste.com/en/article/265885/chadian-troops-begin-deployment-in-gang-suppression-force",
-       "entered": "2026-10-12"
-      },
-      {
-       "class": "press",
-       "publisher": "Associated Press",
-       "text": "Associated Press, Chadian troops are already deployed in Port-au-Prince and staggered deployments from Chad and others will bring the force to 5,500 by year end, 23 April 2026",
-       "date": "2026-04",
-       "url": "https://www.audacy.com/wwl/news/world/un-haiti-gangs-force-deployment-chad-elections-018012db35203b8f4e26e0383f9cbbc4",
-       "entered": "2026-10-12"
-      },
-      {
-       "class": "press",
-       "publisher": "Africanews",
-       "text": "Africanews, Chad to deploy 800 troops to Haiti's Gang Suppression Force as Kenya steps back, 21 March 2026",
-       "date": "2026-03",
-       "url": "https://www.africanews.com/amp/2026/03/21/chad-to-deploy-800-troops-to-haitis-gang-suppression-force-as-kenya-steps-back/",
-       "seen": "search listing only, not opened",
-       "entered": "2026-10-12"
-      },
-      {
-       "class": "press",
-       "publisher": "CNN",
-       "text": "CNN, the Gang Suppression Force has more than 2,000 troops on the ground in Haiti, including soldiers from Chad, Jamaica and Guatemala, against an authorised ceiling of 5,500, 19 October 2026",
-       "date": "2026-10",
-       "url": "https://www.cnn.com/2026/10/19/americas/haiti-el-salvador-ambush-latam-intl",
-       "seen": "search listing only, not opened",
-       "entered": "2026-10-25"
-      }
-     ],
-     "note": "Chad is the biggest contributor to the new force, with about 1,500 police pledged. Guatemala, Jamaica, Mongolia and Sri Lanka also send troops.",
-     "entered": "2026-10-11",
-     "checked": null,
-     "single": false
-    },
-    {
-     "backer": "kenya",
-     "party": "hstate",
-     "kinds": [
-      "police"
-     ],
-     "tier": "reported",
-     "stance": "has said so; its statements are not entered yet",
-     "since": null,
-     "since_precision": null,
-     "ended": "2026-04",
-     "evidence_to": "2026-04",
-     "sources": [
-      {
-       "class": "press",
-       "text": "Haitian Times on the last Kenyan police leaving on 27 April 2026 as the Multinational Security Support mission closed",
-       "date": "2026-04",
-       "url": "https://haitiantimes.com/2026/04/28/kenyan-officers-leave-haiti-mission-end-mandate/",
-       "publisher": "Haitian Times"
-      }
-     ],
-     "note": "Kenya led the police mission from June 2024 until April 2026. It does not take part in the new force.",
-     "entered": "2026-10-11",
-     "checked": null,
-     "single": true
-    },
-    {
-     "backer": "elsalvador",
-     "party": "hstate",
-     "kinds": [
-      "troops"
-     ],
-     "tier": "open",
-     "stance": null,
-     "since": null,
-     "since_precision": null,
-     "ended": null,
-     "evidence_to": "2026-10",
-     "sources": [
-      {
-       "class": "press",
-       "publisher": "NPR",
-       "text": "NPR, President Nayib Bukele says El Salvador has launched a military operation to recover four Salvadoran soldiers serving with the Gang Suppression Force in Haiti, 22 October 2026",
-       "date": "2026-10",
-       "url": "https://www.npr.org/2026/10/22/nx-s1-6012029/bukele-military-operation-haiti",
-       "seen": "search listing only, not opened",
-       "entered": "2026-10-25"
-      },
-      {
-       "class": "recipient",
-       "publisher": "Haitian Times",
-       "text": "Haitian Times, the Gang Suppression Force confirms the arrival on 22 October of a Salvadoran contingent to support search and security operations in the Plaine du Cul-de-Sac, 23 October 2026",
-       "date": "2026-10",
-       "url": "https://haitiantimes.com/2026/10/23/salvadoran-contingent-arrives-haiti-search-four-missing-soldiers/",
-       "seen": "search listing only, not opened",
-       "entered": "2026-10-25"
-      },
-      {
-       "class": "press",
-       "publisher": "CNN",
-       "text": "CNN, gangs fired on a Gang Suppression Force armoured vehicle at Croix-des-Bouquets and four Salvadoran soldiers are unaccounted for; the four are aviation technicians with the force, 19 October 2026",
-       "date": "2026-10",
-       "url": "https://www.cnn.com/2026/10/19/americas/haiti-el-salvador-ambush-latam-intl",
-       "seen": "search listing only, not opened",
-       "entered": "2026-10-25"
-      },
-      {
-       "class": "press",
-       "publisher": "Al Jazeera",
-       "text": "Al Jazeera, Bukele warns the Haitian gangs over the abducted soldiers, 22 October 2026",
-       "date": "2026-10",
-       "url": "https://www.aljazeera.com/news/2026/10/22/el-salvadors-bukele-threatens-haitian-gangs-over-abducted-soldiers",
-       "seen": "search listing only, not opened",
-       "entered": "2026-10-25"
-      }
-     ],
-     "note": "El Salvador has had military personnel in Haiti since early 2025, first with the Multinational Security Support mission and then with the Gang Suppression Force; the four men ambushed in October were aviation technicians. About 200 more soldiers arrived on 22 and 23 October to search for them. The start month is older than the window.",
-     "entered": "2026-10-25",
-     "checked": null
-    }
-   ],
-   "none_note": "No state backs the gangs. The UN's 2023 arms report traced most of their guns to illegal trade from the United States.",
-   "areas": [
-    {
-     "country": "HTI",
-     "name": "Ouest",
-     "why": "Port-au-Prince, Kenscoff fighting"
-    },
-    {
-     "country": "HTI",
-     "name": "L'Artibonite",
-     "why": "Gran Grif; Petite-Riviere"
-    },
-    {
-     "country": "HTI",
-     "name": "Centre",
-     "why": "Mirebalais, Saut-d'Eau"
-    }
-   ],
-   "areas_source": "Wikipedia Viv Ansanm; 2026 in Haiti",
-   "areas_url": "https://en.wikipedia.org/wiki/Viv_Ansanm",
-   "start": "2021-07",
-   "short": "Haiti",
-   "turns": [
-    {
-     "month": "2026-04",
-     "what": "The UN-backed force replaced the Kenya-led mission."
-    },
-    {
-     "month": "2026-10",
-     "what": "Gangs ambushed a Gang Suppression Force vehicle at Croix-des-Bouquets. Four Salvadoran soldiers are missing and El Salvador sent about 200 troops to look for them."
-    }
-   ],
-   "ucdp": {
-    "against": "UCDP lower",
-    "note": "UCDP counts Haiti as a war between the state and the gangs, with Kenya and five others sending police. The UN's count is higher than UCDP's.",
-    "troops_note": "UCDP's extra names are police contributors to the Kenya-led mission, which closed in April 2026."
-   },
-   "counted_by": [
-    "un",
-    "tracker"
-   ],
-   "region": "americas"
   },
   {
    "id": "pakistan",
@@ -5691,7 +4949,6 @@
        "date": "2026-05",
        "url": "https://www.france24.com/en/middle-east/20260514-why-did-saudi-arabia-and-the-uae-allegedly-carry-out-secret-bombing-raids-iran",
        "publisher": "France 24",
-       "via": "Reuters",
        "seen": "search listing only, not opened",
        "entered": "2026-11-01"
       }
@@ -6655,7 +5912,6 @@
        "date": "2026-10",
        "url": "https://www.usnews.com/news/world/articles/2026-10-28/ethiopia-says-it-has-taken-delivery-of-12-russian-su-35-fighter-jets",
        "publisher": "Rosoboronexport",
-       "via": "Reuters",
        "seen": "search listing only, not opened",
        "entered": "2026-11-01"
       },
@@ -6735,142 +5991,6 @@
     "troops_note": "UCDP's 2025 file names Kenya against the Oromo Liberation Army, which we do not draw."
    },
    "counted_by": [
-    "tracker"
-   ],
-   "region": "africa"
-  },
-  {
-   "id": "southsudan",
-   "name": "South Sudan",
-   "since": "2025 (civil war since 2013)",
-   "point": [
-    31.6,
-    7.0
-   ],
-   "label": [
-    -9,
-    7,
-    "end"
-   ],
-   "band": "1",
-   "band_source": "UCDP counted 731 from October 2025 to September 2026. The UN human rights office counted 1,854 killed from January to September 2025. The band follows the lower count.",
-   "status": "The 2018 peace deal collapsed when President Kiir arrested Riek Machar in March 2025. Government forces, with Ugandan troops and air strikes, fight the opposition in Jonglei, Upper Nile and Unity.",
-   "summary": "The two men who led the 2013 to 2018 civil war went back to war in 2025. Government forces fight Machar's SPLA-IO and the Nuer White Army in the north and east. Uganda sent troops at Juba's request.",
-   "parties": [
-    {
-     "id": "ssgov",
-     "name": "Government forces (SSPDF)",
-     "side": "A",
-     "short": "government"
-    },
-    {
-     "id": "splaio",
-     "name": "SPLA-IO and the Nuer White Army",
-     "side": "B",
-     "short": "SPLA-IO"
-    }
-   ],
-   "ties": [
-    {
-     "backer": "uganda",
-     "party": "ssgov",
-     "kinds": [
-      "troops",
-      "air"
-     ],
-     "tier": "open",
-     "stance": null,
-     "since": null,
-     "since_precision": null,
-     "ended": null,
-     "evidence_to": "2026-10",
-     "sources": [
-      {
-       "class": "backer",
-       "text": "Ugandan deployment at Juba's request, March 2025",
-       "date": "2025-03",
-       "url": "https://www.monitor.co.ug/uganda/news/national/uganda-deploys-special-forces-in-juba-amid-tensions-muhoozi-4959864",
-       "publisher": "Ugandan government"
-      },
-      {
-       "class": "research",
-       "text": "Human Rights Watch on air strikes and the breach of the UN arms embargo",
-       "date": null,
-       "url": "https://www.hrw.org/world-report/2026/country-chapters/south-sudan",
-       "publisher": "Human Rights Watch"
-      },
-      {
-       "class": "backer",
-       "text": "UPDF, UPDF commissions new medical facilities at its Operation Mlinzi wa Kimya headquarters in Bilnyang, South Sudan, 11 October 2026",
-       "date": "2026-10",
-       "url": "https://www.updf.go.ug/commissions/updf-commissions-new-medical-facilities-in-south-sudan/",
-       "publisher": "UPDF"
-      },
-      {
-       "class": "press",
-       "publisher": "Reuters",
-       "text": "Reuters, Uganda says special forces deployed in Juba to secure it, quoting Muhoozi's posts; South Sudan did not comment, 11 March 2025",
-       "date": "2025-03",
-       "url": "https://www.chronicle.lu/category/international-news/53838-uganda-says-special-forces-deploy-in-south-sudan-capital-amid-tensions",
-       "via": "Chronicle.lu",
-       "entered": "2026-10-12"
-      }
-     ],
-     "note": "Uganda sent troops in March 2025 and its aircraft bombed opposition areas. Neither state asked the UN for an exemption to the arms embargo.",
-     "entered": "2026-10-11",
-     "checked": null
-    }
-   ],
-   "none_note": "No state is known to back the opposition.",
-   "areas": [
-    {
-     "country": "SSD",
-     "name": "Jonglei",
-     "why": "Akobo, Lankien, Walgak"
-    },
-    {
-     "country": "SSD",
-     "name": "Upper Nile",
-     "why": "Nasir, White Army fighting"
-    },
-    {
-     "country": "SSD",
-     "name": "Unity",
-     "why": "Abiemnom killings; fighting"
-    },
-    {
-     "country": "SSD",
-     "name": "Central Equatoria",
-     "why": "Panyume seized; Jebel Iraq"
-    },
-    {
-     "country": "SSD",
-     "name": "Western Equatoria",
-     "why": "SPLA-IO clashes; Tambura"
-    },
-    {
-     "country": "SSD",
-     "name": "Lakes",
-     "why": "Rumbek killings"
-    },
-    {
-     "country": "SSD",
-     "name": "Warrap",
-     "why": "Cattle camp attack, August"
-    }
-   ],
-   "areas_source": "Wikipedia 2026 in South Sudan; conflicts.json status",
-   "areas_url": "https://en.wikipedia.org/wiki/2026_in_South_Sudan",
-   "start": "2025-03",
-   "short": "South Sudan",
-   "turns": [],
-   "ucdp": {
-    "against": "UCDP lower",
-    "note": "Under a thousand, most of it fighting between armed groups and civilians killed deliberately. The UN's count for 2025 is higher.",
-    "troops_note": "UCDP's 2025 file does not name Uganda, which sent troops in March 2025 by its own account."
-   },
-   "counted_by": [
-    "un",
     "tracker"
    ],
    "region": "africa"
@@ -7982,6 +7102,22 @@
   {
    "name": "Armenia and Azerbaijan",
    "why": "Peace deal initialed in August 2025."
+  },
+  {
+   "name": "Syria",
+   "why": "Under UCDP's line for a war: 500 battle deaths in 2025, and 672 deaths of every kind from October 2025 to September 2026. ACLED counted about 1,300 deaths from October 2025 to February 2026. On the map until 14 November 2026."
+  },
+  {
+   "name": "South Sudan",
+   "why": "Under UCDP's line for a war: 282 battle deaths in 2025, and 731 deaths of every kind from October 2025 to September 2026. The UN human rights office counted 1,854 killed from January to September 2025. On the map until 14 November 2026."
+  },
+  {
+   "name": "Niger",
+   "why": "Under UCDP's line for a war: 535 battle deaths in 2025 in the fight with Islamic State. Drawn as part of the Sahel until 14 November 2026."
+  },
+  {
+   "name": "Haiti",
+   "why": "A war on UCDP's list for 2025, with 1,211 battle deaths that year, but 246 in the twelve months from October 2025 to September 2026. UCDP counted 868 deaths of every kind in those months. The UN human rights office counted 5,519 killed from March 2025 to January 2026. On the map until 14 November 2026."
   }
  ],
  "areas_rule": "The colored view shades provinces that saw ground fighting, sieges or an air campaign in the past twelve months. A province struck only by the occasional long-range drone or missile is not shaded. Provinces are the unit the conflict trackers report, so the shading follows their borders, not front lines.",
@@ -8001,7 +7137,7 @@
   "un": "a UN mission or agency",
   "party": "a party to the war, whose figure is a claim"
  },
- "ucdp_missing": "Above 1,000 deaths in UCDP and not on the map: Mexico, 7,904 deaths in 2025 in fighting between cartels, with a low of 2,720; Colombia, 1,392 so far in 2026; Tanzania, 1,009 civilians killed in 2025. Mexico is left off because no outside state fights there or backs a side. Colombia and Tanzania are not yet entered.",
+ "ucdp_missing": "Above 1,000 deaths of every kind in UCDP and not on the map: Mexico, 7,904 deaths in 2025 in fighting between cartels, with a low of 2,720; Colombia, 1,676 so far in 2026; Tanzania, 1,009 civilians killed in 2025. None is a war on UCDP's count, which takes battle deaths in one conflict with a government on one side.",
  "kept_by": "Kept by Kurt Olmstead with Claude, an AI assistant. The assistant drafts rows from the public record; the editor enters them. The second reading so far is by the assistant, not a person; a blind packet for a human reader is at data/blind_packet.json and scripts/blind_reader.py scores the grades.",
  "source_classes": {
   "backer": "the backer itself: its government, armed forces, state media or arms makers",
@@ -8238,6 +7374,12 @@
    "entry": "gaza",
    "what": "Gaza and Lebanon, one entry until now, is two wars: Gaza and Lebanon.",
    "why": "UCDP counts two conflicts, Israel against the Palestinian groups and Israel against Hezbollah, and the fighting in Lebanon since March 2026 followed the strikes on Iran. Each war keeps the lines to its own sides. The U.S. and German lines to Israel are on both, on the same sources, without the air-defence crew in Lebanon."
+  },
+  {
+   "date": "2026-11-14",
+   "entry": "mali",
+   "what": "The map now shows the wars that meet UCDP's line for a war. Syria, South Sudan and Haiti are off the map. The Sahel is two wars, Mali and Burkina Faso, and Niger is no longer drawn.",
+   "why": "The map had its own rule: about 1,000 deaths of any kind in the past twelve months, on any counter. UCDP's line is 1,000 battle deaths in one conflict in a year, and the map now applies it to UCDP's count for the past twelve months. Syria and South Sudan were on the map on other counters' figures. Haiti was a war on UCDP's count in 2025 and is under the line for the past twelve months. UCDP counts Mali and Burkina Faso as two wars and Niger as none. The lines of the Sahel entry went to the country their sources name; the U.S. line, which was to Niger and ended in 2024, is gone."
   }
  ],
  "ucdp_note": "UCDP counts deaths in fighting between a state and an opponent, deaths in fighting between armed groups, and civilians killed deliberately. UCDP calls a conflict a war at 1,000 battle deaths in a year, and minor below that. The figures here are our own sums from data/ucdp.json, built by scripts/build_ucdp.py from the yearly file and the monthly candidate files, pulled after the 20th of each month. A flag is UCDP's own mark that a row still needs a check on its deaths, its sides, its place or its source.",
@@ -8256,7 +7398,7 @@
    "disagreed": 13
   },
   "close_calls": 31,
-  "note": "Before the re-grade the two readings differed on 16 of 110 ties, 15 percent. Some were re-graded to follow the rules; 13 still differ, shown below. The reader's hardest cases changed the wording of the ladder: which trackers count as a record, what a partial denial does, that a backer's words count only when entered as a source, and that one publisher is said, not punished. The reading was made on 11 October, before the sourcing pass of 12 October; several of the ties below have gained sources since and have not been re-read.",
+  "note": "Before the re-grade the two readings differed on 16 of 110 ties, 15 percent. Some were re-graded to follow the rules; 13 still differ, shown below. The reader's hardest cases changed the wording of the ladder: which trackers count as a record, what a partial denial does, that a backer's words count only when entered as a source, and that one publisher is said, not punished. The reading was made on 11 October, before the sourcing pass of 12 October; several of the ties below have gained sources since and have not been re-read. Since 14 November 2026 the Sahel entry is Mali and Burkina Faso and Syria and Haiti are off the map; the readings below that name them stand as they were made.",
   "open": [
    {
     "tie": "UAE to Yemeni government and allied forces in Yemen",
@@ -8340,26 +7482,26 @@
  },
  "esd_note": "The ties are also published as data/ties_esd.csv, one row per backer, side and year, in the shape of UCDP's External Support Dataset, which stops at 2017, so the two can be read end to end. Our sixteen kinds of help fold into its eight: troops, air strikes, air defence and police count as troops, since the state's own forces engage; bases, transit, shelter and hosting as access to territory; weapons, drones and parts as weapons; oil as materiel; backing in public and at the UN as other. Alleged is our fourth tier.",
  "source_counts": {
-  "ties": 113,
-  "live": 103,
-  "open": 77,
+  "ties": 103,
+  "live": 96,
+  "open": 68,
   "shown": 11,
-  "reported": 22,
+  "reported": 21,
   "claimed": 3,
-  "ended": 10,
+  "ended": 7,
   "reference_only": 0,
   "open_on_tracker": 1,
   "no_outlet": 1,
   "document_unlinked": 1,
-  "single_publisher": 0,
-  "prewindow": 9,
+  "single_publisher": 1,
+  "prewindow": 11,
   "undated": 0,
   "weapons": 50,
-  "weapons_sipri": 5,
-  "sources": 423,
-  "sources_unlinked": 35,
-  "sources_undated": 58,
-  "sources_unopened": 57,
+  "weapons_sipri": 6,
+  "sources": 366,
+  "sources_unlinked": 32,
+  "sources_undated": 51,
+  "sources_unopened": 46,
   "checked": 0,
   "one_class": 8
  },
@@ -8388,13 +7530,13 @@
     "id": "africa",
     "title": "Africa's wars and who arms them",
     "hash": "all&z=africa",
-    "text": "{africa_wars} of the {wars} wars are in Africa. Türkiye's drones are on the record in the Sahel, Somalia, Ethiopia and Nigeria, and reported in Sudan. The UAE is documented arming the RSF in Sudan and reported arming Ethiopia's government; Egypt is on the other side in both. Russia's troops are in the Sahel. Most of these lines are solid: the backers say so themselves. The dashed ones in Sudan are what UN investigators documented and the backers deny."
+    "text": "{africa_wars} of the {wars} wars are in Africa. Türkiye's drones are on the record in Mali, Burkina Faso, Somalia, Ethiopia and Nigeria, and reported in Sudan. The UAE is documented arming the RSF in Sudan and reported arming Ethiopia's government; Egypt is on the other side in both. Russia's troops are in Mali and Burkina Faso. Most of these lines are solid: the backers say so themselves. The dashed ones in Sudan are what UN investigators documented and the backers deny."
    },
    {
     "id": "both",
     "title": "The same states on both sides",
     "hash": "all&grid=all",
-    "text": "Türkiye is with the United States in five wars and against it in Gaza. China is against the United States in five wars and squares and beside it in two. Egypt and Türkiye are on one side in Sudan and Somalia and on opposite sides in Ethiopia. The grid under the map puts the states down the side and the wars across, so this reads at a glance. One thing after another is not one thing because of another."
+    "text": "Türkiye is with the United States in four wars and against it in Gaza. China is against the United States in five wars and squares and beside it in two. Egypt and Türkiye are on one side in Sudan and Somalia and on opposite sides in Ethiopia. The grid under the map puts the states down the side and the wars across, so this reads at a glance. One thing after another is not one thing because of another."
    }
   ]
  },

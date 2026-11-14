@@ -26,14 +26,6 @@ The last positive record of Kenya hosting the RSF's political side is April 2025
 
 Blocked: allafrica.com (February 2025 'Kenya Defends Hosting RSF') returned 403 · no Kenyan government page for the February 2025 conference was found before the search budget ran out
 
-## Qatar to Transitional government in Syria
-
-`syria/qatar/sgov2` · holds: **doubtful** · in the queue for: unlinked source: Qatari grant of $29 million a month for state salaries from 
-
-The $29 million a month grant was announced by Syria's finance minister to SANA on 7 May 2025, and the joint Qatar-Saudi deal was renewed in October 2025; by March 2026 the minister said salaries were paid from state resources, so the salary money appears to have ended. No Qatari ministry or QNA statement on the grant was found, and no 2026 source on the gas deliveries.
-
-Blocked: No mofa.gov.qa or QNA page on the salary grant appeared in search; the Qatari side did not comment at the time, per Reuters relays.
-
 ## China to Nigerian government in Nigeria
 
 `nigeria/china/ngov` · holds: **unknown** · in the queue for: pre-window evidence to 2023; unlinked source: Nigerian Air Force announcement of Wing Loong II deliveries,
@@ -168,12 +160,6 @@ President Ndayishimiye told diplomats on 14 January 2026 that Burundi deployed t
 
 Blocked: No communique from the Burundian government or army on the 2026 deployment turned up; the president's speech is the nearest official statement.
 
-## Canada to Haitian government and the foreign force in Haiti
-
-`haiti/canada/hstate` · holds: **yes** · in the queue for: one counting source
-
-Le Nouvelliste reports Canada's 29 June 2026 package of CAD 26.3 million for Haiti security, mainly for the Gang Suppression Force, announced by foreign minister Anita Anand; Carnegie says Canada and the U.S. provided the bulk of the earlier mission's funding.
-
 ## Canada to Ukraine in Ukraine
 
 `ukraine/canada/ukr` · holds: **yes** · in the queue for: one counting source
@@ -181,14 +167,6 @@ Le Nouvelliste reports Canada's 29 June 2026 package of CAD 26.3 million for Hai
 LIGA.net reported the same 24 February 2026 announcement: Operation Unifier extended to 2029, about 2 billion Canadian dollars for 2026-27, more than 400 armoured vehicles. It relays the government's own statement, so it is a second publisher rather than independent confirmation. The Kiel tracker already cited for Europe also covers Canada.
 
 Blocked: search budget ran out before a wire-service (Reuters or Canadian Press) item could be found
-
-## Chad to Haitian government and the foreign force in Haiti
-
-`haiti/chad/hstate` · holds: **yes** · in the queue for: one counting source; one publisher
-
-Le Nouvelliste reported about fifty Chadian police arriving in Port-au-Prince on 1 April 2026 as a pre-deployment, with 1,500 planned; AP on 23 April 2026 said Chadian troops were already deployed in the capital with staggered deployments to follow; Africanews on 21 March 2026 reported Chad would deploy 800 as Kenya stepped back. The figures differ between reports.
-
-Blocked: ABC News (AP wire) returned 404 and Africanews returned 500 on fetch; the Chadian government's own announcement did not surface.
 
 ## Chad to Rapid Support Forces in Sudan
 
@@ -228,11 +206,13 @@ The 8 May 2026 satellite designations (MizarVision, The Earth Eye, Chang Guang) 
 
 Blocked: state.gov May 2026 release returned 403 to the fetcher and 504 to curl; URL confirmed from search results · wsj.com cannot be searched or fetched by this tool; the Journal URL comes from the IBTimes page · USNI News and centcom.mil returned 403 · iranwatch.org mirrors returned 403
 
-## China to Mali, Burkina Faso and Niger (military governments) in Sahel
+## China to Mali (military government) in Mali
 
-`sahel/china/aes` · holds: **yes** · in the queue for: one counting source
+`mali/china/gov` · holds: **yes** · in the queue for: one counting source
 
 Named press adds a second class: Military Africa reported on 30 April 2026 that Mali took in Norinco Yitian-L air-defence systems and VN22 infantry fighting vehicles, the latest batch seen on 12 March 2026, arriving through Guinea under a September 2024 Norinco contract. The report rests on convoy footage; no Chinese or Malian statement was found.
+
+Since 14 November 2026 the Sahel entry is two wars. This line is also on Burkina Faso (`burkinafaso/china/gov`) with the sources that name Burkina Faso.
 
 ## China to Military-led government in Myanmar
 
@@ -392,13 +372,15 @@ The Treasury release is dated 20 August 2026: OFAC re-designated Hezbollah citin
 
 Blocked: no Iranian or Hezbollah leaders' statements located before the search budget ran out
 
-## Iran to Mali, Burkina Faso and Niger (military governments) in Sahel
+## Iran to Mali (military government) in Mali
 
-`sahel/iran/aes` · holds: **yes** · in the queue for: unlinked source: Iranian government statement on the defence ministers' meeti
+`mali/iran/gov` · holds: **yes** · in the queue for: unlinked source: Iranian government statement on the defence ministers' meeti
 
 Iran's defence minister Aziz Nasirzadeh met Burkina Faso's defence minister Celestin Simpore in Tehran on 23 February 2026; Iran's government account on X said he thanked Ouagadougou for its stance and spoke of Sahel cooperation with Mali and Niger, and Xinhua reported President Pezeshkian offering to share defence expertise. These show the relationship, not a delivery; the drones and trainers still rest on the AGSI report.
 
 Blocked: The GlobalSecurity mirror of the Press TV item returned 402; no presstv.ir or mod.ir page came up before the search budget ran out.
+
+Since 14 November 2026 the Sahel entry is two wars. This line is also on Burkina Faso (`burkinafaso/iran/gov`) with the sources that name Burkina Faso.
 
 ## Iran to Venezuela (Maduro's government) in Venezuela
 
@@ -407,22 +389,6 @@ Blocked: The GlobalSecurity mirror of the Press TV item returned 402; no presstv
 Foreign ministry spokesman Baghaei's statement of 11 December 2025 called the U.S. seizure of the tanker Skipper carrying Venezuelan oil state maritime piracy and armed robbery at sea; Tasnim carries it. The January 2026 statement is already linked through Iran International.
 
 Blocked: the foreign ministry's own site did not surface in search
-
-## Israel to Druze militias in Sweida and Assad loyalists on the coast in Syria
-
-`syria/israel/local` · holds: **yes** · in the queue for: unlinked source: Israeli military statements on strikes against Syrian army s
-
-A Washington Post investigation of 23 December 2025, relayed by The New Arab, Ynet and Middle East Monitor, says Israel airdropped about 500 rifles and gear to the Sweida Military Council, paid stipends of $100 to $200 a month to about 3,000 fighters, and routed money through the SDF; weapon transfers reportedly stopped around May 2025 and aid tapered in August, while stipends and non-lethal airdrops continued. Nothing dated 2026 was found.
-
-Blocked: The Washington Post article itself did not surface in search; all three sources relay it. i24NEWS loaded only its masthead.
-
-## Israel to Druze militias in Sweida and Assad loyalists on the coast in Syria
-
-`syria/israel/local` · holds: **yes** · in the queue for: unlinked source: Israeli military statements on strikes against Syrian army s
-
-On 20 March 2026 the Israeli military said on Telegram that it struck command centres and equipment at Syrian army camps in the south in response to the previous day's attacks on Druze civilians in the Sweida area, and that it would keep acting to protect the Druze; Syria's foreign ministry called it an outrageous assault.
-
-Blocked: Al Arabiya returned 403; the IDF's own site did not appear in search results.
 
 ## Jordan to United States in Gulf
 
@@ -494,13 +460,15 @@ The UN's own record of the 10130th meeting on 7 April 2026 shows draft S/2026/27
 
 Blocked: press.un.org pages return a JavaScript error to the fetcher and HTTP 406 to curl; URLs were confirmed from search results only
 
-## Russia to Mali, Burkina Faso and Niger (military governments) in Sahel
+## Russia to Mali (military government) in Mali
 
-`sahel/russia/aes` · holds: **yes** · in the queue for: unlinked source: Russian Defence Ministry statements on the Africa Corps
+`mali/russia/gov` · holds: **yes** · in the queue for: unlinked source: Russian Defence Ministry statements on the Africa Corps
 
 The Russian Defence Ministry's Africa Corps said on 27 April 2026 that its units left Kidal by a joint decision with Mali's leadership and that 'personnel continue to carry out their assigned combat mission'; the ministry said operations against armed groups continue. The CRS brief was updated 8 April 2026 and puts as many as 2,500 Russian personnel in Mali as of early 2026, with Russian forces in Niger since 2024.
 
 Blocked: crsreports.congress.gov returned 403; the EveryCRSReport mirror was fetched. · NV.ua and Dhaka Tribune pages carrying the ministry's wording returned 403; no mil.ru or TASS page came up in search.
+
+Since 14 November 2026 the Sahel entry is two wars. This line is also on Burkina Faso (`burkinafaso/russia/gov`) with the sources that name Burkina Faso.
 
 ## Russia to Military-led government in Myanmar
 
@@ -541,14 +509,6 @@ Blocked: The S/2026/466 PDF on ecoi.net exceeded the fetcher's size limit; its s
 The memorandum was signed in Riyadh on 9 February 2026 by Somali defence minister Ahmed Moallim Fiqi and Prince Khalid bin Salman; only the Somali ministry has described it, as a framework for defence cooperation, and neither side has published its text or said what is delivered. No Saudi Press Agency or Saudi defence ministry page was found.
 
 Blocked: No page on spa.gov.sa or the Saudi defence ministry site turned up in search; Prince Khalid's confirmation is an X post that cannot be fetched.
-
-## Saudi Arabia to Transitional government in Syria
-
-`syria/saudi/sgov2` · holds: **yes** · in the queue for: unlinked source: Saudi and Qatari payment of Syria's World Bank arrears, Apri
-
-The joint Saudi-Qatari finance ministry statement of 27 April 2025 committing to settle Syria's roughly $15 million World Bank arrears is carried by Gulf Today crediting WAM; the World Bank later confirmed the payment, per Rudaw. Public backing continues into 2026, but the salary grants are described in the past tense by March 2026.
-
-Blocked: WAM's page (https://www.wam.ae/en/article/bje0ybf-saudi-arabia-qatar-clear-syria’s-15-world-bank) loads only its masthead to the fetcher; Al Arabiya returned 403; no mof.gov.sa or spa.gov.sa page appeared in search.
 
 ## Saudi Arabia to United States in Gulf
 
@@ -606,13 +566,15 @@ Anadolu's 4 April 2026 item is the record of the meeting: Erdogan received a Ham
 
 Blocked: no Turkish presidency (tccb.gov.tr) page or Duran's NSosyal post located; Anadolu gives no link
 
-## Türkiye to Mali, Burkina Faso and Niger (military governments) in Sahel
+## Türkiye to Mali (military government) in Mali
 
-`sahel/turkey/aes` · holds: **yes** · in the queue for: unlinked source: Burkinabe and Nigerien announcements
+`mali/turkey/gov` · holds: **yes** · in the queue for: unlinked source: Burkinabe and Nigerien announcements
 
 Burkina Faso's announcement is already held (AIB, April 2024). For Niger no government announcement was found; the May 2022 delivery is reported by The Defense Post (held) and HumAngle, and Turkey's presidency announced the sale in November 2021. The September 2026 defenceWeb item on training keeps the tie in the window.
 
 Blocked: humanglemedia.com returned 403 and haber.aero 404; the search found no Nigerien government or ANP page on the drones. · Web search budget ran out before a last pass for Nigerien statements.
+
+Since 14 November 2026 the Sahel entry is two wars. This line is also on Burkina Faso (`burkinafaso/turkey/gov`) with the sources that name Burkina Faso.
 
 ## Türkiye to Sudanese Armed Forces in Sudan
 
@@ -621,14 +583,6 @@ Blocked: humanglemedia.com returned 403 and haber.aero 404; the search found no 
 The Washington Post article's URL was not found; Euronews summarised it on 9 March 2025 (110.7 million euro Baykar contract of 16 November 2023, shipments to Port Sudan August to November 2024). Inside the window, Al Jazeera's February 2026 survey says Turkey provided Bayraktar drones via Egypt, and Reuters found most tracked flights into the Egyptian base flying the Akinci came from Turkey.
 
 Blocked: washingtonpost.com article not located before the search budget ran out; Euronews does not link it
-
-## Türkiye to Transitional government in Syria
-
-`syria/turkey/sgov2` · holds: **yes** · in the queue for: unlinked source: Türkiye-Syria military training memorandum, 13 August 2025; Turkish armoured vehicle deliveries
-
-The 13 August 2025 training and consultancy memorandum is confirmed by Türkiye's defence ministry (via Daily Sabah) and by Syria's foreign ministry on its own site; a Turkish defence ministry source told Al-Monitor the next day that Türkiye would supply weapon systems and logistics. The armoured vehicle claim rests on photographs of Cobra and Commando vehicles at a Syrian army ceremony in Aleppo reported by Militarnyi in July 2025; no Turkish statement on deliveries was found.
-
-Blocked: No msb.gov.tr page for the memorandum or for vehicle deliveries appeared in search; Daily Sabah is the closest carrier of the Turkish ministry's wording.
 
 ## Türkiye to United States in Gulf
 
@@ -654,14 +608,6 @@ Two other classes confirm the strikes: New America's tracker reported on 29 May 
 
 Blocked: africom.mil press release list returned 403, so no AFRICOM URL for the September 2026 releases.
 
-## U.S. to Haitian government and the foreign force in Haiti
-
-`haiti/usa/hstate` · holds: **yes** · in the queue for: one counting source
-
-AP, citing a BINUH report, says 13 Security Council states pledged more than $200 million to the force's trust fund and that the U.S. and Panama proposed the force; Carnegie's July 2026 paper says the Gang Suppression Force has received significant financial and material support from the United States and that the U.S. and Canada gave the bulk of the earlier mission's money. Neither gives a 2026 U.S. dollar figure.
-
-Blocked: No UN Secretary-General report with per-donor figures surfaced; the search budget ran out before a State Department 2026 funding announcement could be looked for.
-
 ## U.S. to Nigerian government in Nigeria
 
 `nigeria/usa/ngov` · holds: **yes** · in the queue for: unlinked source: U.S. Africa Command strikes in Sokoto, 25 December 2025
@@ -675,14 +621,6 @@ AFRICOM's own release of 25 December 2025 says it struck ISIS camps in Sokoto St
 Press on 10 to 12 December 2025 (Dawn, The Statesman/IANS, GBP) reports the DSCA letter to Congress on the $686 million F-16 sustainment and upgrade package, with $37 million in major defence equipment; relays date the letter 8 December, not 4 December. The DSCA page itself could not be reached.
 
 Blocked: dsca.mil returns 403 to the fetcher; the Federal Register notice for this transmittal did not surface before the search budget ran out (a January 2026 Federal Register item 2026-00529 concerns a different 2019 Pakistan case).
-
-## U.S. to Transitional government in Syria
-
-`syria/usa/sgov2` · holds: **yes** · in the queue for: unlinked source: Syria joined the U.S.-led anti-ISIS coalition, 11 November 2
-
-A senior U.S. official announced on 10 November 2025 that Syria would join the anti-ISIS coalition as its 90th member during al-Sharaa's White House visit; the U.S. embassy in Syria called it a defining moment the next day; the State Department issued a determination in November 2025 suspending Caesar Act sanctions for 180 days; and U.S. envoy Tom Barrack hailed the 30 January 2026 government-SDF deal. Note the coalition announcement was 10 November, not 11.
-
-Blocked: state.gov pages return 403 to the fetcher; the Caesar determination URL and date come from the search listing only.
 
 ## UAE to Federal government in Ethiopia
 
@@ -732,17 +670,9 @@ Defence Minister Kiryowa Kiwanuka said on 15 August 2026 'Uganda is going to rem
 
 Blocked: The VOA page of February 2025 with per-country numbers was behind a 402 on its mirror; no AUSSOM site page was reachable (aussom.au.int did not resolve).
 
-## Uganda to Government forces (SSPDF) in South Sudan
+## Ukraine to Azawad Liberation Front (Tuareg) in Mali
 
-`southsudan/uganda/ssgov` · holds: **yes** · in the queue for: unlinked source: Ugandan deployment at Juba's request, March 2025
-
-On 11 March 2025 Muhoozi Kainerugaba said on X that special forces had entered Juba to secure it, and UPDF spokesman Felix Kulayigye told the Daily Monitor the troops were there on the invitation of the government of South Sudan; Juba's information minister denied the deployment at the time. The UPDF's own October 2026 page already shows the presence continuing.
-
-Blocked: allafrica.com copy of the UPDF statement (202503130037) returned 403
-
-## Ukraine to Azawad Liberation Front (Tuareg) in Sahel
-
-`sahel/ukraine/fla` · holds: **yes** · in the queue for: unlinked source: CNN, 12 September 2026, Ukraine is fighting Russia anywhere 
+`mali/ukraine/fla` · holds: **yes** · in the queue for: unlinked source: CNN, 12 September 2026, Ukraine is fighting Russia anywhere 
 
 The CNN story by Ivana Kottasova ran on 11 September 2026 (CNN Newsource copy on KEYT): about 15 Ukrainian specialists in Mali train and guide the Azawad Liberation Front's drone operations, and one said they helped take Kidal; Ukraine's intelligence service referred CNN to earlier comments. Russia's Defence Ministry accused Kyiv of a role in the Kidal attack.
 
@@ -755,3 +685,14 @@ Blocked: No cnn.com URL for the story came up in search; the KEYT copy carries t
 ## Germany to Israel in Lebanon
 
 `lebanon/germany/isr` · holds: **unknown** · in the queue for: entered 2026-11-13 on the same split. The sources (SIPRI, German export figures, Al Jazeera 27 July 2026) are about German arms to Israel in general; none names Lebanon.
+## Iran to Mali (military government) in Mali, after the split
+
+`mali/iran/gov` · holds: **not checked** · in the queue for: one source, entered 14 November 2026
+
+When the Sahel entry became Mali and Burkina Faso, the Arab Gulf States Institute report was the only source left on Mali's line; the others name Burkina Faso. Open the report and confirm it says Iran sent drones or trainers to Mali. If it does not, take the line off.
+
+## Russia to Burkina Faso (military government) in Burkina Faso, after the split
+
+`burkinafaso/russia/gov` · holds: **not checked** · in the queue for: pre-window evidence to 2024-01, entered 14 November 2026
+
+The line rests on the Africa Corps announcement of January 2024 (100 soldiers, 200 to follow, to guard the country's leader), read in the Reuters report, and on the Congressional Research Service paper. Nothing from the past twelve months is entered. Find a 2026 source that the unit is still there, and whether it fights.
