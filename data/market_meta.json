@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-11-13T09:57:41Z",
+ "generated_at_utc": "2026-11-14T01:49:45Z",
  "schema_version": 1,
  "window_start": "2025-06-23",
  "war_start": "2026-02-28",
@@ -23,32 +23,32 @@
    "value": 44.3
   },
   "bno": {
-   "date": "2026-11-12",
-   "value": 61.01
+   "date": "2026-11-13",
+   "value": 61.06
   },
   "ovx": {
-   "date": "2026-11-11",
-   "value": 51.26
+   "date": "2026-11-12",
+   "value": 51.72
   },
   "vix": {
-   "date": "2026-11-11",
-   "value": 17.49
+   "date": "2026-11-12",
+   "value": 18.7
   },
   "ovx_vix": {
-   "date": "2026-11-11",
-   "value": 2.93
+   "date": "2026-11-12",
+   "value": 2.77
   },
   "corr20": {
-   "date": "2026-11-12",
-   "value": -0.558
+   "date": "2026-11-13",
+   "value": -0.541
   },
   "spy_drawdown_pct": {
-   "date": "2026-11-12",
-   "value": -2.82
+   "date": "2026-11-13",
+   "value": -3.17
   },
   "us10y": {
-   "date": "2026-11-10",
-   "value": 4.98
+   "date": "2026-11-12",
+   "value": 5.1
   }
  },
  "bno_brent_ratio_60obs_median": 0.5485,
