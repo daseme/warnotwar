@@ -3392,6 +3392,288 @@
    "tie": "gaza/iran/hezb",
    "kind": "tie",
    "what": "Iran to Hezbollah in Gaza & Lebanon: removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "mali",
+   "kind": "entry",
+   "what": "Mali entered"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "burkinafaso",
+   "kind": "entry",
+   "what": "Burkina Faso entered"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "sahel",
+   "kind": "entry",
+   "what": "The Sahel removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "syria",
+   "kind": "entry",
+   "what": "Syria removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "haiti",
+   "kind": "entry",
+   "what": "Haiti removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "southsudan",
+   "kind": "entry",
+   "what": "South Sudan removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "mali",
+   "tie": "mali/russia/gov",
+   "kind": "tie",
+   "what": "Russia to junta in Mali: entered, on the record"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "mali",
+   "tie": "mali/turkey/gov",
+   "kind": "tie",
+   "what": "Türkiye to junta in Mali: entered, on the record"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "mali",
+   "tie": "mali/china/gov",
+   "kind": "tie",
+   "what": "China to junta in Mali: entered, reported"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "mali",
+   "tie": "mali/iran/gov",
+   "kind": "tie",
+   "what": "Iran to junta in Mali: entered, reported"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "mali",
+   "tie": "mali/ukraine/fla",
+   "kind": "tie",
+   "what": "Ukraine to Tuareg in Mali: entered, reported"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "mali",
+   "tie": "mali/algeria/fla",
+   "kind": "tie",
+   "what": "Algeria to Tuareg in Mali: entered, alleged"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "burkinafaso",
+   "tie": "burkinafaso/russia/gov",
+   "kind": "tie",
+   "what": "Russia to junta in Burkina Faso: entered, on the record"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "burkinafaso",
+   "tie": "burkinafaso/turkey/gov",
+   "kind": "tie",
+   "what": "Türkiye to junta in Burkina Faso: entered, on the record"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "burkinafaso",
+   "tie": "burkinafaso/china/gov",
+   "kind": "tie",
+   "what": "China to junta in Burkina Faso: entered, reported"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "burkinafaso",
+   "tie": "burkinafaso/iran/gov",
+   "kind": "tie",
+   "what": "Iran to junta in Burkina Faso: entered, reported"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "sahel",
+   "tie": "sahel/russia/aes",
+   "kind": "tie",
+   "what": "Russia to juntas in Sahel: removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "sahel",
+   "tie": "sahel/turkey/aes",
+   "kind": "tie",
+   "what": "Türkiye to juntas in Sahel: removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "sahel",
+   "tie": "sahel/china/aes",
+   "kind": "tie",
+   "what": "China to juntas in Sahel: removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "sahel",
+   "tie": "sahel/iran/aes",
+   "kind": "tie",
+   "what": "Iran to juntas in Sahel: removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "sahel",
+   "tie": "sahel/usa/aes",
+   "kind": "tie",
+   "what": "U.S. to juntas in Sahel: removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "sahel",
+   "tie": "sahel/ukraine/fla",
+   "kind": "tie",
+   "what": "Ukraine to Tuareg in Sahel: removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "sahel",
+   "tie": "sahel/algeria/fla",
+   "kind": "tie",
+   "what": "Algeria to Tuareg in Sahel: removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "syria",
+   "tie": "syria/turkey/sgov2",
+   "kind": "tie",
+   "what": "Türkiye to government in Syria: removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "syria",
+   "tie": "syria/qatar/sgov2",
+   "kind": "tie",
+   "what": "Qatar to government in Syria: removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "syria",
+   "tie": "syria/saudi/sgov2",
+   "kind": "tie",
+   "what": "Saudi Arabia to government in Syria: removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "syria",
+   "tie": "syria/usa/sgov2",
+   "kind": "tie",
+   "what": "U.S. to government in Syria: removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "syria",
+   "tie": "syria/usa/sdf",
+   "kind": "tie",
+   "what": "U.S. to SDF in Syria: removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "syria",
+   "tie": "syria/israel/local",
+   "kind": "tie",
+   "what": "Israel to Druze, loyalists in Syria: removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "syria",
+   "tie": "syria/israel/local/2",
+   "kind": "tie",
+   "what": "Israel to Druze, loyalists in Syria: removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "haiti",
+   "tie": "haiti/usa/hstate",
+   "kind": "tie",
+   "what": "U.S. to state in Haiti: removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "haiti",
+   "tie": "haiti/canada/hstate",
+   "kind": "tie",
+   "what": "Canada to state in Haiti: removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "haiti",
+   "tie": "haiti/chad/hstate",
+   "kind": "tie",
+   "what": "Chad to state in Haiti: removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "haiti",
+   "tie": "haiti/kenya/hstate",
+   "kind": "tie",
+   "what": "Kenya to state in Haiti: removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "haiti",
+   "tie": "haiti/elsalvador/hstate",
+   "kind": "tie",
+   "what": "El Salvador to state in Haiti: removed"
+  },
+  {
+   "date": "2026-11-14",
+   "commit": "1d2f882",
+   "entry": "southsudan",
+   "tie": "southsudan/uganda/ssgov",
+   "kind": "tie",
+   "what": "Uganda to government in South Sudan: removed"
   }
  ]
 }
