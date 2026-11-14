@@ -965,7 +965,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
 
   /* each step's map: what is drawn and where the camera is */
   function sceneFor(id) {
-    const sc = { view: 'world', marks: true, sized: sizedNow(), areas: 'faint', squares: false, arcs: null, chips: null, focus: null, labels: null, chart: false, names: {} };   /* every map names its countries */
+    const sc = { view: 'world', marks: true, sized: sizedNow(), areas: 'faint', squares: false, arcs: null, chips: null, focus: null, labels: null, chart: false, names: {} };   /* every map names its countries once it is zoomed in */
     switch (id) {
       case 'start': Object.assign(sc, { marks: false, areas: 'none' }); break;
       case 'where': Object.assign(sc, { areas: 'none', seq: true }); break;
@@ -1078,7 +1078,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
     }
     /* light names: places the step names first, then countries, each left off where it would sit on another name or run off the map */
     gNames.innerHTML = '';
-    if (sc.names) {
+    if (sc.names && target.k >= worldK * 1.4) {   /* Kurt, 14 November 2026: names crowd the whole-world view; they show once the map is zoomed in */
       const fit = (sx, sy, w, start) => { const box = start ? [sx - 2, sy - 6, sx + w + 2, sy + 6] : [sx - w / 2 - 2, sy - 6, sx + w / 2 + 2, sy + 6]; if (box[0] < 2 || box[2] > svg.clientWidth - 2 || box[1] < 2 || box[3] > svg.clientHeight - 2 || nameBoxes.some(q => box[0] < q[2] && box[2] > q[0] && box[1] < q[3] && box[3] > q[1])) return false; nameBoxes.push(box); return true; };
       for (const pl of sc.names.places || []) { const [x, y] = project(pl.at[0], pl.at[1]), [sx, sy] = toScreen(x, y, target); if (fit(sx, sy, pl.name.length * 4.9, true)) el('text', {}, scaled(x, y, gNames, { class: 'cname place' }, uT)).textContent = pl.name; }
       /* a country's name moves below or above a war's dot before it is dropped, so the countries at war keep their names */
