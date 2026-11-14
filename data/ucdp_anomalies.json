@@ -9,6 +9,11 @@
   "candidate_broken": 64
  },
  "entries": {
+  "balochistan": {
+   "rows": 4,
+   "low_above_best": 1,
+   "high_below_best": 3
+  },
   "burkinafaso": {
    "rows": 58,
    "low_above_best": 60,
@@ -55,9 +60,9 @@
    "high_below_best": 178
   },
   "pakistan": {
-   "rows": 206,
-   "low_above_best": 62,
-   "high_below_best": 154
+   "rows": 201,
+   "low_above_best": 61,
+   "high_below_best": 150
   },
   "somalia": {
    "rows": 15,

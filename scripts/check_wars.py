@@ -130,12 +130,14 @@ def main():
     need('ucdp_year', lambda: last_y['year'])
     need('ucdp_wars', lambda: last_y['wars'])
     need('interstate', lambda: last_y['interstate'])
-    # the map's rule: every war has a conflict with 1,000 or more battle deaths in the window on UCDP's count,
-    # and no country off the map has that many
+    # the map's rule: every war is one UCDP conflict with 1,000 or more battle deaths in the window, so the count of dots
+    # is a count of UCDP's wars. Rows whose armed group UCDP could not name are not a conflict of its and do not count.
     for c in wars:
-        top = max([k['best_window'] for k in (U['entries'].get(c['id']) or {}).get('conflicts') or [] if k.get('type') == 'state-based'] or [0])
-        if top < 1000:
-            fails.append(f"{c['id']}: no conflict with 1,000 battle deaths in the window on UCDP's count (highest {top}); the map's rule takes it off")
+        over = [k for k in (U['entries'].get(c['id']) or {}).get('conflicts') or []
+                if k.get('type') == 'state-based' and k['best_window'] >= 1000 and not k['name'].startswith('unnamed groups')]
+        if len(over) != 1:
+            fails.append(f"{c['id']}: {len(over)} UCDP conflicts with 1,000 battle deaths in the window ({', '.join(k['name'] for k in over) or 'none'}); "
+                         "the map's rule wants exactly one: take the war off, or split it")
     for x in U.get('not_on_map') or []:
         if (x.get('by_type') or {}).get('state-based', 0) >= 1000:
             fails.append(f"{x['country']}: {x['by_type']['state-based']} battle deaths in the window and not on the map; check its conflicts against the map's rule")

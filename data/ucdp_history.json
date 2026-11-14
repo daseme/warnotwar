@@ -3871,71 +3871,143 @@
      "window": {
       "from": "2025-10",
       "to": "2026-09",
-      "low": 4934,
-      "best": 5652,
-      "high": 9501,
+      "low": 3006,
+      "best": 3210,
+      "high": 4043,
       "by_type": {
-       "state-based": 5360,
+       "state-based": 3036,
        "non-state": 42,
-       "one-sided": 250
+       "one-sided": 132
       }
      },
      "last_year": {
       "year": 2025,
-      "low": 3212,
-      "best": 3554,
-      "high": 5540
+      "low": 2612,
+      "best": 2692,
+      "high": 3141
      },
      "this_year": {
       "year": 2026,
       "to": "2026-09",
-      "low": 3907,
-      "best": 4466,
-      "high": 7644
+      "low": 2174,
+      "best": 2323,
+      "high": 3065
      },
-     "basis": "countries: Pakistan; and these conflicts wherever they are fought: Afghanistan - Pakistan, Pakistan: Balochistan, Pakistan: Government",
+     "basis": "countries: Pakistan; less the conflicts counted under Balochistan; less Afghanistan - Pakistan; and these conflicts wherever they are fought: Pakistan: Government",
      "months": {
       "best": [
-       602,
-       355,
-       229,
-       413,
-       494,
-       579,
-       227,
-       349,
-       479,
-       662,
-       535,
-       728
+       412,
+       303,
+       172,
+       113,
+       269,
+       117,
+       121,
+       253,
+       324,
+       374,
+       318,
+       434
       ],
       "low": [
-       484,
-       322,
-       221,
-       311,
-       424,
-       396,
-       189,
-       281,
-       466,
-       643,
-       531,
-       666
+       369,
+       298,
+       165,
+       113,
+       247,
+       116,
+       102,
+       195,
+       316,
+       374,
+       318,
+       393
       ],
       "high": [
-       958,
-       512,
-       387,
-       1218,
-       1556,
-       1027,
-       380,
-       595,
-       682,
-       784,
-       588,
-       814
+       474,
+       319,
+       185,
+       461,
+       359,
+       134,
+       171,
+       338,
+       429,
+       389,
+       328,
+       456
+      ]
+     }
+    },
+    "balochistan": {
+     "window": {
+      "from": "2025-10",
+      "to": "2026-09",
+      "low": 1413,
+      "best": 1596,
+      "high": 3138,
+      "by_type": {
+       "state-based": 1478,
+       "non-state": 0,
+       "one-sided": 118
+      }
+     },
+     "last_year": {
+      "year": 2025,
+      "low": 514,
+      "best": 684,
+      "high": 1973
+     },
+     "this_year": {
+      "year": 2026,
+      "to": "2026-09",
+      "low": 1296,
+      "best": 1458,
+      "high": 2659
+     },
+     "basis": "conflicts: BRAS - Civilians, Pakistan: Balochistan",
+     "months": {
+      "best": [
+       59,
+       31,
+       48,
+       300,
+       53,
+       51,
+       38,
+       88,
+       155,
+       288,
+       217,
+       268
+      ],
+      "low": [
+       53,
+       17,
+       47,
+       198,
+       51,
+       49,
+       26,
+       78,
+       150,
+       269,
+       213,
+       262
+      ],
+      "high": [
+       133,
+       170,
+       176,
+       757,
+       70,
+       213,
+       133,
+       248,
+       252,
+       395,
+       260,
+       331
       ]
      }
     },

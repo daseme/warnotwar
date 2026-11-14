@@ -106,7 +106,7 @@ The two reports are S/2024/432 (final report sent 31 May 2024, dated 4 June 2024
 
 Blocked: Both documents.un.org PDFs exceeded the fetcher's size limit; digitallibrary.un.org returned 403. Symbols come from search listings (UN Digital Library, ecoi.net, press.un.org). · The S/2026/466 PDF was too large to read; its ecoi listing covers AFC/M23, ADF/ISCAP, Ituri and North Kivu but says nothing visible on Uganda.
 
-## Afghanistan to Pakistani Taliban (TTP) and Baloch insurgents in Pakistan
+## Afghanistan to Pakistani Taliban (TTP) in Pakistan
 
 `pakistan/afghanistan/ttp` · holds: **yes** · in the queue for: unlinked source: UN Security Council Monitoring Team, 38th report, released 1
 
@@ -348,15 +348,7 @@ The SIPRI Arms Transfers Database page says it was last updated 9 March 2026 wit
 
 Blocked: the Bundestag document (Foreign Office answer to the AfD question) was not located; Al Jazeera does not link it
 
-## India to Afghan Taliban government in Pakistan
-
-`pakistan/india/afg` · holds: **yes** · in the queue for: one counting source
-
-Dawn on 21 October 2025 carried India's foreign ministry press release restoring the Kabul mission to a full embassy to augment India's development, humanitarian and capacity-building contribution, and IANS on 10 October 2025 reported food aid delivered during Muttaqi's visit. No source dated 2026 on new Indian aid to Afghanistan was found before the search budget ran out.
-
-Blocked: Search budget ran out before a 2026-dated source on Indian aid could be found; the MEA's own press release page was not reached.
-
-## India to Pakistani Taliban (TTP) and Baloch insurgents in Pakistan
+## India to Pakistani Taliban (TTP) in Pakistan
 
 `pakistan/india/ttp` · holds: **yes** · in the queue for: unlinked source: Pakistani statements at the UN General Assembly, 7 and 8 Oct
 
@@ -696,3 +688,9 @@ When the Sahel entry became Mali and Burkina Faso, the Arab Gulf States Institut
 `burkinafaso/russia/gov` · holds: **not checked** · in the queue for: pre-window evidence to 2024-01, entered 14 November 2026
 
 The line rests on the Africa Corps announcement of January 2024 (100 soldiers, 200 to follow, to guard the country's leader), read in the Reuters report, and on the Congressional Research Service paper. Nothing from the past twelve months is entered. Find a 2026 source that the unit is still there, and whether it fights.
+
+## China, the U.S. and India in Balochistan, after the split
+
+`balochistan/china/pak` · `balochistan/usa/pak` · `balochistan/india/baloch` · holds: **not checked** · in the queue for: copied lines, entered 14 November 2026
+
+When Balochistan became its own war, the lines to Pakistan from China (SIPRI) and the U.S. (the F-16 package) were copied onto it on the same sources; neither source names Balochistan. India's line rests on Pakistan's statements at the UN, which name the Baloch separatists and the Pakistani Taliban together. Check that each belongs on this war, and find a source on arms used in Balochistan.

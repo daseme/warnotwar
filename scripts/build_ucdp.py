@@ -58,11 +58,16 @@ BY_COUNTRY = {
 # map entry id -> UCDP conflict_new_id list (summed across every country the events fall in)
 BY_CONFLICT = {
     'gulf': [14609, 16905],  # Iran - Israel; Iran - Israel, United States of America
+    'balochistan': [325, 14859],  # Pakistan: Balochistan; BRAS - Civilians
 }
 # a country entry also takes these UCDP conflicts wherever their events fall. Pakistan's war crosses into
 # Afghanistan; Afghanistan's own conflicts (its government against its opponents) are another war and stay out.
 ALSO_CONFLICT = {
-    'pakistan': [404, 325, 11639],  # Pakistan: Government; Pakistan: Balochistan; Afghanistan - Pakistan
+    'pakistan': [404],  # Pakistan: Government, which is also fought in Afghanistan
+}
+# conflicts in an entry's countries that are not part of its war and are left out of its sum
+NOT_THIS_WAR = {
+    'pakistan': [11639],  # Afghanistan - Pakistan: a conflict of its own, under the map's rule
 }
 # rows left out of the sums, by UCDP event id, with the reason shown on the page
 EXCLUDE = {}
@@ -278,6 +283,9 @@ def main():
                 if len(x[x.conflict_new_id.isin(ids)]):
                     x = x[~x.conflict_new_id.isin(ids)]
                     basis += '; less the conflicts counted under ' + cmeta[other]['name']
+            if cid in NOT_THIS_WAR:
+                basis += '; less ' + ', '.join(sorted(set(x[x.conflict_new_id.isin(NOT_THIS_WAR[cid])].conflict_name)))
+                x = x[~x.conflict_new_id.isin(NOT_THIS_WAR[cid])]
             if cid in ALSO_CONFLICT:
                 basis += '; and these conflicts wherever they are fought: ' + ', '.join(sorted(set(df[df.conflict_new_id.isin(ALSO_CONFLICT[cid])].conflict_name)))
         elif cid in BY_CONFLICT:

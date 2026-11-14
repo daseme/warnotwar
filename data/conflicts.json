@@ -1,7 +1,7 @@
 {
  "as_of": "2026-11-08",
  "status": "entered",
- "rule": "A war is on the map if the Uppsala Conflict Data Program counted 1,000 or more people killed in battle in it in the past twelve months. That is UCDP's line for a war. UCDP applies it by calendar year; the map applies it to the twelve months its counts cover.",
+ "rule": "A war is on the map if the Uppsala Conflict Data Program counted 1,000 or more people killed in battle in it in the past twelve months. That is UCDP's rule for calling a conflict a war. UCDP applies it by calendar year; the map applies it to the twelve months its counts cover.",
  "color_rule": "Five states are colored: those that fight in or back a side in the most wars. The rest are gray and labeled.",
  "tiers": {
   "open": {
@@ -4188,7 +4188,7 @@
   },
   {
    "id": "pakistan",
-   "name": "Pakistan and Afghanistan",
+   "name": "Pakistan",
    "since": "2007",
    "point": [
     70.5,
@@ -4199,9 +4199,9 @@
     -1
    ],
    "band": "2",
-   "band_source": "UCDP counted 5,652 in Pakistan and in Pakistan's fighting across the Afghan border from October 2025 to September 2026. Pakistan's CRSS counted about 3,000 killed in Pakistan in 2026 to September; UNAMA counted 372 Afghan civilians killed in the first quarter of the war with Afghanistan.",
-   "status": "Open war with Afghanistan since February 2026: Pakistani air strikes, Taliban attacks on the border, two short truces. Border fighting resumed in October in Kurram and Paktia, and talks in Moscow ended without agreement. Militant attacks inside Pakistan at a twelve-year high, by CRSS counts.",
-   "summary": "Pakistan fights the Pakistani Taliban in the northwest and Baloch separatists in the southwest. In February 2026 it went to open war with Afghanistan, which it blames for sheltering the Pakistani Taliban. China hosts the peace talks.",
+   "band_source": "UCDP counted 3,210 from October 2025 to September 2026 in Pakistan, less Balochistan's war and the fighting with Afghanistan's government. Pakistan's CRSS counted about 3,000 killed in Pakistan in 2026 to September.",
+   "status": "Militant attacks inside Pakistan are at a twelve-year high, by CRSS counts.",
+   "summary": "Pakistan fights the Pakistani Taliban in the northwest and blames Afghanistan for sheltering them. Its fighting with Afghanistan's government since February 2026 is under UCDP's rule for a war and is listed with what the map leaves out. The war with Baloch separatists is entered under Balochistan.",
    "parties": [
     {
      "id": "pak",
@@ -4211,16 +4211,9 @@
     },
     {
      "id": "ttp",
-     "name": "Pakistani Taliban (TTP) and Baloch insurgents",
+     "name": "Pakistani Taliban (TTP)",
      "side": "B",
-     "short": "TTP, Baloch"
-    },
-    {
-     "id": "afg",
-     "name": "Afghan Taliban government",
-     "state": "afghanistan",
-     "side": "B",
-     "short": "Afghanistan"
+     "short": "TTP"
     }
    ],
    "ties": [
@@ -4231,11 +4224,11 @@
       "arms"
      ],
      "tier": "reported",
-     "stance": "says it backs neither side against Afghanistan and hosts the talks",
+     "stance": "says nothing",
      "since": null,
      "since_precision": null,
      "ended": null,
-     "evidence_to": "2026-04",
+     "evidence_to": "2026-03",
      "sources": [
       {
        "class": "research",
@@ -4243,19 +4236,12 @@
        "date": "2026-03",
        "url": "https://www.sipri.org/databases/armstransfers",
        "publisher": "SIPRI Arms Transfers Database"
-      },
-      {
-       "class": "press",
-       "text": "NPR, 3 April 2026, on China hosting Pakistan-Afghanistan talks",
-       "date": "2026-04",
-       "url": "https://www.npr.org/2026/04/03/g-s1-116299/pakistan-says-a-new-round-of-peace-talks-with-afghanistan-is-underway-in-china",
-       "publisher": "NPR"
       }
      ],
-     "note": "China is Pakistan's main arms supplier. It also hosts the peace talks with Afghanistan, so it does not back one side in that fight. SIPRI's database records the transfers; China's own words are not entered.",
+     "note": "China is Pakistan's main arms supplier. SIPRI's database records the transfers; China's own words are not entered.",
      "entered": "2026-10-11",
      "checked": null,
-     "single": false
+     "single": true
     },
     {
      "backer": "usa",
@@ -4395,49 +4381,6 @@
      "note": "Pakistan says India funds and arms the Pakistani Taliban and Baloch separatists through Afghanistan.",
      "entered": "2026-10-11",
      "checked": null
-    },
-    {
-     "backer": "india",
-     "party": "afg",
-     "kinds": [
-      "money",
-      "cover"
-     ],
-     "tier": "open",
-     "stance": "says the aid is for the people, not the government",
-     "since": "2025-10",
-     "since_precision": "month",
-     "ended": null,
-     "evidence_to": "2025-10",
-     "sources": [
-      {
-       "class": "backer",
-       "text": "Indian Council of World Affairs on India's aid to Afghanistan; embassy in Kabul reopened October 2025",
-       "date": "2025-10",
-       "url": "https://www.icwa.in/show_content.php?lang=1&level=3&ls_id=14213&lid=8638",
-       "publisher": "Indian Council of World Affairs"
-      },
-      {
-       "class": "press",
-       "publisher": "Dawn",
-       "text": "Dawn, India restores its Kabul mission to full embassy status, quoting the Ministry of External Affairs that it will further augment India's contribution to Afghanistan's development, humanitarian assistance and capacity building, 21 October 2025",
-       "date": "2025-10",
-       "url": "https://www.dawn.com/news/1950392/india-restores-embassy-in-afghanistan-as-ties-improve",
-       "entered": "2026-10-12"
-      },
-      {
-       "class": "press",
-       "publisher": "IANS",
-       "text": "IANS, India delivers food supplies to Afghanistan during Muttaqi's visit, as part of ongoing earthquake relief, 10 October 2025",
-       "date": "2025-10",
-       "url": "https://ianslive.in/india-delivers-food-supplies-to-afghanistan-amid-muttaqis-visit--20251010222536",
-       "seen": "search listing only, not opened",
-       "entered": "2026-10-12"
-      }
-     ],
-     "note": "India reopened its Kabul embassy, accepted a Taliban envoy, and budgets aid for Afghanistan. It says the aid is for the people, not the government.",
-     "entered": "2026-10-11",
-     "checked": null
     }
    ],
    "areas": [
@@ -4450,69 +4393,189 @@
      "country": "PAK",
      "name": "F.A.T.A.",
      "why": "Bajaur, Kurram, Waziristan fighting"
+    }
+   ],
+   "areas_source": "Wikipedia 2026 in Pakistan",
+   "areas_url": "https://en.wikipedia.org/wiki/2026_in_Pakistan",
+   "start": "2007-12",
+   "short": "Pakistan",
+   "turns": [],
+   "ucdp": {
+    "against": "same band",
+    "note": "One war on UCDP's count, Pakistan against the Pakistani Taliban, over a thousand battle deaths a year, some of them in Afghanistan."
+   },
+   "counted_by": [
+    "tracker"
+   ],
+   "region": "asia"
+  },
+  {
+   "id": "balochistan",
+   "name": "Balochistan",
+   "since": "2019",
+   "point": [
+    65.5,
+    28.3
+   ],
+   "label": [
+    -9,
+    5,
+    "end"
+   ],
+   "band": "2",
+   "band_source": "UCDP counted 1,596 from October 2025 to September 2026.",
+   "status": "The fighting has grown. UCDP counted 526 battle deaths in 2025 and 1,365 in the first nine months of 2026.",
+   "summary": "Baloch separatists fight Pakistan's army in the southwest for a state of their own. The war with the Pakistani Taliban is entered under Pakistan.",
+   "parties": [
+    {
+     "id": "pak",
+     "name": "Pakistan",
+     "side": "A",
+     "short": "Pakistan"
     },
+    {
+     "id": "baloch",
+     "name": "Baloch separatists",
+     "side": "B",
+     "short": "Baloch"
+    }
+   ],
+   "ties": [
+    {
+     "backer": "china",
+     "party": "pak",
+     "kinds": [
+      "arms"
+     ],
+     "tier": "reported",
+     "stance": "says nothing",
+     "since": null,
+     "since_precision": null,
+     "ended": null,
+     "sources": [
+      {
+       "class": "research",
+       "text": "SIPRI Arms Transfers Database, March 2026 release, deliveries to 2025",
+       "date": "2026-03",
+       "url": "https://www.sipri.org/databases/armstransfers",
+       "publisher": "SIPRI Arms Transfers Database"
+      }
+     ],
+     "note": "China is Pakistan's main arms supplier. SIPRI's database records the transfers; China's own words are not entered.",
+     "entered": "2026-11-14",
+     "checked": null,
+     "evidence_to": "2026-03",
+     "single": true
+    },
+    {
+     "backer": "usa",
+     "party": "pak",
+     "kinds": [
+      "arms"
+     ],
+     "tier": "open",
+     "stance": null,
+     "since": null,
+     "since_precision": null,
+     "ended": null,
+     "sources": [
+      {
+       "class": "backer",
+       "text": "U.S. Defense Security Cooperation Agency notification to Congress, 8 December 2025, $686 million F-16 package",
+       "date": "2025-12",
+       "url": null,
+       "publisher": "U.S. Defense Security Cooperation Agency"
+      },
+      {
+       "class": "press",
+       "text": "Al Jazeera, the page linked here",
+       "date": null,
+       "url": "https://www.aljazeera.com/news/2025/12/11/is-trumps-686m-f-16-upgrade-for-pakistan-a-message-to-india",
+       "publisher": "Al Jazeera"
+      },
+      {
+       "class": "press",
+       "publisher": "Dawn",
+       "text": "Dawn, the U.S. approves a $686 million F-16 upgrade and sustainment package for Pakistan, according to a DSCA letter to Congress, 11 December 2025",
+       "date": "2025-12",
+       "url": "https://www.dawn.com/news/1960448",
+       "entered": "2026-10-12"
+      },
+      {
+       "class": "press",
+       "publisher": "The Statesman",
+       "text": "The Statesman, Trump administration notifies Congress of a $686 million F-16 upgrade for Pakistan; the deal enters a 30-day review; letter dated 8 December, December 2025",
+       "date": "2025-12",
+       "url": "https://www.thestatesman.com/world/trump-administration-notifies-686-million-f16-upgrade-pakistan-1503523755.html",
+       "seen": "search listing only, not opened",
+       "entered": "2026-10-12"
+      }
+     ],
+     "note": "The U.S. approved a $686 million F-16 upgrade in December 2025 and added Pakistan to a missile order.",
+     "entered": "2026-11-14",
+     "checked": null,
+     "evidence_to": "2025-12"
+    },
+    {
+     "backer": "india",
+     "party": "baloch",
+     "kinds": [
+      "money",
+      "arms"
+     ],
+     "tier": "claimed",
+     "stance": "denies it",
+     "since": null,
+     "since_precision": null,
+     "ended": null,
+     "sources": [
+      {
+       "class": "opponent",
+       "text": "Pakistani statements at the UN General Assembly, 7 and 8 October 2026",
+       "date": "2026-10",
+       "url": "https://www.radio.gov.pk/08-10-2026/pakistan-calls-for-collective-response-to-contemporary-terrorist-threat",
+       "publisher": "Pakistani mission to the UN"
+      },
+      {
+       "class": "press",
+       "text": "Express Tribune, the page linked here",
+       "date": null,
+       "url": "https://tribune.com.pk/story/2633668/at-un-pakistan-says-india-provides-active-support-to-taliban-backs-terrorist-groups",
+       "publisher": "Express Tribune"
+      },
+      {
+       "class": "opponent",
+       "publisher": "Associated Press of Pakistan",
+       "text": "APP, Pakistan warns at the Sixth Committee that India-backed terror proxies will face the same fate as the jets downed in May 2025; Jadoon says the TTP and BLA operate from Afghan soil with India's active support, 8 October 2026",
+       "date": "2026-10",
+       "url": "https://www.app.com.pk/?p=1288122",
+       "entered": "2026-10-12"
+      }
+     ],
+     "note": "Pakistan says India funds and arms Baloch separatists and the Pakistani Taliban through Afghanistan.",
+     "entered": "2026-11-14",
+     "checked": null,
+     "evidence_to": "2026-10"
+    }
+   ],
+   "areas": [
     {
      "country": "PAK",
      "name": "Baluchistan",
      "why": "BLA attacks; Zhob, Quetta"
-    },
-    {
-     "country": "AFG",
-     "name": "Kabul",
-     "why": "Pakistani airstrikes, Bagram"
-    },
-    {
-     "country": "AFG",
-     "name": "Kandahar",
-     "why": "Airstrikes on bases"
-    },
-    {
-     "country": "AFG",
-     "name": "Nangarhar",
-     "why": "Airstrikes; Torkham fighting"
-    },
-    {
-     "country": "AFG",
-     "name": "Paktika",
-     "why": "Airstrikes, border fighting"
-    },
-    {
-     "country": "AFG",
-     "name": "Khost",
-     "why": "Airstrikes, border fighting"
-    },
-    {
-     "country": "AFG",
-     "name": "Paktya",
-     "why": "Airstrikes"
-    },
-    {
-     "country": "AFG",
-     "name": "Kunar",
-     "why": "Airstrikes, border fighting"
     }
    ],
-   "areas_source": "Wikipedia 2026 Pakistan–Afghanistan War; 2026 in Pakistan",
-   "areas_url": "https://en.wikipedia.org/wiki/2026_Afghanistan%E2%80%93Pakistan_conflict",
-   "start": "2007-12",
-   "short": "Pakistan",
-   "turns": [
-    {
-     "month": "2026-02",
-     "what": "Open war with Afghanistan."
-    },
-    {
-     "month": "2026-10",
-     "what": "Border fighting resumed in Kurram and Paktia from 5 October and talks in Moscow ended without agreement."
-    }
-   ],
+   "areas_source": "Wikipedia 2026 in Pakistan",
+   "areas_url": "https://en.wikipedia.org/wiki/2026_in_Pakistan",
+   "start": "2019-05",
+   "short": "Balochistan",
+   "turns": [],
    "ucdp": {
     "against": "same band",
-    "note": "The Pakistani Taliban over a thousand a year; the Baloch insurgency rising; the border with Afghanistan a conflict between two states, under a thousand so far."
+    "note": "One conflict, Pakistan against the Baloch alliance BRAS: under a thousand battle deaths in 2025 and over a thousand in the past twelve months."
    },
    "counted_by": [
-    "tracker",
-    "un"
+    "tracker"
    ],
    "region": "asia"
   },
@@ -6260,7 +6323,7 @@
    ],
    "ucdp": {
     "against": "UCDP lower",
-    "note": "Islamic State over a thousand a year, with the U.S., Cameroon and Niger sending forces against it. 2,850 of the 2026 deaths are by actors UCDP could not identify. ACLED's count for 2025 is about three times UCDP's."
+    "note": "One war on UCDP's count, the government against Islamic State, with the U.S., Cameroon and Niger sending forces against it. UCDP also has 1,615 battle deaths in the past twelve months in fights with armed groups it could not name; they are in this war's count and are not a second war. ACLED's count for 2025 is about three times UCDP's."
    },
    "counted_by": [
     "tracker"
@@ -7105,19 +7168,23 @@
   },
   {
    "name": "Syria",
-   "why": "Under UCDP's line for a war: 500 battle deaths in 2025, and 672 deaths of every kind from October 2025 to September 2026. ACLED counted about 1,300 deaths from October 2025 to February 2026. On the map until 14 November 2026."
+   "why": "Under UCDP's rule for a war: 500 battle deaths in 2025, and 672 deaths of every kind from October 2025 to September 2026. ACLED counted about 1,300 deaths from October 2025 to February 2026. On the map until 14 November 2026."
   },
   {
    "name": "South Sudan",
-   "why": "Under UCDP's line for a war: 282 battle deaths in 2025, and 731 deaths of every kind from October 2025 to September 2026. The UN human rights office counted 1,854 killed from January to September 2025. On the map until 14 November 2026."
+   "why": "Under UCDP's rule for a war: 282 battle deaths in 2025, and 731 deaths of every kind from October 2025 to September 2026. The UN human rights office counted 1,854 killed from January to September 2025. On the map until 14 November 2026."
   },
   {
    "name": "Niger",
-   "why": "Under UCDP's line for a war: 535 battle deaths in 2025 in the fight with Islamic State. Drawn as part of the Sahel until 14 November 2026."
+   "why": "Under UCDP's rule for a war: 535 battle deaths in 2025 in the fight with Islamic State. Drawn as part of the Sahel until 14 November 2026."
   },
   {
    "name": "Haiti",
    "why": "A war on UCDP's list for 2025, with 1,211 battle deaths that year, but 246 in the twelve months from October 2025 to September 2026. UCDP counted 868 deaths of every kind in those months. The UN human rights office counted 5,519 killed from March 2025 to January 2026. On the map until 14 November 2026."
+  },
+  {
+   "name": "Pakistan and Afghanistan",
+   "why": "Open fighting between the two states since February 2026: Pakistani air strikes, Taliban attacks on the border, two short truces. Under UCDP's rule for a war: 846 battle deaths from October 2025 to September 2026. UNAMA counted 372 Afghan civilians killed in the first quarter of the fighting. Drawn as part of Pakistan's war until 14 November 2026."
   }
  ],
  "areas_rule": "The colored view shades provinces that saw ground fighting, sieges or an air campaign in the past twelve months. A province struck only by the occasional long-range drone or missile is not shaded. Provinces are the unit the conflict trackers report, so the shading follows their borders, not front lines.",
@@ -7378,8 +7445,8 @@
   {
    "date": "2026-11-14",
    "entry": "mali",
-   "what": "The map now shows the wars that meet UCDP's line for a war. Syria, South Sudan and Haiti are off the map. The Sahel is two wars, Mali and Burkina Faso, and Niger is no longer drawn.",
-   "why": "The map had its own rule: about 1,000 deaths of any kind in the past twelve months, on any counter. UCDP's line is 1,000 battle deaths in one conflict in a year, and the map now applies it to UCDP's count for the past twelve months. Syria and South Sudan were on the map on other counters' figures. Haiti was a war on UCDP's count in 2025 and is under the line for the past twelve months. UCDP counts Mali and Burkina Faso as two wars and Niger as none. The lines of the Sahel entry went to the country their sources name; the U.S. line, which was to Niger and ended in 2024, is gone."
+   "what": "The map now shows the wars that meet UCDP's rule for a war. Syria, South Sudan and Haiti are off the map. The Sahel is two wars, Mali and Burkina Faso, and Niger is no longer drawn. Balochistan is its own war, apart from Pakistan's war with the Pakistani Taliban, and the fighting between Pakistan and Afghanistan is no longer drawn.",
+   "why": "The map had its own rule: about 1,000 deaths of any kind in the past twelve months, on any counter. UCDP's rule is 1,000 battle deaths in one conflict in a year, and the map now applies it to UCDP's count for the past twelve months. Syria and South Sudan were on the map on other counters' figures. Haiti was a war on UCDP's count in 2025 and is under it for the past twelve months. UCDP counts Mali and Burkina Faso as two wars and Niger as none. The lines of the Sahel entry went to the country their sources name; the U.S. line, which was to Niger and ended in 2024, is gone. UCDP counts Pakistan against the Baloch separatists as its own conflict, and it passed 1,000 battle deaths in the past twelve months. UCDP counts the fighting between Pakistan and Afghanistan as a conflict of its own, with 846 battle deaths in the past twelve months."
   }
  ],
  "ucdp_note": "UCDP counts deaths in fighting between a state and an opponent, deaths in fighting between armed groups, and civilians killed deliberately. UCDP calls a conflict a war at 1,000 battle deaths in a year, and minor below that. The figures here are our own sums from data/ucdp.json, built by scripts/build_ucdp.py from the yearly file and the monthly candidate files, pulled after the 20th of each month. A flag is UCDP's own mark that a row still needs a check on its deaths, its sides, its place or its source.",
@@ -7482,28 +7549,28 @@
  },
  "esd_note": "The ties are also published as data/ties_esd.csv, one row per backer, side and year, in the shape of UCDP's External Support Dataset, which stops at 2017, so the two can be read end to end. Our sixteen kinds of help fold into its eight: troops, air strikes, air defence and police count as troops, since the state's own forces engage; bases, transit, shelter and hosting as access to territory; weapons, drones and parts as weapons; oil as materiel; backing in public and at the UN as other. Alleged is our fourth tier.",
  "source_counts": {
-  "ties": 103,
-  "live": 96,
+  "ties": 105,
+  "live": 98,
   "open": 68,
   "shown": 11,
-  "reported": 21,
-  "claimed": 3,
+  "reported": 22,
+  "claimed": 4,
   "ended": 7,
   "reference_only": 0,
   "open_on_tracker": 1,
   "no_outlet": 1,
   "document_unlinked": 1,
-  "single_publisher": 1,
+  "single_publisher": 3,
   "prewindow": 11,
   "undated": 0,
-  "weapons": 50,
-  "weapons_sipri": 6,
-  "sources": 366,
-  "sources_unlinked": 32,
-  "sources_undated": 51,
+  "weapons": 53,
+  "weapons_sipri": 7,
+  "sources": 370,
+  "sources_unlinked": 33,
+  "sources_undated": 53,
   "sources_unopened": 46,
   "checked": 0,
-  "one_class": 8
+  "one_class": 10
  },
  "reading": {
   "note": "A reading of the map in five steps. Each step sets the map and says what to look at. Braces are filled from the data by the page.",
@@ -7536,7 +7603,7 @@
     "id": "both",
     "title": "The same states on both sides",
     "hash": "all&grid=all",
-    "text": "Türkiye is with the United States in four wars and against it in Gaza. China is against the United States in five wars and squares and beside it in two. Egypt and Türkiye are on one side in Sudan and Somalia and on opposite sides in Ethiopia. The grid under the map puts the states down the side and the wars across, so this reads at a glance. One thing after another is not one thing because of another."
+    "text": "Türkiye is with the United States in four wars and against it in Gaza. China is against the United States in five wars and squares and beside it in three. Egypt and Türkiye are on one side in Sudan and Somalia and on opposite sides in Ethiopia. The grid under the map puts the states down the side and the wars across, so this reads at a glance. One thing after another is not one thing because of another."
    }
   ]
  },

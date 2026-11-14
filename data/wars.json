@@ -46,7 +46,7 @@
       "guess": {"type": "slider", "min": 0, "max": 100, "start": 20, "label": "your guess", "button": "show the answer"},
       "marks": {"guess": "your guess", "map": "this map", "ucdp": "UCDP conflicts", "ucdp_wars": "UCDP wars"},
       "reveal_note": "The first two sentences and the UCDP sentence are KURT'S WORDS (2026-11-12): do not edit them. The rest is Claude's draft of 2026-11-14, for Kurt to mark up, written when the map began to follow UCDP's line for a war; his earlier ending no longer described the map.",
-      "reveal": "How many wars are there? It depends who’s counting. The Uppsala Conflict Data Program (UCDP), a research group at a Swedish university, counted {ucdp_n} [[armed conflict|armed conflicts]] in {ucdp_year}. {Ucdp_wars_word} of them killed {war_bar} or more people in battle that year, and UCDP calls those wars. This map applies the same line to the past twelve months and shows {wars}.",
+      "reveal": "How many wars are there? It depends who’s counting. The Uppsala Conflict Data Program (UCDP), a research group at a Swedish university, counted {ucdp_n} [[armed conflict|armed conflicts]] in {ucdp_year}. {Ucdp_wars_word} of them killed {war_bar} or more people in battle that year, and UCDP calls those wars. This map applies the same rule to the past twelve months and shows {wars}.",
       "sources": [
         {"from": "conflicts.rule"},
         {"text": "UCDP/PRIO Armed Conflict Dataset, version {acd_version}, {n_first} to {ucdp_year}."},

@@ -1892,69 +1892,51 @@
    }
   },
   "pakistan": {
-   "basis": "countries: Pakistan; and these conflicts wherever they are fought: Afghanistan - Pakistan, Pakistan: Balochistan, Pakistan: Government",
+   "basis": "countries: Pakistan; less the conflicts counted under Balochistan; less Afghanistan - Pakistan; and these conflicts wherever they are fought: Pakistan: Government",
    "last_year": {
     "year": 2025,
-    "low": 3212,
-    "best": 3554,
-    "high": 5540
+    "low": 2612,
+    "best": 2692,
+    "high": 3141
    },
    "this_year": {
     "year": 2026,
     "to": "2026-09",
-    "low": 3907,
-    "best": 4466,
-    "high": 7644
+    "low": 2174,
+    "best": 2323,
+    "high": 3065
    },
    "window": {
     "from": "2025-10",
     "to": "2026-09",
-    "low": 4934,
-    "best": 5652,
-    "high": 9501,
+    "low": 3006,
+    "best": 3210,
+    "high": 4043,
     "by_type": {
-     "state-based": 5360,
+     "state-based": 3036,
      "non-state": 42,
-     "one-sided": 250
+     "one-sided": 132
     }
    },
    "whole": {
     "from": "2007-12",
     "to": "2026-09",
-    "low": 48173,
-    "best": 51516,
-    "high": 62905,
+    "low": 44044,
+    "best": 46451,
+    "high": 52754,
     "by_type": {
-     "state-based": 43717,
+     "state-based": 39029,
      "non-state": 2898,
-     "one-sided": 4901
+     "one-sided": 4524
     }
    },
-   "flagged_share_window": 0.029,
+   "flagged_share_window": 0.034,
    "conflicts": [
     {
      "id": 404,
      "name": "Pakistan: Government",
      "type": "state-based",
      "best_window": 2934
-    },
-    {
-     "id": 325,
-     "name": "Pakistan: Balochistan",
-     "type": "state-based",
-     "best_window": 1478
-    },
-    {
-     "id": 11639,
-     "name": "Afghanistan - Pakistan",
-     "type": "state-based",
-     "best_window": 846
-    },
-    {
-     "id": 14859,
-     "name": "BRAS - Civilians",
-     "type": "one-sided",
-     "best_window": 118
     },
     {
      "id": 13936,
@@ -2003,6 +1985,24 @@
      "name": "Afghanistan: Islamic State",
      "type": "state-based",
      "best_window": 19
+    },
+    {
+     "id": 218,
+     "name": "India - Pakistan",
+     "type": "state-based",
+     "best_window": 0
+    },
+    {
+     "id": 10685,
+     "name": "Shia (Pakistan) - Sunni (Pakistan)",
+     "type": "non-state",
+     "best_window": 1
+    },
+    {
+     "id": 14562,
+     "name": "IS - TTP",
+     "type": "non-state",
+     "best_window": 9
     }
    ],
    "dyad_ids": [
@@ -2013,13 +2013,10 @@
     1197,
     5522,
     11295,
-    12291,
     14227,
     14319,
     14320,
     15847,
-    16177,
-    16202,
     16456,
     17442,
     18458,
@@ -2036,46 +2033,156 @@
    },
    "months": {
     "best": [
-     602,
-     355,
-     229,
-     413,
-     494,
-     579,
-     227,
-     349,
-     479,
-     662,
-     535,
-     728
+     412,
+     303,
+     172,
+     113,
+     269,
+     117,
+     121,
+     253,
+     324,
+     374,
+     318,
+     434
     ],
     "low": [
-     484,
-     322,
-     221,
-     311,
-     424,
-     396,
-     189,
-     281,
-     466,
-     643,
-     531,
-     666
+     369,
+     298,
+     165,
+     113,
+     247,
+     116,
+     102,
+     195,
+     316,
+     374,
+     318,
+     393
     ],
     "high": [
-     958,
-     512,
-     387,
-     1218,
-     1556,
-     1027,
-     380,
-     595,
-     682,
-     784,
-     588,
-     814
+     474,
+     319,
+     185,
+     461,
+     359,
+     134,
+     171,
+     338,
+     429,
+     389,
+     328,
+     456
+    ]
+   }
+  },
+  "balochistan": {
+   "basis": "conflicts: BRAS - Civilians, Pakistan: Balochistan",
+   "last_year": {
+    "year": 2025,
+    "low": 514,
+    "best": 684,
+    "high": 1973
+   },
+   "this_year": {
+    "year": 2026,
+    "to": "2026-09",
+    "low": 1296,
+    "best": 1458,
+    "high": 2659
+   },
+   "window": {
+    "from": "2025-10",
+    "to": "2026-09",
+    "low": 1413,
+    "best": 1596,
+    "high": 3138,
+    "by_type": {
+     "state-based": 1478,
+     "non-state": 0,
+     "one-sided": 118
+    }
+   },
+   "whole": {
+    "from": "2019-05",
+    "to": "2026-09",
+    "low": 2564,
+    "best": 3132,
+    "high": 6246,
+    "by_type": {
+     "state-based": 2755,
+     "non-state": 0,
+     "one-sided": 377
+    }
+   },
+   "flagged_share_window": 0.002,
+   "conflicts": [
+    {
+     "id": 325,
+     "name": "Pakistan: Balochistan",
+     "type": "state-based",
+     "best_window": 1478
+    },
+    {
+     "id": 14859,
+     "name": "BRAS - Civilians",
+     "type": "one-sided",
+     "best_window": 118
+    }
+   ],
+   "dyad_ids": [
+    16177,
+    16202
+   ],
+   "excluded": [],
+   "secondary": {
+    "ucdp": [],
+    "ours": [],
+    "only_ucdp": [],
+    "only_ours": []
+   },
+   "months": {
+    "best": [
+     59,
+     31,
+     48,
+     300,
+     53,
+     51,
+     38,
+     88,
+     155,
+     288,
+     217,
+     268
+    ],
+    "low": [
+     53,
+     17,
+     47,
+     198,
+     51,
+     49,
+     26,
+     78,
+     150,
+     269,
+     213,
+     262
+    ],
+    "high": [
+     133,
+     170,
+     176,
+     757,
+     70,
+     213,
+     133,
+     248,
+     252,
+     395,
+     260,
+     331
     ]
    }
   },
@@ -2885,6 +2992,12 @@
     "only_ucdp": [],
     "only_ours": []
    },
+   "balochistan": {
+    "ucdp": [],
+    "ours": [],
+    "only_ucdp": [],
+    "only_ours": []
+   },
    "gulf": {
     "ucdp": [],
     "ours": [],
@@ -2937,46 +3050,46 @@
   ],
   "map": {
    "best": [
-    69764,
-    14321,
-    13374,
+    69633,
+    14300,
+    13365,
     18183,
-    13278,
-    16051,
-    11485,
-    11008,
+    13106,
+    15640,
+    11417,
+    11000,
     8163,
     8496,
     10188,
-    12136
+    12110
    ],
    "low": [
-    15112,
-    13377,
-    12609,
+    15050,
+    13370,
+    12600,
     17640,
-    13076,
-    15344,
-    11068,
-    10497,
+    12950,
+    15113,
+    11007,
+    10489,
     7579,
     7922,
     8944,
-    10345
+    10334
    ],
    "high": [
-    89475,
-    15324,
-    16078,
+    89124,
+    15301,
+    16052,
     21524,
-    16113,
-    18239,
-    15293,
-    13775,
-    10123,
+    14986,
+    17559,
+    15217,
+    13766,
+    10122,
     12678,
     13149,
-    14832
+    14805
    ]
   },
   "world": {

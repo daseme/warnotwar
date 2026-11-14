@@ -116,16 +116,20 @@ somalia,Somalia,war,egypt,Egypt,EGY,sgov,Federal government and AU mission,,2026
 somalia,Somalia,war,saudi,Saudi Arabia,SAU,sgov,Federal government and AU mission,,2026,0,0,0,0,0,0,0,1,cover,cover,0,on the record,,2026-02,,2026-02,4,3,2026-10-11
 somalia,Somalia,war,uae,United Arab Emirates,ARE,sgov,Federal government and AU mission,,2025,0,0,0,0,1,1,0,0,,training;money,0,on the record,,,2026-01,2026-01,2,1,2026-10-11
 somalia,Somalia,war,uae,United Arab Emirates,ARE,sgov,Federal government and AU mission,,2026,0,0,0,0,1,1,0,0,,training;money,0,on the record,,,2026-01,2026-01,2,1,2026-10-11
-pakistan,Pakistan and Afghanistan,war,china,China,CHN,pak,Pakistan,,2025,0,0,1,0,0,0,0,0,,arms,0,reported,says it backs neither side against Afghanistan and hosts the talks,,,2026-04,2,2,2026-10-11
-pakistan,Pakistan and Afghanistan,war,china,China,CHN,pak,Pakistan,,2026,0,0,1,0,0,0,0,0,,arms,0,reported,says it backs neither side against Afghanistan and hosts the talks,,,2026-04,2,2,2026-10-11
-pakistan,Pakistan and Afghanistan,war,usa,United States,USA,pak,Pakistan,,2025,0,0,1,0,0,0,0,0,,arms,0,on the record,,,,2025-12,4,3,2026-10-11
-pakistan,Pakistan and Afghanistan,war,usa,United States,USA,pak,Pakistan,,2026,0,0,1,0,0,0,0,0,,arms,0,on the record,,,,2025-12,4,3,2026-10-11
-pakistan,Pakistan and Afghanistan,war,afghanistan,Afghanistan (Taliban government),AFG,ttp,Pakistani Taliban (TTP) and Baloch insurgents,,2025,0,1,0,0,0,0,0,0,,harbor,0,documented,denies it,,,2026-09,4,4,2026-10-11
-pakistan,Pakistan and Afghanistan,war,afghanistan,Afghanistan (Taliban government),AFG,ttp,Pakistani Taliban (TTP) and Baloch insurgents,,2026,0,1,0,0,0,0,0,0,,harbor,0,documented,denies it,,,2026-09,4,4,2026-10-11
-pakistan,Pakistan and Afghanistan,war,india,India,IND,ttp,Pakistani Taliban (TTP) and Baloch insurgents,,2025,0,0,1,0,0,1,0,0,,money;arms,1,alleged,denies it,,,2026-10,3,3,2026-10-11
-pakistan,Pakistan and Afghanistan,war,india,India,IND,ttp,Pakistani Taliban (TTP) and Baloch insurgents,,2026,0,0,1,0,0,1,0,0,,money;arms,1,alleged,denies it,,,2026-10,3,3,2026-10-11
-pakistan,Pakistan and Afghanistan,war,india,India,IND,afg,Afghan Taliban government,afghanistan,2025,0,0,0,0,0,1,0,1,cover,money;cover,0,on the record,"says the aid is for the people, not the government",2025-10,,2025-10,3,3,2026-10-11
-pakistan,Pakistan and Afghanistan,war,india,India,IND,afg,Afghan Taliban government,afghanistan,2026,0,0,0,0,0,1,0,1,cover,money;cover,0,on the record,"says the aid is for the people, not the government",2025-10,,2025-10,3,3,2026-10-11
+pakistan,Pakistan,war,china,China,CHN,pak,Pakistan,,2025,0,0,1,0,0,0,0,0,,arms,0,reported,says it backs neither side against Afghanistan and hosts the talks,,,2026-04,1,1,2026-10-11
+pakistan,Pakistan,war,china,China,CHN,pak,Pakistan,,2026,0,0,1,0,0,0,0,0,,arms,0,reported,says it backs neither side against Afghanistan and hosts the talks,,,2026-04,1,1,2026-10-11
+pakistan,Pakistan,war,usa,United States,USA,pak,Pakistan,,2025,0,0,1,0,0,0,0,0,,arms,0,on the record,,,,2025-12,4,3,2026-10-11
+pakistan,Pakistan,war,usa,United States,USA,pak,Pakistan,,2026,0,0,1,0,0,0,0,0,,arms,0,on the record,,,,2025-12,4,3,2026-10-11
+pakistan,Pakistan,war,afghanistan,Afghanistan (Taliban government),AFG,ttp,Pakistani Taliban (TTP),,2025,0,1,0,0,0,0,0,0,,harbor,0,documented,denies it,,,2026-09,4,4,2026-10-11
+pakistan,Pakistan,war,afghanistan,Afghanistan (Taliban government),AFG,ttp,Pakistani Taliban (TTP),,2026,0,1,0,0,0,0,0,0,,harbor,0,documented,denies it,,,2026-09,4,4,2026-10-11
+pakistan,Pakistan,war,india,India,IND,ttp,Pakistani Taliban (TTP),,2025,0,0,1,0,0,1,0,0,,money;arms,1,alleged,denies it,,,2026-10,3,3,2026-10-11
+pakistan,Pakistan,war,india,India,IND,ttp,Pakistani Taliban (TTP),,2026,0,0,1,0,0,1,0,0,,money;arms,1,alleged,denies it,,,2026-10,3,3,2026-10-11
+balochistan,Balochistan,war,china,China,CHN,pak,Pakistan,,2025,0,0,1,0,0,0,0,0,,arms,0,reported,says it backs neither side against Afghanistan and hosts the talks,,,2026-03,1,1,2026-11-14
+balochistan,Balochistan,war,china,China,CHN,pak,Pakistan,,2026,0,0,1,0,0,0,0,0,,arms,0,reported,says it backs neither side against Afghanistan and hosts the talks,,,2026-03,1,1,2026-11-14
+balochistan,Balochistan,war,usa,United States,USA,pak,Pakistan,,2025,0,0,1,0,0,0,0,0,,arms,0,on the record,,,,2025-12,4,3,2026-11-14
+balochistan,Balochistan,war,usa,United States,USA,pak,Pakistan,,2026,0,0,1,0,0,0,0,0,,arms,0,on the record,,,,2025-12,4,3,2026-11-14
+balochistan,Balochistan,war,india,India,IND,baloch,Baloch separatists,,2025,0,0,1,0,0,1,0,0,,money;arms,1,alleged,denies it,,,2026-10,3,3,2026-11-14
+balochistan,Balochistan,war,india,India,IND,baloch,Baloch separatists,,2026,0,0,1,0,0,1,0,0,,money;arms,1,alleged,denies it,,,2026-10,3,3,2026-11-14
 gulf,The Iran war,war,bahrain,Bahrain,BHR,us,United States,usa,2026,1,1,0,0,0,0,0,0,,bases;shield,0,on the record,,2026-03,,2026-03,4,4,2026-10-11
 gulf,The Iran war,war,qatar,Qatar,QAT,us,United States,usa,2026,1,1,0,0,0,0,0,0,,bases;shield,0,on the record,says Al Udeid was not used to attack Iran,2026-03,,2026-03,3,3,2026-10-11
 gulf,The Iran war,war,kuwait,Kuwait,KWT,us,United States,usa,2026,1,1,0,0,0,0,0,0,,bases;shield,0,on the record,"says it allowed no attack on Iran from its land, air or sea",2026-03,,2026-03,4,4,2026-10-11
