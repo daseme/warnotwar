@@ -41,7 +41,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PATH = os.path.join(ROOT, 'data', 'conflicts.json')
 UCDP = os.path.join(ROOT, 'data', 'ucdp.json')
 DATE = re.compile(r'^\d{4}(-\d{2}(-\d{2})?)?$')
-BAND_EDGES = [(10000, '3'), (1500, '2'), (500, '1')]
+BAND_EDGES = [(10000, '3'), (1500, '2'), (1000, '1')]
 
 
 def band_for(n):

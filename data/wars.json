@@ -29,11 +29,11 @@
   "glossary": {
     "UCDP": "The Uppsala Conflict Data Program, a university project in Sweden that counts armed conflicts and the deaths in them, year by year.",
     "armed conflict": "A fight between a government and an opposing side in which at least {acd_bar} people died in battle that year.",
-    "band": "A range a death count falls in. {band_ranges}",
+    "band": "A range of deaths. {band_ranges}",
     "state": "A country and its government.",
     "armed group": "A fighting force that is not the army of a state: a rebel movement, a militia, a gang, a jihadist group.",
     "backer": "Someone outside a war who helps one side: a state, a group of states, or a force that controls part of a state.",
-    "province": "The first level of division inside a country. Some countries call them states or regions.",
+    "province": "The largest piece a country is divided into. Some countries call them states or regions.",
     "provisional": "Not final. UCDP revises its latest years as more reports come in."
   },
   "nav": {"back": "back", "next": "next", "skip": "skip the guess", "where": "where this comes from"},
@@ -58,7 +58,7 @@
       "id": "where",
       "name": "where",
       "title": "Where they are",
-      "body": "Each dot is one war. They appear one region at a time: {region_counts}. Hover or {tap} a dot for its name.",
+      "body": "Each dot is one war. There are {region_counts}. Hover or {tap} a dot for its name.",
       "sources": [
         {"from": "conflicts.rule"},
         {"text": "Each war, with its sides, backers and sources, is on the full map, as of {as_of}.", "url": "/conflicts.html"}
@@ -69,7 +69,7 @@
       "name": "provinces",
       "title": "Where the fighting is",
       "places": [{"name": "Strait of Hormuz", "at": [57.8, 24.1]}],
-      "body": "Shaded provinces show where the fighting was in the past year. A [[province]] is shaded for ground fighting, sieges or an air campaign. {areas_drone} In the Iran war, which began in {eg_start}, {eg_prov} provinces are shaded, in {eg_countries} countries.",
+      "body": "The shaded [[province|provinces]] are where the fighting was in the past year: ground fighting, sieges or an air campaign. {areas_drone} The Iran war began in {eg_start}. It reaches {eg_prov} provinces in {eg_countries} countries.",
       "toggle": ["the Iran war", "every war"],
       "toggle_text": "Across the map, {areas_total} provinces are shaded in {areas_wars} wars. {areas_border}",
       "sources": [
@@ -81,9 +81,9 @@
       "id": "size",
       "name": "deaths",
       "title": "How many died",
-      "body": "The dots are all one size so far. Next they show deaths in the past year.",
+      "body": "So far the dots are all one size.",
       "guess": {"type": "pick", "question": "Which of these three killed the most people in the past year?", "options": ["ukraine", "sudan", "gulf"]},
-      "reveal": "{top_name} had the most deaths: {top_n}. UCDP counted {o1_n} in {o1_name} and {o2_n} in {o2_name}, from {win_from} to {win_to}. The rule that puts a war on the map counts only deaths in battle. The dots count all of a war's dead. Each bar splits the deaths into UCDP's three kinds. In {os_name}, {os_n} of the {os_total} were civilians killed deliberately. The dots now show deaths in three [[band|bands]].",
+      "reveal": "{top_n} people died in {top_name}, the most of the three. UCDP counted {o1_n} in {o1_name} and {o2_n} in {o2_name}, from {win_from} to {win_to}. The rule that puts a war on the map counts only deaths in battle. The dots count all of a war's dead. Each bar splits the deaths into UCDP's three kinds. In {os_name}, {os_n} of the {os_total} were civilians killed deliberately. The dots now come in three [[band|sizes]].",
       "chart_caption": "Deaths by war, {win_from} to {win_to}, UCDP's best count. Below each war that began earlier: its total since it began.",
       "whole_line": "{whole_n} since {whole_from}",
       "kinds": {"state-based": "fighting that involves a state", "non-state": "fighting between armed groups", "one-sided": "civilians killed deliberately"},
@@ -105,7 +105,7 @@
       "id": "sides",
       "name": "who fights",
       "title": "Who fights",
-      "body": "In the Iran war {eg_sides_word} sides fight: {eg_side_a} against {eg_side_b}. All {eg_parties_word} countries are [[state|states]]. Iran also has allies that are not states, such as Hezbollah and the Houthis. They are [[armed group|armed groups]]. Of the {ucdp_n} armed conflicts UCDP counted in {ucdp_year}, {interstate} were between states. In the other {intra}, a government fought an armed group.",
+      "body": "In the Iran war {eg_sides_word} sides fight: {eg_side_a} against {eg_side_b}. All {eg_parties_word} are [[state|states]]. Iran also has allies that are not states, such as Hezbollah and the Houthis. They are [[armed group|armed groups]]. Of the {ucdp_n} armed conflicts UCDP counted in {ucdp_year}, {interstate} were between states. In the other {intra}, a government fought an armed group.",
       "units": {"filled": "{interstate} between states", "rest": "{intra} a government against an armed group", "caption": "UCDP's {ucdp_n} armed conflicts in {ucdp_year}, one small box each"},
       "sources": [
         {"from": "entry.gulf.summary"},
@@ -116,7 +116,7 @@
       "id": "help",
       "name": "who helps",
       "title": "Who helps from outside",
-      "body": "Each line runs from a [[backer]] to the side it helps from outside the war. {eg_backers} backers help a side in the Iran war. {eg_multi} The list says what each one gives.",
+      "body": "Each line runs from a [[backer]], outside the war, to the side it helps. {eg_backers} backers help a side in the Iran war. {eg_multi} The list says what each one gives.",
       "multi": "{name} has {count} lines. The next step says why.",
       "multi_many": "{names} have {per}. The next step says why.",
       "toggle": ["the Iran war", "every war"],
@@ -180,7 +180,7 @@
       "id": "force",
       "name": "force short of war",
       "title": "Force short of war",
-      "body": "A hollow square marks force used without sustained fighting: strikes, raids, seizures, a blockade. There are {squares}, and {sq_us} are by the {us_name}. Squares have no lines; who helps is on each one's card on the full map. A square goes on the map only when the state using the force says so itself.",
+      "body": "A hollow square is force without a war: strikes, raids, seizures, a blockade. There are {squares}. The {us_name} is behind {sq_us}. A square goes on the map only when the state using the force has said so. Squares have no lines. Who helps is on the full map.",
       "list_cue": "{Tap} one to find it on the map.",
       "sources": [
         {"from": "conflicts.pressure_rule", "pick": "A state is also on the map"},
@@ -192,12 +192,12 @@
       "id": "normal",
       "name": "every year",
       "title": "Every year since {n_first}",
-      "body": "To look back, this chart uses UCDP's wider count of armed conflicts, back to {n_first}. In {ucdp_year} it counted {ucdp_n}, {n_phrase}. The five years through {avg_last_year} average {avg_latest} deaths a year on UCDP's best count. {avg_two} The last {prov_word} years are [[provisional]].",
+      "body": "This chart is UCDP's wider count, armed conflicts, for every year since {n_first}. In {ucdp_year} it counted {ucdp_n}, {n_phrase}. The five years through {avg_last_year} average {avg_latest} deaths a year on UCDP's best count. {avg_two} The last {prov_word} years are [[provisional]].",
       "phrases": {
         "n_max": "the most of any year",
         "n_tie": "as many as the highest year before it",
         "n_else": "more than in all but {n_above} years",
-        "avg_two": "The five years through {avg_other_year} average {avg_other}. Those are the two highest of any five years since {d_first}. Of the {peak_total} deaths in {peak_year}, UCDP's best count puts {peak_top_n} in {peak_top_name}.",
+        "avg_two": "The five years through {avg_other_year} average {avg_other}. No five years since {d_first} had more deaths than those two. Of the {peak_total} deaths in {peak_year}, UCDP's best count puts {peak_top_n} in {peak_top_name}.",
         "avg_else": "The highest five years since {d_first} end in {avg_max_year}, at {avg_max} a year."
       },
       "chart": {
@@ -219,7 +219,7 @@
       "id": "shape",
       "name": "the {wars_word} wars",
       "title": "The {wars_word} wars",
-      "body": "One card for each war. The dot shows all of the war's dead in the past year. The rule that put it on the map counts only those killed in battle. Next to the dot: the year it began and UCDP's count of the dead from then to {whole_to}, then how many sides fight and how many backers help. {old_n} of the {wars} began more than ten years ago. The oldest, {oldest_name}, has run {oldest_years} years. The strip shows how its lines are drawn, from on the record to alleged. {Tap} a card and the map goes there.",
+      "body": "{old_n} of the {wars} wars began more than ten years ago. The oldest, {oldest_name}, has run {oldest_years} years. Each card's dot shows all of the war's dead in the past year. The rule that put it on the map counts only those killed in battle. Beside the dot are the year the war began, its dead since then, its sides and its backers. {Tap} a card and the map goes there.",
       "card_since": "since {year}",
       "card_total": "{total} dead",
       "card_line": "{sides} sides · {helpers} backers",
@@ -233,7 +233,7 @@
       "id": "free",
       "name": "the map",
       "title": "Use the map",
-      "guessed": "You guessed {g}. UCDP counted {ucdp_n} conflicts and called {ucdp_wars} of them wars. This map shows {wars}.",
+      "guessed": "You guessed {g}. UCDP counted {ucdp_wars} wars in {ucdp_year}. By the same rule, this map shows {wars} for the past twelve months.",
       "body": "{Tap} any war. Who fights? Who helps? How do we know? The switches turn layers on and off.",
       "hint_desktop": "drag to move · + and − to zoom · click a war",
       "hint_phone": "two fingers to move · + and − to zoom · tap a war",
