@@ -122,6 +122,7 @@
   svg#map { width: 100%; height: auto; display: block; touch-action: pan-y; cursor: grab; }
   svg#map:active { cursor: grabbing; }
   svg text { font-family: var(--mono); }
+  .cname text { font-family: var(--mono); font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; fill: var(--ink-45); opacity: 0.75; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
   .land { fill: var(--land); stroke: var(--land-line); stroke-width: 0.5; vector-effect: non-scaling-stroke; transition: fill 0.2s ease; }
   .grat { fill: none; stroke: var(--grat); stroke-width: 0.5; vector-effect: non-scaling-stroke; }
   .outline { fill: none; stroke: var(--ink-18); stroke-width: 0.7; vector-effect: non-scaling-stroke; }
@@ -788,7 +789,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   /* the UCDP comparison */
   const ucdpNum = v => (v == null ? '—' : Number(v).toLocaleString('en-US'));
   /* the rule puts a war on the map: its largest named conflict, by UCDP's battle deaths in the window */
-  const ruleLine = c => { const u = uOf(c); const k = u && (u.conflicts || []).filter(k => k.type === 'state-based' && !/^unnamed groups/.test(k.name)).sort((a, b) => b.best_window - a.best_window)[0]; return k ? `<div class="s" style="margin-top:8px">On the map: UCDP counted ${ucdpNum(k.best_window)} killed in battle in this war's main conflict from ${esc(monthWord(u.window.from))} to ${esc(monthWord(u.window.to))}. Its rule for a war is 1,000. The deaths below are all of the war's dead.</div>` : ''; };
+  const ruleLine = c => { const u = uOf(c); const k = u && (u.conflicts || []).filter(k => k.type === 'state-based' && !/^unnamed groups/.test(k.name)).sort((a, b) => b.best_window - a.best_window)[0]; return k ? `<div class="s" style="margin-top:8px">UCDP counted ${ucdpNum(k.best_window)} killed in battle in this war's main conflict from ${esc(monthWord(u.window.from))} to ${esc(monthWord(u.window.to))}. A war needs 1,000 to be on the map. The count below is all of the war's dead.</div>` : ''; };
   const ucdpRange = x => x ? ucdpNum(x.best) : '—';
   const uOf = c => (U && U.entries && U.entries[c.id]) || null;
   const pct = v => (v == null ? '—' : Math.round(v * 100) + '%');
@@ -829,6 +830,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   drawLand(world);
   const gCells = el('g', { id: 'cells' }, gRoot);   /* where Uppsala counted, under the shaded provinces */
   const gAreas = el('g', { id: 'areas' }, gRoot);
+  const gNames = el('g', { id: 'cnames' }, gRoot);   /* country names, drawn only when zoomed in */
   const gArcs = el('g', { id: 'arcs' }, gRoot);
   const gParties = el('g', {}, gRoot);
   const gBackers = el('g', {}, gRoot);
@@ -878,6 +880,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
       if (zoomK >= 2.2 && !hiresLoading) hiresLoading = get('/data/world_50m.json').then(t => { drawLand(t); render(); }).catch(() => {});
     })
     .on('end', ev => {
+      requestAnimationFrame(drawNames);
       const t = ev.transform;
       if (!ev.sourceEvent || sameT(t, settled)) { settled = t; return; }   /* a programmatic move already wrote the hash; a click that moved nothing is not a zoom */
       settled = t; pendingTarget = null;
@@ -902,6 +905,34 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   let resizeTimer = null;
   addEventListener('resize', () => { setDashes(); clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { if (!state.zoom && !state.view) fitView(false); render(); }, 150); });
   const scaled = (x, y, parent, attrs = {}) => { const g = el('g', { ...attrs, 'data-scale': 1, 'data-x': x.toFixed(1), 'data-y': y.toFixed(1), transform: `translate(${x.toFixed(1)},${y.toFixed(1)}) scale(${U_.toFixed(4)})` }, parent); return g; };
+  /* country names: light, and only once the map is zoomed in (Kurt, 14 November 2026). Countries with a war in them come first.
+     A name is left off where it would sit on a dot, a label or another name, or where a war or backer label already says it. */
+  const warIso = new Set(); for (const c of D.conflicts) for (const a of c.areas || []) { warIso.add(a.country); if (ISO_NE[a.country]) warIso.add(ISO_NE[a.country]); }
+  const isoName = {}; for (const b of D.backers) if (typeof b.iso === 'string') isoName[b.iso] = b.name.length <= 14 ? b.name : b.short;
+  const CNAMES = topojson.feature(world, world.objects.countries).features.map(f => { const [x, y] = geoPath.centroid(f); return { name: isoName[f.id] || (f.properties || {}).name, x, y, a: geoPath.area(f), war: warIso.has(f.id) }; })
+    .filter(n => n.name && isFinite(n.x) && !/Antarctic|Falkland/.test(n.name)).sort((a, b) => b.war - a.war || b.a - a.a);
+  function drawNames() {
+    gNames.innerHTML = '';
+    const m = gRoot.getScreenCTM();
+    if (zoomK < 1.4 || !m) return;
+    const r = svg.getBoundingClientRect(), boxes = [], said = new Set();
+    for (const g of [gParties, gBackers, gConf]) for (const n of g.querySelectorAll('text, circle, rect')) {
+      const b = n.getBoundingClientRect();
+      if (!b.width || !b.height || b.right < r.left || b.left > r.right || b.bottom < r.top || b.top > r.bottom) continue;
+      boxes.push([b.left - 2, b.top - 2, b.right + 2, b.bottom + 2]);
+      if (n.tagName === 'text') said.add(n.textContent.trim().toLowerCase());
+    }
+    const hit = b => boxes.some(q => b[0] < q[2] && b[2] > q[0] && b[1] < q[3] && b[3] > q[1]);
+    for (const n of CNAMES) {
+      if (said.has(n.name.toLowerCase())) continue;
+      const sx = m.a * n.x + m.e, sy = m.d * n.y + m.f, w = n.name.length * 6.2;
+      for (const dy of [0, 15, -15]) {
+        const b = [sx - w / 2 - 2, sy + dy - 6, sx + w / 2 + 2, sy + dy + 6];
+        if (b[0] < r.left + 2 || b[2] > r.right - 2 || b[1] < r.top + 2 || b[3] > r.bottom - 2 || hit(b)) continue;
+        boxes.push(b); el('text', dy ? { y: dy } : {}, scaled(n.x, n.y, gNames, { class: 'cname' })).textContent = n.name; break;
+      }
+    }
+  }
 
   const confNodes = {};
   for (const c of D.conflicts) {
@@ -1116,6 +1147,7 @@ themeBtn.onclick = () => { const t = rootEl.dataset.theme === 'paper' ? 'ink' : 
   const scopeOf = () => !state.pinned ? null : state.kind === 'backer' ? new Set(involvedIn(state.id).map(c => c.id)) : state.kind === 'conflict' ? new Set([state.id]) : null;
 
   function render() {
+    requestAnimationFrame(drawNames);   /* after this pass has placed the dots and labels */
     gArcs.innerHTML = ''; gParties.innerHTML = ''; gBackers.innerHTML = ''; gAreas.innerHTML = '';
     const allView = (state.all || !!state.month) && !state.kind;
     const rest = restView();

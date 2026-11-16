@@ -1,7 +1,7 @@
 {
  "as_of": "2026-11-08",
  "status": "entered",
- "rule": "A war is on the map if the Uppsala Conflict Data Program counted 1,000 or more people killed in battle in it in the past twelve months. That is UCDP's rule for calling a conflict a war. UCDP applies it by calendar year; the map applies it to the twelve months its counts cover. The rule puts a war on the map. The dot then shows all of that war's dead on UCDP's count: those killed in battle, in fighting between armed groups, and civilians killed deliberately, in the main conflict and the smaller ones fought beside it.",
+ "rule": "A war is on the map if the Uppsala Conflict Data Program (UCDP) counted 1,000 or more killed in battle there in the past twelve months. UCDP uses the same number to call a conflict a war. The rule gets a war on the map. The dot shows all of its dead: in battle, in fighting between armed groups, and civilians killed deliberately.",
  "color_rule": "Five states are colored: those that fight in or back a side in the most wars. The rest are gray and labeled.",
  "tiers": {
   "open": {
@@ -46,7 +46,7 @@
   "2": "thousands a year",
   "1": "about a thousand a year"
  },
- "band_note": "Deaths are shown as a band for the past year, because every count is an estimate. Every war's band is set from UCDP's count for the same period, October 2025 to the last month UCDP has reached, so the bands can be compared. About 1,000 means 500 to 1,500 deaths; thousands, 1,500 to 10,000; tens of thousands, more than 10,000. A card may give another counter's figure beside UCDP's, with its own period. It does not change the band. A party's own figure is a claim.",
+ "band_note": "Deaths are shown as a band for the past year, because every count is an estimate. Every war's band is set from UCDP's count for the same period, October 2025 to the last month UCDP has reached, so the bands can be compared. About 1,000 means 1,000 to 1,500 deaths; thousands, 1,500 to 10,000; tens of thousands, more than 10,000. A card may give another counter's figure beside UCDP's, with its own period. It does not change the band. A party's own figure is a claim.",
  "label_note": "label: [dx, dy, anchor] offset of the war's name from its glyph, in map units; anchor is start, middle or end",
  "backers": [
   {
@@ -1627,7 +1627,7 @@
    "band": "2",
    "band_source": "UCDP counted 2,040 from October 2025 to September 2026, and 14,533 in all of 2025. Gaza's health ministry counts about 1,500 killed since the October 2025 ceasefire; it is a party.",
    "status": "Ceasefire in Gaza since October 2025, on paper. Israel holds most of Gaza and keeps striking.",
-   "summary": "Hamas attacked Israel on 7 October 2023. Israel's war in Gaza followed. A ceasefire took hold in Gaza in October 2025, but Israel still holds most of the strip and strikes continue. The fighting with Hezbollah is entered under Lebanon.",
+   "summary": "Hamas attacked Israel on 7 October 2023. Israel's war in Gaza followed. A ceasefire took hold in Gaza in October 2025, but Israel still holds most of the strip and strikes continue. The fighting with Hezbollah has its own dot, Lebanon.",
    "parties": [
     {
      "id": "isr",
@@ -3057,7 +3057,7 @@
    "band": "2",
    "band_source": "UCDP counted 2,052 from October 2025 to September 2026. The Africa Center for Strategic Studies, from ACLED data, counted just under 10,000 deaths linked to militant Islamist groups across the Sahel in the past twelve months.",
    "status": "Jihadists and Tuareg rebels struck across Mali in April 2026, killed the defence minister and took Kidal. Mali and Russian forces retook Kidal in October.",
-   "summary": "Mali fights al-Qaeda and Islamic State affiliates and Tuareg separatists, who now attack together. French and UN forces are gone. Russian forces took their place. The war across the border is entered under Burkina Faso.",
+   "summary": "Mali fights al-Qaeda and Islamic State affiliates and Tuareg separatists, who now attack together. French and UN forces are gone. Russian forces took their place. Burkina Faso's war has its own dot.",
    "parties": [
     {
      "id": "gov",
@@ -3354,7 +3354,7 @@
    ],
    "ucdp": {
     "against": "same band",
-    "note": "One war on UCDP's count, Mali against JNIM, with smaller conflicts beside it: Islamic State, the Tuareg rebels, and groups killing civilians."
+    "note": "One war on UCDP's count, Mali against JNIM, al-Qaeda's branch in the Sahel, with smaller conflicts beside it: Islamic State, the Tuareg rebels, and groups killing civilians."
    },
    "counted_by": [
     "tracker"
@@ -3376,8 +3376,8 @@
    ],
    "band": "2",
    "band_source": "UCDP counted 2,686 from October 2025 to September 2026. The Africa Center for Strategic Studies, from ACLED data, counted just under 10,000 deaths linked to militant Islamist groups across the Sahel in the past twelve months.",
-   "status": "JNIM attacked army and police posts across the north and east in 2026, among them Titao in February.",
-   "summary": "Burkina Faso fights al-Qaeda and Islamic State affiliates. French forces are gone. A military government rules. The war across the border is entered under Mali.",
+   "status": "JNIM, al-Qaeda's branch in the Sahel, attacked army and police posts across the north and east in 2026, among them Titao in February.",
+   "summary": "Burkina Faso fights al-Qaeda and Islamic State affiliates. French forces are gone. A military government rules. Mali's war has its own dot.",
    "parties": [
     {
      "id": "gov",
@@ -3665,7 +3665,7 @@
    "turns": [],
    "ucdp": {
     "against": "same band",
-    "note": "One war on UCDP's count, Burkina Faso against JNIM."
+    "note": "One war on UCDP's count, Burkina Faso against JNIM, al-Qaeda's branch in the Sahel."
    },
    "counted_by": [
     "tracker"
@@ -4199,9 +4199,9 @@
     -1
    ],
    "band": "2",
-   "band_source": "UCDP counted 3,210 from October 2025 to September 2026 in Pakistan, less Balochistan's war and the fighting with Afghanistan's government. Pakistan's CRSS counted about 3,000 killed in Pakistan in 2026 to September.",
-   "status": "Militant attacks inside Pakistan are at a twelve-year high, by CRSS counts.",
-   "summary": "Pakistan fights the Pakistani Taliban in the northwest and blames Afghanistan for sheltering them. Its fighting with Afghanistan's government since February 2026 is under UCDP's rule for a war and is listed with what the map leaves out. The war with Baloch separatists is entered under Balochistan.",
+   "band_source": "UCDP counted 3,210 from October 2025 to September 2026 in Pakistan, less Balochistan's war and the fighting with Afghanistan's government. CRSS, a research centre in Islamabad, counted about 3,000 killed in Pakistan in 2026 to September.",
+   "status": "Militant attacks inside Pakistan are at a twelve-year high, by the count of CRSS, a research centre in Islamabad.",
+   "summary": "Pakistan fights the Pakistani Taliban in the northwest and blames Afghanistan for sheltering them. Its fighting with Afghanistan's government since February 2026 is short of the 1,000 killed in battle that makes a war, and is listed with what the map leaves out. Balochistan's war has its own dot.",
    "parties": [
     {
      "id": "pak",
@@ -4425,7 +4425,7 @@
    "band": "2",
    "band_source": "UCDP counted 1,596 from October 2025 to September 2026.",
    "status": "The fighting has grown. UCDP counted 526 battle deaths in 2025 and 1,365 in the first nine months of 2026.",
-   "summary": "Baloch separatists fight Pakistan's army in the southwest for a state of their own. The war with the Pakistani Taliban is entered under Pakistan.",
+   "summary": "Baloch separatists fight Pakistan's army in the southwest for a state of their own. The war with the Pakistani Taliban has its own dot, Pakistan.",
    "parties": [
     {
      "id": "pak",
@@ -4594,7 +4594,7 @@
    "band": "2",
    "band_source": "UCDP counted 3,864 in the war itself from October 2025 to September 2026. By those states' own counts, 72 were killed in Israel, about two dozen U.S. troops, and dozens across the Gulf states. Lebanon's dead are counted under Lebanon, and the dead of this war in Israel are counted here only.",
    "status": "War since 28 February 2026. A ceasefire from 8 April collapsed on 8 July. U.S. strikes again in September. Iran's attacks on shipping in the strait reached a record in October: Iran said seven tankers were hit on 22 October and two more struck mines on 24 October, and attacks on ships about doubled on September. The attacks went on into November. UKMTO counted eleven ships attacked in the seven days to 4 November, and 325 transits of the strait in the same week against 277 the week before. Iran's Revolutionary Guard said more tankers struck mines and caught fire between 3 and 8 November; no body outside the fight has said so, and CENTCOM said on 28 October that the strait's primary transit routes were clear of Iranian mines. The United States struck Qeshm Island in the strait on 2 November, the day before the midterm elections, and again on 6 November; unnamed U.S. officials said the first answered an Iranian missile that threatened shipping, and Trump said the second knocked out an anti-aircraft system. CENTCOM said on 7 November that it had disabled the cargo ship M/V Huda in the Gulf of Oman, that 147 commercial vessels had been turned around since July, and that it had set up a task force, Iron Gate, against weapons and sanctioned goods reaching Iran by land and across the Caspian Sea. Kpler put the oil leaving through the strait in the week to 28 October at 7.3 million barrels a day, more than 40 percent below the pre-war rate. Vortexa and Kpler both read Gulf exports on every route as lower in October than in September. Talks run through Qatar and Pakistan.",
-   "summary": "Israel and the United States struck Iran in June 2025 and again on 28 February 2026, killing Ali Khamenei. Iran shut the Strait of Hormuz on 4 March and fired missiles and drones at Israel, U.S. bases and every Gulf state. Hezbollah joined on 2 March and the Houthis seized the Bab al-Mandab coast in September; their wars are entered under Lebanon and under Yemen. A Pakistan-brokered ceasefire held from April to July. U.S. forces cleared Iranian mines by late August, but traffic is still a fraction of normal. This site's other pages follow the oil.",
+   "summary": "Israel and the United States struck Iran in June 2025 and again on 28 February 2026, killing Ali Khamenei. Iran shut the Strait of Hormuz on 4 March and fired missiles and drones at Israel, U.S. bases and every Gulf state. Hezbollah joined on 2 March and the Houthis seized the Bab al-Mandab coast in September; their wars have their own dots, Lebanon and Yemen. A Pakistan-brokered ceasefire held from April to July. U.S. forces cleared Iranian mines by late August, but traffic is still a fraction of normal. This site's other pages follow the oil.",
    "parties": [
     {
      "id": "us",
@@ -7128,7 +7128,7 @@
  "excluded": [
   {
    "name": "Mexico",
-   "why": "Criminal violence on a war scale, but no U.S. strike or raid on Mexican soil. The Jalisco raid of February 2026 was Mexican-led with U.S. intelligence. No state backs the cartels, so there are no lines to draw."
+   "why": "3,454 dead in the past twelve months, almost all in fighting between cartels. UCDP counts 28 killed in battle with the government."
   },
   {
    "name": "Taiwan",
@@ -7160,7 +7160,7 @@
   },
   {
    "name": "Mozambique, Colombia, Cameroon, Libya",
-   "why": "Under a thousand deaths in the past twelve months."
+   "why": "Under 1,000 killed in battle in the past twelve months."
   },
   {
    "name": "Armenia and Azerbaijan",
@@ -7168,23 +7168,23 @@
   },
   {
    "name": "Syria",
-   "why": "Under UCDP's rule for a war: 500 battle deaths in 2025, and 672 deaths of every kind from October 2025 to September 2026. ACLED counted about 1,300 deaths from October 2025 to February 2026. On the map until 14 November 2026."
+   "why": "UCDP counted 672 dead of every kind from October 2025 to September 2026, and fewer than that in battle, short of the 1,000 that makes a war. ACLED counted about 1,300 deaths from October 2025 to February 2026. On the map until 14 November 2026."
   },
   {
    "name": "South Sudan",
-   "why": "Under UCDP's rule for a war: 282 battle deaths in 2025, and 731 deaths of every kind from October 2025 to September 2026. The UN human rights office counted 1,854 killed from January to September 2025. On the map until 14 November 2026."
+   "why": "UCDP counted 731 dead of every kind from October 2025 to September 2026, and fewer than that in battle, short of the 1,000 that makes a war. The UN human rights office counted 1,854 killed from January to September 2025. On the map until 14 November 2026."
   },
   {
    "name": "Niger",
-   "why": "Under UCDP's rule for a war: 535 battle deaths in 2025 in the fight with Islamic State. Drawn as part of the Sahel until 14 November 2026."
+   "why": "UCDP counted 472 killed in battle with Islamic State from October 2025 to September 2026, short of the 1,000 that makes a war. Drawn as part of the Sahel until 14 November 2026."
   },
   {
    "name": "Haiti",
-   "why": "A war on UCDP's list for 2025, with 1,211 battle deaths that year, but 246 in the twelve months from October 2025 to September 2026. UCDP counted 868 deaths of every kind in those months. The UN human rights office counted 5,519 killed from March 2025 to January 2026. On the map until 14 November 2026."
+   "why": "A war on UCDP's list for 2025, with 1,211 killed in battle that year. From October 2025 to September 2026 it counted 246, short of the 1,000 that makes a war, and 868 dead of every kind. The UN human rights office counted 5,519 killed from March 2025 to January 2026. On the map until 14 November 2026."
   },
   {
    "name": "Pakistan and Afghanistan",
-   "why": "Open fighting between the two states since February 2026: Pakistani air strikes, Taliban attacks on the border, two short truces. Under UCDP's rule for a war: 846 battle deaths from October 2025 to September 2026. UNAMA counted 372 Afghan civilians killed in the first quarter of the fighting. Drawn as part of Pakistan's war until 14 November 2026."
+   "why": "Open fighting between the two states since February 2026: Pakistani air strikes, Taliban attacks on the border, two short truces. UCDP counted 846 killed in battle from October 2025 to September 2026, short of the 1,000 that makes a war. UNAMA counted 372 Afghan civilians killed in the first quarter of the fighting. Drawn as part of Pakistan's war until 14 November 2026."
   }
  ],
  "areas_rule": "The colored view shades provinces that saw ground fighting, sieges or an air campaign in the past twelve months. A province struck only by the occasional long-range drone or missile is not shaded. Provinces are the unit the conflict trackers report, so the shading follows their borders, not front lines.",
@@ -7204,7 +7204,7 @@
   "un": "a UN mission or agency",
   "party": "a party to the war, whose figure is a claim"
  },
- "ucdp_missing": "Above 1,000 deaths of every kind in UCDP and not on the map: Mexico, 7,904 deaths in 2025 in fighting between cartels, with a low of 2,720; Colombia, 1,676 so far in 2026; Tanzania, 1,009 civilians killed in 2025. None is a war on UCDP's count, which takes battle deaths in one conflict with a government on one side.",
+ "ucdp_missing": "Above 1,000 deaths of every kind in UCDP and not on the map: Mexico, 7,904 deaths in 2025 in fighting between cartels, with a low of 2,720; Colombia, 1,676 so far in 2026; Tanzania, 1,009 civilians killed in 2025. None is a war by UCDP's rule, which counts only battle deaths in a conflict with a government on one side.",
  "kept_by": "Kept by Kurt Olmstead with Claude, an AI assistant. The assistant drafts rows from the public record; the editor enters them. The second reading so far is by the assistant, not a person; a blind packet for a human reader is at data/blind_packet.json and scripts/blind_reader.py scores the grades.",
  "source_classes": {
   "backer": "the backer itself: its government, armed forces, state media or arms makers",
@@ -7449,7 +7449,7 @@
    "why": "The map had its own rule: about 1,000 deaths of any kind in the past twelve months, on any counter. UCDP's rule is 1,000 battle deaths in one conflict in a year, and the map now applies it to UCDP's count for the past twelve months. Syria and South Sudan were on the map on other counters' figures. Haiti was a war on UCDP's count in 2025 and is under it for the past twelve months. UCDP counts Mali and Burkina Faso as two wars and Niger as none. The lines of the Sahel entry went to the country their sources name; the U.S. line, which was to Niger and ended in 2024, is gone. UCDP counts Pakistan against the Baloch separatists as its own conflict, and it passed 1,000 battle deaths in the past twelve months. UCDP counts the fighting between Pakistan and Afghanistan as a conflict of its own, with 846 battle deaths in the past twelve months."
   }
  ],
- "ucdp_note": "UCDP counts deaths in fighting between a state and an opponent, deaths in fighting between armed groups, and civilians killed deliberately. UCDP calls a conflict a war at 1,000 battle deaths in a year, and minor below that. The figures here are our own sums from data/ucdp.json, built by scripts/build_ucdp.py from the yearly file and the monthly candidate files, pulled after the 20th of each month. A flag is UCDP's own mark that a row still needs a check on its deaths, its sides, its place or its source.",
+ "ucdp_note": "UCDP counts deaths in fighting between a state and an opponent, deaths in fighting between armed groups, and civilians killed deliberately. UCDP calls a conflict a war at 1,000 battle deaths in a year, and minor below that. The figures here are our sums of UCDP's rows, updated each month. A flag is UCDP's own mark that a row still needs a check on its deaths, its sides, its place or its source.",
  "tie_form": "A tie is one line from a backer to a side: who helps, whom, with what (the kinds), how we know (the tier), what the backer says (the stance), since when and how exact that date is, when it ended if it did, the sources by class with dates and links, the date of the latest dated source, the date the row was entered, and the date a person last checked it. The data is one file, data/conflicts.json; this page draws it.",
  "report_error": "If a line is wrong, say which tie, what is wrong, and where the better evidence is. Open an issue at",
  "second_reader": {
