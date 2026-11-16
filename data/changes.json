@@ -3713,6 +3713,22 @@
    "tie": "pakistan/india/afg",
    "kind": "tie",
    "what": "India to Afghanistan in Pakistan: removed"
+  },
+  {
+   "date": "2026-11-15",
+   "commit": "41bdac4",
+   "entry": "yemen",
+   "tie": "yemen/saudi/ygov",
+   "kind": "sources",
+   "what": "Saudi Arabia to government in Yemen: 1 source added"
+  },
+  {
+   "date": "2026-11-15",
+   "commit": "41bdac4",
+   "entry": "yemen",
+   "tie": "yemen/saudi/ygov",
+   "kind": "evidence",
+   "what": "Saudi Arabia to government in Yemen: evidence now to 2026-11"
   }
  ]
 }
