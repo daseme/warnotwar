@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "generated_at_utc": "2026-11-14T09:25:12Z",
+ "generated_at_utc": "2026-11-17T04:11:35Z",
  "war_start": "2026-02-28",
  "rules": {
   "think": "BNO's last close of the week, read the way the front page reads it. Under $49 it says peace. Over $55 it says war. Between them is the perpetual war sweet spot.",
@@ -24,7 +24,7 @@
   "deaths_conflict_month": 25
  },
  "sources": {
-  "bno": "daily closes from Yahoo Finance, last 2026-11-13",
+  "bno": "daily closes from Yahoo Finance, last 2026-11-16",
   "portwatch": "IMF PortWatch, seven-day tanker count at the strait, last 2026-11-08",
   "ledger": "the tracker figures we keep beside the U.S. statements, newest 2026-10-28",
   "ucdp": "Uppsala, GED 26.1, Candidate 26.01 to 26.09, reaching 2026-09, pulled 2026-11-12"
@@ -82,11 +82,11 @@
  "counts": {
   "are-not-think": 10,
   "are-sweet": 14,
-  "are-think": 10,
+  "are-think": 11,
   "think-not-are": 2
  },
  "counts_sweet_as_think": {
-  "are-think": 24,
+  "are-think": 25,
   "are-not-think": 10,
   "think-not-are": 2,
   "neither": 0
@@ -97,7 +97,7 @@
   "moved": [],
   "months_added": []
  },
- "weeks_full": 36,
+ "weeks_full": 37,
  "lags": [
   {
    "from": "2026-03-02",
@@ -125,16 +125,16 @@
   }
  ],
  "current": {
-  "week": "2026-11-09",
-  "to": "2026-11-15",
+  "week": "2026-11-16",
+  "to": "2026-11-22",
   "partial": true,
-  "bno": 61.06,
-  "bno_date": "2026-11-13",
+  "bno": 58.66,
+  "bno_date": "2026-11-16",
   "think": "war",
   "days": {
    "peace": 0,
    "sweet": 0,
-   "war": 5
+   "war": 1
   },
   "signals": {
    "index": 2.2,
@@ -1423,7 +1423,7 @@
   {
    "week": "2026-11-09",
    "to": "2026-11-15",
-   "partial": true,
+   "partial": false,
    "bno": 61.06,
    "bno_date": "2026-11-13",
    "think": "war",
@@ -1431,6 +1431,41 @@
     "peace": 0,
     "sweet": 0,
     "war": 5
+   },
+   "signals": {
+    "index": 2.2,
+    "date": "2026-11-08",
+    "share": 0.022
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "weekly",
+    "tracker": "Kpler",
+    "mbd": 7.3,
+    "date": "2026-10-28",
+    "share": 0.429,
+    "estimate_id": "e40"
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-11",
+    "best": null,
+    "state": "unknown",
+    "provisional": true
+   },
+   "cell": "are-think"
+  },
+  {
+   "week": "2026-11-16",
+   "to": "2026-11-22",
+   "partial": true,
+   "bno": 58.66,
+   "bno_date": "2026-11-16",
+   "think": "war",
+   "days": {
+    "peace": 0,
+    "sweet": 0,
+    "war": 1
    },
    "signals": {
     "index": 2.2,
