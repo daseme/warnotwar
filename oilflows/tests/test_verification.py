@@ -204,9 +204,9 @@ def test_publish_payload_is_strict_json():
     text = json.dumps(payload, allow_nan=False)
 
     round_trip = json.loads(text)
-    # ledger as of 2026-11-01: Bessent 15-22 mb/d (c10) tops the window
+    # ledger as of 2026-11-22: Bessent 15-22 mb/d (c10) tops the window
     assert round_trip["current_episode"]["claim_high_mbd"] == 22.0
-    assert round_trip["current_episode"]["independent_consensus_mbd"] == 7.3  # Kpler, week to 28 Oct 2026 (e40)
+    assert round_trip["current_episode"]["independent_consensus_mbd"] == 10.0  # Kpler, 7-day average to 10 Nov 2026 (e62)
     assert len(round_trip["claims"]) == len(claims)
     # unverified, never adjudicated language
     assert "unverified" in round_trip["method"]["gap"]
@@ -299,10 +299,13 @@ def test_episode_reflects_wright_revision():
     estimates = load_estimates(CURATED / "hormuz_flow_estimates.csv")
 
     ep = build_current_episode(claims, estimates)
-    assert ep["claim_low_mbd"] == 10.0  # ledger as of 2026-11-01: the 45-day window still starts after Wright's 8
-    assert ep["claim_high_mbd"] == 22.0  # ledger as of 2026-11-01
-    # the newest reading is Kpler's 7.3 for the week to 28 Oct (e40), well
-    # below the 14 of 18 Oct (e35), so the whole gap is positive again:
-    # every claim in the window now sits above what the trackers see
-    assert round(ep["gap_low_mbd"], 1) == 2.7
-    assert round(ep["gap_high_mbd"], 1) == 14.7
+    # ledger as of 2026-11-22: the anchor moved to Kpler's 10 Nov reading
+    # (e62), so the 45-day window now starts after Wright's 10 of 13 Sep
+    # and Rubio's 13 of 27 Sep is the floor
+    assert ep["claim_low_mbd"] == 13.0
+    assert ep["claim_high_mbd"] == 22.0  # Bessent 15-22 mb/d (c10) still tops the window
+    # the newest reading is Kpler's 10.0 for the week to 10 Nov (e62),
+    # above the 7.3 of the week to 28 Oct (e40) but still below every
+    # claim in the window, so the whole gap stays positive
+    assert round(ep["gap_low_mbd"], 1) == 3.0
+    assert round(ep["gap_high_mbd"], 1) == 12.0
