@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "generated_at_utc": "2026-11-21T10:11:20Z",
+ "generated_at_utc": "2026-11-24T05:33:52Z",
  "war_start": "2026-02-28",
  "rules": {
   "think": "BNO's last close of the week, read the way the front page reads it. Under $49 it says peace. Over $55 it says war. Between them is the perpetual war sweet spot.",
@@ -24,9 +24,9 @@
   "deaths_conflict_month": 25
  },
  "sources": {
-  "bno": "daily closes from Yahoo Finance, last 2026-11-20",
+  "bno": "daily closes from Yahoo Finance, last 2026-11-23",
   "portwatch": "IMF PortWatch, seven-day tanker count at the strait, last 2026-11-15",
-  "ledger": "the tracker figures we keep beside the U.S. statements, newest 2026-10-28",
+  "ledger": "the tracker figures we keep beside the U.S. statements, newest 2026-11-10",
   "ucdp": "Uppsala, GED 26.1, Candidate 26.01 to 26.09, reaching 2026-09, pulled 2026-11-12"
  },
  "deaths_months": [
@@ -82,13 +82,13 @@
  "counts": {
   "are-not-think": 10,
   "are-sweet": 14,
-  "are-think": 11,
-  "think-not-are": 2
+  "are-think": 10,
+  "think-not-are": 4
  },
  "counts_sweet_as_think": {
-  "are-think": 25,
+  "are-think": 24,
   "are-not-think": 10,
-  "think-not-are": 2,
+  "think-not-are": 4,
   "neither": 0
  },
  "deaths_moves": {
@@ -97,7 +97,7 @@
   "moved": [],
   "months_added": []
  },
- "weeks_full": 37,
+ "weeks_full": 38,
  "lags": [
   {
    "from": "2026-03-02",
@@ -125,16 +125,16 @@
   }
  ],
  "current": {
-  "week": "2026-11-16",
-  "to": "2026-11-22",
+  "week": "2026-11-23",
+  "to": "2026-11-29",
   "partial": true,
-  "bno": 59.02,
-  "bno_date": "2026-11-20",
+  "bno": 56.66,
+  "bno_date": "2026-11-23",
   "think": "war",
   "days": {
    "peace": 0,
    "sweet": 0,
-   "war": 5
+   "war": 1
   },
   "signals": {
    "index": 0.9,
@@ -145,10 +145,10 @@
    "source": "ledger",
    "basis": "weekly",
    "tracker": "Kpler",
-   "mbd": 7.3,
-   "date": "2026-10-28",
-   "share": 0.429,
-   "estimate_id": "e40"
+   "mbd": 10.0,
+   "date": "2026-11-10",
+   "share": 0.588,
+   "estimate_id": "e62"
   },
   "are": "shut",
   "deaths": {
@@ -1371,19 +1371,19 @@
     "source": "ledger",
     "basis": "weekly",
     "tracker": "Kpler",
-    "mbd": 7.3,
-    "date": "2026-10-28",
-    "share": 0.429,
-    "estimate_id": "e40"
+    "mbd": 13.4,
+    "date": "2026-11-01",
+    "share": 0.788,
+    "estimate_id": "e63"
    },
-   "are": "shut",
+   "are": "open",
    "deaths": {
     "month": "2026-10",
     "best": null,
     "state": "unknown",
     "provisional": true
    },
-   "cell": "are-think"
+   "cell": "think-not-are"
   },
   {
    "week": "2026-11-02",
@@ -1406,19 +1406,19 @@
     "source": "ledger",
     "basis": "weekly",
     "tracker": "Kpler",
-    "mbd": 7.3,
-    "date": "2026-10-28",
-    "share": 0.429,
-    "estimate_id": "e40"
+    "mbd": 13.4,
+    "date": "2026-11-01",
+    "share": 0.788,
+    "estimate_id": "e63"
    },
-   "are": "shut",
+   "are": "open",
    "deaths": {
     "month": "2026-11",
     "best": null,
     "state": "unknown",
     "provisional": true
    },
-   "cell": "are-think"
+   "cell": "think-not-are"
   },
   {
    "week": "2026-11-09",
@@ -1441,10 +1441,10 @@
     "source": "ledger",
     "basis": "weekly",
     "tracker": "Kpler",
-    "mbd": 7.3,
-    "date": "2026-10-28",
-    "share": 0.429,
-    "estimate_id": "e40"
+    "mbd": 10.0,
+    "date": "2026-11-10",
+    "share": 0.588,
+    "estimate_id": "e62"
    },
    "are": "shut",
    "deaths": {
@@ -1458,7 +1458,7 @@
   {
    "week": "2026-11-16",
    "to": "2026-11-22",
-   "partial": true,
+   "partial": false,
    "bno": 59.02,
    "bno_date": "2026-11-20",
    "think": "war",
@@ -1476,10 +1476,45 @@
     "source": "ledger",
     "basis": "weekly",
     "tracker": "Kpler",
-    "mbd": 7.3,
-    "date": "2026-10-28",
-    "share": 0.429,
-    "estimate_id": "e40"
+    "mbd": 10.0,
+    "date": "2026-11-10",
+    "share": 0.588,
+    "estimate_id": "e62"
+   },
+   "are": "shut",
+   "deaths": {
+    "month": "2026-11",
+    "best": null,
+    "state": "unknown",
+    "provisional": true
+   },
+   "cell": "are-think"
+  },
+  {
+   "week": "2026-11-23",
+   "to": "2026-11-29",
+   "partial": true,
+   "bno": 56.66,
+   "bno_date": "2026-11-23",
+   "think": "war",
+   "days": {
+    "peace": 0,
+    "sweet": 0,
+    "war": 1
+   },
+   "signals": {
+    "index": 0.9,
+    "date": "2026-11-15",
+    "share": 0.009
+   },
+   "strait": {
+    "source": "ledger",
+    "basis": "weekly",
+    "tracker": "Kpler",
+    "mbd": 10.0,
+    "date": "2026-11-10",
+    "share": 0.588,
+    "estimate_id": "e62"
    },
    "are": "shut",
    "deaths": {
