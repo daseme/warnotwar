@@ -1,24 +1,24 @@
 {
   "schema_version": 2,
-  "generated_at_utc": "2026-11-20T00:50:21Z",
+  "generated_at_utc": "2026-11-27T01:55:19Z",
   "generated_from": "oilflows_daily_master.csv",
   "first_date": "2025-06-22",
-  "last_date": "2026-11-19",
+  "last_date": "2026-11-25",
   "baseline": {
     "start": "2025-07-01",
     "end": "2025-12-31",
     "index_value": 100
   },
   "latest_observation_dates": {
-    "hormuz": "2026-11-15",
+    "hormuz": "2026-11-22",
     "known_gulf_official": "2026-08-31",
     "core_official_exports": "2026-08-31",
-    "saudi_gulf_proxy": "2026-11-13",
-    "saudi_bypass_proxy": "2026-11-13",
-    "uae_gulf_proxy": "2026-11-13",
-    "uae_bypass_proxy": "2026-11-13",
-    "brent": "2026-11-17",
-    "bno": "2026-11-19"
+    "saudi_gulf_proxy": "2026-11-20",
+    "saudi_bypass_proxy": "2026-11-20",
+    "uae_gulf_proxy": "2026-11-20",
+    "uae_bypass_proxy": "2026-11-20",
+    "brent": "2026-11-24",
+    "bno": "2026-11-25"
   },
   "definitions": {
     "hormuz_tanker_count_index_7d": "7-day Hormuz tanker-count activity; 100 = Jul-Dec 2025 baseline.",
